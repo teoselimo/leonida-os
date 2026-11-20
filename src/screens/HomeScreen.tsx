@@ -86,6 +86,8 @@ export function HomeScreen() {
         </div>
 
         <div className="home__col">
+          <LiveHighlights />
+
           <section className="card progline" aria-label="Progression">
             <ProgressRing value={p.pct} size={76} stroke={8}>
               <strong className="ring__pct" data-testid="progress-pct">{Math.round(p.pct * 100)}<small>%</small></strong>
@@ -96,8 +98,6 @@ export function HomeScreen() {
               <div className="stat"><strong>{collectibles.done}<small>/{collectibles.total}</small></strong><span>Collection</span></div>
             </div>
           </section>
-
-          <LiveHighlights />
 
           {al.length > 0 && (
             <section>
