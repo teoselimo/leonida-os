@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel><title>Synthetic Press (test)</title>
+<item><title>GTA 6: where to find the hidden Stinger supercar at Permit Keys</title><link>https://press-a.example/gta-6-hidden-stinger?utm_source=rss</link><guid>a-1</guid><pubDate>Thu, 20 Nov 2026 10:00:00 GMT</pubDate><dc:creator>A. Writer</dc:creator><description>The hidden Stinger supercar sits in a garage at Permit Keys and sells for $45,000.</description><content:encoded><![CDATA[<p>Video: <a href="https://www.youtube.com/watch?v=AAAAAAAAAAA">source</a></p>]]></content:encoded></item>
+<item><title>GTA Online weekly update: double money on races</title><link>https://press-a.example/gta-online-weekly</link><guid>a-2</guid><pubDate>Thu, 20 Nov 2026 09:00:00 GMT</pubDate><description>This week in GTA Online.</description></item>
+<item><title>GTA 6 leak suggests a secret ending with a twist?</title><link>https://press-a.example/gta-6-leak-ending</link><guid>a-3</guid><pubDate>Thu, 20 Nov 2026 08:00:00 GMT</pubDate><description>An insider claims the ending of GTA 6 hides a twist. Unconfirmed.</description></item>
+<item><title>GTA 6 fan-made montage of the best crashes</title><link>https://press-a.example/montage</link><guid>a-4</guid><pubDate>Thu, 20 Nov 2026 07:00:00 GMT</pubDate><description>A compilation of GTA 6 crashes.</description></item>
+<item><title>GTA 6 trailer 1 breakdown</title><link>https://press-a.example/old</link><guid>a-5</guid><pubDate>Tue, 05 Dec 2023 07:00:00 GMT</pubDate><description>Old GTA 6 article.</description></item>
+</channel></rss>

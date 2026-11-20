@@ -1,0 +1,40 @@
+import type { Discovery, DiscoveryStatus, Region } from "@/lib/types";
+import type { Landmark } from "@/lib/gtadb";
+
+/**
+ * Contrat de la carte. Implémentation actuelle : `LeonidaMap` (MapLibre GL + tuiles gtadb).
+ * L'écran Carte ne dépend que de ces props.
+ */
+export interface MapMarker {
+  discovery: Discovery;
+  status: DiscoveryStatus;
+  fresh: boolean;
+  tracked: boolean;
+  /** Masqué par les filtres (le marqueur existe mais n'est pas affiché). */
+  visible: boolean;
+}
+
+export interface MapViewProps {
+  regions: Region[];
+  markers: MapMarker[];
+  selectedId: string | null;
+  onSelect: (id: string | null) => void;
+  /** Change de valeur à chaque demande de recentrage sur la sélection. */
+  focusNonce: number;
+  /** Zone masquée par l'UI (barre du haut, fiche mobile en bas, panneau tablette à gauche). */
+  occlusion: { top: number; bottom: number; left: number };
+  landmarks: Landmark[];
+  showLandmarks: boolean;
+  selectedLandmarkId: string | null;
+  onSelectLandmark: (id: string | null) => void;
+  /** L'onglet Carte est affiché (la carte reste montée en arrière-plan sinon). */
+  active: boolean;
+  /** Mode cartographe : un toucher sur la carte renvoie des coordonnées de jeu. */
+  pickMode: boolean;
+  onPick: (x: number, y: number) => void;
+  /** Change de valeur pour demander « poser au centre de la vue ». */
+  pickCenterNonce: number;
+  /** Point en cours de relevé (déplaçable au doigt). */
+  draft: { x: number; y: number } | null;
+  onDraftMove: (x: number, y: number) => void;
+}

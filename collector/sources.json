@@ -1,0 +1,136 @@
+{
+  "$comment": "Registre des sources. Aucune clé ici : YOUTUBE_API_KEY, REDDIT_CLIENT_ID/SECRET, ANTHROPIC_API_KEY viennent des secrets GitHub.",
+  "sources": [
+    {
+      "id": "rockstar-youtube",
+      "name": "Rockstar Games (YouTube officiel)",
+      "kind": "youtube-feed",
+      "official": true,
+      "enabled": true,
+      "intervalMinutes": 15,
+      "channelId": "UC6VcWc1rAoWdBCM0JxrRQ3A",
+      "access": "Flux Atom public YouTube (sans clé). Métadonnées uniquement ; miniature affichée depuis i.ytimg.com avec lien vers la vidéo.",
+      "noAI": true,
+      "lang": "en",
+      "trust": "official"
+    },
+    {
+      "id": "rockstar-newswire",
+      "name": "Rockstar Newswire",
+      "kind": "unsupported",
+      "official": true,
+      "enabled": false,
+      "intervalMinutes": 30,
+      "url": "https://www.rockstargames.com/newswire?tag=vi",
+      "access": "Aucun flux RSS, sitemap ni API publique ; page rendue en JavaScript ; robots.txt interdit les robots d'IA. Non collecté pour respecter la politique du site. Les annonces officielles sont suivies via la chaîne YouTube Rockstar.",
+      "noAI": true,
+      "lang": "en",
+      "trust": "official"
+    },
+    {
+      "id": "youtube-search",
+      "name": "YouTube — recherches ciblées (Data API v3)",
+      "kind": "youtube-api",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 120,
+      "queries": [
+        "GTA 6 easter egg",
+        "GTA 6 secret location",
+        "GTA 6 hidden vehicle",
+        "GTA 6 missable",
+        "GTA 6 money glitch legit",
+        "GTA 6 rare weapon"
+      ],
+      "access": "API officielle YouTube Data v3 (search.list, 100 unités/requête). Requiert YOUTUBE_API_KEY. Budget quotidien plafonné.",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "gtaseries-youtube",
+      "name": "GTA Series Videos (YouTube)",
+      "kind": "youtube-feed",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 30,
+      "channelId": "UCuWcjpKbIDAbZfHoru1toFg",
+      "access": "Flux Atom public YouTube (sans clé). Métadonnées uniquement.",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "rockstarintel",
+      "name": "Rockstar Intel",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://www.rockstarintel.com/feed",
+      "access": "Flux RSS public de syndication. Titre, date, lien et extrait court uniquement.",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "gtaboom",
+      "name": "GTA BOOM",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://www.gtaboom.com/feed/",
+      "access": "Flux RSS public de syndication. Titre, date, lien et extrait court uniquement.",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "pcgamer",
+      "name": "PC Gamer",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://www.pcgamer.com/feeds.xml",
+      "access": "Flux RSS public de syndication. Titre, date, lien et extrait court uniquement.",
+      "lang": "en",
+      "trust": "high"
+    },
+    {
+      "id": "gamesradar",
+      "name": "GamesRadar+",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://www.gamesradar.com/feeds.xml",
+      "access": "Flux RSS public de syndication. Titre, date, lien et extrait court uniquement.",
+      "lang": "en",
+      "trust": "high"
+    },
+    {
+      "id": "polygon",
+      "name": "Polygon",
+      "kind": "rss",
+      "official": false,
+      "enabled": false,
+      "intervalMinutes": 60,
+      "url": "https://www.polygon.com/rss/index.xml",
+      "access": "Flux RSS public, mais le serveur refuse notre robot identifié (HTTP 403). Respecté : source désactivée.",
+      "lang": "en",
+      "trust": "high"
+    },
+    {
+      "id": "reddit-gta6",
+      "name": "Reddit r/GTA6",
+      "kind": "reddit",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 30,
+      "subreddits": [
+        "GTA6"
+      ],
+      "access": "API Reddit OAuth uniquement (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET / REDDIT_USER_AGENT), conditions Reddit Data API, suppression respectée. Désactivé sans autorisation.",
+      "lang": "en",
+      "trust": "low"
+    }
+  ]
+}

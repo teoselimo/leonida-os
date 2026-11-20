@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+out-artifact
+test-results
+test-report
+captures
+data-branch
+*.tsbuildinfo

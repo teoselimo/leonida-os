@@ -1,0 +1,297 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import { recommend, statusOf } from "@/lib/engine";
+import { CATEGORIES, CATEGORY_ORDER } from "@/lib/meta";
+import { repo, useStore } from "@/lib/store";
+import { useIsTablet } from "@/lib/useMedia";
+import { loadLandmarks } from "@/lib/gtadb";
+import type { Landmark } from "@/lib/gtadb";
+import type { CategoryId } from "@/lib/types";
+import { LeonidaMap } from "@/components/map/LeonidaMap";
+import type { MapMarker } from "@/components/map/types";
+import { DiscoveryDetail } from "@/components/DiscoveryDetail";
+import { DiscoveryEditor } from "@/components/DiscoveryEditor";
+import type { EditorDraft } from "@/components/DiscoveryEditor";
+import { LandmarkCard } from "@/components/LandmarkCard";
+import { RecoCard } from "@/components/RecoCard";
+import { ShieldChip } from "@/components/ShieldChip";
+import { CategoryGlyph } from "@/components/ui/primitives";
+import { Icon } from "@/components/ui/Icon";
+import { Sheet } from "@/components/Sheet";
+
+const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+export function MapScreen({ active = true }: { active?: boolean }) {
+  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals } = useStore();
+  const isTablet = useIsTablet();
+  const [cats, setCats] = useState<Set<CategoryId>>(new Set());
+  const [onlyAvailable, setOnlyAvailable] = useState(false);
+  const [hideDone, setHideDone] = useState(false);
+  const [onlyNew, setOnlyNew] = useState(false);
+  const [showLandmarks, setShowLandmarks] = useState(true);
+  const [landmarks, setLandmarks] = useState<Landmark[]>([]);
+  const [lmId, setLmId] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [carto, setCarto] = useState(false);
+  const [editor, setEditor] = useState<EditorDraft | null>(null);
+  const [pickNonce, setPickNonce] = useState(0);
+  const [sheetH, setSheetH] = useState(420);
+  const [topH, setTopH] = useState(110);
+  const topRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    loadLandmarks().then(setLandmarks);
+  }, []);
+  useEffect(() => {
+    const el = topRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setTopH(el.offsetHeight));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [isTablet]);
+
+  const selectDiscovery = (id: string | null) => {
+    if (id) setLmId(null);
+    select(id);
+  };
+  const selectLandmark = (id: string | null) => {
+    if (id) select(null);
+    setLmId(id);
+  };
+
+  const recs = useMemo(() => recommend(all, state, new Date(), 6), [all, state]);
+  const tracked = useMemo(() => {
+    const ids = new Set<string>();
+    signals.forEach((g) => g.discoveryId && state.trackedSignals.includes(g.id) && ids.add(g.discoveryId));
+    return ids;
+  }, [state.trackedSignals, signals]);
+
+  const allMarkers = useMemo(
+    () => all.map((d) => ({ discovery: d, status: statusOf(d, state), fresh: state.freshUnlocks.includes(d.id), tracked: tracked.has(d.id) })),
+    [all, state, tracked],
+  );
+  const markers: MapMarker[] = allMarkers.map((m) => ({
+    ...m,
+    visible:
+      m.discovery.id === selectedId ||
+      (!(m.status === "hidden" && state.profile.spoilerMode === "strict") &&
+        (!cats.size || cats.has(m.discovery.category)) &&
+        (!onlyAvailable || m.status === "available") &&
+        (!hideDone || m.status !== "done") &&
+        (!onlyNew || m.discovery.provenance.kind === "live" || m.fresh)),
+  }));
+
+  // ── Mode cartographe ─────────────────────────────────────────────────────────
+  const onPick = (x: number, y: number) => {
+    select(null);
+    setLmId(null);
+    setEditor((e) => (e ? { ...e, x, y } : { x, y }));
+  };
+  const openEdit = (id: string) => {
+    const d = all.find((x) => x.id === id);
+    if (!d) return;
+    select(null);
+    setEditor({ x: d.x, y: d.y, base: d });
+  };
+  const closeEditor = () => setEditor(null);
+  const editorEl = editor && (
+    <DiscoveryEditor key={editor.base?.id ?? "new"} draft={editor} onCancel={closeEditor} onSaved={() => setEditor(null)} />
+  );
+  const cartoBtn = (
+    <button className={`cartobtn ${carto ? "is-on" : ""}`} onClick={() => { setCarto((v) => !v); setEditor(null); }} aria-pressed={carto} data-testid="carto-btn">
+      <Icon name="flag" size={15} /> {carto ? "Terminer" : "Cartographe"}
+    </button>
+  );
+  const cartoBar = carto && !editor && (
+    <div className="cartobar" onClick={(e) => e.stopPropagation()} data-testid="carto-bar">
+      <div>
+        <strong>Mode cartographe</strong>
+        <span>Touche la carte, ou vise avec la mire puis « Poser ici ».</span>
+      </div>
+      <button className="btn btn--primary btn--sm" style={{ width: "auto" }} onClick={() => setPickNonce((n) => n + 1)} data-testid="pick-center">
+        <Icon name="plus" size={16} stroke={2.4} /> Poser ici
+      </button>
+    </div>
+  );
+
+  const lm = lmId ? landmarks.find((l) => l.id === lmId) ?? null : null;
+
+  // ── Recherche (découvertes + lieux) ─────────────────────────────────────────
+  const visibleCount = markers.filter((m) => m.visible && m.status === "available").length;
+  const results = useMemo(() => {
+    const q = norm(query.trim());
+    if (q.length < 2) return { disc: [], lms: [] as Landmark[] };
+    const disc = allMarkers.filter((m) => m.status !== "hidden" && norm(m.discovery.title).includes(q)).slice(0, 4);
+    const lms = landmarks.filter((l) => norm(`${l.name} ${l.district}`).includes(q)).slice(0, 8);
+    return { disc, lms };
+  }, [query, allMarkers, landmarks]);
+
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setQuery("");
+  };
+
+  const search = (
+    <div className="search" onClick={(e) => e.stopPropagation()}>
+      <div className="search__field">
+        <Icon name="search" size={16} />
+        <input autoFocus placeholder={`Rechercher parmi ${landmarks.length.toLocaleString("fr-FR")} lieux…`} value={query} onChange={(e) => setQuery(e.target.value)} data-testid="search-input" />
+        <button onClick={closeSearch} aria-label="Fermer la recherche"><Icon name="close" size={16} /></button>
+      </div>
+      {(results.disc.length > 0 || results.lms.length > 0) && (
+        <div className="search__results">
+          {results.disc.map((m) => (
+            <button key={m.discovery.id} onClick={() => { closeSearch(); focusOnMap(m.discovery.id); setLmId(null); }}>
+              <CategoryGlyph id={m.discovery.category} size={28} />
+              <span><strong>{m.discovery.title}</strong><em>Découverte · DÉMO</em></span>
+            </button>
+          ))}
+          {results.lms.map((l) => (
+            <button key={l.id} onClick={() => { closeSearch(); selectLandmark(l.id); }} data-testid={`result-${l.id}`}>
+              <span className="glyph glyph--lm" style={{ width: 28, height: 28 }}><Icon name="target" size={14} /></span>
+              <span><strong>{l.name}</strong><em>{l.district || "Leonida"}</em></span>
+            </button>
+          ))}
+        </div>
+      )}
+      {query.trim().length >= 2 && !results.disc.length && !results.lms.length && <div className="search__results"><p className="muted small pad">Aucun résultat.</p></div>}
+    </div>
+  );
+
+  const toggleCat = (c: CategoryId) =>
+    setCats((s) => {
+      const n = new Set(s);
+      n.has(c) ? n.delete(c) : n.add(c);
+      return n;
+    });
+
+  const filters = (
+    <div className="filters" onClick={(e) => e.stopPropagation()}>
+      <button className={`fchip ${showLandmarks ? "is-on" : ""}`} onClick={() => setShowLandmarks((v) => !v)} aria-pressed={showLandmarks} data-testid="filter-landmarks">
+        <i className="fchip__dot" style={{ background: "#e9f6ff" }} /> Lieux
+      </button>
+      <button className={`fchip ${onlyNew ? "is-on" : ""}`} onClick={() => setOnlyNew((v) => !v)} aria-pressed={onlyNew} data-testid="filter-new">
+        <Icon name="sparkle" size={14} /> Nouveau
+      </button>
+      <button className={`fchip ${onlyAvailable ? "is-on" : ""}`} onClick={() => setOnlyAvailable((v) => !v)} aria-pressed={onlyAvailable}>
+        <Icon name="target" size={14} /> Accessibles
+      </button>
+      <button className={`fchip ${hideDone ? "is-on" : ""}`} onClick={() => setHideDone((v) => !v)} aria-pressed={hideDone}>
+        <Icon name="eyeOff" size={14} /> Masquer terminées
+      </button>
+      <span className="filters__sep" />
+      {CATEGORY_ORDER.map((c) => (
+        <button key={c} className={`fchip ${cats.has(c) ? "is-on" : ""}`} style={{ ["--c" as string]: CATEGORIES[c].color }} onClick={() => toggleCat(c)} aria-pressed={cats.has(c)} data-testid={`filter-${c}`}>
+          <i className="fchip__dot" /> {CATEGORIES[c].plural}
+        </button>
+      ))}
+    </div>
+  );
+
+  const searchBtn = (
+    <button className="iconbtn iconbtn--glass" onClick={() => setSearchOpen(true)} aria-label="Rechercher un lieu" data-testid="search-btn">
+      <Icon name="search" size={18} />
+    </button>
+  );
+
+  const mapEl = (occlusion: { top: number; bottom: number; left: number }) => (
+    <LeonidaMap
+      regions={repo.regions()}
+      markers={markers}
+      selectedId={selectedId}
+      onSelect={selectDiscovery}
+      focusNonce={focusNonce}
+      occlusion={occlusion}
+      landmarks={landmarks}
+      showLandmarks={showLandmarks}
+      selectedLandmarkId={lmId}
+      onSelectLandmark={selectLandmark}
+      active={active}
+      pickMode={carto || Boolean(editor)}
+      onPick={onPick}
+      pickCenterNonce={pickNonce}
+      draft={editor ? { x: editor.x, y: editor.y } : null}
+      onDraftMove={(x, y) => setEditor((e) => (e ? { ...e, x, y } : e))}
+    />
+  );
+
+  // ── Tablette : panneau + carte côte à côte ─────────────────────────────────
+  if (isTablet) {
+    const detailOpen = Boolean(selectedId || lm);
+    return (
+      <div className="mapsplit">
+        <aside className="panel">
+          {editor ? (
+            <div className="panel__scroll" style={{ paddingTop: "calc(var(--sat) + 18px)" }}>{editorEl}</div>
+          ) : detailOpen ? (
+            <>
+              <button className="back" onClick={() => { select(null); setLmId(null); }}><Icon name="chevronLeft" size={16} /> Recommandations</button>
+              <div className="panel__scroll">
+                {selectedId ? <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} /> : lm && <LandmarkCard lm={lm} onClose={() => setLmId(null)} />}
+              </div>
+            </>
+          ) : (
+            <>
+              <header className="panel__head">
+                <div>
+                  <p className="eyebrow">Carte · {visibleCount} accessibles</p>
+                  <h1 className="h2">Recommandations</h1>
+                </div>
+                <ShieldChip />
+              </header>
+              <div className="panel__tools">{cartoBtn}</div>
+              <div className="panel__search">{searchOpen ? search : <button className="searchfake" onClick={() => setSearchOpen(true)} data-testid="search-btn"><Icon name="search" size={16} /> Rechercher un lieu, une découverte…</button>}</div>
+              <div className="panel__scroll list">
+                {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} />)}
+                <p className="fineprint pad">Les recommandations se recalculent à chaque découverte terminée.</p>
+              </div>
+            </>
+          )}
+        </aside>
+        <div className="mapsplit__map">
+          {mapEl({ top: 64, bottom: 0, left: 0 })}
+          <div className="mapsplit__filters">{filters}</div>
+          {cartoBar && <div className="mapsplit__carto">{cartoBar}</div>}
+        </div>
+      </div>
+    );
+  }
+
+  // ── iPhone : carte plein écran + fiche glissante ───────────────────────────
+  const sheetOpen = Boolean(selectedId || lm || editor);
+  return (
+    <div className="mapphone">
+      {mapEl({ top: topH, bottom: sheetOpen ? sheetH : carto ? 96 : 118, left: 0 })}
+      <div className="mapphone__top" ref={topRef}>
+        <div className="row between">
+          <h1 className="h2 shadowtxt">Carte</h1>
+          <div className="row gap8">{cartoBtn}{searchBtn}<ShieldChip /></div>
+        </div>
+        {searchOpen ? search : filters}
+      </div>
+      {!sheetOpen && cartoBar}
+      {!sheetOpen && !carto && (
+        <div className="strip" onClick={(e) => e.stopPropagation()}>
+          {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} variant="chip" />)}
+        </div>
+      )}
+      {editor && (
+        <Sheet key={`ed-${editor.base?.id ?? "new"}`} onClose={closeEditor} onHeight={setSheetH} tall>
+          {editorEl}
+        </Sheet>
+      )}
+      {!editor && selectedId && (
+        <Sheet key={selectedId} onClose={() => select(null)} onHeight={setSheetH}>
+          <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} />
+        </Sheet>
+      )}
+      {!editor && !selectedId && lm && (
+        <Sheet key={lm.id} onClose={() => setLmId(null)} onHeight={setSheetH}>
+          <LandmarkCard lm={lm} onClose={() => setLmId(null)} />
+        </Sheet>
+      )}
+    </div>
+  );
+}

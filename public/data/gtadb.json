@@ -1,0 +1,12 @@
+{
+ "source": "https://github.com/rolux/gtadb.org",
+ "revision": "d406fea099e1df2bce42fd6b87eed04bce646629",
+ "updatedAt": "2026-11-19T17:51:06+01:00",
+ "tileset": "day",
+ "tileSize": 2048,
+ "maxzoom": 4,
+ "landmarks": 3663,
+ "license": "CC BY 4.0",
+ "attribution": "GTA VI Landmarks Data & Map Tiles (CC BY 4.0) — map.gtadb.org",
+ "changes": "Tuiles ré-assemblées en grandes tuiles et recompressées, assombries à l'affichage ; données réduites."
+}

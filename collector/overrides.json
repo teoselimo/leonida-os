@@ -1,0 +1,4 @@
+{
+  "$comment": "Corrections administrateur appliquées à la collecte suivante, sans redéploiement. Clé = id de fiche (visible dans l'app). status: active | disputed | outdated | retracted. location: uniquement un point vérifié en jeu (coordonnées gtadb).",
+  "items": {}
+}

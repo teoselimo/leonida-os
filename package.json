@@ -1,0 +1,30 @@
+{
+  "name": "leonida-os",
+  "version": "0.4.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/check-assets.mjs",
+    "build": "next build && node scripts/fix-export.mjs",
+    "build:artifact": "npm run build && node scripts/artifact-package.mjs",
+    "serve": "node scripts/serve.mjs out 4321",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "test:all": "npm run typecheck && npm run build && playwright test"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "maplibre-gl": "^5.24.1",
+    "next": "^15.5.29",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56",
+    "@types/node": "22.15.0",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "typescript": "5.8.3"
+  }
+}
