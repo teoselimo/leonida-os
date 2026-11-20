@@ -1,0 +1,88 @@
+{
+ "rockstar-youtube": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": "2026-11-20T19:23:01.978Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "15 éléments lus",
+  "etag": null
+ },
+ "rockstar-newswire": {
+  "lastAttemptAt": null,
+  "lastSuccessAt": null,
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "disabled",
+  "statusDetail": "Désactivée dans sources.json"
+ },
+ "youtube-search": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": null,
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "disabled",
+  "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
+ },
+ "gtaseries-youtube": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": "2026-11-20T19:23:01.978Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "15 éléments lus",
+  "etag": null
+ },
+ "rockstarintel": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": "2026-11-20T19:23:01.978Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "10 éléments lus",
+  "etag": "\"93d627736ca76d2e30345bfcf57e93dd\""
+ },
+ "gtaboom": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": "2026-11-20T19:23:01.978Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "30 éléments lus",
+  "etag": null
+ },
+ "pcgamer": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": "2026-11-20T19:23:01.978Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "50 éléments lus",
+  "etag": null
+ },
+ "gamesradar": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": "2026-11-20T19:23:01.978Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "50 éléments lus",
+  "etag": null
+ },
+ "polygon": {
+  "lastAttemptAt": null,
+  "lastSuccessAt": null,
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "disabled",
+  "statusDetail": "Désactivée dans sources.json"
+ },
+ "reddit-gta6": {
+  "lastAttemptAt": "2026-11-20T19:23:01.978Z",
+  "lastSuccessAt": null,
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "disabled",
+  "statusDetail": "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif."
+ }
+}

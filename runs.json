@@ -1,0 +1,104 @@
+[
+ {
+  "id": "rockstar-youtube-1795202581978",
+  "sourceId": "rockstar-youtube",
+  "startedAt": "2026-11-20T19:23:01.978Z",
+  "finishedAt": "2026-11-20T19:23:02.138Z",
+  "ok": true,
+  "fetched": 15,
+  "newItems": 5,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "youtube-search-1795202582139",
+  "sourceId": "youtube-search",
+  "startedAt": "2026-11-20T19:23:02.139Z",
+  "finishedAt": "2026-11-20T19:23:02.139Z",
+  "ok": false,
+  "fetched": 0,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [
+   "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
+  ],
+  "attempts": 0,
+  "skipped": "missing-credentials"
+ },
+ {
+  "id": "gtaseries-youtube-1795202582139",
+  "sourceId": "gtaseries-youtube",
+  "startedAt": "2026-11-20T19:23:02.139Z",
+  "finishedAt": "2026-11-20T19:23:02.273Z",
+  "ok": true,
+  "fetched": 15,
+  "newItems": 9,
+  "updatedItems": 6,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "rockstarintel-1795202582273",
+  "sourceId": "rockstarintel",
+  "startedAt": "2026-11-20T19:23:02.273Z",
+  "finishedAt": "2026-11-20T19:23:09.039Z",
+  "ok": true,
+  "fetched": 10,
+  "newItems": 10,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "gtaboom-1795202589040",
+  "sourceId": "gtaboom",
+  "startedAt": "2026-11-20T19:23:09.040Z",
+  "finishedAt": "2026-11-20T19:23:09.378Z",
+  "ok": true,
+  "fetched": 30,
+  "newItems": 30,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "pcgamer-1795202589378",
+  "sourceId": "pcgamer",
+  "startedAt": "2026-11-20T19:23:09.378Z",
+  "finishedAt": "2026-11-20T19:23:09.692Z",
+  "ok": true,
+  "fetched": 50,
+  "newItems": 30,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "gamesradar-1795202589692",
+  "sourceId": "gamesradar",
+  "startedAt": "2026-11-20T19:23:09.692Z",
+  "finishedAt": "2026-11-20T19:23:09.934Z",
+  "ok": true,
+  "fetched": 50,
+  "newItems": 24,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "reddit-gta6-1795202589934",
+  "sourceId": "reddit-gta6",
+  "startedAt": "2026-11-20T19:23:09.934Z",
+  "finishedAt": "2026-11-20T19:23:09.935Z",
+  "ok": false,
+  "fetched": 0,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [
+   "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif."
+  ],
+  "attempts": 0,
+  "skipped": "missing-credentials"
+ }
+]
