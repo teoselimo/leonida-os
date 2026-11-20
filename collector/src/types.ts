@@ -79,6 +79,60 @@ export interface Evidence {
   origins: string[];
   /** Citations exactes tirées du texte collecté justifiant les champs extraits. */
   quotes: string[];
+  /** Lecture approfondie de l'article (si robots.txt l'autorise) : faits extraits, jamais le texte complet. */
+  deep?: DeepRead;
+}
+
+export interface FactRef<T> {
+  value: T;
+  quote: string;
+  url: string;
+}
+
+export interface DeepRead {
+  /** Version des règles d'extraction : une amélioration des règles relance la lecture des articles concernés. */
+  v?: number;
+  at: string;
+  ok: boolean;
+  reason: string | null;
+  /** Le site refuse les robots d'IA : aucune analyse par modèle sur ce contenu. */
+  aiOptOut: boolean;
+  method: "rules" | "rules+ai";
+  facts: {
+    chapter: FactRef<number> | null;
+    money: FactRef<{ amount: number; max: number | null; approx: boolean }> | null;
+    mission: FactRef<string> | null;
+    giver: FactRef<string> | null;
+    unlockAfter: FactRef<string> | null;
+    place: FactRef<{ name: string; district: string | null; regionId: string | null }> | null;
+    missable: FactRef<boolean> | null;
+    contextMissable: FactRef<{ subject: string | null; until: string | null }> | null;
+    handsOn: FactRef<boolean> | null;
+    keywords: string[];
+  } | null;
+  videoIds: string[];
+}
+
+/** Un champ consolidé d'une fiche, avec toutes les sources qui l'appuient (jamais de valeur sans citation). */
+export interface DetailField<T> {
+  value: T;
+  support: Array<{ sourceName: string; url: string; quote: string }>;
+  /** Sources qui contredisent la valeur retenue. */
+  conflicts: Array<{ sourceName: string; url: string; quote: string }>;
+}
+
+export interface RecordDetails {
+  chapter: DetailField<number> | null;
+  money: DetailField<{ min: number; max: number | null; approx: boolean }> | null;
+  mission: DetailField<string> | null;
+  giver: DetailField<string> | null;
+  unlockAfter: DetailField<string> | null;
+  place: DetailField<{ name: string; district: string | null }> | null;
+  missable: DetailField<boolean> | null;
+  contextMissable: DetailField<{ subject: string | null; until: string | null }> | null;
+  handsOn: boolean;
+  /** Champs demandés par le format de fiche mais introuvables dans les sources : laissés vides. */
+  missing: string[];
 }
 
 export interface Revision {
@@ -94,6 +148,8 @@ export interface Location {
   precision: "none" | "region" | "named-place" | "validated";
   x: number | null;
   y: number | null;
+  /** Point proposé (repère exact de la carte communautaire) en attente de validation : jamais affiché comme épingle. */
+  suggestion?: { x: number; y: number; landmark: string } | null;
 }
 
 export interface Conditions {
@@ -127,6 +183,14 @@ export interface RadarRecord {
   revisions: Revision[];
   score: number;
   opportunity: { score: number; angle: "testé" | "vrai ou faux ?" | "actu"; ideas: string[] };
+  /** Fiche structurée issue de la lecture des guides (V0.5.1). */
+  details?: RecordDetails | null;
+  /** Conseil prêt à afficher dans « Que faire maintenant ? » si la fiche est exploitable. */
+  advice?: { text: string; chapterMin: number | null; urgency: "now" | "soon" | "anytime" } | null;
+  /** Capture personnelle validée par l'administrateur (droits détenus). */
+  capture?: { src: string; credit: string; alt?: string } | null;
+  /** Identifiants de fiches fusionnées dans celle-ci (même découverte décrite par plusieurs sources). */
+  mergedFrom?: string[];
 }
 
 export interface RunLog {
@@ -162,12 +226,29 @@ export interface Override {
   reliability?: Reliability;
   location?: { regionId?: string; place?: string; x: number; y: number };
   note?: string;
+  /** Capture de gameplay personnelle (fichier dans public/gameplay/), affichée à la place de la miniature. */
+  capture?: { src: string; credit: string; alt?: string };
 }
 
-/** Flux public lu par l'application. */
+/** Un passage complet du collecteur (toutes sources dues), pour prouver la régularité du cron. */
+export interface CycleLog {
+  at: string;
+  /** schedule (cron GitHub), workflow_dispatch, push, local… */
+  trigger: string;
+  runId: string | null;
+  sourcesAttempted: number;
+  sourcesOk: number;
+  newItems: number;
+  updatedItems: number;
+  deepReads: number;
+  merged: number;
+}
+
 export interface RadarFeed {
   version: 1;
   generatedAt: string;
+  /** Santé du collecteur : cadence attendue et derniers cycles (pour détecter un arrêt). */
+  health?: { cadenceMinutes: number; cycles: CycleLog[] };
   sources: Array<{ id: string; name: string; kind: ConnectorKind; official: boolean; status: SourceState["status"]; statusDetail: string | null; lastSuccessAt: string | null; lastAttemptAt: string | null }>;
   lastRun: { at: string; newItems: number; updatedItems: number; errors: number } | null;
   items: RadarRecord[];

@@ -16,7 +16,7 @@ export type CategoryId = "mission" | "collectible" | "activity" | "vehicle" | "s
  */
 export type Reliability = "official" | "confirmed" | "reported" | "rumor" | "personal";
 
-/** Repère de progression narrative. Valeurs de démo, pas la structure réelle du jeu. */
+/** Progression narrative : prologue puis chapitres (cités par les guides publics). Le nombre total de chapitres n'est pas établi : 3 = « chapitre 3 ou plus ». */
 export type Chapter = 0 | 1 | 2 | 3;
 
 export type ConsoleId = "ps5" | "ps5pro" | "xsx" | "xss";

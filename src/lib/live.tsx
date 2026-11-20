@@ -130,10 +130,86 @@ export function tabOf(r: RadarRecord, now = Date.now()): LiveTab[] {
   return tabs;
 }
 
-/** Filtre anti-spoiler du flux : strict = retiré, modéré = flouté (géré à l'affichage). */
-export function spoilerVisibility(r: RadarRecord, mode: "strict" | "relaxed"): "visible" | "blurred" | "hidden" {
-  if (r.spoiler !== "high") return "visible";
+/**
+ * Filtre anti-spoiler du flux : strict = retiré, modéré = flouté (géré à l'affichage).
+ * Une fiche rattachée à un chapitre plus avancé que celui du joueur est traitée comme un spoiler.
+ */
+export function spoilerVisibility(r: RadarRecord, mode: "strict" | "relaxed", playerChapter?: number): "visible" | "blurred" | "hidden" {
+  const ahead = playerChapter != null && (r.details?.chapter?.value ?? 0) > playerChapter;
+  if (r.spoiler !== "high" && !ahead) return "visible";
   return mode === "strict" ? "hidden" : "blurred";
+}
+
+// ── Santé du collecteur ─────────────────────────────────────────────────────────
+export type CollectorHealth = { level: "ok" | "late" | "stopped"; ageMin: number; cadence: number; lastCron: string | null; cronCount24h: number };
+
+/**
+ * Le collecteur tourne toutes les 15 min (cron GitHub, retards de 10–30 min fréquents).
+ * En retard au-delà de 3 cycles sans nouveau flux, arrêté au-delà de 3 h.
+ */
+export function collectorHealth(feed: RadarFeed, now = Date.now()): CollectorHealth {
+  const cadence = feed.health?.cadenceMinutes ?? 15;
+  const ageMin = Math.max(0, Math.round((now - Date.parse(feed.generatedAt)) / 60_000));
+  const cycles = feed.health?.cycles ?? [];
+  const crons = cycles.filter((c) => c.trigger === "schedule");
+  return {
+    level: ageMin > 180 ? "stopped" : ageMin > cadence * 3 ? "late" : "ok",
+    ageMin,
+    cadence,
+    lastCron: crons.at(-1)?.at ?? null,
+    cronCount24h: crons.filter((c) => now - Date.parse(c.at) < 86400_000).length,
+  };
+}
+
+export const TRIGGER_FR: Record<string, string> = { schedule: "planifié (cron)", workflow_dispatch: "manuel", push: "déploiement", local: "local" };
+
+// ── Conseils personnalisés (« Que faire maintenant ? ») ────────────────────────
+/** Conseils exploitables, fiables, compatibles avec le chapitre du joueur et l'anti-spoiler. */
+export function liveAdvice(feed: RadarFeed | null, profile: { chapter: number; spoilerMode: "strict" | "relaxed" }, done: string[] = []) {
+  if (!feed) return { now: [] as RadarRecord[], later: 0 };
+  const usable = feed.items.filter(
+    (r) => r.advice && r.actionable && r.status === "active" && (r.reliability === "official" || r.reliability === "confirmed") && !done.includes(r.id),
+  );
+  const fits = (r: RadarRecord) => (r.advice!.chapterMin ?? 0) <= profile.chapter && spoilerVisibility(r, profile.spoilerMode, profile.chapter) === "visible";
+  const now = usable.filter(fits).sort((a, b) => Number(b.advice!.urgency === "now") - Number(a.advice!.urgency === "now") || b.score - a.score);
+  return { now, later: usable.length - now.length };
+}
+
+const DONE_KEY = "leonida-os/advice-done/v1";
+export function readDoneAdvice(): string[] {
+  try {
+    const v = JSON.parse(localStorage.getItem(DONE_KEY) || "[]");
+    return Array.isArray(v) ? v.filter((x) => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
+export function writeDoneAdvice(ids: string[]) {
+  try {
+    localStorage.setItem(DONE_KEY, JSON.stringify(ids.slice(-200)));
+  } catch {
+    /* stockage indisponible : l'état reste en mémoire */
+  }
+}
+
+/** Lien de proposition de point : ouvre une demande de validation sur GitHub (aucune coordonnée publiée sans validation). */
+export function proposePointUrl(r: RadarRecord): string {
+  const s = r.location.suggestion;
+  const body = [
+    `Fiche : ${r.id}`,
+    `Titre : ${r.title}`,
+    `Lieu cité par les sources : ${r.location.place ?? "—"}`,
+    s ? `Repère proposé (carte communautaire gtadb) : ${s.landmark} → x=${s.x}, y=${s.y}` : "Aucun repère exact sur la carte communautaire : indiquer x/y relevés en jeu.",
+    "",
+    "Preuves :",
+    ...r.evidence.map((e) => `- ${e.sourceName} : ${e.url}`),
+    "",
+    "Pour valider : ajouter dans collector/overrides.json →",
+    "```json",
+    JSON.stringify({ [r.id]: { location: { x: s?.x ?? 0, y: s?.y ?? 0, place: r.location.place } } }, null, 1),
+    "```",
+  ].join("\n");
+  return `https://github.com/teoselimo/leonida-os/issues/new?labels=validation-point&title=${encodeURIComponent(`Point à valider : ${r.location.place ?? r.title}`)}&body=${encodeURIComponent(body)}`;
 }
 
 export const LIVE_CATEGORY: Record<string, { label: string; icon: string; color: string }> = {

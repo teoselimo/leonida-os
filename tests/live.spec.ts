@@ -9,11 +9,15 @@ import { readFileSync } from "node:fs";
 const FEED_URL = "http://localhost:4321/__live/radar.json";
 const load = (v: string) => JSON.parse(readFileSync(`tests/fixtures/radar-${v}.json`, "utf8"));
 
-async function serveFeed(page: Page, get: () => unknown) {
+async function serveFeed(page: Page, get: () => unknown, opts: { ageMin?: number } = {}) {
   await page.route("**/__live/radar.json*", async (route) => {
     const feed = get() as { generatedAt: string; items: Array<{ firstSeenAt: string }>; sources: Array<{ lastSuccessAt: string | null }> };
     if (!feed) return route.fulfill({ status: 503, body: "indisponible" });
     const now = new Date().toISOString();
+    if (opts.ageMin != null) {
+      // flux figé : simule un collecteur qui ne publie plus
+      return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ...feed, generatedAt: new Date(Date.now() - opts.ageMin * 60_000).toISOString() }) });
+    }
     // fraîcheur relative au moment du test
     const fresh = { ...feed, generatedAt: now, items: feed.items.map((i) => ({ ...i, firstSeenAt: now })), sources: feed.sources.map((s) => ({ ...s, lastSuccessAt: s.lastSuccessAt ? now : null })) };
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(fresh) });
@@ -104,4 +108,60 @@ test("dégradation : flux injoignable → bascule propre en démonstration", asy
   await serveFeed(page, () => null);
   await start(page);
   await expect(page.getByTestId("demo-banner")).toContainText("injoignable");
+});
+
+// ───────────── V0.5.1 : fiche structurée, conseil personnalisé, santé du collecteur ─────────────
+test("V0.5.1 : la cache du perroquet devient une fiche structurée sourcée dans le Radar", async ({ page }, info) => {
+  await serveFeed(page, () => load("v4"));
+  await start(page);
+  await page.getByRole("radio", { name: /Confirmé/ }).click();
+  const card = page.locator("article.live-card", { hasText: "Parrot Stash" }).first();
+  await expect(card.getByTestId("rel-confirmed")).toBeVisible();
+  const sheet = card.getByTestId("fact-sheet");
+  await expect(sheet).toContainText("≈ 1 000–1 400 $");
+  await expect(sheet).toContainText("Three Sheets Liquor, Key Lento");
+  await expect(sheet).toContainText("Get Shirley's Rum (Shirley)");
+  await expect(sheet).toContainText("Après « Pipework »");
+  await expect(sheet).toContainText("Chapitre 1");
+  await expect(sheet).toContainText("au lancement de « Tourist Trap »");
+  await sheet.getByRole("button", { name: /≈ 1 000–1 400 \$/ }).click();
+  await expect(sheet.locator(".fsrow__proof q")).toHaveCount(2); // une citation par source
+  await expect(card.getByTestId("propose-point")).toHaveAttribute("href", /github\.com\/teoselimo\/leonida-os\/issues\/new/);
+  await card.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `captures/${info.project.name}-20-fiche-structuree.png` });
+});
+
+test("V0.5.1 : « Que faire maintenant ? » propose le conseil au chapitre 1, pas avant", async ({ page }, info) => {
+  await serveFeed(page, () => load("v4"));
+  await start(page, "#accueil");
+  const adv = page.getByTestId("live-advice");
+  await expect(adv).toContainText("Three Sheets Liquor (Key Lento)");
+  await expect(adv).toContainText("À faire avant de continuer");
+  await expect(adv).toContainText("Tourist Trap");
+  await page.screenshot({ path: `captures/${info.project.name}-21-conseil-accueil.png` });
+  // carte : lieu cité mais non validé → aucune épingle inventée pour cette fiche
+  await adv.getByTestId("advice-done").first().click();
+  await expect(page.getByTestId("live-advice")).toHaveCount(0);
+});
+
+test("V0.5.1 : chapitre du joueur antérieur → conseil gardé pour plus tard", async ({ page }) => {
+  await serveFeed(page, () => load("v4"));
+  await start(page, "#profil");
+  await page.getByTestId("chapter-0").click();
+  await page.goto("/#accueil");
+  await page.waitForSelector(".app.is-ready");
+  await expect(page.getByTestId("live-highlights")).toBeVisible();
+  await expect(page.getByTestId("live-advice")).toHaveCount(0);
+});
+
+test("V0.5.1 : collecteur arrêté → alerte claire sur l'accueil et le Radar", async ({ page }, info) => {
+  await serveFeed(page, () => load("v4"), { ageMin: 240 });
+  await start(page, "#accueil");
+  await expect(page.getByTestId("collector-alert").first()).toContainText("Veille arrêtée");
+  await page.goto("/#radar");
+  await expect(page.getByTestId("collector-alert")).toContainText("aucune nouvelle collecte depuis 4 h");
+  await expect(page.getByTestId("sync-status")).toContainText("Collecteur arrêté");
+  await page.getByTestId("sync-status").locator(".sync__main").click();
+  await expect(page.getByTestId("cycles")).toContainText("planifié (cron)");
+  await page.screenshot({ path: `captures/${info.project.name}-22-collecteur-arrete.png` });
 });

@@ -1,6 +1,6 @@
 {
  "version": 1,
- "generatedAt": "2026-11-20T19:12:33.601Z",
+ "generatedAt": "2026-11-20T14:00:00.000Z",
  "sources": [
   {
    "id": "rockstar-youtube",
@@ -9,8 +9,8 @@
    "official": true,
    "status": "ok",
    "statusDetail": "5 éléments lus",
-   "lastSuccessAt": "2026-11-20T19:12:33.601Z",
-   "lastAttemptAt": "2026-11-20T19:12:33.601Z"
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
   },
   {
    "id": "press-a",
@@ -19,8 +19,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "5 éléments lus",
-   "lastSuccessAt": "2026-11-20T19:12:33.601Z",
-   "lastAttemptAt": "2026-11-20T19:12:33.601Z"
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
   },
   {
    "id": "press-b",
@@ -29,12 +29,59 @@
    "official": false,
    "status": "ok",
    "statusDetail": "1 éléments lus",
-   "lastSuccessAt": "2026-11-20T19:12:33.601Z",
-   "lastAttemptAt": "2026-11-20T19:12:33.601Z"
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "guide-a",
+   "name": "Guide A (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
+  },
+  {
+   "id": "guide-b",
+   "name": "Guide B (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
   }
  ],
+ "health": {
+  "cadenceMinutes": 15,
+  "cycles": [
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 2,
+    "sourcesOk": 2,
+    "newItems": 8,
+    "updatedItems": 0,
+    "deepReads": 0,
+    "merged": 0
+   },
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 1,
+    "sourcesOk": 1,
+    "newItems": 0,
+    "updatedItems": 1,
+    "deepReads": 0,
+    "merged": 0
+   }
+  ]
+ },
  "lastRun": {
-  "at": "2026-11-20T19:12:33.601Z",
+  "at": "2026-11-20T14:00:00.000Z",
   "newItems": 0,
   "updatedItems": 1,
   "errors": 0
@@ -75,7 +122,7 @@
      "url": "https://press-a.example/gta-6-hidden-stinger",
      "title": "GTA 6: where to find the hidden Stinger supercar at Permit Keys",
      "excerpt": "The hidden Stinger supercar sits in a garage at Permit Keys and sells for $45,000.",
-     "publishedAt": "2026-11-20T19:12:33.000Z",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
      "official": false,
      "origins": [
       "site:press-a.example",
@@ -84,7 +131,17 @@
      "quotes": [
       "$45,000",
       "Permit Keys"
-     ]
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": false,
+      "reason": "HTTP 404 sur https://press-a.example/gta-6-hidden-stinger",
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": null,
+      "videoIds": []
+     }
     },
     {
      "rawKey": "press-b:b-1",
@@ -93,7 +150,7 @@
      "url": "https://press-b.example/stinger-permit-keys",
      "title": "Hidden Stinger supercar in GTA 6: Permit Keys garage location",
      "excerpt": "We found the hidden Stinger supercar ourselves in a Permit Keys garage; it resells for $45,000 in GTA 6.",
-     "publishedAt": "2026-11-20T19:12:33.000Z",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
      "official": false,
      "origins": [
       "site:press-b.example"
@@ -101,25 +158,36 @@
      "quotes": [
       "$45,000",
       "Permit Keys"
-     ]
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": false,
+      "reason": "HTTP 404 sur https://press-b.example/stinger-permit-keys",
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": null,
+      "videoIds": []
+     }
     }
    ],
    "media": null,
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
-   "publishedAt": "2026-11-20T19:12:33.000Z",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Presse A (test)",
-      "localisation : none → named-place"
+      "localisation : none → named-place",
+      "lieu : Permit Keys"
      ]
     },
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Nouvelle preuve rattachée",
      "changes": [
       "Presse B (test) : « Hidden Stinger supercar in GTA 6: Permit Keys garage location »",
@@ -135,7 +203,10 @@
      "Testé en jeu : « GTA 6: where to find the hidden Stinger supercar at Permit Keys »",
      "Où et comment, en moins de 30 secondes"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   },
   {
    "id": "r-8e7d82b4c2",
@@ -189,13 +260,13 @@
     "credit": "Rockstar Games",
     "rights": "youtube-terms"
    },
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
    "publishedAt": "2026-11-19T13:59:56+00:00",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Rockstar Games (YouTube officiel)",
@@ -210,7 +281,10 @@
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI Now Available »"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   },
   {
    "id": "r-b3f13db885",
@@ -264,13 +338,13 @@
     "credit": "Rockstar Games",
     "rights": "youtube-terms"
    },
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
    "publishedAt": "2026-11-10T13:55:42+00:00",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Rockstar Games (YouTube officiel)",
@@ -285,7 +359,10 @@
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI: Pre-Load Now »"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   },
   {
    "id": "r-e70605f996",
@@ -339,13 +416,13 @@
     "credit": "Rockstar Games",
     "rights": "youtube-terms"
    },
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
    "publishedAt": "2026-11-10T13:55:06+00:00",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Rockstar Games (YouTube officiel)",
@@ -360,7 +437,10 @@
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI: Out Now »"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   },
   {
    "id": "r-5eba03a19c",
@@ -414,13 +494,13 @@
     "credit": "Rockstar Games",
     "rights": "youtube-terms"
    },
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
    "publishedAt": "2026-11-10T12:59:01+00:00",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Rockstar Games (YouTube officiel)",
@@ -435,7 +515,10 @@
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI: The Festival »"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   },
   {
    "id": "r-80508f3004",
@@ -489,13 +572,13 @@
     "credit": "Rockstar Games",
     "rights": "youtube-terms"
    },
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
    "publishedAt": "2026-11-09T20:59:12+00:00",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Rockstar Games (YouTube officiel)",
@@ -510,7 +593,10 @@
     "ideas": [
      "L'essentiel en 30 secondes : « A Night in Vice City »"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   },
   {
    "id": "r-ce266f63ec",
@@ -556,13 +642,13 @@
     }
    ],
    "media": null,
-   "firstSeenAt": "2026-11-20T19:12:33.601Z",
-   "updatedAt": "2026-11-20T19:12:33.601Z",
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
    "publishedAt": "2023-12-05T07:00:00.000Z",
-   "lastVerifiedAt": "2026-11-20T19:12:33.601Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
    "revisions": [
     {
-     "at": "2026-11-20T19:12:33.601Z",
+     "at": "2026-11-20T14:00:00.000Z",
      "reason": "Création automatique",
      "changes": [
       "source : Presse A (test)"
@@ -577,7 +663,10 @@
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 trailer 1 breakdown »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
-   }
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
   }
  ]
 }

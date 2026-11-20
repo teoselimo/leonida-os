@@ -68,6 +68,7 @@ jobs:
           REDDIT_USER_AGENT: ${{ vars.REDDIT_USER_AGENT }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          DEEP_READ_MAX: ${{ vars.DEEP_READ_MAX }}
         run: |
           ARGS="--data ../data-branch"
           if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi

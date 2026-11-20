@@ -23,10 +23,10 @@ export const RELIABILITY: Record<Reliability, { label: string; short: string; le
 export const isReliable = (r: Reliability) => RELIABILITY[r].level >= 3;
 
 export const CHAPTERS: Record<Chapter, string> = {
-  0: "Début de partie",
-  1: "Repère 1",
-  2: "Repère 2",
-  3: "Fin de partie",
+  0: "Prologue",
+  1: "Chapitre 1",
+  2: "Chapitre 2",
+  3: "Chapitre 3 et +",
 };
 
 export const CONSOLES: Record<ConsoleId, string> = {

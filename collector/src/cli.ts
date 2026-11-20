@@ -34,9 +34,12 @@ const summary = await runCollection(store, {
   force: flag("force") || diagnose,
   only: val("only")?.split(","),
   log: (m) => console.log(m),
+  trigger: process.env.GITHUB_EVENT_NAME ?? "local",
+  runId: process.env.GITHUB_RUN_ID ?? null,
 });
 const feed = buildFeed(store, sources, summary);
-console.log(`\nRésumé : ${summary.newItems} nouvelles fiches · ${summary.updatedItems} mises à jour · ${summary.duplicates} doublons ignorés · filtrés ${JSON.stringify(summary.filtered)} · ${feed.items.length} fiches publiées · ${((Date.now() - t0) / 1000).toFixed(1)} s`);
+console.log(`Déclenchement : ${process.env.GITHUB_EVENT_NAME ?? "local"}${process.env.GITHUB_RUN_ID ? ` (run ${process.env.GITHUB_RUN_ID})` : ""}`);
+console.log(`\nRésumé : ${summary.newItems} nouvelles fiches · ${summary.updatedItems} mises à jour · ${summary.duplicates} doublons ignorés · ${summary.deepReads} articles lus · ${summary.merged} fusions · filtrés ${JSON.stringify(summary.filtered)} · ${feed.items.length} fiches publiées · ${((Date.now() - t0) / 1000).toFixed(1)} s`);
 if (!diagnose) saveStore(dataDir, store, feed);
 else console.log("(diagnostic : rien n'a été écrit)");
 const hardFailures = summary.runs.filter((r) => !r.ok && !r.skipped);

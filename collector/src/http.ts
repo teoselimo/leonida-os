@@ -1,5 +1,5 @@
 /** Requêtes HTTP avec délai maximal, nouvelles tentatives à recul exponentiel et en-têtes honnêtes. */
-export const USER_AGENT = "LeonidaOS-Collector/0.5 (+https://github.com/teoselimo/leonida-os; veille GTA VI personnelle)";
+export const USER_AGENT = "LeonidaOS-Collector/0.5.1 (+https://github.com/teoselimo/leonida-os; veille GTA VI personnelle)";
 
 export class HttpError extends Error {
   constructor(public status: number, public url: string, msg?: string) {

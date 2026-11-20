@@ -4,6 +4,7 @@ import type { CollectedItem } from "./connectors/base.ts";
 import { derive, diff, matches, newRecord, toEvidence } from "./pipeline/records.ts";
 import { GTA6, NOISE, OTHER_GAMES, categorize } from "./pipeline/rules.ts";
 import { enrichWithLLM } from "./pipeline/llm.ts";
+import { deepReadPhase, mergeByFacts } from "./pipeline/deep.ts";
 import type { Store } from "./store/fileStore.ts";
 import type { Override, RadarFeed, RadarRecord, RawItem, RunLog, SourceConfig, SourceState } from "./types.ts";
 import { canonicalUrl, sha1, shortExcerpt, stripHtml } from "./util.ts";
@@ -18,6 +19,11 @@ export interface RunOptions {
   fetchImpl?: typeof fetch;
   log?: (msg: string) => void;
   maxAgeDays?: number;
+  /** Origine du déclenchement (GITHUB_EVENT_NAME) et identifiant d'exécution, journalisés dans cycles.json. */
+  trigger?: string;
+  runId?: string | null;
+  /** Désactive la lecture approfondie (tests unitaires sans réseau). */
+  deep?: boolean;
 }
 
 export interface RunSummary {
@@ -26,6 +32,8 @@ export interface RunSummary {
   updatedItems: number;
   duplicates: number;
   filtered: Record<string, number>;
+  deepReads: number;
+  merged: number;
 }
 
 const initState = (): SourceState => ({ lastAttemptAt: null, lastSuccessAt: null, consecutiveFailures: 0, lastError: null, status: "never-run", statusDetail: null });
@@ -53,7 +61,7 @@ export async function runCollection(store: Store, opts: RunOptions): Promise<Run
   const now = opts.now ?? new Date();
   const log = opts.log ?? (() => {});
   const sources = new Map(opts.sources.map((s) => [s.id, s]));
-  const summary: RunSummary = { runs: [], newItems: 0, updatedItems: 0, duplicates: 0, filtered: {} };
+  const summary: RunSummary = { runs: [], newItems: 0, updatedItems: 0, duplicates: 0, filtered: {}, deepReads: 0, merged: 0 };
   const touched = new Set<string>();
 
   for (const src of opts.sources) {
@@ -106,6 +114,16 @@ export async function runCollection(store: Store, opts: RunOptions): Promise<Run
     log(`${runLog.ok ? "✓" : runLog.skipped ? "–" : "✗"} ${src.id} : ${runLog.fetched} lus, ${runLog.newItems} nouveaux, ${runLog.updatedItems} mis à jour${runLog.errors.length ? ` · ${runLog.errors.join(" | ")}` : ""}`);
   }
 
+  // Lecture approfondie des guides (robots.txt respecté, budget par exécution) puis fusion des fiches identiques
+  if (opts.deep !== false) {
+    const d = await deepReadPhase(store.records, sources, touched, { env: opts.env, fetchImpl: opts.fetchImpl, now, log });
+    summary.deepReads = d.ok;
+  }
+  const m = mergeByFacts(store.records, now);
+  store.records = m.records;
+  summary.merged = m.merged;
+  if (m.merged) log(`✓ recoupement : ${m.merged} fiche(s) fusionnée(s) (même lieu, mêmes indices)`);
+
   // Analyse IA optionnelle (jamais sur les sources marquées noAI)
   await enrichWithLLM(store.records.filter((r) => touched.has(r.id)), sources, opts, log);
 
@@ -122,6 +140,18 @@ export async function runCollection(store: Store, opts: RunOptions): Promise<Run
     }
     if (changes.length) after.updatedAt = now.toISOString();
     return after;
+  });
+  store.cycles ??= [];
+  store.cycles.push({
+    at: now.toISOString(),
+    trigger: opts.trigger ?? "local",
+    runId: opts.runId ?? null,
+    sourcesAttempted: summary.runs.filter((r) => !r.skipped).length,
+    sourcesOk: summary.runs.filter((r) => r.ok).length,
+    newItems: summary.newItems,
+    updatedItems: summary.updatedItems,
+    deepReads: summary.deepReads,
+    merged: summary.merged,
   });
   return summary;
 }
@@ -242,6 +272,7 @@ export function buildFeed(store: Store, sources: SourceConfig[], summary: RunSum
         lastAttemptAt: st.lastAttemptAt,
       };
     }),
+    health: { cadenceMinutes: 15, cycles: (store.cycles ?? []).slice(-24) },
     lastRun: summary ? { at: now.toISOString(), newItems: summary.newItems, updatedItems: summary.updatedItems, errors: summary.runs.filter((r) => !r.ok && !r.skipped).length } : null,
     items,
   };

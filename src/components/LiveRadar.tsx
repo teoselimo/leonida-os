@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useStore } from "@/lib/store";
-import { LIVE_CATEGORY, spoilerVisibility, tabOf, useLiveRadar } from "@/lib/live";
+import { collectorHealth, LIVE_CATEGORY, proposePointUrl, spoilerVisibility, tabOf, TRIGGER_FR, useLiveRadar } from "@/lib/live";
+import { assetUrl } from "@/lib/gtadb";
 import type { LiveTab, RadarRecord } from "@/lib/live";
 import { timeAgo } from "@/lib/useMedia";
 import { ReliabilityBadge, Segmented, SpoilerText } from "./ui/primitives";
@@ -19,13 +20,15 @@ export function SyncStatus() {
   const ok = feed.sources.filter((s) => s.status === "ok").length;
   const degraded = feed.sources.filter((s) => s.status === "degraded").length;
   const lastSync = feed.sources.map((s) => s.lastSuccessAt).filter(Boolean).sort().pop() ?? feed.generatedAt;
-  const stale = Date.now() - Date.parse(feed.generatedAt) > 3 * 3600_000;
+  const health = collectorHealth(feed);
+  const stale = health.level !== "ok";
+  const cycles = (feed.health?.cycles ?? []).slice(-8).reverse();
   return (
     <div className={`sync ${stale || state === "offline" ? "is-stale" : degraded ? "is-degraded" : ""}`} data-testid="sync-status">
       <button className="sync__main" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
         <span className="live" />
         <span>
-          <strong>{state === "offline" ? "Hors ligne · dernières données connues" : stale ? "Synchronisation en retard" : "Veille automatique active"}</strong>
+          <strong>{state === "offline" ? "Hors ligne · dernières données connues" : health.level === "stopped" ? "Collecteur arrêté" : health.level === "late" ? "Collecte en retard" : "Veille automatique active"}</strong>
           <em>Dernière collecte {timeAgo(lastSync)} · {ok}/{feed.sources.length} sources OK{degraded ? ` · ${degraded} en difficulté` : ""}{feed.lastRun ? ` · ${feed.lastRun.newItems} nouveauté${feed.lastRun.newItems > 1 ? "s" : ""}` : ""}</em>
         </span>
         <Icon name="chevronRight" size={16} />
@@ -39,10 +42,88 @@ export function SyncStatus() {
               <span className="srcrow__detail">{s.status === "ok" ? `OK · ${s.lastSuccessAt ? timeAgo(s.lastSuccessAt) : ""}` : s.statusDetail}</span>
             </div>
           ))}
+          {cycles.length > 0 && (
+            <div className="cycles" data-testid="cycles">
+              <h4>Derniers cycles du collecteur</h4>
+              {cycles.map((c) => (
+                <div key={c.at} className={`cycle cycle--${c.trigger}`}>
+                  <span>{new Date(c.at).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>
+                  <b>{TRIGGER_FR[c.trigger] ?? c.trigger}</b>
+                  <em>{c.sourcesOk}/{c.sourcesAttempted} sources · +{c.newItems}{c.deepReads ? ` · ${c.deepReads} lus` : ""}{c.merged ? ` · ${c.merged} fusion` : ""}</em>
+                </div>
+              ))}
+              <p className="fineprint">{health.lastCron ? `Dernier cycle planifié ${timeAgo(health.lastCron)} · ${health.cronCount24h} en 24 h` : "Aucun cycle planifié enregistré pour l'instant"} · cadence prévue {health.cadence} min</p>
+            </div>
+          )}
           <button className="btn btn--ghost btn--sm" onClick={() => refresh()}><Icon name="reset" size={14} /> Relire le flux</button>
           {fetchedAt && <p className="fineprint">Flux relu {timeAgo(fetchedAt)} · généré {timeAgo(feed.generatedAt)}</p>}
         </div>
       )}
+    </div>
+  );
+}
+
+/** Bandeau d'alerte : flux non renouvelé (collecteur en retard ou arrêté). Silencieux quand tout va bien. */
+export function CollectorAlert() {
+  const { feed, state } = useLiveRadar();
+  if (!feed) return null;
+  const h = collectorHealth(feed);
+  if (h.level === "ok" && state !== "offline") return null;
+  const age = h.ageMin < 120 ? `${h.ageMin} min` : `${Math.round(h.ageMin / 60)} h`;
+  return (
+    <div className={`collector-alert collector-alert--${state === "offline" ? "offline" : h.level}`} role="status" data-testid="collector-alert">
+      <Icon name="alert" size={16} />
+      <span>
+        <strong>{state === "offline" ? "Pas de connexion au flux" : h.level === "stopped" ? "Veille arrêtée" : "Veille en retard"}</strong>
+        {state === "offline" ? " — affichage des dernières données connues." : ` — aucune nouvelle collecte depuis ${age} (prévu toutes les ${h.cadence} min). Les informations peuvent être périmées.`}
+      </span>
+    </div>
+  );
+}
+
+const fmtDate = (d: string) => new Date(d).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+
+/** Fiche structurée : chaque champ affiche sa valeur et le nombre de sources ; un champ non établi reste vide. */
+function FactSheet({ r }: { r: RadarRecord }) {
+  const d = r.details;
+  const [open, setOpen] = useState<string | null>(null);
+  if (!d) return null;
+  type Row = { k: string; label: string; value: string | null; field: { support: { sourceName: string; url: string; quote: string }[]; conflicts: { sourceName: string; quote: string }[] } | null; warn?: boolean };
+  const rows: Row[] = [
+    { k: "money", label: "Récompense", value: r.conditions.reward, field: d.money },
+    { k: "place", label: "Lieu", value: r.location.place, field: d.place },
+    { k: "mission", label: "Mission / contexte", value: d.mission ? `${d.mission.value}${d.giver ? ` (${d.giver.value})` : ""}` : d.giver ? `Via ${d.giver.value}` : null, field: d.mission ?? d.giver },
+    { k: "unlock", label: "Accès", value: d.unlockAfter ? `Après « ${d.unlockAfter.value} »` : null, field: d.unlockAfter },
+    { k: "chapter", label: "Chapitre", value: d.chapter ? `Chapitre ${d.chapter.value}` : null, field: d.chapter },
+    {
+      k: "missable",
+      label: "Risque de manquer",
+      value: d.contextMissable ? `${d.contextMissable.value.subject ? `« ${d.contextMissable.value.subject} »` : "La mission"} disparaît${d.contextMissable.value.until ? ` au lancement de « ${d.contextMissable.value.until} »` : ""}${d.missable?.value === false ? " · le lieu reste accessible" : ""}` : d.missable ? (d.missable.value ? "Manquable" : "Non manquable") : null,
+      field: d.contextMissable ?? d.missable,
+      warn: !!d.contextMissable || d.missable?.value === true,
+    },
+  ];
+  return (
+    <div className="factsheet" data-testid="fact-sheet">
+      {rows.map((row) => (
+        <div key={row.k} className={`fsrow${row.value ? "" : " is-empty"}${row.warn ? " is-warn" : ""}`}>
+          <span className="fsrow__label">{row.label}</span>
+          {row.value ? (
+            <button className="fsrow__value" onClick={() => setOpen(open === row.k ? null : row.k)} aria-expanded={open === row.k}>
+              {row.value}
+              <small>{row.field ? `${row.field.support.length} source${row.field.support.length > 1 ? "s" : ""}` : ""}{row.field?.conflicts.length ? " · contesté" : ""}</small>
+            </button>
+          ) : (
+            <span className="fsrow__value">— non établi</span>
+          )}
+          {open === row.k && row.field && (
+            <div className="fsrow__proof">
+              {row.field.support.map((p) => <q key={p.url + p.quote}><a href={p.url} target="_blank" rel="noreferrer">{p.sourceName}</a> « {p.quote} »</q>)}
+              {row.field.conflicts.map((p) => <q key={"c" + p.quote} className="is-conflict">Contredit par {p.sourceName} : « {p.quote} »</q>)}
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
@@ -69,7 +150,15 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
         <ReliabilityBadge r={r.reliability} />
       </div>
 
-      {r.media && !blurred && (
+      {r.capture && !blurred && (
+        <figure className="live-thumb live-thumb--capture">
+          {/* Capture personnelle (droits détenus) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={assetUrl(r.capture.src)} alt={r.capture.alt ?? ""} loading="lazy" decoding="async" />
+          <span className="live-thumb__credit">Capture © {r.capture.credit}</span>
+        </figure>
+      )}
+      {r.media && !r.capture && !blurred && (
         <a className="live-thumb" href={r.media.url} target="_blank" rel="noreferrer" aria-label="Voir la vidéo sur YouTube">
           {/* Miniature hébergée par YouTube (non copiée), créditée */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -81,13 +170,14 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
 
       <h3>{blurred ? <SpoilerText strict={false} hint="Spoiler possible">{title}</SpoilerText> : title}</h3>
       {!blurred && <p className="muted">{lead.excerpt}</p>}
+      {!blurred && <FactSheet r={r} />}
 
       <div className="live-tags">
         {r.status !== "active" && <span className="pill pill--locked">{STATUS_FR[r.status] ?? r.status}</span>}
-        {r.location.precision !== "none" && (
+        {r.location.precision !== "none" && !r.details?.place && (
           <span className="tagchip"><Icon name="map" size={12} /> {r.location.place ?? REGION_NAMES[r.location.regionId ?? ""] ?? "Lieu cité"}{r.location.precision === "validated" ? " · point vérifié" : " · non localisé"}</span>
         )}
-        {r.conditions.money != null && <span className="tagchip">{r.conditions.money.toLocaleString("fr-FR")} $ cités</span>}
+        {r.conditions.money != null && !r.details?.money && <span className="tagchip">{r.conditions.money.toLocaleString("fr-FR")} $ cités</span>}
         {r.conditions.missable && <span className="tagchip tagchip--warn">Manquable (selon la source)</span>}
         {r.evidence.length > 1 && <span className="tagchip">{r.evidence.length} preuves</span>}
       </div>
@@ -95,6 +185,11 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
       <div className="signal__actions">
         <a className="btn btn--sm btn--ghost" href={lead.url} target="_blank" rel="noreferrer" data-testid="open-proof"><Icon name="info" size={15} /> Ouvrir la preuve</a>
         {r.media && <a className="btn btn--sm btn--ghost" href={r.media.url} target="_blank" rel="noreferrer"><Icon name="arrow" size={15} /> Voir la vidéo</a>}
+        {r.location.precision === "named-place" && r.actionable && (
+          <a className="btn btn--sm btn--ghost" href={proposePointUrl(r)} target="_blank" rel="noreferrer" data-testid="propose-point" title="Aucune épingle n'est posée sans validation">
+            <Icon name="map" size={15} /> {r.location.suggestion ? "Valider le point proposé" : "Proposer le point"}
+          </a>
+        )}
         <button className="btn btn--sm btn--ghost" onClick={() => setOpen((v) => !v)} aria-expanded={open}>{open ? "Moins" : "Détails"}</button>
       </div>
 
@@ -106,7 +201,8 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
           <ul className="live-sources">
             {r.evidence.map((e) => (
               <li key={e.rawKey}>
-                <a href={e.url} target="_blank" rel="noreferrer">{e.sourceName}</a> · {e.publishedAt ? new Date(e.publishedAt).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "date inconnue"}
+                <a href={e.url} target="_blank" rel="noreferrer">{e.sourceName}</a> · {e.publishedAt ? fmtDate(e.publishedAt) : "date inconnue"}
+                {e.deep && <span className="small muted"> · {e.deep.ok ? `article lu ${timeAgo(e.deep.at)}${e.deep.aiOptOut ? " · IA exclue (souhait du site)" : ""}` : `non lu : ${e.deep.reason}`}</span>}
                 {e.quotes.length > 0 && <q>{e.quotes.join(" … ")}</q>}
               </li>
             ))}
@@ -135,7 +231,7 @@ export function LiveRadar() {
     const counts: Record<LiveTab, number> = { new: 0, confirmed: 0, verify: 0, news: 0 };
     let hidden = 0;
     const visible = items.filter((r) => {
-      if (spoilerVisibility(r, state.profile.spoilerMode) === "hidden") {
+      if (spoilerVisibility(r, state.profile.spoilerMode, state.profile.chapter) === "hidden") {
         hidden++;
         return false;
       }
@@ -145,10 +241,11 @@ export function LiveRadar() {
     const list = visible.filter((r) => tabOf(r).includes(tab));
     if (tab === "new") list.sort((a, b) => b.firstSeenAt.localeCompare(a.firstSeenAt) || b.score - a.score);
     return { list: list.slice(0, 60), hidden, counts };
-  }, [items, state.profile.spoilerMode, tab]);
+  }, [items, state.profile.spoilerMode, state.profile.chapter, tab]);
 
   return (
     <>
+      <CollectorAlert />
       <SyncStatus />
       <Segmented<LiveTab>
         label="Onglets du Radar"
@@ -164,9 +261,9 @@ export function LiveRadar() {
       {tab === "verify" && <div className="note"><Icon name="alert" size={16} /> Signalements et rumeurs non confirmés : ne pas les prendre pour des faits.</div>}
       <div className="signals" data-testid="live-list">
         {list.length === 0 && <div className="card empty">Rien dans cet onglet pour l&apos;instant.</div>}
-        {list.map((r) => <LiveCard key={r.id} r={r} blurred={spoilerVisibility(r, state.profile.spoilerMode) === "blurred"} />)}
+        {list.map((r) => <LiveCard key={r.id} r={r} blurred={spoilerVisibility(r, state.profile.spoilerMode, state.profile.chapter) === "blurred"} />)}
         {hidden > 0 && (
-          <div className="note" data-testid="live-hidden"><Icon name="shield" size={16} /> {hidden} fiche{hidden > 1 ? "s" : ""} masquée{hidden > 1 ? "s" : ""} par l&apos;anti-spoiler strict.</div>
+          <div className="note" data-testid="live-hidden"><Icon name="shield" size={16} /> {hidden} fiche{hidden > 1 ? "s" : ""} masquée{hidden > 1 ? "s" : ""} par l&apos;anti-spoiler strict (fin d&apos;histoire ou chapitre plus avancé que le tien).</div>
         )}
       </div>
     </>

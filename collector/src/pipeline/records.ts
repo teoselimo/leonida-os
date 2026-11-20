@@ -1,6 +1,7 @@
 import type { Category, Evidence, Override, RadarRecord, RawItem, Reliability, ReviewStatus, SourceConfig } from "../types.ts";
 import { hostOf, sha1 } from "../util.ts";
-import { ACTIONABLE, CATEGORY_FR, categorize, extractMoney, jaccard, MISSABLE, RUMOR, SPOILER, tokens } from "./rules.ts";
+import { ACTIONABLE, CATEGORY_FR, CLAIM_QUESTION, categorize, extractMoney, jaccard, MISSABLE, RUMOR, SPOILER, tokens } from "./rules.ts";
+import { adviceFor, consolidate, suggestionFor } from "./deep.ts";
 import { findPlace } from "./places.ts";
 
 /** Origines d'une preuve : chaîne/domaine éditeur + vidéos citées. */
@@ -79,7 +80,10 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
   const text = textOf(evs);
   const official = evs.some((e) => e.official);
   const lead = [...evs].sort((a, b) => Number(b.official) - Number(a.official))[0];
-  const category: Category = categorize(lead.title, evs.map((e) => e.excerpt).join(" "), "news");
+  const details = consolidate(evs);
+  let category: Category = categorize(lead.title, evs.map((e) => e.excerpt).join(" "), "news");
+  // Un guide qui établit une somme d'argent précise à un lieu nommé est une source de revenus
+  if (details?.money && details.place && category !== "missable") category = "money";
 
   // Champs établis uniquement s'ils sont cités textuellement
   const quotes: string[] = [];
@@ -89,12 +93,14 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
   if (miss) quotes.push(miss[0]);
   const place = ACTIONABLE.includes(category) ? findPlace(text) : null;
   if (place) quotes.push(place.quote);
+  const detailQuotes = details ? [details.chapter, details.money, details.mission, details.giver, details.unlockAfter, details.place, details.missable, details.contextMissable].flatMap((f) => f?.support ?? []) : [];
 
   const independent = independentCount(evs.filter((e) => !e.official));
   const rumorHit = text.match(RUMOR);
-  const question = evs.every((e) => /\?\s*$/.test(e.title));
+  const question = evs.every((e) => CLAIM_QUESTION.test(e.title));
   const lowTrustOnly = evs.every((e) => sources.get(e.sourceId)?.trust === "low");
-  const precise = !!place || !!money || !!miss;
+  const precise = !!place || !!money || !!miss || !!details?.place || !!details?.money;
+  const conflicting = !!(details?.money?.conflicts.length || details?.place?.conflicts.length);
   const reasons: string[] = [];
   let reliability: Reliability;
   if (official) {
@@ -103,9 +109,13 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
   } else if (rumorHit || question || lowTrustOnly) {
     reliability = "rumor";
     reasons.push(rumorHit ? `Formulation de rumeur détectée (« ${rumorHit[0]} »).` : question ? "Titre interrogatif : affirmation non établie." : "Source à faible confiance uniquement.");
-  } else if (independent >= 2 && ACTIONABLE.includes(category) && precise) {
+  } else if (independent >= 2 && ACTIONABLE.includes(category) && precise && !conflicting) {
     reliability = "confirmed";
-    reasons.push(`${independent} sources indépendantes concordantes avec des éléments précis.`);
+    const agree = details ? [details.place && "le lieu", details.money && "la récompense", details.giver && "le contexte"].filter(Boolean).join(", ") : "";
+    reasons.push(`${independent} sources indépendantes concordantes${agree ? ` sur ${agree}` : " avec des éléments précis"}.`);
+  } else if (conflicting) {
+    reliability = "reported";
+    reasons.push("Les sources se contredisent sur la récompense ou le lieu : à vérifier en jeu.");
   } else {
     reliability = "reported";
     reasons.push(independent >= 2 ? `${independent} sources indépendantes, mais sans élément assez précis pour confirmer.` : "Une seule source identifiée, non corroborée.");
@@ -120,22 +130,35 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
   if (override?.status) status = override.status;
   if (override?.note) reasons.push(`Note admin : ${override.note}`);
 
+  const deepRead = evs.filter((e) => e.deep?.ok).length;
+  if (deepRead) reasons.push(`Fiche structurée extraite de ${deepRead} article${deepRead > 1 ? "s" : ""} lu${deepRead > 1 ? "s" : ""} en entier${evs.some((e) => e.deep?.method === "rules+ai") ? " (règles + IA ciblée, citations vérifiées)" : " (règles déterministes)"}.`);
+  if (details?.handsOn) reasons.push("Au moins une source dit avoir testé en jeu.");
+  if (details?.missing.length) reasons.push(`Non établi par les sources : ${details.missing.join(", ")} (laissé vide).`);
+  const dPlace = details?.place ? `${details.place.value.name}${details.place.value.district ? `, ${details.place.value.district}` : ""}` : null;
+  const dRegion = details?.place ? (evs.map((e) => e.deep?.facts?.place?.value.regionId).find(Boolean) ?? null) : null;
+  const suggestion = override?.location ? null : suggestionFor(details);
+
   const location = override?.location
     ? { regionId: override.location.regionId ?? place?.regionId ?? null, place: override.location.place ?? place?.place ?? null, precision: "validated" as const, x: override.location.x, y: override.location.y }
-    : { regionId: place?.regionId ?? null, place: place?.place ?? null, precision: place?.precision ?? ("none" as const), x: null, y: null };
+    : dPlace
+      ? { regionId: dRegion ?? place?.regionId ?? null, place: dPlace, precision: "named-place" as const, x: null, y: null, suggestion }
+      : { regionId: place?.regionId ?? null, place: place?.place ?? null, precision: place?.precision ?? ("none" as const), x: null, y: null };
 
   const spoilerHit = text.match(SPOILER);
-  const spoiler = spoilerHit ? "high" : "low";
+  const chapterHigh = (details?.chapter?.value ?? 0) >= 2;
+  const spoiler = spoilerHit || chapterHigh ? "high" : "low";
   if (spoilerHit) reasons.push(`Spoiler possible (« ${spoilerHit[0]} ») : masqué en mode strict.`);
 
+  const fmt = (n: number) => n.toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, " ");
+  const req = details ? [details.unlockAfter && `après « ${details.unlockAfter.value} »`, details.mission && `pendant « ${details.mission.value} »${details.giver ? ` (${details.giver.value})` : ""}`, !details.mission && details.giver && `via ${details.giver.value}`].filter(Boolean).join(", ") : "";
   const conditions = {
-    reward: null,
-    money: money?.value ?? null,
-    requirement: null,
-    missable: miss ? true : null,
+    reward: details?.money ? `${details.money.value.approx ? "≈ " : ""}${fmt(details.money.value.min)}${details.money.value.max ? `–${fmt(details.money.value.max)}` : ""} $` : null,
+    money: details?.money?.value.min ?? money?.value ?? null,
+    requirement: req ? req.charAt(0).toUpperCase() + req.slice(1) : null,
+    missable: details?.missable ? details.missable.value : miss ? true : null,
     platform: null,
   };
-  const actionable = (reliability === "official" || reliability === "confirmed") && status === "active" && ACTIONABLE.includes(category) && (location.precision !== "none" || money != null || miss != null);
+  const actionable = (reliability === "official" || reliability === "confirmed") && status === "active" && ACTIONABLE.includes(category) && (location.precision !== "none" || conditions.money != null || miss != null);
 
   const media = rec.media;
   const publishedAt = evs.map((e) => e.publishedAt).filter(Boolean).sort()[0] ?? null;
@@ -160,7 +183,7 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
         ? [`Testé en jeu : « ${short} »`, `Où et comment, en moins de 30 secondes`]
         : [`L'essentiel en 30 secondes : « ${short} »`];
 
-  return {
+  const result: RadarRecord = {
     ...rec,
     title: lead.title,
     summary: `${CATEGORY_FR[category]} · ${lead.sourceName}${evs.length > 1 ? ` + ${evs.length - 1} autre${evs.length > 2 ? "s" : ""} source${evs.length > 2 ? "s" : ""}` : ""} — ${lead.excerpt}`.slice(0, 400),
@@ -178,8 +201,12 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
     lastVerifiedAt: now.toISOString(),
     score,
     opportunity: { score: opp, angle, ideas },
-    evidence: evs.map((e) => ({ ...e, quotes: quotes.filter((q) => `${e.title} ${e.excerpt}`.includes(q)) })),
+    evidence: evs.map((e) => ({ ...e, quotes: [...quotes.filter((q) => `${e.title} ${e.excerpt}`.includes(q)), ...new Set(detailQuotes.filter((d) => d.url === e.url).map((d) => d.quote))] })),
+    details,
+    capture: override?.capture && /^gameplay\/[\w.-]+\.(jpe?g|png|webp)$/.test(override.capture.src) ? override.capture : null,
   };
+  result.advice = adviceFor(result);
+  return result;
 }
 
 export function newRecord(ev: Evidence, raw: RawItem, now: Date, category: Category = "news"): RadarRecord {
@@ -218,5 +245,9 @@ export function diff(a: RadarRecord, b: RadarRecord): string[] {
   if (a.category !== b.category) out.push(`catégorie : ${a.category} → ${b.category}`);
   if (a.evidence.length !== b.evidence.length) out.push(`preuves : ${a.evidence.length} → ${b.evidence.length}`);
   if (a.location.precision !== b.location.precision) out.push(`localisation : ${a.location.precision} → ${b.location.precision}`);
+  if (a.location.place !== b.location.place && b.location.place) out.push(`lieu : ${b.location.place}`);
+  if (a.conditions.reward !== b.conditions.reward && b.conditions.reward) out.push(`récompense : ${b.conditions.reward}`);
+  if (a.conditions.requirement !== b.conditions.requirement && b.conditions.requirement) out.push(`conditions : ${b.conditions.requirement}`);
+  if ((a.details?.chapter?.value ?? null) !== (b.details?.chapter?.value ?? null) && b.details?.chapter) out.push(`chapitre : ${b.details.chapter.value}`);
   return out;
 }

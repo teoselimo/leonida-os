@@ -5,7 +5,10 @@ import type { Category } from "../types.ts";
 export const GTA6 = /\b(gta\s?(6|vi)\b|gta6\b|grand theft auto\s?(vi|6)\b)/i;
 export const OTHER_GAMES = /\b(gta\s?online|gtao\b|gta\s?(5|v)\b|gtav\b|grand theft auto\s?v\b|red dead|rdr\s?2|bully)\b/i;
 export const NOISE = /\b(compilation|montage|fan[\s-]?made|concept (art|trailer)|meme|memes|reacts?|reaction|tier list|asmr|parody|parodie|mod(ded|s)?\b|lego|minecraft|roblox|fortnite)\b/i;
-export const RUMOR = /\b(rumou?rs?|leak(s|ed)?|reportedly|allegedly|theory|theories|insider|could be|might be|possibly|unconfirmed|fake|hoax|claims?|rumeurs?|fuites?|théories?|supposé|serait)\b/i;
+/** Marqueurs de rumeur forts uniquement : « fake », « claims », « could be » apparaissent aussi dans des articles de démenti ou des guides. */
+export const RUMOR = /\b(rumou?rs?|rumou?red|leak(s|ed|er)?|reportedly|allegedly|fan theor(y|ies)|theory|theories|insider (says|claims)|unconfirmed|hoax|rumeurs?|fuites?|théories?|supposément|selon un insider)\b/i;
+/** Titre qui pose une question d'existence (« Is X real? ») — pas les guides (« Should you…? », « How to…? »). */
+export const CLAIM_QUESTION = /^(is|are|was|were|did|does|do|will|could|has|have|can)\b[^?]*\?\s*$/i;
 export const SPOILER = /\b(ending|endings|final mission|last mission|epilogue|finale|twist|who dies|dies\b|death of|boss fight|credits scene|spoilers?|walkthrough|chapter\s?[2-9]|fin du jeu|mort de|dernière mission|soluce)\b/i;
 /** Actualité business/industrie : jamais classée comme astuce de jeu, même si un montant est cité. */
 export const BUSINESS = /\b(sales|sold|revenue|earnings|stock|shares|merch|review|reviews|interview|take-two|copies|metacritic|price|preorders?|pre-orders?|launch day|record|ventes|chiffre d'affaires|test du jeu)\b/i;

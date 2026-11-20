@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import type { RadarFeed, RadarRecord, RawItem, RunLog, SourceState } from "../types.ts";
+import type { CycleLog, RadarFeed, RadarRecord, RawItem, RunLog, SourceState } from "../types.ts";
 
 /**
  * Stockage fichier (branche Git `data`). Même modèle que les tables SQL de sql/001_schema.sql :
@@ -12,6 +12,7 @@ export interface Store {
   records: RadarRecord[];
   runs: RunLog[];
   state: Record<string, SourceState>;
+  cycles: CycleLog[];
 }
 
 const read = <T>(dir: string, f: string, fallback: T): T => {
@@ -32,6 +33,7 @@ export function loadStore(dir: string): Store {
     records: read(dir, "records.json", []),
     runs: read(dir, "runs.json", []),
     state: read(dir, "state.json", {}),
+    cycles: read(dir, "cycles.json", []),
   };
 }
 
@@ -44,5 +46,6 @@ export function saveStore(dir: string, s: Store, feed: RadarFeed) {
   write(dir, "records.json", s.records);
   write(dir, "runs.json", s.runs.slice(-400));
   write(dir, "state.json", s.state);
+  write(dir, "cycles.json", s.cycles.slice(-500));
   write(dir, "radar.json", feed);
 }

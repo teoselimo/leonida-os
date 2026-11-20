@@ -10,7 +10,7 @@ import type { Override, RadarRecord, SourceConfig } from "../src/types.ts";
 
 const fx = (f: string) => readFileSync(fileURLToPath(new URL(`./fixtures/${f}`, import.meta.url)), "utf8");
 const NOW = new Date("2026-11-20T14:00:00Z");
-const emptyStore = (): Store => ({ raw: {}, records: [], runs: [], state: {} });
+const emptyStore = (): Store => ({ raw: {}, records: [], runs: [], state: {}, cycles: [] });
 
 const SRC = {
   rockstar: { id: "rockstar-youtube", name: "Rockstar Games (YouTube officiel)", kind: "youtube-feed", official: true, enabled: true, intervalMinutes: 15, channelId: "UC6VcWc1rAoWdBCM0JxrRQ3A", access: "", noAI: true, lang: "en", trust: "official" },
@@ -206,4 +206,149 @@ test("Reddit : une publication supprimée est retirée du Radar", async () => {
 test("IA : une citation inventée est rejetée", () => {
   const src = "The hidden Stinger supercar sits in a garage at Permit Keys.";
   assert.deepEqual(verifyQuotes(src, ["garage at Permit Keys", "worth one million dollars"]), ["garage at Permit Keys"]);
+});
+
+// ───────────────────────── V0.5.1 : lecture des guides, fiche structurée, recoupement ─────────────────────────
+import { resetRobotsCache, parseRobots, isAllowed } from "../src/pipeline/article.ts";
+import { CLAIM_QUESTION, RUMOR } from "../src/pipeline/rules.ts";
+
+const GUIDE_A = { id: "guide-a", name: "Guide A", kind: "rss", official: false, enabled: true, intervalMinutes: 60, url: "https://guide-a.example/feed", access: "", lang: "en", trust: "high" } satisfies SourceConfig;
+const GUIDE_B = { id: "guide-b", name: "Guide B", kind: "rss", official: false, enabled: true, intervalMinutes: 60, url: "https://guide-b.example/feed", access: "", lang: "en", trust: "high" } satisfies SourceConfig;
+const GUIDE_C = { id: "guide-c", name: "Guide C", kind: "rss", official: false, enabled: true, intervalMinutes: 60, url: "https://guide-c.example/feed", access: "", lang: "en", trust: "medium" } satisfies SourceConfig;
+const C_FEED = fx("guide-a.xml").replace(/guide-a/g, "guide-c").replace("ga-1", "gc-1").replace("GTA 6 Early Money: The Three Sheets Liquor Parrot Stash", "GTA 6 parrot money at Three Sheets Liquor: our first look");
+
+const GUIDE_ROUTES = {
+  "https://guide-a.example/robots.txt": "User-agent: *\nDisallow: /wp-admin/\n",
+  "https://guide-a.example/feed": fx("guide-a.xml"),
+  "https://guide-a.example/gta-6-early-money": fx("guide-a.html"),
+  // Le site B accepte les lecteurs mais refuse explicitement les robots d'IA
+  "https://guide-b.example/robots.txt": "User-agent: *\nAllow: /\n\nUser-agent: ClaudeBot\nDisallow: /\n",
+  "https://guide-b.example/feed": fx("guide-b.xml"),
+  "https://guide-b.example/exotic-animals-front": fx("guide-b.html"),
+  "https://guide-c.example/robots.txt": "User-agent: *\nAllow: /\n",
+  "https://guide-c.example/feed": C_FEED,
+  "https://guide-c.example/gta-6-early-money": fx("guide-c.html"),
+};
+const strip = (h: string) => h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+test("V0.5.1 acceptation : cache du perroquet (mission de Shirley) transformée automatiquement en fiche sourcée", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  const { summary, feed } = await run(store, [GUIDE_A, GUIDE_B], GUIDE_ROUTES);
+  assert.equal(summary.deepReads, 2, "deux articles lus en entier");
+  assert.equal(summary.merged, 1, "les deux guides décrivent la même découverte");
+  const recs = feed.items.filter((i) => /parrot|exotic/i.test(i.title));
+  assert.equal(recs.length, 1, "une seule fiche");
+  const r = recs[0];
+  const d = r.details!;
+  // le secret et sa récompense
+  assert.equal(r.category, "money");
+  assert.deepEqual(d.money!.value, { min: 1000, max: 1400, approx: true });
+  assert.equal(d.money!.support.length, 2, "1 263 $ (B) est compris dans 1 000–1 400 $ (A)");
+  assert.equal(r.conditions.reward, "≈ 1 000–1 400 $");
+  // la mission ou le contexte associé
+  assert.equal(d.mission!.value, "Get Shirley's Rum");
+  assert.equal(d.giver!.value, "Shirley");
+  assert.equal(d.giver!.support.length, 2);
+  assert.equal(d.unlockAfter!.value, "Pipework");
+  assert.deepEqual(d.contextMissable!.value, { subject: "Get Shirley's Rum", until: "Tourist Trap" });
+  assert.equal(d.missable!.value, false, "la découverte elle-même reste accessible");
+  // le lieu cité — sans coordonnées inventées
+  assert.equal(r.location.place, "Three Sheets Liquor, Key Lento");
+  assert.equal(r.location.regionId, "keys");
+  assert.equal(r.location.precision, "named-place");
+  assert.equal(r.location.x, null);
+  assert.equal(r.location.suggestion, null, "lieu absent de la carte communautaire : aucune proposition");
+  // preuves : chaque citation existe textuellement dans l'article d'origine
+  assert.equal(r.evidence.length, 2);
+  for (const e of r.evidence) {
+    assert.ok(e.deep?.ok);
+    const src = strip(fx(e.url.includes("guide-a") ? "guide-a.html" : "guide-b.html"));
+    for (const q of e.quotes) assert.ok(src.includes(q.replace(/…$/, "").replace(/\s+/g, " ").slice(0, 60)), `citation retrouvée : ${q}`);
+    assert.ok(e.quotes.length >= 2);
+  }
+  // le niveau de confiance
+  assert.equal(r.reliability, "confirmed");
+  assert.ok(r.reasons.some((x) => /2 sources indépendantes concordantes sur le lieu, la récompense/.test(x)));
+  assert.ok(r.reasons.some((x) => /testé en jeu/.test(x)));
+  // la pertinence pour un joueur en début de chapitre 1
+  assert.equal(d.chapter!.value, 1);
+  assert.equal(r.spoiler, "low");
+  assert.equal(r.actionable, true);
+  assert.equal(r.advice!.chapterMin, 1);
+  assert.equal(r.advice!.urgency, "now");
+  assert.match(r.advice!.text, /Three Sheets Liquor \(Key Lento\) pendant « Get Shirley's Rum » \(Shirley\)\. Accessible après « Pipework »\. La mission disparaît au lancement de « Tourist Trap »/);
+  assert.ok(r.revisions.some((v) => v.reason.includes("Même découverte")));
+});
+
+test("V0.5.1 : une seule source → « À vérifier », champs inconnus laissés vides", async () => {
+  resetRobotsCache();
+  const { feed } = await run(emptyStore(), [GUIDE_B], GUIDE_ROUTES);
+  const r = byTitle(feed.items, /Exotic Animals Front/)!;
+  assert.equal(r.reliability, "reported");
+  assert.equal(r.actionable, false);
+  assert.equal(r.advice, null);
+  assert.equal(r.details!.mission, null);
+  assert.equal(r.details!.unlockAfter, null);
+  assert.ok(r.details!.missing.includes("mission associée"));
+  assert.ok(r.details!.missing.includes("condition d'accès"));
+  assert.equal(r.details!.money!.value.min, 1263);
+  assert.ok(r.reasons.some((x) => x.includes("Non établi par les sources")));
+});
+
+test("V0.5.1 : montants contradictoires → fusion mais pas de confirmation", async () => {
+  resetRobotsCache();
+  const { feed } = await run(emptyStore(), [GUIDE_A, GUIDE_C], GUIDE_ROUTES);
+  const r = feed.items.find((i) => /parrot/i.test(i.title))!;
+  assert.equal(r.evidence.length, 2);
+  assert.equal(r.reliability, "reported");
+  assert.equal(r.details!.money!.conflicts.length, 1);
+  assert.ok(r.reasons.some((x) => x.includes("se contredisent")));
+});
+
+test("V0.5.1 : robots.txt respecté et IA jamais utilisée sur un site qui la refuse", async () => {
+  resetRobotsCache();
+  let aiCalls = 0;
+  const bodies: string[] = [];
+  const routes = { ...GUIDE_ROUTES, "https://guide-a.example/robots.txt": "User-agent: *\nDisallow: /gta-6\n" };
+  const f = mockFetch(routes);
+  const counting = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    if (String(input).includes("api.anthropic.com")) {
+      aiCalls++;
+      bodies.push(String(init?.body ?? ""));
+      return new Response(JSON.stringify({ content: [{ text: "{}" }] }));
+    }
+    return f(input, init);
+  }) as typeof fetch;
+  const store = emptyStore();
+  await runCollection(store, { sources: [GUIDE_A, GUIDE_B], overrides: {}, env: { ANTHROPIC_API_KEY: "k", ANTHROPIC_MODEL: "m" }, now: NOW, force: true, fetchImpl: counting });
+  const evA = store.records.flatMap((r) => r.evidence).find((e) => e.sourceId === "guide-a")!;
+  const evB = store.records.flatMap((r) => r.evidence).find((e) => e.sourceId === "guide-b")!;
+  assert.equal(evA.deep!.ok, false);
+  assert.equal(evA.deep!.reason, "refusé par robots.txt");
+  assert.equal(evA.deep!.facts, null);
+  assert.equal(evB.deep!.aiOptOut, true);
+  assert.equal(evB.deep!.method, "rules");
+  // seul l'enrichissement de résumé (titre + extrait RSS) peut appeler l'IA, jamais l'extraction sur le texte de B
+  assert.ok(aiCalls <= 2, `appels IA bornés (${aiCalls})`);
+  assert.equal(bodies.some((b) => b.includes("generator room")), false, "le texte de l'article B n'est jamais envoyé à un modèle");
+  assert.equal(isAllowed(parseRobots("User-agent: *\nDisallow: /\nAllow: /news/"), "/news/x"), true);
+  assert.equal(isAllowed(parseRobots("User-agent: *\nDisallow: /search"), "/search?q=1"), false);
+});
+
+test("V0.5.1 : marqueurs de rumeur resserrés (guides et démentis ne sont plus des rumeurs)", () => {
+  assert.equal(CLAIM_QUESTION.test("Should you do Shirley's rum errand in GTA 6?"), false);
+  assert.equal(CLAIM_QUESTION.test("Is Bigfoot real in GTA 6?"), true);
+  assert.equal(RUMOR.test("Fact check: that viral GTA 6 map is fake, Rockstar claims"), false);
+  assert.equal(RUMOR.test("GTA 6 leak suggests a new island"), true);
+});
+
+test("V0.5.1 : chaque cycle est journalisé avec son déclencheur (preuve du cron)", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  await runCollection(store, { sources: [SRC.pressA], overrides: {}, env: {}, now: NOW, force: true, fetchImpl: mockFetch(ROUTES), trigger: "schedule", runId: "42", deep: false });
+  const feed = buildFeed(store, [SRC.pressA], null, NOW);
+  assert.equal(feed.health!.cadenceMinutes, 15);
+  assert.equal(feed.health!.cycles.at(-1)!.trigger, "schedule");
+  assert.equal(feed.health!.cycles.at(-1)!.runId, "42");
 });

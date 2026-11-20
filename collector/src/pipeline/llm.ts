@@ -37,7 +37,7 @@ export async function enrichWithLLM(
   let calls = 0;
   for (const r of records) {
     if (calls >= max) break;
-    if (r.evidence.some((e) => sources.get(e.sourceId)?.noAI)) continue;
+    if (r.evidence.some((e) => sources.get(e.sourceId)?.noAI || e.deep?.aiOptOut)) continue; // sites refusant les robots d'IA exclus
     const text = r.evidence.map((e) => `${e.title}\n${e.excerpt}`).join("\n---\n");
     calls++;
     try {
@@ -63,4 +63,42 @@ export async function enrichWithLLM(
       log(`✗ IA : ${(e as Error).message}`);
     }
   }
+}
+
+/**
+ * Extraction ciblée par IA, utilisée seulement quand les règles trouvent le sujet sans son contexte.
+ * Le texte envoyé est limité (6 000 caractères), chaque valeur doit être accompagnée d'une citation exacte du texte.
+ */
+export async function extractWithLLM(
+  text: string,
+  url: string,
+  opts: { env: Record<string, string | undefined>; fetchImpl?: typeof fetch },
+): Promise<{ chapter: { value: number; quote: string; url: string } | null; mission: { value: string; quote: string; url: string } | null; giver: { value: string; quote: string; url: string } | null; unlockAfter: { value: string; quote: string; url: string } | null } | null> {
+  const key = opts.env.ANTHROPIC_API_KEY;
+  const model = opts.env.ANTHROPIC_MODEL;
+  if (!key || !model) return null;
+  const input = text.slice(0, 6000);
+  const res = await (opts.fetchImpl ?? fetch)("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+    body: JSON.stringify({
+      model,
+      max_tokens: 300,
+      system:
+        'Extrait d\'un guide GTA VI. Réponds en JSON {"chapter":{"value":number,"quote":string}|null,"mission":{...}|null,"giver":{...}|null,"unlockAfter":{...}|null}. quote = phrase EXACTE du texte. Si un champ n\'est pas explicitement écrit, mets null. N\'invente rien.',
+      messages: [{ role: "user", content: input }],
+    }),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const body = (await res.json()) as { content: Array<{ text?: string }> };
+  const j = JSON.parse((body.content[0]?.text ?? "{}").replace(/^```json|```$/g, "").trim()) as Record<string, { value?: unknown; quote?: unknown } | null>;
+  const field = <T>(k: string, ok: (v: unknown) => v is T) => {
+    const f = j[k];
+    if (!f || !ok(f.value) || typeof f.quote !== "string" || f.quote.length < 8 || !input.includes(f.quote)) return null; // citation non retrouvée : rejet
+    if (typeof f.value === "string" && !f.quote.includes(f.value)) return null;
+    return { value: f.value, quote: f.quote.slice(0, 220), url };
+  };
+  const isStr = (v: unknown): v is string => typeof v === "string" && v.length > 1 && v.length < 60;
+  const isNum = (v: unknown): v is number => typeof v === "number" && v >= 1 && v <= 9;
+  return { chapter: field("chapter", isNum), mission: field("mission", isStr), giver: field("giver", isStr), unlockAfter: field("unlockAfter", isStr) };
 }

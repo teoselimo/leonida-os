@@ -8,7 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Bar, CategoryGlyph, DemoBadge, ProgressRing, SectionHead } from "@/components/ui/primitives";
 import { RecoCard } from "@/components/RecoCard";
 import { ShieldChip } from "@/components/ShieldChip";
-import { LiveHighlights } from "@/components/LiveHighlights";
+import { LiveAdvice, LiveHighlights } from "@/components/LiveHighlights";
 
 function greeting(d = new Date()) {
   const h = d.getHours();
@@ -40,6 +40,8 @@ export function HomeScreen() {
 
       <div className="home__grid">
         <div className="home__col">
+          {/* Conseils réels (sources confirmées) avant la recommandation de la carte */}
+          <LiveAdvice />
           {next ? (
             <button className="now" onClick={() => focusOnMap(next.discovery.id)} data-testid="next-discovery" aria-label={`Que faire maintenant : ${next.discovery.title}`}>
               <div className="now__glow" style={{ background: CATEGORIES[next.discovery.category].color }} />

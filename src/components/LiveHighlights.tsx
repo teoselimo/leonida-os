@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
-import { spoilerVisibility, useLiveRadar } from "@/lib/live";
+import { liveAdvice, LIVE_CATEGORY, readDoneAdvice, spoilerVisibility, useLiveRadar, writeDoneAdvice } from "@/lib/live";
+import { CHAPTERS } from "@/lib/meta";
+import { CollectorAlert } from "./LiveRadar";
 import { timeAgo } from "@/lib/useMedia";
 import { ReliabilityBadge } from "./ui/primitives";
 import { Icon } from "./ui/Icon";
@@ -14,13 +17,14 @@ export function LiveHighlights() {
   const { feed } = useLiveRadar();
   const { state, setView } = useStore();
   if (!feed) return null;
-  const fresh = feed.items.filter((r) => r.status === "active" && spoilerVisibility(r, state.profile.spoilerMode) === "visible");
+  const fresh = feed.items.filter((r) => r.status === "active" && spoilerVisibility(r, state.profile.spoilerMode, state.profile.chapter) === "visible");
   const official = fresh.filter((r) => r.reliability === "official").sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""))[0];
   const missables = fresh.filter((r) => r.conditions.missable && (r.reliability === "official" || r.reliability === "confirmed" || r.reliability === "reported")).slice(0, 2);
   const newCount = fresh.filter((r) => Date.now() - Date.parse(r.firstSeenAt) < 24 * 3600_000).length;
-  if (!official && !missables.length && !newCount) return null;
+  if (!official && !missables.length && !newCount) return <CollectorAlert />;
   return (
     <section data-testid="live-highlights">
+      <CollectorAlert />
       <div className="shead">
         <h2>Veille GTA VI</h2>
         <button className="link" onClick={() => setView("radar")}>Radar <Icon name="chevronRight" size={14} /></button>
@@ -52,6 +56,55 @@ export function LiveHighlights() {
           <Icon name="chevronRight" size={16} />
         </button>
       )}
+    </section>
+  );
+}
+
+/**
+ * « Que faire maintenant ? » côté veille : conseils tirés des fiches confirmées ou officielles,
+ * filtrés par le chapitre du joueur et l'anti-spoiler. Chaque conseil renvoie à ses preuves.
+ */
+export function LiveAdvice() {
+  const { feed } = useLiveRadar();
+  const { state, setView } = useStore();
+  const [done, setDone] = useState<string[]>([]);
+  useEffect(() => setDone(readDoneAdvice()), []);
+  const { now, later } = liveAdvice(feed, state.profile, done);
+  if (!now.length) return null;
+  const mark = (id: string) => {
+    const next = [...done, id];
+    setDone(next);
+    writeDoneAdvice(next);
+  };
+  return (
+    <section className="advice" data-testid="live-advice">
+      <div className="shead">
+        <h2>Que faire maintenant ? · d&apos;après la veille</h2>
+        <span className="small muted">{CHAPTERS[state.profile.chapter as 0 | 1 | 2 | 3]}</span>
+      </div>
+      {now.slice(0, 3).map((r) => {
+        const cat = LIVE_CATEGORY[r.category] ?? LIVE_CATEGORY.other;
+        const a = r.advice!;
+        return (
+          <article key={r.id} className={`advice__item${a.urgency === "now" ? " is-urgent" : ""}`} data-testid={`advice-${r.id}`}>
+            <span className="glyph" style={{ width: 34, height: 34, color: cat.color, background: `${cat.color}1f` }}><Icon name={cat.icon} size={17} /></span>
+            <div className="advice__body">
+              <div className="row gap8">
+                <ReliabilityBadge r={r.reliability} />
+                {a.urgency === "now" && <span className="pill pill--warn">À faire avant de continuer</span>}
+              </div>
+              <strong>{r.title}</strong>
+              <p>{a.text}</p>
+              <div className="row gap8 advice__actions">
+                <a className="link" href={r.evidence[0].url} target="_blank" rel="noreferrer">{r.evidence.length} preuve{r.evidence.length > 1 ? "s" : ""}</a>
+                <button className="link" onClick={() => setView("radar")}>Fiche complète</button>
+                <button className="link" onClick={() => mark(r.id)} data-testid="advice-done">C&apos;est fait</button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+      {later > 0 && <p className="fineprint"><Icon name="shield" size={12} /> {later} autre{later > 1 ? "s" : ""} conseil{later > 1 ? "s" : ""} gardé{later > 1 ? "s" : ""} pour plus tard (chapitre suivant ou spoiler).</p>}
     </section>
   );
 }

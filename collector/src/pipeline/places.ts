@@ -60,3 +60,20 @@ export function findPlace(text: string): { regionId: string; place: string | nul
   }
   return null;
 }
+
+/**
+ * Repère exact de la carte communautaire correspondant au nom cité (et au quartier s'il est donné).
+ * Sert uniquement de PROPOSITION à valider : la fiche n'est jamais épinglée sans validation humaine.
+ */
+export function exactLandmark(name: string, district: string | null): { x: number; y: number; landmark: string } | null {
+  const p = fileURLToPath(new URL("../../../public/data/landmarks.json", import.meta.url));
+  if (!existsSync(p)) return null;
+  const rows = JSON.parse(readFileSync(p, "utf8")) as [string, string, number, number][];
+  const n = name.toLowerCase().trim();
+  const hits = rows.filter(([, full]) => {
+    const parts = full.split(",").map((s) => s.replace(/"/g, "").trim().toLowerCase());
+    return parts[0] === n && (!district || parts.includes(district.toLowerCase()));
+  });
+  if (hits.length !== 1) return null; // absent ou ambigu : aucune proposition
+  return { x: hits[0][2], y: hits[0][3], landmark: hits[0][1] };
+}

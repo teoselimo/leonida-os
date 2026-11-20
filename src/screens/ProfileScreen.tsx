@@ -86,7 +86,7 @@ export function ProfileScreen() {
 
           <section className="card form">
             <h4>Progression narrative</h4>
-            <p className="muted small">Détermine ce qui peut être affiché sans spoiler. Repères génériques de démonstration.</p>
+            <p className="muted small">Détermine ce que la veille peut te montrer sans spoiler : un conseil ou une fiche rattachés à un chapitre plus avancé restent masqués.</p>
             <div className="stepper" role="radiogroup" aria-label="Progression narrative">
               {([0, 1, 2, 3] as Chapter[]).map((c) => (
                 <button key={c} role="radio" aria-checked={state.profile.chapter === c} className={`${state.profile.chapter >= c ? "is-reached" : ""} ${state.profile.chapter === c ? "is-on" : ""}`} onClick={() => setProfile({ chapter: c })} data-testid={`chapter-${c}`}>
