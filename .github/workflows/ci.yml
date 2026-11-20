@@ -18,8 +18,9 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: cd collector && npm ci --no-audit --no-fund && npm run typecheck && npm test
-      - run: npx playwright install --with-deps chromium
+      # Chrome est préinstallé sur les runners Ubuntu : pas de téléchargement de navigateur
       - run: npm run test:all
         env:
           NEXT_TELEMETRY_DISABLED: "1"
           CI: "1"
+          CHROME_PATH: /usr/bin/google-chrome

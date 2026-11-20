@@ -236,8 +236,8 @@ export function buildFeed(store: Store, sources: SourceConfig[], summary: RunSum
         name: s.name,
         kind: s.kind,
         official: s.official,
-        status: !s.enabled ? "disabled" : s.kind === "unsupported" ? "unsupported" : st.status,
-        statusDetail: s.kind === "unsupported" ? s.access : st.statusDetail,
+        status: s.kind === "unsupported" ? "unsupported" : !s.enabled ? "disabled" : st.status,
+        statusDetail: s.kind === "unsupported" || !s.enabled ? s.access : st.statusDetail,
         lastSuccessAt: st.lastSuccessAt,
         lastAttemptAt: st.lastAttemptAt,
       };
