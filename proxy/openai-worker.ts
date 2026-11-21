@@ -323,7 +323,18 @@ export default {
             throw new Error(response?.error?.code === "server_error"
               ? "upstream_failed_server" : "upstream_failed");
           } else if (event.type === "error") {
-            throw new Error(classifyOpenAiStreamError(event));
+            // Provider error category only. Never log the upstream message,
+            // prompt, authorization header or raw event payload.
+            const inner = event.error && typeof event.error === "object"
+              ? event.error as { code?: unknown; type?: unknown } : undefined;
+            const rawCode = typeof inner?.code === "string" ? inner.code
+              : typeof event.code === "string" ? event.code : "";
+            const safeProviderCode = /^[a-z][a-z0-9_]{0,49}$/.test(rawCode) ? rawCode : "unknown";
+            const category = classifyOpenAiStreamError({
+              code: rawCode, error: inner, message: undefined,
+            });
+            console.warn("leonida_gpt_openai_event", { category, safeProviderCode });
+            throw new Error(category);
           }
         };
         try {
