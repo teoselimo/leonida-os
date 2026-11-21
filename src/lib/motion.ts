@@ -54,7 +54,8 @@ export function spring(from: number, to: number, v0: number, cfg: SpringConfig, 
   const step = (t: number) => {
     if (stopped) return;
     if (!last) last = t;
-    let dt = Math.min(0.064, (t - last) / 1000);
+    // jusqu'à 250 ms rattrapés : sur un appareil lent, l'animation garde sa durée réelle au lieu de traîner
+    let dt = Math.min(0.25, (t - last) / 1000);
     last = t;
     // sous-pas de 4 ms : précision constante à 60 comme à 120 Hz
     while (dt > 0) {

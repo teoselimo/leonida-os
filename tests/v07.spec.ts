@@ -48,6 +48,7 @@ test("PS5 Standard ch.1 après « Down to Earth », Shirley et perroquet faits :
   const a = await ask(page, "Quelle arme gratuite puis-je récupérer maintenant ?");
   await expect(a).toHaveAttribute("data-intent", "weapon");
   await expect(a).toContainText("SM-69");
+  await a.getByTestId("ai-sources").locator("summary").click(); // sources repliées (« Sources et preuves »)
   await expect(a.locator("a[href^='https://']").first()).toBeVisible(); // source citée
   await expect(a).not.toContainText("Shirley");
   await page.screenshot({ path: `captures/${info.project.name}-40-ia-arme.png` });
@@ -107,7 +108,7 @@ test("historique local effaçable ; aucune requête vers un fournisseur d'IA dep
   });
   await start(page, {});
   await ask(page, "Comment acheter une voiture ?");
-  expect(await page.evaluate(() => localStorage.getItem("leonida-os/ai-history/v1"))).toContain("acheter");
+  expect(await page.evaluate(() => localStorage.getItem("leonida-os/ai-history/v2"))).toContain("acheter");
   await page.getByTestId("ai-clear").click();
   await expect(page.getByTestId("ai-answer")).toHaveCount(0);
   expect(external).toEqual([]);
