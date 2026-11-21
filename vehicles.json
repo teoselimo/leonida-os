@@ -87,6 +87,11 @@
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
       "quote": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-is-a-movie-and-tv-goldmine-as-players-discover-everything-from-fast-and-furious-cars-to-dexters-apartment",
+      "quote": "Head to Vespucci Island and break into a garage for a chance to claim that across all GTA 6 versions , no upgrade necessary."
      }
     ]
    },
@@ -263,6 +268,13 @@
     "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
     "official": false,
     "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-is-a-movie-and-tv-goldmine-as-players-discover-everything-from-fast-and-furious-cars-to-dexters-apartment",
+    "title": "GTA 6 is a movie and TV goldmine, as players discover Fast and Furious cars and Dexter's apartment",
+    "official": false,
+    "readAt": "2026-11-21T09:50:22.874Z"
    }
   ],
   "reliability": "confirmed",
@@ -273,7 +285,7 @@
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:50:22.874Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -284,6 +296,13 @@
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)",
      "source : GamesRadar+"
+    ]
+   },
+   {
+    "at": "2026-11-21T09:50:22.874Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 6"
     ]
    }
   ]
@@ -2016,6 +2035,206 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-piccia-big-cat-furia",
+  "type": "vehicle",
+  "name": "Piccia Big Cat Furia",
+  "make": "Piccia",
+  "model": "Big Cat Furia",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "livrée Its yellow spotted",
+   "support": [
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "Its yellow spotted livery and POUNCE plate set it apart from the cars inside the garage."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+      "quote": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Starfish Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 777,
+    "y": 470,
+    "radius": 220,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": {
+    "value": "Clonin' Keys",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+      "quote": "Randy gives you access during Clonin' Keys, Makin' Gs, the job where you steal a Zorrusso for him."
+     }
+    ],
+    "conflicts": []
+   },
+   "early": true,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+      "quote": "All four need the Key Cloner."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": {
+    "value": "standard",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+      "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's."
+     }
+    ],
+    "conflicts": []
+   },
+   "alarm": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+      "quote": "The WAiNK scan showed Key Cloner access, an alarm and an advanced tracker."
+     }
+    ],
+    "conflicts": []
+   }
+  },
+  "keep": {
+   "text": {
+    "value": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+      "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": {
+    "chapter": 3,
+    "where": "Pay 'n' Spray",
+    "tracker": "standard",
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-register-cars",
+     "quote": "Chapter 3 Where you register: Any Pay 'n' Spray What you can register: Cars without a tracker or with a standard tracker"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "Take the road onto Starfish Island from Waxman Island and follow it to the turnaround at the northeast end."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "Use the driveway with the small oval loop beside the large waterfront house."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "Scan the cars with WAiNK before you try a door."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "Go for the Paul Walker Eclipse instead."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "You'll need the advanced-tracker unlock to register any of the three sports cars."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "quote": "The tracker and the cost to register are what set them apart."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+    "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
+    "official": false,
+    "readAt": "2026-11-21T09:50:22.874Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:50:22.874Z",
+  "updatedAt": "2026-11-21T09:50:22.874Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:50:22.874Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA BOOM"
     ]
    }
   ]
