@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           # Version GPT explicitement épinglée, jamais la branche main.
-          ref: 6ebd0676d0f362a8a5d8f9d39127af669dea1276
+          ref: e1e9da5652a51e3f4d2b6377e17b5f132c80e708
           path: gpt-preview-src
           persist-credentials: false
       - name: Installer les dependances de la preversion
