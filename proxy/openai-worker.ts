@@ -222,7 +222,7 @@ export default {
           if (response?.model) actualModel = response.model;
         };
         const handleBlock = (block: string) => {
-          const data = block.split(/\\r?\\n/).filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trim()).join("\\n");
+          const data = block.split(/\r?\n/).filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trim()).join("\n");
           if (!data || data === "[DONE]") return;
           let event: Record<string, unknown>;
           try { event = JSON.parse(data) as Record<string, unknown>; } catch { return; }
@@ -261,7 +261,7 @@ export default {
             try { piece = await reader.read(); } catch { throw new Error("upstream_stream"); }
             if (piece.done) break;
             pending += dec.decode(piece.value, { stream: true });
-            const blocks = pending.split(/\\r?\\n\\r?\\n/);
+            const blocks = pending.split(/\r?\n\r?\n/);
             pending = blocks.pop() || "";
             for (const b of blocks) handleBlock(b);
           }
