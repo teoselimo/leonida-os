@@ -34,6 +34,21 @@ Branche : experiment/openai-gpt-leonida. Base : experiment/claude-artifact, PR #
 
 **Aucune activation, dépense, ni URL définitive n'a été effectuée dans cette branche.**
 
+## Prévisualisation GPT sans modifier GitHub Pages (étape après Worker)
+
+**Important :** le Worker Cloudflare peut être opérationnel mais le frontend GitHub Pages sur `main` n'utilise pas encore GPT. Il faut un **second projet Cloudflare Pages** pour tester la branche sans fusion.
+
+1. Cloudflare → Workers & Pages → Create application → **Pages** → Connect to GitHub (ou « Continue to Pages » dans le sélecteur). Ne pas créer un nouveau Worker ; le Worker `leonida-gpt-private` existe déjà.
+2. Repository `teoselimo/leonida-os`, **Production branch : `experiment/openai-gpt-leonida`**, Project name libre, par exemple `leonida-gpt-preview` si disponible. Ce projet Pages est distinct de `leonida-gpt-private`.
+3. Framework preset : **Next.js (Static HTML Export)**. Root directory : `/`. Build command : `npm run build`. Build output directory : `out`. Le dépôt utilise `output: 'export'` ; ne pas reprendre les réglages Worker sans build.
+4. Variables d'environnement **de build Pages uniquement, non secrètes** : `NEXT_PUBLIC_GPT_ENABLED=1` et `NEXT_PUBLIC_GPT_PROXY_URL=https://leonida-gpt-private.spitfier9.workers.dev/v1/chat`. N'ajouter **aucune** clé `OPENAI_API_KEY` ni `LEONIDA_ACCESS_TOKEN` à Pages ; elles restent dans les secrets du Worker. Les variables `NEXT_PUBLIC_` sont visibles par tous dans le bundle navigateur.
+5. Deploy Pages. Récupérer **l'URL *.pages.dev réelle**, sans la deviner. **Ne pas annoncer l'IA fonctionnelle immédiatement** : le Worker n'autorise actuellement que `https://teoselimo.github.io` comme `Origin`.
+6. Pour les tests Pages, modifier `ALLOWED_ORIGIN` du Worker pour la nouvelle origine Pages **exacte** (sans slash final ni chemin), puis déployer le réglage. Les deux applications peuvent ensuite être autorisées ensemble en faisant évoluer le parseur du Worker vers une liste stricte d'origines approuvées ; ne pas utiliser `*` en CORS avec un jeton personnel.
+7. Ouvrir Pages sur iPhone, LEONIDA AI → Activer GPT → saisir **uniquement** le `LEONIDA_ACCESS_TOKEN` créé séparément, puis poser une question. Si modèle non disponible ou quota, s'assurer que la réponse mentionne honnêtement le mode direct.
+8. Vérifier la facture API et la réserve Worker ; garder $2/mois comme plafond estimé côté Worker, configurer également des alertes et limites au niveau du projet OpenAI Platform. La version `main` reste intacte.
+
+Ne jamais envoyer de secrets en capture d'écran, dans le chat, dans un commentaire GitHub ou dans un dépôt.
+
 ## Critères de GO et bugs du chantier
 - #12 : scroll chat iPhone (geste de fermeture limité à la poignée et bouton X).
 - #13 : commerces visibles plus tôt (zoom quartier), pas de surcharge des 3663 repères. Les règles de zoom seules ne suffisent pas à atteindre l'expérience GTA VI : l'index catégoriel et l'essai iPhone restent nécessaires.
