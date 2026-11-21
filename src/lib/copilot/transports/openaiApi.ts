@@ -24,7 +24,7 @@ export const openaiApiTransport: LlmTransport = {
       res = await fetch(ENDPOINT, {
         method: "POST", signal: req.signal,
         headers: { "content-type": "application/json", authorization: "Bearer " + key },
-        body: JSON.stringify({ messages: req.messages.slice(-16), tier: req.tier ?? "quick" }),
+        body: JSON.stringify({ messages: req.messages.slice(-16), tier: req.tier ?? "quick", web: req.web === true }),
       });
     } catch (e) {
       throw new LlmError(req.signal?.aborted ? "cancelled" : "network_error", req.signal?.aborted ? "Requête annulée" : "Connexion au Worker impossible (réseau ou CORS)");
@@ -40,6 +40,7 @@ export const openaiApiTransport: LlmTransport = {
       if (res.status === 401) throw new LlmError("not_granted", "Code d'accès LEONIDA refusé (401)");
       if (res.status === 403) throw new LlmError("origin_rejected", "Origine de l'application refusée (403)");
       if (res.status === 429 || res.status === 402) throw new LlmError("rate_limited", "Plafond ou quota de notre Worker atteint (" + res.status + ")");
+      if (res.status === 409 && serverError === "web_search_disabled") throw new LlmError("web_search_disabled", "Recherche web pas encore activée dans Cloudflare");
       if (res.status === 413) throw new LlmError("request_too_large", "Contexte envoyé trop volumineux (413)");
       if (res.status === 503) throw new LlmError(serverError.includes("budget guard") ? "ledger_unavailable" : "server_disabled", "Worker indisponible (503 : " + (serverError || "service") + ")");
       if (res.status === 502 && serverError.includes("upstream rejected")) {
@@ -55,12 +56,25 @@ export const openaiApiTransport: LlmTransport = {
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = ""; let answer = ""; let model = "GPT"; let done = false;
+    const webSources = new Map<string, { url: string; title: string }>();
     const processEvent = (part: string) => {
       const raw = part.split("\n").filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trim()).join("\n");
       if (!raw) return;
-      let event: { type?: string; text?: string; model?: string; code?: string };
+      let event: { type?: string; text?: string; model?: string; code?: string; sources?: { url?: string; title?: string }[] };
       try { event = JSON.parse(raw); } catch { return; }
       if (event.type === "delta" && typeof event.text === "string") { answer += event.text; req.onText?.(answer); }
+      if (event.type === "sources" && Array.isArray(event.sources)) {
+        for (const source of event.sources) {
+          try {
+            if (typeof source.url !== "string") continue;
+            const url = new URL(source.url);
+            if (url.protocol !== "https:" || url.username || url.password) continue;
+            if (!webSources.has(url.href)) webSources.set(url.href, {
+              url: url.href, title: (source.title || url.hostname).slice(0, 110),
+            });
+          } catch { /* malformed URL */ }
+        }
+      }
       if (event.type === "done") { done = true; if (event.model) model = event.model; }
       if (event.type === "error") throw new LlmError(event.code ?? "upstream_error");
     };
@@ -74,7 +88,7 @@ export const openaiApiTransport: LlmTransport = {
       }
       if (buffer.trim()) processEvent(buffer);
       if (!done || !answer.trim()) throw new LlmError("upstream_error", "Réponse incomplète");
-      return { text: answer, model, truncated: false };
+      return { text: answer, model, truncated: false, webSources: Array.from(webSources.values()).slice(0, 5) };
     } catch (e) {
       if (e instanceof LlmError) throw e;
       throw new LlmError(req.signal?.aborted ? "cancelled" : "upstream_error", String(e), answer);
