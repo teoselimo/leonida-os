@@ -21,19 +21,37 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   // V0.6 : l'ancienne valeur « spéciale / collector » ne correspond à aucune édition réelle → à renseigner
   if (!["standard", "ultimate", "unknown"].includes(profile.edition as string)) profile.edition = "unknown";
   const vehicles = saved.vehicles && typeof saved.vehicles === "object" ? saved.vehicles : {};
-  return { ...base, ...saved, profile, custom, vehicles, schema: 1 };
+  if (!["yes", "no", "unknown"].includes(profile.preorder as string)) profile.preorder = "unknown";
+  if (!Array.isArray(profile.missionsDone)) profile.missionsDone = [];
+  if (profile.lastMission !== null && typeof profile.lastMission !== "string") profile.lastMission = null;
+  // V0.7 : la démo n'est plus mélangée à la vraie partie (désactivée une fois, réactivable dans Profil)
+  const rev = saved.rev ?? 0;
+  const showDemo = rev < 7 ? false : saved.showDemo ?? false;
+  // reprise des activités « C'est fait » de la V0.5.1 (stockées à part)
+  let done: Record<string, string> = saved.done && typeof saved.done === "object" ? { ...saved.done } : {};
+  if (rev < 7) {
+    try {
+      const old = JSON.parse(localStorage.getItem("leonida-os/advice-done/v1") || "[]");
+      if (Array.isArray(old)) for (const id of old) if (typeof id === "string") done[id] = new Date().toISOString();
+    } catch {
+      done = { ...done };
+    }
+  }
+  return { ...base, ...saved, profile, custom, vehicles, done, showDemo, rev: 7, schema: 1 };
 }
 
 export const initialState = (): PersistedState => ({
   schema: 1,
-  profile: { pseudo: "Joueur", console: "ps5", edition: "standard", chapter: 1, spoilerMode: "strict" },
+  profile: { pseudo: "Joueur", console: "ps5", edition: "unknown", preorder: "unknown", chapter: 1, lastMission: null, missionsDone: [], spoilerMode: "strict" },
   completed: { ...DEMO_SEED_COMPLETED },
   trackedSignals: [],
   seenSignals: [],
   freshUnlocks: [],
   custom: [],
-  showDemo: true,
+  showDemo: false,
   vehicles: {},
+  done: {},
+  rev: 7,
 });
 
 type Action =
@@ -48,7 +66,9 @@ type Action =
   | { type: "deleteCustom"; id: string }
   | { type: "importCustom"; items: Discovery[] }
   | { type: "showDemo"; value: boolean }
-  | { type: "vehicle"; id: string; progress: VehicleProgress | null };
+  | { type: "vehicle"; id: string; progress: VehicleProgress | null }
+  | { type: "done"; id: string; value: boolean }
+  | { type: "mission"; name: string | null; done: boolean };
 
 function reducer(s: PersistedState, a: Action): PersistedState {
   switch (a.type) {
@@ -70,7 +90,7 @@ function reducer(s: PersistedState, a: Action): PersistedState {
     case "seen":
       return { ...s, seenSignals: Array.from(new Set([...s.seenSignals, ...a.ids])) };
     case "reset":
-      return { ...initialState(), custom: s.custom, vehicles: s.vehicles };
+      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile };
     case "upsertCustom": {
       const exists = s.custom.some((c) => c.id === a.d.id);
       return { ...s, custom: exists ? s.custom.map((c) => (c.id === a.d.id ? a.d : c)) : [...s.custom, a.d] };
@@ -93,6 +113,17 @@ function reducer(s: PersistedState, a: Action): PersistedState {
     }
     case "showDemo":
       return { ...s, showDemo: a.value, freshUnlocks: [] };
+    case "done": {
+      const { [a.id]: _o, ...rest } = s.done;
+      return { ...s, done: a.value ? { ...rest, [a.id]: new Date().toISOString() } : rest };
+    }
+    case "mission": {
+      if (!a.name) return { ...s, profile: { ...s.profile, lastMission: null } };
+      const name = a.name.trim().slice(0, 80);
+      const has = s.profile.missionsDone.some((m) => m.toLowerCase() === name.toLowerCase());
+      const missionsDone = a.done ? (has ? s.profile.missionsDone : [...s.profile.missionsDone, name]) : s.profile.missionsDone.filter((m) => m.toLowerCase() !== name.toLowerCase());
+      return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone } };
+    }
     case "vehicle": {
       const { [a.id]: _old, ...rest } = s.vehicles;
       return { ...s, vehicles: a.progress ? { ...rest, [a.id]: a.progress } : rest };
@@ -135,12 +166,32 @@ interface Ctx {
   reset: () => void;
   toast: Toast | null;
   dismissToast: () => void;
+  /** Activité de la veille faite / à refaire. */
+  setDone: (id: string, value: boolean) => void;
+  /** Mission principale terminée (devient la « dernière mission ») ou retirée. */
+  setMission: (name: string | null, done?: boolean) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
   /** Véhicule sélectionné sur la carte (mode Voitures cachées). */
   vehicleId: string | null;
+  /** Mode « Voitures cachées » de la carte et son sous-filtre (conservés entre les onglets et depuis LEONIDA AI). */
+  garage: { on: boolean; filter: string | null };
+  setGarage: (g: { on: boolean; filter?: string | null }) => void;
+  /** Radar : fiche à ouvrir et catégorie à filtrer (actions de LEONIDA AI). */
+  radarFocus: { id: string | null; category: string | null; nonce: number };
+  openRecord: (id: string) => void;
+  filterRadar: (category: string | null) => void;
+  /** LEONIDA AI ouvert. */
+  aiOpen: boolean;
+  setAiOpen: (v: boolean) => void;
+  /** Célébration (validation d'une action) : clé changeante + libellé. */
+  celebration: { key: number; label: string } | null;
+  celebrate: (label: string) => void;
   selectVehicle: (id: string | null) => void;
   focusVehicle: (id: string) => void;
+  /** Lieu de la carte communautaire à montrer (action de LEONIDA AI). */
+  placeFocus: { landmarkId?: string; district?: string; nonce: number };
+  showPlace: (p: { landmarkId?: string; district?: string }) => void;
 }
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -159,6 +210,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [focusNonce, setFocusNonce] = useState(0);
   const [toast, setToast] = useState<Toast | null>(null);
   const [vehicleId, setVehicleId] = useState<string | null>(null);
+  const [garage, setGarageState] = useState<{ on: boolean; filter: string | null }>({ on: false, filter: null });
+  const [radarFocus, setRadarFocus] = useState<{ id: string | null; category: string | null; nonce: number }>({ id: null, category: null, nonce: 0 });
+  const [aiOpen, setAiOpen] = useState(false);
+  const [placeFocus, setPlaceFocus] = useState<{ landmarkId?: string; district?: string; nonce: number }>({ nonce: 0 });
+  const [celebration, setCelebration] = useState<{ key: number; label: string } | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Hydratation : progression locale + vue depuis l'ancre (#carte, #radar…)
@@ -260,11 +316,28 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
       toast,
       dismissToast: () => setToast(null),
+      setDone: (id, value) => dispatch({ type: "done", id, value }),
+      setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
       setVehicle: (id, st, storage) => {
         const prev = state.vehicles[id];
         dispatch({ type: "vehicle", id, progress: st ? { state: st, at: new Date().toISOString(), storage: storage ?? prev?.storage } : null });
       },
       vehicleId,
+      garage,
+      setGarage: (g) => setGarageState((cur) => ({ on: g.on, filter: g.filter === undefined ? cur.filter : g.filter })),
+      radarFocus,
+      openRecord: (id) => {
+        setRadarFocus((r) => ({ id, category: null, nonce: r.nonce + 1 }));
+        setView("radar");
+      },
+      filterRadar: (category) => {
+        setRadarFocus((r) => ({ id: null, category, nonce: r.nonce + 1 }));
+        setView("radar");
+      },
+      aiOpen,
+      setAiOpen,
+      celebration,
+      celebrate: (label) => setCelebration({ key: Date.now(), label }),
       selectVehicle: (id) => {
         if (id) setSelectedId(null);
         setVehicleId(id);
@@ -272,11 +345,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       focusVehicle: (id) => {
         setSelectedId(null);
         setVehicleId(id);
+        setGarageState((g) => ({ on: true, filter: g.filter }));
         setFocusNonce((n) => n + 1);
         setView("carte");
       },
+      placeFocus,
+      showPlace: (p) => {
+        setSelectedId(null);
+        setVehicleId(null);
+        setPlaceFocus((f) => ({ ...p, nonce: f.nonce + 1 }));
+        setView("carte");
+      },
     }),
-    [state, all, signals, hydrated, view, setView, selectedId, focusNonce, complete, toast, showToast, vehicleId],
+    [state, all, signals, hydrated, view, setView, selectedId, focusNonce, complete, toast, showToast, vehicleId, garage, radarFocus, aiOpen, celebration, placeFocus],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

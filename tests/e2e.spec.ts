@@ -8,11 +8,27 @@ import type { Page } from "@playwright/test";
 
 const isPhone = (page: Page) => (page.viewportSize()?.width ?? 0) < 760;
 
-async function freshStart(page: Page, hash = "") {
-  await page.goto("/");
-  await page.evaluate(() => localStorage.clear());
+/** Parcours historiques sur les données de démonstration (désactivées par défaut depuis la V0.7). */
+async function freshStart(page: Page, hash = "", profile: Record<string, unknown> = {}) {
+  // amorçage avant tout script de l'app (évite qu'une sauvegarde de la première page écrase le profil de test) ;
+  // une seule fois par onglet, pour que les rechargements testent bien la persistance
+  await page.addInitScript((p) => {
+    if (sessionStorage.getItem("__seeded")) return;
+    sessionStorage.setItem("__seeded", "1");
+    localStorage.clear();
+    localStorage.setItem("leonida-os/progress/v1", JSON.stringify({ schema: 1, rev: 7, showDemo: true, profile: { pseudo: "Joueur", console: "ps5", edition: "standard", preorder: "unknown", chapter: 1, lastMission: null, missionsDone: [], spoilerMode: "strict", ...p } }));
+  }, profile);
   await page.goto(`/${hash}`);
   await page.waitForSelector(".app.is-ready");
+}
+
+/** Change d'onglet ; sur iPhone, une fiche ouverte masque le dock (comme Plans) : on la referme d'abord. */
+async function tab(page: Page, id: "accueil" | "carte" | "radar" | "profil") {
+  if (isPhone(page) && (await page.getByTestId("sheet").count())) {
+    await page.keyboard.press("Escape");
+    await expect(page.getByTestId("sheet")).toHaveCount(0);
+  }
+  await page.getByTestId(`nav-${id}`).click();
 }
 
 async function mapReady(page: Page) {
@@ -87,7 +103,7 @@ test.describe("Parcours essentiels", () => {
     await page.getByTestId("next-discovery").click();
     await mapReady(page);
     await page.getByTestId("complete-btn").click();
-    await page.getByTestId("nav-accueil").click();
+    await tab(page, "accueil");
     expect(await pct(page)).toBeGreaterThan(before);
     expect(await page.getByTestId("progress-count").innerText()).not.toBe(countBefore);
     await expect(page.getByTestId("next-discovery").locator("h2")).not.toHaveText(title);
@@ -102,15 +118,15 @@ test.describe("Persistance", () => {
     await page.getByTestId("next-discovery").click();
     await mapReady(page);
     await page.getByTestId("complete-btn").click();
-    await page.getByTestId("nav-accueil").click();
+    await tab(page, "accueil");
     const after = await pct(page);
-    await page.getByTestId("nav-profil").click();
+    await tab(page, "profil");
     await page.getByTestId("chapter-2").click();
     await page.reload();
     await page.waitForSelector(".app.is-ready");
-    await page.getByTestId("nav-accueil").click();
+    await tab(page, "accueil");
     expect(await pct(page)).toBe(after);
-    await page.getByTestId("nav-profil").click();
+    await tab(page, "profil");
     await expect(page.getByTestId("chapter-2")).toHaveAttribute("aria-checked", "true");
   });
 });
@@ -120,12 +136,12 @@ test.describe("Anti-spoiler", () => {
     await freshStart(page, "#carte");
     await mapReady(page);
     await expect(page.getByTestId("marker-gr-anomaly")).toBeHidden();
-    await page.getByTestId("nav-radar").click();
+    await tab(page, "radar");
     await expect(page.locator(".note", { hasText: "masqué" })).toBeVisible();
     await expect(page.getByTestId("signal-sig-5")).toHaveCount(0);
     await page.locator(".shield").first().click(); // → modéré
     await expect(page.getByTestId("signal-sig-5").locator(".spoiler")).toBeVisible();
-    await page.getByTestId("nav-carte").click();
+    await tab(page, "carte");
     await expect(page.getByTestId("marker-gr-anomaly")).toBeVisible();
     await expect(page.getByTestId("marker-gr-anomaly").locator("b")).toHaveText("?");
   });
@@ -160,7 +176,7 @@ test.describe("Carte", () => {
     await mapReady(page);
     await page.evaluate(() => (window as unknown as { __leonidaMap: { jumpTo: (o: object) => void } }).__leonidaMap.jumpTo({ center: [-12, -4], zoom: 5 }));
     for (const v of ["radar", "accueil", "profil"]) await page.getByTestId(`nav-${v}`).click();
-    await page.getByTestId("nav-carte").click();
+    await tab(page, "carte");
     const cam = await page.evaluate(() => {
       const w = window as unknown as { __leonidaMap: { getZoom: () => number; getCenter: () => { lng: number } }; __leonidaMapCount: number };
       return { count: w.__leonidaMapCount, zoom: w.__leonidaMap.getZoom(), lng: w.__leonidaMap.getCenter().lng };
@@ -190,11 +206,12 @@ test.describe("Fiche glissante (iPhone)", () => {
     await mapReady(page);
     const sheet = page.getByTestId("sheet");
     await expect(sheet).toHaveAttribute("data-snap", "half");
-    const h1 = (await sheet.boundingBox())!.height;
+    // V0.7 : hauteur fixe, la fiche se déplace par transform (60 fps) → on mesure la position de son bord haut
+    const top1 = (await sheet.boundingBox())!.y;
     await page.getByTestId("sheet-grip").click();
     await expect(sheet).toHaveAttribute("data-snap", "full");
-    await page.waitForTimeout(450);
-    expect((await sheet.boundingBox())!.height).toBeGreaterThan(h1);
+    await expect(sheet).toHaveAttribute("data-settled", "true");
+    expect((await sheet.boundingBox())!.y).toBeLessThan(top1 - 100);
     const g = (await page.getByTestId("sheet-grip").boundingBox())!;
     await page.mouse.move(g.x + g.width / 2, g.y + 5);
     await page.mouse.down();
@@ -255,6 +272,8 @@ test.describe("Responsive", () => {
     await freshStart(page);
     for (const v of ["accueil", "radar", "profil"]) {
       await page.getByTestId(`nav-${v}`).click();
+      // la transition d'onglet (glissement de 24 px, transform seul) doit être terminée avant la mesure
+      await page.waitForFunction(() => document.querySelector(".main")!.getAnimations({ subtree: true }).every((a) => a.playState !== "running" || a.effect?.getTiming().iterations === Infinity));
       const overflow = await page.evaluate(() => document.querySelector(".main")!.scrollWidth - window.innerWidth);
       expect(overflow, `débordement sur ${v}`).toBeLessThanOrEqual(0);
     }
@@ -265,11 +284,13 @@ test.describe("Responsive", () => {
       expect(b.height, `${id} hauteur`).toBeGreaterThanOrEqual(44); // cible tactile Apple HIG
     }
     if (isPhone(page)) {
-      expect(Math.round(nav.y + nav.height)).toBe(vp.height); // barre d'onglets en bas
+      // V0.7 : dock flottant en bas (marge de sécurité ≤ 40 px)
+      expect(vp.height - (nav.y + nav.height)).toBeGreaterThanOrEqual(0);
+      expect(vp.height - (nav.y + nav.height)).toBeLessThanOrEqual(40);
     } else {
       expect(nav.x).toBe(0);
       expect(nav.height).toBeGreaterThan(vp.height * 0.9); // rail latéral
-      await page.getByTestId("nav-carte").click();
+      await tab(page, "carte");
       await mapReady(page);
       const panel = (await page.locator(".panel").boundingBox())!;
       const map = (await page.locator(".mapsplit__map").boundingBox())!;
@@ -281,12 +302,12 @@ test.describe("Responsive", () => {
   test("captures de référence", async ({ page }, info) => {
     await freshStart(page);
     await capture(page, "01-accueil", info.project.name);
-    await page.getByTestId("nav-carte").click();
+    await tab(page, "carte");
     await mapReady(page);
     await capture(page, "04-carte", info.project.name);
-    await page.getByTestId("nav-radar").click();
+    await tab(page, "radar");
     await capture(page, "07-radar", info.project.name);
-    await page.getByTestId("nav-profil").click();
+    await tab(page, "profil");
     await capture(page, "08-profil", info.project.name);
   });
 });

@@ -135,13 +135,13 @@ test("V0.5.1 : « Que faire maintenant ? » propose le conseil au chapitre 1, pa
   await serveFeed(page, () => load("v4"));
   await start(page, "#accueil");
   const adv = page.getByTestId("live-advice");
-  await expect(adv).toContainText("Three Sheets Liquor (Key Lento)");
+  await expect(adv).toContainText("Three Sheets Liquor");
   await expect(adv).toContainText("À faire avant de continuer");
   await expect(adv).toContainText("Tourist Trap");
   await page.screenshot({ path: `captures/${info.project.name}-21-conseil-accueil.png` });
-  // carte : lieu cité mais non validé → aucune épingle inventée pour cette fiche
+  // « C'est fait » retire le conseil (et le mémorise)
   await adv.getByTestId("advice-done").first().click();
-  await expect(page.getByTestId("live-advice")).toHaveCount(0);
+  await expect(page.getByTestId("live-advice")).not.toContainText("Three Sheets Liquor");
 });
 
 test("V0.5.1 : chapitre du joueur antérieur → conseil gardé pour plus tard", async ({ page }) => {
@@ -151,7 +151,7 @@ test("V0.5.1 : chapitre du joueur antérieur → conseil gardé pour plus tard",
   await page.goto("/#accueil");
   await page.waitForSelector(".app.is-ready");
   await expect(page.getByTestId("live-highlights")).toBeVisible();
-  await expect(page.getByTestId("live-advice")).toHaveCount(0);
+  await expect(page.getByTestId("live-advice")).not.toContainText("Three Sheets Liquor");
 });
 
 test("V0.5.1 : collecteur arrêté → alerte claire sur l'accueil et le Radar", async ({ page }, info) => {
@@ -191,13 +191,14 @@ test("V0.6 : Standard et Ultimate au même chapitre obtiennent des recommandatio
   await setProfile(page, "Ultimate", 1);
   await page.goto("/#accueil");
   await expect(page.getByTestId("car-advice-v-dinka-enduro")).toBeVisible();
-  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toContainText("À ne pas manquer");
+  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toContainText("jusqu'au chapitre 1");
   await page.screenshot({ path: `captures/${info.project.name}-30-accueil-ultimate.png` });
 });
 
 test("V0.6 : filtre Voitures cachées — zone approximative, point exact validé, fiche premium", async ({ page }, info) => {
   await serveFeed(page, () => load("v5"));
-  await start(page, "#carte");
+  await start(page, "#profil");
+  await setProfile(page, "Standard", 1);
   await openGarage(page);
   await expect(page.getByTestId("filter-garage")).toContainText("Voitures cachées");
   // point validé : épingle ; zone : pas d'épingle
@@ -223,7 +224,8 @@ test("V0.6 : filtre Voitures cachées — zone approximative, point exact valid�
 
 test("V0.6 : repéré → volé → conservé → rangé, persistant après rechargement et visible dans Mon garage", async ({ page }) => {
   await serveFeed(page, () => load("v5"));
-  await start(page, "#carte");
+  await start(page, "#profil");
+  await setProfile(page, "Standard", 1);
   await openGarage(page);
   await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
   const sheet = page.getByTestId("vehicle-sheet");

@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { frTitle } from "@/lib/now";
 import { useStore } from "@/lib/store";
 import { collectorHealth, LIVE_CATEGORY, proposePointUrl, spoilerVisibility, tabOf, TRIGGER_FR, useLiveRadar } from "@/lib/live";
 import { assetUrl } from "@/lib/gtadb";
@@ -128,14 +129,25 @@ function FactSheet({ r }: { r: RadarRecord }) {
   );
 }
 
-function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
-  const [open, setOpen] = useState(false);
+const cleanName = (s: string) => s.replace(/\s*\([^)]*\)\s*$/, "");
+
+function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; focused?: boolean }) {
+  const [open, setOpen] = useState(!!focused);
+  const ref = useRef<HTMLElement>(null);
+  const { state, setDone, celebrate } = useStore();
+  useEffect(() => {
+    if (!focused) return;
+    setOpen(true);
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [focused]);
   const cat = LIVE_CATEGORY[r.category] ?? LIVE_CATEGORY.other;
   const lead = r.evidence[0];
-  const sources = Array.from(new Set(r.evidence.map((e) => e.sourceName)));
-  const title = (r as RadarRecord & { titleFr?: string }).titleFr ?? r.title;
+  const sources = Array.from(new Set(r.evidence.map((e) => cleanName(e.sourceName))));
+  const fr = frTitle(r);
+  const title = (r as RadarRecord & { titleFr?: string }).titleFr ?? fr;
+  const isDone = !!state.done[r.id];
   return (
-    <article className={`signal live-card${Date.now() - Date.parse(r.firstSeenAt) < 6 * 3600_000 ? " is-new" : ""}`} data-testid={`live-${r.id}`}>
+    <article ref={ref} className={`signal live-card${Date.now() - Date.parse(r.firstSeenAt) < 6 * 3600_000 ? " is-new" : ""}${focused ? " is-focused" : ""}${isDone ? " is-done" : ""}`} data-testid={`live-${r.id}`}>
       <div className="signal__top">
         <span className="glyph" style={{ width: 36, height: 36, color: cat.color, background: `${cat.color}1f`, boxShadow: `inset 0 0 0 1px ${cat.color}40` }}>
           <Icon name={cat.icon} size={18} />
@@ -169,6 +181,7 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
       )}
 
       <h3>{blurred ? <SpoilerText strict={false} hint="Spoiler possible">{title}</SpoilerText> : title}</h3>
+      {!blurred && fr !== r.title && <p className="small muted live-orig">« {r.title} »</p>}
       {!blurred && <p className="muted">{lead.excerpt}</p>}
       {!blurred && <FactSheet r={r} />}
 
@@ -190,6 +203,11 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
             <Icon name="map" size={15} /> {r.location.suggestion ? "Valider le point proposé" : "Proposer le point"}
           </a>
         )}
+        {(r.actionable || r.details) && (
+          <button className={`btn btn--sm ${isDone ? "btn--on" : "btn--ghost"}`} onClick={() => { setDone(r.id, !isDone); if (!isDone) celebrate("Activité terminée"); }} data-testid="record-done" aria-pressed={isDone}>
+            <Icon name="check" size={15} /> {isDone ? "Fait" : "C'est fait"}
+          </button>
+        )}
         <button className="btn btn--sm btn--ghost" onClick={() => setOpen((v) => !v)} aria-expanded={open}>{open ? "Moins" : "Détails"}</button>
       </div>
 
@@ -201,7 +219,7 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
           <ul className="live-sources">
             {r.evidence.map((e) => (
               <li key={e.rawKey}>
-                <a href={e.url} target="_blank" rel="noreferrer">{e.sourceName}</a> · {e.publishedAt ? fmtDate(e.publishedAt) : "date inconnue"}
+                <a href={e.url} target="_blank" rel="noreferrer">{cleanName(e.sourceName)}</a> · {e.publishedAt ? fmtDate(e.publishedAt) : "date inconnue"}
                 {e.deep && <span className="small muted"> · {e.deep.ok ? `article lu ${timeAgo(e.deep.at)}${e.deep.aiOptOut ? " · IA exclue (souhait du site)" : ""}` : `non lu : ${e.deep.reason}`}</span>}
                 {e.quotes.length > 0 && <q>{e.quotes.join(" … ")}</q>}
               </li>
@@ -210,11 +228,11 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
           <h4>Historique</h4>
           <ul>{r.revisions.slice(-4).reverse().map((v, i) => <li key={i}>{new Date(v.at).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })} — {v.reason}{v.changes.length ? ` (${v.changes.slice(0, 2).join(" ; ")})` : ""}</li>)}</ul>
           <div className="creator">
-            <h4><Icon name="sparkle" size={14} /> ViceScopeIV · opportunité {r.opportunity.score}/100</h4>
-            <p className="small muted">Angle « {r.opportunity.angle} » — brouillons à valider, jamais publiés automatiquement.</p>
+            <h4><Icon name="sparkle" size={14} /> Idées de vidéo · intérêt {r.opportunity.score}/100</h4>
+            <p className="small muted">Angle « {r.opportunity.angle} » — brouillons, jamais publiés automatiquement.</p>
             <ul>{r.opportunity.ideas.map((x) => <li key={x}>{x}</li>)}</ul>
           </div>
-          <p className="fineprint">Fiche {r.id} · vérifiée {timeAgo(r.lastVerifiedAt)} · classement automatique, corrigeable par un administrateur.</p>
+          <p className="fineprint">Vérifiée {timeAgo(r.lastVerifiedAt)} · classement automatique.</p>
         </div>
       )}
     </article>
@@ -223,8 +241,14 @@ function LiveCard({ r, blurred }: { r: RadarRecord; blurred: boolean }) {
 
 export function LiveRadar() {
   const { feed } = useLiveRadar();
-  const { state } = useStore();
+  const { state, radarFocus, filterRadar } = useStore();
   const [tab, setTab] = useState<LiveTab>("new");
+  const focusRec = radarFocus.id ? items0(feed).find((r) => r.id === radarFocus.id) ?? null : null;
+  const cat = radarFocus.category;
+  useEffect(() => {
+    if (focusRec) setTab(tabOf(focusRec)[tabOf(focusRec).length - 1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [radarFocus.nonce]);
   const items = feed?.items ?? [];
 
   const { list, hidden, counts } = useMemo(() => {
@@ -237,17 +261,24 @@ export function LiveRadar() {
       }
       return true;
     });
-    visible.forEach((r) => tabOf(r).forEach((t) => counts[t]++));
-    const list = visible.filter((r) => tabOf(r).includes(tab));
+    const scoped = cat ? visible.filter((r) => r.category === cat) : visible;
+    scoped.forEach((r) => tabOf(r).forEach((t) => counts[t]++));
+    const list = cat ? scoped : scoped.filter((r) => tabOf(r).includes(tab));
     if (tab === "new") list.sort((a, b) => b.firstSeenAt.localeCompare(a.firstSeenAt) || b.score - a.score);
     return { list: list.slice(0, 60), hidden, counts };
-  }, [items, state.profile.spoilerMode, state.profile.chapter, tab]);
+  }, [items, state.profile.spoilerMode, state.profile.chapter, tab, cat]);
 
   return (
     <>
       <CollectorAlert />
       <SyncStatus />
-      <Segmented<LiveTab>
+      {cat && (
+        <div className="catfilter" data-testid="radar-category">
+          <span>Filtre : {LIVE_CATEGORY[cat]?.label ?? cat}</span>
+          <button className="link small" onClick={() => filterRadar(null)}>Tout afficher</button>
+        </div>
+      )}
+      {!cat && <Segmented<LiveTab>
         label="Onglets du Radar"
         value={tab}
         onChange={setTab}
@@ -257,15 +288,22 @@ export function LiveRadar() {
           { id: "verify", label: `À vérifier ${counts.verify}` },
           { id: "news", label: `Actualités ${counts.news}` },
         ]}
-      />
+      />}
       {tab === "verify" && <div className="note"><Icon name="alert" size={16} /> Signalements et rumeurs non confirmés : ne pas les prendre pour des faits.</div>}
       <div className="signals" data-testid="live-list">
         {list.length === 0 && <div className="card empty">Rien dans cet onglet pour l&apos;instant.</div>}
-        {list.map((r) => <LiveCard key={r.id} r={r} blurred={spoilerVisibility(r, state.profile.spoilerMode, state.profile.chapter) === "blurred"} />)}
+        {focusRec && !list.some((r) => r.id === focusRec.id) && spoilerVisibility(focusRec, state.profile.spoilerMode, state.profile.chapter) !== "hidden" && (
+          <LiveCard key={`f-${focusRec.id}`} r={focusRec} focused blurred={false} />
+        )}
+        {list.map((r) => <LiveCard key={r.id} r={r} focused={r.id === radarFocus.id} blurred={spoilerVisibility(r, state.profile.spoilerMode, state.profile.chapter) === "blurred"} />)}
         {hidden > 0 && (
           <div className="note" data-testid="live-hidden"><Icon name="shield" size={16} /> {hidden} fiche{hidden > 1 ? "s" : ""} masquée{hidden > 1 ? "s" : ""} par l&apos;anti-spoiler strict (fin d&apos;histoire ou chapitre plus avancé que le tien).</div>
         )}
       </div>
     </>
   );
+}
+
+function items0(feed: ReturnType<typeof useLiveRadar>["feed"]) {
+  return feed?.items ?? [];
 }

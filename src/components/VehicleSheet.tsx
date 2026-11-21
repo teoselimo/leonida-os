@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
 import { assetUrl } from "@/lib/gtadb";
-import { COMPAT_FR, KIND_FR, keepText, STATE_FR, STATE_ORDER, viewOf } from "@/lib/garage";
+import { ACCESS_FR, COMPAT_FR, KIND_FR, keepText, STATE_FR, STATE_ORDER, viewOf } from "@/lib/garage";
+import { tick } from "@/lib/motion";
 import type { VehicleRecord } from "@/lib/garage";
 import type { VehicleState } from "@/lib/types";
 import { CHAPTERS } from "@/lib/meta";
 import { Icon } from "./ui/Icon";
 import { ReliabilityBadge, SpoilerText } from "./ui/primitives";
+import { Visual } from "./ui/Visual";
 
 const COLORS: Record<string, string> = { green: "#3ddc6b", blue: "#4d8dff", red: "#ff4d5e", yellow: "#ffd23f", orange: "#ff8a3d", purple: "#a96bff", pink: "#ff5fb0", white: "#f2f2f7", black: "#222", silver: "#c0c4cc", gold: "#d8b14a", teal: "#2ee6d6" };
 const swatch = (variant: string | undefined) => COLORS[Object.keys(COLORS).find((c) => variant?.includes(c)) ?? ""] ?? null;
@@ -17,7 +19,7 @@ const swatch = (variant: string | undefined) => COLORS[Object.keys(COLORS).find(
 function Quote({ r }: { r: { sourceName: string; url: string; quote: string } }) {
   return (
     <q className="vq">
-      « {r.quote} » <a href={r.url} target="_blank" rel="noreferrer">{r.sourceName}</a>
+      « {r.quote} » <a href={r.url} target="_blank" rel="noreferrer">{r.sourceName.replace(/\s*\([^)]*\)$/, "")}</a>
     </q>
   );
 }
@@ -41,7 +43,7 @@ export function validatePointUrl(v: VehicleRecord): string {
 }
 
 export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: () => void; onGuide: (id: string) => void }) {
-  const { state, setVehicle, notify } = useStore();
+  const { state, setVehicle, notify, celebrate } = useStore();
   const { feed } = useLiveRadar();
   const [proofs, setProofs] = useState(false);
   const [storing, setStoring] = useState(false);
@@ -55,7 +57,9 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
   const ownedGarages = (feed?.vehicles ?? []).filter((g) => g.type === "garage" && state.vehicles[g.id] && state.vehicles[g.id].state !== "spotted");
 
   const go = (st: VehicleState, storage?: string) => {
+    tick(12);
     setVehicle(v.id, st, storage);
+    celebrate(st === "spotted" ? "Véhicule repéré" : st === "stolen" ? "Véhicule récupéré" : st === "registered" ? "Véhicule conservé" : "Rangé au garage");
     notify(`${v.name} · ${STATE_FR[st]}`, st === "stolen" && v.keep.mode === "register" ? keepText(v) : st === "stored" && storage ? `Rangé : ${storage}` : undefined, "car");
   };
 
@@ -84,11 +88,13 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
           </a>
         ) : (
           <div className="vmedia__ph" style={{ ["--c" as string]: sw ?? "#ff3d8b" }}>
-            <Icon name="car" size={44} stroke={1.6} />
-            <span>Aucune capture autorisée pour l&apos;instant</span>
+            <Visual media={null} icon={v.type === "garage" ? "home" : "car"} color={sw ?? "#ff3d8b"} label={v.name} />
           </div>
         )}
-        <span className="vmedia__credit">{capture ? `Capture © ${capture.credit}` : v.media ? `© ${v.media.credit} · YouTube` : "Ajoute ta capture : public/gameplay/"}</span>
+        {(capture || v.media) && <span className="vmedia__credit">{capture ? `Capture © ${capture.credit}` : `© ${v.media!.credit} · YouTube`}</span>}
+        {!capture && !v.media && v.evidence[0] && (
+          <a className="vmedia__guide" href={v.evidence[0].url} target="_blank" rel="noreferrer">Voir le guide illustré <Icon name="arrow" size={12} /></a>
+        )}
         <button className="iconbtn vmedia__close" onClick={onClose} aria-label="Fermer"><Icon name="close" /></button>
       </div>
 
@@ -97,16 +103,17 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
           <ReliabilityBadge r={v.reliability} />
           {v.edition.exclusive === "ultimate" && <span className={`edtag${v.edition.status === "confirmed" ? "" : " is-check"}`} data-testid="ultimate-tag">ULTIMATE{v.edition.status === "confirmed" ? "" : " ?"}</span>}
           {v.edition.exclusive === "preorder" && <span className="edtag edtag--pre">PRÉCOMMANDE</span>}
+          <span className={`accesschip accesschip--${x.access}`} data-testid="v-access">{ACCESS_FR[x.access]}</span>
           <span className="small muted">{v.type === "garage" ? "Garage" : KIND_FR[v.kind]}</span>
         </div>
         <h3 className="detail__title" data-testid="vehicle-name">{v.name}</h3>
         <p className="muted small">
           {variant && <><i className="vswatch" style={{ background: sw ?? "transparent" }} /> {variant} · </>}
-          {v.aliases ? <>Inspiré de {v.aliases.value.map((a) => a.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")).join(", ")} (selon {v.aliases.support[0].sourceName})</> : v.make}
+          {v.aliases ? <>Inspiré de {v.aliases.value.map((a) => a.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")).join(", ")} (selon {v.aliases.support[0].sourceName.replace(/\s*\([^)]*\)$/, "")})</> : v.make}
         </p>
         <div className={`compat compat--${x.compat}`} data-testid="compat">
           <Icon name={x.compat === "ok" ? "check" : x.compat === "ultimate-only" ? "lock" : "info"} size={14} /> {COMPAT_FR[x.compat]}
-          {x.compat === "check" && state.profile.edition === "unknown" && " · renseigne ton édition dans Profil"}
+          {x.compat === "check" && state.profile.edition === "unknown" && " · indique ton édition dans Profil"}
         </div>
       </div>
 
@@ -127,7 +134,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
           <Icon name="locate" size={16} /> Me guider
         </button>
         {(!prog || prog.state === "spotted") && v.type === "vehicle" && (
-          <button className="btn btn--sm" onClick={() => go(prog ? "stolen" : "spotted")} data-testid="v-found" disabled={x.compat === "ultimate-only"}>
+          <button className="btn btn--sm" onClick={() => go(prog ? "stolen" : "spotted")} data-testid="v-found" disabled={x.access === "excluded"}>
             <Icon name="flag" size={15} /> {prog ? "Je l'ai volé" : "Je l'ai trouvé"}
           </button>
         )}
@@ -164,7 +171,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
         {v.location.text && <Quote r={v.location.text.support[0]} />}
         {v.location.alternatives.length > 0 && <p className="small muted">Autres emplacements signalés : {v.location.alternatives.map((a) => `${a.district ?? a.text} (${a.sourceName})`).join(" · ")}</p>}
         {v.location.precision !== "exact" && v.type === "vehicle" && (
-          <a className="link small" href={validatePointUrl(v)} target="_blank" rel="noreferrer" data-testid="v-validate">Proposer le point exact (validation)</a>
+          <a className="link small" href={validatePointUrl(v)} target="_blank" rel="noreferrer" data-testid="v-validate">Signaler la position exacte</a>
         )}
       </section>
 
@@ -182,7 +189,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
 
       {v.steps.length > 0 && (
         <section className="vsec">
-          <h4><Icon name="flag" size={14} /> Étapes citées par les sources</h4>
+          <h4><Icon name="flag" size={14} /> Étapes (citations des guides, en anglais)</h4>
           <ol className="vsteps">{v.steps.map((s) => <li key={s.quote}>{s.quote} <a href={s.url} target="_blank" rel="noreferrer">{s.sourceName}</a></li>)}</ol>
         </section>
       )}
@@ -208,7 +215,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
           <div data-testid="v-sources">
             <ul className="vlist">{v.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
             {v.missing.length > 0 && <p className="small muted">Non établi : {v.missing.join(", ")}.</p>}
-            <ul className="vlist">{v.evidence.map((e) => <li key={e.url}><a href={e.url} target="_blank" rel="noreferrer">{e.sourceName}</a> · {e.title}</li>)}</ul>
+            <ul className="vlist">{v.evidence.map((e) => <li key={e.url}><a href={e.url} target="_blank" rel="noreferrer">{e.sourceName.replace(/\s*\([^)]*\)$/, "")}</a> · {e.title}</li>)}</ul>
             {v.edition.support.length > 0 && <><p className="small muted">Édition :</p>{v.edition.support.map((r) => <Quote key={r.url + r.quote} r={r} />)}</>}
           </div>
         )}

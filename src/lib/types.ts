@@ -88,7 +88,13 @@ export interface Profile {
   pseudo: string;
   console: ConsoleId;
   edition: EditionId;
+  /** Éligibilité aux bonus de précommande : indépendante de l'édition (achat avant la date limite). */
+  preorder: "yes" | "no" | "unknown";
   chapter: Chapter;
+  /** Dernière mission principale terminée (saisie par le joueur ; aucune lecture de sauvegarde PS5). */
+  lastMission: string | null;
+  /** Missions déclarées terminées (sert à savoir qu'une mission limitée a disparu). */
+  missionsDone: string[];
   spoilerMode: SpoilerMode;
 }
 
@@ -108,6 +114,10 @@ export interface PersistedState {
   showDemo: boolean;
   /** Garage des légendes : état de chaque véhicule pour ce joueur (repéré → rangé au garage). */
   vehicles: Record<string, VehicleProgress>;
+  /** Activités de la veille déclarées faites (id de fiche → date). */
+  done: Record<string, string>;
+  /** Version de migration appliquée. */
+  rev?: number;
 }
 
 /** Repéré, volé et possédé sont trois choses différentes. */

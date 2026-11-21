@@ -15,8 +15,18 @@ import { Icon } from "@/components/ui/Icon";
 import { Bar, CategoryGlyph, SectionHead, Segmented } from "@/components/ui/primitives";
 
 export function ProfileScreen() {
-  const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, notify, focusVehicle } = useStore();
+  const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, notify, focusVehicle, setMission } = useStore();
   const { feed } = useLiveRadar();
+  const [missionText, setMissionText] = useState("");
+  // Missions connues par la veille, sans spoiler : uniquement celles rattachées à un chapitre déjà atteint
+  const knownMissions = Array.from(
+    new Set(
+      (feed?.items ?? [])
+        .filter((r) => (r.details?.chapter?.value ?? 99) <= state.profile.chapter)
+        .flatMap((r) => [r.details?.mission?.value, r.details?.unlockAfter?.value, r.details?.contextMissable?.value.until])
+        .filter((m): m is string => !!m),
+    ),
+  ).sort();
   const owned = (feed?.vehicles ?? []).filter((v) => state.vehicles[v.id]);
   const [confirmReset, setConfirmReset] = useState(false);
   const [meta, setMeta] = useState<GtadbMeta | null>(null);
@@ -89,6 +99,18 @@ export function ProfileScreen() {
             <p className="muted small" data-testid="edition-note">
               {state.profile.edition === "ultimate" ? "Les véhicules, garages et bonus Ultimate vérifiés te sont proposés." : state.profile.edition === "standard" ? "Les exclusivités Ultimate vérifiées restent consultables mais ne te sont jamais recommandées." : "Tant que ton édition n'est pas renseignée, les exclusivités restent « compatibilité à vérifier »."} Ta progression est conservée si tu changes.
             </p>
+            <h4>Bonus de précommande</h4>
+            <Segmented<"yes" | "no" | "unknown">
+              label="Bonus de précommande"
+              value={state.profile.preorder}
+              onChange={(v) => setProfile({ preorder: v })}
+              options={[
+                { id: "yes", label: "J'y ai droit" },
+                { id: "no", label: "Non" },
+                { id: "unknown", label: "Je ne sais pas" },
+              ]}
+            />
+            <p className="muted small">Indépendant de l&apos;édition : le pack Vintage Vice City dépend de la date d&apos;achat.</p>
           </section>
 
           <section className="card form">
@@ -102,6 +124,29 @@ export function ProfileScreen() {
                 </button>
               ))}
             </div>
+            <h4>Dernière mission terminée</h4>
+            <form
+              className="missionform"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (missionText.trim()) setMission(missionText.trim(), true);
+                setMissionText("");
+              }}
+            >
+              <input list="missions-known" value={missionText} onChange={(e) => setMissionText(e.target.value)} placeholder={state.profile.lastMission ?? "Nom de la mission (ex. Tourist Trap)"} aria-label="Dernière mission terminée" data-testid="mission-input" />
+              <datalist id="missions-known">{knownMissions.map((m) => <option key={m} value={m} />)}</datalist>
+              <button className="btn btn--sm btn--on" type="submit" data-testid="mission-save">Noter</button>
+            </form>
+            {state.profile.missionsDone.length > 0 && (
+              <div className="row gap8 wrap" data-testid="missions-done">
+                {state.profile.missionsDone.map((m) => (
+                  <button key={m} className={`fchip${state.profile.lastMission === m ? " is-on" : ""}`} onClick={() => setMission(m, false)} aria-label={`Retirer ${m}`}>
+                    {m} <Icon name="close" size={12} />
+                  </button>
+                ))}
+              </div>
+            )}
+            <p className="muted small">Sert à ne plus te proposer une activité liée à une mission déjà passée. Saisie manuelle : LEONIDA OS ne lit pas ta sauvegarde.</p>
             <h4>Anti-spoiler</h4>
             <Segmented<SpoilerMode>
               label="Mode anti-spoiler"
@@ -187,7 +232,7 @@ export function ProfileScreen() {
             <label className="toggle">
               <input type="checkbox" checked={state.showDemo} onChange={(e) => setShowDemo(e.target.checked)} data-testid="toggle-demo" />
               <span className="toggle__ui" />
-              <span>Afficher les données de démo</span>
+              <span>Mode démonstration (contenu fictif, séparé de ta partie)</span>
             </label>
             <div className="row gap8 wrap">
               <button className="btn btn--ghost btn--sm" onClick={copyExport} disabled={!state.custom.length}><Icon name="bookmark" size={15} /> Copier l&apos;export</button>

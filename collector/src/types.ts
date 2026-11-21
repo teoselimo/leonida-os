@@ -161,6 +161,8 @@ export interface Location {
   y: number | null;
   /** Point proposé (repère exact de la carte communautaire) en attente de validation : jamais affiché comme épingle. */
   suggestion?: { x: number; y: number; landmark: string } | null;
+  /** Zone de recherche approximative dérivée du quartier cité (repères gtadb) : jamais un point exact. */
+  zone?: { x: number; y: number; radius: number } | null;
 }
 
 export interface Conditions {
@@ -263,6 +265,11 @@ export interface RadarFeed {
   health?: { cadenceMinutes: number; cycles: CycleLog[] };
   /** Garage des légendes : véhicules et garages consolidés (V0.6). */
   vehicles?: VehicleRecord[];
+  /** Règles générales sourcées (immatriculation, cloneur de clé) — pour LEONIDA AI. */
+  mechanics?: {
+    register: Array<{ chapter: number; where: string | null; tracker: string | null; source: SourceRef }>;
+    keyCloner: { chapter: number; mission: string | null; source: SourceRef } | null;
+  };
   sources: Array<{ id: string; name: string; kind: ConnectorKind; official: boolean; status: SourceState["status"]; statusDetail: string | null; lastSuccessAt: string | null; lastAttemptAt: string | null }>;
   lastRun: { at: string; newItems: number; updatedItems: number; errors: number } | null;
   items: RadarRecord[];

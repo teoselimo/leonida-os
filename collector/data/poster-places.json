@@ -1,0 +1,1083 @@
+{
+ "$comment": "Noms de lieux relevés sur la carte officielle « Leonida Map Poster » (Rockstar Games) fournie par le propriétaire, utilisés UNIQUEMENT comme référence interne de toponymie. L'image n'est ni copiée ni publiée. Positions estimées par ajustement affine sur les repères gtadb communs : approximatives, jamais présentées comme exactes.",
+ "fit": {
+  "anchors": 33,
+  "rmsGameUnits": 241
+ },
+ "places": [
+  {
+   "name": "Hyde Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -2314,
+    "y": 8688
+   },
+   "gap": null
+  },
+  {
+   "name": "Saint Attaway Islands",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -3148,
+    "y": 8365
+   },
+   "gap": null
+  },
+  {
+   "name": "Frampton Islands",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1561,
+    "y": 8261
+   },
+   "poster": {
+    "x": -1431,
+    "y": 8211
+   },
+   "gap": 139
+  },
+  {
+   "name": "Bonanza",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -3846,
+    "y": 8151
+   },
+   "gap": null
+  },
+  {
+   "name": "Featherstone Islands",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -5367,
+    "y": 7842
+   },
+   "gap": null
+  },
+  {
+   "name": "Moreau",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -3883,
+    "y": 7894
+   },
+   "poster": {
+    "x": -3343,
+    "y": 7672
+   },
+   "gap": 584
+  },
+  {
+   "name": "East Lummox County",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -1536,
+    "y": 7436
+   },
+   "gap": null
+  },
+  {
+   "name": "Lummox County",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -3536,
+    "y": 7046
+   },
+   "poster": {
+    "x": -3619,
+    "y": 6923
+   },
+   "gap": 148
+  },
+  {
+   "name": "Grayson",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -5375,
+    "y": 6576
+   },
+   "gap": null
+  },
+  {
+   "name": "Mount Kalaga National Park",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -3622,
+    "y": 6413
+   },
+   "gap": null
+  },
+  {
+   "name": "Millport",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -885,
+    "y": 6565
+   },
+   "poster": {
+    "x": -1208,
+    "y": 6345
+   },
+   "gap": 391
+  },
+  {
+   "name": "Little Hardin Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 516,
+    "y": 5972
+   },
+   "gap": null
+  },
+  {
+   "name": "Zephyr Islands",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -7572,
+    "y": 5766
+   },
+   "poster": {
+    "x": -7333,
+    "y": 5809
+   },
+   "gap": 243
+  },
+  {
+   "name": "North Leonard County",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -2125,
+    "y": 5884
+   },
+   "gap": null
+  },
+  {
+   "name": "Richard Barebone State Park",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -372,
+    "y": 5639
+   },
+   "gap": null
+  },
+  {
+   "name": "North Kelly County",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -3720,
+    "y": 5310
+   },
+   "gap": null
+  },
+  {
+   "name": "Draper Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -7403,
+    "y": 4871
+   },
+   "gap": null
+  },
+  {
+   "name": "Manifest Canyon",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -5277,
+    "y": 4992
+   },
+   "gap": null
+  },
+  {
+   "name": "Lake Leonida",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -2043,
+    "y": 4609
+   },
+   "gap": null
+  },
+  {
+   "name": "Waning Sands",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -23,
+    "y": 3987
+   },
+   "poster": {
+    "x": -18,
+    "y": 4439
+   },
+   "gap": 452
+  },
+  {
+   "name": "Sabal Palms",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -608,
+    "y": 4189
+   },
+   "gap": null
+  },
+  {
+   "name": "Vinewood Beach",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 685,
+    "y": 4197
+   },
+   "gap": null
+  },
+  {
+   "name": "Port Gellhorn",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -6579,
+    "y": 3734
+   },
+   "poster": {
+    "x": -6507,
+    "y": 3692
+   },
+   "gap": 83
+  },
+  {
+   "name": "Frogswater",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -4470,
+    "y": 3985
+   },
+   "gap": null
+  },
+  {
+   "name": "Ambrosia",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -2796,
+    "y": 3954
+   },
+   "poster": {
+    "x": -2772,
+    "y": 3731
+   },
+   "gap": 224
+  },
+  {
+   "name": "Leonard County",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -845,
+    "y": 3721
+   },
+   "poster": {
+    "x": -629,
+    "y": 3688
+   },
+   "gap": 219
+  },
+  {
+   "name": "Kelly County",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -5191,
+    "y": 3505
+   },
+   "poster": {
+    "x": -4748,
+    "y": 2927
+   },
+   "gap": 728
+  },
+  {
+   "name": "Wild Hog Point",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -7406,
+    "y": 3031
+   },
+   "gap": null
+  },
+  {
+   "name": "Belville",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1375,
+    "y": 2897
+   },
+   "poster": {
+    "x": -1249,
+    "y": 2947
+   },
+   "gap": 136
+  },
+  {
+   "name": "Sandbars",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -8972,
+    "y": 2703
+   },
+   "gap": null
+  },
+  {
+   "name": "Leaf Links",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 457,
+    "y": 2422
+   },
+   "poster": {
+    "x": 629,
+    "y": 2502
+   },
+   "gap": 190
+  },
+  {
+   "name": "Emerald Springs",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -4156,
+    "y": 2293
+   },
+   "poster": {
+    "x": -4236,
+    "y": 2411
+   },
+   "gap": 143
+  },
+  {
+   "name": "Decor District",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -306,
+    "y": 2236
+   },
+   "poster": {
+    "x": -241,
+    "y": 2160
+   },
+   "gap": 100
+  },
+  {
+   "name": "Washington Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 1314,
+    "y": 2169
+   },
+   "gap": null
+  },
+  {
+   "name": "Crude Islands",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -8262,
+    "y": 2051
+   },
+   "gap": null
+  },
+  {
+   "name": "South Leonard County",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -1896,
+    "y": 2151
+   },
+   "gap": null
+  },
+  {
+   "name": "Penmarch Isle",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 833,
+    "y": 1957
+   },
+   "gap": null
+  },
+  {
+   "name": "Washington Beach",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 1702,
+    "y": 2183
+   },
+   "poster": {
+    "x": 1828,
+    "y": 1962
+   },
+   "gap": 254
+  },
+  {
+   "name": "Gellhorn",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -5596,
+    "y": 1857
+   },
+   "gap": null
+  },
+  {
+   "name": "Stockyard",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -342,
+    "y": 1798
+   },
+   "poster": {
+    "x": -271,
+    "y": 1841
+   },
+   "gap": 83
+  },
+  {
+   "name": "Oldby Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 1392,
+    "y": 1687
+   },
+   "gap": null
+  },
+  {
+   "name": "Buckskin Swamp",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -3891,
+    "y": 1311
+   },
+   "gap": null
+  },
+  {
+   "name": "La Perle",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -968,
+    "y": 1430
+   },
+   "poster": {
+    "x": -951,
+    "y": 1528
+   },
+   "gap": 99
+  },
+  {
+   "name": "Bayside",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -349,
+    "y": 1041
+   },
+   "poster": {
+    "x": -346,
+    "y": 1367
+   },
+   "gap": 326
+  },
+  {
+   "name": "Rialto Islands",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 495,
+    "y": 1253
+   },
+   "poster": {
+    "x": 378,
+    "y": 1408
+   },
+   "gap": 194
+  },
+  {
+   "name": "Casandova Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 811,
+    "y": 1346
+   },
+   "gap": null
+  },
+  {
+   "name": "Catalan Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 78,
+    "y": 1178
+   },
+   "gap": null
+  },
+  {
+   "name": "Vespucci Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 484,
+    "y": 1071
+   },
+   "gap": null
+  },
+  {
+   "name": "Vice Beach",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 1636,
+    "y": 1096
+   },
+   "poster": {
+    "x": 1641,
+    "y": 1032
+   },
+   "gap": 64
+  },
+  {
+   "name": "Rockridge",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1264,
+    "y": 860
+   },
+   "poster": {
+    "x": -1362,
+    "y": 842
+   },
+   "gap": 100
+  },
+  {
+   "name": "Crosstown",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -636,
+    "y": 1157
+   },
+   "poster": {
+    "x": -684,
+    "y": 883
+   },
+   "gap": 278
+  },
+  {
+   "name": "Balsero",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1855,
+    "y": 601
+   },
+   "poster": {
+    "x": -2393,
+    "y": 800
+   },
+   "gap": 574
+  },
+  {
+   "name": "Starfish Island",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 777,
+    "y": 470
+   },
+   "poster": {
+    "x": 643,
+    "y": 480
+   },
+   "gap": 134
+  },
+  {
+   "name": "South Kelly County",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -5216,
+    "y": 602
+   },
+   "gap": null
+  },
+  {
+   "name": "Vice City",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1049,
+    "y": -63
+   },
+   "poster": {
+    "x": -1103,
+    "y": 352
+   },
+   "gap": 418
+  },
+  {
+   "name": "Ocean Beach",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 1743,
+    "y": 702
+   },
+   "poster": {
+    "x": 1772,
+    "y": 350
+   },
+   "gap": 353
+  },
+  {
+   "name": "Capri",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -6896,
+    "y": 210
+   },
+   "poster": {
+    "x": -6810,
+    "y": 192
+   },
+   "gap": 88
+  },
+  {
+   "name": "Little Cuba",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1200,
+    "y": 75
+   },
+   "poster": {
+    "x": -1448,
+    "y": 104
+   },
+   "gap": 250
+  },
+  {
+   "name": "Downtown",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -662,
+    "y": -102
+   },
+   "poster": {
+    "x": -626,
+    "y": 81
+   },
+   "gap": 187
+  },
+  {
+   "name": "Waxman Island",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": 414,
+    "y": 115
+   },
+   "gap": null
+  },
+  {
+   "name": "Salton",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1481,
+    "y": -510
+   },
+   "poster": {
+    "x": -1811,
+    "y": -53
+   },
+   "gap": 564
+  },
+  {
+   "name": "West Vice-Dale County",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -4180,
+    "y": -30
+   },
+   "gap": null
+  },
+  {
+   "name": "Port Vice City",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 722,
+    "y": -522
+   },
+   "poster": {
+    "x": 927,
+    "y": -356
+   },
+   "gap": 264
+  },
+  {
+   "name": "Belpoint",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -8495,
+    "y": -254
+   },
+   "gap": null
+  },
+  {
+   "name": "VCIA",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -2665,
+    "y": -677
+   },
+   "gap": null
+  },
+  {
+   "name": "Vice-Dale County",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 171,
+    "y": 669
+   },
+   "poster": {
+    "x": -324,
+    "y": -728
+   },
+   "gap": 1482
+  },
+  {
+   "name": "Breakwater Quarry",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -4638,
+    "y": -943
+   },
+   "gap": null
+  },
+  {
+   "name": "Tequesta",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -885,
+    "y": -1108
+   },
+   "poster": {
+    "x": -1158,
+    "y": -1169
+   },
+   "gap": 280
+  },
+  {
+   "name": "Tequesta Retreat",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -208,
+    "y": -1076
+   },
+   "poster": {
+    "x": -227,
+    "y": -1164
+   },
+   "gap": 90
+  },
+  {
+   "name": "Dalton Island",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 1738,
+    "y": -1355
+   },
+   "poster": {
+    "x": 1807,
+    "y": -1153
+   },
+   "gap": 213
+  },
+  {
+   "name": "Big Pine",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -4960,
+    "y": -1765
+   },
+   "gap": null
+  },
+  {
+   "name": "Bobcat Key",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -6229,
+    "y": -2154
+   },
+   "gap": null
+  },
+  {
+   "name": "Bluegrass",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -2519,
+    "y": -2409
+   },
+   "poster": {
+    "x": -2728,
+    "y": -1952
+   },
+   "gap": 503
+  },
+  {
+   "name": "Gloriana Key",
+   "inGtadb": true,
+   "gtadb": {
+    "x": 618,
+    "y": -1629
+   },
+   "poster": {
+    "x": 809,
+    "y": -1778
+   },
+   "gap": 242
+  },
+  {
+   "name": "Peacock Bay",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1195,
+    "y": -1903
+   },
+   "poster": {
+    "x": -1192,
+    "y": -2080
+   },
+   "gap": 177
+  },
+  {
+   "name": "Catalan Key",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -154,
+    "y": -2032
+   },
+   "poster": {
+    "x": -215,
+    "y": -2120
+   },
+   "gap": 107
+  },
+  {
+   "name": "Southside",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -1791,
+    "y": -2071
+   },
+   "poster": {
+    "x": -1799,
+    "y": -2293
+   },
+   "gap": 222
+  },
+  {
+   "name": "Grassrivers",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -4387,
+    "y": -2590
+   },
+   "gap": null
+  },
+  {
+   "name": "Hamlet",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -2691,
+    "y": -3193
+   },
+   "poster": {
+    "x": -2753,
+    "y": -3046
+   },
+   "gap": 160
+  },
+  {
+   "name": "South Vice-Dale",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -1893,
+    "y": -2877
+   },
+   "gap": null
+  },
+  {
+   "name": "Watson Bay",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -4987,
+    "y": -3272
+   },
+   "poster": {
+    "x": -4682,
+    "y": -3421
+   },
+   "gap": 339
+  },
+  {
+   "name": "Mariana County",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -4306,
+    "y": -4005
+   },
+   "poster": {
+    "x": -4975,
+    "y": -3969
+   },
+   "gap": 670
+  },
+  {
+   "name": "Pelican Valley",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -3329,
+    "y": -4005
+   },
+   "gap": null
+  },
+  {
+   "name": "Corsair Key",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -1042,
+    "y": -4111
+   },
+   "gap": null
+  },
+  {
+   "name": "Shoeless Keys",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -2085,
+    "y": -4517
+   },
+   "gap": null
+  },
+  {
+   "name": "Key Lento",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -2510,
+    "y": -5919
+   },
+   "poster": {
+    "x": -2656,
+    "y": -6078
+   },
+   "gap": 216
+  },
+  {
+   "name": "Riquezas Keys",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -7882,
+    "y": -6035
+   },
+   "gap": null
+  },
+  {
+   "name": "Permit Keys",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -5704,
+    "y": -6296
+   },
+   "gap": null
+  },
+  {
+   "name": "Goose Key",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -6600,
+    "y": -6380
+   },
+   "poster": {
+    "x": -7233,
+    "y": -6395
+   },
+   "gap": 633
+  },
+  {
+   "name": "Southwind",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -6388,
+    "y": -6463
+   },
+   "poster": {
+    "x": -6257,
+    "y": -6526
+   },
+   "gap": 145
+  },
+  {
+   "name": "Maroon Key",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -4377,
+    "y": -6864
+   },
+   "poster": {
+    "x": -4423,
+    "y": -6653
+   },
+   "gap": 216
+  },
+  {
+   "name": "Mile Zero Air Station",
+   "inGtadb": false,
+   "gtadb": null,
+   "poster": {
+    "x": -7028,
+    "y": -6913
+   },
+   "gap": null
+  },
+  {
+   "name": "Abismo Key",
+   "inGtadb": true,
+   "gtadb": {
+    "x": -4986,
+    "y": -7310
+   },
+   "poster": {
+    "x": -4427,
+    "y": -7290
+   },
+   "gap": 559
+  }
+ ]
+}
