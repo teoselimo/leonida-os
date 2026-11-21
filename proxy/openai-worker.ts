@@ -32,7 +32,8 @@ const PRICES: Record<string, Money> = {
   "gpt-6.1-terra": { input: 1.00, output: 5.00 },
   "gpt-6.2-sol": { input: 2.00, output: 10.00 },
 };
-const OUTPUT_LIMIT = 1200;
+const OUTPUT_LIMIT_QUICK = 1600;
+const OUTPUT_LIMIT_DEEP = 2800;
 const SERVER_RULES = [
   "Tu es LEONIDA AI, un assistant GTA VI conversationnel chaleureux et naturel, en français.",
   "Reste vivant, curieux et pertinent. N'impose pas 2–4 phrases. Réponds d'abord à la demande et rebondis avec tact.",
@@ -152,15 +153,16 @@ export default {
     }));
     if (messages.some((m) => !m.content)) return reply("content", 400, headers);
 
+    const outputLimit = payload.tier === "default" ? OUTPUT_LIMIT_DEEP : OUTPUT_LIMIT_QUICK;
     const requestBody = {
       model, instructions: SERVER_RULES, input: messages,
       reasoning: { effort: payload.tier === "default" ? "medium" : model === "gpt-6.2-sol" ? "low" : "none" },
-      max_output_tokens: OUTPUT_LIMIT, store: false, stream: true,
+      max_output_tokens: outputLimit, store: false, stream: true,
     };
     // Extremely conservative bound: a UTF-8 byte is at least as granular as a
     // BPE text token. Add overhead for response framing and serialized roles.
     const inputMax = new TextEncoder().encode(JSON.stringify(requestBody)).length + 1200;
-    const reservedMicros = chargeMicros(inputMax, OUTPUT_LIMIT, price);
+    const reservedMicros = chargeMicros(inputMax, outputLimit, price);
     const id = crypto.randomUUID();
     const ledger = env.BUDGET.get(env.BUDGET.idFromName("personal-ledger"));
     const ledgerCall = (op: object) => ledger.fetch("https://ledger.invalid/", {
@@ -205,8 +207,22 @@ export default {
         let gotText = false;
         let measured: number | null = null;
         let actualModel = model;
+        type FinalResponse = {
+          usage?: { input_tokens?: number; output_tokens?: number } | null;
+          model?: string;
+          error?: { code?: string } | null;
+          incomplete_details?: { reason?: string } | null;
+          output?: { type?: string; content?: { type?: string; text?: string }[] }[];
+        };
+        const recordUsage = (response?: FinalResponse) => {
+          const usage = response?.usage;
+          if (usage && Number.isFinite(usage.input_tokens) && Number.isFinite(usage.output_tokens)) {
+            measured = chargeMicros(usage.input_tokens || 0, usage.output_tokens || 0, price);
+          }
+          if (response?.model) actualModel = response.model;
+        };
         const handleBlock = (block: string) => {
-          const data = block.split(/\r?\n/).filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trim()).join("\n");
+          const data = block.split(/\\r?\\n/).filter((line) => line.startsWith("data:")).map((line) => line.slice(5).trim()).join("\\n");
           if (!data || data === "[DONE]") return;
           let event: Record<string, unknown>;
           try { event = JSON.parse(data) as Record<string, unknown>; } catch { return; }
@@ -214,31 +230,56 @@ export default {
             gotText = true;
             send({ type: "delta", text: event.delta });
           } else if (event.type === "response.completed") {
-            const response = event.response as { usage?: { input_tokens?: number; output_tokens?: number }; model?: string } | undefined;
-            const usage = response?.usage;
-            if (usage && Number.isFinite(usage.input_tokens) && Number.isFinite(usage.output_tokens)) {
-              measured = chargeMicros(usage.input_tokens || 0, usage.output_tokens || 0, price);
+            const response = event.response as FinalResponse | undefined;
+            recordUsage(response);
+            // Defensive: the final response may contain output_text even when delta events were missing.
+            if (!gotText && Array.isArray(response?.output)) {
+              const finalText = response.output.flatMap((item) => item.content || [])
+                .filter((c) => c.type === "output_text" && typeof c.text === "string")
+                .map((c) => c.text).join("");
+              if (finalText.trim()) { gotText = true; send({ type: "delta", text: finalText }); }
             }
-            actualModel = response?.model || model;
             completed = true;
-          } else if (event.type === "response.failed" || event.type === "error") {
-            throw new Error("upstream-failed");
+          } else if (event.type === "response.incomplete") {
+            const response = event.response as FinalResponse | undefined;
+            recordUsage(response);
+            throw new Error(response?.incomplete_details?.reason === "max_output_tokens"
+              ? "upstream_output_limit" : "upstream_incomplete");
+          } else if (event.type === "response.failed") {
+            const response = event.response as FinalResponse | undefined;
+            recordUsage(response);
+            // Only expose a small, non-sensitive error category, never OpenAI's raw message.
+            throw new Error(response?.error?.code === "server_error"
+              ? "upstream_failed_server" : "upstream_failed");
+          } else if (event.type === "error") {
+            throw new Error("upstream_event_error");
           }
         };
         try {
           for (;;) {
-            const piece = await reader.read();
+            let piece: ReadableStreamReadResult<Uint8Array>;
+            try { piece = await reader.read(); } catch { throw new Error("upstream_stream"); }
             if (piece.done) break;
             pending += dec.decode(piece.value, { stream: true });
-            const blocks = pending.split(/\r?\n\r?\n/);
+            const blocks = pending.split(/\\r?\\n\\r?\\n/);
             pending = blocks.pop() || "";
             for (const b of blocks) handleBlock(b);
           }
           if (pending.trim()) handleBlock(pending);
-          if (!completed || !gotText) throw new Error("incomplete");
+          if (!completed) throw new Error("upstream_stream_ended");
+          if (!gotText) throw new Error("upstream_no_text");
           send({ type: "done", model: actualModel });
-        } catch {
-          send({ type: "error", code: "upstream_error" });
+        } catch (e) {
+          const reason = e instanceof Error ? e.message : "";
+          const categories = [
+            "upstream_output_limit", "upstream_incomplete", "upstream_failed",
+            "upstream_failed_server", "upstream_event_error", "upstream_stream",
+            "upstream_stream_ended", "upstream_no_text",
+          ];
+          const code = categories.includes(reason) ? reason : "upstream_unknown";
+          // No messages, payloads, API credentials or response text in logs.
+          console.warn("leonida_gpt_stream", { code, gotText, completed });
+          try { send({ type: "error", code }); } catch { /* client disconnected */ }
         } finally {
           // If usage is missing, retain entire reservation; never release an
           // unknown-cost call to permit unlimited retries.
