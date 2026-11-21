@@ -5,10 +5,10 @@ import type { PlaceRef } from "../ai/engine";
 import { POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus } from "../poi";
 import type { Landmark } from "../gtadb";
 import type { PersistedState } from "../types";
-import { CONSOLES } from "../meta";
+import { CONSOLES, SPOILER_FR } from "../meta";
 
 /** Limites de contexte : jamais des dizaines de fiches sans rapport. */
-export const CONTEXT_LIMITS = { maxEvidence: 6, maxQuote: 240, maxChars: 6_000 };
+export const CONTEXT_LIMITS = { maxEvidence: 8, maxQuote: 280, maxChars: 9_000 };
 
 const EDITION: Record<string, string> = { standard: "Standard", ultimate: "Ultimate", unknown: "non renseignée" };
 const PREORDER: Record<string, string> = { yes: "oui", no: "non", unknown: "inconnu" };
@@ -27,12 +27,34 @@ export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "
     .filter(Boolean);
   return [
     `Console : ${CONSOLES[p.console] ?? p.console} · édition ${EDITION[p.edition]} · bonus de précommande : ${PREORDER[p.preorder]}`,
-    `Chapitre atteint : ${p.chapter} · dernière mission terminée : ${p.lastMission ?? "non renseignée"} · prochaine mission : ${p.nextMission ?? "non renseignée"}`,
+    `Chapitre atteint : ${p.chapter} · dernière mission terminée (déclarée) : ${p.lastMission ?? "non renseignée"}`,
+    p.nextMission
+      ? p.missionInProgress
+        ? `Mission EN COURS (déclarée lancée, PAS terminée) : ${p.nextMission}`
+        : `Prochaine mission (pas encore lancée) : ${p.nextMission}`
+      : "Prochaine mission : non renseignée",
+    objectivesLine(p),
     `Missions terminées : ${p.missionsDone.length ? p.missionsDone.slice(-12).join(", ") : "aucune renseignée"}`,
     `Activités déjà faites : ${done.length ? done.slice(-10).join(" ; ") : "aucune renseignée"}`,
     `Véhicules et garages possédés : ${owned.length ? owned.slice(-10).join(", ") : "aucun renseigné"}`,
-    `Anti-spoiler : ${p.spoilerMode === "strict" ? "strict (ne rien révéler au-delà du chapitre atteint)" : "modéré"}`,
+    `Anti-spoiler : ${SPOILER_FR[p.spoilerMode] ?? SPOILER_FR.strict}`,
   ].join("\n");
+}
+
+function objectivesLine(p: PersistedState["profile"]): string {
+  const list = (p.objectives ?? []).filter((o) => p.nextMission && o.mission.toLowerCase() === p.nextMission.toLowerCase());
+  if (!list.length) return "Objectifs facultatifs notés pour cette mission : aucun";
+  return `Objectifs facultatifs notés : ${list.map((o) => `${o.done ? "[fait] " : "[à faire] "}${o.text} (${o.basis})`).join(" ; ")}`;
+}
+
+/** Résultat web transmis au modèle comme preuve (jamais comme instruction). */
+export interface WebEvidence {
+  id: string;
+  titre: string;
+  url: string;
+  site: string;
+  date: string | null;
+  extrait: string;
 }
 
 const asLm = (p: PlaceRef): Landmark => ({ id: p.id, name: p.name, district: p.district, tags: p.tags ?? [], x: p.x ?? 0, y: p.y ?? 0, real: p.real ?? "" });
@@ -41,7 +63,7 @@ const asLm = (p: PlaceRef): Landmark => ({ id: p.id, name: p.name, district: p.d
  * Preuves compactes pour le modèle : uniquement les entités retenues par la recherche (fiches, véhicules, lieux),
  * avec leur fiabilité et le nombre de sources par fait. Partagé par l'Artifact et le futur backend API.
  */
-export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[] = []): string {
+export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[] = [], web: WebEvidence[] = []): string {
   const cat = missionCatalog(feed);
   const g = { missions: [...cat.values()].map((m) => m.name), proper: (feed.vehicles ?? []).map((v) => v.name) };
   const q = (s: string) => s.slice(0, CONTEXT_LIMITS.maxQuote);
@@ -71,7 +93,7 @@ export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[]
           manquable: d?.missable?.value ?? null,
           sources_par_fait: { gain: d?.money?.support.length ?? 0, lieu: d?.place?.support.length ?? 0, disparition: d?.contextMissable?.support.length ?? 0 },
         },
-        extraits: r.evidence.flatMap((e) => (e.quotes ?? []).slice(0, 1)).slice(0, 2).map(q),
+        extraits: r.evidence.flatMap((e) => (e.quotes ?? []).slice(0, 2)).slice(0, 3).map(q),
         sources: r.evidence.slice(0, 3).map((e) => `${e.sourceName.replace(/\s*\([^)]*\)\s*$/, "")} (${(e.publishedAt ?? r.firstSeenAt).slice(0, 10)})`),
       });
       continue;
@@ -92,6 +114,7 @@ export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[]
         extraits: [v.location.text?.value ?? ""].filter(Boolean).map(q),
       });
   }
+  for (const w of web.slice(0, 5)) out.push({ id: w.id, web: w.titre, site: w.site, date: w.date, fiabilite: "web non vérifié (une source)", extrait: q(w.extrait) });
   let s = JSON.stringify(out);
   if (s.length > CONTEXT_LIMITS.maxChars) s = s.slice(0, CONTEXT_LIMITS.maxChars);
   return s;

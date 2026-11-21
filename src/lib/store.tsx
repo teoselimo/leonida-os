@@ -8,7 +8,7 @@ import { asPlayerRecord, isValidRecordInput } from "./records";
 import { liveToDiscoveries, useLiveRadar } from "./live";
 import { demoRepository, localProgressStore } from "./repository";
 import { cloudLoad, cloudSave } from "./runtime/cloud";
-import type { Discovery, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
+import type { Discovery, Objective, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
 
 const STORAGE_KEY = "leonida-os/progress/v1";
 const SAVED_AT_KEY = "leonida-os/progress-saved-at/v1";
@@ -27,6 +27,9 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   if (!Array.isArray(profile.missionsDone)) profile.missionsDone = [];
   if (profile.lastMission !== null && typeof profile.lastMission !== "string") profile.lastMission = null;
   if (typeof profile.nextMission !== "string") profile.nextMission = null;
+  if (!["strict", "relaxed", "off"].includes(profile.spoilerMode as string)) profile.spoilerMode = "strict";
+  profile.missionInProgress = !!profile.nextMission && profile.missionInProgress === true;
+  profile.objectives = Array.isArray(profile.objectives) ? profile.objectives.filter((o) => o && typeof o.text === "string" && typeof o.mission === "string").slice(-80) : [];
   // V0.7 : la démo n'est plus mélangée à la vraie partie (désactivée une fois, réactivable dans Profil)
   const rev = saved.rev ?? 0;
   const showDemo = rev < 7 ? false : saved.showDemo ?? false;
@@ -71,7 +74,8 @@ type Action =
   | { type: "showDemo"; value: boolean }
   | { type: "vehicle"; id: string; progress: VehicleProgress | null }
   | { type: "done"; id: string; value: boolean }
-  | { type: "mission"; name: string | null; done: boolean };
+  | { type: "mission"; name: string | null; done: boolean }
+  | { type: "objectives"; fn: (list: Objective[]) => Objective[] };
 
 function reducer(s: PersistedState, a: Action): PersistedState {
   switch (a.type) {
@@ -126,9 +130,12 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       const has = s.profile.missionsDone.some((m) => m.toLowerCase() === name.toLowerCase());
       const missionsDone = a.done ? (has ? s.profile.missionsDone : [...s.profile.missionsDone, name]) : s.profile.missionsDone.filter((m) => m.toLowerCase() !== name.toLowerCase());
       // une mission terminée n'est plus « prochaine »
-      const nextMission = a.done && s.profile.nextMission && s.profile.nextMission.toLowerCase() === name.toLowerCase() ? null : s.profile.nextMission;
-      return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone, nextMission } };
+      const wasNext = a.done && !!s.profile.nextMission && s.profile.nextMission.toLowerCase() === name.toLowerCase();
+      const nextMission = wasNext ? null : s.profile.nextMission;
+      return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone, nextMission, missionInProgress: wasNext ? false : s.profile.missionInProgress } };
     }
+    case "objectives":
+      return { ...s, profile: { ...s.profile, objectives: a.fn(s.profile.objectives ?? []).slice(-80) } };
     case "vehicle": {
       const { [a.id]: _old, ...rest } = s.vehicles;
       return { ...s, vehicles: a.progress ? { ...rest, [a.id]: a.progress } : rest };
@@ -177,7 +184,11 @@ interface Ctx {
   setDone: (id: string, value: boolean) => void;
   /** Mission principale terminée (devient la « dernière mission ») ou retirée. */
   setMission: (name: string | null, done?: boolean) => void;
-  setNextMission: (name: string | null) => void;
+  setNextMission: (name: string | null, inProgress?: boolean) => void;
+  setMissionInProgress: (on: boolean) => void;
+  addObjective: (o: Omit<Objective, "id" | "done" | "at">) => void;
+  toggleObjective: (id: string) => void;
+  removeObjective: (id: string) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
   /** Véhicule sélectionné sur la carte (mode Voitures cachées). */
@@ -366,7 +377,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       dismissToast: () => setToast(null),
       setDone: (id, value) => dispatch({ type: "done", id, value }),
       setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
-      setNextMission: (name) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null } }),
+      setNextMission: (name, inProgress = false) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress } }),
+      setMissionInProgress: (on) => dispatch({ type: "profile", patch: { missionInProgress: on } }),
+      addObjective: (o) =>
+        dispatch({
+          type: "objectives",
+          fn: (list) =>
+            list.some((x) => x.mission.toLowerCase() === o.mission.toLowerCase() && x.text.toLowerCase() === o.text.trim().toLowerCase())
+              ? list
+              : [...list, { ...o, text: o.text.trim().slice(0, 160), id: `o${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, done: false, at: new Date().toISOString() }],
+        }),
+      toggleObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.map((x) => (x.id === id ? { ...x, done: !x.done } : x)) }),
+      removeObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.filter((x) => x.id !== id) }),
       setVehicle: (id, st, storage) => {
         const prev = state.vehicles[id];
         dispatch({ type: "vehicle", id, progress: st ? { state: st, at: new Date().toISOString(), storage: storage ?? prev?.storage } : null });

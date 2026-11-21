@@ -74,4 +74,23 @@ export interface CopilotAnswer {
   /** Remarque d'honnêteté (repli, limite atteinte, réponse écartée). */
   note?: string;
   evidence?: string[];
+  /** Mode « Rien à manquer » : éléments validés (chaque élément cite une preuve existante). */
+  checklist?: { verified: ChecklistItem[]; uncertain: ChecklistItem[] };
+  /** Recherche web effectuée pour cette réponse (null = non tentée). */
+  web?: { status: WebStatus; count: number } | null;
 }
+
+export interface ChecklistItem {
+  text: string;
+  source: Source | null;
+}
+
+export type WebStatus = "ok" | "empty" | "unavailable" | "not_connected" | "needs_reauth" | "denied" | "error";
+export interface WebHit {
+  title: string;
+  url: string;
+  text: string;
+  date: string | null;
+}
+/** Recherche web injectée par l'environnement (connecteur de l'Artifact, ou futur backend) : le moteur n'en dépend pas. */
+export type WebSearchFn = (query: string, signal?: AbortSignal) => Promise<{ status: WebStatus; hits: WebHit[] }>;

@@ -20,16 +20,21 @@ export interface PoiCatMeta {
   rank: number;
 }
 
+/**
+ * Zooms d'apparition : ENTIERS, car MapLibre évalue les filtres de zoom d'une couche de symboles au zoom de tuile
+ * (entier) — un seuil 3,4 n'apparaîtrait qu'au zoom 4. Calés sur le rendu iPhone (#13) : repères dès la vue
+ * d'ensemble, commerces / stations / garages dès la vue de quartier (~3), restos et loisirs un cran plus près.
+ */
 export const POI_CATS: Record<PoiCat, PoiCatMeta> = {
-  repere: { label: "Repère", plural: "Repères", color: "#FFB35C", glyph: "★", minZoom: 1.5, rank: 1 },
-  commerce: { label: "Commerce", plural: "Commerces", color: "#FF3D8B", glyph: "$", minZoom: 4, rank: 2 },
-  station: { label: "Station-service", plural: "Stations", color: "#FF6F61", glyph: "⛽", minZoom: 4, rank: 3 },
-  garage: { label: "Garage", plural: "Garages", color: "#5AB8FF", glyph: "G", minZoom: 4.6, rank: 3 },
-  restaurant: { label: "Restaurant / bar", plural: "Restos & bars", color: "#FFD166", glyph: "R", minZoom: 5.2, rank: 4 },
-  loisirs: { label: "Loisirs", plural: "Loisirs", color: "#2EE6D6", glyph: "♪", minZoom: 5.2, rank: 4 },
-  hotel: { label: "Hôtel", plural: "Hôtels", color: "#B98CFF", glyph: "H", minZoom: 5.6, rank: 5 },
-  transport: { label: "Transport", plural: "Transports", color: "#9AA7C2", glyph: "T", minZoom: 6.2, rank: 6 },
-  autre: { label: "Lieu", plural: "Autres lieux", color: "#C9C3D8", glyph: "•", minZoom: 6.8, rank: 7 },
+  repere: { label: "Repère", plural: "Repères", color: "#FFB35C", glyph: "★", minZoom: 0, rank: 1 },
+  commerce: { label: "Commerce", plural: "Commerces", color: "#FF3D8B", glyph: "$", minZoom: 3, rank: 2 },
+  station: { label: "Station-service", plural: "Stations", color: "#FF6F61", glyph: "⛽", minZoom: 3, rank: 3 },
+  garage: { label: "Garage", plural: "Garages", color: "#5AB8FF", glyph: "G", minZoom: 3, rank: 3 },
+  restaurant: { label: "Restaurant / bar", plural: "Restos & bars", color: "#FFD166", glyph: "R", minZoom: 4, rank: 4 },
+  loisirs: { label: "Loisirs", plural: "Loisirs", color: "#2EE6D6", glyph: "♪", minZoom: 4, rank: 4 },
+  hotel: { label: "Hôtel", plural: "Hôtels", color: "#B98CFF", glyph: "H", minZoom: 4, rank: 5 },
+  transport: { label: "Transport", plural: "Transports", color: "#9AA7C2", glyph: "T", minZoom: 5, rank: 6 },
+  autre: { label: "Lieu", plural: "Autres lieux", color: "#C9C3D8", glyph: "•", minZoom: 6, rank: 7 },
 };
 
 /** Catégories proposées en filtre (ordre d'affichage). */

@@ -113,8 +113,8 @@ function buildCatalog(feed: RadarFeed): Map<string, MissionInfo> {
 const PEOPLE = new Set(["Donnie", "Shirley", "Moses", "Kirk", "Andrea", "Kordell", "Rafa", "Shayna", "Andrés", "Mattia", "Kat", "Brian", "Lucia", "Jason", "Cal", "Boobie", "Dre"]);
 
 /** Mission visible pour le joueur sans spoiler (chapitre connu et atteint, ou mode modéré). */
-export function missionVisible(m: MissionInfo, chapter: number, spoilerMode: "strict" | "relaxed"): boolean {
-  if (spoilerMode === "relaxed") return true;
+export function missionVisible(m: MissionInfo, chapter: number, spoilerMode: "strict" | "relaxed" | "off"): boolean {
+  if (spoilerMode !== "strict") return true;
   return m.chapter != null && m.chapter <= chapter;
 }
 
@@ -154,7 +154,7 @@ export interface MissionMatch {
   raw: string | null;
 }
 
-export function resolveMission(q: string, catalog: Map<string, MissionInfo>, opts: { chapter: number; spoilerMode: "strict" | "relaxed" }): MissionMatch {
+export function resolveMission(q: string, catalog: Map<string, MissionInfo>, opts: { chapter: number; spoilerMode: "strict" | "relaxed" | "off" }): MissionMatch {
   const qTok = keyOf(q).split(" ");
   const all = [...catalog.values()];
   const direct = all.filter((m) => phraseHas(qTok, m.name) || m.aliases.some((a) => phraseHas(qTok, a)));
@@ -203,7 +203,7 @@ export interface MissionBrief {
   guide: RadarRecord | null;
 }
 
-export function missionBrief(feed: RadarFeed | null, name: string, ctx: { chapter: number; spoilerMode: "strict" | "relaxed"; done: Record<string, string> }): MissionBrief {
+export function missionBrief(feed: RadarFeed | null, name: string, ctx: { chapter: number; spoilerMode: "strict" | "relaxed" | "off"; done: Record<string, string> }): MissionBrief {
   const catalog = missionCatalog(feed);
   const k = keyOf(name);
   const mission = catalog.get(k) ?? null;

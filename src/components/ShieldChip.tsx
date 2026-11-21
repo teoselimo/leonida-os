@@ -1,20 +1,23 @@
 "use client";
 
 import { useStore } from "@/lib/store";
+import { SPOILER_LABEL, SPOILER_NEXT } from "@/lib/meta";
 import { Icon } from "./ui/Icon";
 
-/** Indicateur anti-spoiler, présent sur chaque écran. Toucher = basculer strict/modéré. */
+/** Indicateur anti-spoiler, présent sur chaque écran. Toucher = niveau suivant (complet → léger → aucun). */
 export function ShieldChip() {
   const { state, setProfile } = useStore();
-  const strict = state.profile.spoilerMode === "strict";
+  const mode = state.profile.spoilerMode;
   return (
     <button
-      className={`shield ${strict ? "is-strict" : ""}`}
-      onClick={() => setProfile({ spoilerMode: strict ? "relaxed" : "strict" })}
-      aria-label={`Anti-spoiler ${strict ? "strict" : "modéré"} — toucher pour changer`}
+      className={`shield ${mode === "strict" ? "is-strict" : mode === "off" ? "is-off" : ""}`}
+      onClick={() => setProfile({ spoilerMode: SPOILER_NEXT[mode] })}
+      aria-label={`Anti-spoiler ${SPOILER_LABEL[mode].toLowerCase()} — toucher pour changer`}
+      data-testid="shield"
+      data-mode={mode}
     >
       <Icon name="shieldCheck" size={16} />
-      <span>{strict ? "Strict" : "Modéré"}</span>
+      <span>{SPOILER_LABEL[mode]}</span>
     </button>
   );
 }

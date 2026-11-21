@@ -105,7 +105,7 @@ test.describe("Copilote : Claude encadré", () => {
     expect(r.engine).toBe("claude");
     expect(r.model).toBe("Claude (test)");
     const msgs = t.calls[0].messages;
-    expect(msgs[0].content).toContain("LEONIDA AI");
+    expect(msgs[0].content).toContain("copilote de GTA VI");
     const turn = msgs[msgs.length - 1];
     expect(turn.role).toBe("user");
     expect(turn.content).toContain("Find Donnie's Package");

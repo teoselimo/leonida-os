@@ -8,7 +8,8 @@ import type { AiAction, AiAnswer, PlaceRef, Topic } from "@/lib/ai/engine";
 import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
 import { askCopilot, pickTransport } from "@/lib/copilot";
-import type { CopilotAnswer, LlmMessage, LlmTransport } from "@/lib/copilot";
+import type { CopilotAnswer, LlmMessage, LlmTransport, WebStatus } from "@/lib/copilot";
+import { exaSearch, webStatus } from "@/lib/runtime/web";
 import { lngLatToGame, loadLandmarks } from "@/lib/gtadb";
 import { useIsTablet } from "@/lib/useMedia";
 import { SPRINGS, spring, tick } from "@/lib/motion";
@@ -17,7 +18,15 @@ import { Sheet } from "./Sheet";
 import { BrandMark } from "./Brand";
 import { Icon } from "./ui/Icon";
 
-type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean };
+type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean; stage?: "search" | "write"; checklist?: CopilotAnswer["checklist"]; web?: CopilotAnswer["web"]; mission?: string };
+type AskOpts = { mode?: "chat" | "checklist"; mission?: string };
+const WEB_FAIL: Partial<Record<WebStatus, string>> = {
+  not_connected: "Recherche web indisponible : le connecteur Exa n'est pas branché sur ton compte Claude.",
+  needs_reauth: "Recherche web indisponible : reconnecte le connecteur Exa dans les réglages de Claude.",
+  denied: "Recherche web non autorisée pour cette app (tu peux l'accepter à la prochaine demande).",
+  error: "La recherche web a échoué cette fois-ci ; réponse sans le web.",
+  empty: "Aucun résultat web pertinent trouvé.",
+};
 type Msg = { id: number; role: "user"; text: string } | AiMsg;
 const HISTORY_KEY = "leonida-os/ai-history/v2";
 
@@ -67,8 +76,10 @@ export function AiCopilot() {
   msgsRef.current = msgs;
   // Moteur conversationnel : Claude (Artifact ou API) si disponible, sinon mode direct
   const [transport, setTransport] = useState<LlmTransport | null>(null);
+  const [web, setWeb] = useState<WebStatus>("unavailable");
   useEffect(() => {
     void pickTransport().then(setTransport);
+    void webStatus().then(setWeb);
   }, []);
   const [deep, setDeep] = useState(false);
   useEffect(() => {
@@ -92,7 +103,7 @@ export function AiCopilot() {
   const historyOf = (list: Msg[]): LlmMessage[] =>
     list
       .filter((m) => (m.role === "user" ? m.text : m.a.text))
-      .slice(-8)
+      .slice(-16)
       .map((m) => (m.role === "user" ? { role: "user" as const, content: m.text } : { role: "assistant" as const, content: m.a.text }));
   const toAi = (c: CopilotAnswer): AiAnswer => ({ intent: c.intent, text: c.message, reliability: c.trust, sources: c.sources, actions: c.actions, more: c.more, replies: c.replies, topic: c.topic, evidence: c.evidence });
   const [places, setPlaces] = useState<PlaceRef[]>([]);
@@ -121,7 +132,7 @@ export function AiCopilot() {
   };
 
   const ask = useCallback(
-    async (q: string, forcedTopic?: Topic | null) => {
+    async (q: string, forcedTopic?: Topic | null, opts: AskOpts = {}) => {
       const question = q.trim().slice(0, 300);
       if (!question) return;
       setText("");
@@ -137,8 +148,12 @@ export function AiCopilot() {
         ctlRef.current?.abort();
         ctlRef.current = ctl;
         setStreaming(true);
-        setMsgs((m) => [...m, { id, role: "user", text: question }, { id: id + 1, role: "ai", a: { intent: "pending", text: "", reliability: null, sources: [], actions: [] }, engine: "claude", streaming: true }]);
+        setMsgs((m) => [...m, { id, role: "user", text: question }, { id: id + 1, role: "ai", a: { intent: "pending", text: "", reliability: null, sources: [], actions: [] }, engine: "claude", streaming: true, mission: opts.mission }]);
         const c = await askCopilot({
+          mode: opts.mode,
+          mission: opts.mission,
+          search: web === "unavailable" ? null : exaSearch,
+          onStage: (stage) => setMsgs((m) => m.map((x) => (x.id === id + 1 && x.role === "ai" ? { ...x, stage } : x))),
           question,
           ctx,
           topic,
@@ -152,7 +167,9 @@ export function AiCopilot() {
           ctlRef.current = null;
           setStreaming(false);
         }
-        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: c.note } : x)));
+        const webNote = c.web && c.web.status !== "ok" ? WEB_FAIL[c.web.status] : undefined;
+        if (c.web) setWeb(c.web.status === "ok" || c.web.status === "empty" ? "ok" : c.web.status);
+        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: [c.note, webNote].filter(Boolean).join(" ") || undefined, checklist: c.checklist, web: c.web, mission: opts.mission } : x)));
         return;
       }
       const local = answer(question, ctx, topic);
@@ -172,15 +189,15 @@ export function AiCopilot() {
         }),
       );
     },
-    [feed, state, places, transport, deep],
+    [feed, state, places, transport, deep, web],
   );
 
   // Questions lancées depuis l'accueil (amorces)
   useEffect(() => {
     const h = (e: Event) => {
-      const d = (e as CustomEvent).detail as string | { question: string; topic?: Topic | null };
+      const d = (e as CustomEvent).detail as string | { question: string; topic?: Topic | null; mode?: "chat" | "checklist"; mission?: string };
       if (typeof d === "string") void ask(d);
-      else if (d?.question) void ask(d.question, d.topic ?? null);
+      else if (d?.question) void ask(d.question, d.topic ?? null, { mode: d.mode, mission: d.mission });
     };
     window.addEventListener("leonida:ask", h);
     return () => window.removeEventListener("leonida:ask", h);
@@ -269,15 +286,15 @@ export function AiCopilot() {
         <BrandMark size={30} />
         <div>
           <strong>LEONIDA AI</strong>
-          <span data-testid="ai-mode">{transport ? `${transport.label} · données LEONIDA RADAR` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+          <span data-testid="ai-mode">{transport ? `${transport.label} · LEONIDA RADAR${web === "ok" ? " + web" : ""}` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
         </div>
         {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
-        {isTablet && <button className="iconbtn" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>}
+        <button className="iconbtn ai__close" onClick={() => { tick(); setAiOpen(false); }} aria-label="Fermer LEONIDA AI" data-testid="ai-close"><Icon name="close" /></button>
       </header>
       <div className="ai__list" ref={listRef} data-testid="ai-list">
         {msgs.length === 0 && (
           <div className="ai__intro">
-            <p>Salut ! Dis-moi quelle mission tu vas lancer ou ce que tu cherches. Je réponds avec les fiches vérifiées de la veille, selon ton chapitre, ton édition et ce que tu as déjà fait.</p>
+            <p>{transport ? "Salut ! Je joue avec toi : parle-moi comme à un pote (« je lance Swamped », « j'ai la caisse ! », « ça vaut le coup ? »). Je m'appuie sur la veille LEONIDA RADAR" + (web === "ok" ? " et le web" : "") + ", ton chapitre et ce que tu as déjà fait — sans rien inventer." : "Salut ! Dis-moi quelle mission tu vas lancer ou ce que tu cherches. Je réponds avec les fiches vérifiées de la veille, selon ton chapitre, ton édition et ce que tu as déjà fait."}</p>
             {transport && (
               <button className={`chip chip--reply press${deep ? " is-on" : ""}`} onClick={toggleDeep} aria-pressed={deep} data-testid="ai-deep">
                 {deep ? "Réponses approfondies (plus lentes)" : "Réponses rapides · toucher pour approfondir"}
@@ -295,7 +312,8 @@ export function AiCopilot() {
             <div key={m.id} className="bubble bubble--me">{m.text}</div>
           ) : (
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
-              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">Leonida réfléchit…</span> : <p className="bubble__text">{m.a.text}</p>}
+              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{m.a.text}</p>}
+              {m.checklist && <ChecklistView c={m.checklist} mission={m.mission ?? ""} />}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.reliability && (
                 <p className={`bubble__rel relchip--${REL_CLS[m.a.reliability]}`}><i />{REL_FR[m.a.reliability]}</p>
@@ -346,7 +364,7 @@ export function AiCopilot() {
                   ))}
                 </div>
               )}
-              {!m.streaming && m.engine === "claude" && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? "Claude"} à partir des données LEONIDA RADAR</p>}
+              {!m.streaming && m.engine === "claude" && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? "Claude"} à partir des données LEONIDA RADAR{m.web?.status === "ok" ? ` et de ${m.web.count} résultat${m.web.count > 1 ? "s" : ""} web` : ""}</p>}
               {m.note && <p className="bubble__note" data-testid="ai-note">{m.note}</p>}
               {m.llm && m.llm !== "pending" && m.llm !== "generated" && m.llm !== "cached" && m.llm !== "skipped" && (
                 <p className="bubble__note" data-testid="ai-llm-note">Réponse directe : la synthèse IA n’est pas disponible pour le moment.</p>
@@ -382,7 +400,7 @@ export function AiCopilot() {
       )}
       {aiOpen && !isTablet && (
         <div className="ailayer">
-          <Sheet tall initial="full" onClose={() => setAiOpen(false)} testId="ai-sheet" label="LEONIDA AI">
+          <Sheet tall handleOnly initial="full" onClose={() => setAiOpen(false)} testId="ai-sheet" label="LEONIDA AI">
             {body}
           </Sheet>
         </div>
@@ -416,5 +434,41 @@ function AiSidePanel({ open, children }: { open: boolean; children: React.ReactN
     <aside ref={ref} className="aiside glass" style={{ transform: "translate3d(110%, 0, 0)" }} aria-label="LEONIDA AI" data-testid="ai-side">
       {children}
     </aside>
+  );
+}
+
+/** « Rien à manquer » : ce qui est vérifié, ce qui est incertain ; chaque élément peut devenir un objectif facultatif. */
+function ChecklistView({ c, mission }: { c: NonNullable<CopilotAnswer["checklist"]>; mission: string }) {
+  const { state, addObjective } = useStore();
+  const has = (t: string) => (state.profile.objectives ?? []).some((o) => o.mission.toLowerCase() === mission.toLowerCase() && o.text.toLowerCase() === t.toLowerCase());
+  const block = (title: string, items: typeof c.verified, basis: "vérifié" | "incertain", tid: string) =>
+    items.length > 0 && (
+      <div className={`chk chk--${basis === "vérifié" ? "ok" : "warn"}`} data-testid={tid}>
+        <p className="chk__title">{title}</p>
+        <ul>
+          {items.map((it, i) => (
+            <li key={i}>
+              <span className="chk__text">
+                {it.text}
+                {it.source && <a href={it.source.url} target="_blank" rel="noreferrer" className="chk__src">{it.source.name}</a>}
+              </span>
+              {mission && (has(it.text) ? (
+                <span className="chk__added" aria-label="Déjà dans tes objectifs"><Icon name="check" size={14} /></span>
+              ) : (
+                <button className="btn btn--xs btn--ghost press" onClick={() => { tick(); addObjective({ mission, text: it.text, basis, source: it.source ? { name: it.source.name, url: it.source.url } : undefined }); }} data-testid="checklist-add">
+                  <Icon name="plus" size={12} /> Objectif
+                </button>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  if (!c.verified.length && !c.uncertain.length) return null;
+  return (
+    <div className="chks" data-testid="checklist">
+      {block("Vérifié", c.verified, "vérifié", "checklist-verified")}
+      {block("Incertain — à confirmer en jeu", c.uncertain, "incertain", "checklist-uncertain")}
+    </div>
   );
 }

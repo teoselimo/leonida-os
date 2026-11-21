@@ -15,10 +15,12 @@ type Snap = "half" | "full";
  *  - Au lâcher, la vitesse est projetée (comme UIScrollView) pour choisir le cran : plein, mi-hauteur ou fermeture.
  *  - Un toucher pendant une animation la reprend en vol (position et vitesse conservées).
  *  - Le défilement interne cède la main à la fiche quand il est tout en haut et qu'on tire vers le bas.
+ *  - `handleOnly` (conversation LEONIDA AI) : seule la poignée déplace la fiche ; le contenu défile toujours nativement (#12).
+ *  - Sinon, un défilement interne (liste imbriquée comprise) garde la main tant qu'il peut encore défiler.
  *  - Clavier iOS : la fiche passe en plein écran et se place au-dessus du clavier (visualViewport).
  * `onHeight` reçoit la hauteur visible une fois la fiche immobile (pour recentrer la carte au-dessus).
  */
-export function Sheet({ children, onClose, onHeight, tall, testId, label, initial = "half" }: { children: ReactNode; onClose: () => void; onHeight?: (h: number) => void; tall?: boolean; testId?: string; label?: string; initial?: Snap }) {
+export function Sheet({ children, onClose, onHeight, tall, testId, label, initial = "half", handleOnly = false }: { children: ReactNode; onClose: () => void; onHeight?: (h: number) => void; tall?: boolean; testId?: string; label?: string; initial?: Snap; handleOnly?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -170,25 +172,42 @@ export function Sheet({ children, onClose, onHeight, tall, testId, label, initia
     onPointerCancel: (e: React.PointerEvent) => end(e.clientY),
   };
 
-  // Défilement interne : en haut + tirer vers le bas → la fiche prend le relais (et le rend si on remonte)
+  // Défilement interne : en haut + tirer vers le bas → la fiche prend le relais (et le rend si on remonte).
+  // Le geste n'est jamais volé à un contenu qui peut encore défiler (conteneur imbriqué compris).
   useEffect(() => {
     const el = scroller.current;
-    if (!el) return;
+    if (!el || handleOnly) return;
     let startY = 0;
     let engaged = false;
+    let inner: HTMLElement | null = null;
+    const scrollableAncestor = (t: EventTarget | null): HTMLElement | null => {
+      let n = t instanceof HTMLElement ? t : null;
+      while (n && n !== el) {
+        if (n.scrollHeight > n.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(n).overflowY)) return n;
+        n = n.parentElement;
+      }
+      return null;
+    };
     const ts = (e: TouchEvent) => {
+      if (e.touches.length > 1) return;
       startY = e.touches[0].clientY;
       engaged = false;
-      if (anim.current) begin(startY, true), (engaged = true);
+      inner = scrollableAncestor(e.target);
     };
     const tm = (e: TouchEvent) => {
+      if (e.touches.length > 1) return;
       const cy = e.touches[0].clientY;
-      // mi-hauteur : tout glissement vertical déplace la fiche (comme le détent « medium » d'iOS) ;
-      // plein écran : défilement natif, sauf tirer vers le bas quand on est tout en haut
-      const half = el.classList.contains("is-half");
-      if (!engaged && (half ? Math.abs(cy - startY) > 6 : el.scrollTop <= 0 && cy - startY > 6)) {
-        engaged = true;
-        begin(cy, true);
+      const dy = cy - startY;
+      if (!engaged) {
+        // un contenu imbriqué qui peut encore défiler dans ce sens garde le geste
+        if (inner && (dy > 0 ? inner.scrollTop > 0 : inner.scrollTop + inner.clientHeight < inner.scrollHeight - 1)) return;
+        // mi-hauteur : tout glissement vertical déplace la fiche (comme le détent « medium » d'iOS) ;
+        // plein écran : défilement natif, sauf tirer vers le bas quand on est tout en haut
+        const half = el.classList.contains("is-half");
+        if (half ? Math.abs(dy) > 8 : el.scrollTop <= 0 && dy > 8) {
+          engaged = true;
+          begin(cy, true);
+        }
       }
       if (engaged) {
         e.preventDefault();
@@ -227,13 +246,14 @@ export function Sheet({ children, onClose, onHeight, tall, testId, label, initia
       data-testid={testId ?? "sheet"}
       data-snap={snap}
       data-settled={settled ? "true" : "false"}
+      data-handle-only={handleOnly ? "true" : undefined}
       role="dialog"
       aria-label={label}
     >
       <div className="sheet__grip" {...gripProps} role="button" aria-label={snap === "half" ? "Agrandir la fiche" : "Réduire la fiche"} data-testid="sheet-grip">
         <span />
       </div>
-      <div className={`sheet__scroll${snap === "full" ? "" : " is-half"}`} ref={scroller}>
+      <div className={`sheet__scroll${snap === "full" ? "" : " is-half"}${handleOnly ? " is-locked" : ""}`} ref={scroller}>
         <div ref={content}>{children}</div>
       </div>
     </div>

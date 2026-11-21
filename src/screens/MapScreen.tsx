@@ -31,7 +31,7 @@ import type { PoiCat } from "@/lib/poi";
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 export function MapScreen({ active = true }: { active?: boolean }) {
-  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle, garage: gState, setGarage: setGarageStore, placeFocus } = useStore();
+  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle, garage: gState, setGarage: setGarageStore, placeFocus, notify } = useStore();
   const { feed } = useLiveRadar();
   const garage = gState.on;
   const gFilter = gState.filter as GarageFilter | null;
@@ -85,26 +85,47 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     return () => ro.disconnect();
   }, [isTablet]);
 
-  // Lieu demandé par LEONIDA AI : repère gtadb exact, ou quartier → zone approximative (jamais un point inventé)
+  // Lieu demandé par LEONIDA AI (#15) : repère gtadb exact, ou catégorie + quartier → zone couvrant les lieux trouvés.
+  // Jamais un point inventé ; chaque commande est acquittée (data-place-ack) et un échec est dit au joueur.
   const [placeZone, setPlaceZone] = useState<MapZone | null>(null);
+  const [placeAck, setPlaceAck] = useState("");
   useEffect(() => {
     if (!placeFocus.nonce || !landmarks.length) return;
+    const n = placeFocus.nonce;
     setShowLandmarks(true);
-    if (placeFocus.poiCat && placeFocus.poiCat in POI_CATS) setPoiCats([placeFocus.poiCat as PoiCat]);
-    if (placeFocus.landmarkId && landmarks.some((l) => l.id === placeFocus.landmarkId)) {
-      setPlaceZone(null);
-      setLmId(placeFocus.landmarkId);
+    const cat = placeFocus.poiCat && placeFocus.poiCat in POI_CATS ? (placeFocus.poiCat as PoiCat) : null;
+    if (placeFocus.landmarkId) {
+      const l = landmarks.find((x) => x.id === placeFocus.landmarkId);
+      if (l) {
+        // le lieu choisi reste visible même si un filtre de catégorie l'aurait masqué
+        const c = poiCategory(l);
+        setPoiCats((cur) => (cur.length && !cur.includes(c) ? [...cur, c] : cur));
+        setPlaceZone(null);
+        setLmId(l.id);
+        setPlaceAck(`applied:${n}:${l.id}`);
+        return;
+      }
+      notify("Lieu non localisable", "Ce lieu n'est pas dans notre référentiel de la carte. Essaie la recherche.");
+      setPlaceAck(`error:${n}:landmark`);
       return;
     }
+    if (cat) setPoiCats([cat]);
     const d = placeFocus.district ? norm(placeFocus.district) : "";
-    const pts = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
-    if (!pts.length) return;
-    const x = pts.reduce((a, l) => a + l.x, 0) / pts.length;
-    const y = pts.reduce((a, l) => a + l.y, 0) / pts.length;
-    const dist = pts.map((l) => Math.hypot(l.x - x, l.y - y)).sort((a, b) => a - b);
-    const radius = Math.min(2500, Math.max(350, dist[Math.floor(dist.length * 0.8)] ?? 350));
+    const inD = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
+    const pts = cat ? inD.filter((l) => poiCategory(l) === cat) : inD;
+    if (!pts.length) {
+      notify(inD.length ? `Aucun ${POI_CATS[cat!].label.toLowerCase()} répertorié ici` : "Zone non localisable", inD.length ? `La carte communautaire n'en signale pas à ${placeFocus.district}.` : "Ce quartier n'est pas dans notre référentiel de la carte.");
+      setPlaceAck(`error:${n}:${inD.length ? "empty" : "district"}`);
+      if (!inD.length) return;
+    }
+    const use = pts.length ? pts : inD;
+    const x = use.reduce((a, l) => a + l.x, 0) / use.length;
+    const y = use.reduce((a, l) => a + l.y, 0) / use.length;
+    const dist = use.map((l) => Math.hypot(l.x - x, l.y - y)).sort((a, b) => a - b);
+    const radius = Math.min(2500, Math.max(300, (dist[Math.floor(dist.length * 0.9)] ?? 300) * 1.1));
     setLmId(null);
-    setPlaceZone({ id: `place:${placeFocus.district}`, x, y, radius, color: "#2EE6D6", label: placeFocus.district! });
+    setPlaceZone({ id: `place:${placeFocus.district}`, x, y, radius, color: "#2EE6D6", label: cat && pts.length ? `${placeFocus.district} · ${pts.length} ${(pts.length > 1 ? POI_CATS[cat].plural : POI_CATS[cat].label).toLowerCase()}` : placeFocus.district! });
+    if (pts.length && cat) setPlaceAck(`applied:${n}:${pts.length}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeFocus.nonce, landmarks.length]);
 
@@ -365,7 +386,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   if (isTablet) {
     const detailOpen = Boolean(selectedId || lm || vehicleId);
     return (
-      <div className="mapsplit">
+      <div className="mapsplit" data-place-ack={placeAck}>
         <aside className="panel">
           {editor ? (
             <div className="panel__scroll" style={{ paddingTop: "calc(var(--sat) + 18px)" }}>{editorEl}</div>
@@ -415,7 +436,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   // ── iPhone : carte plein écran + fiche glissante ───────────────────────────
   const sheetOpen = Boolean(selectedId || lm || editor || vehicleId);
   return (
-    <div className="mapphone">
+    <div className="mapphone" data-place-ack={placeAck}>
       {mapEl({ top: topH, bottom: sheetOpen ? sheetH : (carto ? 96 : 118) + 86, left: 0 })}
       <div className="mapphone__top" ref={topRef}>
         <div className="row between">

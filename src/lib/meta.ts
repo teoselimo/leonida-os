@@ -1,4 +1,4 @@
-import type { CategoryId, Chapter, ConsoleId, EditionId, Reliability } from "./types";
+import type { CategoryId, Chapter, ConsoleId, EditionId, Reliability, SpoilerMode } from "./types";
 
 export const CATEGORIES: Record<CategoryId, { label: string; plural: string; color: string; icon: string }> = {
   mission: { label: "Mission annexe", plural: "Missions", color: "#FF3D8B", icon: "flag" },
@@ -48,3 +48,12 @@ export const EDITIONS: Record<EditionId, string> = {
 };
 
 export const DIFFICULTY = ["", "Facile", "Moyen", "Exigeant"] as const;
+
+/** Anti-spoiler : libellés courts (puce) et cycle au toucher. */
+export const SPOILER_LABEL: Record<SpoilerMode, string> = { strict: "Complet", relaxed: "Léger", off: "Aucun" };
+export const SPOILER_NEXT: Record<SpoilerMode, SpoilerMode> = { strict: "relaxed", relaxed: "off", off: "strict" };
+export const SPOILER_FR: Record<SpoilerMode, string> = {
+  strict: "complet — ne rien révéler au-delà du chapitre et de la mission atteints (ni nom de mission future, ni personnage, ni lieu de l'histoire)",
+  relaxed: "léger — tu peux évoquer la suite sans détail d'intrigue (pas de rebondissement, pas de fin de mission), en le signalant",
+  off: "aucun — le joueur accepte les révélations",
+};

@@ -179,8 +179,9 @@ export function ProfileScreen() {
               value={state.profile.spoilerMode}
               onChange={(v) => setProfile({ spoilerMode: v })}
               options={[
-                { id: "strict", label: "Strict — tout masquer" },
-                { id: "relaxed", label: "Modéré — flouter" },
+                { id: "strict", label: "Complet" },
+                { id: "relaxed", label: "Léger" },
+                { id: "off", label: "Aucun" },
               ]}
             />
           </section>

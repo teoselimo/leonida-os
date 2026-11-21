@@ -75,7 +75,7 @@ test("Pilote 1 — Find Donnie's Package : Claude reçoit la mission, le profil 
   await expect(a).toHaveAttribute("data-intent", "before");
   await expect(a).toContainText("LEONIDA RADAR");
   const sent = await page.evaluate(() => (window as unknown as Win).__calls[0]);
-  expect(sent[0].content).toContain("LEONIDA AI");
+  expect(sent[0].content).toContain("copilote de GTA VI");
   expect(sent[sent.length - 1].content).toContain("Find Donnie's Package");
   expect(sent[sent.length - 1].content).toMatch(/PS5/);
   await page.screenshot({ path: `captures/${info.project.name}-60-pilote-donnie.png` });

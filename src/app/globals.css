@@ -920,3 +920,45 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .chip--reply.is-on { background: rgba(255, 61, 139, 0.16); box-shadow: inset 0 0 0 1px rgba(255, 61, 139, 0.45); color: #ffd0e3; }
 .collector-alert--snapshot { background: rgba(91, 123, 255, 0.1); color: #c9d3ff; box-shadow: inset 0 0 0 1px rgba(91, 123, 255, 0.28); }
 .live--off { background: var(--dim) !important; animation: none !important; box-shadow: none !important; }
+
+/* ── V0.8 « En partie » ──────────────────────────────────────────────────────── */
+/* #12 : conversation = un seul conteneur de défilement ; la fiche ne bouge que par sa poignée */
+.sheet__scroll.is-locked { overflow: hidden; display: flex; flex-direction: column; }
+.sheet__scroll.is-locked > div { flex: 1; min-height: 0; }
+.sheet[data-handle-only] .sheet__grip { padding: 12px 0 10px; }
+.ai__list { -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+.ai__close { flex: none; width: 40px; height: 40px; }
+.shield.is-off { color: var(--warn, #ffb547); background: rgba(255, 181, 71, 0.08); border-color: rgba(255, 181, 71, 0.3); }
+.pill--live { color: #0b0a10; background: var(--cyan); font-weight: 700; margin-left: 6px; }
+.pill--mini { font-size: 10px; padding: 2px 6px; }
+.missioncard__ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.missioncard__ctas .btn--ghost { box-shadow: inset 0 0 0 1px var(--line2); }
+/* Objectifs facultatifs */
+.objs { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.objs__head { display: flex; justify-content: space-between; align-items: center; min-height: 40px; font-size: 13px; font-weight: 600; color: #d4cde4; background: none; border: 0; padding: 0; }
+.objs__head em { font-style: normal; color: var(--muted); font-weight: 500; }
+.objs__list { list-style: none; display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; }
+.objs__list li { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 6px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
+.objs__list li.is-done .objs__text { opacity: 0.55; text-decoration: line-through; }
+.objs__check { flex: none; width: 36px; height: 36px; display: grid; place-items: center; color: var(--ok); background: none; border: 0; }
+.objs__box { width: 20px; height: 20px; border-radius: 6px; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35); }
+.objs__text { flex: 1; font-size: 13.5px; line-height: 1.35; display: flex; flex-direction: column; gap: 2px; }
+.objs__basis { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.objs__basis--ok { color: var(--ok); }
+.objs__basis--warn { color: var(--amber); }
+.objs__basis--me { color: var(--muted); }
+.objs__rm { flex: none; width: 36px; height: 36px; display: grid; place-items: center; color: var(--muted); background: none; border: 0; }
+.objs__add { display: flex; gap: 6px; }
+.objs__add input { flex: 1; min-width: 0; min-height: 40px; font-size: 16px; }
+/* « Rien à manquer » */
+.chks { display: flex; flex-direction: column; gap: 8px; }
+.chk { border-radius: 14px; padding: 8px 10px; background: rgba(255, 255, 255, 0.04); box-shadow: inset 3px 0 0 var(--chk, var(--ok)); }
+.chk--warn { --chk: var(--amber); }
+.chk__title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--chk, var(--ok)); margin-bottom: 4px; }
+.chk ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.chk li { display: flex; align-items: center; gap: 8px; min-height: 40px; }
+.chk__text { flex: 1; font-size: 13.5px; line-height: 1.35; display: flex; flex-direction: column; gap: 2px; }
+.chk__src { font-size: 11.5px; color: var(--muted); text-decoration: underline; }
+.chk__added { color: var(--ok); width: 36px; display: grid; place-items: center; }
+.chk .btn { flex: none; min-height: 34px; }
+.missioncard__ctas .missioncard__cta { font-size: 14px; white-space: nowrap; padding-left: 10px; padding-right: 10px; gap: 6px; }

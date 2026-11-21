@@ -22,7 +22,8 @@ export type Chapter = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type ConsoleId = "ps5" | "ps5pro" | "xsx" | "xss";
 /** Édition possédée : décide des véhicules, garages et bonus exclusifs proposés. */
 export type EditionId = "standard" | "ultimate" | "unknown";
-export type SpoilerMode = "strict" | "relaxed";
+/** Anti-spoiler : complet (masquer), léger (flouter, révélable au toucher), aucun (tout afficher). */
+export type SpoilerMode = "strict" | "relaxed" | "off";
 
 /** Fait vérifié (officiel) ou donnée de démonstration. Jamais de mélange implicite. */
 export type Provenance =
@@ -98,6 +99,22 @@ export interface Profile {
   /** Missions déclarées terminées (sert à savoir qu'une mission limitée a disparu). */
   missionsDone: string[];
   spoilerMode: SpoilerMode;
+  /** La prochaine mission est lancée (« en cours ») : déclaré par le joueur, jamais déduit. */
+  missionInProgress?: boolean;
+  /** Objectifs facultatifs identifiés (par le joueur ou proposés par l'analyse « Rien à manquer »). */
+  objectives?: Objective[];
+}
+
+/** Objectif facultatif lié à une mission, avec son niveau de preuve. */
+export interface Objective {
+  id: string;
+  mission: string;
+  text: string;
+  done: boolean;
+  /** vérifié = source(s) LEONIDA RADAR fiable(s) ; incertain = une source isolée ou web non recoupé ; perso = ajouté par le joueur. */
+  basis: "vérifié" | "incertain" | "perso";
+  source?: { name: string; url: string };
+  at: string;
 }
 
 /** État persistant (localStorage aujourd'hui, table player_progress demain). */

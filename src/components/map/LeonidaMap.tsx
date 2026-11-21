@@ -14,21 +14,21 @@ import type { Landmark } from "@/lib/gtadb";
 
 const FOCUS_ZOOM = 4.9;
 /** Zoom d'arrivée sur un lieu précis : assez près pour lire les commerces voisins. */
-const POI_ZOOM = 6.6;
+const POI_ZOOM = 5.8;
 
 /**
  * Filtre des repères : zoom minimal de la catégorie (apparition progressive), catégories choisies, conditions en plus.
  * MapLibre n'accepte « zoom » qu'en tête d'un step : les autres conditions vont dans chaque palier.
  */
-function zoomFilter(cats: PoiCat[] | null | undefined, extra: unknown[] = []): FilterSpecification {
+function zoomFilter(cats: PoiCat[] | null | undefined, extra: unknown[] = [], offset = 0): FilterSpecification {
   const base = [...(cats && cats.length ? [["in", ["get", "cat"], ["literal", cats]]] : []), ...extra];
-  const at = (z: number) => ["all", ["<=", ["get", "minz"], z], ...base];
-  const steps = [...new Set(Object.values(POI_CATS).map((c) => c.minZoom))].sort((a, b) => a - b);
+  const at = (z: number) => ["all", ["<=", ["get", "minz"], z - offset], ...base];
+  const steps = [...new Set(Object.values(POI_CATS).map((c) => c.minZoom + offset))].sort((a, b) => a - b);
   return ["step", ["zoom"], at(0), ...steps.flatMap((z) => [z, at(z)])] as unknown as FilterSpecification;
 }
 const lmFilter = (cats: PoiCat[] | null | undefined) => zoomFilter(cats);
-/** Noms : lieux identifiés, catégories utiles (pas les milliers d'« autres lieux »). */
-const labelFilter = (cats: PoiCat[] | null | undefined) => zoomFilter(cats, [["==", ["get", "named"], 1], ["!=", ["get", "cat"], "autre"]]);
+/** Noms : lieux identifiés, catégories utiles (pas les milliers d'« autres lieux »), un cran de zoom après l'icône. */
+const labelFilter = (cats: PoiCat[] | null | undefined) => zoomFilter(cats, [["==", ["get", "named"], 1], ["!=", ["get", "cat"], "autre"]], 1);
 
 /** Pastille de catégorie (canvas, 2×). */
 function drawPin(color: string, glyph: string): ImageData {
@@ -187,7 +187,7 @@ export function LeonidaMap(props: MapViewProps) {
                 id: "lm-label",
                 type: "symbol",
                 source: "landmarks",
-                minzoom: 5.6,
+                minzoom: 4.4,
                 filter: labelFilter(null),
                 layout: {
                   "icon-image": ["concat", "lbl:", ["get", "id"]],

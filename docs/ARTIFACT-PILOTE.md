@@ -81,3 +81,22 @@ Rien n'est activé aujourd'hui (budget 0 €). Le jour venu :
 4. Le flux live redevient accessible (hors Artifact) : plus d'instantané.
 
 Ce qui distingue les deux : l'abonnement Claude grand public (usage personnel dans l'Artifact) **n'est pas** une clé API ; l'API est un contrat distinct, facturé à l'usage.
+
+## 8. V0.8 « En partie » (22/11/2026) — même Artifact, republié
+
+Objectif : utiliser LEONIDA pendant une session de jeu, sur iPhone et iPad.
+
+| Fonction | État | Détail |
+|---|---|---|
+| Copilote naturel (#14) | **Opérationnel** | Nouvelles consignes : Claude mène la conversation (ton de pote, réponses courtes adaptatives, messages elliptiques compris, 16 derniers échanges). Le moteur LEONIDA fournit des faits vérifiés et des actions possibles, plus un texte à reformuler. Garde-fous conservés (chiffres hors preuves rejetés — sauf petits nombres ≤ 20 de la conversation —, actions par index, sources par id). |
+| Anti-spoiler aucun / léger / complet | **Opérationnel** | Puce sur chaque écran (toucher = niveau suivant) et Profil ; transmis à Claude ; ancien réglage migré. |
+| Missions terminée / en cours / objectifs | **Opérationnel** | « Mission en cours » déclarée par le joueur, jamais déduite ; « Je l'ai terminée » demande confirmation. Objectifs facultatifs cochables (vérifié / incertain / noté par toi), sauvegardés (local + stockage personnel). |
+| « Rien à manquer » | **Opérationnel** (qualité à juger en vrai) | Claude analyse les fiches LEONIDA RADAR de la mission (+ web si branché). Chaque point doit citer une preuve existante ; « vérifié » exige une fiche officielle ou recoupée, sinon « incertain ». Bouton « + Objectif » sur chaque point. |
+| Recherche web (Exa) | **À configurer** | Code prêt et capacité `mcp` déclarée (Exa, `web_search_exa`). Le connecteur Exa **n'est pas branché sur le compte** : tant qu'il ne l'est pas, l'app le dit et répond sans web. Jamais testé avec le vrai Exa : le format de réponse est lu de façon tolérante (`results`, JSON texte, blocs « Title/URL »). Un résultat web seul n'est jamais « officiel » ni « vérifié ». |
+| IA → carte (#15) | **Opérationnel** | Commande acquittée (`data-place-ack`), lieu ou zone introuvable signalé par une notification ; bouton carte conservé quand le joueur demande « montre-moi ». Le lieu choisi reste visible malgré un filtre. |
+| Carte lisible (#13) | **Amélioré** | Seuils de zoom entiers (MapLibre filtre au zoom de tuile : 3,4 valait 4) ; repères dès la vue d'ensemble, commerces / stations / garages dès le quartier, noms un cran après. |
+| Scroll du chat iPhone (#12) | **Opérationnel** | Fiche IA déplaçable uniquement par sa poignée, un seul conteneur de défilement, bouton Fermer ; les autres fiches ne volent plus le geste d'un contenu imbriqué qui peut défiler. |
+| Données | Instantané du 21/11/2026 21:44 UTC | Toujours pas de flux live dans un Artifact. |
+
+Tests : `tests/enpartie.unit.spec.ts` (16) et `tests/enpartie.spec.ts` (4 parcours × iPhone, iPad, WebKit). Suite complète : 200+ tests.
+Non vérifiable ici : rendu et gestes sur iPhone réel, ton des réponses du vrai Claude, réponses réelles d'Exa.

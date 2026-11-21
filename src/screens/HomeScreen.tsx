@@ -65,7 +65,7 @@ function FunCard({ it, onGo }: { it: SessionItem; onGo: () => void }) {
 }
 
 export function HomeScreen() {
-  const { state, focusOnMap, setView, discoveries: all, signals, focusVehicle, openRecord, setDone, setVehicle, setAiOpen, celebrate, setNextMission, setMission } = useStore();
+  const { state, focusOnMap, setView, discoveries: all, signals, focusVehicle, openRecord, setDone, setVehicle, setAiOpen, celebrate, setNextMission, setMission, setMissionInProgress } = useStore();
   const { feed } = useLiveRadar();
   const regions = repo.regions();
   const plan = useMemo(() => sessionPlan(feed, state), [feed, state]);
@@ -89,14 +89,21 @@ export function HomeScreen() {
   const prepare = () => {
     if (!m.name) return;
     tick();
-    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: `Je vais lancer ${m.name}`, topic: { kind: "mission", name: m.name, known: !!m.info } } }));
+    const q = p.missionInProgress ? `Je suis en pleine mission ${m.name}` : `Je vais lancer ${m.name}`;
+    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: q, topic: { kind: "mission", name: m.name, known: !!m.info } } }));
     setAiOpen(true);
   };
-  const saveNext = (name: string) => {
+  const checklist = () => {
+    if (!m.name) return;
+    tick();
+    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: `Rien à manquer dans ${m.name} ?`, topic: { kind: "mission", name: m.name, known: !!m.info }, mode: "checklist", mission: m.name } }));
+    setAiOpen(true);
+  };
+  const saveNext = (name: string, inProgress = false) => {
     const n = name.trim();
     if (!n) return;
     tick();
-    setNextMission(n);
+    setNextMission(n, inProgress);
     setEditing(false);
     setDraft("");
   };
@@ -117,7 +124,10 @@ export function HomeScreen() {
         <div className="home__col">
           {/* A — Ta prochaine mission */}
           <section className="missioncard glass" data-testid="next-mission">
-            <p className="missioncard__eyebrow"><Icon name="flag" size={14} /> Ta prochaine mission</p>
+            <p className="missioncard__eyebrow">
+              <Icon name="flag" size={14} /> {m.name && p.missionInProgress && !editing ? "Mission en cours" : "Ta prochaine mission"}
+              {m.name && p.missionInProgress && !editing && <b className="pill pill--live pill--mini" data-testid="mission-live">EN COURS</b>}
+            </p>
             {m.name && !editing ? (
               <>
                 <h2 className="missioncard__name" data-testid="next-mission-name">{m.name}</h2>
@@ -129,9 +139,15 @@ export function HomeScreen() {
                   <b>À récupérer pendant :</b> {m.during ?? "aucune récompense particulière confirmée pour le moment."}
                 </p>
                 {m.risk && <p className="missioncard__risk"><Icon name="alert" size={13} /> {m.risk}</p>}
-                <button className="btn btn--primary missioncard__cta press" onClick={prepare} data-testid="prepare-mission">
-                  <BrandMark size={20} /> Préparer ma mission
-                </button>
+                <div className="missioncard__ctas">
+                  <button className="btn btn--primary missioncard__cta press" onClick={checklist} data-testid="nothing-to-miss">
+                    <Icon name="check" size={18} /> Rien à manquer
+                  </button>
+                  <button className="btn btn--ghost missioncard__cta press" onClick={prepare} data-testid="prepare-mission">
+                    <BrandMark size={18} /> {p.missionInProgress ? "Aide en mission" : "Préparer ma mission"}
+                  </button>
+                </div>
+                <Objectives mission={m.name} />
                 <div className="missioncard__links">
                   {confirmDone ? (
                     <span className="confirm" data-testid="mission-done-confirm">
@@ -141,6 +157,11 @@ export function HomeScreen() {
                     </span>
                   ) : (
                     <>
+                      {p.missionInProgress ? (
+                        <button className="link small" onClick={() => setMissionInProgress(false)} data-testid="mission-stop">Pas encore lancée</button>
+                      ) : (
+                        <button className="link small" onClick={() => { tick(); setMissionInProgress(true); }} data-testid="mission-start">Je l&apos;ai lancée</button>
+                      )}
                       <button className="link small" onClick={() => setConfirmDone(true)} data-testid="mission-done">Je l&apos;ai terminée</button>
                       <button className="link small" onClick={() => { setDraft(""); setEditing(true); }} data-testid="mission-change">Changer</button>
                     </>
@@ -162,7 +183,8 @@ export function HomeScreen() {
                   <form className="missionform" onSubmit={(e) => { e.preventDefault(); saveNext(draft); }}>
                     <input list="next-missions" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Nom de la mission (ex. Tourist Trap)" aria-label="Prochaine mission" data-testid="next-mission-input" maxLength={80} />
                     <datalist id="next-missions">{m.choices.map((c) => <option key={c} value={c} />)}</datalist>
-                    <button className="btn btn--primary btn--sm" disabled={!draft.trim()} data-testid="next-mission-save">OK</button>
+                    <button className="btn btn--primary btn--sm" disabled={!draft.trim()} data-testid="next-mission-save">À venir</button>
+                    <button type="button" className="btn btn--ghost btn--sm" disabled={!draft.trim()} onClick={() => saveNext(draft, true)} data-testid="next-mission-live">En cours</button>
                   </form>
                 )}
               </>
@@ -276,5 +298,44 @@ function DemoSection({ regions, all, signals, focusOnMap, setView }: { regions: 
         </div>
       </div>
     </section>
+  );
+}
+
+/** Objectifs facultatifs de la mission : cochables, avec leur niveau de preuve ; ajout libre par le joueur. */
+function Objectives({ mission }: { mission: string }) {
+  const { state, addObjective, toggleObjective, removeObjective } = useStore();
+  const [txt, setTxt] = useState("");
+  const [open, setOpen] = useState(false);
+  const list = (state.profile.objectives ?? []).filter((o) => o.mission.toLowerCase() === mission.toLowerCase());
+  const left = list.filter((o) => !o.done).length;
+  return (
+    <div className="objs" data-testid="objectives">
+      <button className="objs__head press" onClick={() => setOpen((v) => !v)} aria-expanded={open || list.length > 0}>
+        <span>Objectifs facultatifs</span>
+        <em>{list.length ? `${list.length - left}/${list.length}` : "aucun noté"}</em>
+      </button>
+      {list.length > 0 && (
+        <ul className="objs__list">
+          {list.map((o) => (
+            <li key={o.id} className={o.done ? "is-done" : ""} data-testid="objective">
+              <button className="objs__check press" onClick={() => { tick(); toggleObjective(o.id); }} aria-pressed={o.done} aria-label={`${o.done ? "Rouvrir" : "Cocher"} : ${o.text}`}>
+                {o.done ? <Icon name="check" size={20} /> : <span className="objs__box" />}
+              </button>
+              <span className="objs__text">
+                {o.text}
+                <b className={`objs__basis objs__basis--${o.basis === "vérifié" ? "ok" : o.basis === "incertain" ? "warn" : "me"}`}>{o.basis === "perso" ? "noté par toi" : o.basis}</b>
+              </span>
+              <button className="objs__rm" onClick={() => removeObjective(o.id)} aria-label={`Retirer : ${o.text}`}><Icon name="close" size={14} /></button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {(open || list.length > 0) && (
+        <form className="objs__add" onSubmit={(e) => { e.preventDefault(); if (txt.trim()) { addObjective({ mission, text: txt, basis: "perso" }); setTxt(""); } }}>
+          <input value={txt} onChange={(e) => setTxt(e.target.value)} placeholder="Ajouter un objectif (ex. ne pas abîmer la voiture)" maxLength={160} aria-label="Nouvel objectif" data-testid="objective-input" />
+          <button className="btn btn--xs btn--on" disabled={!txt.trim()} data-testid="objective-add">Ajouter</button>
+        </form>
+      )}
+    </div>
   );
 }
