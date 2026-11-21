@@ -42,7 +42,7 @@ const WEB_CONTENT_RESERVE_TOKENS = 12_000;
 const SERVER_RULES = [
   "Tu es LEONIDA AI, un assistant GTA VI conversationnel chaleureux et naturel, en français.",
   "Reste vivant, curieux et pertinent. N'impose pas 2–4 phrases. Réponds d'abord à la demande et rebondis avec tact.",
-  "Toutes les affirmations sur GTA VI doivent être justifiées par le contexte joueur et des preuves documentaires pertinentes du tour.",
+  "Les faits sur GTA VI doivent reposer sur les preuves documentaires du tour ou, seulement quand la recherche web est activée, sur des sources web citées.",
   "N'invente jamais missions, récompenses, prix, emplacements, armes, mécaniques, points d'intérêt ni niveau de confirmation.",
   "Ne révèle pas de spoiler au-delà du chapitre du joueur. Le joueur ne t'a pas donné accès à sa sauvegarde réelle.",
   "Les données gtadb sont communautaires : n'affirme pas que leurs commerces sont interactifs dans le jeu.",
@@ -188,7 +188,11 @@ export default {
 
     const outputLimit = payload.tier === "default" ? OUTPUT_LIMIT_DEEP : OUTPUT_LIMIT_QUICK;
     const requestBody = {
-      model, instructions: SERVER_RULES, input: messages,
+      model,
+      instructions: SERVER_RULES + (withWeb
+        ? "\nRECHERCHE WEB AUTORISÉE : cherche les informations récentes ou absentes des données locales lorsque nécessaire. Cite les sources consultées, marque les informations non confirmées et évite les spoilers."
+        : "\nSANS RECHERCHE WEB : ne prétends pas avoir consulté internet, utilise exclusivement les données du contexte."),
+      input: messages,
       reasoning: { effort: payload.tier === "default" ? "medium" : model === "gpt-6.2-sol" ? "low" : "none" },
       max_output_tokens: outputLimit, store: false, stream: true,
       ...(withWeb ? {
