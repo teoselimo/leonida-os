@@ -59,6 +59,31 @@ function validAccess(provided: string, expected: string): boolean {
 const usdToMicros = (usd: number) => Math.floor(usd * 1_000_000);
 const chargeMicros = (input: number, output: number, rate: Money) =>
   Math.ceil(Math.max(0, input) * rate.input + Math.max(0, output) * rate.output);
+/** OpenAI SSE error events may expose a root code or an error object.
+ * Never forward the raw upstream message (which could include request text).
+ * Only route recognized provider categories to the browser.
+ */
+export function classifyOpenAiStreamError(event: {
+  code?: unknown;
+  error?: { code?: unknown; type?: unknown } | null;
+  message?: unknown;
+}): string {
+  const code = typeof event.error?.code === "string" ? event.error.code
+    : typeof event.code === "string" ? event.code
+    : typeof event.error?.type === "string" ? event.error.type : "";
+  const normalized = code.toLowerCase();
+  if (normalized === "insufficient_quota" || normalized.includes("billing_hard_limit")) return "openai_stream_quota";
+  if (normalized.includes("rate_limit") || normalized === "too_many_requests") return "openai_stream_rate_limit";
+  if (normalized === "invalid_api_key" || normalized === "authentication_error") return "openai_stream_auth";
+  if (normalized.includes("model_not_found") || normalized.includes("model_access")) return "openai_stream_model";
+  if (normalized.includes("context_length") || normalized.includes("token_limit")) return "openai_stream_context";
+  if (normalized === "invalid_request_error" || normalized === "invalid_request") return "openai_stream_request";
+  if (normalized === "server_error" || normalized === "internal_server_error") return "openai_stream_server";
+  if (normalized === "timeout" || normalized === "upstream_timeout") return "openai_stream_timeout";
+  if (normalized === "content_filter" || normalized === "safety_violation") return "openai_stream_content_filter";
+  return "upstream_event_error";
+}
+
 const monthNow = () => new Date().toISOString().slice(0, 7);
 const minuteNow = () => new Date().toISOString().slice(0, 16);
 
@@ -252,7 +277,7 @@ export default {
             throw new Error(response?.error?.code === "server_error"
               ? "upstream_failed_server" : "upstream_failed");
           } else if (event.type === "error") {
-            throw new Error("upstream_event_error");
+            throw new Error(classifyOpenAiStreamError(event));
           }
         };
         try {
@@ -274,6 +299,9 @@ export default {
           const categories = [
             "upstream_output_limit", "upstream_incomplete", "upstream_failed",
             "upstream_failed_server", "upstream_event_error", "upstream_stream",
+            "openai_stream_quota", "openai_stream_rate_limit", "openai_stream_auth",
+            "openai_stream_model", "openai_stream_context", "openai_stream_request",
+            "openai_stream_server", "openai_stream_timeout", "openai_stream_content_filter",
             "upstream_stream_ended", "upstream_no_text",
           ];
           const code = categories.includes(reason) ? reason : "upstream_unknown";
