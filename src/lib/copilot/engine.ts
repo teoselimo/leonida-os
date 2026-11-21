@@ -140,11 +140,17 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     // Validation : aucun nombre absent des preuves, du contexte, de la question ou de la piste vérifiée
     const allowed = new Set([...digits(evidence), ...digits(draft.text), ...digits(o.question), ...digits(playerContext(o.ctx.state, o.ctx.feed)), "1", "2", "3", "4"]);
     const bad = digits(message).filter((n) => !allowed.has(n));
-    if (bad.length) return fromDirect(draft, `Réponse du modèle écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`);
+    // Lors d'une recherche web explicitement demandée, les nombres récents
+    // n'apparaissent pas forcément dans les fiches locales. Les accepter
+    // uniquement si OpenAI a renvoyé des annotations de sources cliquables.
+    const hasCitedWeb = o.web === true && !!r.webSources?.length;
+    if (bad.length && !hasCitedWeb) return fromDirect(draft, `Réponse du modèle écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`);
     const idx = Array.isArray(meta?.actions) ? (meta!.actions as unknown[]).filter((i): i is number => Number.isInteger(i) && (i as number) >= 0 && (i as number) < actions.length) : null;
     const chosen = (idx && idx.length ? idx.map((i) => actions[i]) : actions).slice(0, 2);
     const used = Array.isArray(meta?.sources) ? (meta!.sources as unknown[]).map(String).filter((s) => ids.includes(s)) : [];
-    const trust = TRUST.includes(meta?.confiance as Trust) ? (meta!.confiance as Trust) : draft.reliability;
+    // Le statut « officiel » ne peut pas être attribué automatiquement
+    // à des contenus web de provenance hétérogène.
+    const trust = hasCitedWeb ? "signalé" : (TRUST.includes(meta?.confiance as Trust) ? (meta!.confiance as Trust) : draft.reliability);
     const localSources: Source[] = sourcesFor(used.length ? used : ids, o.ctx, draft.sources);
     // Une source web est affichée uniquement si l'API l'a renvoyée comme annotation.
     // Ne pas accepter de liens improvisés par le texte généré.
