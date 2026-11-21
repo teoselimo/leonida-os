@@ -1,4 +1,5 @@
 {
-  "$comment": "Corrections administrateur appliquées à la collecte suivante, sans redéploiement. Clé = id de fiche (visible dans l'app). status: active | disputed | outdated | retracted. location: uniquement un point vérifié en jeu (coordonnées gtadb).",
-  "items": {}
+  "$comment": "Validations administrateur appliquées à la collecte suivante, sans redéploiement. items : fiches du Radar (status, reliability, location validée, note, capture). vehicles : Garage des légendes (point exact vérifié en jeu, retrait, capture). Les demandes GitHub étiquetées « validé » par le propriétaire du dépôt sont appliquées automatiquement (workflow validation.yml).",
+  "items": {},
+  "vehicles": {}
 }

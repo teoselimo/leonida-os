@@ -12,7 +12,7 @@ export type Category =
 /** État rédactionnel, distinct de la fiabilité : une info peut être fiable puis devenir périmée. */
 export type ReviewStatus = "active" | "disputed" | "outdated" | "retracted";
 
-export type ConnectorKind = "youtube-feed" | "youtube-api" | "rss" | "reddit" | "unsupported";
+export type ConnectorKind = "youtube-feed" | "youtube-api" | "rss" | "reddit" | "sitemap" | "unsupported";
 
 export interface SourceConfig {
   id: string;
@@ -27,6 +27,10 @@ export interface SourceConfig {
   channelId?: string;
   queries?: string[];
   subreddits?: string[];
+  /** Sitemap : motif des URL retenues, nombre de sous-sitemaps récents suivis, plafond d'URL par passage. */
+  urlFilter?: string;
+  followChildren?: number;
+  maxItems?: number;
   /** Règles d'accès et d'usage retenues pour cette source. */
   access: string;
   /** Les contenus de cette source ne sont jamais envoyés à un modèle d'IA (ex. Rockstar, robots.txt). */
@@ -111,6 +115,11 @@ export interface DeepRead {
     keywords: string[];
   } | null;
   videoIds: string[];
+  /** Véhicules, garages et règles de conservation extraits (V0.6). */
+  vehicles?: VehicleMention[];
+  mechanics?: Mechanics;
+  /** Sites cités par l'article comme sa propre source : ils ne comptent pas comme confirmation indépendante. */
+  cites?: string[];
 }
 
 /** Un champ consolidé d'une fiche, avec toutes les sources qui l'appuient (jamais de valeur sans citation). */
@@ -242,6 +251,7 @@ export interface CycleLog {
   updatedItems: number;
   deepReads: number;
   merged: number;
+  vehicles?: number;
 }
 
 export interface RadarFeed {
@@ -249,7 +259,130 @@ export interface RadarFeed {
   generatedAt: string;
   /** Santé du collecteur : cadence attendue et derniers cycles (pour détecter un arrêt). */
   health?: { cadenceMinutes: number; cycles: CycleLog[] };
+  /** Garage des légendes : véhicules et garages consolidés (V0.6). */
+  vehicles?: VehicleRecord[];
   sources: Array<{ id: string; name: string; kind: ConnectorKind; official: boolean; status: SourceState["status"]; statusDetail: string | null; lastSuccessAt: string | null; lastAttemptAt: string | null }>;
   lastRun: { at: string; newItems: number; updatedItems: number; errors: number } | null;
   items: RadarRecord[];
 }
+
+// ── Garage des légendes (V0.6) ────────────────────────────────────────────────
+export interface SourceRef {
+  sourceName: string;
+  url: string;
+  quote: string;
+}
+
+export interface VField<T> {
+  value: T;
+  support: SourceRef[];
+  conflicts: SourceRef[];
+}
+
+/** Fiche automobile consolidée à partir de toutes les sources (jamais saisie à la main). */
+export interface VehicleRecord {
+  id: string;
+  type: "vehicle" | "garage";
+  name: string;
+  make: string;
+  model: string;
+  year: string | null;
+  /** Voiture réelle dont le modèle s'inspire, selon les sources (alias appris). */
+  aliases: VField<string[]> | null;
+  /** hidden : garé à un endroit fixe · dynamic : apparition aléatoire · mission · delivery : remis au joueur (bonus) · news : pas d'emplacement */
+  kind: "hidden" | "dynamic" | "mission" | "delivery" | "news";
+  variant: VField<string> | null;
+  edition: { exclusive: "ultimate" | "preorder" | null; status: "confirmed" | "reported" | "none"; support: SourceRef[] };
+  location: {
+    text: VField<string> | null;
+    district: string | null;
+    regionId: string | null;
+    /** exact : point validé · zone : zone de recherche dérivée du quartier · text : adresse seulement · none */
+    precision: "exact" | "zone" | "text" | "none";
+    zone: { x: number; y: number; radius: number; widened: boolean } | null;
+    point: { x: number; y: number } | null;
+    alternatives: Array<{ district: string | null; text: string; sourceName: string; url: string }>;
+  };
+  access: {
+    chapterMin: VField<number> | null;
+    /** Chapitre déduit d'une règle générale (ex. cloneur de clé au chapitre 3), avec sa source. */
+    inferredChapter: { value: number; why: string; source: SourceRef } | null;
+    until: VField<number> | null;
+    mission: VField<string> | null;
+    early: boolean;
+    keyCloner: VField<boolean> | null;
+    tracker: VField<"none" | "standard" | "advanced"> | null;
+    alarm: VField<boolean> | null;
+  };
+  keep: {
+    text: VField<string> | null;
+    /** Règle générale d'immatriculation applicable, avec sa source. */
+    rule: { chapter: number; where: string | null; tracker: string | null; source: SourceRef } | null;
+    /** yes : conservé d'office (bonus) · register : à immatriculer · unknown */
+    mode: "yes" | "register" | "unknown";
+  };
+  steps: SourceRef[];
+  risks: SourceRef[];
+  price: VField<number> | null;
+  media: MediaRef | null;
+  evidence: Array<{ sourceName: string; url: string; title: string; official: boolean; readAt: string | null }>;
+  reliability: Reliability;
+  reasons: string[];
+  missing: string[];
+  firstSeenAt: string;
+  updatedAt: string;
+  revisions: Revision[];
+}
+
+// ── Extraction automobile (faits par article) ─────────────────────────────────
+export interface VFact<T> {
+  value: T;
+  quote: string;
+  url: string;
+}
+
+export interface VehicleMention {
+  /** Nom tel qu'écrit par la source (« Maibatsu '97 Penumbra FF »). */
+  name: string;
+  make: string;
+  model: string;
+  year: string | null;
+  /** Clé canonique : marque + modèle, sans l'année (« maibatsu-penumbra-ff »). */
+  key: string;
+  type: "vehicle" | "garage";
+  variant: VFact<string> | null;
+  location: VFact<{ text: string; district: string | null; relative: boolean }> | null;
+  spawn: VFact<"fixed" | "dynamic" | "mission" | "delivery"> | null;
+  edition: VFact<"ultimate" | "preorder"> | null;
+  chapter: VFact<number> | null;
+  mission: VFact<string> | null;
+  early: VFact<boolean> | null;
+  keyCloner: VFact<boolean> | null;
+  tracker: VFact<"none" | "standard" | "advanced"> | null;
+  alarm: VFact<boolean> | null;
+  keep: VFact<string> | null;
+  price: VFact<number> | null;
+  steps: VFact<string>[];
+  risks: VFact<string>[];
+  /** Disponible seulement jusqu'à ce chapitre inclus (« only available in Chapter 1 »). */
+  until: VFact<number> | null;
+  /** Voitures réelles associées par la même source (alias), avec la phrase qui les lie. */
+  aliases?: VFact<string[]> | null;
+  /** Mention non résolue : l'article ne cite qu'une voiture réelle (« Mitsubishi Eclipse »). */
+  unresolved?: boolean;
+}
+
+export interface Mechanics {
+  /** Immatriculation d'un véhicule volé (chapitre, lieu, condition sur le traqueur). */
+  register: Array<VFact<{ chapter: number; where: string | null; tracker: "none" | "standard" | "advanced" | null }>>;
+  /** Obtention du cloneur de clé. */
+  keyCloner: VFact<{ chapter: number | null; mission: string | null }> | null;
+  /** Achat de garages supplémentaires. */
+  garages: VFact<{ chapter: number | null; how: string }> | null;
+}
+
+export interface VehicleFacts {
+  vehicles: VehicleMention[];
+  mechanics: Mechanics;
+}
+

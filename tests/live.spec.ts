@@ -165,3 +165,110 @@ test("V0.5.1 : collecteur arrêté → alerte claire sur l'accueil et le Radar",
   await expect(page.getByTestId("cycles")).toContainText("planifié (cron)");
   await page.screenshot({ path: `captures/${info.project.name}-22-collecteur-arrete.png` });
 });
+
+// ───────────── V0.6 : Garage des légendes ─────────────
+async function setProfile(page: Page, edition: "Standard" | "Ultimate", chapter: number) {
+  await page.goto("/#profil");
+  await page.waitForSelector(".app.is-ready");
+  await page.getByRole("radio", { name: edition, exact: true }).click();
+  await page.getByTestId(`chapter-${chapter}`).click();
+}
+async function openGarage(page: Page) {
+  await page.goto("/#carte");
+  await page.waitForSelector(".app.is-ready");
+  await page.waitForFunction(() => !!(window as unknown as { __leonidaMap?: unknown }).__leonidaMap);
+  const chip = page.getByTestId("filter-garage");
+  if ((await chip.getAttribute("aria-pressed")) !== "true") await chip.click();
+}
+
+test("V0.6 : Standard et Ultimate au même chapitre obtiennent des recommandations différentes", async ({ page }, info) => {
+  await serveFeed(page, () => load("v5"));
+  await start(page, "#profil");
+  await setProfile(page, "Standard", 1);
+  await page.goto("/#accueil");
+  await expect(page.getByTestId("car-advice-v-maibatsu-penumbra-ff")).toBeVisible();
+  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toHaveCount(0);
+  await setProfile(page, "Ultimate", 1);
+  await page.goto("/#accueil");
+  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toBeVisible();
+  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toContainText("À ne pas manquer");
+  await page.screenshot({ path: `captures/${info.project.name}-30-accueil-ultimate.png` });
+});
+
+test("V0.6 : filtre Voitures cachées — zone approximative, point exact validé, fiche premium", async ({ page }, info) => {
+  await serveFeed(page, () => load("v5"));
+  await start(page, "#carte");
+  await openGarage(page);
+  await expect(page.getByTestId("filter-garage")).toContainText("Voitures cachées");
+  // point validé : épingle ; zone : pas d'épingle
+  await expect(page.locator('[data-testid="marker-veh:v-pegassi-vitello"]')).toHaveCount(1);
+  await expect(page.locator('[data-testid="marker-veh:v-maibatsu-penumbra-ff"]')).toHaveCount(0);
+  await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
+  const sheet = page.getByTestId("vehicle-sheet");
+  await expect(sheet.getByTestId("vehicle-name")).toHaveText("'97 Maibatsu Penumbra FF");
+  await expect(sheet.getByTestId("v-location")).toContainText("Zone de recherche : Rialto Islands");
+  await expect(sheet.getByTestId("compat")).toContainText("Compatible");
+  await expect(sheet.getByTestId("v-keep-text")).toContainText("chapitre 2");
+  await expect(page.getByTestId("zone-tag")).toContainText("Zone approximative");
+  await page.waitForTimeout(900);
+  await page.screenshot({ path: `captures/${info.project.name}-31-fiche-auto.png` });
+  // exclusivité Ultimate vue par un joueur Standard : consultable, indicateur explicite, jamais « récupérable »
+  await sheet.locator(".vmedia__close").click();
+  await page.getByTestId("gfilter-ultimate").click();
+  await page.getByTestId("vehicle-v-dinka-enduro").first().click();
+  await expect(page.getByTestId("vehicle-sheet").getByTestId("ultimate-tag")).toHaveText("ULTIMATE");
+  await expect(page.getByTestId("vehicle-sheet").getByTestId("compat")).toContainText("Réservé à l'édition Ultimate");
+  await expect(page.getByTestId("vehicle-sheet").getByTestId("v-found")).toBeDisabled();
+});
+
+test("V0.6 : repéré → volé → conservé → rangé, persistant après rechargement et visible dans Mon garage", async ({ page }) => {
+  await serveFeed(page, () => load("v5"));
+  await start(page, "#carte");
+  await openGarage(page);
+  await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
+  const sheet = page.getByTestId("vehicle-sheet");
+  await sheet.getByTestId("v-found").click();
+  await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Repéré");
+  await sheet.getByTestId("v-found").click(); // « Je l'ai volé »
+  await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Volé");
+  await sheet.getByTestId("v-keep").click(); // « Je l'ai conservé »
+  await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Véhicule personnel");
+  await sheet.getByTestId("v-keep").click(); // « Ranger au garage »
+  await sheet.getByTestId("v-store").getByRole("button", { name: "Planque" }).click();
+  await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Rangé au garage");
+  await page.reload();
+  await page.waitForSelector(".app.is-ready");
+  await page.goto("/#profil");
+  await expect(page.getByTestId("inv-v-maibatsu-penumbra-ff")).toContainText("Rangé au garage");
+  await expect(page.getByTestId("inv-v-maibatsu-penumbra-ff")).toContainText("Planque");
+  // un véhicule conservé n'est plus recommandé
+  await page.goto("/#accueil");
+  await expect(page.getByTestId("car-advice-v-maibatsu-penumbra-ff")).toHaveCount(0);
+});
+
+test("V0.6 : véhicule d'un chapitre plus avancé masqué (anti-spoiler), révélé au bon chapitre", async ({ page }) => {
+  await serveFeed(page, () => load("v5"));
+  await start(page, "#profil");
+  await setProfile(page, "Ultimate", 1);
+  await openGarage(page);
+  await expect(page.getByTestId("vehicle-v-grotti-itali-rsx")).toHaveCount(0); // cloneur de clé : chapitre 3
+  await expect(page.getByTestId("vehicle-v-grotti-cheetah")).toHaveCount(0); // chapitre 5
+  await setProfile(page, "Ultimate", 3);
+  await openGarage(page);
+  await expect(page.getByTestId("vehicle-v-grotti-itali-rsx").first()).toBeVisible();
+  await expect(page.getByTestId("vehicle-v-grotti-cheetah")).toHaveCount(0);
+  await expect(page.getByTestId("vehicle-v-dinka-enduro")).toHaveCount(1); // fenêtre dépassée : consultable, plus recommandé
+  await page.goto("/#accueil");
+  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toHaveCount(0);
+});
+
+test("V0.6 : un nouveau véhicule détecté par la veille apparaît sans redéployer l'app", async ({ page }) => {
+  let current: unknown = load("v5");
+  await serveFeed(page, () => current);
+  await start(page, "#carte");
+  await openGarage(page);
+  await expect(page.getByTestId("vehicle-v-bravado-banshee")).toHaveCount(0);
+  current = load("v6");
+  await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+  await expect(page.getByTestId("vehicle-v-bravado-banshee").first()).toBeVisible({ timeout: 10_000 });
+});

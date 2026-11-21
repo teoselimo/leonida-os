@@ -10,7 +10,7 @@ import type { Override, RadarRecord, SourceConfig } from "../src/types.ts";
 
 const fx = (f: string) => readFileSync(fileURLToPath(new URL(`./fixtures/${f}`, import.meta.url)), "utf8");
 const NOW = new Date("2026-11-20T14:00:00Z");
-const emptyStore = (): Store => ({ raw: {}, records: [], runs: [], state: {}, cycles: [] });
+const emptyStore = (): Store => ({ raw: {}, records: [], runs: [], state: {}, cycles: [], vehicles: [] });
 
 const SRC = {
   rockstar: { id: "rockstar-youtube", name: "Rockstar Games (YouTube officiel)", kind: "youtube-feed", official: true, enabled: true, intervalMinutes: 15, channelId: "UC6VcWc1rAoWdBCM0JxrRQ3A", access: "", noAI: true, lang: "en", trust: "official" },
@@ -351,4 +351,128 @@ test("V0.5.1 : chaque cycle est journalisé avec son déclencheur (preuve du cro
   assert.equal(feed.health!.cadenceMinutes, 15);
   assert.equal(feed.health!.cycles.at(-1)!.trigger, "schedule");
   assert.equal(feed.health!.cycles.at(-1)!.runId, "42");
+});
+
+// ───────────────────────── V0.6 : Garage des légendes (catalogue automobile autonome) ─────────────────────────
+const carFx = (f: string) => fx(`cars/${f}`);
+const rssOf = (host: string, items: Array<[string, string, string]>) =>
+  `<?xml version="1.0"?><rss version="2.0"><channel><title>${host}</title>${items
+    .map(([path, title, desc]) => `<item><title>${title}</title><link>https://${host}/${path}</link><guid>${host}-${path}</guid><pubDate>Thu, 20 Nov 2026 10:00:00 GMT</pubDate><description>${desc}</description></item>`)
+    .join("")}</channel></rss>`;
+const carSrc = (id: string, host: string): SourceConfig => ({ id, name: `Guide ${id}`, kind: "rss", official: false, enabled: true, intervalMinutes: 60, url: `https://${host}/feed`, access: "", lang: "en", trust: "high" });
+const CAR_SOURCES = [carSrc("cx", "cars-x.example"), carSrc("cy", "cars-y.example"), carSrc("cz", "cars-z.example"), carSrc("cu", "cars-u.example"), carSrc("cv", "cars-v.example"), carSrc("cr", "cars-r.example")];
+function carRoutes(listFile = "list.html") {
+  const r: Record<string, string> = {};
+  for (const h of ["x", "y", "z", "u", "v", "r"]) r[`https://cars-${h}.example/robots.txt`] = "User-agent: *\nAllow: /\n";
+  r["https://cars-x.example/feed"] = rssOf("cars-x.example", [["gta-6-hidden-cars", "GTA 6 hidden cars: every parked rarity we found", "Rare parked cars in GTA 6."]]);
+  r["https://cars-x.example/gta-6-hidden-cars"] = carFx(listFile);
+  r["https://cars-y.example/feed"] = rssOf("cars-y.example", [["paul-walker-car", "How to get Paul Walker's Fast and Furious car in GTA 6", "The tribute car in GTA 6."]]);
+  r["https://cars-y.example/paul-walker-car"] = carFx("single.html");
+  r["https://cars-z.example/feed"] = rssOf("cars-z.example", [["gta-6-paul-walker-car", "GTA 6 Paul Walker Car Location", "Where the Eclipse tribute is in GTA 6."]]);
+  r["https://cars-z.example/gta-6-paul-walker-car"] = carFx("alias.html");
+  r["https://cars-u.example/feed"] = rssOf("cars-u.example", [["ultimate-items", "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses", "Every bonus in GTA 6."]]);
+  r["https://cars-u.example/ultimate-items"] = carFx("ultimate.html");
+  r["https://cars-v.example/feed"] = rssOf("cars-v.example", [["editions", "GTA 6 Standard vs Ultimate Edition cars", "Edition comparison for GTA 6."]]);
+  r["https://cars-v.example/editions"] = carFx("ultimate-b.html");
+  r["https://cars-r.example/feed"] = rssOf("cars-r.example", [["register-car", "GTA 6 How to Get New Personal Car", "Register cars in GTA 6."]]);
+  r["https://cars-r.example/register-car"] = carFx("register.html");
+  return r;
+}
+const vById = (store: Store, id: string) => store.vehicles.find((v) => v.id === id)!;
+
+test("V0.6 : Penumbra FF détectée, recoupée par 3 guides (dont un qui ne cite que la Mitsubishi Eclipse), zone sans faux point", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  const { summary } = await run(store, CAR_SOURCES, carRoutes());
+  assert.ok((summary.vehicles ?? 0) >= 6);
+  const p = vById(store, "v-maibatsu-penumbra-ff");
+  assert.equal(p.name, "'97 Maibatsu Penumbra FF");
+  assert.deepEqual(p.evidence.map((e) => e.sourceName).sort(), ["Guide cx", "Guide cy", "Guide cz"], "le guide « Mitsubishi Eclipse » est rattaché par alias appris");
+  assert.deepEqual(p.aliases!.value, ["mitsubishi-eclipse"]);
+  assert.equal(p.reliability, "confirmed");
+  assert.equal(p.kind, "hidden");
+  assert.equal(p.location.district, "Rialto Islands");
+  assert.equal(p.location.precision, "zone");
+  assert.equal(p.location.point, null, "jamais de point exact sans validation");
+  assert.ok(p.location.zone!.radius > 100);
+  assert.match(p.variant!.value, /green/);
+  assert.equal(p.keep.mode, "register");
+  assert.equal(p.keep.rule!.chapter, 2);
+  assert.equal(p.keep.rule!.where, "garage de Moses");
+  assert.ok(p.risks.some((r) => /lose it again/.test(r.quote)));
+  assert.ok(p.steps.length >= 1);
+  // variante distincte : la Penumbra « simple » n'est pas confondue
+  const plain = vById(store, "v-maibatsu-penumbra");
+  assert.ok(plain && plain.id !== p.id);
+  assert.equal(plain.location.district, "Little Cuba");
+});
+
+test("V0.6 : Itali RSX — cloneur de clé ⇒ chapitre 3 déduit (règle sourcée), traqueur avancé, conservation non documentée", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  await run(store, CAR_SOURCES, carRoutes());
+  const r = vById(store, "v-grotti-itali-rsx");
+  assert.equal(r.access.keyCloner!.value, true);
+  assert.equal(r.access.tracker!.value, "advanced");
+  assert.equal(r.access.inferredChapter!.value, 3);
+  assert.match(r.access.inferredChapter!.source.quote, /key cloner in Chapter 3/);
+  assert.equal(r.keep.rule, null, "aucune règle documentée pour les traqueurs avancés : rien d'inventé");
+  assert.equal(r.reliability, "reported");
+  // la page cite sa propre source : l'origine est comptée, pas de fausse indépendance
+  assert.equal(r.location.district, "Rialto Islands");
+});
+
+test("V0.6 : exclusivités d'édition — Cheetah et Enduro Ultimate confirmés (2 sources), Stanier = précommande, fenêtre « chapitre 1 »", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  await run(store, CAR_SOURCES, carRoutes());
+  const c = vById(store, "v-grotti-cheetah");
+  assert.equal(c.edition.exclusive, "ultimate");
+  assert.equal(c.edition.status, "confirmed");
+  assert.equal(c.access.chapterMin!.value, 5);
+  assert.equal(c.keep.mode, "yes");
+  const e = vById(store, "v-dinka-enduro");
+  assert.equal(e.edition.exclusive, "ultimate");
+  assert.equal(e.edition.status, "confirmed");
+  assert.equal(e.access.until!.value, 1);
+  assert.equal(e.location.district, "Key Lento");
+  const s = vById(store, "v-vapid-stanier");
+  assert.equal(s.edition.exclusive, "preorder");
+  assert.equal(s.access.chapterMin!.value, 3);
+});
+
+test("V0.6 : zone élargie (« à l'est de Belville »), puis point exact uniquement après validation", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  await run(store, CAR_SOURCES, carRoutes());
+  const v = vById(store, "v-pegassi-vitello");
+  assert.equal(v.location.precision, "zone");
+  assert.equal(v.location.zone!.widened, true);
+  await runCollection(store, { sources: CAR_SOURCES, overrides: {}, vehicleOverrides: { "v-pegassi-vitello": { point: { x: -1100, y: 2950 } } }, env: {}, now: new Date(NOW.getTime() + 3600_000), force: true, fetchImpl: mockFetch(carRoutes()) });
+  const w = vById(store, "v-pegassi-vitello");
+  assert.equal(w.location.precision, "exact");
+  assert.deepEqual(w.location.point, { x: -1100, y: 2950 });
+  assert.equal(w.location.zone, null);
+  assert.ok(w.revisions.some((r) => r.reason === "Point validé"));
+});
+
+test("V0.6 : un nouveau véhicule publié par une source entre automatiquement au catalogue, sans doublon", async () => {
+  resetRobotsCache();
+  const store = emptyStore();
+  await run(store, CAR_SOURCES, carRoutes());
+  const before = store.vehicles.length;
+  assert.equal(store.vehicles.some((v) => v.id === "v-bravado-banshee"), false);
+  // la source met à jour sa liste (nouvel article dans le flux)
+  resetRobotsCache();
+  const routes = carRoutes();
+  routes["https://cars-x.example/feed"] = rssOf("cars-x.example", [["gta-6-hidden-cars", "GTA 6 hidden cars: every parked rarity we found", "Rare parked cars in GTA 6."], ["gta-6-more-cars", "GTA 6 more hidden cars", "More rare cars."]]);
+  routes["https://cars-x.example/gta-6-more-cars"] = carFx("list-v2.html");
+  const later = new Date(NOW.getTime() + 2 * 3600_000);
+  await runCollection(store, { sources: CAR_SOURCES, overrides: {}, env: {}, now: later, force: true, fetchImpl: mockFetch(routes) });
+  const b = vById(store, "v-bravado-banshee");
+  assert.ok(b, "nouveau véhicule détecté");
+  assert.equal(b.firstSeenAt, later.toISOString());
+  assert.equal(b.location.district, "Starfish Island");
+  assert.equal(store.vehicles.length, before + 1);
+  assert.equal(vById(store, "v-pegassi-vitello").evidence.length, 2, "même modèle cité par un 2e article du même site : une fiche, deux preuves");
 });

@@ -26,8 +26,13 @@ export const CHAPTERS: Record<Chapter, string> = {
   0: "Prologue",
   1: "Chapitre 1",
   2: "Chapitre 2",
-  3: "Chapitre 3 et +",
+  3: "Chapitre 3",
+  4: "Chapitre 4",
+  5: "Chapitre 5",
+  6: "Chapitre 6 et +",
 };
+export const CHAPTER_SHORT: Record<Chapter, string> = { 0: "Prol.", 1: "Ch. 1", 2: "Ch. 2", 3: "Ch. 3", 4: "Ch. 4", 5: "Ch. 5", 6: "Ch. 6+" };
+export const CHAPTER_LIST: Chapter[] = [0, 1, 2, 3, 4, 5, 6];
 
 export const CONSOLES: Record<ConsoleId, string> = {
   ps5: "PS5",
@@ -38,8 +43,8 @@ export const CONSOLES: Record<ConsoleId, string> = {
 
 export const EDITIONS: Record<EditionId, string> = {
   standard: "Standard",
-  special: "Spéciale / collector",
-  unknown: "Non renseignée",
+  ultimate: "Ultimate",
+  unknown: "Je ne sais pas",
 };
 
 export const DIFFICULTY = ["", "Facile", "Moyen", "Exigeant"] as const;

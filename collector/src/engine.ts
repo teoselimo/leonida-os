@@ -5,6 +5,8 @@ import { derive, diff, matches, newRecord, toEvidence } from "./pipeline/records
 import { GTA6, NOISE, OTHER_GAMES, categorize } from "./pipeline/rules.ts";
 import { enrichWithLLM } from "./pipeline/llm.ts";
 import { deepReadPhase, mergeByFacts } from "./pipeline/deep.ts";
+import { buildVehicles } from "./pipeline/garage.ts";
+import type { VehicleOverride } from "./pipeline/garage.ts";
 import type { Store } from "./store/fileStore.ts";
 import type { Override, RadarFeed, RadarRecord, RawItem, RunLog, SourceConfig, SourceState } from "./types.ts";
 import { canonicalUrl, sha1, shortExcerpt, stripHtml } from "./util.ts";
@@ -22,6 +24,8 @@ export interface RunOptions {
   /** Origine du déclenchement (GITHUB_EVENT_NAME) et identifiant d'exécution, journalisés dans cycles.json. */
   trigger?: string;
   runId?: string | null;
+  /** Validations humaines du Garage des légendes (point exact, retrait). */
+  vehicleOverrides?: Record<string, VehicleOverride>;
   /** Désactive la lecture approfondie (tests unitaires sans réseau). */
   deep?: boolean;
 }
@@ -34,6 +38,8 @@ export interface RunSummary {
   filtered: Record<string, number>;
   deepReads: number;
   merged: number;
+  vehicles?: number;
+  newVehicles?: number;
 }
 
 const initState = (): SourceState => ({ lastAttemptAt: null, lastSuccessAt: null, consecutiveFailures: 0, lastError: null, status: "never-run", statusDetail: null });
@@ -141,6 +147,12 @@ export async function runCollection(store: Store, opts: RunOptions): Promise<Run
     if (changes.length) after.updatedAt = now.toISOString();
     return after;
   });
+  // Garage des légendes : consolidation automatique des véhicules extraits des guides
+  const before = new Set((store.vehicles ?? []).map((v) => v.id));
+  store.vehicles = buildVehicles(store.records, sources, store.vehicles ?? [], opts.vehicleOverrides ?? {}, now);
+  summary.vehicles = store.vehicles.length;
+  summary.newVehicles = store.vehicles.filter((v) => !before.has(v.id)).length;
+  if (summary.newVehicles) log(`✓ garage : ${summary.newVehicles} nouveau(x) véhicule(s)/garage(s) · ${store.vehicles.length} au catalogue`);
   store.cycles ??= [];
   store.cycles.push({
     at: now.toISOString(),
@@ -152,6 +164,7 @@ export async function runCollection(store: Store, opts: RunOptions): Promise<Run
     updatedItems: summary.updatedItems,
     deepReads: summary.deepReads,
     merged: summary.merged,
+    vehicles: summary.vehicles ?? 0,
   });
   return summary;
 }
@@ -272,7 +285,8 @@ export function buildFeed(store: Store, sources: SourceConfig[], summary: RunSum
         lastAttemptAt: st.lastAttemptAt,
       };
     }),
-    health: { cadenceMinutes: 15, cycles: (store.cycles ?? []).slice(-24) },
+    health: { cadenceMinutes: 15, cycles: (store.cycles ?? []).slice(-48) },
+    vehicles: store.vehicles ?? [],
     lastRun: summary ? { at: now.toISOString(), newItems: summary.newItems, updatedItems: summary.updatedItems, errors: summary.runs.filter((r) => !r.ok && !r.skipped).length } : null,
     items,
   };

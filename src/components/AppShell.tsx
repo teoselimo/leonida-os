@@ -50,7 +50,7 @@ export function AppShell() {
             <span className="nav__label">{n.label}</span>
           </button>
         ))}
-        <div className="nav__foot">V0.5.1 · veille auto</div>
+        <div className="nav__foot">V0.6 · garage des légendes</div>
       </nav>
 
       <div className="stage">

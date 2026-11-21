@@ -5,6 +5,7 @@ import { useStore } from "@/lib/store";
 import { liveAdvice, LIVE_CATEGORY, readDoneAdvice, spoilerVisibility, useLiveRadar, writeDoneAdvice } from "@/lib/live";
 import { CHAPTERS } from "@/lib/meta";
 import { CollectorAlert } from "./LiveRadar";
+import { vehicleRecommendations } from "@/lib/garage";
 import { timeAgo } from "@/lib/useMedia";
 import { ReliabilityBadge } from "./ui/primitives";
 import { Icon } from "./ui/Icon";
@@ -66,11 +67,12 @@ export function LiveHighlights() {
  */
 export function LiveAdvice() {
   const { feed } = useLiveRadar();
-  const { state, setView } = useStore();
+  const { state, setView, focusVehicle } = useStore();
   const [done, setDone] = useState<string[]>([]);
   useEffect(() => setDone(readDoneAdvice()), []);
   const { now, later } = liveAdvice(feed, state.profile, done);
-  if (!now.length) return null;
+  const cars = vehicleRecommendations(feed?.vehicles ?? [], state, 2);
+  if (!now.length && !cars.length) return null;
   const mark = (id: string) => {
     const next = [...done, id];
     setDone(next);
@@ -104,6 +106,20 @@ export function LiveAdvice() {
           </article>
         );
       })}
+      {cars.map((x) => (
+        <button key={x.v.id} className={`advice__item advice__car${x.urgent ? " is-urgent" : ""}`} onClick={() => focusVehicle(x.v.id)} data-testid={`car-advice-${x.v.id}`}>
+          <span className="glyph" style={{ width: 34, height: 34, color: "#5AB8FF", background: "#5AB8FF1f" }}><Icon name="car" size={17} /></span>
+          <span className="advice__body">
+            <span className="row gap8">
+              <ReliabilityBadge r={x.v.reliability} />
+              {x.v.edition.exclusive === "ultimate" && <span className="edtag">ULTIMATE</span>}
+              {x.urgent && <span className="pill pill--warn">À ne pas manquer</span>}
+            </span>
+            <strong>🚗 {x.v.name}</strong>
+            <span className="small muted">{x.v.location.district ? `Zone : ${x.v.location.district}` : "Emplacement cité"} · récupérable maintenant</span>
+          </span>
+        </button>
+      ))}
       {later > 0 && <p className="fineprint"><Icon name="shield" size={12} /> {later} autre{later > 1 ? "s" : ""} conseil{later > 1 ? "s" : ""} gardé{later > 1 ? "s" : ""} pour plus tard (chapitre suivant ou spoiler).</p>}
     </section>
   );

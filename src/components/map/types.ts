@@ -14,6 +14,18 @@ export interface MapMarker {
   visible: boolean;
 }
 
+/** Zone de recherche approximative (jamais présentée comme un point exact). */
+export interface MapZone {
+  id: string;
+  x: number;
+  y: number;
+  radius: number;
+  color: string;
+  label: string;
+  /** Zone élargie (« à l'est de… ») : trait pointillé plus marqué. */
+  widened?: boolean;
+}
+
 export interface MapViewProps {
   regions: Region[];
   markers: MapMarker[];
@@ -37,4 +49,8 @@ export interface MapViewProps {
   /** Point en cours de relevé (déplaçable au doigt). */
   draft: { x: number; y: number } | null;
   onDraftMove: (x: number, y: number) => void;
+  /** Garage des légendes : zones de recherche affichées sous les marqueurs. */
+  zones?: MapZone[];
+  selectedZoneId?: string | null;
+  onSelectZone?: (id: string) => void;
 }

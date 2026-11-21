@@ -61,7 +61,7 @@ test.describe("Modèle de fiabilité", () => {
   });
   test("les valeurs hors bornes sont ramenées dans les limites", () => {
     const r = asPlayerRecord({ id: "x2", title: "Test", x: 1, y: 2, difficulty: 9 as 1, spoilerChapter: 12 as 0, durationMin: -4, category: "inconnue" as "mission" }, NOW);
-    expect([r.difficulty, r.spoilerChapter, r.durationMin, r.category]).toEqual([3, 3, 1, "collectible"]);
+    expect([r.difficulty, r.spoilerChapter, r.durationMin, r.category]).toEqual([3, 6, 1, "collectible"]);
   });
   test("migration V0.3 : les relevés marqués « vérifié » deviennent personnels", () => {
     const old = { schema: 1, custom: [{ ...byId("am-sign"), id: "p-old", source: { label: "Mon relevé", reliability: "verified" }, provenance: { kind: "player", createdAt: "2026-11-20T09:00:00Z" } }] } as unknown as PersistedState;
@@ -75,5 +75,48 @@ test.describe("Modèle de fiabilité", () => {
     expect(levels.has("rumor") && levels.has("reported") && levels.has("confirmed")).toBe(true);
     expect(RADAR.every((g) => g.provenance.kind === "demo")).toBe(true);
     expect(DISCOVERIES.every((d) => d.source.reliability !== "official")).toBe(true); // rien d'inventé n'est « officiel »
+  });
+});
+
+// ── V0.6 : logique du Garage des légendes (sur le flux réel produit par le moteur, fixtures v5) ──
+import { readFileSync as rf } from "node:fs";
+import { compatibility, vehicleRecommendations, viewOf } from "../src/lib/garage";
+test.describe("Garage des légendes", () => {
+  const feed = JSON.parse(rf("tests/fixtures/radar-v5.json", "utf8"));
+  const V = (id: string) => feed.vehicles.find((v: { id: string }) => v.id === id);
+  const st = (edition: "standard" | "ultimate" | "unknown", chapter: number, vehicles = {}) => ({ profile: { pseudo: "", console: "ps5" as const, edition, chapter: chapter as 1, spoilerMode: "strict" as const }, vehicles });
+  test("exclusivité confirmée : réservée Ultimate, à vérifier si l'édition est inconnue", () => {
+    expect(compatibility(V("v-dinka-enduro"), "standard")).toBe("ultimate-only");
+    expect(compatibility(V("v-dinka-enduro"), "ultimate")).toBe("ok");
+    expect(compatibility(V("v-dinka-enduro"), "unknown")).toBe("check");
+    expect(compatibility(V("v-vapid-stanier"), "standard")).toBe("preorder");
+  });
+  test("même chapitre, éditions différentes ⇒ recommandations différentes", () => {
+    const s = vehicleRecommendations(feed.vehicles, st("standard", 1)).map((x) => x.v.id);
+    const u = vehicleRecommendations(feed.vehicles, st("ultimate", 1)).map((x) => x.v.id);
+    expect(s).not.toContain("v-dinka-enduro");
+    expect(u).toContain("v-dinka-enduro");
+    expect(u).not.toEqual(s);
+  });
+  test("chapitre insuffisant ⇒ plus tard (masqué en strict) ; fenêtre dépassée ⇒ plus recommandé", () => {
+    expect(viewOf(V("v-grotti-itali-rsx"), st("ultimate", 1)).hidden).toBe(true);
+    expect(viewOf(V("v-grotti-itali-rsx"), st("ultimate", 3)).now).toBe(true);
+    expect(viewOf(V("v-dinka-enduro"), st("ultimate", 2)).expired).toBe(true);
+    expect(viewOf(V("v-dinka-enduro"), st("ultimate", 2)).now).toBe(false);
+  });
+  test("un véhicule conservé n'est plus recommandé ; un simple repérage, si", () => {
+    const at = "2026-11-21T10:00:00Z";
+    expect(vehicleRecommendations(feed.vehicles, st("standard", 1, { "v-maibatsu-penumbra-ff": { state: "spotted", at } })).map((x) => x.v.id)).toContain("v-maibatsu-penumbra-ff");
+    expect(vehicleRecommendations(feed.vehicles, st("standard", 1, { "v-maibatsu-penumbra-ff": { state: "registered", at } })).map((x) => x.v.id)).not.toContain("v-maibatsu-penumbra-ff");
+  });
+  test("précision : zone pour la Penumbra, point exact seulement pour la Vitello validée", () => {
+    expect(V("v-maibatsu-penumbra-ff").location.precision).toBe("zone");
+    expect(V("v-maibatsu-penumbra-ff").location.point).toBeNull();
+    expect(V("v-pegassi-vitello").location.precision).toBe("exact");
+  });
+  test("migration : l'ancienne édition « spéciale » devient « à renseigner », les véhicules suivis sont conservés", () => {
+    const m = migrate({ schema: 1, profile: { edition: "special" } } as unknown as PersistedState);
+    expect(m.profile.edition).toBe("unknown");
+    expect(m.vehicles).toEqual({});
   });
 });

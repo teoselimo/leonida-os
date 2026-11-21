@@ -5,6 +5,8 @@
  *   v2 : + presse B (confirme la découverte « Stinger ») ; la rumeur « leak » est retirée par un admin
  *   v3 : v2 + point validé par un admin sur « Stinger »
  *   v4 : v3 + deux guides (textes de test réécrits) décrivant la cache du perroquet → fiche structurée confirmée
+ *   v5 : v4 + six guides automobiles (textes de test réécrits) → Garage des légendes ; point validé sur la Vitello
+ *   v6 : v5 + un nouvel article qui ajoute la Bravado Banshee (détection automatique)
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -34,12 +36,30 @@ const routes: Record<string, string> = {
   "https://guide-b.example/feed": fx("guide-b.xml").replace(/Thu, \d\d Nov 2026 \d\d:00:00 GMT/g, NOW.toUTCString()),
   "https://guide-b.example/exotic": fx("guide-b.html"),
 };
+const carFx = (f: string) => fx(`cars/${f}`);
+const rssOf = (host: string, items: Array<[string, string]>) =>
+  `<?xml version="1.0"?><rss version="2.0"><channel><title>${host}</title>${items.map(([path, title]) => `<item><title>${title}</title><link>https://${host}/${path}</link><guid>${host}-${path}</guid><pubDate>${NOW.toUTCString()}</pubDate><description>${title} (GTA 6)</description></item>`).join("")}</channel></rss>`;
+const CARS: Array<[string, string, string, string]> = [
+  ["cx", "cars-x.example", "gta-6-hidden-cars|GTA 6 hidden cars: every parked rarity we found", "list.html"],
+  ["cy", "cars-y.example", "paul-walker-car|How to get Paul Walker's Fast and Furious car in GTA 6", "single.html"],
+  ["cz", "cars-z.example", "gta-6-paul-walker-car|GTA 6 Paul Walker Car Location", "alias.html"],
+  ["cu", "cars-u.example", "ultimate-items|GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses", "ultimate.html"],
+  ["cv", "cars-v.example", "editions|GTA 6 Standard vs Ultimate Edition cars", "ultimate-b.html"],
+  ["cr", "cars-r.example", "register-car|GTA 6 How to Get New Personal Car", "register.html"],
+];
+for (const [id, host, it, file] of CARS) {
+  const [path, title] = it.split("|");
+  sources.push({ id, name: `Guide auto ${id.slice(1).toUpperCase()} (test)`, kind: "rss", official: false, enabled: true, intervalMinutes: 60, url: `https://${host}/feed`, access: "", lang: "en", trust: "high" });
+  routes[`https://${host}/robots.txt`] = "User-agent: *\nAllow: /\n";
+  routes[`https://${host}/feed`] = rssOf(host, [[path, title]]);
+  routes[`https://${host}/${path}`] = carFx(file);
+}
 const fetchImpl = (async (u: RequestInfo | URL) => {
   const k = Object.keys(routes).find((r) => String(u).startsWith(r));
   return k ? new Response(routes[k], { status: 200 }) : new Response("", { status: 404 });
 }) as typeof fetch;
 
-const store: Store = { raw: {}, records: [], runs: [], state: {}, cycles: [] };
+const store: Store = { raw: {}, records: [], runs: [], state: {}, cycles: [], vehicles: [] };
 const run = async (only: string[], overrides = {}) => {
   const s = await runCollection(store, { sources, overrides, env: {}, now: NOW, force: true, only, fetchImpl, maxAgeDays: 3650, trigger: "schedule" });
   return buildFeed(store, sources, s, NOW);
@@ -54,6 +74,18 @@ const v3 = await run([], { [leak.id]: { status: "retracted" }, [stinger.id]: { l
 writeFileSync(out + "radar-v3.json", JSON.stringify(v3, null, 1));
 const v4 = await run(["guide-a", "guide-b"], { [leak.id]: { status: "retracted" }, [stinger.id]: { location: { regionId: "keys", place: "Permit Keys", x: -2100, y: -5300 } } });
 writeFileSync(out + "radar-v4.json", JSON.stringify(v4, null, 1));
+const ovV5 = { "v-pegassi-vitello": { point: { x: -1100, y: 2950 } } };
+const runV = async (only: string[]) => {
+  const s = await runCollection(store, { sources, overrides: { [leak.id]: { status: "retracted" }, [stinger.id]: { location: { regionId: "keys", place: "Permit Keys", x: -2100, y: -5300 } } }, vehicleOverrides: ovV5, env: {}, now: NOW, force: true, only, fetchImpl, maxAgeDays: 3650, trigger: "schedule" });
+  return buildFeed(store, sources, s, NOW);
+};
+const v5 = await runV(CARS.map((c) => c[0]));
+writeFileSync(out + "radar-v5.json", JSON.stringify(v5, null, 1));
+routes["https://cars-x.example/feed"] = rssOf("cars-x.example", [["gta-6-hidden-cars", "GTA 6 hidden cars: every parked rarity we found"], ["gta-6-more-cars", "GTA 6 more hidden cars"]]);
+routes["https://cars-x.example/gta-6-more-cars"] = carFx("list-v2.html");
+const v6 = await runV(["cx"]);
+writeFileSync(out + "radar-v6.json", JSON.stringify(v6, null, 1));
+console.log(`v5 garage : ${v5.vehicles!.length} fiches (${v5.vehicles!.map((v) => v.name).join(", ")}) · v6 : ${v6.vehicles!.length}`);
 const parrot = v4.items.find((i) => /Parrot/.test(i.title))!;
 console.log(`v4 perroquet : ${parrot.reliability} · ${parrot.conditions.reward} · ${parrot.location.place} · conseil : ${parrot.advice?.text}`);
 console.log(`v1 ${v1.items.length} fiches · v2 ${v2.items.length} (Stinger : ${stinger.reliability}) · v3 point validé : ${v3.items.find((i) => i.id === stinger.id)!.location.precision}`);

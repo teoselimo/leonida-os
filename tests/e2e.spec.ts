@@ -216,7 +216,22 @@ test.describe("Fiabilité des relevés", () => {
     await expect(page.getByTestId("toast")).toContainText("Relevé ajouté");
     const id = await page.evaluate(() => JSON.parse(localStorage.getItem("leonida-os/progress/v1")!).custom[0].id);
     await page.getByTestId("carto-btn").first().click();
-    await page.getByTestId(`marker-${id}`).click();
+    // Correctif CI (run 44818934585) : sur iPhone, la carte se recentre encore (fiche qui se ferme, easeTo)
+    // au moment du clic ; on attend l'immobilité puis on recentre explicitement sur le relevé avant de le toucher.
+    await mapReady(page);
+    const marker = page.getByTestId(`marker-${id}`);
+    await page.evaluate((mid) => {
+      const w = window as unknown as { __leonidaMap: { getContainer: () => HTMLElement; jumpTo: (o: object) => void; unproject: (p: [number, number]) => unknown } };
+      const el = document.querySelector(`[data-testid="marker-${mid}"]`)?.parentElement as HTMLElement | null;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const box = w.__leonidaMap.getContainer().getBoundingClientRect();
+      const c = w.__leonidaMap.unproject([r.left + r.width / 2 - box.left, r.top + r.height / 2 - box.top]);
+      w.__leonidaMap.jumpTo({ center: c });
+    }, id);
+    await mapReady(page);
+    await expect(marker).toBeInViewport();
+    await marker.click();
     const detail = page.getByTestId("detail");
     await expect(detail.getByText("MON RELEVÉ")).toBeVisible();
     await expect(detail.getByTestId("rel-personal")).toBeVisible();

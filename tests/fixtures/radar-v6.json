@@ -1,0 +1,3562 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-20T14:00:00.000Z",
+ "sources": [
+  {
+   "id": "rockstar-youtube",
+   "name": "Rockstar Games (YouTube officiel)",
+   "kind": "youtube-feed",
+   "official": true,
+   "status": "ok",
+   "statusDetail": "5 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "press-a",
+   "name": "Presse A (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "5 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "press-b",
+   "name": "Presse B (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "guide-a",
+   "name": "Guide A (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "guide-b",
+   "name": "Guide B (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "cx",
+   "name": "Guide auto X (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "2 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "cy",
+   "name": "Guide auto Y (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "cz",
+   "name": "Guide auto Z (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "cu",
+   "name": "Guide auto U (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "cv",
+   "name": "Guide auto V (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  },
+  {
+   "id": "cr",
+   "name": "Guide auto R (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "ok",
+   "statusDetail": "1 éléments lus",
+   "lastSuccessAt": "2026-11-20T14:00:00.000Z",
+   "lastAttemptAt": "2026-11-20T14:00:00.000Z"
+  }
+ ],
+ "health": {
+  "cadenceMinutes": 15,
+  "cycles": [
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 2,
+    "sourcesOk": 2,
+    "newItems": 8,
+    "updatedItems": 0,
+    "deepReads": 0,
+    "merged": 0,
+    "vehicles": 0
+   },
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 1,
+    "sourcesOk": 1,
+    "newItems": 0,
+    "updatedItems": 1,
+    "deepReads": 0,
+    "merged": 0,
+    "vehicles": 0
+   },
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 0,
+    "sourcesOk": 0,
+    "newItems": 0,
+    "updatedItems": 0,
+    "deepReads": 0,
+    "merged": 0,
+    "vehicles": 0
+   },
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 2,
+    "sourcesOk": 2,
+    "newItems": 2,
+    "updatedItems": 0,
+    "deepReads": 2,
+    "merged": 1,
+    "vehicles": 0
+   },
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 6,
+    "sourcesOk": 6,
+    "newItems": 5,
+    "updatedItems": 1,
+    "deepReads": 6,
+    "merged": 0,
+    "vehicles": 7
+   },
+   {
+    "at": "2026-11-20T14:00:00.000Z",
+    "trigger": "schedule",
+    "runId": null,
+    "sourcesAttempted": 1,
+    "sourcesOk": 1,
+    "newItems": 1,
+    "updatedItems": 0,
+    "deepReads": 1,
+    "merged": 0,
+    "vehicles": 8
+   }
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "v-vapid-stanier",
+   "type": "vehicle",
+   "name": "'55 Vapid Stanier",
+   "make": "Vapid",
+   "model": "Stanier",
+   "year": "55",
+   "aliases": null,
+   "kind": "hidden",
+   "variant": null,
+   "edition": {
+    "exclusive": "preorder",
+    "status": "reported",
+    "support": [
+     {
+      "sourceName": "Guide auto U (test)",
+      "url": "https://cars-u.example/ultimate-items",
+      "quote": "Your Vintage Vice City Pack pre-order bonus becomes available from Chapter 3."
+     }
+    ]
+   },
+   "location": {
+    "text": {
+     "value": "Pick up your '55 Vapid Stanier parked outside a hotel in Vice Beach.",
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "Pick up your '55 Vapid Stanier parked outside a hotel in Vice Beach."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Vice Beach",
+    "regionId": "vicecity",
+    "precision": "zone",
+    "zone": {
+     "x": 1636,
+     "y": 1096,
+     "radius": 1198,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": {
+     "value": 3,
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "Your Vintage Vice City Pack pre-order bonus becomes available from Chapter 3."
+      }
+     ],
+     "conflicts": []
+    },
+    "inferredChapter": null,
+    "until": null,
+    "mission": null,
+    "early": false,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": null,
+    "mode": "yes"
+   },
+   "steps": [],
+   "risks": [],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto U (test)",
+     "url": "https://cars-u.example/ultimate-items",
+     "title": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "reported",
+   "reasons": [
+    "Une seule source : à vérifier en jeu.",
+    "Zone de recherche autour de Vice Beach (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [
+    "sécurité (traqueur, alarme, clé)"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto U (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-grotti-cheetah",
+   "type": "vehicle",
+   "name": "'95 Grotti Cheetah",
+   "make": "Grotti",
+   "model": "Cheetah",
+   "year": "95",
+   "aliases": null,
+   "kind": "delivery",
+   "variant": null,
+   "edition": {
+    "exclusive": "ultimate",
+    "status": "confirmed",
+    "support": [
+     {
+      "sourceName": "Guide auto U (test)",
+      "url": "https://cars-u.example/ultimate-items",
+      "quote": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses"
+     },
+     {
+      "sourceName": "Guide auto V (test)",
+      "url": "https://cars-v.example/editions",
+      "quote": "The '95 Grotti Cheetah is an Ultimate Edition exclusive and arrives late in the story."
+     }
+    ]
+   },
+   "location": {
+    "text": {
+     "value": "You'll get a notification and your '95 Grotti Cheetah will be parked in the basement of Pegassi Residences on Bayside Drive.",
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "You'll get a notification and your '95 Grotti Cheetah will be parked in the basement of Pegassi Residences on Bayside Drive."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Bayside",
+    "regionId": "vicecity",
+    "precision": "zone",
+    "zone": {
+     "x": -349,
+     "y": 1041,
+     "radius": 456,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": {
+     "value": 5,
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "Available from Chapter 5 once the story reaches the city."
+      }
+     ],
+     "conflicts": []
+    },
+    "inferredChapter": null,
+    "until": null,
+    "mission": null,
+    "early": false,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": null,
+    "mode": "yes"
+   },
+   "steps": [],
+   "risks": [],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto U (test)",
+     "url": "https://cars-u.example/ultimate-items",
+     "title": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    },
+    {
+     "sourceName": "Guide auto V (test)",
+     "url": "https://cars-v.example/editions",
+     "title": "GTA 6 Standard vs Ultimate Edition cars",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "confirmed",
+   "reasons": [
+    "2 sources indépendantes concordantes sur l'exclusivité d'édition.",
+    "Exclusivité Ultimate recoupée.",
+    "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto U (test)",
+      "source : Guide auto V (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-maibatsu-penumbra-ff",
+   "type": "vehicle",
+   "name": "'97 Maibatsu Penumbra FF",
+   "make": "Maibatsu",
+   "model": "Penumbra FF",
+   "year": "97",
+   "aliases": {
+    "value": [
+     "mitsubishi-eclipse"
+    ],
+    "support": [
+     {
+      "sourceName": "Guide auto X (test)",
+      "url": "https://cars-x.example/gta-6-hidden-cars",
+      "quote": "Maibatsu ’97 Penumbra FF (Paul Walker’s Eclipse)"
+     },
+     {
+      "sourceName": "Guide auto Z (test)",
+      "url": "https://cars-z.example/gta-6-paul-walker-car",
+      "quote": "Rockstar hid a tribute to the green 1995 Mitsubishi Eclipse from the first movie in GTA 6."
+     }
+    ],
+    "conflicts": []
+   },
+   "kind": "hidden",
+   "variant": {
+    "value": "bright green",
+    "support": [
+     {
+      "sourceName": "Guide auto X (test)",
+      "url": "https://cars-x.example/gta-6-hidden-cars",
+      "quote": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "Guide auto Z (test)",
+      "url": "https://cars-z.example/gta-6-paul-walker-car",
+      "quote": "Rockstar hid a tribute to the green 1995 Mitsubishi Eclipse from the first movie in GTA 6."
+     }
+    ]
+   },
+   "edition": {
+    "exclusive": null,
+    "status": "none",
+    "support": []
+   },
+   "location": {
+    "text": {
+     "value": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road.",
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road."
+      }
+     ],
+     "conflicts": [
+      {
+       "sourceName": "Guide auto Z (test)",
+       "url": "https://cars-z.example/gta-6-paul-walker-car",
+       "quote": "It sits inside a villa garage on Vespucci Island, among the Rialto Islands west of Vice Beach."
+      },
+      {
+       "sourceName": "Guide auto Y (test)",
+       "url": "https://cars-y.example/paul-walker-car",
+       "quote": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach."
+      }
+     ]
+    },
+    "district": "Rialto Islands",
+    "regionId": "vicecity",
+    "precision": "zone",
+    "zone": {
+     "x": 495,
+     "y": 1253,
+     "radius": 431,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": null,
+    "inferredChapter": null,
+    "until": null,
+    "mission": null,
+    "early": true,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": {
+     "value": true,
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "Break the side door, switch off the alarm panel on the wall, then open the main garage door."
+      },
+      {
+       "sourceName": "Guide auto Y (test)",
+       "url": "https://cars-y.example/paul-walker-car",
+       "quote": "Head to the garage, break in, and switch off the alarm on the wall to your left."
+      }
+     ],
+     "conflicts": []
+    }
+   },
+   "keep": {
+    "text": {
+     "value": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept.",
+     "support": [
+      {
+       "sourceName": "Guide auto Y (test)",
+       "url": "https://cars-y.example/paul-walker-car",
+       "quote": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept."
+      }
+     ],
+     "conflicts": []
+    },
+    "rule": {
+     "chapter": 2,
+     "where": "garage de Moses",
+     "tracker": "none",
+     "source": {
+      "sourceName": "Guide auto R (test)",
+      "url": "https://cars-r.example/register-car",
+      "quote": "After you meet Moses in Chapter 2, you can bring him any car that doesn't have a tracker and click Register in his garage."
+     }
+    },
+    "mode": "register"
+   },
+   "steps": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "quote": "Take the causeway through the Rialto Islands west of Vice Beach."
+    },
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "quote": "Break the side door, switch off the alarm panel on the wall, then open the main garage door."
+    },
+    {
+     "sourceName": "Guide auto Z (test)",
+     "url": "https://cars-z.example/gta-6-paul-walker-car",
+     "quote": "Drive west from Vice Beach to Vespucci Island."
+    },
+    {
+     "sourceName": "Guide auto Z (test)",
+     "url": "https://cars-z.example/gta-6-paul-walker-car",
+     "quote": "Open the garage from the main garage door, not the side door."
+    },
+    {
+     "sourceName": "Guide auto Y (test)",
+     "url": "https://cars-y.example/paul-walker-car",
+     "quote": "Head to the garage, break in, and switch off the alarm on the wall to your left."
+    }
+   ],
+   "risks": [
+    {
+     "sourceName": "Guide auto Y (test)",
+     "url": "https://cars-y.example/paul-walker-car",
+     "quote": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept."
+    }
+   ],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "title": "GTA 6 hidden cars: every parked rarity we found",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    },
+    {
+     "sourceName": "Guide auto Z (test)",
+     "url": "https://cars-z.example/gta-6-paul-walker-car",
+     "title": "GTA 6 Paul Walker Car Location",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    },
+    {
+     "sourceName": "Guide auto Y (test)",
+     "url": "https://cars-y.example/paul-walker-car",
+     "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "confirmed",
+   "reasons": [
+    "3 sources indépendantes concordantes sur l'emplacement.",
+    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [
+    "chapitre"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto X (test)",
+      "source : Guide auto Z (test)",
+      "source : Guide auto Y (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-bravado-banshee",
+   "type": "vehicle",
+   "name": "Bravado Banshee",
+   "make": "Bravado",
+   "model": "Banshee",
+   "year": null,
+   "aliases": null,
+   "kind": "hidden",
+   "variant": null,
+   "edition": {
+    "exclusive": null,
+    "status": "none",
+    "support": []
+   },
+   "location": {
+    "text": {
+     "value": "A red Bravado Banshee is parked in a villa garage on Starfish Island most nights, next to the jetty.",
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-more-cars",
+       "quote": "A red Bravado Banshee is parked in a villa garage on Starfish Island most nights, next to the jetty."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Starfish Island",
+    "regionId": "vicecity",
+    "precision": "zone",
+    "zone": {
+     "x": 777,
+     "y": 470,
+     "radius": 220,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": null,
+    "inferredChapter": null,
+    "until": null,
+    "mission": null,
+    "early": false,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": {
+     "chapter": 2,
+     "where": "garage de Moses",
+     "tracker": "none",
+     "source": {
+      "sourceName": "Guide auto R (test)",
+      "url": "https://cars-r.example/register-car",
+      "quote": "After you meet Moses in Chapter 2, you can bring him any car that doesn't have a tracker and click Register in his garage."
+     }
+    },
+    "mode": "register"
+   },
+   "steps": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-more-cars",
+     "quote": "Drive across the causeway at night and check the garage on the north side of the island."
+    }
+   ],
+   "risks": [],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-more-cars",
+     "title": "GTA 6 more hidden cars",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "reported",
+   "reasons": [
+    "Une seule source : à vérifier en jeu.",
+    "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [
+    "chapitre",
+    "sécurité (traqueur, alarme, clé)"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto X (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-dinka-enduro",
+   "type": "vehicle",
+   "name": "Dinka Enduro",
+   "make": "Dinka",
+   "model": "Enduro",
+   "year": null,
+   "aliases": null,
+   "kind": "hidden",
+   "variant": null,
+   "edition": {
+    "exclusive": "ultimate",
+    "status": "confirmed",
+    "support": [
+     {
+      "sourceName": "Guide auto U (test)",
+      "url": "https://cars-u.example/ultimate-items",
+      "quote": "Available from Chapter 1 for owners of the Ultimate Edition."
+     },
+     {
+      "sourceName": "Guide auto V (test)",
+      "url": "https://cars-v.example/editions",
+      "quote": "The army-green Dinka Enduro is part of the Ultimate Edition safehouse vehicles."
+     }
+    ]
+   },
+   "location": {
+    "text": {
+     "value": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck.",
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Key Lento",
+    "regionId": "keys",
+    "precision": "zone",
+    "zone": {
+     "x": -2510,
+     "y": -5919,
+     "radius": 804,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "Available from Chapter 1 for owners of the Ultimate Edition."
+      }
+     ],
+     "conflicts": []
+    },
+    "inferredChapter": null,
+    "until": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "These items are only available in Chapter 1, so grab them before you leave the Keys."
+      }
+     ],
+     "conflicts": []
+    },
+    "mission": null,
+    "early": false,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": null,
+    "mode": "yes"
+   },
+   "steps": [],
+   "risks": [
+    {
+     "sourceName": "Guide auto U (test)",
+     "url": "https://cars-u.example/ultimate-items",
+     "quote": "These items are only available in Chapter 1, so grab them before you leave the Keys."
+    }
+   ],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto U (test)",
+     "url": "https://cars-u.example/ultimate-items",
+     "title": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    },
+    {
+     "sourceName": "Guide auto V (test)",
+     "url": "https://cars-v.example/editions",
+     "title": "GTA 6 Standard vs Ultimate Edition cars",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "confirmed",
+   "reasons": [
+    "2 sources indépendantes concordantes sur l'exclusivité d'édition.",
+    "Exclusivité Ultimate recoupée.",
+    "Zone de recherche autour de Key Lento (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [
+    "sécurité (traqueur, alarme, clé)"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto U (test)",
+      "source : Guide auto V (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-grotti-itali-rsx",
+   "type": "vehicle",
+   "name": "Grotti Itali RSX",
+   "make": "Grotti",
+   "model": "Itali RSX",
+   "year": null,
+   "aliases": null,
+   "kind": "hidden",
+   "variant": null,
+   "edition": {
+    "exclusive": null,
+    "status": "none",
+    "support": []
+   },
+   "location": {
+    "text": {
+     "value": "Residential garage in the Rialto Islands, two doors from the canal.",
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "Residential garage in the Rialto Islands, two doors from the canal."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Rialto Islands",
+    "regionId": "vicecity",
+    "precision": "zone",
+    "zone": {
+     "x": 495,
+     "y": 1253,
+     "radius": 431,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": null,
+    "inferredChapter": {
+     "value": 3,
+     "why": "cloneur de clé nécessaire",
+     "source": {
+      "sourceName": "Guide auto R (test)",
+      "url": "https://cars-r.example/register-car",
+      "quote": "You automatically get the key cloner in Chapter 3 during the mission \"Steal the Zorruso\"."
+     }
+    },
+    "until": null,
+    "mission": null,
+    "early": false,
+    "keyCloner": {
+     "value": true,
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police."
+      }
+     ],
+     "conflicts": []
+    },
+    "tracker": {
+     "value": "advanced",
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police."
+      }
+     ],
+     "conflicts": []
+    },
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": null,
+    "mode": "register"
+   },
+   "steps": [],
+   "risks": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "quote": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police."
+    }
+   ],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "title": "GTA 6 hidden cars: every parked rarity we found",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "reported",
+   "reasons": [
+    "Une seule source : à vérifier en jeu.",
+    "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, Guide auto R (test)).",
+    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [
+    "méthode de conservation"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto X (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-maibatsu-penumbra",
+   "type": "vehicle",
+   "name": "Maibatsu Penumbra",
+   "make": "Maibatsu",
+   "model": "Penumbra",
+   "year": null,
+   "aliases": null,
+   "kind": "hidden",
+   "variant": null,
+   "edition": {
+    "exclusive": null,
+    "status": "none",
+    "support": []
+   },
+   "location": {
+    "text": {
+     "value": "A plain Penumbra is parked in the multistorey parking structure in Little Cuba most afternoons.",
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "A plain Penumbra is parked in the multistorey parking structure in Little Cuba most afternoons."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Little Cuba",
+    "regionId": "vicecity",
+    "precision": "zone",
+    "zone": {
+     "x": -1200,
+     "y": 75,
+     "radius": 266,
+     "widened": false
+    },
+    "point": null,
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": null,
+    "inferredChapter": null,
+    "until": null,
+    "mission": null,
+    "early": false,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": {
+     "chapter": 2,
+     "where": "garage de Moses",
+     "tracker": "none",
+     "source": {
+      "sourceName": "Guide auto R (test)",
+      "url": "https://cars-r.example/register-car",
+      "quote": "After you meet Moses in Chapter 2, you can bring him any car that doesn't have a tracker and click Register in his garage."
+     }
+    },
+    "mode": "register"
+   },
+   "steps": [],
+   "risks": [],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "title": "GTA 6 hidden cars: every parked rarity we found",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "reported",
+   "reasons": [
+    "Une seule source : à vérifier en jeu.",
+    "Zone de recherche autour de Little Cuba (repères de la carte communautaire), pas un point exact."
+   ],
+   "missing": [
+    "chapitre",
+    "sécurité (traqueur, alarme, clé)"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto X (test)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "v-pegassi-vitello",
+   "type": "vehicle",
+   "name": "Pegassi Vitello",
+   "make": "Pegassi",
+   "model": "Vitello",
+   "year": null,
+   "aliases": null,
+   "kind": "hidden",
+   "variant": null,
+   "edition": {
+    "exclusive": null,
+    "status": "none",
+    "support": []
+   },
+   "location": {
+    "text": {
+     "value": "Villa garage on Flamingo Parkway, east of Belville.",
+     "support": [
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-hidden-cars",
+       "quote": "Villa garage on Flamingo Parkway, east of Belville."
+      },
+      {
+       "sourceName": "Guide auto X (test)",
+       "url": "https://cars-x.example/gta-6-more-cars",
+       "quote": "Villa garage on Flamingo Parkway, east of Belville."
+      }
+     ],
+     "conflicts": []
+    },
+    "district": "Belville",
+    "regionId": "ambrosia",
+    "precision": "exact",
+    "zone": null,
+    "point": {
+     "x": -1100,
+     "y": 2950
+    },
+    "alternatives": []
+   },
+   "access": {
+    "chapterMin": null,
+    "inferredChapter": null,
+    "until": null,
+    "mission": null,
+    "early": false,
+    "keyCloner": null,
+    "tracker": null,
+    "alarm": null
+   },
+   "keep": {
+    "text": null,
+    "rule": {
+     "chapter": 2,
+     "where": "garage de Moses",
+     "tracker": "none",
+     "source": {
+      "sourceName": "Guide auto R (test)",
+      "url": "https://cars-r.example/register-car",
+      "quote": "After you meet Moses in Chapter 2, you can bring him any car that doesn't have a tracker and click Register in his garage."
+     }
+    },
+    "mode": "register"
+   },
+   "steps": [],
+   "risks": [],
+   "price": null,
+   "media": null,
+   "evidence": [
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "title": "GTA 6 hidden cars: every parked rarity we found",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    },
+    {
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-more-cars",
+     "title": "GTA 6 more hidden cars",
+     "official": false,
+     "readAt": "2026-11-20T14:00:00.000Z"
+    }
+   ],
+   "reliability": "reported",
+   "reasons": [
+    "Une seule source : à vérifier en jeu.",
+    "Certaines sources reprennent la même origine : comptées une seule fois."
+   ],
+   "missing": [
+    "chapitre",
+    "sécurité (traqueur, alarme, clé)"
+   ],
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Détection automatique",
+     "changes": [
+      "source : Guide auto X (test)"
+     ]
+    },
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "preuves : 1 → 2"
+     ]
+    }
+   ]
+  }
+ ],
+ "lastRun": {
+  "at": "2026-11-20T14:00:00.000Z",
+  "newItems": 1,
+  "updatedItems": 0,
+  "errors": 0
+ },
+ "items": [
+  {
+   "id": "r-626541ae74",
+   "title": "GTA 6 Early Money: The Three Sheets Liquor Parrot Stash",
+   "summary": "Argent · Guide A (test) + 1 autre source — A talking parrot points you to an early cash stash in GTA 6.",
+   "category": "money",
+   "reliability": "confirmed",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "2 sources indépendantes concordantes sur le lieu, la récompense, le contexte.",
+    "Fiche structurée extraite de 2 articles lus en entier (règles déterministes).",
+    "Au moins une source dit avoir testé en jeu."
+   ],
+   "spoiler": "low",
+   "actionable": true,
+   "location": {
+    "regionId": "keys",
+    "place": "Three Sheets Liquor, Key Lento",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": null
+   },
+   "conditions": {
+    "reward": "≈ 1 000–1 400 $",
+    "money": 1000,
+    "requirement": "Après « Pipework », pendant « Get Shirley's Rum » (Shirley)",
+    "missable": false,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "guide-a:ga-1",
+     "sourceId": "guide-a",
+     "sourceName": "Guide A (test)",
+     "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+     "title": "GTA 6 Early Money: The Three Sheets Liquor Parrot Stash",
+     "excerpt": "A talking parrot points you to an early cash stash in GTA 6.",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:guide-a.example"
+     ],
+     "quotes": [
+      "We tested it ourselves: we cleared it in Chapter 1 after a shootout with the guards.",
+      "Check the vent panel in the wall beside the cages for the main haul, somewhere around $1,000 to $1,400, then open the small safe nearby.",
+      "However, Get Shirley's Rum is a time-sensitive mission and disappears for good the moment you start the Chapter 1 mission Tourist Trap.",
+      "Finish the opening story jobs and unlock Pipework, then answer the call from your neighbor Shirley.",
+      "Get to Three Sheets Liquor in Key Lento",
+      "You don't necessarily miss anything if you skip it though, because the shop stays open afterwards."
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 1,
+        "quote": "We tested it ourselves: we cleared it in Chapter 1 after a shootout with the guards.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "money": {
+        "value": {
+         "amount": 1000,
+         "max": 1400,
+         "approx": true
+        },
+        "quote": "Check the vent panel in the wall beside the cages for the main haul, somewhere around $1,000 to $1,400, then open the small safe nearby.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "mission": {
+        "value": "Get Shirley's Rum",
+        "quote": "However, Get Shirley's Rum is a time-sensitive mission and disappears for good the moment you start the Chapter 1 mission Tourist Trap.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "giver": {
+        "value": "Shirley",
+        "quote": "Finish the opening story jobs and unlock Pipework, then answer the call from your neighbor Shirley.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "unlockAfter": {
+        "value": "Pipework",
+        "quote": "Finish the opening story jobs and unlock Pipework, then answer the call from your neighbor Shirley.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "place": {
+        "value": {
+         "name": "Three Sheets Liquor",
+         "district": "Key Lento",
+         "regionId": "keys"
+        },
+        "quote": "Get to Three Sheets Liquor in Key Lento",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "missable": {
+        "value": false,
+        "quote": "You don't necessarily miss anything if you skip it though, because the shop stays open afterwards.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "contextMissable": {
+        "value": {
+         "subject": "Get Shirley's Rum",
+         "until": "Tourist Trap"
+        },
+        "quote": "However, Get Shirley's Rum is a time-sensitive mission and disappears for good the moment you start the Chapter 1 mission Tourist Trap.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "handsOn": {
+        "value": true,
+        "quote": "We tested it ourselves: we cleared it in Chapter 1 after a shootout with the guards.",
+        "url": "https://guide-a.example/gta-6-early-money-parrot-stash"
+       },
+       "keywords": [
+        "liquor",
+        "parrot",
+        "stash",
+        "cash",
+        "rum",
+        "vent",
+        "safe"
+       ]
+      },
+      "videoIds": []
+     }
+    },
+    {
+     "rawKey": "guide-b:gb-1",
+     "sourceId": "guide-b",
+     "sourceName": "Guide B (test)",
+     "url": "https://guide-b.example/exotic-animals-front-gta-6",
+     "title": "How to complete the Exotic Animals Front illegal operation in GTA 6",
+     "excerpt": "Where to find the parrot and its hidden money in GTA 6.",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:guide-b.example"
+     ],
+     "quotes": [
+      "Most players trigger it while doing a side mission for Jason's neighbor Shirley in GTA 6 Chapter 1, when she sends you to buy rum.",
+      "Open the vent and you'll find a cash stash of $1,263.",
+      "Behind the Three Sheets Liquor Store in Key Lento a smuggling ring keeps exotic birds, and one parrot keeps hinting at a stash of money."
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": true,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 1,
+        "quote": "Most players trigger it while doing a side mission for Jason's neighbor Shirley in GTA 6 Chapter 1, when she sends you to buy rum.",
+        "url": "https://guide-b.example/exotic-animals-front-gta-6"
+       },
+       "money": {
+        "value": {
+         "amount": 1263,
+         "max": null,
+         "approx": false
+        },
+        "quote": "Open the vent and you'll find a cash stash of $1,263.",
+        "url": "https://guide-b.example/exotic-animals-front-gta-6"
+       },
+       "mission": null,
+       "giver": {
+        "value": "Shirley",
+        "quote": "Most players trigger it while doing a side mission for Jason's neighbor Shirley in GTA 6 Chapter 1, when she sends you to buy rum.",
+        "url": "https://guide-b.example/exotic-animals-front-gta-6"
+       },
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Three Sheets Liquor",
+         "district": "Key Lento",
+         "regionId": "keys"
+        },
+        "quote": "Behind the Three Sheets Liquor Store in Key Lento a smuggling ring keeps exotic birds, and one parrot keeps hinting at a stash of money.",
+        "url": "https://guide-b.example/exotic-animals-front-gta-6"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "exotic",
+        "liquor",
+        "parrot",
+        "stash",
+        "rum",
+        "vent",
+        "cash"
+       ]
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide A (test)"
+     ]
+    },
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Même découverte décrite par une autre source",
+     "changes": [
+      "fusion : « How to complete the Exotic Animals Front illegal operation in GTA 6 » (Guide B (test))",
+      "fiabilité : reported → confirmed",
+      "localisation : none → named-place",
+      "lieu : Three Sheets Liquor, Key Lento",
+      "récompense : ≈ 1 000–1 400 $",
+      "conditions : Après « Pipework », pendant « Get Shirley's Rum » (Shirley)",
+      "chapitre : 1"
+     ]
+    }
+   ],
+   "score": 76,
+   "opportunity": {
+    "score": 83,
+    "angle": "testé",
+    "ideas": [
+     "Testé en jeu : « GTA 6 Early Money: The Three Sheets Liquor Parrot Stash »",
+     "Où et comment, en moins de 30 secondes"
+    ]
+   },
+   "mergedFrom": [
+    "r-5360abf6f1"
+   ],
+   "details": {
+    "chapter": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "We tested it ourselves: we cleared it in Chapter 1 after a shootout with the guards."
+      },
+      {
+       "sourceName": "Guide B (test)",
+       "url": "https://guide-b.example/exotic-animals-front-gta-6",
+       "quote": "Most players trigger it while doing a side mission for Jason's neighbor Shirley in GTA 6 Chapter 1, when she sends you to buy rum."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": {
+     "value": {
+      "min": 1000,
+      "max": 1400,
+      "approx": true
+     },
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "Check the vent panel in the wall beside the cages for the main haul, somewhere around $1,000 to $1,400, then open the small safe nearby."
+      },
+      {
+       "sourceName": "Guide B (test)",
+       "url": "https://guide-b.example/exotic-animals-front-gta-6",
+       "quote": "Open the vent and you'll find a cash stash of $1,263."
+      }
+     ],
+     "conflicts": []
+    },
+    "mission": {
+     "value": "Get Shirley's Rum",
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "However, Get Shirley's Rum is a time-sensitive mission and disappears for good the moment you start the Chapter 1 mission Tourist Trap."
+      }
+     ],
+     "conflicts": []
+    },
+    "giver": {
+     "value": "Shirley",
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "Finish the opening story jobs and unlock Pipework, then answer the call from your neighbor Shirley."
+      },
+      {
+       "sourceName": "Guide B (test)",
+       "url": "https://guide-b.example/exotic-animals-front-gta-6",
+       "quote": "Most players trigger it while doing a side mission for Jason's neighbor Shirley in GTA 6 Chapter 1, when she sends you to buy rum."
+      }
+     ],
+     "conflicts": []
+    },
+    "unlockAfter": {
+     "value": "Pipework",
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "Finish the opening story jobs and unlock Pipework, then answer the call from your neighbor Shirley."
+      }
+     ],
+     "conflicts": []
+    },
+    "place": {
+     "value": {
+      "name": "Three Sheets Liquor",
+      "district": "Key Lento"
+     },
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "Get to Three Sheets Liquor in Key Lento"
+      },
+      {
+       "sourceName": "Guide B (test)",
+       "url": "https://guide-b.example/exotic-animals-front-gta-6",
+       "quote": "Behind the Three Sheets Liquor Store in Key Lento a smuggling ring keeps exotic birds, and one parrot keeps hinting at a stash of money."
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": {
+     "value": false,
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "You don't necessarily miss anything if you skip it though, because the shop stays open afterwards."
+      }
+     ],
+     "conflicts": []
+    },
+    "contextMissable": {
+     "value": {
+      "subject": "Get Shirley's Rum",
+      "until": "Tourist Trap"
+     },
+     "support": [
+      {
+       "sourceName": "Guide A (test)",
+       "url": "https://guide-a.example/gta-6-early-money-parrot-stash",
+       "quote": "However, Get Shirley's Rum is a time-sensitive mission and disappears for good the moment you start the Chapter 1 mission Tourist Trap."
+      }
+     ],
+     "conflicts": []
+    },
+    "handsOn": true,
+    "missing": []
+   },
+   "capture": null,
+   "advice": {
+    "text": "≈ 1 000–1 400 $ · Three Sheets Liquor (Key Lento) pendant « Get Shirley's Rum » (Shirley). Accessible après « Pipework ». La mission disparaît au lancement de « Tourist Trap ».",
+    "chapterMin": 1,
+    "urgency": "now"
+   }
+  },
+  {
+   "id": "r-dbb6e66934",
+   "title": "GTA 6: where to find the hidden Stinger supercar at Permit Keys",
+   "summary": "Easter egg · Presse A (test) + 1 autre source — The hidden Stinger supercar sits in a garage at Permit Keys and sells for $45,000.",
+   "category": "easter_egg",
+   "reliability": "confirmed",
+   "status": "active",
+   "reviewed": true,
+   "reasons": [
+    "2 sources indépendantes concordantes avec des éléments précis."
+   ],
+   "spoiler": "low",
+   "actionable": true,
+   "location": {
+    "regionId": "keys",
+    "place": "Permit Keys",
+    "precision": "validated",
+    "x": -2100,
+    "y": -5300
+   },
+   "conditions": {
+    "reward": null,
+    "money": 45000,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "press-a:a-1",
+     "sourceId": "press-a",
+     "sourceName": "Presse A (test)",
+     "url": "https://press-a.example/gta-6-hidden-stinger",
+     "title": "GTA 6: where to find the hidden Stinger supercar at Permit Keys",
+     "excerpt": "The hidden Stinger supercar sits in a garage at Permit Keys and sells for $45,000.",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:press-a.example",
+      "yt:AAAAAAAAAAA"
+     ],
+     "quotes": [
+      "$45,000",
+      "Permit Keys"
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": false,
+      "reason": "HTTP 404 sur https://press-a.example/gta-6-hidden-stinger",
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": null,
+      "videoIds": []
+     }
+    },
+    {
+     "rawKey": "press-b:b-1",
+     "sourceId": "press-b",
+     "sourceName": "Presse B (test)",
+     "url": "https://press-b.example/stinger-permit-keys",
+     "title": "Hidden Stinger supercar in GTA 6: Permit Keys garage location",
+     "excerpt": "We found the hidden Stinger supercar ourselves in a Permit Keys garage; it resells for $45,000 in GTA 6.",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:press-b.example"
+     ],
+     "quotes": [
+      "$45,000",
+      "Permit Keys"
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": false,
+      "reason": "HTTP 404 sur https://press-b.example/stinger-permit-keys",
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": null,
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Presse A (test)",
+      "localisation : none → named-place",
+      "lieu : Permit Keys"
+     ]
+    },
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Nouvelle preuve rattachée",
+     "changes": [
+      "Presse B (test) : « Hidden Stinger supercar in GTA 6: Permit Keys garage location »",
+      "fiabilité : reported → confirmed"
+     ]
+    },
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Correction administrateur",
+     "changes": [
+      "localisation : named-place → validated"
+     ]
+    }
+   ],
+   "score": 73,
+   "opportunity": {
+    "score": 84,
+    "angle": "testé",
+    "ideas": [
+     "Testé en jeu : « GTA 6: where to find the hidden Stinger supercar at Permit Keys »",
+     "Où et comment, en moins de 30 secondes"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-8e7d82b4c2",
+   "title": "Grand Theft Auto VI Now Available",
+   "summary": "Actualité · Rockstar Games (YouTube officiel) — Today we are proud to announce that Grand Theft Auto VI is now available worldwide for PlayStation 5 and XBOX Series X|S. Vice City, USA. Jason and Lucia have always known the dec",
+   "category": "news",
+   "reliability": "official",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Publié par Rockstar Games (source officielle)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "rockstar-youtube:T95WGWkx7P0",
+     "sourceId": "rockstar-youtube",
+     "sourceName": "Rockstar Games (YouTube officiel)",
+     "url": "https://www.youtube.com/watch?v=T95WGWkx7P0",
+     "title": "Grand Theft Auto VI Now Available",
+     "excerpt": "Today we are proud to announce that Grand Theft Auto VI is now available worldwide for PlayStation 5 and XBOX Series X|S. Vice City, USA. Jason and Lucia have always known the dec",
+     "publishedAt": "2026-11-19T13:59:56+00:00",
+     "official": true,
+     "origins": [
+      "yt-channel:rockstar games",
+      "yt:T95WGWkx7P0"
+     ],
+     "quotes": []
+    }
+   ],
+   "media": {
+    "kind": "youtube",
+    "videoId": "T95WGWkx7P0",
+    "url": "https://www.youtube.com/watch?v=T95WGWkx7P0",
+    "thumbnail": "https://i.ytimg.com/vi/T95WGWkx7P0/hqdefault.jpg",
+    "credit": "Rockstar Games",
+    "rights": "youtube-terms"
+   },
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-19T13:59:56+00:00",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Rockstar Games (YouTube officiel)",
+      "fiabilité : reported → official"
+     ]
+    }
+   ],
+   "score": 68,
+   "opportunity": {
+    "score": 78,
+    "angle": "actu",
+    "ideas": [
+     "L'essentiel en 30 secondes : « Grand Theft Auto VI Now Available »"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-b3f13db885",
+   "title": "Grand Theft Auto VI: Pre-Load Now",
+   "summary": "Actualité · Rockstar Games (YouTube officiel) — Pre-loading is now available for everyone who has pre-ordered Grand Theft Auto VI digitally. Players who pre-ordered the code-in-box version can also activate their code and begin",
+   "category": "news",
+   "reliability": "official",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Publié par Rockstar Games (source officielle)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "rockstar-youtube:TIPlpDAsfWo",
+     "sourceId": "rockstar-youtube",
+     "sourceName": "Rockstar Games (YouTube officiel)",
+     "url": "https://www.youtube.com/watch?v=TIPlpDAsfWo",
+     "title": "Grand Theft Auto VI: Pre-Load Now",
+     "excerpt": "Pre-loading is now available for everyone who has pre-ordered Grand Theft Auto VI digitally. Players who pre-ordered the code-in-box version can also activate their code and begin",
+     "publishedAt": "2026-11-10T13:55:42+00:00",
+     "official": true,
+     "origins": [
+      "yt-channel:rockstar games",
+      "yt:TIPlpDAsfWo"
+     ],
+     "quotes": []
+    }
+   ],
+   "media": {
+    "kind": "youtube",
+    "videoId": "TIPlpDAsfWo",
+    "url": "https://www.youtube.com/watch?v=TIPlpDAsfWo",
+    "thumbnail": "https://i.ytimg.com/vi/TIPlpDAsfWo/hqdefault.jpg",
+    "credit": "Rockstar Games",
+    "rights": "youtube-terms"
+   },
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-10T13:55:42+00:00",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Rockstar Games (YouTube officiel)",
+      "fiabilité : reported → official"
+     ]
+    }
+   ],
+   "score": 68,
+   "opportunity": {
+    "score": 78,
+    "angle": "actu",
+    "ideas": [
+     "L'essentiel en 30 secondes : « Grand Theft Auto VI: Pre-Load Now »"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-e70605f996",
+   "title": "Grand Theft Auto VI: Out Now",
+   "summary": "Actualité · Rockstar Games (YouTube officiel) — Today we are proud to announce that Grand Theft Auto VI is now available worldwide for PlayStation 5 and XBOX Series X|S. Vice City, USA. Jason and Lucia have always known the dec",
+   "category": "news",
+   "reliability": "official",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Publié par Rockstar Games (source officielle)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "rockstar-youtube:_yl5ELcmugI",
+     "sourceId": "rockstar-youtube",
+     "sourceName": "Rockstar Games (YouTube officiel)",
+     "url": "https://www.youtube.com/watch?v=_yl5ELcmugI",
+     "title": "Grand Theft Auto VI: Out Now",
+     "excerpt": "Today we are proud to announce that Grand Theft Auto VI is now available worldwide for PlayStation 5 and XBOX Series X|S. Vice City, USA. Jason and Lucia have always known the dec",
+     "publishedAt": "2026-11-10T13:55:06+00:00",
+     "official": true,
+     "origins": [
+      "yt-channel:rockstar games",
+      "yt:_yl5ELcmugI"
+     ],
+     "quotes": []
+    }
+   ],
+   "media": {
+    "kind": "youtube",
+    "videoId": "_yl5ELcmugI",
+    "url": "https://www.youtube.com/watch?v=_yl5ELcmugI",
+    "thumbnail": "https://i.ytimg.com/vi/_yl5ELcmugI/hqdefault.jpg",
+    "credit": "Rockstar Games",
+    "rights": "youtube-terms"
+   },
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-10T13:55:06+00:00",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Rockstar Games (YouTube officiel)",
+      "fiabilité : reported → official"
+     ]
+    }
+   ],
+   "score": 68,
+   "opportunity": {
+    "score": 78,
+    "angle": "actu",
+    "ideas": [
+     "L'essentiel en 30 secondes : « Grand Theft Auto VI: Out Now »"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-5eba03a19c",
+   "title": "Grand Theft Auto VI: The Festival",
+   "summary": "Actualité · Rockstar Games (YouTube officiel) — REMINDER: The deadline to join the Grand Theft Auto VI: The Festival ticket lottery is today by 4 p.m. ET. Sign up with an active @dicefm account. Winners to be randomly selected",
+   "category": "news",
+   "reliability": "official",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Publié par Rockstar Games (source officielle)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "rockstar-youtube:AvBcfBrBl60",
+     "sourceId": "rockstar-youtube",
+     "sourceName": "Rockstar Games (YouTube officiel)",
+     "url": "https://www.youtube.com/watch?v=AvBcfBrBl60",
+     "title": "Grand Theft Auto VI: The Festival",
+     "excerpt": "REMINDER: The deadline to join the Grand Theft Auto VI: The Festival ticket lottery is today by 4 p.m. ET. Sign up with an active @dicefm account. Winners to be randomly selected",
+     "publishedAt": "2026-11-10T12:59:01+00:00",
+     "official": true,
+     "origins": [
+      "yt-channel:rockstar games",
+      "yt:AvBcfBrBl60"
+     ],
+     "quotes": []
+    }
+   ],
+   "media": {
+    "kind": "youtube",
+    "videoId": "AvBcfBrBl60",
+    "url": "https://www.youtube.com/watch?v=AvBcfBrBl60",
+    "thumbnail": "https://i.ytimg.com/vi/AvBcfBrBl60/hqdefault.jpg",
+    "credit": "Rockstar Games",
+    "rights": "youtube-terms"
+   },
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-10T12:59:01+00:00",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Rockstar Games (YouTube officiel)",
+      "fiabilité : reported → official"
+     ]
+    }
+   ],
+   "score": 68,
+   "opportunity": {
+    "score": 78,
+    "angle": "actu",
+    "ideas": [
+     "L'essentiel en 30 secondes : « Grand Theft Auto VI: The Festival »"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-80508f3004",
+   "title": "A Night in Vice City",
+   "summary": "Actualité · Rockstar Games (YouTube officiel) — On the eve of the release of Grand Theft Auto VI, tune in to the NBA on ESPN Wednesday, November 18 at 7PM Eastern to see the HEAT trade Miami for Vice City when they host the Milw",
+   "category": "news",
+   "reliability": "official",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Publié par Rockstar Games (source officielle)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "rockstar-youtube:Rj2Jnbt-5p4",
+     "sourceId": "rockstar-youtube",
+     "sourceName": "Rockstar Games (YouTube officiel)",
+     "url": "https://www.youtube.com/watch?v=Rj2Jnbt-5p4",
+     "title": "A Night in Vice City",
+     "excerpt": "On the eve of the release of Grand Theft Auto VI, tune in to the NBA on ESPN Wednesday, November 18 at 7PM Eastern to see the HEAT trade Miami for Vice City when they host the Milw",
+     "publishedAt": "2026-11-09T20:59:12+00:00",
+     "official": true,
+     "origins": [
+      "yt-channel:rockstar games",
+      "yt:Rj2Jnbt-5p4"
+     ],
+     "quotes": []
+    }
+   ],
+   "media": {
+    "kind": "youtube",
+    "videoId": "Rj2Jnbt-5p4",
+    "url": "https://www.youtube.com/watch?v=Rj2Jnbt-5p4",
+    "thumbnail": "https://i.ytimg.com/vi/Rj2Jnbt-5p4/hqdefault.jpg",
+    "credit": "Rockstar Games",
+    "rights": "youtube-terms"
+   },
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-09T20:59:12+00:00",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Rockstar Games (YouTube officiel)",
+      "fiabilité : reported → official"
+     ]
+    }
+   ],
+   "score": 68,
+   "opportunity": {
+    "score": 78,
+    "angle": "actu",
+    "ideas": [
+     "L'essentiel en 30 secondes : « A Night in Vice City »"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-b56605bf16",
+   "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
+   "summary": "Véhicule · Guide auto Y (test) + 1 autre source — How to get Paul Walker's Fast and Furious car in GTA 6 (GTA 6)",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "2 sources indépendantes, mais sans élément assez précis pour confirmer.",
+    "Fiche structurée extraite de 2 articles lus en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "cy:cars-y.example-paul-walker-car",
+     "sourceId": "cy",
+     "sourceName": "Guide auto Y (test)",
+     "url": "https://cars-y.example/paul-walker-car",
+     "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
+     "excerpt": "How to get Paul Walker's Fast and Furious car in GTA 6 (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-y.example"
+     ],
+     "quotes": [
+      "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept."
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 1,
+        "quote": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept.",
+        "url": "https://cars-y.example/paul-walker-car"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "mitsubishi-eclipse",
+        "make": "",
+        "model": "mitsubishi-eclipse",
+        "year": null,
+        "key": "alias:mitsubishi-eclipse",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach.",
+          "district": "Rialto Islands",
+          "relative": false
+         },
+         "quote": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach.",
+         "url": "https://cars-y.example/paul-walker-car"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach.",
+         "url": "https://cars-y.example/paul-walker-car"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": {
+         "value": true,
+         "quote": "The Fast and Furious Mitsubishi Eclipse tribute is one of the best early rides in GTA 6, and you can take it for free.",
+         "url": "https://cars-y.example/paul-walker-car"
+        },
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": {
+         "value": true,
+         "quote": "Head to the garage, break in, and switch off the alarm on the wall to your left.",
+         "url": "https://cars-y.example/paul-walker-car"
+        },
+        "keep": {
+         "value": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept.",
+         "quote": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept.",
+         "url": "https://cars-y.example/paul-walker-car"
+        },
+        "price": null,
+        "steps": [
+         {
+          "value": "Head to the garage, break in, and switch off the alarm on the wall to your left.",
+          "quote": "Head to the garage, break in, and switch off the alarm on the wall to your left.",
+          "url": "https://cars-y.example/paul-walker-car"
+         }
+        ],
+        "risks": [
+         {
+          "value": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept.",
+          "quote": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept.",
+          "url": "https://cars-y.example/paul-walker-car"
+         }
+        ],
+        "until": null,
+        "unresolved": true,
+        "aliases": {
+         "value": [
+          "mitsubishi-eclipse"
+         ],
+         "quote": "How to get Paul Walker's Fast and Furious car in GTA 6",
+         "url": "https://cars-y.example/paul-walker-car"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "rawKey": "cz:cars-z.example-gta-6-paul-walker-car",
+     "sourceId": "cz",
+     "sourceName": "Guide auto Z (test)",
+     "url": "https://cars-z.example/gta-6-paul-walker-car",
+     "title": "GTA 6 Paul Walker Car Location",
+     "excerpt": "GTA 6 Paul Walker Car Location (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-z.example"
+     ],
+     "quotes": [],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "'97 Maibatsu Penumbra FF",
+        "make": "Maibatsu",
+        "model": "Penumbra FF",
+        "year": "97",
+        "key": "maibatsu-penumbra-ff",
+        "type": "vehicle",
+        "variant": {
+         "value": "green",
+         "quote": "Rockstar hid a tribute to the green 1995 Mitsubishi Eclipse from the first movie in GTA 6.",
+         "url": "https://cars-z.example/gta-6-paul-walker-car"
+        },
+        "location": {
+         "value": {
+          "text": "It sits inside a villa garage on Vespucci Island, among the Rialto Islands west of Vice Beach.",
+          "district": "Rialto Islands",
+          "relative": false
+         },
+         "quote": "It sits inside a villa garage on Vespucci Island, among the Rialto Islands west of Vice Beach.",
+         "url": "https://cars-z.example/gta-6-paul-walker-car"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "It sits inside a villa garage on Vespucci Island, among the Rialto Islands west of Vice Beach.",
+         "url": "https://cars-z.example/gta-6-paul-walker-car"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [
+         {
+          "value": "Drive west from Vice Beach to Vespucci Island.",
+          "quote": "Drive west from Vice Beach to Vespucci Island.",
+          "url": "https://cars-z.example/gta-6-paul-walker-car"
+         },
+         {
+          "value": "Open the garage from the main garage door, not the side door.",
+          "quote": "Open the garage from the main garage door, not the side door.",
+          "url": "https://cars-z.example/gta-6-paul-walker-car"
+         }
+        ],
+        "risks": [],
+        "until": null,
+        "aliases": {
+         "value": [
+          "mitsubishi-eclipse"
+         ],
+         "quote": "Rockstar hid a tribute to the green 1995 Mitsubishi Eclipse from the first movie in GTA 6.",
+         "url": "https://cars-z.example/gta-6-paul-walker-car"
+        }
+       }
+      ]
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide auto Y (test)"
+     ]
+    },
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Nouvelle preuve rattachée",
+     "changes": [
+      "Guide auto Z (test) : « GTA 6 Paul Walker Car Location »",
+      "chapitre : 1"
+     ]
+    }
+   ],
+   "score": 58,
+   "opportunity": {
+    "score": 70,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « How to get Paul Walker's Fast and Furious car in GTA 6 »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "Guide auto Y (test)",
+       "url": "https://cars-y.example/paul-walker-car",
+       "quote": "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-97e8b535f2",
+   "title": "GTA 6 hidden cars: every parked rarity we found",
+   "summary": "Easter egg · Guide auto X (test) — GTA 6 hidden cars: every parked rarity we found (GTA 6)",
+   "category": "easter_egg",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "cx:cars-x.example-gta-6-hidden-cars",
+     "sourceId": "cx",
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-hidden-cars",
+     "title": "GTA 6 hidden cars: every parked rarity we found",
+     "excerpt": "GTA 6 hidden cars: every parked rarity we found (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-x.example"
+     ],
+     "quotes": [],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "'97 Maibatsu Penumbra FF",
+        "make": "Maibatsu",
+        "model": "Penumbra FF",
+        "year": "97",
+        "key": "maibatsu-penumbra-ff",
+        "type": "vehicle",
+        "variant": {
+         "value": "bright green",
+         "quote": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "location": {
+         "value": {
+          "text": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road.",
+          "district": "Rialto Islands",
+          "relative": false
+         },
+         "quote": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "On Vespucci Island the bright green tribute car is inside a villa garage just north of the road.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": {
+         "value": true,
+         "quote": "Break the side door, switch off the alarm panel on the wall, then open the main garage door.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "keep": null,
+        "price": null,
+        "steps": [
+         {
+          "value": "Take the causeway through the Rialto Islands west of Vice Beach.",
+          "quote": "Take the causeway through the Rialto Islands west of Vice Beach.",
+          "url": "https://cars-x.example/gta-6-hidden-cars"
+         },
+         {
+          "value": "Break the side door, switch off the alarm panel on the wall, then open the main garage door.",
+          "quote": "Break the side door, switch off the alarm panel on the wall, then open the main garage door.",
+          "url": "https://cars-x.example/gta-6-hidden-cars"
+         }
+        ],
+        "risks": [],
+        "until": null,
+        "aliases": {
+         "value": [
+          "eclipse"
+         ],
+         "quote": "Maibatsu ’97 Penumbra FF (Paul Walker’s Eclipse)",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        }
+       },
+       {
+        "name": "Maibatsu Penumbra",
+        "make": "Maibatsu",
+        "model": "Penumbra",
+        "year": null,
+        "key": "maibatsu-penumbra",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "A plain Penumbra is parked in the multistorey parking structure in Little Cuba most afternoons.",
+          "district": "Little Cuba",
+          "relative": false
+         },
+         "quote": "A plain Penumbra is parked in the multistorey parking structure in Little Cuba most afternoons.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "A plain Penumbra is parked in the multistorey parking structure in Little Cuba most afternoons.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       },
+       {
+        "name": "Pegassi Vitello",
+        "make": "Pegassi",
+        "model": "Vitello",
+        "year": null,
+        "key": "pegassi-vitello",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "Villa garage on Flamingo Parkway, east of Belville.",
+          "district": "Belville",
+          "relative": true
+         },
+         "quote": "Villa garage on Flamingo Parkway, east of Belville.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "Villa garage on Flamingo Parkway, east of Belville.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       },
+       {
+        "name": "Grotti Itali RSX",
+        "make": "Grotti",
+        "model": "Itali RSX",
+        "year": null,
+        "key": "grotti-itali-rsx",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "Residential garage in the Rialto Islands, two doors from the canal.",
+          "district": "Rialto Islands",
+          "relative": false
+         },
+         "quote": "Residential garage in the Rialto Islands, two doors from the canal.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "Residential garage in the Rialto Islands, two doors from the canal.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": {
+         "value": true,
+         "quote": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "tracker": {
+         "value": "advanced",
+         "quote": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police.",
+         "url": "https://cars-x.example/gta-6-hidden-cars"
+        },
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [
+         {
+          "value": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police.",
+          "quote": "You need the key cloner to start it, and it carries an advanced tracker that alerts the police.",
+          "url": "https://cars-x.example/gta-6-hidden-cars"
+         }
+        ],
+        "until": null
+       }
+      ],
+      "cites": [
+       "source-origin.example"
+      ]
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide auto X (test)"
+     ]
+    }
+   ],
+   "score": 55,
+   "opportunity": {
+    "score": 75,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 hidden cars: every parked rarity we found »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-1dcb009ac3",
+   "title": "GTA 6 Standard vs Ultimate Edition cars",
+   "summary": "Véhicule · Guide auto V (test) — GTA 6 Standard vs Ultimate Edition cars (GTA 6)",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "cv:cars-v.example-editions",
+     "sourceId": "cv",
+     "sourceName": "Guide auto V (test)",
+     "url": "https://cars-v.example/editions",
+     "title": "GTA 6 Standard vs Ultimate Edition cars",
+     "excerpt": "GTA 6 Standard vs Ultimate Edition cars (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-v.example"
+     ],
+     "quotes": [],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "Grotti Cheetah",
+        "make": "Grotti",
+        "model": "Cheetah",
+        "year": null,
+        "key": "grotti-cheetah",
+        "type": "vehicle",
+        "variant": null,
+        "location": null,
+        "spawn": null,
+        "edition": {
+         "value": "ultimate",
+         "quote": "The '95 Grotti Cheetah is an Ultimate Edition exclusive and arrives late in the story.",
+         "url": "https://cars-v.example/editions"
+        },
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       },
+       {
+        "name": "Dinka Enduro",
+        "make": "Dinka",
+        "model": "Enduro",
+        "year": null,
+        "key": "dinka-enduro",
+        "type": "vehicle",
+        "variant": null,
+        "location": null,
+        "spawn": null,
+        "edition": {
+         "value": "ultimate",
+         "quote": "The army-green Dinka Enduro is part of the Ultimate Edition safehouse vehicles.",
+         "url": "https://cars-v.example/editions"
+        },
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       }
+      ]
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide auto V (test)"
+     ]
+    }
+   ],
+   "score": 55,
+   "opportunity": {
+    "score": 73,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Standard vs Ultimate Edition cars »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-379656ab5a",
+   "title": "GTA 6 How to Get New Personal Car",
+   "summary": "Véhicule · Guide auto R (test) — GTA 6 How to Get New Personal Car (GTA 6)",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "cr:cars-r.example-register-car",
+     "sourceId": "cr",
+     "sourceName": "Guide auto R (test)",
+     "url": "https://cars-r.example/register-car",
+     "title": "GTA 6 How to Get New Personal Car",
+     "excerpt": "GTA 6 How to Get New Personal Car (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-r.example"
+     ],
+     "quotes": [
+      "Chapter 3 – More tools"
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 3,
+        "quote": "Chapter 3 – More tools",
+        "url": "https://cars-r.example/register-car"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "mechanics": {
+       "register": [
+        {
+         "value": {
+          "chapter": 2,
+          "where": "garage de Moses",
+          "tracker": "none"
+         },
+         "quote": "After you meet Moses in Chapter 2, you can bring him any car that doesn't have a tracker and click Register in his garage.",
+         "url": "https://cars-r.example/register-car"
+        },
+        {
+         "value": {
+          "chapter": 3,
+          "where": "Pay 'n' Spray",
+          "tracker": "standard"
+         },
+         "quote": "Early in Chapter 3 you can register stolen vehicles that have Standard Trackers at any Pay 'n' Spray.",
+         "url": "https://cars-r.example/register-car"
+        }
+       ],
+       "keyCloner": {
+        "value": {
+         "chapter": 3,
+         "mission": "Steal the Zorruso"
+        },
+        "quote": "You automatically get the key cloner in Chapter 3 during the mission \"Steal the Zorruso\".",
+        "url": "https://cars-r.example/register-car"
+       },
+       "garages": null
+      }
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide auto R (test)",
+      "chapitre : 3"
+     ]
+    }
+   ],
+   "score": 55,
+   "opportunity": {
+    "score": 73,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 How to Get New Personal Car »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 3,
+     "support": [
+      {
+       "sourceName": "Guide auto R (test)",
+       "url": "https://cars-r.example/register-car",
+       "quote": "Chapter 3 – More tools"
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-aa30e31f7d",
+   "title": "GTA 6 more hidden cars",
+   "summary": "Easter egg · Guide auto X (test) — GTA 6 more hidden cars (GTA 6)",
+   "category": "easter_egg",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "cx:cars-x.example-gta-6-more-cars",
+     "sourceId": "cx",
+     "sourceName": "Guide auto X (test)",
+     "url": "https://cars-x.example/gta-6-more-cars",
+     "title": "GTA 6 more hidden cars",
+     "excerpt": "GTA 6 more hidden cars (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-x.example"
+     ],
+     "quotes": [],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "Pegassi Vitello",
+        "make": "Pegassi",
+        "model": "Vitello",
+        "year": null,
+        "key": "pegassi-vitello",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "Villa garage on Flamingo Parkway, east of Belville.",
+          "district": "Belville",
+          "relative": true
+         },
+         "quote": "Villa garage on Flamingo Parkway, east of Belville.",
+         "url": "https://cars-x.example/gta-6-more-cars"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "Villa garage on Flamingo Parkway, east of Belville.",
+         "url": "https://cars-x.example/gta-6-more-cars"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       },
+       {
+        "name": "Bravado Banshee",
+        "make": "Bravado",
+        "model": "Banshee",
+        "year": null,
+        "key": "bravado-banshee",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "A red Bravado Banshee is parked in a villa garage on Starfish Island most nights, next to the jetty.",
+          "district": "Starfish Island",
+          "relative": false
+         },
+         "quote": "A red Bravado Banshee is parked in a villa garage on Starfish Island most nights, next to the jetty.",
+         "url": "https://cars-x.example/gta-6-more-cars"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "A red Bravado Banshee is parked in a villa garage on Starfish Island most nights, next to the jetty.",
+         "url": "https://cars-x.example/gta-6-more-cars"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [
+         {
+          "value": "Drive across the causeway at night and check the garage on the north side of the island.",
+          "quote": "Drive across the causeway at night and check the garage on the north side of the island.",
+          "url": "https://cars-x.example/gta-6-more-cars"
+         }
+        ],
+        "risks": [],
+        "until": null
+       }
+      ]
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide auto X (test)"
+     ]
+    }
+   ],
+   "score": 55,
+   "opportunity": {
+    "score": 75,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 more hidden cars »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-ce266f63ec",
+   "title": "GTA 6 trailer 1 breakdown",
+   "summary": "Actualité · Presse A (test) — Old GTA 6 article.",
+   "category": "news",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "press-a:a-5",
+     "sourceId": "press-a",
+     "sourceName": "Presse A (test)",
+     "url": "https://press-a.example/old",
+     "title": "GTA 6 trailer 1 breakdown",
+     "excerpt": "Old GTA 6 article.",
+     "publishedAt": "2023-12-05T07:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:press-a.example"
+     ],
+     "quotes": []
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2023-12-05T07:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Presse A (test)"
+     ]
+    }
+   ],
+   "score": 48,
+   "opportunity": {
+    "score": 66,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 trailer 1 breakdown »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-97dd876c07",
+   "title": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+   "summary": "Actualité · Guide auto U (test) — GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses (GTA 6)",
+   "category": "news",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": "keys",
+    "place": "Jason's House, Key Lento",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": {
+     "x": -2353.5,
+     "y": -5532.3,
+     "landmark": "Jason's House, Key Lento"
+    }
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "cu:cars-u.example-ultimate-items",
+     "sourceId": "cu",
+     "sourceName": "Guide auto U (test)",
+     "url": "https://cars-u.example/ultimate-items",
+     "title": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+     "excerpt": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses (GTA 6)",
+     "publishedAt": "2026-11-20T14:00:00.000Z",
+     "official": false,
+     "origins": [
+      "site:cars-u.example"
+     ],
+     "quotes": [
+      "Available from Chapter 1 for owners of the Ultimate Edition.",
+      "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck."
+     ],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-20T14:00:00.000Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 1,
+        "quote": "Available from Chapter 1 for owners of the Ultimate Edition.",
+        "url": "https://cars-u.example/ultimate-items"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Jason's House",
+         "district": "Key Lento",
+         "regionId": "keys"
+        },
+        "quote": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck.",
+        "url": "https://cars-u.example/ultimate-items"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "Dinka Enduro",
+        "make": "Dinka",
+        "model": "Enduro",
+        "year": null,
+        "key": "dinka-enduro",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck.",
+          "district": "Key Lento",
+          "relative": false
+         },
+         "quote": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "edition": {
+         "value": "ultimate",
+         "quote": "Available from Chapter 1 for owners of the Ultimate Edition.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "chapter": {
+         "value": 1,
+         "quote": "Available from Chapter 1 for owners of the Ultimate Edition.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [
+         {
+          "value": "These items are only available in Chapter 1, so grab them before you leave the Keys.",
+          "quote": "These items are only available in Chapter 1, so grab them before you leave the Keys.",
+          "url": "https://cars-u.example/ultimate-items"
+         }
+        ],
+        "until": {
+         "value": 1,
+         "quote": "These items are only available in Chapter 1, so grab them before you leave the Keys.",
+         "url": "https://cars-u.example/ultimate-items"
+        }
+       },
+       {
+        "name": "'95 Grotti Cheetah",
+        "make": "Grotti",
+        "model": "Cheetah",
+        "year": "95",
+        "key": "grotti-cheetah",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "You'll get a notification and your '95 Grotti Cheetah will be parked in the basement of Pegassi Residences on Bayside Drive.",
+          "district": "Bayside",
+          "relative": false
+         },
+         "quote": "You'll get a notification and your '95 Grotti Cheetah will be parked in the basement of Pegassi Residences on Bayside Drive.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "spawn": {
+         "value": "delivery",
+         "quote": "You'll get a notification and your '95 Grotti Cheetah will be parked in the basement of Pegassi Residences on Bayside Drive.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "edition": {
+         "value": "ultimate",
+         "quote": "GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "chapter": {
+         "value": 5,
+         "quote": "Available from Chapter 5 once the story reaches the city.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       },
+       {
+        "name": "'55 Vapid Stanier",
+        "make": "Vapid",
+        "model": "Stanier",
+        "year": "55",
+        "key": "vapid-stanier",
+        "type": "vehicle",
+        "variant": null,
+        "location": {
+         "value": {
+          "text": "Pick up your '55 Vapid Stanier parked outside a hotel in Vice Beach.",
+          "district": "Vice Beach",
+          "relative": false
+         },
+         "quote": "Pick up your '55 Vapid Stanier parked outside a hotel in Vice Beach.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "Pick up your '55 Vapid Stanier parked outside a hotel in Vice Beach.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "edition": {
+         "value": "preorder",
+         "quote": "Your Vintage Vice City Pack pre-order bonus becomes available from Chapter 3.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "chapter": {
+         "value": 3,
+         "quote": "Your Vintage Vice City Pack pre-order bonus becomes available from Chapter 3.",
+         "url": "https://cars-u.example/ultimate-items"
+        },
+        "mission": null,
+        "early": null,
+        "keyCloner": null,
+        "tracker": null,
+        "alarm": null,
+        "keep": null,
+        "price": null,
+        "steps": [],
+        "risks": [],
+        "until": null
+       }
+      ]
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T14:00:00.000Z",
+   "updatedAt": "2026-11-20T14:00:00.000Z",
+   "publishedAt": "2026-11-20T14:00:00.000Z",
+   "lastVerifiedAt": "2026-11-20T14:00:00.000Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T14:00:00.000Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : Guide auto U (test)",
+      "localisation : none → named-place",
+      "lieu : Jason's House, Key Lento",
+      "chapitre : 1"
+     ]
+    }
+   ],
+   "score": 48,
+   "opportunity": {
+    "score": 74,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "Available from Chapter 1 for owners of the Ultimate Edition."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Jason's House",
+      "district": "Key Lento"
+     },
+     "support": [
+      {
+       "sourceName": "Guide auto U (test)",
+       "url": "https://cars-u.example/ultimate-items",
+       "quote": "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck."
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  }
+ ]
+}

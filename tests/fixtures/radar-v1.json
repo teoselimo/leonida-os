@@ -51,6 +51,66 @@
    "statusDetail": null,
    "lastSuccessAt": null,
    "lastAttemptAt": null
+  },
+  {
+   "id": "cx",
+   "name": "Guide auto X (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
+  },
+  {
+   "id": "cy",
+   "name": "Guide auto Y (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
+  },
+  {
+   "id": "cz",
+   "name": "Guide auto Z (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
+  },
+  {
+   "id": "cu",
+   "name": "Guide auto U (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
+  },
+  {
+   "id": "cv",
+   "name": "Guide auto V (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
+  },
+  {
+   "id": "cr",
+   "name": "Guide auto R (test)",
+   "kind": "rss",
+   "official": false,
+   "status": "never-run",
+   "statusDetail": null,
+   "lastSuccessAt": null,
+   "lastAttemptAt": null
   }
  ],
  "health": {
@@ -65,10 +125,12 @@
     "newItems": 8,
     "updatedItems": 0,
     "deepReads": 0,
-    "merged": 0
+    "merged": 0,
+    "vehicles": 0
    }
   ]
  },
+ "vehicles": [],
  "lastRun": {
   "at": "2026-11-20T14:00:00.000Z",
   "newItems": 8,
@@ -512,7 +574,7 @@
       "Permit Keys"
      ],
      "deep": {
-      "v": 1,
+      "v": 3,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": false,
       "reason": "HTTP 404 sur https://press-a.example/gta-6-hidden-stinger",
@@ -665,7 +727,7 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 1,
+      "v": 3,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": false,
       "reason": "HTTP 404 sur https://press-a.example/gta-6-leak-ending",

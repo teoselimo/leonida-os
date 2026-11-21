@@ -1,0 +1,50 @@
+name: Validation de point (depuis une demande GitHub)
+
+# Le propriétaire du dépôt ajoute l'étiquette « validé » à une demande « Point à valider » (possible depuis l'app GitHub sur iPhone) :
+# le point est ajouté à collector/overrides.json et appliqué à la collecte suivante, sans éditer de JSON à la main.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: overrides
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: github.event.label.name == 'validé' && github.event.sender.login == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Appliquer la validation
+        id: apply
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          set -o pipefail
+          printf '%s' "$BODY" | node collector/scripts/apply-validation.mjs | tee result.txt
+      - name: Enregistrer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "leonida-validation"
+          git config user.email "leonida-validation@users.noreply.github.com"
+          git add collector/overrides.json
+          git commit -q -m "Validation de point (#$ISSUE)" -m "$(cat result.txt)"
+          git push
+          gh issue comment "$ISSUE" --body "Point appliqué : $(cat result.txt). Il apparaîtra sur la carte après la prochaine collecte."
+          gh issue close "$ISSUE"
+      - name: Signaler un refus
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: gh issue comment "$ISSUE" --body "Validation refusée : vérifiez le bloc JSON (identifiant et coordonnées relevées en jeu, pas 0/0)."

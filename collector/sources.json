@@ -40,7 +40,9 @@
         "GTA 6 hidden vehicle",
         "GTA 6 missable",
         "GTA 6 money glitch legit",
-        "GTA 6 rare weapon"
+        "GTA 6 rare weapon",
+        "GTA 6 hidden car location",
+        "GTA 6 rare car"
       ],
       "access": "API officielle YouTube Data v3 (search.list, 100 unités/requête). Requiert YOUTUBE_API_KEY. Budget quotidien plafonné.",
       "lang": "en",
@@ -131,6 +133,95 @@
       "access": "API Reddit OAuth uniquement (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET / REDDIT_USER_AGENT), conditions Reddit Data API, suppression respectée. Désactivé sans autorisation.",
       "lang": "en",
       "trust": "low"
+    },
+    {
+      "id": "powerpyx",
+      "name": "PowerPyx",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://www.powerpyx.com/feed/",
+      "access": "Flux RSS public (robots.txt : tout autorisé). Lecture d'article pour extraire des faits sourcés ; texte jamais stocké.",
+      "lang": "en",
+      "trust": "high"
+    },
+    {
+      "id": "powerpyx-sitemap",
+      "name": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "kind": "sitemap",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 360,
+      "url": "https://www.powerpyx.com/sitemap_index.xml",
+      "urlFilter": "/gta-6-.*(car|vehicle|garage|register|key-cloner|edition|bonus|tracker)",
+      "followChildren": 1,
+      "maxItems": 25,
+      "access": "Sitemap XML public (protocole destiné aux robots). Rattrape les guides sortis du flux RSS (10 derniers articles).",
+      "lang": "en",
+      "trust": "high"
+    },
+    {
+      "id": "gtaxtreme-sitemap",
+      "name": "GTA Xtreme (sitemap)",
+      "kind": "sitemap",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 360,
+      "url": "https://www.gta-xtreme.com/sitemap.xml",
+      "urlFilter": "(gta-6/locations/(hidden-cars|safehouses)|/en/gta-6-.*(car|vehicle|garage|edition)|/en/how-to-register-a-car-in-gta-6)",
+      "maxItems": 20,
+      "access": "Pas de flux RSS ; sitemap XML public (robots.txt : tout autorisé hors /admin et /api). Le site cite ses propres sources : elles ne comptent pas comme confirmation indépendante.",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "pushsquare",
+      "name": "Push Square",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://www.pushsquare.com/feeds/latest",
+      "access": "Flux RSS public. robots.txt : Crawl-delay 5 respecté pour la lecture d'articles.",
+      "lang": "en",
+      "trust": "high"
+    },
+    {
+      "id": "alcasthq",
+      "name": "AlcastHQ",
+      "kind": "rss",
+      "official": false,
+      "enabled": true,
+      "intervalMinutes": 60,
+      "url": "https://alcasthq.com/feed/",
+      "access": "Flux RSS public (robots.txt : recherche interne seulement interdite).",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "keengamer",
+      "name": "KeenGamer",
+      "kind": "unsupported",
+      "official": false,
+      "enabled": false,
+      "intervalMinutes": 360,
+      "url": "https://www.keengamer.com/",
+      "access": "Le site répond 403 (protection anti-robots) à notre collecteur identifié : non contourné. Ses guides restent consultables par lien.",
+      "lang": "en",
+      "trust": "medium"
+    },
+    {
+      "id": "gamesgg",
+      "name": "GAMES.GG",
+      "kind": "unsupported",
+      "official": false,
+      "enabled": false,
+      "intervalMinutes": 360,
+      "url": "https://games.gg/",
+      "access": "Le site répond 403 (protection anti-robots) et interdit explicitement plusieurs robots d'IA : non collecté.",
+      "lang": "en",
+      "trust": "medium"
     }
   ]
 }

@@ -1,11 +1,13 @@
 import type { Category, DetailField, Evidence, RadarRecord, RecordDetails, SourceConfig } from "../types.ts";
+import { sha1 } from "../util.ts";
 import { readArticle } from "./article.ts";
 import { extractFacts } from "./facts.ts";
 import { extractWithLLM } from "./llm.ts";
+import { extractVehicles } from "./vehicles.ts";
 import { exactLandmark } from "./places.ts";
 
 /** Catégories pour lesquelles on lit l'article complet (contenu exploitable en jeu). */
-export const RULES_VERSION = 1;
+export const RULES_VERSION = 3; // 3 : extraction automobile (V0.6)
 
 export const DEEP_CATEGORIES: Category[] = ["money", "easter_egg", "side_mission", "missable", "guide", "mechanic", "weapon", "vehicle", "unique_item"];
 
@@ -22,15 +24,15 @@ export interface DeepOptions {
  * Priorité : fiches touchées à ce cycle, puis rattrapage des plus récentes jamais lues.
  */
 export async function deepReadPhase(records: RadarRecord[], sources: Map<string, SourceConfig>, touched: Set<string>, opts: DeepOptions): Promise<{ read: number; ok: number; ai: number }> {
-  const max = Number(opts.env.DEEP_READ_MAX || 15);
+  const max = Number(opts.env.DEEP_READ_MAX || 25);
   const horizon = opts.now.getTime() - 21 * 86400_000;
   const candidates: Array<{ rec: RadarRecord; ev: Evidence }> = [];
   for (const rec of records) {
     if (rec.status === "retracted" || Date.parse(rec.firstSeenAt) < horizon) continue;
-    if (!DEEP_CATEGORIES.includes(rec.category) && !/\b(guide|how to|where to|location|stash|secret|hidden|missable|early money)\b/i.test(rec.title)) continue;
+    if (!DEEP_CATEGORIES.includes(rec.category) && !/\b(guide|how to|where to|location|stash|secret|hidden|missable|early money|cars?|vehicles?|garages?|edition|bonus|register)\b/i.test(rec.title)) continue;
     for (const ev of rec.evidence) {
       const src = sources.get(ev.sourceId);
-      if (!src || src.kind !== "rss") continue;
+      if (!src || (src.kind !== "rss" && src.kind !== "sitemap")) continue;
       // Déjà lu avec les règles actuelles ; un échec réseau est retenté après 24 h, un refus robots.txt jamais
       const d = ev.deep;
       if (d && d.v === RULES_VERSION && (d.ok || d.reason === "refusé par robots.txt" || opts.now.getTime() - Date.parse(d.at) < 86400_000)) continue;
@@ -40,7 +42,7 @@ export async function deepReadPhase(records: RadarRecord[], sources: Map<string,
   // Priorité : nouveautés du cycle, contenu exploitable (argent, manquable, secret…), indices concrets dans le titre, puis récence
   const HOT: Category[] = ["money", "missable", "easter_egg", "side_mission", "unique_item", "weapon", "vehicle"];
   const prio = (c: { rec: RadarRecord; ev: Evidence }) =>
-    (touched.has(c.rec.id) ? 2 : 0) + (HOT.includes(c.rec.category) ? 2 : 0) + (/\b(stash|money|cash|secret|hidden|missable|location|where to|unlock|free|how to (?:complete|find|get)|operation|side mission)\b/i.test(c.ev.title) ? 1 : 0);
+    (touched.has(c.rec.id) ? 2 : 0) + (HOT.includes(c.rec.category) ? 2 : 0) + (/\b(stash|money|cash|secret|hidden|missable|location|where to|unlock|free|how to (?:complete|find|get)|operation|side mission|cars?|vehicles?|garages?|ultimate|register)\b/i.test(c.ev.title) ? 1 : 0);
   candidates.sort((a, b) => prio(b) - prio(a) || b.rec.firstSeenAt.localeCompare(a.rec.firstSeenAt));
   let read = 0;
   let ok = 0;
@@ -68,10 +70,18 @@ export async function deepReadPhase(records: RadarRecord[], sources: Map<string,
         method = "rules+ai";
       }
     }
-    ev.deep = { v: RULES_VERSION, at: opts.now.toISOString(), ok: true, reason: null, aiOptOut: art.aiOptOut, method, facts, videoIds: art.videoIds };
+    const vf = extractVehicles(art.text, art.sections, ev.title, ev.url);
+    const hasMech = vf.mechanics.register.length || vf.mechanics.keyCloner || vf.mechanics.garages;
+    ev.deep = {
+      v: RULES_VERSION, at: opts.now.toISOString(), ok: true, reason: null, aiOptOut: art.aiOptOut, method, facts, videoIds: art.videoIds,
+      ...(vf.vehicles.length ? { vehicles: vf.vehicles } : {}),
+      ...(hasMech ? { mechanics: vf.mechanics } : {}),
+      ...(art.cites.length ? { cites: art.cites } : {}),
+    };
     for (const v of art.videoIds) if (!ev.origins.includes(`yt:${v}`)) ev.origins.push(`yt:${v}`);
     touched.add(rec.id);
     const n = Object.entries(facts).filter(([k, v]) => k !== "keywords" && v).length;
+    if (vf.vehicles.length) opts.log(`  ↳ ${vf.vehicles.length} véhicule(s)/garage(s) : ${vf.vehicles.map((v) => v.name).slice(0, 6).join(", ")}`);
     opts.log(`✓ lecture : ${ev.sourceName} · ${n} champ(s) extrait(s)${method === "rules+ai" ? " (dont IA ciblée)" : ""} · « ${ev.title.slice(0, 60)} »`);
   }
   return { read, ok, ai };
@@ -94,12 +104,15 @@ export function sameDiscovery(a: RadarRecord, b: RadarRecord): boolean {
   const placesA = new Set(fa.map((f) => f.place && norm(f.place.value.name)).filter(Boolean));
   const placeHit = fb.some((f) => f.place && placesA.has(norm(f.place.value.name)));
   if (!placeHit) return false;
+  // Le lieu seul ne suffit pas (un guide « toutes les cartes à collectionner » cite les mêmes lieux) :
+  // il faut une récompense compatible des deux côtés, ou au moins deux indices précis communs.
+  const GENERIC = new Set(["cash", "liquor", "rum", "drugs", "safe", "stash", "gold"]);
   const kwA = new Set(fa.flatMap((f) => f.keywords));
-  const sharedKw = [...new Set(fb.flatMap((f) => f.keywords))].filter((k) => kwA.has(k) && !["cash", "liquor", "rum"].includes(k));
+  const sharedKw = [...new Set(fb.flatMap((f) => f.keywords))].filter((k) => kwA.has(k) && !GENERIC.has(k));
   const moneyA = fa.map((f) => f.money?.value).filter(Boolean) as Array<{ amount: number; max: number | null }>;
   const moneyB = fb.map((f) => f.money?.value).filter(Boolean) as Array<{ amount: number; max: number | null }>;
   const compatible = moneyA.some((x) => moneyB.some((y) => moneyCompatible(x, y)));
-  return sharedKw.length >= 1 || compatible;
+  return compatible && sharedKw.length >= 1;
 }
 
 export function moneyCompatible(x: { amount: number; max: number | null }, y: { amount: number; max: number | null }) {
@@ -108,7 +121,36 @@ export function moneyCompatible(x: { amount: number; max: number | null }, y: { 
   return lo1 <= hi2 && lo2 <= hi1;
 }
 
+/**
+ * Annule une fusion devenue injustifiée (règles resserrées) : chaque preuve non reliée retrouve sa fiche d'origine
+ * (même identifiant, dérivé de la clé de la preuve), avec une révision explicite.
+ */
+export function splitInvalidMerges(records: RadarRecord[], now: Date): RadarRecord[] {
+  const out: RadarRecord[] = [];
+  for (const r of records) {
+    if (!r.mergedFrom?.length || r.evidence.length < 2) {
+      out.push(r);
+      continue;
+    }
+    const solo = (e: Evidence): RadarRecord => ({ ...r, evidence: [e] });
+    const keep = [r.evidence[0]];
+    const rest: Evidence[] = [];
+    for (const e of r.evidence.slice(1)) (keep.some((k) => sameDiscovery(solo(k), solo(e))) ? keep : rest).push(e);
+    if (!rest.length) {
+      out.push(r);
+      continue;
+    }
+    const t = now.toISOString();
+    out.push({ ...r, evidence: keep, mergedFrom: r.mergedFrom.filter((id) => !rest.some((e) => id === `r-${sha1(e.rawKey).slice(0, 10)}`)), revisions: [...r.revisions, { at: t, reason: "Fusion annulée (sources distinctes)", changes: rest.map((e) => `séparée : « ${e.title} »`) }], updatedAt: t });
+    for (const e of rest) {
+      out.push({ ...r, id: `r-${sha1(e.rawKey).slice(0, 10)}`, title: e.title, evidence: [e], mergedFrom: [], media: null, firstSeenAt: e.publishedAt ?? r.firstSeenAt, revisions: [{ at: t, reason: "Fusion annulée (sources distinctes)", changes: [`détachée de « ${r.title} »`] }], updatedAt: t });
+    }
+  }
+  return out;
+}
+
 export function mergeByFacts(records: RadarRecord[], now: Date): { records: RadarRecord[]; merged: number } {
+  records = splitInvalidMerges(records, now);
   const out: RadarRecord[] = [];
   let merged = 0;
   const sorted = [...records].sort((a, b) => a.firstSeenAt.localeCompare(b.firstSeenAt));

@@ -3,6 +3,7 @@ import type { Connector } from "./base.ts";
 import { ConnectorUnavailable } from "./base.ts";
 import { reddit } from "./reddit.ts";
 import { rss } from "./rss.ts";
+import { sitemap } from "./sitemap.ts";
 import { youtubeApi } from "./youtubeApi.ts";
 import { youtubeFeed } from "./youtubeFeed.ts";
 
@@ -16,5 +17,6 @@ export const CONNECTORS: Record<ConnectorKind, Connector> = {
   "youtube-api": youtubeApi,
   rss,
   reddit,
+  sitemap,
   unsupported,
 };

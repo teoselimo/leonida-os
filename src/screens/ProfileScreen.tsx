@@ -5,7 +5,9 @@ import { DATASET_INFO } from "@/data/demo";
 import { CC_BY_URL, GTADB_URL, loadMeta } from "@/lib/gtadb";
 import type { GtadbMeta } from "@/lib/gtadb";
 import { progress } from "@/lib/engine";
-import { CATEGORIES, CHAPTERS, CONSOLES, EDITIONS } from "@/lib/meta";
+import { CATEGORIES, CHAPTER_LIST, CHAPTER_SHORT, CHAPTERS, CONSOLES, EDITIONS } from "@/lib/meta";
+import { useLiveRadar } from "@/lib/live";
+import { STATE_FR } from "@/lib/garage";
 import { repo, useStore } from "@/lib/store";
 import type { Chapter, ConsoleId, EditionId, SpoilerMode } from "@/lib/types";
 import { ShieldChip } from "@/components/ShieldChip";
@@ -13,7 +15,9 @@ import { Icon } from "@/components/ui/Icon";
 import { Bar, CategoryGlyph, SectionHead, Segmented } from "@/components/ui/primitives";
 
 export function ProfileScreen() {
-  const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, notify } = useStore();
+  const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, notify, focusVehicle } = useStore();
+  const { feed } = useLiveRadar();
+  const owned = (feed?.vehicles ?? []).filter((v) => state.vehicles[v.id]);
   const [confirmReset, setConfirmReset] = useState(false);
   const [meta, setMeta] = useState<GtadbMeta | null>(null);
   const [exportText, setExportText] = useState<string | null>(null);
@@ -80,18 +84,21 @@ export function ProfileScreen() {
           <section className="card form">
             <h4>Console</h4>
             <Segmented<ConsoleId> label="Console" value={state.profile.console} onChange={(v) => setProfile({ console: v })} options={(Object.keys(CONSOLES) as ConsoleId[]).map((id) => ({ id, label: CONSOLES[id] }))} />
-            <h4>Édition</h4>
+            <h4>Édition du jeu</h4>
             <Segmented<EditionId> label="Édition" value={state.profile.edition} onChange={(v) => setProfile({ edition: v })} options={(Object.keys(EDITIONS) as EditionId[]).map((id) => ({ id, label: EDITIONS[id] }))} />
+            <p className="muted small" data-testid="edition-note">
+              {state.profile.edition === "ultimate" ? "Les véhicules, garages et bonus Ultimate vérifiés te sont proposés." : state.profile.edition === "standard" ? "Les exclusivités Ultimate vérifiées restent consultables mais ne te sont jamais recommandées." : "Tant que ton édition n'est pas renseignée, les exclusivités restent « compatibilité à vérifier »."} Ta progression est conservée si tu changes.
+            </p>
           </section>
 
           <section className="card form">
             <h4>Progression narrative</h4>
             <p className="muted small">Détermine ce que la veille peut te montrer sans spoiler : un conseil ou une fiche rattachés à un chapitre plus avancé restent masqués.</p>
-            <div className="stepper" role="radiogroup" aria-label="Progression narrative">
-              {([0, 1, 2, 3] as Chapter[]).map((c) => (
+            <div className="stepper stepper--7" role="radiogroup" aria-label="Progression narrative">
+              {CHAPTER_LIST.map((c: Chapter) => (
                 <button key={c} role="radio" aria-checked={state.profile.chapter === c} className={`${state.profile.chapter >= c ? "is-reached" : ""} ${state.profile.chapter === c ? "is-on" : ""}`} onClick={() => setProfile({ chapter: c })} data-testid={`chapter-${c}`}>
                   <span className="stepper__dot" />
-                  <span>{CHAPTERS[c]}</span>
+                  <span title={CHAPTERS[c]}>{CHAPTER_SHORT[c]}</span>
                 </button>
               ))}
             </div>
@@ -105,6 +112,26 @@ export function ProfileScreen() {
                 { id: "relaxed", label: "Modéré — flouter" },
               ]}
             />
+          </section>
+
+          <section className="card form" data-testid="my-garage">
+            <h4>Mon garage</h4>
+            {owned.length === 0 ? (
+              <p className="muted small">Aucun véhicule suivi. Ouvre Carte › 🚗 Voitures cachées et marque ce que tu repères, voles et conserves.</p>
+            ) : (
+              <div className="inv">
+                {owned.map((v) => {
+                  const p = state.vehicles[v.id];
+                  return (
+                    <button key={v.id} className="inv__row" onClick={() => focusVehicle(v.id)} data-testid={`inv-${v.id}`}>
+                      <span className={`inv__state inv__state--${p.state}`}>{STATE_FR[p.state]}</span>
+                      <strong>{v.name}</strong>
+                      <em>{v.type === "garage" ? "Garage" : p.storage ? `Rangé : ${p.storage}` : p.state === "stolen" ? "Pas encore conservé" : ""}</em>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </section>
         </div>
 

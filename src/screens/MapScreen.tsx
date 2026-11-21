@@ -19,11 +19,20 @@ import { ShieldChip } from "@/components/ShieldChip";
 import { CategoryGlyph } from "@/components/ui/primitives";
 import { Icon } from "@/components/ui/Icon";
 import { Sheet } from "@/components/Sheet";
+import { VehicleSheet } from "@/components/VehicleSheet";
+import { useLiveRadar } from "@/lib/live";
+import { FILTERS, matches, viewOf } from "@/lib/garage";
+import type { GarageFilter, VehicleView } from "@/lib/garage";
+import type { MapZone } from "@/components/map/types";
+import type { Discovery } from "@/lib/types";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 export function MapScreen({ active = true }: { active?: boolean }) {
-  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals } = useStore();
+  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle } = useStore();
+  const { feed } = useLiveRadar();
+  const [garage, setGarage] = useState(false);
+  const [gFilter, setGFilter] = useState<GarageFilter | null>(null);
   const isTablet = useIsTablet();
   const [cats, setCats] = useState<Set<CategoryId>>(new Set());
   const [onlyAvailable, setOnlyAvailable] = useState(false);
@@ -53,11 +62,46 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   }, [isTablet]);
 
   const selectDiscovery = (id: string | null) => {
-    if (id) setLmId(null);
+    if (id?.startsWith("veh:")) {
+      setLmId(null);
+      selectVehicle(id.slice(4));
+      return;
+    }
+    if (id) {
+      setLmId(null);
+      selectVehicle(null);
+    }
     select(id);
   };
+
+  // ── Garage des légendes ──────────────────────────────────────────────────────
+  const vehicleViews = useMemo(() => (feed?.vehicles ?? []).map((v) => viewOf(v, state)), [feed, state]);
+  const shownVehicles = vehicleViews.filter((x) => !x.hidden && (!gFilter || matches(x, gFilter)));
+  const hiddenVehicles = vehicleViews.filter((x) => x.hidden).length;
+  useEffect(() => {
+    if (vehicleId) setGarage(true);
+  }, [vehicleId]);
+  const VCOLOR = (x: VehicleView) => (x.v.type === "garage" ? "#5AB8FF" : x.v.edition.exclusive === "ultimate" ? "#FFB547" : x.now ? "#2EE6D6" : x.v.reliability === "reported" ? "#B98CFF" : "#FF3D8B");
+  const zones: MapZone[] = garage
+    ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened }))
+    : [];
+  const vehicleMarkers: MapMarker[] = garage
+    ? shownVehicles
+        .filter((x) => x.v.location.point)
+        .map((x) => ({
+          discovery: { id: `veh:${x.v.id}`, title: x.v.name, category: "vehicle", regionId: x.v.location.regionId ?? "vicecity", x: x.v.location.point!.x, y: x.v.location.point!.y, summary: "", prerequisites: [], reward: "", durationMin: 0, difficulty: 1, spoilerChapter: 0, contentPotential: 0, source: { label: "", reliability: x.v.reliability }, provenance: { kind: "live", recordId: x.v.id, url: "", firstSeenAt: x.v.firstSeenAt } } as Discovery,
+          status: x.owned && x.owned !== "spotted" ? "done" : "available",
+          fresh: false,
+          tracked: false,
+          visible: true,
+        }))
+    : [];
+  const guide = (id: string) => focusVehicle(id);
   const selectLandmark = (id: string | null) => {
-    if (id) select(null);
+    if (id) {
+      select(null);
+      selectVehicle(null);
+    }
     setLmId(id);
   };
 
@@ -72,16 +116,17 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     () => all.map((d) => ({ discovery: d, status: statusOf(d, state), fresh: state.freshUnlocks.includes(d.id), tracked: tracked.has(d.id) })),
     [all, state, tracked],
   );
-  const markers: MapMarker[] = allMarkers.map((m) => ({
+  const markers: MapMarker[] = [...allMarkers.map((m) => ({
     ...m,
     visible:
       m.discovery.id === selectedId ||
+      (!garage &&
       (!(m.status === "hidden" && state.profile.spoilerMode === "strict") &&
         (!cats.size || cats.has(m.discovery.category)) &&
         (!onlyAvailable || m.status === "available") &&
         (!hideDone || m.status !== "done") &&
-        (!onlyNew || m.discovery.provenance.kind === "live" || m.fresh)),
-  }));
+        (!onlyNew || m.discovery.provenance.kind === "live" || m.fresh))),
+  })), ...vehicleMarkers];
 
   // ── Mode cartographe ─────────────────────────────────────────────────────────
   const onPick = (x: number, y: number) => {
@@ -167,8 +212,26 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       return n;
     });
 
-  const filters = (
+  const garageChip = (
+    <button className={`fchip fchip--garage ${garage ? "is-on" : ""}`} onClick={() => { setGarage((v) => !v); setGFilter(null); selectVehicle(null); }} aria-pressed={garage} data-testid="filter-garage">
+      <span aria-hidden>🚗</span> Voitures cachées <b>{vehicleViews.filter((x) => !x.hidden && x.v.type === "vehicle").length}</b>
+    </button>
+  );
+  const filters = garage ? (
     <div className="filters" onClick={(e) => e.stopPropagation()}>
+      {garageChip}
+      {FILTERS.map((f) => {
+        const n = vehicleViews.filter((x) => !x.hidden && matches(x, f.id)).length;
+        return (
+          <button key={f.id} className={`fchip ${gFilter === f.id ? "is-on" : ""}`} onClick={() => setGFilter((g) => (g === f.id ? null : f.id))} aria-pressed={gFilter === f.id} data-testid={`gfilter-${f.id}`}>
+            {f.label} <b>{n}</b>
+          </button>
+        );
+      })}
+    </div>
+  ) : (
+    <div className="filters" onClick={(e) => e.stopPropagation()}>
+      {garageChip}
       <button className={`fchip ${showLandmarks ? "is-on" : ""}`} onClick={() => setShowLandmarks((v) => !v)} aria-pressed={showLandmarks} data-testid="filter-landmarks">
         <i className="fchip__dot" style={{ background: "#e9f6ff" }} /> Lieux
       </button>
@@ -214,12 +277,32 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       pickCenterNonce={pickNonce}
       draft={editor ? { x: editor.x, y: editor.y } : null}
       onDraftMove={(x, y) => setEditor((e) => (e ? { ...e, x, y } : e))}
+      zones={zones}
+      selectedZoneId={vehicleId && zones.some((z) => z.id === `veh:${vehicleId}`) ? `veh:${vehicleId}` : null}
+      onSelectZone={(id) => selectDiscovery(id)}
     />
   );
 
+  // Liste des véhicules (panneau iPad, bandeau iPhone) : récupérables d'abord
+  const sortedVehicles = [...shownVehicles].sort((a, b) => Number(b.now) - Number(a.now) || Number(b.urgent) - Number(a.urgent) || a.v.name.localeCompare(b.v.name));
+  const vrow = (x: VehicleView, chip = false) => (
+    <button key={x.v.id} className={chip ? "vchip" : "vrow"} onClick={() => selectDiscovery(`veh:${x.v.id}`)} data-testid={`vehicle-${x.v.id}`}>
+      <span className="vrow__dot" style={{ background: VCOLOR(x) }} />
+      <span className="vrow__body">
+        <strong>{x.v.name}</strong>
+        <em>
+          {x.v.edition.exclusive === "ultimate" ? (x.compat === "ultimate-only" ? "Ultimate · non disponible" : "Ultimate · ") : ""}
+          {x.owned && x.owned !== "spotted" ? "Possédé" : x.now ? "Récupérable maintenant" : x.later ? `Chapitre ${x.need}` : x.compat === "check" ? "Compatibilité à vérifier" : x.v.location.precision === "none" || x.v.location.precision === "text" ? "À localiser" : x.v.reliability === "reported" ? "À vérifier" : ""}
+        </em>
+      </span>
+      {x.v.location.precision === "zone" && <span className="vrow__tag">zone</span>}
+    </button>
+  );
+  const vehicleEl = vehicleId && <VehicleSheet id={vehicleId} onClose={() => selectVehicle(null)} onGuide={guide} />;
+
   // ── Tablette : panneau + carte côte à côte ─────────────────────────────────
   if (isTablet) {
-    const detailOpen = Boolean(selectedId || lm);
+    const detailOpen = Boolean(selectedId || lm || vehicleId);
     return (
       <div className="mapsplit">
         <aside className="panel">
@@ -227,9 +310,9 @@ export function MapScreen({ active = true }: { active?: boolean }) {
             <div className="panel__scroll" style={{ paddingTop: "calc(var(--sat) + 18px)" }}>{editorEl}</div>
           ) : detailOpen ? (
             <>
-              <button className="back" onClick={() => { select(null); setLmId(null); }}><Icon name="chevronLeft" size={16} /> Recommandations</button>
+              <button className="back" onClick={() => { select(null); setLmId(null); selectVehicle(null); }}><Icon name="chevronLeft" size={16} /> {garage ? "Voitures cachées" : "Recommandations"}</button>
               <div className="panel__scroll">
-                {selectedId ? <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} /> : lm && <LandmarkCard lm={lm} onClose={() => setLmId(null)} />}
+                {vehicleId ? vehicleEl : selectedId ? <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} /> : lm && <LandmarkCard lm={lm} onClose={() => setLmId(null)} />}
               </div>
             </>
           ) : (
@@ -243,10 +326,19 @@ export function MapScreen({ active = true }: { active?: boolean }) {
               </header>
               <div className="panel__tools">{cartoBtn}</div>
               <div className="panel__search">{searchOpen ? search : <button className="searchfake" onClick={() => setSearchOpen(true)} data-testid="search-btn"><Icon name="search" size={16} /> Rechercher un lieu, une découverte…</button>}</div>
-              <div className="panel__scroll list">
-                {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} />)}
-                <p className="fineprint pad">Les recommandations se recalculent à chaque découverte terminée.</p>
-              </div>
+              {garage ? (
+                <div className="panel__scroll list" data-testid="garage-list">
+                  {sortedVehicles.map((x) => vrow(x))}
+                  {!sortedVehicles.length && <p className="muted pad">Aucun véhicule pour ce filtre.</p>}
+                  {hiddenVehicles > 0 && <p className="fineprint pad"><Icon name="shield" size={12} /> {hiddenVehicles} véhicule{hiddenVehicles > 1 ? "s" : ""} masqué{hiddenVehicles > 1 ? "s" : ""} (chapitre plus avancé).</p>}
+                  <p className="fineprint pad">Catalogue alimenté automatiquement par la veille. Zones pointillées : emplacements approximatifs.</p>
+                </div>
+              ) : (
+                <div className="panel__scroll list">
+                  {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} />)}
+                  <p className="fineprint pad">Les recommandations se recalculent à chaque découverte terminée.</p>
+                </div>
+              )}
             </>
           )}
         </aside>
@@ -260,7 +352,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   }
 
   // ── iPhone : carte plein écran + fiche glissante ───────────────────────────
-  const sheetOpen = Boolean(selectedId || lm || editor);
+  const sheetOpen = Boolean(selectedId || lm || editor || vehicleId);
   return (
     <div className="mapphone">
       {mapEl({ top: topH, bottom: sheetOpen ? sheetH : carto ? 96 : 118, left: 0 })}
@@ -273,21 +365,26 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       </div>
       {!sheetOpen && cartoBar}
       {!sheetOpen && !carto && (
-        <div className="strip" onClick={(e) => e.stopPropagation()}>
-          {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} variant="chip" />)}
+        <div className="strip" onClick={(e) => e.stopPropagation()} data-testid={garage ? "garage-strip" : undefined}>
+          {garage ? sortedVehicles.map((x) => vrow(x, true)) : recs.map((r) => <RecoCard key={r.discovery.id} rec={r} variant="chip" />)}
         </div>
+      )}
+      {!editor && vehicleId && (
+        <Sheet key={`v-${vehicleId}`} onClose={() => selectVehicle(null)} onHeight={setSheetH}>
+          {vehicleEl}
+        </Sheet>
       )}
       {editor && (
         <Sheet key={`ed-${editor.base?.id ?? "new"}`} onClose={closeEditor} onHeight={setSheetH} tall>
           {editorEl}
         </Sheet>
       )}
-      {!editor && selectedId && (
+      {!editor && !vehicleId && selectedId && (
         <Sheet key={selectedId} onClose={() => select(null)} onHeight={setSheetH}>
           <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} />
         </Sheet>
       )}
-      {!editor && !selectedId && lm && (
+      {!editor && !vehicleId && !selectedId && lm && (
         <Sheet key={lm.id} onClose={() => setLmId(null)} onHeight={setSheetH}>
           <LandmarkCard lm={lm} onClose={() => setLmId(null)} />
         </Sheet>

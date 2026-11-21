@@ -16,11 +16,11 @@ export function asPlayerRecord(input: Partial<Discovery> & { id: string; title: 
     input.provenance && input.provenance.kind === "player" && !Number.isNaN(Date.parse(input.provenance.createdAt))
       ? input.provenance.createdAt
       : now.toISOString();
-  const chapter = clamp(Math.round(Number(input.spoilerChapter) || 0), 0, 3) as Chapter;
+  const chapter = clamp(Math.round(Number(input.spoilerChapter) || 0), 0, 6) as Chapter;
   const prerequisites: Prerequisite[] = Array.isArray(input.prerequisites)
     ? input.prerequisites.filter(
         (p): p is Prerequisite =>
-          !!p && ((p.type === "discovery" && typeof p.id === "string") || (p.type === "chapter" && [1, 2, 3].includes(p.min))),
+          !!p && ((p.type === "discovery" && typeof p.id === "string") || (p.type === "chapter" && [1, 2, 3, 4, 5, 6].includes(p.min))),
       )
     : [];
   return {

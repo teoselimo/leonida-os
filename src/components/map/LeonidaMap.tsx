@@ -44,7 +44,7 @@ async function tilesReachable(): Promise<boolean> {
  * affichant les tuiles de la carte communautaire gtadb.org, préparées par scripts/build_gtadb_assets.py.
  */
 export function LeonidaMap(props: MapViewProps) {
-  const { regions, markers, selectedId, onSelect, focusNonce, occlusion, landmarks, showLandmarks, selectedLandmarkId, onSelectLandmark, pickMode, onPick, pickCenterNonce, draft, onDraftMove, active } = props;
+  const { regions, markers, selectedId, onSelect, focusNonce, occlusion, landmarks, showLandmarks, selectedLandmarkId, onSelectLandmark, pickMode, onPick, pickCenterNonce, draft, onDraftMove, active, zones = [], selectedZoneId = null, onSelectZone } = props;
   const [tileError, setTileError] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MLMap | null>(null);
@@ -55,8 +55,8 @@ export function LeonidaMap(props: MapViewProps) {
   const markerObjs = useRef<Record<string, Marker>>({});
   const mlRef = useRef<typeof import("maplibre-gl") | null>(null);
   const draftMarker = useRef<Marker | null>(null);
-  const cb = useRef({ onSelect, onSelectLandmark, onPick, onDraftMove, pickMode });
-  cb.current = { onSelect, onSelectLandmark, onPick, onDraftMove, pickMode };
+  const cb = useRef({ onSelect, onSelectLandmark, onPick, onDraftMove, pickMode, onSelectZone });
+  cb.current = { onSelect, onSelectLandmark, onPick, onDraftMove, pickMode, onSelectZone };
   const occ = useRef(occlusion);
   occ.current = occlusion;
 
@@ -89,10 +89,19 @@ export function LeonidaMap(props: MapViewProps) {
             sources: {
               leonida: { type: "raster", tiles: [assetUrl("tiles/") + "{z}/{x}/{y}.jpg"], tileSize: 2048, minzoom: 0, maxzoom: 4, bounds: [-135, -74.0195, 67.5, 79.1713] },
               landmarks: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
+              zones: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
             },
             layers: [
               { id: "bg", type: "background", paint: { "background-color": "#071019" } },
               { id: "base", type: "raster", source: "leonida", paint: { "raster-brightness-max": 0.72, "raster-saturation": -0.25, "raster-contrast": 0.12, "raster-fade-duration": 120 } },
+              // Zones de recherche approximatives (Garage des légendes) : remplissage léger + contour pointillé
+              { id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": ["get", "color"], "fill-opacity": ["case", ["==", ["get", "sel"], 1], 0.28, 0.14] } },
+              {
+                id: "zones-line",
+                type: "line",
+                source: "zones",
+                paint: { "line-color": ["get", "color"], "line-width": ["case", ["==", ["get", "sel"], 1], 2.6, 1.4], "line-dasharray": [2, 1.5], "line-opacity": 0.9 },
+              },
               {
                 id: "lm",
                 type: "circle",
@@ -145,6 +154,15 @@ export function LeonidaMap(props: MapViewProps) {
             return;
           }
           const p = e.point;
+          const zHits = map!.getLayer("zones-fill") ? map!.queryRenderedFeatures([[p.x - 4, p.y - 4], [p.x + 4, p.y + 4]], { layers: ["zones-fill"] }) : [];
+          if (zHits.length && cb.current.onSelectZone) {
+            // la plus petite zone l'emporte quand elles se chevauchent
+            const z = [...zHits].sort((a, b) => Number(a.properties?.r) - Number(b.properties?.r))[0];
+            cb.current.onSelect(null);
+            cb.current.onSelectLandmark(null);
+            cb.current.onSelectZone(String(z.properties?.id));
+            return;
+          }
           const hits = map!.getLayer("lm") && map!.getLayoutProperty("lm", "visibility") !== "none"
             ? map!.queryRenderedFeatures([[p.x - 10, p.y - 10], [p.x + 10, p.y + 10]], { layers: ["lm"] })
             : [];
@@ -303,6 +321,36 @@ export function LeonidaMap(props: MapViewProps) {
     map.setFilter("lm-sel", ["==", ["get", "id"], selectedLandmarkId ?? ""]);
   }, [ready, showLandmarks, selectedLandmarkId]);
 
+  // Zones de recherche : cercles calculés en coordonnées de jeu puis projetés
+  const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}`).join("|") + `#${selectedZoneId ?? ""}`;
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!ready || !map) return;
+    const circle = (z: { x: number; y: number; radius: number }) => {
+      const ring: [number, number][] = [];
+      for (let i = 0; i <= 48; i++) {
+        const a = (i / 48) * Math.PI * 2;
+        ring.push(gameToLngLat(z.x + Math.cos(a) * z.radius, z.y + Math.sin(a) * z.radius));
+      }
+      return ring;
+    };
+    (map.getSource("zones") as GeoJSONSource | undefined)?.setData({
+      type: "FeatureCollection",
+      features: zones.map((z) => ({ type: "Feature", properties: { id: z.id, color: z.color, sel: z.id === selectedZoneId ? 1 : 0, r: z.radius }, geometry: { type: "Polygon", coordinates: [circle(z)] } })),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, zoneKey]);
+
+  // Recentrage sur une zone sélectionnée : toute la zone doit être visible
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !selectedZoneId) return;
+    const z = zones.find((x) => x.id === selectedZoneId);
+    if (!z) return;
+    map.fitBounds([gameToLngLat(z.x - z.radius, z.y - z.radius), gameToLngLat(z.x + z.radius, z.y + z.radius)], { padding: padding(), duration: 850, maxZoom: 6.2 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, focusNonce, selectedZoneId, occlusion.bottom, occlusion.left]);
+
   // Recentrage sur la sélection (découverte ou lieu)
   useEffect(() => {
     const map = mapRef.current;
@@ -357,6 +405,11 @@ export function LeonidaMap(props: MapViewProps) {
       )}
       {!ready && <div className="map__loading"><span className="spinner" /> Chargement de Leonida…</div>}
 
+      {zones.filter((z) => z.id === selectedZoneId).map((z) => (
+        <div key={z.id} className="zonetag" style={{ top: occlusion.top + 10, left: occlusion.left + 12 }} data-testid="zone-tag">
+          <Icon name="target" size={13} /> Zone approximative · {z.label}
+        </div>
+      ))}
       {markers.map(({ discovery: d, status, fresh, tracked }) => {
         const el = els[d.id];
         if (!el) return null;

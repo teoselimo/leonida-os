@@ -16,11 +16,12 @@ export type CategoryId = "mission" | "collectible" | "activity" | "vehicle" | "s
  */
 export type Reliability = "official" | "confirmed" | "reported" | "rumor" | "personal";
 
-/** Progression narrative : prologue puis chapitres (cités par les guides publics). Le nombre total de chapitres n'est pas établi : 3 = « chapitre 3 ou plus ». */
-export type Chapter = 0 | 1 | 2 | 3;
+/** Progression narrative : prologue puis chapitres (cités par les guides publics). Le nombre total de chapitres n'est pas établi : 6 = « chapitre 6 ou plus ». */
+export type Chapter = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export type ConsoleId = "ps5" | "ps5pro" | "xsx" | "xss";
-export type EditionId = "standard" | "special" | "unknown";
+/** Édition possédée : décide des véhicules, garages et bonus exclusifs proposés. */
+export type EditionId = "standard" | "ultimate" | "unknown";
 export type SpoilerMode = "strict" | "relaxed";
 
 /** Fait vérifié (officiel) ou donnée de démonstration. Jamais de mélange implicite. */
@@ -105,6 +106,17 @@ export interface PersistedState {
   custom: Discovery[];
   /** Afficher le jeu de données de démonstration. */
   showDemo: boolean;
+  /** Garage des légendes : état de chaque véhicule pour ce joueur (repéré → rangé au garage). */
+  vehicles: Record<string, VehicleProgress>;
+}
+
+/** Repéré, volé et possédé sont trois choses différentes. */
+export type VehicleState = "spotted" | "stolen" | "registered" | "stored";
+export interface VehicleProgress {
+  state: VehicleState;
+  at: string;
+  /** Garage ou lieu de stockage choisi par le joueur (texte libre ou garage du catalogue). */
+  storage?: string;
 }
 
 export type DiscoveryStatus = "done" | "available" | "locked" | "chapter" | "hidden";
