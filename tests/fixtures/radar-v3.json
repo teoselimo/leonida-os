@@ -208,7 +208,7 @@
       "Permit Keys"
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": false,
       "reason": "HTTP 404 sur https://press-a.example/gta-6-hidden-stinger",
@@ -235,7 +235,7 @@
       "Permit Keys"
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": false,
       "reason": "HTTP 404 sur https://press-b.example/stinger-permit-keys",

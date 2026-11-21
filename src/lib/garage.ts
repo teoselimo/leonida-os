@@ -106,7 +106,8 @@ export function vehicleRecommendations(list: VehicleRecord[], s: Pick<PersistedS
   const RW = { official: 4, confirmed: 3, reported: 1, rumor: 0, personal: 0 } as const;
   return list
     .map((v) => viewOf(v, s))
-    .filter((x) => x.now && x.compat !== "check" && (x.v.location.precision === "zone" || x.v.location.precision === "exact"))
+    // localisable (zone ou point) — ou bonus remis au joueur (notification en jeu), qui n'a pas besoin d'être cherché
+    .filter((x) => x.now && x.compat !== "check" && (x.v.location.precision === "zone" || x.v.location.precision === "exact" || x.v.kind === "delivery"))
     .sort((a, b) => Number(b.urgent) - Number(a.urgent) || Number(b.v.edition.exclusive === "ultimate") - Number(a.v.edition.exclusive === "ultimate") || RW[b.v.reliability] - RW[a.v.reliability] || b.v.evidence.length - a.v.evidence.length)
     .slice(0, limit);
 }

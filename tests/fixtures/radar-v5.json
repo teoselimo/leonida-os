@@ -1116,7 +1116,7 @@
       "You don't necessarily miss anything if you skip it though, because the shop stays open afterwards."
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -1210,7 +1210,7 @@
       "Behind the Three Sheets Liquor Store in Key Lento a smuggling ring keeps exotic birds, and one parrot keeps hinting at a stash of money."
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -1478,7 +1478,7 @@
       "Permit Keys"
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": false,
       "reason": "HTTP 404 sur https://press-a.example/gta-6-hidden-stinger",
@@ -1505,7 +1505,7 @@
       "Permit Keys"
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": false,
       "reason": "HTTP 404 sur https://press-b.example/stinger-permit-keys",
@@ -1996,7 +1996,7 @@
       "If you take it in Chapter 1, you lose it again once you die or get busted, because only your personal vehicle is kept."
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -2104,7 +2104,7 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -2291,7 +2291,7 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -2587,7 +2587,7 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -2756,7 +2756,7 @@
       "Chapter 3 – More tools"
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,
@@ -2990,7 +2990,7 @@
       "You'll find the Dinka Enduro motorcycle around Jason's House in Key Lento, parked under the deck."
      ],
      "deep": {
-      "v": 3,
+      "v": 4,
       "at": "2026-11-20T14:00:00.000Z",
       "ok": true,
       "reason": null,

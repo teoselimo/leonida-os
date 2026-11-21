@@ -7,7 +7,7 @@ import { extractVehicles } from "./vehicles.ts";
 import { exactLandmark } from "./places.ts";
 
 /** Catégories pour lesquelles on lit l'article complet (contenu exploitable en jeu). */
-export const RULES_VERSION = 3; // 3 : extraction automobile (V0.6)
+export const RULES_VERSION = 4; // 3 : extraction automobile (V0.6)
 
 export const DEEP_CATEGORIES: Category[] = ["money", "easter_egg", "side_mission", "missable", "guide", "mechanic", "weapon", "vehicle", "unique_item"];
 

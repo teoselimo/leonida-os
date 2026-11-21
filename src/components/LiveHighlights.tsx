@@ -116,7 +116,7 @@ export function LiveAdvice() {
               {x.urgent && <span className="pill pill--warn">À ne pas manquer</span>}
             </span>
             <strong>🚗 {x.v.name}</strong>
-            <span className="small muted">{x.v.location.district ? `Zone : ${x.v.location.district}` : "Emplacement cité"} · récupérable maintenant</span>
+            <span className="small muted">{x.v.kind === "delivery" ? "Bonus remis au joueur · suis la notification en jeu" : `${x.v.location.district ? `Zone : ${x.v.location.district}` : "Emplacement cité"} · récupérable maintenant`}</span>
           </span>
         </button>
       ))}

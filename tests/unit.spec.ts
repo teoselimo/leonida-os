@@ -98,6 +98,10 @@ test.describe("Garage des légendes", () => {
     expect(u).toContain("v-dinka-enduro");
     expect(u).not.toEqual(s);
   });
+  test("chapitre 5 : le bonus Ultimate confirmé (Cheetah) n'est recommandé qu'au joueur Ultimate", () => {
+    expect(vehicleRecommendations(feed.vehicles, st("ultimate", 5), 10).map((x) => x.v.id)).toContain("v-grotti-cheetah");
+    expect(vehicleRecommendations(feed.vehicles, st("standard", 5), 10).map((x) => x.v.id)).not.toContain("v-grotti-cheetah");
+  });
   test("chapitre insuffisant ⇒ plus tard (masqué en strict) ; fenêtre dépassée ⇒ plus recommandé", () => {
     expect(viewOf(V("v-grotti-itali-rsx"), st("ultimate", 1)).hidden).toBe(true);
     expect(viewOf(V("v-grotti-itali-rsx"), st("ultimate", 3)).now).toBe(true);

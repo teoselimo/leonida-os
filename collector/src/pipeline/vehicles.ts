@@ -160,7 +160,7 @@ function factsFor(name: ReturnType<typeof vehicleNames>[number] | { name: string
     : /\b(garage|parked|sits|inside|driveway|docked)\b/i.test(s) ? "fixed" : null);
   // Chapitre d'accès : phrase de disponibilité d'abord ; jamais un outil facultatif (« waiting until… Snap Gun in Chapter 3 ») ni une règle d'immatriculation
   const chOf = (s: string) => Number(s.match(/\bChapter\s(\d{1,2})\b/)?.[1] ?? NaN);
-  const OPTIONAL = /\b(wait(?:ing)? until|optional|don'?t (?:really )?need|easier|register|registration|respray|sell)\b/i;
+  const OPTIONAL = /\b(wait(?:ing)? until|optional|don'?t (?:really )?need|easier|regist(?:er|ers|ered|ering|ration)|respray|sell(?:ing)?|personal vehicle)\b/i;
   const chS = all0.find((s) => /\bChapter\s\d/.test(s) && /\b(available|from chapter|starting (?:from|in) chapter|beginning(?: in)? chapter|unlocks? (?:in|during|at)|collect|notification|only (?:in|during) chapter|requires? chapter)\b/i.test(s) && !OPTIONAL.test(s));
   const chapter: VFact<number> | null = chS ? { value: chOf(chS), quote: CAP(chS), url } : null;
   const mission = f((s) => {
