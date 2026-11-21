@@ -272,15 +272,19 @@ export function AiCopilot() {
   const body = (
     <div className="ai" data-testid="ai-panel">
       <header className="ai__head">
-        <BrandMark size={30} />
-        <div>
-          <strong>LEONIDA AI</strong>
-          <span data-testid="ai-mode">{transport ? `${transport.label} · données LEONIDA RADAR` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+        <div className="ai__identity">
+          <BrandMark size={30} />
+          <div className="ai__identity-copy">
+            <strong>LEONIDA AI</strong>
+            <span data-testid="ai-mode">{transport ? `${transport.label} · données LEONIDA RADAR` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+          </div>
         </div>
-        {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
-        {gptApiEnabled() && transport?.id !== "openai-api" && <button className="link small" type="button" onClick={() => setAccessOpen((v) => !v)} data-testid="gpt-connect">Activer GPT</button>}
-        {gptApiEnabled() && transport?.id === "openai-api" && <button className="link small" type="button" onClick={() => { clearGptAccessCode(); setGptKeyEpoch((n) => n + 1); }} data-testid="gpt-disconnect">Déconnecter GPT</button>}
-        <button className="iconbtn" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>
+        <div className="ai__head-actions">
+          {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
+          {gptApiEnabled() && transport?.id !== "openai-api" && <button className="link small" type="button" onClick={() => setAccessOpen((v) => !v)} data-testid="gpt-connect">Activer GPT</button>}
+          {gptApiEnabled() && transport?.id === "openai-api" && <button className="link small" type="button" onClick={() => { clearGptAccessCode(); setGptKeyEpoch((n) => n + 1); }} data-testid="gpt-disconnect">Déconnecter GPT</button>}
+        </div>
+        <button className="iconbtn ai__head-close" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>
       </header>
       {accessOpen && <form className="gpt-access" onSubmit={(e) => { e.preventDefault(); if (accessCode.trim()) { saveGptAccessCode(accessCode.trim()); setAccessCode(""); setAccessOpen(false); setGptKeyEpoch((n) => n + 1); } }}>
         <label htmlFor="gpt-access-code">Code personnel LEONIDA (jamais ta clé API OpenAI)</label>
