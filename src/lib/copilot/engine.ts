@@ -78,10 +78,10 @@ export interface AskOptions {
 }
 
 const NOTE: Record<string, string> = {
-  not_granted: "Tu n'as pas autorisé cette app à utiliser Claude : réponse directe, à partir des données vérifiées.",
-  sampling_disabled: "Claude n'est pas disponible sur ce compte : réponse directe.",
-  rate_limited: "Limite d'utilisation de Claude atteinte pour le moment : réponse directe. Réessaie un peu plus tard.",
-  session_expired: "Session Claude expirée : reconnecte-toi. Réponse directe en attendant.",
+  not_granted: "Accès au modèle non autorisé ou code LEONIDA incorrect : réponse directe, à partir des données vérifiées.",
+  sampling_disabled: "Le modèle n'est pas disponible pour le moment : réponse directe.",
+  rate_limited: "Quota du modèle ou budget du pilote atteint : réponse directe. Le coût est bloqué côté serveur.",
+  session_expired: "Session du modèle expirée : reconnecte-toi. Réponse directe en attendant.",
   refused: "Claude n'a pas répondu à cette demande : réponse directe.",
   unavailable: "Claude n'est pas joignable ici : réponse directe.",
 };
