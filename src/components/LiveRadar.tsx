@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { frHeadline, frSummary } from "@/lib/fr";
 import { glossaryOf } from "@/lib/missions";
 import { useStore } from "@/lib/store";
+/** Build de l'Artifact : flux = instantané daté embarqué (NEXT_PUBLIC_FEED_SNAPSHOT=1). */
+const FEED_SNAPSHOT = process.env.NEXT_PUBLIC_FEED_SNAPSHOT === "1";
 import { collectorHealth, LIVE_CATEGORY, proposePointUrl, spoilerVisibility, tabOf, TRIGGER_FR, useLiveRadar } from "@/lib/live";
 import { assetUrl } from "@/lib/gtadb";
 import type { LiveTab, RadarRecord } from "@/lib/live";
@@ -23,6 +25,20 @@ export function SyncStatus() {
   const degraded = feed.sources.filter((s) => s.status === "degraded").length;
   const lastSync = feed.sources.map((s) => s.lastSuccessAt).filter(Boolean).sort().pop() ?? feed.generatedAt;
   const health = collectorHealth(feed);
+  if (FEED_SNAPSHOT) {
+    // Pilote Artifact : le flux est un instantané daté embarqué, jamais présenté comme « en direct »
+    return (
+      <div className="sync is-stale" data-testid="sync-status">
+        <div className="sync__main">
+          <span className="live live--off" />
+          <span>
+            <strong>Instantané de la veille</strong>
+            <em>Données collectées le {new Date(feed.generatedAt).toLocaleString("fr-FR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })} · {feed.items.length} fiches · mises à jour à chaque nouvelle version de l&apos;Artifact (l&apos;app GitHub Pages reste en direct)</em>
+          </span>
+        </div>
+      </div>
+    );
+  }
   const stale = health.level !== "ok";
   const cycles = (feed.health?.cycles ?? []).slice(-8).reverse();
   return (
@@ -69,6 +85,17 @@ export function SyncStatus() {
 export function CollectorAlert() {
   const { feed, state } = useLiveRadar();
   if (!feed) return null;
+  if (FEED_SNAPSHOT) {
+    const days = Math.floor((Date.now() - Date.parse(feed.generatedAt)) / 86_400_000);
+    return (
+      <div className="collector-alert collector-alert--snapshot" role="status" data-testid="snapshot-banner">
+        <Icon name="info" size={16} />
+        <span>
+          <strong>Instantané du {new Date(feed.generatedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}</strong> — les découvertes plus récentes sont dans l&apos;app en direct{days >= 2 ? ` (instantané vieux de ${days} jours)` : ""}.
+        </span>
+      </div>
+    );
+  }
   const h = collectorHealth(feed);
   if (h.level === "ok" && state !== "offline") return null;
   const age = h.ageMin < 120 ? `${h.ageMin} min` : `${Math.round(h.ageMin / 60)} h`;

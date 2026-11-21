@@ -7,9 +7,11 @@ import { progress, wouldUnlock } from "./engine";
 import { asPlayerRecord, isValidRecordInput } from "./records";
 import { liveToDiscoveries, useLiveRadar } from "./live";
 import { demoRepository, localProgressStore } from "./repository";
+import { cloudLoad, cloudSave } from "./runtime/cloud";
 import type { Discovery, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
 
 const STORAGE_KEY = "leonida-os/progress/v1";
+const SAVED_AT_KEY = "leonida-os/progress-saved-at/v1";
 const persistence = localProgressStore<PersistedState>(STORAGE_KEY);
 export const repo = demoRepository;
 
@@ -151,6 +153,8 @@ interface Ctx {
   saveCustom: (d: Discovery) => void;
   deleteCustom: (id: string) => void;
   importCustom: (items: unknown[]) => number;
+  /** Remplace toute la progression par un export « leonida-os/progression » (après confirmation dans l'interface). */
+  importProgress: (state: unknown) => boolean;
   setShowDemo: (v: boolean) => void;
   notify: (title: string, body?: string, icon?: string) => void;
   hydrated: boolean;
@@ -194,8 +198,8 @@ interface Ctx {
   selectVehicle: (id: string | null) => void;
   focusVehicle: (id: string) => void;
   /** Lieu de la carte communautaire à montrer (action de LEONIDA AI). */
-  placeFocus: { landmarkId?: string; district?: string; nonce: number };
-  showPlace: (p: { landmarkId?: string; district?: string }) => void;
+  placeFocus: { landmarkId?: string; district?: string; poiCat?: string; nonce: number };
+  showPlace: (p: { landmarkId?: string; district?: string; poiCat?: string }) => void;
 }
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -217,7 +221,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [garage, setGarageState] = useState<{ on: boolean; filter: string | null }>({ on: false, filter: null });
   const [radarFocus, setRadarFocus] = useState<{ id: string | null; category: string | null; nonce: number }>({ id: null, category: null, nonce: 0 });
   const [aiOpen, setAiOpen] = useState(false);
-  const [placeFocus, setPlaceFocus] = useState<{ landmarkId?: string; district?: string; nonce: number }>({ nonce: 0 });
+  const [placeFocus, setPlaceFocus] = useState<{ landmarkId?: string; district?: string; poiCat?: string; nonce: number }>({ nonce: 0 });
   const [celebration, setCelebration] = useState<{ key: number; label: string } | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -233,8 +237,42 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (hydrated) persistence.save(state);
+    if (!hydrated) return;
+    persistence.save(state);
+    // copie privée dans l'Artifact (iPhone ↔ iPad), une écriture par pause
+    if (!cloudReady.current) return;
+    const t = setTimeout(() => {
+      const at = new Date().toISOString();
+      try {
+        localStorage.setItem(SAVED_AT_KEY, at);
+      } catch {
+        /* stockage indisponible */
+      }
+      cloudSave(state, at);
+    }, 1500);
+    return () => clearTimeout(t);
   }, [state, hydrated]);
+
+  // Au démarrage dans un Artifact : reprendre la copie privée si elle est plus récente que celle de ce navigateur
+  const cloudReady = useRef(false);
+  useEffect(() => {
+    if (!hydrated) return;
+    let cancelled = false;
+    void cloudLoad<PersistedState>().then((copy) => {
+      if (cancelled) return;
+      let local = "";
+      try {
+        local = localStorage.getItem(SAVED_AT_KEY) ?? "";
+      } catch {
+        /* rien */
+      }
+      if (copy && copy.state?.schema === 1 && copy.savedAt > local) dispatch({ type: "hydrate", state: migrate(copy.state) });
+      cloudReady.current = true;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated]);
 
   const setView = useCallback((v: ViewId) => {
     setViewState(v);
@@ -285,6 +323,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         dispatch({ type: "deleteCustom", id });
         setSelectedId(null);
         showToast({ title: "Relevé supprimé" });
+      },
+      importProgress: (raw) => {
+        const st = raw as Partial<PersistedState> | null;
+        if (!st || typeof st !== "object" || st.schema !== 1 || typeof st.profile !== "object") return false;
+        dispatch({ type: "hydrate", state: migrate(st) });
+        return true;
       },
       importCustom: (items) => {
         const valid = (items as unknown[]).filter(isValidRecordInput);
@@ -359,6 +403,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setSelectedId(null);
         setVehicleId(null);
         setPlaceFocus((f) => ({ ...p, nonce: f.nonce + 1 }));
+        // un lieu demandé se montre en mode Explorer (les voitures cachées masqueraient les repères)
+        setGarageState((g) => ({ on: false, filter: g.filter }));
         setView("carte");
       },
     }),

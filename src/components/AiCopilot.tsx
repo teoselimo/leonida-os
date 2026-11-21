@@ -7,6 +7,8 @@ import { answer, isValidAction, starters } from "@/lib/ai/engine";
 import type { AiAction, AiAnswer, PlaceRef, Topic } from "@/lib/ai/engine";
 import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
+import { askCopilot, pickTransport } from "@/lib/copilot";
+import type { CopilotAnswer, LlmMessage, LlmTransport } from "@/lib/copilot";
 import { lngLatToGame, loadLandmarks } from "@/lib/gtadb";
 import { useIsTablet } from "@/lib/useMedia";
 import { SPRINGS, spring, tick } from "@/lib/motion";
@@ -15,7 +17,7 @@ import { Sheet } from "./Sheet";
 import { BrandMark } from "./Brand";
 import { Icon } from "./ui/Icon";
 
-type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending" };
+type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean };
 type Msg = { id: number; role: "user"; text: string } | AiMsg;
 const HISTORY_KEY = "leonida-os/ai-history/v2";
 
@@ -63,9 +65,39 @@ export function AiCopilot() {
   useEffect(() => setMsgs(loadHistory()), []);
   const msgsRef = useRef<Msg[]>([]);
   msgsRef.current = msgs;
+  // Moteur conversationnel : Claude (Artifact ou API) si disponible, sinon mode direct
+  const [transport, setTransport] = useState<LlmTransport | null>(null);
+  useEffect(() => {
+    void pickTransport().then(setTransport);
+  }, []);
+  const [deep, setDeep] = useState(false);
+  useEffect(() => {
+    try {
+      setDeep(localStorage.getItem("leonida-os/ai-tier/v1") === "default");
+    } catch {
+      /* préférence absente */
+    }
+  }, []);
+  const toggleDeep = () =>
+    setDeep((d) => {
+      try {
+        localStorage.setItem("leonida-os/ai-tier/v1", d ? "quick" : "default");
+      } catch {
+        /* stockage indisponible */
+      }
+      return !d;
+    });
+  const ctlRef = useRef<AbortController | null>(null);
+  const [streaming, setStreaming] = useState(false);
+  const historyOf = (list: Msg[]): LlmMessage[] =>
+    list
+      .filter((m) => (m.role === "user" ? m.text : m.a.text))
+      .slice(-8)
+      .map((m) => (m.role === "user" ? { role: "user" as const, content: m.text } : { role: "assistant" as const, content: m.a.text }));
+  const toAi = (c: CopilotAnswer): AiAnswer => ({ intent: c.intent, text: c.message, reliability: c.trust, sources: c.sources, actions: c.actions, more: c.more, replies: c.replies, topic: c.topic, evidence: c.evidence });
   const [places, setPlaces] = useState<PlaceRef[]>([]);
   useEffect(() => {
-    if (aiOpen && !places.length) void loadLandmarks().then((l) => setPlaces(l.map(({ id, name, district }) => ({ id, name, district }))));
+    if (aiOpen && !places.length) void loadLandmarks().then(setPlaces);
   }, [aiOpen, places.length]);
   useEffect(() => {
     try {
@@ -94,9 +126,35 @@ export function AiCopilot() {
       if (!question) return;
       setText("");
       // repères gtadb (cache partagé avec la carte) : nécessaires pour proposer « voir sur la carte »
-      const pl = places.length ? places : (await loadLandmarks()).map(({ id, name, district }) => ({ id, name, district }));
+      const pl = places.length ? places : await loadLandmarks();
       const ctx = { feed, state, position: mapPosition(), places: pl };
       const topic: Topic | null = forcedTopic === undefined ? topicOf(msgsRef.current) : forcedTopic;
+      if (transport) {
+        // Claude rédige, à partir des preuves du Radar ; la réponse s'affiche au fil de l'écriture
+        const history = historyOf(msgsRef.current);
+        const id = Date.now();
+        const ctl = new AbortController();
+        ctlRef.current?.abort();
+        ctlRef.current = ctl;
+        setStreaming(true);
+        setMsgs((m) => [...m, { id, role: "user", text: question }, { id: id + 1, role: "ai", a: { intent: "pending", text: "", reliability: null, sources: [], actions: [] }, engine: "claude", streaming: true }]);
+        const c = await askCopilot({
+          question,
+          ctx,
+          topic,
+          history,
+          transport,
+          signal: ctl.signal,
+          tier: deep ? "default" : "quick",
+          onText: (v) => setMsgs((m) => m.map((x) => (x.id === id + 1 && x.role === "ai" ? { ...x, a: { ...x.a, text: v } } : x))),
+        });
+        if (ctlRef.current === ctl) {
+          ctlRef.current = null;
+          setStreaming(false);
+        }
+        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: c.note } : x)));
+        return;
+      }
       const local = answer(question, ctx, topic);
       const a = { ...local, actions: local.actions.filter((x) => isValidAction(x, feed)).slice(0, 2) };
       const id = Date.now();
@@ -114,7 +172,7 @@ export function AiCopilot() {
         }),
       );
     },
-    [feed, state, places],
+    [feed, state, places, transport, deep],
   );
 
   // Questions lancées depuis l'accueil (amorces)
@@ -150,7 +208,7 @@ export function AiCopilot() {
         leave();
         break;
       case "show_place":
-        store.showPlace({ landmarkId: a.landmarkId, district: a.district });
+        store.showPlace({ landmarkId: a.landmarkId, district: a.district, poiCat: a.poiCat });
         leave();
         break;
       case "open_record":
@@ -162,7 +220,14 @@ export function AiCopilot() {
         leave();
         break;
       case "open_source":
-        window.open(a.url, "_blank", "noopener,noreferrer");
+        {
+          // lien classique : window.open est bloqué dans un Artifact
+          const link = document.createElement("a");
+          link.href = a.url;
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          link.click();
+        }
         break;
       case "mark_done":
         store.setDone(a.id, true);
@@ -204,7 +269,7 @@ export function AiCopilot() {
         <BrandMark size={30} />
         <div>
           <strong>LEONIDA AI</strong>
-          <span data-testid="ai-mode">{proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+          <span data-testid="ai-mode">{transport ? `${transport.label} · données LEONIDA RADAR` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
         </div>
         {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
         {isTablet && <button className="iconbtn" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>}
@@ -213,6 +278,11 @@ export function AiCopilot() {
         {msgs.length === 0 && (
           <div className="ai__intro">
             <p>Salut ! Dis-moi quelle mission tu vas lancer ou ce que tu cherches. Je réponds avec les fiches vérifiées de la veille, selon ton chapitre, ton édition et ce que tu as déjà fait.</p>
+            {transport && (
+              <button className={`chip chip--reply press${deep ? " is-on" : ""}`} onClick={toggleDeep} aria-pressed={deep} data-testid="ai-deep">
+                {deep ? "Réponses approfondies (plus lentes)" : "Réponses rapides · toucher pour approfondir"}
+              </button>
+            )}
             <div className="ai__starters">
               {starters({ feed, state }).map((q) => (
                 <button key={q} className="chip press" onClick={() => ask(q)} data-testid="ai-starter">{q}</button>
@@ -225,7 +295,7 @@ export function AiCopilot() {
             <div key={m.id} className="bubble bubble--me">{m.text}</div>
           ) : (
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
-              <p className="bubble__text">{m.a.text}</p>
+              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">Leonida réfléchit…</span> : <p className="bubble__text">{m.a.text}</p>}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.reliability && (
                 <p className={`bubble__rel relchip--${REL_CLS[m.a.reliability]}`}><i />{REL_FR[m.a.reliability]}</p>
@@ -276,6 +346,8 @@ export function AiCopilot() {
                   ))}
                 </div>
               )}
+              {!m.streaming && m.engine === "claude" && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? "Claude"} à partir des données LEONIDA RADAR</p>}
+              {m.note && <p className="bubble__note" data-testid="ai-note">{m.note}</p>}
               {m.llm && m.llm !== "pending" && m.llm !== "generated" && m.llm !== "cached" && m.llm !== "skipped" && (
                 <p className="bubble__note" data-testid="ai-llm-note">Réponse directe : la synthèse IA n’est pas disponible pour le moment.</p>
               )}
@@ -291,7 +363,11 @@ export function AiCopilot() {
         }}
       >
         <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)} placeholder="Demande à Leonida…" enterKeyHint="send" aria-label="Question pour LEONIDA AI" data-testid="ai-input" maxLength={300} autoComplete="off" />
-        <button type="submit" className="ai__send press" disabled={!text.trim()} aria-label="Envoyer"><Icon name="arrow" size={18} /></button>
+        {streaming ? (
+          <button type="button" className="ai__send ai__send--stop press" onClick={() => ctlRef.current?.abort()} aria-label="Arrêter la réponse" data-testid="ai-stop"><span className="ai__stopsq" /></button>
+        ) : (
+          <button type="submit" className="ai__send press" disabled={!text.trim()} aria-label="Envoyer"><Icon name="arrow" size={18} /></button>
+        )}
       </form>
     </div>
   );

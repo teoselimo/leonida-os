@@ -5,6 +5,7 @@ import { statusOf } from "@/lib/engine";
 import { CC_BY_URL, GTADB_URL, tagFr } from "@/lib/gtadb";
 import type { Landmark } from "@/lib/gtadb";
 import { Icon } from "./ui/Icon";
+import { POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus } from "@/lib/poi";
 
 /** Fiche d'un lieu de la carte communautaire gtadb.org. */
 export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => void }) {
@@ -14,17 +15,19 @@ export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => voi
     .map((d) => ({ d, dist: Math.hypot(d.x - lm.x, d.y - lm.y) }))
     .sort((a, b) => a.dist - b.dist)[0];
   const tags = lm.tags.filter((t) => t !== "unconfirmed");
+  const cat = POI_CATS[poiCategory(lm)];
+  const status = poiStatus(lm);
   return (
     <div className="detail" data-testid="landmark">
       <div className="detail__top">
-        <span className="glyph glyph--lm"><Icon name="target" size={22} /></span>
-        <div className="detail__meta"><span className="lmsrc">Lieu · carte communautaire</span></div>
+        <span className="glyph glyph--lm" style={{ color: cat.color }}><b style={{ fontSize: 20 }}>{cat.glyph}</b></span>
+        <div className="detail__meta"><span className="lmsrc" style={{ color: cat.color }}>{cat.label}</span></div>
         <button className="iconbtn" onClick={onClose} aria-label="Fermer"><Icon name="close" /></button>
       </div>
-      <h3 className="detail__title">{lm.name}</h3>
+      <h3 className="detail__title">{poiName(lm)}</h3>
       {lm.district && <p className="muted">{lm.district}</p>}
+      <p className={`lmstatus lmstatus--${status}`} data-testid="poi-status"><Icon name={status === "uncertain" ? "alert" : "info"} size={13} /> {POI_STATUS_FR[status]}</p>
       <div className="row gap8 wrap">
-        {lm.tags.includes("unconfirmed") && <span className="pill pill--locked"><Icon name="alert" size={13} /> Position non confirmée</span>}
         {tags.map((t) => <span key={t} className="tagchip">{tagFr(t)}</span>)}
       </div>
       {lm.real && (
@@ -38,7 +41,7 @@ export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => voi
           <h4>À proximité</h4>
           <button className="nearbtn" onClick={() => focusOnMap(near.d.id)}>
             <span>{near.d.title}</span>
-            <em>{near.dist < 200 ? "sur place" : `à ~${Math.round(near.dist / 50) * 50} unités`} · DÉMO</em>
+            <em>{near.dist < 200 ? "sur place" : `à ~${Math.round(near.dist / 50) * 50} unités`}{near.d.provenance?.kind === "live" ? "" : " · DÉMO"}</em>
             <Icon name="chevronRight" size={16} />
           </button>
         </div>

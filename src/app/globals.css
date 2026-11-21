@@ -910,3 +910,13 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 @keyframes shimmer { to { background-position: -200% 0; } }
 .ai__list { scroll-padding-bottom: 12px; }
 @media (prefers-reduced-motion: reduce) { .bubble__refine { animation: none; color: var(--muted); } }
+
+/* ── Repères (issue #9) ── */
+.lmstatus { display: flex; gap: 6px; align-items: flex-start; font-size: 12.5px; line-height: 1.4; color: var(--muted); padding: 8px 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); margin: 6px 0 4px; }
+.lmstatus--uncertain { color: #ffb08a; background: rgba(255, 122, 69, 0.1); }
+.bubble__engine { font-size: 11.5px; color: var(--dim); }
+.ai__send--stop { background: rgba(255, 255, 255, 0.12); }
+.ai__stopsq { width: 14px; height: 14px; border-radius: 3px; background: #fff; display: block; }
+.chip--reply.is-on { background: rgba(255, 61, 139, 0.16); box-shadow: inset 0 0 0 1px rgba(255, 61, 139, 0.45); color: #ffd0e3; }
+.collector-alert--snapshot { background: rgba(91, 123, 255, 0.1); color: #c9d3ff; box-shadow: inset 0 0 0 1px rgba(91, 123, 255, 0.28); }
+.live--off { background: var(--dim) !important; animation: none !important; box-shadow: none !important; }

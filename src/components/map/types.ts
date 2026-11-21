@@ -1,5 +1,6 @@
 import type { Discovery, DiscoveryStatus, Region } from "@/lib/types";
 import type { Landmark } from "@/lib/gtadb";
+import type { PoiCat } from "@/lib/poi";
 
 /**
  * Contrat de la carte. Implémentation actuelle : `LeonidaMap` (MapLibre GL + tuiles gtadb).
@@ -37,6 +38,8 @@ export interface MapViewProps {
   occlusion: { top: number; bottom: number; left: number };
   landmarks: Landmark[];
   showLandmarks: boolean;
+  /** Catégories de repères affichées (vide ou absent : toutes). */
+  poiCats?: PoiCat[];
   selectedLandmarkId: string | null;
   onSelectLandmark: (id: string | null) => void;
   /** L'onglet Carte est affiché (la carte reste montée en arrière-plan sinon). */

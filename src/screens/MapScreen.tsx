@@ -25,6 +25,8 @@ import { ACCESS_FR, FILTERS, matches, viewOf } from "@/lib/garage";
 import type { GarageFilter, VehicleView } from "@/lib/garage";
 import type { MapZone } from "@/components/map/types";
 import type { Discovery } from "@/lib/types";
+import { POI_CATS, POI_FILTERS, poiCategory, poiName, poiStatus, searchPois } from "@/lib/poi";
+import type { PoiCat } from "@/lib/poi";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
@@ -41,6 +43,26 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const [hideDone, setHideDone] = useState(false);
   const [onlyNew, setOnlyNew] = useState(false);
   const [showLandmarks, setShowLandmarks] = useState(true);
+  // Catégories de lieux affichées, conservées entre les visites
+  const [poiCats, setPoiCatsState] = useState<PoiCat[]>([]);
+  useEffect(() => {
+    try {
+      const v = JSON.parse(localStorage.getItem("leonida-os/poi-cats/v1") || "[]");
+      if (Array.isArray(v)) setPoiCatsState(v.filter((c) => c in POI_CATS));
+    } catch {
+      /* préférence absente */
+    }
+  }, []);
+  const setPoiCats = (f: PoiCat[] | ((c: PoiCat[]) => PoiCat[])) =>
+    setPoiCatsState((cur) => {
+      const next = typeof f === "function" ? f(cur) : f;
+      try {
+        localStorage.setItem("leonida-os/poi-cats/v1", JSON.stringify(next));
+      } catch {
+        /* stockage indisponible */
+      }
+      return next;
+    });
   const [landmarks, setLandmarks] = useState<Landmark[]>([]);
   const [lmId, setLmId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -67,6 +89,8 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const [placeZone, setPlaceZone] = useState<MapZone | null>(null);
   useEffect(() => {
     if (!placeFocus.nonce || !landmarks.length) return;
+    setShowLandmarks(true);
+    if (placeFocus.poiCat && placeFocus.poiCat in POI_CATS) setPoiCats([placeFocus.poiCat as PoiCat]);
     if (placeFocus.landmarkId && landmarks.some((l) => l.id === placeFocus.landmarkId)) {
       setPlaceZone(null);
       setLmId(placeFocus.landmarkId);
@@ -193,7 +217,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     const q = norm(query.trim());
     if (q.length < 2) return { disc: [], lms: [] as Landmark[] };
     const disc = allMarkers.filter((m) => m.status !== "hidden" && norm(m.discovery.title).includes(q)).slice(0, 4);
-    const lms = landmarks.filter((l) => norm(`${l.name} ${l.district}`).includes(q)).slice(0, 8);
+    const lms = searchPois(query, landmarks, 10);
     return { disc, lms };
   }, [query, allMarkers, landmarks]);
 
@@ -219,8 +243,8 @@ export function MapScreen({ active = true }: { active?: boolean }) {
           ))}
           {results.lms.map((l) => (
             <button key={l.id} onClick={() => { closeSearch(); selectLandmark(l.id); }} data-testid={`result-${l.id}`}>
-              <span className="glyph glyph--lm" style={{ width: 28, height: 28 }}><Icon name="target" size={14} /></span>
-              <span><strong>{l.name}</strong><em>{l.district || "Leonida"}</em></span>
+              <span className="glyph glyph--lm" style={{ width: 28, height: 28, color: POI_CATS[poiCategory(l)].color }}><b style={{ fontSize: 13 }}>{POI_CATS[poiCategory(l)].glyph}</b></span>
+              <span><strong>{poiName(l)}</strong><em>{POI_CATS[poiCategory(l)].label} · {l.district || "Leonida"}{poiStatus(l) === "uncertain" ? " · incertain" : ""}</em></span>
             </button>
           ))}
         </div>
@@ -229,6 +253,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     </div>
   );
 
+  const togglePoi = (c: PoiCat) => setPoiCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]));
   const toggleCat = (c: CategoryId) =>
     setCats((s) => {
       const n = new Set(s);
@@ -268,8 +293,19 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       <button className={`fchip ${hideDone ? "is-on" : ""}`} onClick={() => setHideDone((v) => !v)} aria-pressed={hideDone}>
         <Icon name="eyeOff" size={14} /> Masquer terminées
       </button>
-      <span className="filters__sep" />
-      {CATEGORY_ORDER.map((c) => (
+      {showLandmarks && (
+        <>
+          <span className="filters__sep" />
+          <button className={`fchip ${!poiCats.length ? "is-on" : ""}`} onClick={() => setPoiCats([])} aria-pressed={!poiCats.length} data-testid="poi-all">Tous les lieux</button>
+          {POI_FILTERS.filter((c) => c !== "autre" && c !== "transport").map((c) => (
+            <button key={c} className={`fchip ${poiCats.includes(c) ? "is-on" : ""}`} style={{ ["--c" as string]: POI_CATS[c].color }} onClick={() => togglePoi(c)} aria-pressed={poiCats.includes(c)} data-testid={`poi-${c}`}>
+              <i className="fchip__dot" /> {POI_CATS[c].plural}
+            </button>
+          ))}
+        </>
+      )}
+      {state.showDemo && <span className="filters__sep" />}
+      {state.showDemo && CATEGORY_ORDER.map((c) => (
         <button key={c} className={`fchip ${cats.has(c) ? "is-on" : ""}`} style={{ ["--c" as string]: CATEGORIES[c].color }} onClick={() => toggleCat(c)} aria-pressed={cats.has(c)} data-testid={`filter-${c}`}>
           <i className="fchip__dot" /> {CATEGORIES[c].plural}
         </button>
@@ -293,6 +329,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       occlusion={occlusion}
       landmarks={landmarks}
       showLandmarks={showLandmarks}
+      poiCats={poiCats}
       selectedLandmarkId={lmId}
       onSelectLandmark={selectLandmark}
       active={active}

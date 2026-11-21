@@ -3,13 +3,75 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { Map as MLMap, Marker, GeoJSONSource } from "maplibre-gl";
+import type { Map as MLMap, Marker, GeoJSONSource, FilterSpecification } from "maplibre-gl";
 import { CATEGORIES } from "@/lib/meta";
 import { assetUrl, CC_BY_URL, gameToLngLat, GTADB_URL, LAND, lngLatToGame } from "@/lib/gtadb";
 import { Icon } from "@/components/ui/Icon";
 import type { MapViewProps } from "./types";
+import { POI_CATS, poiCategory, poiName, poiStatus } from "@/lib/poi";
+import type { PoiCat } from "@/lib/poi";
+import type { Landmark } from "@/lib/gtadb";
 
 const FOCUS_ZOOM = 4.9;
+/** Zoom d'arrivée sur un lieu précis : assez près pour lire les commerces voisins. */
+const POI_ZOOM = 6.6;
+
+/**
+ * Filtre des repères : zoom minimal de la catégorie (apparition progressive), catégories choisies, conditions en plus.
+ * MapLibre n'accepte « zoom » qu'en tête d'un step : les autres conditions vont dans chaque palier.
+ */
+function zoomFilter(cats: PoiCat[] | null | undefined, extra: unknown[] = []): FilterSpecification {
+  const base = [...(cats && cats.length ? [["in", ["get", "cat"], ["literal", cats]]] : []), ...extra];
+  const at = (z: number) => ["all", ["<=", ["get", "minz"], z], ...base];
+  const steps = [...new Set(Object.values(POI_CATS).map((c) => c.minZoom))].sort((a, b) => a - b);
+  return ["step", ["zoom"], at(0), ...steps.flatMap((z) => [z, at(z)])] as unknown as FilterSpecification;
+}
+const lmFilter = (cats: PoiCat[] | null | undefined) => zoomFilter(cats);
+/** Noms : lieux identifiés, catégories utiles (pas les milliers d'« autres lieux »). */
+const labelFilter = (cats: PoiCat[] | null | undefined) => zoomFilter(cats, [["==", ["get", "named"], 1], ["!=", ["get", "cat"], "autre"]]);
+
+/** Pastille de catégorie (canvas, 2×). */
+function drawPin(color: string, glyph: string): ImageData {
+  const S = 44;
+  const c = document.createElement("canvas");
+  c.width = c.height = S;
+  const g = c.getContext("2d")!;
+  g.beginPath();
+  g.arc(S / 2, S / 2, S / 2 - 3, 0, Math.PI * 2);
+  g.fillStyle = "rgba(10,7,20,0.9)";
+  g.fill();
+  g.lineWidth = 4;
+  g.strokeStyle = color;
+  g.stroke();
+  g.fillStyle = color;
+  g.font = "700 22px -apple-system, system-ui, 'Segoe UI', sans-serif";
+  g.textAlign = "center";
+  g.textBaseline = "middle";
+  g.fillText(glyph, S / 2, S / 2 + 1);
+  return g.getImageData(0, 0, S, S);
+}
+
+/** Étiquette de nom (canvas, 2×) : texte clair sur fond nuit, lisible sur la carte. */
+function drawLabel(text: string): ImageData {
+  const t = text.length > 28 ? text.slice(0, 27) + "…" : text;
+  const c = document.createElement("canvas");
+  const g0 = c.getContext("2d")!;
+  const font = "600 24px -apple-system, system-ui, 'Segoe UI', sans-serif";
+  g0.font = font;
+  const w = Math.ceil(g0.measureText(t).width) + 20;
+  c.width = w;
+  c.height = 36;
+  const g = c.getContext("2d")!;
+  g.fillStyle = "rgba(10,7,20,0.78)";
+  g.beginPath();
+  g.roundRect(0, 0, w, 36, 12);
+  g.fill();
+  g.font = font;
+  g.fillStyle = "#f4f0fb";
+  g.textBaseline = "middle";
+  g.fillText(t, 10, 19);
+  return g.getImageData(0, 0, w, 36);
+}
 const CAMERA_KEY = "leonida-os/map-camera/v1";
 
 type Camera = { center: [number, number]; zoom: number };
@@ -44,6 +106,10 @@ async function tilesReachable(): Promise<boolean> {
  * affichant les tuiles de la carte communautaire gtadb.org, préparées par scripts/build_gtadb_assets.py.
  */
 export function LeonidaMap(props: MapViewProps) {
+  const { poiCats = [] } = props;
+  const poiKey = poiCats.join(",");
+  const lmIndex = useRef(new Map<string, Landmark>());
+  lmIndex.current = new Map(props.landmarks.map((l) => [l.id, l]));
   const { regions, markers, selectedId, onSelect, focusNonce, occlusion, landmarks, showLandmarks, selectedLandmarkId, onSelectLandmark, pickMode, onPick, pickCenterNonce, draft, onDraftMove, active, zones = [], selectedZoneId = null, onSelectZone } = props;
   const [tileError, setTileError] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -102,16 +168,33 @@ export function LeonidaMap(props: MapViewProps) {
                 source: "zones",
                 paint: { "line-color": ["get", "color"], "line-width": ["case", ["==", ["get", "sel"], 1], 2.6, 1.4], "line-dasharray": [2, 1.5], "line-opacity": 0.9 },
               },
+              // Repères communautaires : icônes par catégorie (images dessinées sur canvas, sans serveur de polices),
+              // apparition progressive selon le zoom et l'importance, collisions gérées par MapLibre.
               {
                 id: "lm",
-                type: "circle",
+                type: "symbol",
                 source: "landmarks",
-                paint: {
-                  "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 0.8, 3, 1.6, 5, 2.8, 7, 5],
-                  "circle-color": "#e9f6ff",
-                  "circle-opacity": ["interpolate", ["linear"], ["zoom"], 3, 0.35, 6, 0.75],
-                  "circle-stroke-color": "#071019",
-                  "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 4, 0, 6, 1],
+                filter: lmFilter(null),
+                layout: {
+                  "icon-image": ["concat", "cat:", ["get", "cat"]],
+                  "icon-size": ["interpolate", ["linear"], ["zoom"], 2, 0.62, 5, 0.85, 7, 1.05],
+                  "icon-allow-overlap": false,
+                  "symbol-sort-key": ["get", "rank"],
+                },
+              },
+              // Noms des lieux à partir d'un zoom de quartier (une image par nom, créée à la demande)
+              {
+                id: "lm-label",
+                type: "symbol",
+                source: "landmarks",
+                minzoom: 5.6,
+                filter: labelFilter(null),
+                layout: {
+                  "icon-image": ["concat", "lbl:", ["get", "id"]],
+                  "icon-anchor": "left",
+                  "icon-offset": [16, 0],
+                  "icon-allow-overlap": false,
+                  "symbol-sort-key": ["get", "rank"],
                 },
               },
               {
@@ -164,7 +247,7 @@ export function LeonidaMap(props: MapViewProps) {
             return;
           }
           const hits = map!.getLayer("lm") && map!.getLayoutProperty("lm", "visibility") !== "none"
-            ? map!.queryRenderedFeatures([[p.x - 10, p.y - 10], [p.x + 10, p.y + 10]], { layers: ["lm"] })
+            ? map!.queryRenderedFeatures([[p.x - 14, p.y - 14], [p.x + 14, p.y + 14]], { layers: ["lm", "lm-label"] })
             : [];
           if (hits.length) {
             cb.current.onSelect(null);
@@ -172,6 +255,18 @@ export function LeonidaMap(props: MapViewProps) {
           } else {
             cb.current.onSelect(null);
             cb.current.onSelectLandmark(null);
+          }
+        });
+        // Pictogrammes des catégories et étiquettes de noms, dessinés à la demande
+        map.on("styleimagemissing", (e: { id: string }) => {
+          const id = e.id;
+          if (map!.hasImage(id)) return;
+          if (id.startsWith("cat:")) {
+            const meta = POI_CATS[id.slice(4) as PoiCat];
+            if (meta) map!.addImage(id, drawPin(meta.color, meta.glyph), { pixelRatio: 2 });
+          } else if (id.startsWith("lbl:")) {
+            const l = lmIndex.current.get(id.slice(4));
+            if (l) map!.addImage(id, drawLabel(poiName(l)), { pixelRatio: 2 });
           }
         });
         map.on("load", () => {
@@ -310,7 +405,10 @@ export function LeonidaMap(props: MapViewProps) {
     if (!ready || !map) return;
     (map.getSource("landmarks") as GeoJSONSource).setData({
       type: "FeatureCollection",
-      features: landmarks.map((l) => ({ type: "Feature", properties: { id: l.id }, geometry: { type: "Point", coordinates: gameToLngLat(l.x, l.y) } })),
+      features: landmarks.map((l) => {
+        const cat = poiCategory(l);
+        return { type: "Feature", properties: { id: l.id, cat, minz: POI_CATS[cat].minZoom, rank: POI_CATS[cat].rank + (poiStatus(l) === "uncertain" ? 0.5 : 0), named: l.name === "Lieu non identifié" ? 0 : 1 }, geometry: { type: "Point", coordinates: gameToLngLat(l.x, l.y) } };
+      }),
     });
   }, [ready, landmarks]);
 
@@ -318,8 +416,11 @@ export function LeonidaMap(props: MapViewProps) {
     const map = mapRef.current;
     if (!ready || !map) return;
     map.setLayoutProperty("lm", "visibility", showLandmarks ? "visible" : "none");
+    map.setLayoutProperty("lm-label", "visibility", showLandmarks ? "visible" : "none");
+    map.setFilter("lm", lmFilter(poiCats));
+    map.setFilter("lm-label", labelFilter(poiCats));
     map.setFilter("lm-sel", ["==", ["get", "id"], selectedLandmarkId ?? ""]);
-  }, [ready, showLandmarks, selectedLandmarkId]);
+  }, [ready, showLandmarks, selectedLandmarkId, poiKey]);
 
   // Zones de recherche : cercles calculés en coordonnées de jeu puis projetés
   const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}`).join("|") + `#${selectedZoneId ?? ""}`;
@@ -366,7 +467,8 @@ export function LeonidaMap(props: MapViewProps) {
       if (l) target = [l.x, l.y];
     }
     if (!target) return;
-    const go = () => map.easeTo({ center: gameToLngLat(target![0], target![1]), zoom: Math.max(map.getZoom(), FOCUS_ZOOM), padding: padding(), duration: 850 });
+    const z = selectedLandmarkId && !selectedId && !draft ? POI_ZOOM : FOCUS_ZOOM;
+    const go = () => map.easeTo({ center: gameToLngLat(target![0], target![1]), zoom: Math.max(map.getZoom(), z), padding: padding(), duration: 850 });
     go();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, focusNonce, selectedId, selectedLandmarkId, occlusion.bottom, occlusion.left, draft ? "d" : ""]);

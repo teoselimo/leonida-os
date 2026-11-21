@@ -6,6 +6,8 @@ import { frHeadline } from "../fr";
 import type { MissionInfo } from "../missions";
 import { missionBrief, missionCatalog, missionVisible, nextMissionGuess, nk, resolveMission } from "../missions";
 import type { PersistedState } from "../types";
+import type { Landmark } from "../gtadb";
+import { categoryFromQuery, districtFromQuery, findPoi, POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus, searchPois } from "../poi";
 
 /**
  * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
@@ -35,14 +37,15 @@ export type AiAction =
   | { type: "set_next_mission"; name: string; label: string; confirm: string }
   | { type: "ask"; question: string; label: string }
   /** Lieu de la carte communautaire : repère gtadb (point) ou quartier (zone approximative). Jamais de coordonnées inventées. */
-  | { type: "show_place"; label: string; landmarkId?: string; district?: string };
+  | { type: "show_place"; label: string; landmarkId?: string; district?: string; poiCat?: string };
 
 /** Sujet de la conversation, pour comprendre « et comment je la garde ? », « et où exactement ? », « et après ? ». */
 export type Topic =
   | { kind: "vehicle"; id: string }
   | { kind: "record"; id: string }
   | { kind: "mission"; name: string; known: boolean }
-  | { kind: "ask_mission"; then: "before" | "done" };
+  | { kind: "ask_mission"; then: "before" | "done" }
+  | { kind: "place"; id: string };
 
 export interface Source {
   name: string;
@@ -74,7 +77,13 @@ export interface PlaceRef {
   id: string;
   name: string;
   district: string;
+  /** Champs gtadb complets quand disponibles (catégories de lieux). */
+  tags?: string[];
+  x?: number;
+  y?: number;
+  real?: string;
 }
+const asLm = (p: PlaceRef): Landmark => ({ id: p.id, name: p.name, district: p.district, tags: p.tags ?? [], x: p.x ?? 0, y: p.y ?? 0, real: p.real ?? "" });
 
 export interface AiContext {
   feed: RadarFeed | null;
@@ -397,6 +406,27 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
 
   const intent = intentOf(q, topic);
   const vMentioned = findVehicle(q, vehicles);
+  // Lieux de la carte (repères gtadb) : nom cité, ou catégorie + quartier (« les commerces de Key Lento »)
+  if (ctx.places?.length && !["weapon", "money", "mission_done", "keep", "ultimate"].includes(intent) && !vMentioned) {
+    const lms = ctx.places.map(asLm);
+    const district = districtFromQuery(q, lms);
+    const cat = categoryFromQuery(q);
+    const named = findPoi(q, lms, district);
+    if (named && (intent === "unknown" || intent === "where" || /\b(ou|où|trouver|montre|aller|c est ou)\b/i.test(q))) return poiAnswer(named, district);
+    if (cat && (district || /\b(ou|où|montre|trouver|voir|y a)\b/i.test(q)) && intent !== "before") {
+      const list = searchPois(`${POI_CATS[cat].plural} ${district ?? ""}`, lms, 6).filter((l) => poiCategory(l) === cat && l.name !== "Lieu non identifié");
+      if (list.length)
+        return {
+          intent: "poi",
+          text: `${list.length > 1 ? `Sur la carte communautaire, je vois ${list.length} ${POI_CATS[cat].plural.toLowerCase()}` : `Sur la carte communautaire, je vois un lieu de ce type`}${district ? ` à ${district}` : ""} : ${list.slice(0, 3).map((l) => poiName(l)).join(", ")}${list.length > 3 ? "…" : ""}. Ce sont des repères communautaires : rien ne garantit encore qu'ils soient ouverts ou utilisables en jeu.`,
+          reliability: "non établi",
+          sources: [{ name: "gtadb.org (carte communautaire)", url: "https://map.gtadb.org", when: null }],
+          actions: [{ type: "show_place", district: district ?? undefined, poiCat: cat, landmarkId: district ? undefined : list[0].id, label: `Voir les ${POI_CATS[cat].plural.toLowerCase()} sur la carte` }],
+          topic: { kind: "place", id: list[0].id },
+          evidence: list.slice(0, 5).map((l) => `poi:${l.id}`),
+        };
+    }
+  }
   const topicVehicle = topic?.kind === "vehicle" ? vehicles.find((v) => v.id === topic.id) ?? null : null;
 
   switch (intent) {
@@ -448,6 +478,10 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
           const pa = placeAction(r, ctx);
           return { intent, text: r.details?.place ? `Le lieu cité est ${r.details.place.value.name}${r.details.place.value.district ? `, dans le quartier ${r.details.place.value.district}` : ""}. ${pa ? "Je peux te le montrer sur la carte communautaire (repère approximatif)." : "Je n'ai pas de point vérifié sur la carte pour ce lieu."}` : "Les sources ne précisent pas d'emplacement exact pour celle-ci.", reliability: R[r.reliability], sources: recSources(r), actions: pa ? [pa] : [], topic, evidence: [r.id] };
         }
+      }
+      if (topic?.kind === "place" && ctx.places?.length) {
+        const l = ctx.places.find((x) => x.id === topic.id);
+        if (l) return poiAnswer(asLm(l), null);
       }
       if (topic?.kind === "mission") return { intent, text: `Je n'ai pas d'emplacement documenté pour le départ de « ${topic.name} ». Dans le jeu, la carte de l'histoire indique son point de départ.`, reliability: null, sources: [], actions: [], topic };
       break;
@@ -582,6 +616,21 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
   };
 }
 
+function poiAnswer(l: Landmark, district: string | null): AiAnswer {
+  const cat = POI_CATS[poiCategory(l)];
+  const status = poiStatus(l);
+  return {
+    intent: "poi",
+    text: `${poiName(l)} est un ${cat.label.toLowerCase()} repéré${l.district ? ` à ${l.district}` : district ? ` à ${district}` : ""} sur la carte communautaire. ${status === "uncertain" ? "Sa position ou son identité n'est pas confirmée par gtadb." : "C'est un repère communautaire : rien ne confirme encore qu'il soit ouvert ou utilisable en jeu."}`,
+    reliability: "non établi",
+    sources: [{ name: "gtadb.org (carte communautaire)", url: "https://map.gtadb.org", when: null, quote: l.real ? `Équivalent réel : ${l.real}` : undefined }],
+    actions: [{ type: "show_place", landmarkId: l.id, label: `Voir ${poiName(l)} sur la carte` }],
+    more: [POI_STATUS_FR[status]],
+    topic: { kind: "place", id: l.id },
+    evidence: [`poi:${l.id}`],
+  };
+}
+
 function doneAnswer(ctx: AiContext, name: string): AiAnswer {
   const p = ctx.state.profile;
   const already = p.missionsDone.some((m) => nk(m) === nk(name));
@@ -624,7 +673,7 @@ export function isValidAction(a: AiAction, feed: RadarFeed | null): boolean {
     case "ask":
       return a.question.length > 1 && a.question.length < 200;
     case "show_place":
-      return (!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) || (!!a.district && a.district.length > 1 && a.district.length < 60);
+      return ((!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) || (!!a.district && a.district.length > 1 && a.district.length < 60) || (!!a.poiCat && a.poiCat in POI_CATS)) && (!a.poiCat || a.poiCat in POI_CATS);
     default:
       return true;
   }

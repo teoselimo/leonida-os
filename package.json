@@ -7,6 +7,7 @@
     "prebuild": "node scripts/check-assets.mjs",
     "build": "next build && node scripts/fix-export.mjs",
     "build:artifact": "npm run build && node scripts/artifact-package.mjs",
+    "build:pilote": "node scripts/artifact-build.mjs",
     "serve": "node scripts/serve.mjs out 4321",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",

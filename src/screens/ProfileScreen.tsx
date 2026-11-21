@@ -17,7 +17,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Bar, CategoryGlyph, SectionHead, Segmented } from "@/components/ui/primitives";
 
 export function ProfileScreen() {
-  const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, notify, focusVehicle, setMission } = useStore();
+  const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, importProgress, notify, focusVehicle, setMission } = useStore();
   const { feed } = useLiveRadar();
   const [missionText, setMissionText] = useState("");
   const [glass, setGlass] = useState<GlassPref>("auto");
@@ -40,6 +40,19 @@ export function ProfileScreen() {
   const [importMsg, setImportMsg] = useState("");
   const exportJson = () =>
     JSON.stringify({ format: "leonida-os/releves", version: 1, exportedAt: new Date().toISOString(), items: state.custom }, null, 1);
+  // Sauvegarde complète de la partie (profil, missions, activités, véhicules, relevés) : format portable,
+  // réimportable dans l'Artifact comme dans l'app GitHub Pages
+  const progressJson = () => JSON.stringify({ format: "leonida-os/progression", version: 1, exportedAt: new Date().toISOString(), state }, null, 1);
+  const copyProgress = async () => {
+    const txt = progressJson();
+    try {
+      await navigator.clipboard.writeText(txt);
+      notify("Sauvegarde copiée", "Colle-la dans « Importer » sur un autre appareil ou dans l'autre version de l'app");
+      setExportText(null);
+    } catch {
+      setExportText(txt);
+    }
+  };
   const copyExport = async () => {
     const txt = exportJson();
     try {
@@ -53,6 +66,15 @@ export function ProfileScreen() {
   const doImport = () => {
     try {
       const parsed = JSON.parse(importText);
+      if (parsed?.format === "leonida-os/progression") {
+        if (importProgress(parsed.state)) {
+          setImportText("");
+          setImportOpen(false);
+          setImportMsg("Progression importée.");
+          notify("Progression importée", "Ta partie a été restaurée");
+        } else setImportMsg("Sauvegarde illisible ou d'un format inconnu.");
+        return;
+      }
       const items = Array.isArray(parsed) ? parsed : parsed.items;
       if (!Array.isArray(items)) throw new Error("format");
       const n = importCustom(items);
@@ -242,7 +264,8 @@ export function ProfileScreen() {
               <span>Mode démonstration (contenu fictif, séparé de ta partie)</span>
             </label>
             <div className="row gap8 wrap">
-              <button className="btn btn--ghost btn--sm" onClick={copyExport} disabled={!state.custom.length}><Icon name="bookmark" size={15} /> Copier l&apos;export</button>
+              <button className="btn btn--ghost btn--sm" onClick={copyProgress} data-testid="export-progress"><Icon name="bookmark" size={15} /> Copier ma sauvegarde</button>
+              <button className="btn btn--ghost btn--sm" onClick={copyExport} disabled={!state.custom.length}><Icon name="bookmark" size={15} /> Exporter mes relevés</button>
               <button className="btn btn--ghost btn--sm" onClick={() => { setImportOpen((v) => !v); setImportMsg(""); }}><Icon name="plus" size={15} /> Importer</button>
             </div>
             {exportText && (
@@ -254,10 +277,10 @@ export function ProfileScreen() {
             {importOpen && (
               <div className="form">
                 <label className="field">
-                  <span>Colle un export LEONIDA OS</span>
-                  <textarea rows={4} value={importText} onChange={(e) => setImportText(e.target.value)} placeholder='{"format":"leonida-os/releves", ...}' />
+                  <span>Colle une sauvegarde ou un export de relevés (une sauvegarde remplace ta progression actuelle)</span>
+                  <textarea rows={4} value={importText} onChange={(e) => setImportText(e.target.value)} placeholder='{"format":"leonida-os/progression", ...}' data-testid="import-text" />
                 </label>
-                <button className="btn btn--sm btn--on" onClick={doImport} disabled={!importText.trim()}>Importer</button>
+                <button className="btn btn--sm btn--on" onClick={doImport} disabled={!importText.trim()} data-testid="import-go">Importer</button>
               </div>
             )}
             {importMsg && <p className="small muted">{importMsg}</p>}

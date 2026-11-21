@@ -10,8 +10,7 @@
  */
 import { answer } from "../src/lib/ai/engine";
 import type { AiAction, AiAnswer, Topic } from "../src/lib/ai/engine";
-import { frHeadline } from "../src/lib/fr";
-import { missionCatalog } from "../src/lib/missions";
+import { buildEvidence as sharedEvidence } from "../src/lib/copilot/context";
 import type { RadarFeed } from "../src/lib/feed";
 import type { Profile } from "../src/lib/types";
 
@@ -65,7 +64,7 @@ export function sanitizeProfile(p: unknown): Profile | null {
   if (!Number.isInteger(chapter) || chapter < 0 || chapter > 6) return null;
   return {
     pseudo: "",
-    console: x.console === "xbox" ? "xbox" : "ps5",
+    console: (["ps5", "ps5pro", "xsx", "xss"].includes(String(x.console)) ? x.console : "ps5") as Profile["console"],
     edition: x.edition === "ultimate" || x.edition === "standard" ? x.edition : "unknown",
     preorder: x.preorder === "yes" || x.preorder === "no" ? x.preorder : "unknown",
     chapter: chapter as Profile["chapter"],
@@ -81,55 +80,15 @@ export function sanitizeTopic(t: unknown): Topic | null {
   if (!x || typeof x.kind !== "string") return null;
   const id = typeof x.id === "string" && /^[a-z0-9-]{3,64}$/i.test(x.id) ? x.id : null;
   if ((x.kind === "vehicle" || x.kind === "record") && id) return { kind: x.kind, id };
+  if (x.kind === "place" && typeof x.id === "string" && /^L\d{1,6}$/.test(x.id)) return { kind: "place", id: x.id };
   if (x.kind === "mission" && typeof x.name === "string" && x.name.length < 80) return { kind: "mission", name: x.name, known: !!x.known };
   if (x.kind === "ask_mission" && (x.then === "before" || x.then === "done")) return { kind: "ask_mission", then: x.then };
   return null;
 }
 
-/** Preuves compactes transmises au modèle : uniquement les entités retenues par le moteur. */
+/** Preuves compactes transmises au modèle : même construction que l'Artifact (src/lib/copilot/context.ts). */
 export function buildEvidence(feed: RadarFeed, ids: string[]): string {
-  const cat = missionCatalog(feed);
-  const g = { missions: [...cat.values()].map((m) => m.name), proper: (feed.vehicles ?? []).map((v) => v.name) };
-  const out: unknown[] = [];
-  for (const id of ids.slice(0, LIMITS.maxEvidence)) {
-    const r = feed.items.find((x) => x.id === id);
-    if (r) {
-      const d = r.details;
-      out.push({
-        id: r.id,
-        titre: frHeadline(r, g),
-        fiabilite: r.reliability,
-        faits: {
-          chapitre: d?.chapter?.value ?? null,
-          gain: r.conditions.reward,
-          lieu: d?.place ? `${d.place.value.name}${d.place.value.district ? `, ${d.place.value.district}` : ""}` : null,
-          pendant_mission: d?.mission?.value ?? null,
-          disparait_au_lancement_de: d?.contextMissable?.value.until ?? null,
-          manquable: d?.missable?.value ?? null,
-          sources_par_fait: { gain: d?.money?.support.length ?? 0, lieu: d?.place?.support.length ?? 0, disparition: d?.contextMissable?.support.length ?? 0 },
-        },
-        extraits: r.evidence.flatMap((e) => (e.quotes ?? []).slice(0, 1)).slice(0, 2).map((q) => q.slice(0, 240)),
-      });
-      continue;
-    }
-    const v = (feed.vehicles ?? []).find((x) => x.id === id);
-    if (v)
-      out.push({
-        id: v.id,
-        vehicule: v.name,
-        fiabilite: v.reliability,
-        zone: v.location.district,
-        precision: v.location.precision,
-        edition: v.edition.exclusive ? `${v.edition.exclusive} (${v.edition.status})` : null,
-        chapitre_min: v.access.chapterMin?.value ?? v.access.inferredChapter?.value ?? null,
-        jusqu_au_chapitre: v.access.until?.value ?? null,
-        conserver: v.keep.rule ? `immatriculation dès le chapitre ${v.keep.rule.chapter}${v.keep.rule.where ? `, ${v.keep.rule.where}` : ""}` : v.keep.mode,
-        extraits: [v.location.text?.value ?? ""].filter(Boolean).map((q) => q.slice(0, 240)),
-      });
-  }
-  let s = JSON.stringify(out);
-  if (s.length > LIMITS.maxContextChars) s = s.slice(0, LIMITS.maxContextChars);
-  return s;
+  return sharedEvidence(feed, ids).slice(0, LIMITS.maxContextChars);
 }
 
 /** Validation de la sortie du modèle : JSON, longueur, nombres présents dans les données, actions parmi celles proposées. */
