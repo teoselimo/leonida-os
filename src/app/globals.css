@@ -708,7 +708,9 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
   .main { padding-bottom: calc(var(--dock) + 28px); }
   .mapphone { bottom: 0; }
   .strip { bottom: calc(var(--dock) + 8px); }
-  .toast, .view-carte .toast { bottom: calc(var(--dock) + 10px); }
+  .toast { bottom: calc(var(--dock) + 10px); }
+  /* sur la carte, la notification reste en haut (sous les filtres) : jamais étirée entre deux ancrages */
+  .view-carte .toast { top: calc(var(--sat) + 112px); bottom: auto; }
   /* une fiche ouverte prend la place du dock, comme dans Plans : toute la hauteur pour le contenu */
   .app:has(.sheet) .nav { transform: translate3d(0, calc(100% + 24px), 0); opacity: 0; pointer-events: none; }
 }

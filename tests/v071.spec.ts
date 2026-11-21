@@ -126,6 +126,9 @@ test("Parcours continu : Accueil → Préparer ma mission → voiture sympa → 
   await expect(page.getByTestId("zone-tag")).toContainText("Zone approximative");
   await page.waitForFunction(() => (window as unknown as { __leonidaMapCount?: number }).__leonidaMapCount === 1);
   await sheet.getByTestId("v-found").click(); // repéré
+  // régression V0.7 : sur la carte iPhone, la notification était étirée entre deux ancrages et masquait la fiche
+  const toast = page.locator(".toast");
+  if (await toast.count()) expect((await toast.boundingBox())!.height).toBeLessThan(140);
   await sheet.getByTestId("v-found").click(); // volé
   await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Volé");
   await page.screenshot({ path: `captures/${info.project.name}-53-parcours-carte.png` });
