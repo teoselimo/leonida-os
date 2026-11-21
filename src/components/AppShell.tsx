@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { applyGlass, sampleTransition } from "@/lib/glass";
 import { AiCopilot } from "./AiCopilot";
 import { BrandMark } from "./Brand";
 import { tick } from "@/lib/motion";
@@ -28,8 +29,10 @@ export function AppShell() {
   const prev = useRef<ViewId>(view);
   const dir = Math.sign(order.indexOf(view) - order.indexOf(prev.current)) || 0;
   useEffect(() => {
+    if (prev.current !== view) sampleTransition();
     prev.current = view;
   }, [view]);
+  useEffect(() => applyGlass(), []);
   const scroller = useRef<HTMLElement>(null);
   const live = useLiveRadar();
   const radarBadge = live.feed

@@ -1,0 +1,71 @@
+{
+ "engine": "webkit",
+ "dpr": 1,
+ "glass": true,
+ "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",
+ "date": "2026-11-21T13:33:55.926Z",
+ "tapToFrameMs": [
+  129,
+  36,
+  37,
+  44
+ ],
+ "mapInstances": 1,
+ "results": [
+  {
+   "scenario": "changement d'onglet ×5",
+   "frames": 97,
+   "fpsMedian": 55.6,
+   "p95ms": 89,
+   "maxMs": 409,
+   "janky": 23,
+   "jankyPct": 23.7,
+   "longTasks": 0,
+   "longTaskMaxMs": 0
+  },
+  {
+   "scenario": "changement d'onglet ×5 (verre désactivé)",
+   "frames": 143,
+   "fpsMedian": 62.5,
+   "p95ms": 43,
+   "maxMs": 58,
+   "janky": 20,
+   "jankyPct": 14,
+   "longTasks": 0,
+   "longTaskMaxMs": 0
+  },
+  {
+   "scenario": "fiche IA : ouverture + fermeture",
+   "frames": 64,
+   "fpsMedian": 62.5,
+   "p95ms": 34,
+   "maxMs": 328,
+   "janky": 4,
+   "jankyPct": 6.3,
+   "longTasks": 0,
+   "longTaskMaxMs": 0
+  },
+  {
+   "scenario": "carte : glisser (pan) 600 ms",
+   "frames": 55,
+   "fpsMedian": 34.5,
+   "p95ms": 37,
+   "maxMs": 49,
+   "janky": 30,
+   "jankyPct": 54.5,
+   "longTasks": 0,
+   "longTaskMaxMs": 0
+  },
+  {
+   "scenario": "fiche glissante : drag haut + bas + fermeture",
+   "frames": 84,
+   "fpsMedian": 45.5,
+   "p95ms": 61,
+   "maxMs": 193,
+   "janky": 36,
+   "jankyPct": 42.9,
+   "longTasks": 0,
+   "longTaskMaxMs": 0
+  }
+ ]
+}

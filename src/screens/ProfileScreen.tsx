@@ -8,6 +8,8 @@ import { progress } from "@/lib/engine";
 import { CATEGORIES, CHAPTER_LIST, CHAPTER_SHORT, CHAPTERS, CONSOLES, EDITIONS } from "@/lib/meta";
 import { useLiveRadar } from "@/lib/live";
 import { STATE_FR } from "@/lib/garage";
+import { glassPref, setGlassPref } from "@/lib/glass";
+import type { GlassPref } from "@/lib/glass";
 import { repo, useStore } from "@/lib/store";
 import type { Chapter, ConsoleId, EditionId, SpoilerMode } from "@/lib/types";
 import { ShieldChip } from "@/components/ShieldChip";
@@ -18,6 +20,8 @@ export function ProfileScreen() {
   const { state, setProfile, focusOnMap, reset, discoveries: all, setShowDemo, importCustom, notify, focusVehicle, setMission } = useStore();
   const { feed } = useLiveRadar();
   const [missionText, setMissionText] = useState("");
+  const [glass, setGlass] = useState<GlassPref>("auto");
+  useEffect(() => setGlass(glassPref()), []);
   // Missions connues par la veille, sans spoiler : uniquement celles rattachées à un chapitre déjà atteint
   const knownMissions = Array.from(
     new Set(
@@ -229,6 +233,9 @@ export function ProfileScreen() {
                 ))}
               </div>
             )}
+            <h4>Effets de verre</h4>
+            <Segmented<GlassPref> label="Effets de verre" value={glass} onChange={(v) => { setGlass(v); setGlassPref(v); }} options={[{ id: "auto", label: "Auto" }, { id: "on", label: "Activés" }, { id: "off", label: "Réduits" }]} />
+            <p className="muted small">Auto : le verre passe en version opaque si ton appareil perd des images pendant les transitions.</p>
             <label className="toggle">
               <input type="checkbox" checked={state.showDemo} onChange={(e) => setShowDemo(e.target.checked)} data-testid="toggle-demo" />
               <span className="toggle__ui" />

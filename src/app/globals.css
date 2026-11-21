@@ -599,7 +599,7 @@ button.fsrow__value { cursor: pointer; }
 .vsheet__top { display: flex; justify-content: space-between; }
 .vmedia { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; background: #0c0a14; }
 .vmedia img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.vmedia > a { display: block; width: 100%; height: 100%; }
+.vmedia > a:not(.vmedia__guide) { display: block; width: 100%; height: 100%; }
 .vmedia__ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--c); background: radial-gradient(120% 90% at 50% 110%, color-mix(in srgb, var(--c) 35%, transparent), transparent 60%), linear-gradient(160deg, #1a1426, #0b0a12); font-size: 12px; }
 .vmedia__ph span { color: var(--muted); }
 .vmedia__credit { position: absolute; left: 10px; bottom: 8px; font-size: 10.5px; color: #fff; background: rgba(0, 0, 0, 0.55); padding: 3px 7px; border-radius: 6px; }
@@ -824,7 +824,7 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .accesschip--now { color: var(--ok); background: rgba(124, 242, 154, 0.1); }
 .accesschip--confirm { color: var(--mango); background: rgba(255, 179, 92, 0.12); }
 .accesschip--later, .accesschip--expired, .accesschip--excluded { color: var(--muted); background: rgba(255, 255, 255, 0.06); }
-.vmedia__ph .visual { position: absolute; inset: 0; }
+.vmedia__ph .visual { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; margin: 0; }
 .vmedia__guide { position: absolute; right: 10px; bottom: 8px; font-size: 12px; font-weight: 600; color: #fff; background: rgba(0, 0, 0, 0.5); padding: 6px 10px; border-radius: 10px; display: inline-flex; gap: 5px; align-items: center; min-height: 32px; }
 .catfilter { min-width: 0; max-width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); font-size: 13px; font-weight: 600; }
 .live-orig { font-style: italic; }
@@ -833,3 +833,8 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .missionform { display: flex; gap: 8px; }
 .missionform input { flex: 1; min-width: 0; height: 44px; padding: 0 12px; border-radius: 12px; border: 0; background: rgba(255, 255, 255, 0.07); color: var(--text); font-size: 16px; }
 @media (prefers-reduced-motion: reduce) { .nav__pill { transition: none; } }
+
+/* Perf : le flou d'arrière-plan d'une fiche en mouvement au-dessus de la carte WebGL est le cas le plus coûteux
+   (mesuré : 8,8 % d'images en retard contre 3,8 % sans flou). Pendant le geste et le ressort, la fiche devient
+   opaque (teinte équivalente) ; le verre revient à l'arrêt. */
+.sheet.glass.is-dragging, .sheet.glass[data-settled="false"] { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(24, 18, 40, 0.97); }
