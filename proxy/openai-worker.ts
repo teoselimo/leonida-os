@@ -19,6 +19,7 @@ export interface Env {
   OPENAI_API_KEY?: string;
   LEONIDA_ACCESS_TOKEN?: string;
   AI_ENABLED?: string;
+  WEB_SEARCH_ENABLED?: string;
   MODEL?: string;
   ALLOWED_ORIGIN?: string;
   MONTHLY_BUDGET_USD?: string;
@@ -34,6 +35,10 @@ const PRICES: Record<string, Money> = {
 };
 const OUTPUT_LIMIT_QUICK = 1600;
 const OUTPUT_LIMIT_DEEP = 2800;
+// OpenAI web search is currently $10 / 1000 calls, i.e. $0.01 per search.
+const WEB_TOOL_CALL_MICROS = 10_000;
+// Conservatively hold extra tokens since tool results are billed at model rates.
+const WEB_CONTENT_RESERVE_TOKENS = 12_000;
 const SERVER_RULES = [
   "Tu es LEONIDA AI, un assistant GTA VI conversationnel chaleureux et naturel, en français.",
   "Reste vivant, curieux et pertinent. N'impose pas 2–4 phrases. Réponds d'abord à la demande et rebondis avec tact.",
@@ -169,7 +174,7 @@ export default {
     let raw: string;
     try { raw = await req.text(); } catch { return reply("request", 400, headers); }
     if (raw.length > 18_000) return reply("too large", 413, headers);
-    let payload: { messages?: { role: string; content: string }[]; tier?: string };
+    let payload: { messages?: { role: string; content: string }[]; tier?: string; web?: boolean };
     try { payload = JSON.parse(raw); } catch { return reply("json", 400, headers); }
     if (!Array.isArray(payload.messages) || payload.messages.length < 1 || payload.messages.length > 16) return reply("messages", 400, headers);
     const messages = payload.messages.map((m) => ({
@@ -177,17 +182,25 @@ export default {
       content: typeof m.content === "string" ? m.content.slice(0, 7000) : "",
     }));
     if (messages.some((m) => !m.content)) return reply("content", 400, headers);
+    const withWeb = payload.web === true;
+    // Web search is a separate, explicitly enabled paid capability.
+    if (withWeb && env.WEB_SEARCH_ENABLED !== "1") return reply("web_search_disabled", 409, headers);
 
     const outputLimit = payload.tier === "default" ? OUTPUT_LIMIT_DEEP : OUTPUT_LIMIT_QUICK;
     const requestBody = {
       model, instructions: SERVER_RULES, input: messages,
       reasoning: { effort: payload.tier === "default" ? "medium" : model === "gpt-6.2-sol" ? "low" : "none" },
       max_output_tokens: outputLimit, store: false, stream: true,
+      ...(withWeb ? {
+        tools: [{ type: "web_search", return_token_budget: 2500 }],
+        tool_choice: "auto", max_tool_calls: 1,
+      } : {}),
     };
     // Extremely conservative bound: a UTF-8 byte is at least as granular as a
     // BPE text token. Add overhead for response framing and serialized roles.
     const inputMax = new TextEncoder().encode(JSON.stringify(requestBody)).length + 1200;
-    const reservedMicros = chargeMicros(inputMax, outputLimit, price);
+    const reservedMicros = chargeMicros(inputMax + (withWeb ? WEB_CONTENT_RESERVE_TOKENS : 0), outputLimit, price)
+      + (withWeb ? WEB_TOOL_CALL_MICROS : 0);
     const id = crypto.randomUUID();
     const ledger = env.BUDGET.get(env.BUDGET.idFromName("personal-ledger"));
     const ledgerCall = (op: object) => ledger.fetch("https://ledger.invalid/", {
