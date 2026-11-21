@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { frTitle } from "@/lib/now";
+import { frHeadline, frSummary } from "@/lib/fr";
+import { glossaryOf } from "@/lib/missions";
 import { useStore } from "@/lib/store";
 import { collectorHealth, LIVE_CATEGORY, proposePointUrl, spoilerVisibility, tabOf, TRIGGER_FR, useLiveRadar } from "@/lib/live";
 import { assetUrl } from "@/lib/gtadb";
@@ -143,8 +144,8 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
   const cat = LIVE_CATEGORY[r.category] ?? LIVE_CATEGORY.other;
   const lead = r.evidence[0];
   const sources = Array.from(new Set(r.evidence.map((e) => cleanName(e.sourceName))));
-  const fr = frTitle(r);
-  const title = (r as RadarRecord & { titleFr?: string }).titleFr ?? fr;
+  const { feed } = useLiveRadar();
+  const title = frHeadline(r, glossaryOf(feed));
   const isDone = !!state.done[r.id];
   return (
     <article ref={ref} className={`signal live-card${Date.now() - Date.parse(r.firstSeenAt) < 6 * 3600_000 ? " is-new" : ""}${focused ? " is-focused" : ""}${isDone ? " is-done" : ""}`} data-testid={`live-${r.id}`}>
@@ -181,8 +182,8 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
       )}
 
       <h3>{blurred ? <SpoilerText strict={false} hint="Spoiler possible">{title}</SpoilerText> : title}</h3>
-      {!blurred && fr !== r.title && <p className="small muted live-orig">« {r.title} »</p>}
-      {!blurred && <p className="muted">{lead.excerpt}</p>}
+      {!blurred && (r.category === "news" || r.category === "patch") && title !== r.title && <p className="small muted live-orig" lang="en">Titre d’origine (en anglais) : {r.title}</p>}
+      {!blurred && <p className="muted" data-testid="live-summary">{frSummary(r)}</p>}
       {!blurred && <FactSheet r={r} />}
 
       <div className="live-tags">
@@ -215,11 +216,12 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
         <div className="live-detail">
           <h4>Pourquoi ce statut</h4>
           <ul>{r.reasons.map((x) => <li key={x}>{x}</li>)}</ul>
-          <h4>Sources ({r.evidence.length})</h4>
+          <h4>Sources et preuves ({r.evidence.length}) — textes d’origine en anglais</h4>
           <ul className="live-sources">
             {r.evidence.map((e) => (
               <li key={e.rawKey}>
                 <a href={e.url} target="_blank" rel="noreferrer">{cleanName(e.sourceName)}</a> · {e.publishedAt ? fmtDate(e.publishedAt) : "date inconnue"}
+                <em className="small muted live-orig" lang="en"> · Titre d’origine : {e.title}</em>
                 {e.deep && <span className="small muted"> · {e.deep.ok ? `article lu ${timeAgo(e.deep.at)}${e.deep.aiOptOut ? " · IA exclue (souhait du site)" : ""}` : `non lu : ${e.deep.reason}`}</span>}
                 {e.quotes.length > 0 && <q>{e.quotes.join(" … ")}</q>}
               </li>

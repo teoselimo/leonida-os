@@ -18,7 +18,8 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: cd collector && npm ci --no-audit --no-fund && npm run typecheck && npm test
-      # Chrome est préinstallé sur les runners Ubuntu : pas de téléchargement de navigateur
+      # Chrome est préinstallé sur les runners Ubuntu ; WebKit (moteur de Safari) est installé pour les parcours V0.7.1
+      - run: npx playwright install --with-deps webkit
       - run: npm run test:all
         env:
           NEXT_TELEMETRY_DISABLED: "1"

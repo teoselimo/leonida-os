@@ -64,7 +64,7 @@ export function AppShell() {
             <span className="nav__label">{n.label}</span>
           </button>
         ))}
-        <div className="nav__foot">V0.7</div>
+        <div className="nav__foot">V0.7.1</div>
       </nav>
 
       <div className="stage">

@@ -93,6 +93,8 @@ export interface Profile {
   chapter: Chapter;
   /** Dernière mission principale terminée (saisie par le joueur ; aucune lecture de sauvegarde PS5). */
   lastMission: string | null;
+  /** Prochaine mission principale, choisie ou confirmée par le joueur (jamais déduite du seul chapitre). */
+  nextMission: string | null;
   /** Missions déclarées terminées (sert à savoir qu'une mission limitée a disparu). */
   missionsDone: string[];
   spoilerMode: SpoilerMode;

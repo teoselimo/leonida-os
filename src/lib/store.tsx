@@ -24,6 +24,7 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   if (!["yes", "no", "unknown"].includes(profile.preorder as string)) profile.preorder = "unknown";
   if (!Array.isArray(profile.missionsDone)) profile.missionsDone = [];
   if (profile.lastMission !== null && typeof profile.lastMission !== "string") profile.lastMission = null;
+  if (typeof profile.nextMission !== "string") profile.nextMission = null;
   // V0.7 : la démo n'est plus mélangée à la vraie partie (désactivée une fois, réactivable dans Profil)
   const rev = saved.rev ?? 0;
   const showDemo = rev < 7 ? false : saved.showDemo ?? false;
@@ -42,7 +43,7 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
 
 export const initialState = (): PersistedState => ({
   schema: 1,
-  profile: { pseudo: "Joueur", console: "ps5", edition: "unknown", preorder: "unknown", chapter: 1, lastMission: null, missionsDone: [], spoilerMode: "strict" },
+  profile: { pseudo: "Joueur", console: "ps5", edition: "unknown", preorder: "unknown", chapter: 1, lastMission: null, nextMission: null, missionsDone: [], spoilerMode: "strict" },
   completed: { ...DEMO_SEED_COMPLETED },
   trackedSignals: [],
   seenSignals: [],
@@ -122,7 +123,9 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       const name = a.name.trim().slice(0, 80);
       const has = s.profile.missionsDone.some((m) => m.toLowerCase() === name.toLowerCase());
       const missionsDone = a.done ? (has ? s.profile.missionsDone : [...s.profile.missionsDone, name]) : s.profile.missionsDone.filter((m) => m.toLowerCase() !== name.toLowerCase());
-      return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone } };
+      // une mission terminée n'est plus « prochaine »
+      const nextMission = a.done && s.profile.nextMission && s.profile.nextMission.toLowerCase() === name.toLowerCase() ? null : s.profile.nextMission;
+      return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone, nextMission } };
     }
     case "vehicle": {
       const { [a.id]: _old, ...rest } = s.vehicles;
@@ -170,6 +173,7 @@ interface Ctx {
   setDone: (id: string, value: boolean) => void;
   /** Mission principale terminée (devient la « dernière mission ») ou retirée. */
   setMission: (name: string | null, done?: boolean) => void;
+  setNextMission: (name: string | null) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
   /** Véhicule sélectionné sur la carte (mode Voitures cachées). */
@@ -318,6 +322,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       dismissToast: () => setToast(null),
       setDone: (id, value) => dispatch({ type: "done", id, value }),
       setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
+      setNextMission: (name) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null } }),
       setVehicle: (id, st, storage) => {
         const prev = state.vehicles[id];
         dispatch({ type: "vehicle", id, progress: st ? { state: st, at: new Date().toISOString(), storage: storage ?? prev?.storage } : null });

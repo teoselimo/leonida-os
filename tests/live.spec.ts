@@ -97,11 +97,11 @@ test("la fiche retirée par un administrateur disparaît", async ({ page }) => {
   await start(page);
   await page.locator(".shield").first().click(); // modéré : la rumeur (spoiler) est visible floutée
   await page.getByRole("radio", { name: /À vérifier/ }).click();
-  await expect(page.getByTestId("live-list")).toContainText("leak");
+  await expect(page.getByTestId("live-list")).toContainText("Rumeur");
   current = load("v2");
   await page.getByTestId("sync-status").locator(".sync__main").click();
   await page.getByRole("button", { name: "Relire le flux" }).click();
-  await expect(page.getByTestId("live-list")).not.toContainText("leak");
+  await expect(page.getByTestId("live-list")).not.toContainText("Rumeur");
 });
 
 test("dégradation : flux injoignable → bascule propre en démonstration", async ({ page }) => {
@@ -115,7 +115,7 @@ test("V0.5.1 : la cache du perroquet devient une fiche structurée sourcée dans
   await serveFeed(page, () => load("v4"));
   await start(page);
   await page.getByRole("radio", { name: /Confirmé/ }).click();
-  const card = page.locator("article.live-card", { hasText: "Parrot Stash" }).first();
+  const card = page.locator("article.live-card", { hasText: "Three Sheets Liquor" }).first();
   await expect(card.getByTestId("rel-confirmed")).toBeVisible();
   const sheet = card.getByTestId("fact-sheet");
   await expect(sheet).toContainText("≈ 1 000–1 400 $");
@@ -136,7 +136,7 @@ test("V0.5.1 : « Que faire maintenant ? » propose le conseil au chapitre 1, pa
   await start(page, "#accueil");
   const adv = page.getByTestId("live-advice");
   await expect(adv).toContainText("Three Sheets Liquor");
-  await expect(adv).toContainText("À faire avant de continuer");
+  await expect(adv).toContainText("À ne pas rater");
   await expect(adv).toContainText("Tourist Trap");
   await page.screenshot({ path: `captures/${info.project.name}-21-conseil-accueil.png` });
   // « C'est fait » retire le conseil (et le mémorise)
@@ -150,7 +150,7 @@ test("V0.5.1 : chapitre du joueur antérieur → conseil gardé pour plus tard",
   await page.getByTestId("chapter-0").click();
   await page.goto("/#accueil");
   await page.waitForSelector(".app.is-ready");
-  await expect(page.getByTestId("live-highlights")).toBeVisible();
+  await expect(page.getByTestId("my-game")).toBeVisible();
   await expect(page.getByTestId("live-advice")).not.toContainText("Three Sheets Liquor");
 });
 

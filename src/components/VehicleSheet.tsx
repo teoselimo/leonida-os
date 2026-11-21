@@ -9,12 +9,29 @@ import { tick } from "@/lib/motion";
 import type { VehicleRecord } from "@/lib/garage";
 import type { VehicleState } from "@/lib/types";
 import { CHAPTERS } from "@/lib/meta";
+import { variantFr } from "@/lib/fr";
 import { Icon } from "./ui/Icon";
 import { ReliabilityBadge, SpoilerText } from "./ui/primitives";
 import { Visual } from "./ui/Visual";
 
 const COLORS: Record<string, string> = { green: "#3ddc6b", blue: "#4d8dff", red: "#ff4d5e", yellow: "#ffd23f", orange: "#ff8a3d", purple: "#a96bff", pink: "#ff5fb0", white: "#f2f2f7", black: "#222", silver: "#c0c4cc", gold: "#d8b14a", teal: "#2ee6d6" };
 const swatch = (variant: string | undefined) => COLORS[Object.keys(COLORS).find((c) => variant?.includes(c)) ?? ""] ?? null;
+
+/** Marche à suivre en français, construite uniquement à partir des champs établis de la fiche. */
+function howTo(v: VehicleRecord): string[] {
+  const out: string[] = [];
+  if (v.location.precision === "zone") out.push(`Va dans la zone de ${v.location.district} (zone de recherche, pas un point exact).`);
+  else if (v.location.precision === "exact") out.push(`Rends-toi au point vérifié${v.location.district ? ` (${v.location.district})` : ""}.`);
+  else if (v.location.text) out.push("Rends-toi au lieu décrit par le guide (citation dans « Sources et preuves »).");
+  if (v.access.mission) out.push(`Elle est liée à la mission « ${v.access.mission.value} ».`);
+  if (v.access.keyCloner?.value) out.push("Utilise un cloneur de clé pour démarrer.");
+  if (v.access.alarm?.value) out.push("Une alarme se déclenche : éloigne-toi rapidement.");
+  if (v.access.tracker?.value && v.access.tracker.value !== "none") out.push(`Le véhicule a un traqueur ${v.access.tracker.value === "advanced" ? "avancé" : "standard"}.`);
+  if (v.keep.mode === "register" && v.keep.rule) out.push(`Pour le garder, immatricule-le${v.keep.rule.where ? ` (${v.keep.rule.where})` : ""}, possible dès le chapitre ${v.keep.rule.chapter}.`);
+  if (v.keep.mode === "yes") out.push("Il t'est remis d'office : rien d'autre à faire.");
+  if (!out.length) out.push("Les sources ne détaillent pas encore la marche à suivre.");
+  return out;
+}
 
 function Quote({ r }: { r: { sourceName: string; url: string; quote: string } }) {
   return (
@@ -52,8 +69,8 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
   const x = viewOf(v, state);
   const prog = state.vehicles[v.id];
   const capture = (v as VehicleRecord & { capture?: { src: string; credit: string; alt?: string } }).capture;
-  const variant = v.variant?.value;
-  const sw = swatch(variant);
+  const variant = variantFr(v.variant?.value);
+  const sw = swatch(v.variant?.value);
   const ownedGarages = (feed?.vehicles ?? []).filter((g) => g.type === "garage" && state.vehicles[g.id] && state.vehicles[g.id].state !== "spotted");
 
   const go = (st: VehicleState, storage?: string) => {
@@ -109,7 +126,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
         <h3 className="detail__title" data-testid="vehicle-name">{v.name}</h3>
         <p className="muted small">
           {variant && <><i className="vswatch" style={{ background: sw ?? "transparent" }} /> {variant} · </>}
-          {v.aliases ? <>Inspiré de {v.aliases.value.map((a) => a.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")).join(", ")} (selon {v.aliases.support[0].sourceName.replace(/\s*\([^)]*\)$/, "")})</> : v.make}
+          {v.aliases ? <>Modèle réel : {v.aliases.value.map((a) => a.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")).join(", ")} (selon {v.aliases.support[0].sourceName.replace(/\s*\([^)]*\)$/, "")})</> : v.make}
         </p>
         <div className={`compat compat--${x.compat}`} data-testid="compat">
           <Icon name={x.compat === "ok" ? "check" : x.compat === "ultimate-only" ? "lock" : "info"} size={14} /> {COMPAT_FR[x.compat]}
@@ -168,7 +185,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
         <p data-testid="v-location">
           {v.location.precision === "exact" ? "Point vérifié" : v.location.precision === "zone" ? `Zone de recherche : ${v.location.district}${v.location.zone?.widened ? " (élargie)" : ""}` : v.location.precision === "text" ? "Adresse seulement (non placée sur la carte)" : "Emplacement non établi"}
         </p>
-        {v.location.text && <Quote r={v.location.text.support[0]} />}
+        {v.location.text && <p className="small muted">Un guide décrit l&apos;endroit précisément : citation d&apos;origine dans « Sources et preuves ».</p>}
         {v.location.alternatives.length > 0 && <p className="small muted">Autres emplacements signalés : {v.location.alternatives.map((a) => `${a.district ?? a.text} (${a.sourceName})`).join(" · ")}</p>}
         {v.location.precision !== "exact" && v.type === "vehicle" && (
           <a className="link small" href={validatePointUrl(v)} target="_blank" rel="noreferrer" data-testid="v-validate">Signaler la position exacte</a>
@@ -187,28 +204,24 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
         </ul>
       </section>
 
-      {v.steps.length > 0 && (
-        <section className="vsec">
-          <h4><Icon name="flag" size={14} /> Étapes (citations des guides, en anglais)</h4>
-          <ol className="vsteps">{v.steps.map((s) => <li key={s.quote}>{s.quote} <a href={s.url} target="_blank" rel="noreferrer">{s.sourceName}</a></li>)}</ol>
-        </section>
-      )}
+      <section className="vsec" data-testid="v-howto">
+        <h4><Icon name="flag" size={14} /> Comment faire</h4>
+        <ol className="vsteps">
+          {howTo(v).map((t) => <li key={t}>{t}</li>)}
+        </ol>
+      </section>
 
       <section className="vsec">
         <h4><Icon name="shieldCheck" size={14} /> Le conserver</h4>
         <p data-testid="v-keep-text">{keepText(v)}</p>
-        {v.keep.rule && <Quote r={v.keep.rule.source} />}
         {v.risks.length > 0 && (
-          <div className="vrisks">
-            <strong><Icon name="alert" size={13} /> Risques de perte</strong>
-            {v.risks.map((r) => <Quote key={r.quote} r={r} />)}
-          </div>
+          <p className="vrisks"><Icon name="alert" size={13} /> {v.risks.length > 1 ? `${v.risks.length} guides signalent` : "Un guide signale"} un risque de perte : détail dans « Sources et preuves ».</p>
         )}
       </section>
 
       <section className="vsec">
         <button className="vsec__toggle" onClick={() => setProofs((p) => !p)} aria-expanded={proofs}>
-          <h4><Icon name="info" size={14} /> Sources et fiabilité ({v.evidence.length})</h4>
+          <h4><Icon name="info" size={14} /> Sources et preuves ({v.evidence.length})</h4>
           <Icon name="chevronRight" size={16} />
         </button>
         {proofs && (
@@ -216,6 +229,11 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
             <ul className="vlist">{v.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
             {v.missing.length > 0 && <p className="small muted">Non établi : {v.missing.join(", ")}.</p>}
             <ul className="vlist">{v.evidence.map((e) => <li key={e.url}><a href={e.url} target="_blank" rel="noreferrer">{e.sourceName.replace(/\s*\([^)]*\)$/, "")}</a> · {e.title}</li>)}</ul>
+            <p className="small muted">Citations d&apos;origine (en anglais) :</p>
+            {v.location.text && <><p className="small muted">Emplacement :</p><Quote r={v.location.text.support[0]} /></>}
+            {v.steps.length > 0 && <><p className="small muted">Étapes :</p>{v.steps.map((r) => <Quote key={r.url + r.quote} r={r} />)}</>}
+            {v.keep.rule && <><p className="small muted">Conservation :</p><Quote r={v.keep.rule.source} /></>}
+            {v.risks.length > 0 && <><p className="small muted">Risques :</p>{v.risks.map((r) => <Quote key={r.url + r.quote} r={r} />)}</>}
             {v.edition.support.length > 0 && <><p className="small muted">Édition :</p>{v.edition.support.map((r) => <Quote key={r.url + r.quote} r={r} />)}</>}
           </div>
         )}

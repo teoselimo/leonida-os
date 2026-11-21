@@ -3,10 +3,15 @@ main = "worker.ts"
 compatibility_date = "2026-11-01"
 
 [vars]
+AI_ENABLED = "1"                      # « 0 » coupe instantanément la synthèse (l'app reste utile en mode direct)
 ANTHROPIC_MODEL = "claude-haiku-5-5"
 ALLOWED_ORIGIN = "https://teoselimo.github.io"
-DAILY_BUDGET_CALLS = "300"
+FEED_URL = "https://raw.githubusercontent.com/teoselimo/leonida-os/data/radar.json"
+DAILY_BUDGET_CENTS = "200"            # plafond de dépense : 2 € par jour, toutes requêtes confondues
+USER_DAILY_LIMIT = "40"               # questions synthétisées par appareil et par jour
 PER_IP_PER_MIN = "6"
+PRICE_IN_CENTS_PER_MTOK = "100"       # à ajuster au tarif du modèle choisi
+PRICE_OUT_CENTS_PER_MTOK = "500"
 
 [[kv_namespaces]]
 binding = "QUOTA"

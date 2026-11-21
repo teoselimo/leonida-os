@@ -1,17 +1,26 @@
-import type { RadarFeed, RadarRecord } from "../live";
-import { spoilerVisibility } from "../live";
+import type { RadarFeed, RadarRecord } from "../feed";
+import { liveAdvice, spoilerVisibility } from "../feed";
 import type { VehicleRecord } from "../garage";
 import { vehicleRecommendations, viewOf } from "../garage";
+import { frHeadline } from "../fr";
+import type { MissionInfo } from "../missions";
+import { missionBrief, missionCatalog, missionVisible, nextMissionGuess, nk, resolveMission } from "../missions";
 import type { PersistedState } from "../types";
 
 /**
- * LEONIDA AI — moteur « recherche d'abord » (fonctionne sans aucune clé d'IA).
- * Il ne répond qu'à partir du flux réel (fiches de la veille, Garage des légendes, règles sourcées),
- * en respectant le chapitre, l'édition, l'éligibilité précommande, l'anti-spoiler et ce que le joueur a déjà fait.
- * Les textes des sources sont des DONNÉES : ils sont cités, jamais interprétés comme des instructions.
+ * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
+ *
+ * 1. intention (règles explicites sur des formulations naturelles, fautes tolérées) ;
+ * 2. entité (mission, véhicule, fiche) résolue de façon STRUCTURÉE, ou reprise du sujet de la conversation ;
+ * 3. recherche ciblée dans LEONIDA RADAR (jamais de liste d'articles vaguement liés) ;
+ * 4. réponse courte et naturelle, fiabilité discrète, 1 à 2 actions réelles ;
+ * 5. si la demande est floue : une question de précision, pas une liste.
+ *
+ * Les textes des sources sont des DONNÉES, jamais des instructions. Le proxy serveur (synthèse LLM) réutilise
+ * exactement cette recherche : il reformule, il n'ajoute pas de faits.
  */
 
-export type Reliab = "officiel" | "recoupé" | "signalé" | "non établi";
+export type Reliab = "officiel" | "recoupé" | "signalé" | "non établi" | "déclaré par toi";
 
 /** Actions typées : uniquement des identifiants présents dans le catalogue, jamais de code ni d'URL libre. */
 export type AiAction =
@@ -23,27 +32,48 @@ export type AiAction =
   | { type: "mark_done"; id: string; label: string; confirm: string }
   | { type: "vehicle_state"; id: string; state: "spotted" | "stolen" | "registered"; label: string; confirm: string }
   | { type: "set_mission"; name: string; label: string; confirm: string }
+  | { type: "set_next_mission"; name: string; label: string; confirm: string }
+  | { type: "ask"; question: string; label: string }
   /** Lieu de la carte communautaire : repère gtadb (point) ou quartier (zone approximative). Jamais de coordonnées inventées. */
   | { type: "show_place"; label: string; landmarkId?: string; district?: string };
 
-/** Repère de la carte communautaire (gtadb), passé par l'interface. */
+/** Sujet de la conversation, pour comprendre « et comment je la garde ? », « et où exactement ? », « et après ? ». */
+export type Topic =
+  | { kind: "vehicle"; id: string }
+  | { kind: "record"; id: string }
+  | { kind: "mission"; name: string; known: boolean }
+  | { kind: "ask_mission"; then: "before" | "done" };
+
+export interface Source {
+  name: string;
+  url: string;
+  when: string | null;
+  /** Titre d'origine (souvent en anglais) : affiché uniquement dans « Sources et preuves ». */
+  title?: string;
+  quote?: string;
+}
+
+export interface AiAnswer {
+  intent: string;
+  /** Réponse naturelle, 2 à 4 phrases. */
+  text: string;
+  reliability: Reliab | null;
+  sources: Source[];
+  /** Une action principale, éventuellement une seconde. */
+  actions: AiAction[];
+  /** Détails à la demande (« En savoir plus »). */
+  more?: string[];
+  /** Réponses rapides proposées (précision, suite logique). */
+  replies?: string[];
+  topic?: Topic | null;
+  /** Fiches et véhicules utilisés : seules preuves transmises à la synthèse serveur. */
+  evidence?: string[];
+}
+
 export interface PlaceRef {
   id: string;
   name: string;
   district: string;
-}
-
-export interface AiAnswer {
-  /** Conclusion courte, en tête. */
-  title: string;
-  lines: string[];
-  reliability: Reliab | null;
-  sources: Array<{ name: string; url: string; when: string | null }>;
-  actions: AiAction[];
-  /** Remarque d'honnêteté (non confirmé, masqué par l'anti-spoiler, donnée manquante). */
-  note?: string;
-  /** Intention détectée (tests, journal). */
-  intent: string;
 }
 
 export interface AiContext {
@@ -51,11 +81,33 @@ export interface AiContext {
   state: Pick<PersistedState, "profile" | "vehicles" | "done">;
   /** Centre de carte courant (coordonnées de jeu), pour « près de moi ». */
   position?: { x: number; y: number } | null;
-  /** Repères gtadb chargés par la carte : permettent une action « voir sur la carte » sans inventer de position. */
+  /** Repères gtadb chargés par la carte : permettent « voir sur la carte » sans inventer de position. */
   places?: PlaceRef[];
 }
 
-/** Rapproche un lieu cité par une source d'un repère ou d'un quartier gtadb (correspondance exacte de nom). */
+export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, " ");
+const R: Record<string, Reliab> = { official: "officiel", confirmed: "recoupé", reported: "signalé", rumor: "non établi", personal: "déclaré par toi" };
+const cleanSrc = (s: string) => s.replace(/\s*\([^)]*\)\s*$/, "");
+const ago = (iso: string | null | undefined) => {
+  if (!iso) return null;
+  const h = (Date.now() - Date.parse(iso)) / 3600_000;
+  return h < 1 ? "il y a moins d'une heure" : h < 48 ? `il y a ${Math.round(h)} h` : `il y a ${Math.round(h / 24)} j`;
+};
+const fmt$ = (n: number) => `${n.toLocaleString("fr-FR").replace(/[  ]/g, " ")} $`;
+const solid = (rel: string) => rel === "official" || rel === "confirmed";
+
+function recSources(r: RadarRecord): Source[] {
+  return r.evidence.slice(0, 3).map((e) => ({ name: cleanSrc(e.sourceName), url: e.url, when: ago(e.publishedAt ?? r.firstSeenAt), title: e.title, quote: e.quotes?.[0] }));
+}
+function vehSources(v: VehicleRecord): Source[] {
+  return v.evidence.slice(0, 3).map((e) => ({ name: cleanSrc(e.sourceName), url: e.url, when: ago(e.readAt ?? v.firstSeenAt), title: e.title }));
+}
+
+function glossary(feed: RadarFeed | null) {
+  const cat = missionCatalog(feed);
+  return { cat, g: { missions: [...cat.values()].map((m) => m.name), proper: (feed?.vehicles ?? []).map((v) => v.name.replace(/^'\d+\s*/, "")) } };
+}
+
 export function placeAction(r: RadarRecord, ctx: AiContext): AiAction | null {
   const places = ctx.places ?? [];
   if (!places.length) return null;
@@ -63,7 +115,7 @@ export function placeAction(r: RadarRecord, ctx: AiContext): AiAction | null {
   const cited = [p?.name, p?.district, ...(r.location?.place ?? "").split(",")].filter((x): x is string => !!x && !!x.trim()).map((x) => x.trim());
   for (const c of cited) {
     const lm = places.find((l) => norm(l.name) === norm(c));
-    if (lm) return { type: "show_place", landmarkId: lm.id, label: `Voir « ${lm.name} » sur la carte` };
+    if (lm) return { type: "show_place", landmarkId: lm.id, label: `Voir ${lm.name} sur la carte` };
   }
   for (const c of cited) {
     const d = places.find((l) => norm(l.district.split(",")[0] ?? "") === norm(c));
@@ -72,47 +124,23 @@ export function placeAction(r: RadarRecord, ctx: AiContext): AiAction | null {
   return null;
 }
 
-export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, " ");
-const R: Record<string, Reliab> = { official: "officiel", confirmed: "recoupé", reported: "signalé", rumor: "non établi", personal: "non établi" };
-const cleanSrc = (s: string) => s.replace(/\s*\([^)]*\)\s*$/, "");
-const ago = (iso: string | null | undefined) => {
-  if (!iso) return null;
-  const h = (Date.now() - Date.parse(iso)) / 3600_000;
-  return h < 1 ? "il y a moins d'une heure" : h < 48 ? `il y a ${Math.round(h)} h` : `il y a ${Math.round(h / 24)} j`;
-};
-const fmt$ = (n: number) => `${n.toLocaleString("fr-FR").replace(/ | /g, " ")} $`;
-
-function recSources(r: RadarRecord) {
-  return r.evidence.slice(0, 3).map((e) => ({ name: cleanSrc(e.sourceName), url: e.url, when: ago(e.publishedAt ?? r.firstSeenAt) }));
-}
-function vehSources(v: VehicleRecord) {
-  return v.evidence.slice(0, 3).map((e) => ({ name: cleanSrc(e.sourceName), url: e.url, when: ago(e.readAt ?? v.firstSeenAt) }));
-}
-const recChapter = (r: RadarRecord) => r.details?.chapter?.value ?? r.advice?.chapterMin ?? null;
-
-/** Fiches visibles pour ce joueur (anti-spoiler par chapitre) et nombre de fiches masquées. */
-function visibleRecords(ctx: AiContext, pred: (r: RadarRecord) => boolean) {
-  const all = (ctx.feed?.items ?? []).filter((r) => r.status === "active" && pred(r));
-  const ok = all.filter((r) => spoilerVisibility(r, ctx.state.profile.spoilerMode, ctx.state.profile.chapter) === "visible");
-  return { list: ok, hidden: all.length - ok.length };
+/** Fiches visibles pour ce joueur (anti-spoiler, statut, déjà faites exclues). */
+function visible(ctx: AiContext, pred: (r: RadarRecord) => boolean): RadarRecord[] {
+  const p = ctx.state.profile;
+  return (ctx.feed?.items ?? []).filter((r) => r.status === "active" && !ctx.state.done[r.id] && pred(r) && spoilerVisibility(r, p.spoilerMode, p.chapter) === "visible");
 }
 
-function hiddenNote(n: number) {
-  return n ? `${n} résultat${n > 1 ? "s" : ""} masqué${n > 1 ? "s" : ""} par l'anti-spoiler (chapitre plus avancé que le tien).` : undefined;
-}
-
-/** Recherche d'un véhicule cité dans la question (nom, modèle, alias appris, « Fast & Furious »…). */
+/** Véhicule cité (nom, modèle, alias appris, « Fast & Furious »…). */
 export function findVehicle(q: string, list: VehicleRecord[]): VehicleRecord | null {
   const n = norm(q);
   let best: { v: VehicleRecord; s: number } | null = null;
   for (const v of list) {
     let s = 0;
     const model = norm(v.model);
-    if (n.includes(model)) s += 4;
+    if (model && n.includes(model)) s += 4;
     for (const tok of model.split(" ")) if (tok.length >= 4 && new RegExp(`\\b${tok}\\b`).test(n)) s += 2;
-    if (n.includes(norm(v.make)) && v.make) s += 1;
+    if (v.make && n.includes(norm(v.make))) s += 1;
     for (const a of v.aliases?.value ?? []) for (const tok of a.split("-")) if (tok.length >= 4 && n.includes(tok)) s += 3;
-    // indices thématiques présents dans les preuves de la fiche (« Fast & Furious », « Paul Walker »…)
     const blob = norm([...v.evidence.map((e) => e.title), v.location.text?.value ?? "", ...(v.aliases?.support ?? []).map((x) => x.quote)].join(" "));
     if (/fast|furious|paul walker/.test(n) && /fast|furious|paul walker/.test(blob)) s += 4;
     if (s > (best?.s ?? 2)) best = { v, s };
@@ -120,59 +148,53 @@ export function findVehicle(q: string, list: VehicleRecord[]): VehicleRecord | n
   return best?.v ?? null;
 }
 
-function vehicleAnswer(v: VehicleRecord, ctx: AiContext): AiAnswer {
-  const x = viewOf(v, ctx.state);
-  if (x.hidden) {
-    return { intent: "vehicle", title: "Ce véhicule est lié à un chapitre plus avancé que le tien.", lines: ["Je ne détaille pas son emplacement pour ne rien te divulgâcher."], reliability: null, sources: [], actions: [], note: "Passe l'anti-spoiler en mode modéré dans Profil si tu veux le voir." };
-  }
-  const lines: string[] = [];
-  if (v.location.precision === "zone") lines.push(`Zone de recherche : ${v.location.district}${v.location.zone?.widened ? " (élargie)" : ""} — pas un point exact.`);
-  else if (v.location.precision === "exact") lines.push("Point vérifié sur la carte.");
-  else if (v.location.text) lines.push(`Lieu cité : « ${v.location.text.value} »`);
-  else lines.push("Emplacement non établi par les sources.");
-  if (v.location.text && v.location.precision !== "text") lines.push(`Selon ${cleanSrc(v.location.text.support[0].sourceName)} : « ${v.location.text.value} »`);
-  if (x.compat === "ultimate-only") lines.push("Réservé à l'édition Ultimate : non récupérable avec ton édition.");
-  else if (x.compat === "check") lines.push("Exclusivité d'édition non confirmée : compatibilité à vérifier.");
-  else if (x.compat === "preorder") lines.push("Bonus de précommande : indique dans Profil si tu y as droit.");
-  if (v.access.early) lines.push("Accessible tôt, dès l'exploration libre (selon la source).");
-  else if (v.access.chapterMin) lines.push(`À partir du chapitre ${v.access.chapterMin.value}.`);
-  else if (v.access.inferredChapter) lines.push(`Chapitre ${v.access.inferredChapter.value} estimé (${v.access.inferredChapter.why}).`);
-  else lines.push("Chapitre d'accès non établi : accès à confirmer.");
-  if (v.access.alarm?.value) lines.push("Alarme à neutraliser sur place.");
-  if (v.access.keyCloner?.value) lines.push("Cloneur de clé nécessaire.");
-  if (v.keep.mode === "register" && v.keep.rule) lines.push(`Pour la garder : immatriculation dès le chapitre ${v.keep.rule.chapter}${v.keep.rule.where ? `, ${v.keep.rule.where}` : ""}.`);
-  if (v.keep.mode === "yes") lines.push("Conservée automatiquement (bonus remis au joueur).");
-  const risk = v.risks.find((r) => /lose|lost|disappear/i.test(r.quote));
-  if (risk) lines.push(`Attention : « ${risk.quote} » (${cleanSrc(risk.sourceName)})`);
-  const actions: AiAction[] = [{ type: "focus_vehicle", id: v.id, label: v.location.precision === "zone" || v.location.precision === "exact" ? "Voir sur la carte" : "Ouvrir la fiche" }];
-  const owned = ctx.state.vehicles[v.id]?.state;
-  if (!owned && x.access !== "excluded") actions.push({ type: "vehicle_state", id: v.id, state: "spotted", label: "Je l'ai trouvé", confirm: `Marquer « ${v.name} » comme repéré ?` });
-  if (v.media) actions.push({ type: "open_source", url: v.media.url, label: "Voir la vidéo" });
-  return {
-    intent: "vehicle",
-    title: `${v.name} : ${x.now ? "récupérable maintenant" : x.access === "confirm" ? "accès à confirmer" : x.access === "later" ? "plus tard dans l'histoire" : x.access === "excluded" ? "pas disponible pour toi" : x.access === "expired" ? "fenêtre dépassée" : "à vérifier"}.`,
-    lines,
-    reliability: R[v.reliability],
-    sources: vehSources(v),
-    actions,
-    note: v.reliability === "reported" ? "Information signalée par une seule origine : à vérifier en jeu." : undefined,
-  };
-}
+// ── Intentions ────────────────────────────────────────────────────────────────
+const RX = {
+  done: /\b(viens de|vient de|j ai|jai|c est|c etait)\b.{0,12}\b(termin|fini|finir|boucl|reussi)|\bje l ai (fini|termine)|\bmission (terminee|finie)\b/,
+  before: /(sur le point de|je vais|vais|m appret|j appret|je m appret|avant de|je compte|je commence|je lance|commencer|lancer|attaquer|demarrer|je suis devant|devant)\b.{0,40}|\brisque(s)? de (rater|manquer|louper)|\b(louper|rater|manquer) quelque chose|\bsans rien (rater|manquer|louper)|\bmanquable|\bprochaine mission/,
+  keep: /(garder|conserver|immatricul|enregistr|la garde|le garde|la conserve|le conserve|garde-la|garder la)/,
+  buy: /(achet|acquerir|payer).{0,30}(voiture|vehicule|caisse|bagnole|garage)/,
+  ultimate: /ultimate|exclusi|edition/,
+  weapon: /\barmes?\b|fusil|pistolet|sniper|flingue|\bgun\b/,
+  money: /(gagner|argent|\$|dollars?|thune|fric|cash|planque|\d+\s?k\b|\d[\d\s.]*\s?(\$|dollars|balles))/,
+  nearby: /(proche|autour|pres d|a cote|ou je suis|ma position)/,
+  fun: /(sympa|m amuser|amuser|fun|cool|delire|rigoler|kiffer|stylee?|belle (voiture|caisse))/,
+  vehicle: /(voiture|vehicule|caisse|bagnole|moto|bateau|fast|furious|paul walker|eclipse|penumbra)/,
+  secret: /secret|easter|cache|mystere|objets? caches?/,
+  where: /\b(ou exactement|c est ou|elle est ou|il est ou|ou (est|se trouve)|ou la trouver|ou le trouver|ou trouver|localis)/,
+  next: /^\s*(et )?(apres|ensuite|la suite|et maintenant)\s*\??\s*$/,
+  hello: /^\s*(salut|bonjour|hello|coucou|yo|hey)\b/,
+  thanks: /^\s*(merci|top|super|parfait|ok|d accord|dac)\b.{0,20}$/,
+  followPron: /^\s*(et\b|ca\b|cette|celle|elle\b|il\b|la\b|le\b|des objets|du loot|des recompenses|quoi d autre)/,
+};
 
-/** Intention principale d'une question (règles explicites, prévisibles). */
-export function intentOf(q: string): string {
+export function intentOf(q: string, topic: Topic | null = null): string {
   const n = norm(q);
-  if (/(garder|conserver|immatricul|enregistr|personal|perso).{0,40}(voiture|vehicule|caisse|bagnole)|voiture volee|vehicule vole/.test(n)) return "keep";
-  if (/(achet|acheter|acquerir|payer).{0,30}(voiture|vehicule|caisse|bagnole|garage)/.test(n)) return "buy";
-  if (/(lancer|commencer|prochaine).{0,30}mission|rien (rater|manquer|louper)|sans rien|manquable/.test(n)) return "missable";
-  if (/ultimate|exclusi|edition/.test(n)) return "ultimate";
-  if (/\barmes?\b|fusil|pistolet|sniper|flingue|gun/.test(n)) return "weapon";
-  if (/(gagner|argent|\$|dollars?|thune|fric|cash|\d+\s?k\b|\d[\d\s.]*\s?(\$|dollars|balles))/.test(n)) return "money";
-  if (/(proche|autour|pres d|a cote|ou je suis|ma position)/.test(n)) return "nearby";
-  if (/(voiture|vehicule|caisse|bagnole|moto|bateau|fast|furious|paul walker|eclipse)/.test(n)) return "vehicle";
-  if (/garage/.test(n)) return "garage";
-  if (/secret|easter|cache|mystere/.test(n)) return "secret";
-  return "search";
+  if (RX.hello.test(n) && n.length < 30) return "hello";
+  if (RX.thanks.test(n)) return "thanks";
+  if (RX.next.test(n)) return "next";
+  if (RX.done.test(n)) return "mission_done";
+  // reprises : « et comment je la garde ? », « et où exactement ? », « des objets cachés ? »
+  if (topic && (RX.followPron.test(n) || n.split(" ").length <= 6)) {
+    if (RX.keep.test(n) && topic.kind === "vehicle") return "keep";
+    if (RX.where.test(n)) return "where";
+    if (topic.kind === "mission" && /(objet|cache|recompense|loot|argent|arme|rater|manquer|louper|recuperer)/.test(n)) return "before";
+  }
+  if (RX.keep.test(n) && /(voiture|vehicule|caisse|bagnole|volee|vole|la |le )/.test(n)) return "keep";
+  if (/(lancer|commencer|faire|attaquer|demarrer|jouer)\b.{0,30}\bmission|\bmission\b.{0,30}(lancer|commencer)|sur le point de|je suis devant|m appret|prochaine mission/.test(n)) return "before";
+  if (/(risque|vais|peux).{0,25}(rater|manquer|louper)|sans rien (rater|manquer|louper)|manquable/.test(n)) return "before";
+  if (RX.buy.test(n)) return "buy";
+  if (RX.fun.test(n) && RX.vehicle.test(n)) return "fun";
+  if (RX.ultimate.test(n)) return "ultimate";
+  if (RX.weapon.test(n)) return "weapon";
+  if (RX.money.test(n)) return "money";
+  if (RX.nearby.test(n)) return "nearby";
+  if (RX.where.test(n) && topic) return "where";
+  if (RX.vehicle.test(n)) return "vehicle";
+  if (RX.fun.test(n)) return "fun";
+  if (RX.secret.test(n)) return "secret";
+  if (/(lancer|commencer|terminer|finir|faire) /.test(n) && /[A-Z]/.test(q)) return "before";
+  return "unknown";
 }
 
 const amountOf = (q: string) => {
@@ -183,206 +205,410 @@ const amountOf = (q: string) => {
   return n > 0 ? n : null;
 };
 
-export function answer(question: string, ctx: AiContext): AiAnswer {
+/** Ce qu'il est urgent de faire maintenant, toutes missions confondues (pour compléter une réponse). */
+function urgentNow(ctx: AiContext) {
+  const p = ctx.state.profile;
+  const adv = liveAdvice(ctx.feed, { chapter: p.chapter, spoilerMode: p.spoilerMode, missionsDone: p.missionsDone }, ctx.state.done).now.filter((a) => a.urgency === "now");
+  const veh = vehicleRecommendations(ctx.feed?.vehicles ?? [], ctx.state, 10).filter((x) => x.urgent);
+  return { adv, veh };
+}
+
+// ── Réponses ──────────────────────────────────────────────────────────────────
+function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep" | "all" = "all"): AiAnswer {
+  const x = viewOf(v, ctx.state);
+  const topic: Topic = { kind: "vehicle", id: v.id };
+  if (x.hidden)
+    return { intent: "vehicle", text: "Ce véhicule est lié à un chapitre plus avancé que le tien : je préfère ne rien te dévoiler pour l'instant.", reliability: null, sources: [], actions: [], topic };
+  const where =
+    v.location.precision === "exact"
+      ? `Son emplacement est vérifié sur la carte${v.location.district ? ` (${v.location.district})` : ""}.`
+      : v.location.precision === "zone"
+        ? `Elle se trouve dans la zone de ${v.location.district}${v.location.zone?.widened ? " (zone élargie)" : ""} : c'est une zone de recherche, pas un point exact.`
+        : v.location.text
+          ? `Les guides citent un lieu que je n'ai pas encore pu placer sur la carte.`
+          : "Son emplacement n'est pas encore établi par les sources.";
+  const access = x.now
+    ? "Tu peux la récupérer dès maintenant."
+    : x.access === "confirm"
+      ? "Les conditions pour y accéder ne sont pas encore établies : à vérifier en jeu."
+      : x.access === "later"
+        ? `Elle sera accessible plus tard (chapitre ${x.need}).`
+        : x.access === "expired"
+          ? "La fenêtre pour la récupérer est dépassée pour ta progression."
+          : x.compat === "ultimate-only"
+            ? "Elle est réservée à l'édition Ultimate : pas récupérable avec ton édition."
+            : x.compat === "preorder" || x.compat === "preorder-no"
+              ? "C'est un bonus de précommande : indique dans Profil si tu y as droit."
+              : "Sa compatibilité avec ton édition reste à vérifier.";
+  const keep =
+    v.keep.mode === "yes"
+      ? "Elle t'est remise d'office : rien à faire pour la garder."
+      : v.keep.rule
+        ? `Pour la garder, il faudra l'immatriculer${v.keep.rule.where ? ` (${v.keep.rule.where})` : ""}, possible dès le chapitre ${v.keep.rule.chapter}${ctx.state.profile.chapter < v.keep.rule.chapter ? " : avant cela, une voiture volée peut être perdue" : ""}.`
+        : "Les sources ne disent pas encore comment la conserver.";
+  const extras = [v.access.alarm?.value ? "Une alarme se déclenche : prévois de t'éloigner vite." : "", v.access.keyCloner?.value ? "Il faut un cloneur de clé." : ""].filter(Boolean);
+  const text =
+    focus === "keep"
+      ? `${keep}${v.keep.rule && ctx.state.profile.chapter >= v.keep.rule.chapter ? " Tu y as déjà accès." : ""}`
+      : focus === "where"
+        ? `${where}${v.location.text ? " Les guides la décrivent précisément : le détail est dans « Sources et preuves »." : ""}`
+        : `${v.name} : ${access.charAt(0).toLowerCase()}${access.slice(1)} ${where} ${keep}`;
+  const actions: AiAction[] = [];
+  if (v.location.precision === "zone" || v.location.precision === "exact") actions.push({ type: "focus_vehicle", id: v.id, label: v.location.precision === "zone" ? "Voir la zone sur la carte" : "Voir sur la carte" });
+  else actions.push({ type: "focus_vehicle", id: v.id, label: `Ouvrir la fiche ${v.model || v.name}` });
+  const owned = ctx.state.vehicles[v.id]?.state;
+  if (!owned && x.access !== "excluded" && focus !== "keep") actions.push({ type: "vehicle_state", id: v.id, state: "spotted", label: "Je l'ai trouvée", confirm: `Marquer « ${v.name} » comme repérée ?` });
+  if (focus === "keep" && owned && owned !== "registered") actions.unshift({ type: "vehicle_state", id: v.id, state: "registered", label: "Je l'ai immatriculée", confirm: `Indiquer que « ${v.name} » est immatriculée ?` });
+  return {
+    intent: focus === "keep" ? "keep" : focus === "where" ? "where" : "vehicle",
+    text: text.replace(/\s+/g, " ").trim(),
+    reliability: R[v.reliability],
+    sources: vehSources(v),
+    actions: actions.slice(0, 2),
+    more: [...extras, focus !== "all" ? access : "", v.location.text ? `Description du lieu (en anglais) : « ${v.location.text.value} »` : ""].filter(Boolean),
+    replies: focus === "all" ? ["Et comment je la garde ?", "Et où exactement ?"] : focus === "where" ? ["Et comment je la garde ?"] : ["Et où exactement ?"],
+    topic,
+    evidence: [v.id],
+  };
+}
+
+function missionTopicAnswer(ctx: AiContext, mission: MissionInfo | null, rawName: string, opts: { items?: boolean } = {}): AiAnswer {
+  const p = ctx.state.profile;
+  const name = mission?.name ?? rawName;
+  const topic: Topic = { kind: "mission", name, known: !!mission };
+  const { g } = glossary(ctx.feed);
+  // une mission du chapitre suivant reste traitable (c'est souvent elle qu'on s'apprête à lancer) ; au-delà, on se tait
+  const aboveChapter = mission?.chapter != null && mission.chapter > p.chapter + 1;
+  const brief = missionBrief(ctx.feed, name, { chapter: p.chapter, spoilerMode: p.spoilerMode, done: ctx.state.done });
+  const urgent = urgentNow(ctx);
+  const isNext = p.nextMission && nk(p.nextMission) === nk(name);
+  const setNext: AiAction[] = isNext ? [] : [{ type: "set_next_mission", name, label: "C'est ma prochaine mission", confirm: `Enregistrer « ${name} » comme prochaine mission ?` }];
+  const sources = [...brief.before, ...brief.during].slice(0, 3).flatMap(recSources).slice(0, 3);
+  const evidence = [...brief.before, ...brief.during].map((r) => r.id);
+
+  if (!mission) {
+    const other = urgent.adv[0];
+    return {
+      intent: "before",
+      text: `Tu vas lancer « ${name} » ? 🎯 Je n'ai encore aucun guide fiable sur cette mission : je ne peux donc confirmer ni récompense ni objet manquable. Tu peux poursuivre, sans garantie que tout ait été recensé.${other ? ` À part ça, ${lowerFirst(reminder(other.r, g))}` : ""}`,
+      reliability: null,
+      sources: other ? recSources(other.r).slice(0, 2) : [],
+      actions: [...setNext, ...(other ? [{ type: "open_record" as const, id: other.r.id, label: "Voir ce qu'il faut faire avant" }] : [])].slice(0, 2),
+      topic,
+      evidence: other ? [other.r.id] : [],
+    };
+  }
+  if (aboveChapter && p.spoilerMode === "strict") {
+    return {
+      intent: "before",
+      text: `Les sources rattachent « ${name} » au chapitre ${mission.chapter}, plus loin que ta progression indiquée (chapitre ${p.chapter}). Mets ton chapitre à jour dans Profil et je te dirai ce qu'il faut savoir, sans rien te dévoiler d'autre.`,
+      reliability: null,
+      sources: [],
+      actions: [],
+      topic,
+    };
+  }
+  const parts: string[] = [];
+  if (brief.before.length) parts.push(beforeSentence(brief.before[0], name));
+  if (brief.during.length) {
+    const d = brief.during[0];
+    parts.push(`Pendant la mission, tu peux récupérer ${d.conditions.reward ?? "un bonus"}${d.details?.place ? ` à ${d.details.place.value.name}` : ""}${brief.during.length > 1 ? `, et ${brief.during.length - 1} autre${brief.during.length > 2 ? "s" : ""} élément${brief.during.length > 2 ? "s" : ""}` : ""}.`);
+  }
+  if (!parts.length) {
+    parts.push(
+      brief.guide
+        ? `Un guide décrit « ${name} », mais aucune récompense particulière ni oubli possible n'y est confirmé pour l'instant. Tu peux la lancer ; je ne peux simplement pas garantir que tout ait été recensé.`
+        : `Je n'ai pas encore de guide fiable pour « ${name} » : aucune récompense ni aucun oubli possible n'est confirmé pour le moment. Tu peux la lancer, sans garantie que tout ait été recensé.`,
+    );
+    const u = urgent.adv.find((a) => !brief.before.includes(a.r));
+    if (u && !opts.items) parts.push(`À part ça, ${lowerFirst(reminder(u.r, g))}`);
+  }
+  const actions: AiAction[] = [];
+  const first = brief.before[0] ?? brief.during[0];
+  if (first) actions.push(placeAction(first, ctx) ?? { type: "open_record", id: first.id, label: `Voir : ${frHeadline(first, g)}`.slice(0, 48) });
+  else if (brief.guide) actions.push({ type: "open_record", id: brief.guide.id, label: "Voir le guide de la mission" });
+  actions.push(...setNext);
+  return {
+    intent: "before",
+    text: parts.join(" "),
+    reliability: first ? R[first.reliability] : null,
+    sources: sources.length ? sources : brief.guide ? recSources(brief.guide).slice(0, 1) : [],
+    actions: actions.slice(0, 2),
+    more: [...brief.before.slice(1), ...brief.during.slice(1)].map((r) => frHeadline(r, g)),
+    replies: ["Et si je veux une voiture sympa avant ?", "Et après ?"],
+    topic,
+    evidence: [...evidence, ...(brief.guide ? [brief.guide.id] : [])],
+  };
+}
+
+const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+const nSrc = (n: number) => (n > 1 ? `${n} sources` : "une source");
+
+/** « Avant de lancer X, pense à… » — fondé sur les preuves du champ « disparaît au lancement de ». */
+function beforeSentence(r: RadarRecord, mission: string): string {
+  const cm = r.details?.contextMissable;
+  const subject = cm?.value.subject;
+  const where = r.details?.place?.value.name;
+  return `Avant de lancer « ${mission} », pense à ${subject ? `la mission « ${subject} »` : "ceci"} : d'après ${nSrc(cm?.support.length ?? 1)}, elle disparaît au lancement de « ${mission} ».${r.conditions.reward ? ` Elle permet de récupérer ${r.conditions.reward}${where ? ` (${where})` : ""}.` : ""}${r.details?.missable?.value === false ? " La source précise toutefois qu'on ne rate rien d'essentiel en la sautant." : ""}`;
+}
+
+/** Rappel court d'une chose à faire avant de continuer (hors mission demandée). */
+function reminder(r: RadarRecord, g: { missions: string[]; proper: string[] }): string {
+  const cm = r.details?.contextMissable?.value;
+  if (cm?.subject && cm.until) return `Pense à « ${cm.subject} » avant « ${cm.until} »${r.conditions.reward ? ` : elle rapporte ${r.conditions.reward}${r.details?.place ? ` (${r.details.place.value.name})` : ""}` : ""}.`;
+  return `Une chose reste à faire avant de continuer : ${frHeadline(r, g)}.`;
+}
+
+function askMission(ctx: AiContext, then: "before" | "done", candidates: MissionInfo[] = []): AiAnswer {
+  const { cat } = glossary(ctx.feed);
+  const p = ctx.state.profile;
+  const guess = p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
+  const options = candidates.length ? candidates.map((c) => c.name) : [p.nextMission, guess?.mission.name].filter((x): x is string => !!x);
+  return {
+    intent: then === "before" ? "ask_mission" : "ask_mission_done",
+    text: candidates.length
+      ? `Tu parles de quelle mission ? Je connais ${candidates.length === 1 ? `« ${candidates[0].name} »` : candidates.map((c) => `« ${c.name} »`).join(" ou ")} pour l'instant.`
+      : then === "before"
+        ? "De quelle mission s'agit-il ? Donne-moi son nom (en anglais, comme dans le jeu) et je vérifie ce qu'il ne faut pas rater."
+        : "Quelle mission viens-tu de terminer ? Donne-moi son nom et je mets ta progression à jour.",
+    reliability: null,
+    sources: [],
+    actions: [],
+    replies: options.slice(0, 3).map((o) => (then === "before" ? `Je vais lancer ${o}` : `J'ai terminé ${o}`)),
+    topic: { kind: "ask_mission", then },
+  };
+}
+
+export function answer(question: string, ctx: AiContext, topic: Topic | null = null): AiAnswer {
   const q = question.trim().slice(0, 300);
   const p = ctx.state.profile;
   const vehicles = ctx.feed?.vehicles ?? [];
-  if (!ctx.feed) {
-    return { intent: "offline", title: "Je n'ai pas encore les données de la veille.", lines: ["Reconnecte-toi : je réponds uniquement à partir des fiches collectées, jamais de mémoire."], reliability: null, sources: [], actions: [] };
-  }
-  const intent = intentOf(q);
-  const done = (id: string) => !!ctx.state.done[id];
+  if (!ctx.feed)
+    return { intent: "offline", text: "Je n'ai pas encore les données de la veille. Reconnecte-toi : je ne réponds qu'à partir des fiches vérifiées, jamais de mémoire.", reliability: null, sources: [], actions: [] };
+  const { cat, g } = glossary(ctx.feed);
+  const opts = { chapter: p.chapter, spoilerMode: p.spoilerMode };
 
-  // Véhicule précis cité : priorité à la fiche (sauf questions générales d'achat/conservation)
-  if (intent !== "keep" && intent !== "buy" && intent !== "ultimate" && intent !== "missable") {
-    const v = findVehicle(q, vehicles);
-    if (v) return vehicleAnswer(v, ctx);
+  // réponse à une question de précision (« Quelle mission ? » → « Down to Earth »)
+  if (topic?.kind === "ask_mission") {
+    const m = resolveMission(q, cat, opts);
+    const raw = m.raw ?? (q.split(" ").length <= 6 && /[A-Za-z]/.test(q) ? q.replace(/[?.!]+$/, "").trim() : null);
+    if (m.mission || raw) return topic.then === "before" ? missionTopicAnswer(ctx, m.mission, m.mission?.name ?? raw!) : doneAnswer(ctx, m.mission?.name ?? raw!);
   }
+
+  const intent = intentOf(q, topic);
+  const vMentioned = findVehicle(q, vehicles);
+  const topicVehicle = topic?.kind === "vehicle" ? vehicles.find((v) => v.id === topic.id) ?? null : null;
 
   switch (intent) {
+    case "hello":
+      return { intent, text: `Salut ${p.pseudo && p.pseudo !== "Joueur" ? p.pseudo : ""} ! Dis-moi quelle mission tu vas lancer, ou ce que tu cherches : une voiture, une arme, de l'argent…`.replace(" !", "!").replace("Salut!", "Salut !"), reliability: null, sources: [], actions: [], replies: starters(ctx).slice(0, 2) };
+    case "thanks":
+      return { intent, text: "Avec plaisir ! Bonne session à Leonida 🌴", reliability: null, sources: [], actions: [] };
+    case "mission_done": {
+      const m = resolveMission(q, cat, opts);
+      if (m.mission || m.raw) return doneAnswer(ctx, m.mission?.name ?? m.raw!);
+      if (topic?.kind === "mission") return doneAnswer(ctx, topic.name);
+      return askMission(ctx, "done", m.candidates);
+    }
+    case "before": {
+      const m = resolveMission(q, cat, opts);
+      if (m.mission) return missionTopicAnswer(ctx, m.mission, m.mission.name, { items: /objet|cache/.test(norm(q)) });
+      if (m.candidates.length) return askMission(ctx, "before", m.candidates);
+      if (m.raw) return missionTopicAnswer(ctx, null, m.raw);
+      if (topic?.kind === "mission") return missionTopicAnswer(ctx, cat.get(nk(topic.name).replace(/'/g, "")) ?? null, topic.name, { items: true });
+      if (p.nextMission) {
+        const mm = resolveMission(p.nextMission, cat, opts);
+        return missionTopicAnswer(ctx, mm.mission, mm.mission?.name ?? p.nextMission);
+      }
+      return askMission(ctx, "before");
+    }
     case "keep": {
-      // règles générales du flux ; à défaut, celles déjà appliquées aux fiches du garage (même sources)
+      const v = vMentioned ?? topicVehicle;
+      if (v) return vehicleAnswer(v, ctx, "keep");
       const regs = ctx.feed.mechanics?.register?.length
         ? ctx.feed.mechanics.register
-        : vehicles.flatMap((v) => (v.keep.rule ? [{ chapter: v.keep.rule.chapter, where: v.keep.rule.where, tracker: v.keep.rule.tracker, source: v.keep.rule.source }] : []));
+        : vehicles.flatMap((x) => (x.keep.rule ? [{ chapter: x.keep.rule.chapter, where: x.keep.rule.where, tracker: x.keep.rule.tracker, source: x.keep.rule.source }] : []));
       const none = regs.find((r) => (r.tracker ?? "none") === "none" && r.where === "garage de Moses") ?? regs.find((r) => r.tracker == null);
-      const std = regs.find((r) => r.tracker === "standard");
-      if (!none && !std) return { intent, title: "Les sources collectées ne décrivent pas encore comment conserver un véhicule.", lines: [], reliability: "non établi", sources: [], actions: [{ type: "open_map", garage: true, label: "Voir les voitures cachées" }] };
-      const lines = [
-        "Voler une voiture ne la rend pas tienne : il faut l'immatriculer.",
-        none ? `Sans traqueur : dès le chapitre ${none.chapter}${none.where ? `, ${none.where}` : ""}.` : "",
-        std ? `Traqueur standard : dès le chapitre ${std.chapter}${std.where ? `, ${std.where}` : ""}.` : "",
-        "Traqueur avancé : méthode non documentée par les sources.",
-        p.chapter < (none?.chapter ?? 99) ? `Tu es au chapitre ${p.chapter} : une voiture volée avant cela peut être perdue.` : "",
-      ].filter(Boolean);
-      const src = [none?.source, std?.source].filter(Boolean) as Array<{ sourceName: string; url: string }>;
-      return { intent, title: none ? `Immatricule-la chez Moses dès le chapitre ${none.chapter}.` : "Immatricule-la dans un Pay 'n' Spray.", lines, reliability: src.length >= 2 ? "recoupé" : "signalé", sources: src.map((s) => ({ name: cleanSrc(s.sourceName), url: s.url, when: null })), actions: [{ type: "open_map", garage: true, filter: "now", label: "Voitures accessibles maintenant" }] };
-    }
-    case "buy": {
-      const { list } = visibleRecords(ctx, (r) => /\b(buy|purchase|dealership|concession|acheter)\b/i.test(`${r.title} ${r.evidence.map((e) => e.excerpt).join(" ")}`) && /\b(car|vehicle|garage|voiture)\b/i.test(r.title));
-      const garages = ctx.feed.items.find((r) => r.evidence.some((e) => (e.deep?.mechanics?.garages ?? null) !== null));
-      if (!list.length && !garages)
-        return { intent, title: "Aucune source collectée n'explique encore l'achat de voitures.", lines: ["Je ne l'invente pas. En attendant, on peut voler puis immatriculer une voiture (demande « comment conserver ma voiture volée ? »)."], reliability: "non établi", sources: [], actions: [{ type: "open_map", garage: true, label: "Voir les voitures cachées" }] };
-      const g = garages?.evidence.find((e) => e.deep?.mechanics?.garages)?.deep?.mechanics?.garages;
+      if (!none) return { intent, text: "Les sources collectées n'expliquent pas encore comment conserver un véhicule volé. Je préfère ne pas improviser.", reliability: "non établi", sources: [], actions: [] };
+      const src = regs.filter((r) => r.source).slice(0, 2).map((r) => ({ name: cleanSrc(r.source.sourceName), url: r.source.url, when: null, quote: r.source.quote }));
       return {
         intent,
-        title: list.length ? "Voici ce que disent les guides sur l'achat." : "Les sources parlent surtout de garages à acheter.",
-        lines: [...list.slice(0, 2).map((r) => `« ${r.title} » (${cleanSrc(r.evidence[0].sourceName)})`), g ? `Garages : ${g.value.how}${g.value.chapter ? ` (chapitre ${g.value.chapter})` : ""}.` : ""].filter(Boolean),
-        reliability: "signalé",
-        sources: [...list.slice(0, 2).flatMap(recSources), ...(g ? [{ name: cleanSrc(garages!.evidence[0].sourceName), url: g.url, when: null }] : [])].slice(0, 3),
-        actions: list.slice(0, 1).map((r) => ({ type: "open_record" as const, id: r.id, label: "Ouvrir la fiche" })),
+        text: `Voler une voiture ne la rend pas tienne : il faut l'immatriculer, ${none.where ? `au ${none.where}` : "chez un spécialiste"}, possible dès le chapitre ${none.chapter}. ${p.chapter < none.chapter ? `Tu es au chapitre ${p.chapter} : d'ici là, une voiture volée peut être perdue.` : "Tu y as déjà accès."}`,
+        reliability: src.length >= 2 ? "recoupé" : "signalé",
+        sources: src,
+        actions: [{ type: "open_map", garage: true, filter: "now", label: "Voitures accessibles maintenant" }],
+        more: ["Traqueur avancé : méthode pas encore documentée par les sources."],
       };
     }
+    case "where": {
+      if (topicVehicle) return vehicleAnswer(topicVehicle, ctx, "where");
+      if (topic?.kind === "record") {
+        const r = ctx.feed.items.find((x) => x.id === topic.id);
+        if (r) {
+          const pa = placeAction(r, ctx);
+          return { intent, text: r.details?.place ? `Le lieu cité est ${r.details.place.value.name}${r.details.place.value.district ? `, dans le quartier ${r.details.place.value.district}` : ""}. ${pa ? "Je peux te le montrer sur la carte communautaire (repère approximatif)." : "Je n'ai pas de point vérifié sur la carte pour ce lieu."}` : "Les sources ne précisent pas d'emplacement exact pour celle-ci.", reliability: R[r.reliability], sources: recSources(r), actions: pa ? [pa] : [], topic, evidence: [r.id] };
+        }
+      }
+      if (topic?.kind === "mission") return { intent, text: `Je n'ai pas d'emplacement documenté pour le départ de « ${topic.name} ». Dans le jeu, la carte de l'histoire indique son point de départ.`, reliability: null, sources: [], actions: [], topic };
+      break;
+    }
+    case "next": {
+      if (topic?.kind === "mission") {
+        const guess = nextMissionGuess(cat, topic.name);
+        return guess && missionVisible(guess.mission, p.chapter, p.spoilerMode)
+          ? { intent, text: `Ensuite, ce serait probablement « ${guess.mission.name} », ${guess.basis} : à confirmer dans le jeu.`, reliability: "signalé", sources: [], actions: [{ type: "set_next_mission", name: guess.mission.name, label: `Enregistrer ${guess.mission.name}`, confirm: `Enregistrer « ${guess.mission.name} » comme prochaine mission ?` }], replies: [`Je vais lancer ${guess.mission.name}`], topic }
+          : { intent, text: "Je ne connais pas l'ordre des missions de façon fiable après celle-ci. Quand tu sauras laquelle arrive, dis-le-moi et je vérifie ce qu'il ne faut pas rater.", reliability: null, sources: [], actions: [], topic };
+      }
+      if (topicVehicle) return vehicleAnswer(topicVehicle, ctx, "keep");
+      return answer("Je vais lancer ma prochaine mission", ctx, null);
+    }
+    case "fun":
+    case "vehicle":
     case "ultimate": {
-      const ult = vehicles.filter((v) => v.edition.exclusive === "ultimate").map((v) => viewOf(v, ctx.state)).filter((x) => !x.hidden);
-      if (p.edition !== "ultimate")
-        return {
-          intent,
-          title: p.edition === "standard" ? "Avec l'édition Standard, aucun véhicule Ultimate n'est récupérable." : "Indique ton édition dans Profil pour que je réponde.",
-          lines: ult.slice(0, 4).map((x) => `${x.v.name} — ${x.v.edition.status === "confirmed" ? "exclusivité recoupée" : "exclusivité signalée"}`),
-          reliability: null,
-          sources: [],
-          actions: [{ type: "open_map", garage: true, filter: "ultimate", label: "Voir les exclusivités" }],
-        };
-      // d'abord ce qui est récupérable et dont l'exclusivité est recoupée
-      const now = ult.filter((x) => x.now || x.access === "confirm").sort((a, b) => Number(b.now) - Number(a.now) || Number(b.v.edition.status === "confirmed") - Number(a.v.edition.status === "confirmed"));
+      if (vMentioned && intent !== "ultimate") return vehicleAnswer(vMentioned, ctx);
+      const all = vehicles.map((v) => viewOf(v, ctx.state)).filter((x) => !x.hidden);
+      if (intent === "ultimate" && p.edition !== "ultimate") {
+        const n = all.filter((x) => x.v.edition.exclusive === "ultimate" && x.v.edition.status === "confirmed").length;
+        return { intent, text: p.edition === "standard" ? `Avec l'édition Standard, les exclusivités Ultimate ne te sont pas accessibles${n ? ` (${n} sont recoupées par plusieurs sources)` : ""}. Je ne te recommande donc que ce que ton édition permet.` : "Indique ton édition dans Profil : je ne compte une exclusivité que si elle est établie par les sources.", reliability: null, sources: [], actions: [{ type: "open_map", garage: true, filter: "ultimate", label: "Voir les exclusivités" }] };
+      }
+      const pool = all
+        .filter((x) => x.now && (!x.owned || x.owned === "spotted") && (intent !== "ultimate" || (x.v.edition.exclusive === "ultimate" && x.v.edition.status === "confirmed")))
+        .sort((a, b) => Number(!!b.v.media) - Number(!!a.v.media) || Number(b.urgent) - Number(a.urgent) || Number(solid(b.v.reliability)) - Number(solid(a.v.reliability)));
+      if (!pool.length)
+        return { intent, text: intent === "ultimate" ? "Aucune exclusivité Ultimate établie n'est récupérable à ton chapitre pour l'instant." : "Je n'ai pas de véhicule accessible maintenant pour ta progression dont les conditions sont établies. D'autres existent, mais leur accès reste à confirmer.", reliability: null, sources: [], actions: [{ type: "open_map", garage: true, label: "Voir les voitures cachées" }] };
+      const pick = pool.slice(0, 2);
+      const desc = (x: (typeof pick)[number]) => `la ${x.v.name}${x.v.location.district ? ` (zone de ${x.v.location.district})` : ""}${x.urgent ? `, à récupérer avant la fin du chapitre ${x.v.access.until?.value}` : ""}`;
       return {
         intent,
-        title: now.length ? `${now.length} contenu${now.length > 1 ? "s" : ""} Ultimate pour ton chapitre.` : "Aucun contenu Ultimate accessible à ton chapitre pour l'instant.",
-        lines: now.slice(0, 5).map((x) => `${x.v.name} — ${x.now ? "maintenant" : "accès à confirmer"}${x.v.edition.status === "confirmed" ? "" : " (exclusivité à vérifier)"}${x.v.access.until ? `, seulement jusqu'au chapitre ${x.v.access.until.value}` : ""}`),
-        reliability: now.every((x) => x.v.edition.status === "confirmed") && now.length ? "recoupé" : "signalé",
-        sources: now.slice(0, 2).flatMap((x) => vehSources(x.v)).slice(0, 3),
-        actions: [{ type: "open_map", garage: true, filter: "ultimate", label: "Afficher sur la carte" }, ...now.slice(0, 1).map((x) => ({ type: "focus_vehicle" as const, id: x.v.id, label: x.v.name }))],
-        note: hiddenNote(ult.length - ult.filter((x) => !x.hidden).length),
+        text: `${intent === "fun" ? "Bonne idée avant de continuer ! " : ""}${pick.length === 2 ? `Je te propose ${desc(pick[0])} ou ${desc(pick[1])}.` : `Je te propose ${desc(pick[0])}.`} ${pick.length === 2 ? "Les deux sont accessibles" : "Elle est accessible"} maintenant avec ton édition.`,
+        reliability: pick.every((x) => solid(x.v.reliability)) ? "recoupé" : "signalé",
+        sources: pick.flatMap((x) => vehSources(x.v)).slice(0, 3),
+        actions: pick.map((x) => ({ type: "focus_vehicle" as const, id: x.v.id, label: x.v.model ? `${x.v.make} ${x.v.model}`.trim() : x.v.name })),
+        replies: ["Et comment je la garde ?"],
+        topic: { kind: "vehicle", id: pick[0].v.id },
+        evidence: pick.map((x) => x.v.id),
       };
     }
     case "weapon": {
-      const free = /gratuit|free/.test(norm(q));
-      const { list, hidden } = visibleRecords(ctx, (r) => r.category === "weapon" || /\b(weapon|rifle|sniper|gun|pistol|shotgun)\b/i.test(r.title));
-      const ranked = list.filter((r) => !done(r.id)).sort((a, b) => Number(!!b.details?.place) - Number(!!a.details?.place) || (["official", "confirmed"].includes(b.reliability) ? 1 : 0) - (["official", "confirmed"].includes(a.reliability) ? 1 : 0) || Number(/free|early/i.test(b.title)) - Number(/free|early/i.test(a.title)));
-      if (!ranked.length) return { intent, title: "Aucune arme documentée pour ton chapitre dans les sources collectées.", lines: [], reliability: "non établi", sources: [], actions: [], note: hiddenNote(hidden) };
+      const askFree = /gratuit|free|sans payer/.test(norm(q));
+      const list = visible(ctx, (r) => r.category === "weapon" || /\b(weapon|rifle|sniper|gun|pistol|shotgun)\b/i.test(r.title)).filter((r) => {
+        const ch = r.details?.chapter?.value;
+        return ch == null || ch <= p.chapter;
+      });
+      const isFree = (r: RadarRecord) => /\bfree\b/i.test(r.title) || r.evidence.some((e) => (e.quotes ?? []).some((qq) => /\bfree\b/i.test(qq)));
+      const ranked = list.sort((a, b) => Number(isFree(b)) - Number(isFree(a)) || Number(!!b.details?.place) - Number(!!a.details?.place) || Number(solid(b.reliability)) - Number(solid(a.reliability)));
       const top = ranked[0];
+      if (!top) return { intent, text: `Je n'ai aucune arme documentée pour ton chapitre dans les sources fiables${askFree ? ", gratuite ou non" : ""}.`, reliability: "non établi", sources: [], actions: [] };
+      const free = isFree(top);
+      const place = top.details?.place ? `${top.details.place.value.name}${top.details.place.value.district ? ` (${top.details.place.value.district})` : ""}` : null;
+      const head = frHeadline(top, g);
+      const text = askFree && !free
+        ? `Je n'ai aucune source qui confirme une arme gratuite à ton chapitre. La piste la mieux documentée : ${head}${place ? `, à ${place}` : ""} — sa gratuité n'est pas établie.`
+        : `${free ? "D'après " + (solid(top.reliability) ? "plusieurs sources" : "une source") + ", tu peux récupérer gratuitement" : "La piste la mieux documentée :"} ${head.replace(/^Le /, "le ").replace(/ gratuit tôt dans le jeu.*$/, "")}${place ? `, à ${place}` : ""}.${top.details?.chapter ? ` Accessible au chapitre ${top.details.chapter.value}.` : ""}${top.reliability === "reported" ? " Une seule source le signale : vérifie en jeu." : ""}`;
+      const pa = placeAction(top, ctx);
       return {
         intent,
-        title: `${free ? "Arme gratuite" : "Arme"} à récupérer : ${top.title.replace(/\s*in GTA (6|VI)\b.*$/i, "")}.`,
-        lines: [
-          top.details?.place ? `Lieu cité : ${top.details.place.value.name}${top.details.place.value.district ? ` (${top.details.place.value.district})` : ""}.` : "Lieu non précisé dans l'extrait collecté.",
-          top.details?.chapter ? `Chapitre ${top.details.chapter.value}.` : "",
-          ...ranked.slice(1, 3).map((r) => `Aussi : ${r.title.replace(/\s*in GTA (6|VI)\b.*$/i, "")} (${R[r.reliability]})`),
-        ].filter(Boolean),
+        text,
         reliability: R[top.reliability],
         sources: recSources(top),
-        actions: [...[placeAction(top, ctx)].filter((x): x is AiAction => !!x), { type: "open_record", id: top.id, label: "Ouvrir la fiche" }, { type: "filter_radar", category: "weapon", label: "Toutes les armes" }, { type: "mark_done", id: top.id, label: "C'est fait", confirm: `Marquer « ${top.title} » comme fait ?` }],
-        note: top.reliability === "reported" ? "Signalé par une seule origine : à vérifier en jeu." : hiddenNote(hidden),
+        actions: [pa ?? { type: "open_record", id: top.id, label: "Voir la fiche de l'arme" }, { type: "mark_done", id: top.id, label: "C'est fait", confirm: `Marquer « ${head} » comme fait ?` }],
+        more: ranked.slice(1, 3).map((r) => `${frHeadline(r, g)} (${R[r.reliability]})`),
+        topic: { kind: "record", id: top.id },
+        evidence: [top.id],
       };
     }
     case "money": {
       const target = amountOf(q);
-      // seulement des montants extraits d'un guide lu en entier (citation à l'appui), jamais un prix ou un abonnement
-      const { list, hidden } = visibleRecords(ctx, (r) => !!r.details?.money && r.category !== "news" && !/\b(subscription|gta\+|price|preorder)\b/i.test(r.title));
-      const ranked = list.filter((r) => !done(r.id)).sort((a, b) => (["official", "confirmed"].includes(b.reliability) ? 1 : 0) - (["official", "confirmed"].includes(a.reliability) ? 1 : 0) || (b.conditions.money ?? 0) - (a.conditions.money ?? 0));
-      if (!ranked.length) return { intent, title: "Aucune source d'argent documentée pour ton chapitre.", lines: [], reliability: "non établi", sources: [], actions: [], note: hiddenNote(hidden) };
+      const list = visible(ctx, (r) => !!r.details?.money && r.category !== "news" && !/\b(subscription|gta\+|price|preorder)\b/i.test(r.title)).filter((r) => (r.details?.chapter?.value ?? 0) <= p.chapter);
+      const ranked = list.sort((a, b) => Number(solid(b.reliability)) - Number(solid(a.reliability)) || (b.conditions.money ?? 0) - (a.conditions.money ?? 0));
+      if (!ranked.length) return { intent, text: "Je n'ai pas de source d'argent documentée pour ton chapitre.", reliability: "non établi", sources: [], actions: [] };
       const pick: RadarRecord[] = [];
       let sum = 0;
       for (const r of ranked) {
-        if (target && sum >= target) break;
+        if ((target && sum >= target) || pick.length >= 3) break;
         pick.push(r);
         sum += r.conditions.money ?? 0;
-        if (!target && pick.length >= 3) break;
       }
+      const top = pick[0];
+      const label = (r: RadarRecord) => `${r.conditions.reward ?? fmt$(r.conditions.money ?? 0)}${r.details?.place ? ` à ${r.details.place.value.name}` : ""}`;
       return {
         intent,
-        title: target ? (sum >= target ? `Environ ${fmt$(sum)} avec ${pick.length} source${pick.length > 1 ? "s" : ""} d'argent.` : `Je trouve environ ${fmt$(sum)}, moins que tes ${fmt$(target)}.`) : "Les meilleures sources d'argent pour ton chapitre.",
-        lines: pick.slice(0, 4).map((r) => `${r.conditions.reward ?? fmt$(r.conditions.money ?? 0)} — ${r.details?.place ? r.details.place.value.name : r.title.replace(/\s*in GTA (6|VI)\b.*$/i, "")} (${R[r.reliability]})`),
-        reliability: pick.every((r) => ["official", "confirmed"].includes(r.reliability)) ? "recoupé" : "signalé",
-        sources: pick.slice(0, 3).flatMap(recSources).slice(0, 3),
-        actions: pick.slice(0, 2).map((r) => ({ type: "open_record" as const, id: r.id, label: r.details?.place?.value.name ?? "Ouvrir la fiche" })),
-        note: pick.some((r) => r.reliability === "reported") ? "Certaines sommes ne sont signalées que par une source : à vérifier." : hiddenNote(hidden),
-      };
-    }
-    case "missable": {
-      const urgentV = vehicleRecommendations(vehicles, ctx.state, 10).filter((x) => x.urgent);
-      const { list, hidden } = visibleRecords(ctx, (r) => !!r.details?.contextMissable || r.category === "missable" || r.conditions.missable === true);
-      const finished = new Set(p.missionsDone.map((m) => m.toLowerCase()));
-      const open = list.filter((r) => {
-        if (done(r.id)) return false;
-        const ch = recChapter(r);
-        const until = r.details?.contextMissable?.value.until;
-        if (until && (finished.has(until.toLowerCase()) || (ch != null && p.chapter > ch))) return false;
-        return ch == null || ch <= p.chapter;
-      });
-      if (!open.length && !urgentV.length)
-        return { intent, title: "Rien de manquable n'est documenté pour ta progression : tu peux continuer.", lines: [p.lastMission ? `Dernière mission terminée : « ${p.lastMission} ».` : "Indique ta dernière mission terminée dans Profil pour un avis plus précis."], reliability: null, sources: [], actions: [], note: hiddenNote(hidden) };
-      return {
-        intent,
-        title: "Avant de continuer, termine ceci :",
-        lines: [
-          ...open.slice(0, 3).map((r) => (r.details?.contextMissable?.value.until ? `${r.details.contextMissable.value.subject ?? r.title} — disparaît au lancement de « ${r.details.contextMissable.value.until} »` : r.title)),
-          ...urgentV.slice(0, 2).map((x) => `${x.v.name} — seulement jusqu'au chapitre ${x.v.access.until!.value}`),
-        ],
-        reliability: open.every((r) => ["official", "confirmed"].includes(r.reliability)) ? "recoupé" : "signalé",
-        sources: [...open.slice(0, 2).flatMap(recSources), ...urgentV.slice(0, 1).flatMap((x) => vehSources(x.v))].slice(0, 3),
-        actions: [
-          ...open.slice(0, 1).map((r) => ({ type: "open_record" as const, id: r.id, label: "Ouvrir la fiche" })),
-          ...urgentV.slice(0, 1).map((x) => ({ type: "focus_vehicle" as const, id: x.v.id, label: x.v.name })),
-          ...open.slice(0, 1).filter((r) => r.details?.contextMissable?.value.until).map((r) => ({ type: "set_mission" as const, name: r.details!.contextMissable!.value.until!, label: `J'ai terminé « ${r.details!.contextMissable!.value.until} »`, confirm: `Indiquer que « ${r.details!.contextMissable!.value.until} » est terminée ?` })),
-        ],
-        note: hiddenNote(hidden),
+        text: `${target ? (sum >= target ? `Pour tes ${fmt$(target)}, le plus sûr : ` : `Je trouve environ ${fmt$(sum)}, un peu moins que tes ${fmt$(target)}. Le plus sûr : `) : "Le plus sûr : "}${label(top)}${pick.length > 1 ? `, puis ${pick.slice(1).map(label).join(" et ")}` : ""}.${pick.some((r) => r.reliability === "reported") ? " Certaines sommes ne sont signalées que par une source." : ""}`,
+        reliability: pick.every((r) => solid(r.reliability)) ? "recoupé" : "signalé",
+        sources: pick.flatMap(recSources).slice(0, 3),
+        actions: [placeAction(top, ctx) ?? { type: "open_record", id: top.id, label: `Voir ${top.details?.place?.value.name ?? "la planque"}` }, { type: "mark_done", id: top.id, label: "C'est fait", confirm: `Marquer « ${frHeadline(top, g)} » comme fait ?` }],
+        topic: { kind: "record", id: top.id },
+        evidence: pick.map((r) => r.id),
       };
     }
     case "nearby": {
       const pos = ctx.position;
-      if (!pos) return { intent, title: "Ouvre la carte et centre-la là où tu es, puis repose la question.", lines: ["Je ne lis pas ta position dans le jeu : j'utilise le centre de la carte de l'app."], reliability: null, sources: [], actions: [{ type: "open_map", label: "Ouvrir la carte" }] };
+      if (!pos) return { intent, text: "Je ne lis pas ta position dans le jeu. Ouvre la carte, centre-la là où tu es, puis repose-moi la question.", reliability: null, sources: [], actions: [{ type: "open_map", label: "Ouvrir la carte" }] };
       const dist = (x: number, y: number) => Math.hypot(x - pos.x, y - pos.y);
-      const cands: Array<{ d: number; label: string; action: AiAction; rel: string }> = [];
-      for (const r of visibleRecords(ctx, (r) => !!r.location.zone && r.category !== "news").list)
-        if (!done(r.id)) cands.push({ d: dist(r.location.zone!.x, r.location.zone!.y), label: r.details?.place?.value.name ?? r.title, action: { type: "open_record", id: r.id, label: r.details?.place?.value.name ?? "Fiche" }, rel: R[r.reliability] });
+      const cands: Array<{ d: number; label: string; action: AiAction }> = [];
+      for (const r of visible(ctx, (r) => !!r.location.zone && r.category !== "news")) cands.push({ d: dist(r.location.zone!.x, r.location.zone!.y), label: frHeadline(r, g), action: { type: "open_record", id: r.id, label: `Voir ${r.details?.place?.value.name ?? "la fiche"}` } });
       for (const v of vehicles) {
         const x = viewOf(v, ctx.state);
         const c = v.location.point ?? v.location.zone;
-        if (c && !x.hidden && x.access !== "excluded") cands.push({ d: dist(c.x, c.y), label: v.name, action: { type: "focus_vehicle", id: v.id, label: v.name }, rel: R[v.reliability] });
+        if (c && !x.hidden && x.access !== "excluded") cands.push({ d: dist(c.x, c.y), label: v.name, action: { type: "focus_vehicle", id: v.id, label: `Voir ${v.model || v.name}` } });
       }
-      const near = cands.sort((a, b) => a.d - b.d).slice(0, 4);
-      if (!near.length) return { intent, title: "Rien de localisé près du centre de ta carte.", lines: [], reliability: null, sources: [], actions: [] };
-      return { intent, title: `${near.length} découverte${near.length > 1 ? "s" : ""} près du centre de ta carte.`, lines: near.map((c) => `${c.label} — ~${Math.round(c.d / 10) * 10} m (${c.rel})`), reliability: null, sources: [], actions: near.slice(0, 3).map((c) => c.action), note: "Distances jusqu'au centre des zones de recherche, approximatives." };
+      const near = cands.sort((a, b) => a.d - b.d).slice(0, 2);
+      if (!near.length) return { intent, text: "Je n'ai rien de localisé près du centre de ta carte.", reliability: null, sources: [], actions: [] };
+      return { intent, text: `Près du centre de ta carte : ${near.map((c) => `${c.label} (~${Math.round(c.d / 10) * 10} m)`).join(" et ")}. Les distances sont approximatives.`, reliability: null, sources: [], actions: near.map((c) => c.action) };
     }
-    case "garage":
-    case "vehicle": {
-      const recs = vehicleRecommendations(vehicles, ctx.state, 3);
-      if (!recs.length) return { intent, title: "Aucun véhicule récupérable maintenant n'est documenté pour ta partie.", lines: ["Les autres sont « à confirmer », réservés à une autre édition ou plus loin dans l'histoire."], reliability: null, sources: [], actions: [{ type: "open_map", garage: true, label: "Voir les voitures cachées" }] };
-      return { intent, title: `${recs.length} véhicule${recs.length > 1 ? "s" : ""} à récupérer maintenant.`, lines: recs.map((x) => `${x.v.name} — ${x.v.location.district ?? "lieu cité"} (${R[x.v.reliability]})`), reliability: null, sources: recs.slice(0, 2).flatMap((x) => vehSources(x.v)).slice(0, 3), actions: [{ type: "open_map", garage: true, filter: "now", label: "Voir sur la carte" }, ...recs.slice(0, 2).map((x) => ({ type: "focus_vehicle" as const, id: x.v.id, label: x.v.name }))] };
-    }
-    default: {
-      // recherche plein texte prudente dans les titres et faits extraits
-      const words = norm(q).split(/\W+/).filter((w) => w.length >= 4 && !["comment", "quelle", "quelles", "quels", "est-ce", "peux", "faire", "trouver", "dans", "avec", "pour"].includes(w));
-      if (!words.length) return { intent: "unknown", title: "Pose-moi une question sur une voiture, une arme, de l'argent, une mission ou un lieu.", lines: [], reliability: null, sources: [], actions: [] };
-      const { list, hidden } = visibleRecords(ctx, (r) => r.category !== "news");
-      const scored = list
-        .map((r) => {
-          const blob = norm(`${r.title} ${r.details?.place?.value.name ?? ""} ${r.details?.mission?.value ?? ""}`);
-          return { r, s: words.filter((w) => blob.includes(w)).length };
-        })
-        .filter((x) => x.s > 0)
-        .sort((a, b) => b.s - a.s || b.r.score - a.r.score)
-        .slice(0, 3);
-      if (!scored.length) return { intent: "unknown", title: "Je ne trouve rien à ce sujet dans les sources collectées.", lines: ["Je préfère ne pas inventer : la veille ajoutera la réponse dès qu'un guide fiable la publie."], reliability: "non établi", sources: [], actions: [], note: hiddenNote(hidden) };
-      return { intent: "search", title: `${scored.length} fiche${scored.length > 1 ? "s" : ""} en rapport.`, lines: scored.map((x) => `${x.r.title} (${R[x.r.reliability]})`), reliability: null, sources: scored.slice(0, 3).flatMap((x) => recSources(x.r)).slice(0, 3), actions: scored.slice(0, 2).map((x) => ({ type: "open_record" as const, id: x.r.id, label: "Ouvrir la fiche" })), note: hiddenNote(hidden) };
+    case "buy":
+      return { intent, text: "Les sources collectées n'expliquent pas encore comment acheter une voiture : je préfère ne pas l'inventer. En attendant, tu peux en voler une puis l'immatriculer pour la garder.", reliability: "non établi", sources: [], actions: [], replies: ["Comment conserver ma voiture volée ?"] };
+    case "secret": {
+      const list = visible(ctx, (r) => r.category === "easter_egg" && r.reliability !== "rumor" && (r.details?.chapter?.value ?? 0) <= p.chapter);
+      const top = list.sort((a, b) => Number(!!b.media) - Number(!!a.media) || Number(solid(b.reliability)) - Number(solid(a.reliability)))[0];
+      if (!top) return { intent, text: "Je n'ai pas de secret documenté pour ton chapitre pour l'instant.", reliability: null, sources: [], actions: [] };
+      return { intent, text: `Un secret à découvrir : ${frHeadline(top, g)}.${top.reliability === "reported" ? " Signalé par une seule source." : ""}`, reliability: R[top.reliability], sources: recSources(top), actions: [placeAction(top, ctx) ?? (top.media ? { type: "open_source", url: top.media.url, label: "Voir la vidéo" } : { type: "open_record", id: top.id, label: "Voir la fiche" })], topic: { kind: "record", id: top.id }, evidence: [top.id] };
     }
   }
+
+  // Véhicule cité sans intention claire (« Penumbra FF ? »)
+  if (vMentioned) return vehicleAnswer(vMentioned, ctx);
+  // Mission citée sans verbe (« Tourist Trap ? »)
+  const m = resolveMission(q, cat, opts);
+  if (m.mission) return missionTopicAnswer(ctx, m.mission, m.mission.name);
+  // Demande floue : une question de précision, jamais une liste d'articles
+  return {
+    intent: "clarify",
+    text: "Je ne suis pas sûr de bien comprendre. Tu prépares une mission, tu cherches un véhicule, une arme, de l'argent ou un secret ?",
+    reliability: null,
+    sources: [],
+    actions: [],
+    replies: ["Je vais lancer ma prochaine mission", "Une voiture sympa accessible ?", "Une arme gratuite ?"],
+  };
 }
 
-/** Trois amorces de questions adaptées à la progression. */
+function doneAnswer(ctx: AiContext, name: string): AiAnswer {
+  const p = ctx.state.profile;
+  const already = p.missionsDone.some((m) => nk(m) === nk(name));
+  if (already) return { intent: "mission_done", text: `« ${name} » est déjà notée comme terminée. Tu veux préparer la suivante ?`, reliability: "déclaré par toi", sources: [], actions: [], replies: ["Et après ?"], topic: { kind: "mission", name, known: true } };
+  return {
+    intent: "mission_done",
+    text: `Bravo ! Je note « ${name} » comme terminée ? Les conseils liés à cette mission disparaîtront de tes recommandations.`,
+    reliability: "déclaré par toi",
+    sources: [],
+    actions: [{ type: "set_mission", name, label: `Oui, « ${name} » est terminée`, confirm: `Indiquer que « ${name} » est terminée ?` }],
+    replies: ["Et après ?"],
+    topic: { kind: "mission", name, known: true },
+  };
+}
+
+/** Amorces de questions adaptées à la progression. */
 export function starters(ctx: AiContext): string[] {
   const p = ctx.state.profile;
-  const out = ["Je peux lancer ma prochaine mission sans rien rater ?"];
-  out.push(p.edition === "ultimate" ? "Quels véhicules Ultimate sont accessibles à mon niveau ?" : "Où trouver la voiture de Fast & Furious ?");
-  out.push(p.chapter <= 1 ? "Quelle arme gratuite puis-je récupérer maintenant ?" : "Comment conserver ma voiture volée ?");
+  const out = [p.nextMission ? `Je vais lancer ${p.nextMission}` : "Je vais lancer ma prochaine mission"];
+  out.push("Une voiture sympa accessible maintenant ?");
+  out.push(p.chapter <= 1 ? "Quelle arme gratuite puis-je récupérer ?" : "Comment conserver ma voiture volée ?");
   return out;
 }
 
 /** Validation d'une action avant exécution : l'identifiant doit exister dans le catalogue courant. */
 export function isValidAction(a: AiAction, feed: RadarFeed | null): boolean {
-  if (!feed) return a.type === "open_map";
+  if (!feed) return a.type === "open_map" || a.type === "ask";
   switch (a.type) {
     case "focus_vehicle":
     case "vehicle_state":
@@ -393,7 +619,10 @@ export function isValidAction(a: AiAction, feed: RadarFeed | null): boolean {
     case "open_source":
       return /^https:\/\//.test(a.url) && (feed.items.some((r) => r.evidence.some((e) => e.url === a.url) || r.media?.url === a.url) || !!feed.vehicles?.some((v) => v.media?.url === a.url || v.evidence.some((e) => e.url === a.url)));
     case "set_mission":
-      return a.name.length > 1 && a.name.length < 80;
+    case "set_next_mission":
+      return a.name.length > 1 && a.name.length < 80 && !/[<>{}]/.test(a.name);
+    case "ask":
+      return a.question.length > 1 && a.question.length < 200;
     case "show_place":
       return (!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) || (!!a.district && a.district.length > 1 && a.district.length < 60);
     default:

@@ -4,7 +4,8 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
 import { answer, isValidAction, starters } from "@/lib/ai/engine";
-import type { AiAction, AiAnswer, PlaceRef } from "@/lib/ai/engine";
+import type { AiAction, AiAnswer, PlaceRef, Topic } from "@/lib/ai/engine";
+import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
 import { lngLatToGame, loadLandmarks } from "@/lib/gtadb";
 import { useIsTablet } from "@/lib/useMedia";
@@ -14,13 +15,15 @@ import { Sheet } from "./Sheet";
 import { BrandMark } from "./Brand";
 import { Icon } from "./ui/Icon";
 
-type Msg = { id: number; role: "user"; text: string } | { id: number; role: "ai"; a: AiAnswer };
-const HISTORY_KEY = "leonida-os/ai-history/v1";
+type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending" };
+type Msg = { id: number; role: "user"; text: string } | AiMsg;
+const HISTORY_KEY = "leonida-os/ai-history/v2";
 
 function loadHistory(): Msg[] {
   try {
     const v = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
-    return Array.isArray(v) ? v.slice(-40) : [];
+    // on ne garde que des messages au format actuel (l'ancien format « fiche » est abandonné)
+    return Array.isArray(v) ? v.filter((m) => m && (m.role === "user" ? typeof m.text === "string" : typeof m.a?.text === "string")).slice(-40) : [];
   } catch {
     return [];
   }
@@ -38,7 +41,8 @@ function mapPosition(): { x: number; y: number } | null {
   }
 }
 
-const REL_CLS: Record<string, string> = { officiel: "official", recoupé: "confirmed", signalé: "reported", "non établi": "rumor" };
+const REL_CLS: Record<string, string> = { officiel: "official", recoupé: "confirmed", signalé: "reported", "non établi": "rumor", "déclaré par toi": "personal" };
+const REL_FR: Record<string, string> = { officiel: "Information officielle", recoupé: "Recoupé par plusieurs sources", signalé: "Signalé par une source", "non établi": "Non établi", "déclaré par toi": "D’après ce que tu m’as dit" };
 
 /**
  * LEONIDA AI : accès permanent et discret (pas d'onglet).
@@ -53,11 +57,12 @@ export function AiCopilot() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [text, setText] = useState("");
   const [pending, setPending] = useState<{ key: string; action: AiAction } | null>(null);
-  const [busy, setBusy] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => setMsgs(loadHistory()), []);
+  const msgsRef = useRef<Msg[]>([]);
+  msgsRef.current = msgs;
   const [places, setPlaces] = useState<PlaceRef[]>([]);
   useEffect(() => {
     if (aiOpen && !places.length) void loadLandmarks().then((l) => setPlaces(l.map(({ id, name, district }) => ({ id, name, district }))));
@@ -74,41 +79,60 @@ export function AiCopilot() {
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: msgs.length > 1 ? "smooth" : "auto" });
   }, [msgs, aiOpen]);
 
+  // Sujet de la conversation (dernière réponse) : permet « et comment je la garde ? »
+  const topicOf = (list: Msg[]): Topic | null => {
+    for (let i = list.length - 1; i >= 0; i--) {
+      const m = list[i];
+      if (m.role === "ai") return m.a.topic ?? null;
+    }
+    return null;
+  };
+
   const ask = useCallback(
-    async (q: string) => {
-      const question = q.trim();
+    async (q: string, forcedTopic?: Topic | null) => {
+      const question = q.trim().slice(0, 300);
       if (!question) return;
+      setText("");
       // repères gtadb (cache partagé avec la carte) : nécessaires pour proposer « voir sur la carte »
       const pl = places.length ? places : (await loadLandmarks()).map(({ id, name, district }) => ({ id, name, district }));
       const ctx = { feed, state, position: mapPosition(), places: pl };
-      let a = answer(question, ctx);
-      setMsgs((m) => [...m, { id: Date.now(), role: "user", text: question }]);
-      setText("");
-      // Synthèse IA facultative (proxy serveur) seulement si la recherche locale ne trouve rien
-      if (proxyEnabled() && (a.intent === "unknown" || a.intent === "search")) {
-        setBusy(true);
-        const p = await askProxy(question, ctx, a).catch(() => null);
-        setBusy(false);
-        if (p) a = p;
-      }
-      a = { ...a, actions: a.actions.filter((x) => isValidAction(x, feed)) };
-      setMsgs((m) => [...m, { id: Date.now() + 1, role: "ai", a }]);
+      const topic: Topic | null = forcedTopic === undefined ? topicOf(msgsRef.current) : forcedTopic;
+      const local = answer(question, ctx, topic);
+      const a = { ...local, actions: local.actions.filter((x) => isValidAction(x, feed)).slice(0, 2) };
+      const id = Date.now();
+      // la réponse locale s'affiche tout de suite ; la synthèse serveur (si déployée) l'affine ensuite
+      const remote = proxyEnabled() && !!(a.evidence ?? []).length;
+      setMsgs((m) => [...m, { id, role: "user", text: question }, { id: id + 1, role: "ai", a, llm: remote ? "pending" : undefined }]);
+      if (!remote) return;
+      const r = await askProxy(question, state.profile, topic);
+      setMsgs((m) =>
+        m.map((x) => {
+          if (x.id !== id + 1 || x.role !== "ai") return x;
+          if (!("text" in r)) return { ...x, llm: r.status };
+          const actions = r.actions.filter((y) => isValidAction(y, feed) && a.actions.some((z) => JSON.stringify(z) === JSON.stringify(y)));
+          return { ...x, a: { ...x.a, text: r.text, actions: actions.length ? actions : x.a.actions }, llm: r.status };
+        }),
+      );
     },
     [feed, state, places],
   );
 
   // Questions lancées depuis l'accueil (amorces)
   useEffect(() => {
-    const h = (e: Event) => void ask(String((e as CustomEvent).detail ?? ""));
+    const h = (e: Event) => {
+      const d = (e as CustomEvent).detail as string | { question: string; topic?: Topic | null };
+      if (typeof d === "string") void ask(d);
+      else if (d?.question) void ask(d.question, d.topic ?? null);
+    };
     window.addEventListener("leonida:ask", h);
     return () => window.removeEventListener("leonida:ask", h);
   }, [ask]);
 
-  const run = (a: AiAction, confirmed = false) => {
+  const run = (a: AiAction, confirmed = false, key = "") => {
     tick();
-    const needs = a.type === "mark_done" || a.type === "vehicle_state" || a.type === "set_mission";
+    const needs = a.type === "mark_done" || a.type === "vehicle_state" || a.type === "set_mission" || a.type === "set_next_mission";
     if (needs && !confirmed) {
-      setPending({ key: JSON.stringify(a), action: a });
+      setPending({ key, action: a });
       return;
     }
     setPending(null);
@@ -152,6 +176,13 @@ export function AiCopilot() {
         store.setMission(a.name, true);
         store.celebrate("Mission notée");
         break;
+      case "set_next_mission":
+        store.setNextMission(a.name);
+        store.celebrate("Prochaine mission enregistrée");
+        break;
+      case "ask":
+        void ask(a.question);
+        break;
     }
   };
 
@@ -165,13 +196,15 @@ export function AiCopilot() {
     }
   };
 
+  const lastAi = [...msgs].reverse().find((m): m is AiMsg => m.role === "ai");
+
   const body = (
     <div className="ai" data-testid="ai-panel">
       <header className="ai__head">
         <BrandMark size={30} />
         <div>
           <strong>LEONIDA AI</strong>
-          <span>{proxyEnabled() ? "Guides collectés + synthèse IA" : "Réponses tirées des guides collectés"}</span>
+          <span data-testid="ai-mode">{proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
         </div>
         {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
         {isTablet && <button className="iconbtn" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>}
@@ -179,7 +212,7 @@ export function AiCopilot() {
       <div className="ai__list" ref={listRef} data-testid="ai-list">
         {msgs.length === 0 && (
           <div className="ai__intro">
-            <p>Pose une question sur ta partie : je réponds avec les fiches de la veille, en tenant compte de ton chapitre, de ton édition et de ce que tu as déjà fait.</p>
+            <p>Salut ! Dis-moi quelle mission tu vas lancer ou ce que tu cherches. Je réponds avec les fiches vérifiées de la veille, selon ton chapitre, ton édition et ce que tu as déjà fait.</p>
             <div className="ai__starters">
               {starters({ feed, state }).map((q) => (
                 <button key={q} className="chip press" onClick={() => ask(q)} data-testid="ai-starter">{q}</button>
@@ -191,41 +224,64 @@ export function AiCopilot() {
           m.role === "user" ? (
             <div key={m.id} className="bubble bubble--me">{m.text}</div>
           ) : (
-            <article key={m.id} className="bubble bubble--ai" data-testid="ai-answer" data-intent={m.a.intent}>
-              <strong className="bubble__title">{m.a.title}</strong>
-              {m.a.lines.length > 0 && <ul>{m.a.lines.map((l, i) => <li key={i}>{l}</li>)}</ul>}
-              {(m.a.reliability || m.a.sources.length > 0) && (
-                <div className="bubble__meta">
-                  {m.a.reliability && <span className={`relchip relchip--${REL_CLS[m.a.reliability]}`}>{m.a.reliability}</span>}
-                  {m.a.sources.map((s, i) => (
-                    <a key={i} href={s.url} target="_blank" rel="noreferrer">{s.name}{s.when ? ` · ${s.when}` : ""}</a>
-                  ))}
-                </div>
+            <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
+              <p className="bubble__text">{m.a.text}</p>
+              {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
+              {m.a.reliability && (
+                <p className={`bubble__rel relchip--${REL_CLS[m.a.reliability]}`}><i />{REL_FR[m.a.reliability]}</p>
               )}
-              {m.a.note && <p className="bubble__note"><Icon name="info" size={12} /> {m.a.note}</p>}
               {m.a.actions.length > 0 && (
                 <div className="bubble__actions">
                   {m.a.actions.map((a, i) => {
-                    const key = JSON.stringify(a);
-                    const ask = pending?.key === key && "confirm" in a;
-                    return ask ? (
+                    const key = `${m.id}:${JSON.stringify(a)}`;
+                    const asking = pending?.key === key && "confirm" in a;
+                    return asking ? (
                       <span key={i} className="confirm" data-testid="ai-confirm">
                         <span>{(a as { confirm: string }).confirm}</span>
                         <button className="btn btn--primary btn--xs" onClick={() => run(a, true)}>Confirmer</button>
                         <button className="btn btn--ghost btn--xs" onClick={() => setPending(null)}>Annuler</button>
                       </span>
                     ) : (
-                      <button key={i} className={`btn btn--xs press ${i === 0 ? "btn--on" : "btn--ghost"}`} onClick={() => run(a)} data-testid={`ai-action-${a.type}`}>
+                      <button key={i} className={`btn btn--xs press ${i === 0 ? "btn--on" : "btn--ghost"}`} onClick={() => run(a, false, key)} data-testid={`ai-action-${a.type}`}>
                         {a.label}
                       </button>
                     );
                   })}
                 </div>
               )}
+              {(m.a.more?.length ?? 0) > 0 && (
+                <details className="bubble__more" data-testid="ai-more">
+                  <summary>En savoir plus</summary>
+                  <ul>{m.a.more!.map((l, i) => <li key={i}>{l}</li>)}</ul>
+                </details>
+              )}
+              {m.a.sources.length > 0 && (
+                <details className="bubble__more" data-testid="ai-sources">
+                  <summary>Sources et preuves ({m.a.sources.length})</summary>
+                  <ul>
+                    {m.a.sources.map((s, i) => (
+                      <li key={i}>
+                        <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>{s.when ? ` · ${s.when}` : ""}
+                        {s.title && <em className="bubble__orig" lang="en">Titre d’origine : {s.title}</em>}
+                        {s.quote && <q lang="en">{s.quote.slice(0, 220)}</q>}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+              {m === lastAi && (m.a.replies?.length ?? 0) > 0 && (
+                <div className="bubble__replies">
+                  {m.a.replies!.map((r) => (
+                    <button key={r} className="chip chip--reply press" onClick={() => ask(r)} data-testid="ai-reply">{r}</button>
+                  ))}
+                </div>
+              )}
+              {m.llm && m.llm !== "pending" && m.llm !== "generated" && m.llm !== "cached" && m.llm !== "skipped" && (
+                <p className="bubble__note" data-testid="ai-llm-note">Réponse directe : la synthèse IA n’est pas disponible pour le moment.</p>
+              )}
             </article>
           ),
         )}
-        {busy && <div className="bubble bubble--ai bubble--typing"><i /><i /><i /></div>}
       </div>
       <form
         className="ai__input"
@@ -234,7 +290,7 @@ export function AiCopilot() {
           void ask(text);
         }}
       >
-        <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} placeholder="Demande à Leonida…" enterKeyHint="send" aria-label="Question pour LEONIDA AI" data-testid="ai-input" maxLength={300} />
+        <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)} placeholder="Demande à Leonida…" enterKeyHint="send" aria-label="Question pour LEONIDA AI" data-testid="ai-input" maxLength={300} autoComplete="off" />
         <button type="submit" className="ai__send press" disabled={!text.trim()} aria-label="Envoyer"><Icon name="arrow" size={18} /></button>
       </form>
     </div>
