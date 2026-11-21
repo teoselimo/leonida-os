@@ -13,7 +13,7 @@ const prod = JSON.parse(readFileSync("tests/fixtures/radar-prod.json", "utf8"));
 test("LEONIDA BRAIN : consignes de naturel et fiabilité sans règle robotique 2–4 phrases", () => {
   expect(PROMPT_VERSION).toContain("leonida");
   expect(RULES).toContain("spontané");
-  expect(RULES).toContain("anti");
+  expect(RULES).toMatch(/anti-spoiler/i);
   expect(RULES).not.toMatch(/2 à 4 phrases|2–4 phrases/i);
   expect(RULES).toContain("META_MARK".replace("META_MARK", "@@@"));
 });
