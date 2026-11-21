@@ -1,5 +1,7 @@
 # LEONIDA private GPT Worker. Safe to commit: this file contains NO secrets.
-# The pilot starts DISABLED; enable only after the owner's explicit confirmation.
+# The pilot starts DISABLED because AI_ENABLED is not set by default.
+# Set AI_ENABLED in the Cloudflare Dashboard only after secrets and billing controls are verified.
+# keep_vars ensures dashboard variables persist on subsequent Wrangler deployments.
 name = "leonida-gpt-private"
 main = "./openai-worker.ts"
 compatibility_date = "2026-11-01"
@@ -7,7 +9,6 @@ keep_vars = true
 preview_urls = false
 
 [vars]
-AI_ENABLED = "0"
 MODEL = "gpt-6.1-terra"
 ALLOWED_ORIGIN = "https://teoselimo.github.io"
 MONTHLY_BUDGET_USD = "2.00"
