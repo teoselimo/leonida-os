@@ -455,7 +455,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
         {searchOpen ? search : filters}
       </div>
       {indexPanel}
-      {!sheetOpen && cartoBar
+      {!sheetOpen && cartoBar}
       {!sheetOpen && !carto && (
         <div className="strip" onClick={(e) => e.stopPropagation()} data-testid={garage ? "garage-strip" : undefined}>
           {garage ? sortedVehicles.map((x) => vrow(x, true)) : recs.map((r) => <RecoCard key={r.discovery.id} rec={r} variant="chip" />)}
