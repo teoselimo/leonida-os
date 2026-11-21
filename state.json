@@ -1,7 +1,7 @@
 {
  "rockstar-youtube": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
-  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -17,7 +17,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "youtube-search": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
@@ -25,8 +25,8 @@
   "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
  },
  "gtaseries-youtube": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
-  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -34,8 +34,8 @@
   "etag": null
  },
  "rockstarintel": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
-  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -43,8 +43,8 @@
   "etag": "\"85ba2f9f7c45bebf6897fde545f9e7f6\""
  },
  "gtaboom": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
-  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -52,8 +52,8 @@
   "etag": null
  },
  "pcgamer": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
-  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -61,8 +61,8 @@
   "etag": null
  },
  "gamesradar": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
-  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -78,11 +78,72 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "reddit-gta6": {
-  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "disabled",
   "statusDetail": "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif."
+ },
+ "powerpyx": {
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "10 éléments lus",
+  "etag": "\"bb046d80d6eb6fa0e50a64fe7d063549\""
+ },
+ "powerpyx-sitemap": {
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "25 éléments lus",
+  "etag": null
+ },
+ "gtaxtreme-sitemap": {
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "11 éléments lus",
+  "etag": null
+ },
+ "pushsquare": {
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "25 éléments lus",
+  "etag": null
+ },
+ "alcasthq": {
+  "lastAttemptAt": "2026-11-21T09:44:56.655Z",
+  "lastSuccessAt": "2026-11-21T09:44:56.655Z",
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "ok",
+  "statusDetail": "10 éléments lus",
+  "etag": "W/\"a4e46fa9eee0008f30cc15091ce7a635\""
+ },
+ "keengamer": {
+  "lastAttemptAt": null,
+  "lastSuccessAt": null,
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "disabled",
+  "statusDetail": "Désactivée dans sources.json"
+ },
+ "gamesgg": {
+  "lastAttemptAt": null,
+  "lastSuccessAt": null,
+  "consecutiveFailures": 0,
+  "lastError": null,
+  "status": "disabled",
+  "statusDetail": "Désactivée dans sources.json"
  }
 }

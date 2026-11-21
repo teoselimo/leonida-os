@@ -1,0 +1,2414 @@
+[
+ {
+  "id": "v-maibatsu-penumbra-ff",
+  "type": "vehicle",
+  "name": "'97 Maibatsu Penumbra FF",
+  "make": "Maibatsu",
+  "model": "Penumbra FF",
+  "year": "97",
+  "aliases": {
+   "value": [
+    "mitsubishi-eclipse"
+   ],
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
+    },
+    {
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+     "quote": "Maibatsu ’97 Penumbra FF (Paul Walker’s Eclipse)"
+    },
+    {
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+     "quote": "Maibatsu ’97 Penumbra FF (Paul Walkers Eclipse)"
+    }
+   ],
+   "conflicts": []
+  },
+  "kind": "hidden",
+  "variant": {
+   "value": "bright green",
+   "support": [
+    {
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+     "quote": "On Vespucci Island the bright green Fast & Furious tribute is inside a villa garage just north of the road."
+    },
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+     "quote": "Finding, buying, and stealing your dream car or bike is a peak part of Grand Theft Auto, and mine is the Fast and Furious Mitsubishi Eclipse in GTA 6, based on the bright green car driven by Paul Walker as Brian O'Con…"
+    }
+   ],
+   "conflicts": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
+    }
+   ]
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The bright green Maibatsu ’97 Penumbra FF is inside a villa garage on Vespucci Island, among the Rialto Islands west of Vice Beach.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
+      "quote": "The bright green Maibatsu ’97 Penumbra FF is inside a villa garage on Vespucci Island, among the Rialto Islands west of Vice Beach."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-paul-walker-car",
+      "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "On Vespucci Island the bright green Fast & Furious tribute is inside a villa garage just north of the road."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Fahre westlich von Vice Beach über den Damm durch die Rialto Islands."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+      "quote": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach."
+     }
+    ]
+   },
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 2,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-paul-walker-car",
+      "quote": "Yes, once registering cars unlocks in Chapter 2."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": true,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-paul-walker-car",
+      "quote": "The side door sets off an alarm, and that brings people running before you are even in the car."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+      "quote": "This triggers an alarm, but you can switch that off pretty quickly on the wall to your left as you head in."
+     }
+    ],
+    "conflicts": []
+   }
+  },
+  "keep": {
+   "text": {
+    "value": "After taking the car, deal with any wanted level and register it at a workshop.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
+      "quote": "After taking the car, deal with any wanted level and register it at a workshop."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-paul-walker-car",
+      "quote": "Below I show you where it is, how to get it out of the garage and how to keep it."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Location evidence · In-game map capture · How to register the car"
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+      "quote": "This gorgeous motor can be found locked in a garage in Vice City in GTA 6 , but it can be stolen, and, if you play your cards right, you can even register it as your own for free."
+     }
+    ]
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
+    "quote": "Cross the hedge, turn left to the small green door and enter the garage area."
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
+    "quote": "Use the main garage door to open it from inside, then drive the bright green Penumbra FF out."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "quote": "Drive west from Vice Beach to Vespucci Island."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "quote": "Go through the small green door on your left into the garage area."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "quote": "Open the garage from the main garage door, not the side door."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
+    "quote": "After taking the car, deal with any wanted level and register it at a workshop."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "quote": "If you take it in Chapter 1, you lose it again once you die, get busted or leave it behind."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "quote": "Check whether the car has a tracker before you drive off with it."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "quote": "GTA 6 Police Wanted Level Explained"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
+    "title": "GTA 6 paul walker car location",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-paul-walker-car",
+    "title": "GTA 6 Paul Walker Car Location: Fast and Furious Eclipse",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+    "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "confirmed",
+  "reasons": [
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : AlcastHQ",
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)",
+     "source : GamesRadar+"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-annis-hellion",
+  "type": "vehicle",
+  "name": "Annis Hellion",
+  "make": "Annis",
+  "model": "Hellion",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "\"There's an Annis Hellion parked at one of the houses on Orchard Avenue.\" Reward: $1,400",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "\"There's an Annis Hellion parked at one of the houses on Orchard Avenue.\" Reward: $1,400"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "title": "GTA 6 steal vehicles for moses walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ascot-paragon",
+  "type": "vehicle",
+  "name": "Ascot Paragon",
+  "make": "Ascot",
+  "model": "Paragon",
+  "year": null,
+  "aliases": null,
+  "kind": "dynamic",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The Banana Hole Main Bar, Shore Drive; reported evening sighting.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "The Banana Hole Main Bar, Shore Drive; reported evening sighting."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Die Hauptbar Banana Hole, Shore Drive; berichtete über eine abendliche Sichtung."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bf-bandito",
+  "type": "vehicle",
+  "name": "BF Bandito",
+  "make": "BF",
+  "model": "Bandito",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "silver",
+   "support": [
+    {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+     "quote": "When you reach the area you will see a group driving off-road vehicles around the swamp, with the silver car being the Bandito that you are looking for."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The search area for the BF Bandito covers the area of Buckskin Swamp in southeastern Kelly County.",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "The search area for the BF Bandito covers the area of Buckskin Swamp in southeastern Kelly County."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Buckskin",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -4117,
+    "y": 896,
+    "radius": 150,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "title": "GTA 6 steal vehicles for moses walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Buckskin (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-banshee",
+  "type": "vehicle",
+  "name": "Bravado Banshee",
+  "make": "Bravado",
+  "model": "Banshee",
+  "year": null,
+  "aliases": null,
+  "kind": "dynamic",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Sweetbay Inn, East Buckley Drive; reported late-night sighting.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Sweetbay Inn, East Buckley Drive; reported late-night sighting."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Sweetbay Inn, East Buckley Drive; berichtete über eine spätnächtliche Sichtung."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-gauntlet-hellfire",
+  "type": "vehicle",
+  "name": "Bravado Gauntlet Hellfire",
+  "make": "Bravado",
+  "model": "Gauntlet Hellfire",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "M7 junkyard off Galerina Street, east of Boone Speedway.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "M7 junkyard off Galerina Street, east of Boone Speedway."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "M7-Schrottplatz an der Galerina Street, östlich von Boone Speedway."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "Not every garage needs to be a wall of supercars."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Our take: A car you love bringing out for a drive deserves a garage slot.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "Our take: A car you love bringing out for a drive deserves a garage slot."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-vamos",
+  "type": "vehicle",
+  "name": "Declasse Vamos",
+  "make": "Declasse",
+  "model": "Vamos",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The car is located in the shed to the east of the house, but you need a code to enter the door on the side, you can't break it or pick it open.",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "The car is located in the shed to the east of the house, but you need a code to enter the door on the side, you can't break it or pick it open."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "quote": "Go enter this on the keypad on the side of the shed to enter and find the car."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "title": "GTA 6 steal vehicles for moses walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-yosimite-1500",
+  "type": "vehicle",
+  "name": "Declasse Yosimite 1500",
+  "make": "Declasse",
+  "model": "Yosimite 1500",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "\"There's a Yosemite 1500 on Bastion St.\" – Reward: $1,850",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "\"There's a Yosemite 1500 on Bastion St.\" – Reward: $1,850"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "title": "GTA 6 steal vehicles for moses walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-cheetah",
+  "type": "vehicle",
+  "name": "Grotti Cheetah",
+  "make": "Grotti",
+  "model": "Cheetah",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+     "quote": "Edition check: The pictured ’95 Cheetah is an Ultimate Edition item ."
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "The white ’95 Cheetah in Rockstar&#x27;s official image looks right at home outside the Ocean View, and we&#x27;d make room for that look on any Vice City wishlist.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "The white ’95 Cheetah in Rockstar&#x27;s official image looks right at home outside the Ocean View, and we&#x27;d make room for that look on any Vice City wishlist."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-itali-rsx",
+  "type": "vehicle",
+  "name": "Grotti Itali RSX",
+  "make": "Grotti",
+  "model": "Itali RSX",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-karin-futo",
+  "type": "vehicle",
+  "name": "Karin Futo",
+  "make": "Karin",
+  "model": "Futo",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "\"There's a Karin Futo stored in a lockup in the Draper Island Docks.\" Reward: $1,500",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "\"There's a Karin Futo stored in a lockup in the Draper Island Docks.\" Reward: $1,500"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "title": "GTA 6 steal vehicles for moses walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-infernus",
+  "type": "vehicle",
+  "name": "Pegassi Infernus",
+  "make": "Pegassi",
+  "model": "Infernus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Police-station parking structure, NW 9th Street, level seven.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Police-station parking structure, NW 9th Street, level seven."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Parkhaus der Polizeistation, NW 9th Street, Ebene sieben."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Police-station parking structure, NW 9th Street, level seven."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-tempesta",
+  "type": "vehicle",
+  "name": "Pegassi Tempesta",
+  "make": "Pegassi",
+  "model": "Tempesta",
+  "year": null,
+  "aliases": null,
+  "kind": "dynamic",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "NE 3rd Street; random repossession encounter.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "NE 3rd Street; random repossession encounter."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "NE 3rd Street; zufällige Rücknahmebegegnung."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "Try this: Take the same corners in both cars, rather than comparing one motorway blast with one messy city drive."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-toros",
+  "type": "vehicle",
+  "name": "Pegassi Toros",
+  "make": "Pegassi",
+  "model": "Toros",
+  "year": null,
+  "aliases": null,
+  "kind": "dynamic",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Outside Pegassi Residences, Bayside Drive; reported evening sighting.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Outside Pegassi Residences, Bayside Drive; reported evening sighting."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Außerhalb der Pegassi Residences, Bayside Drive; berichtete über eine abendliche Sichtung."
+     }
+    ]
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": true,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-vitello",
+  "type": "vehicle",
+  "name": "Pegassi Vitello",
+  "make": "Pegassi",
+  "model": "Vitello",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Villa garage on Flamingo Parkway, east of Belville.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Villa garage on Flamingo Parkway, east of Belville."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Villa-Garage am Flamingo Parkway, östlich von Belville."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "That saves a lot of chasing the wrong label."
+     }
+    ]
+   },
+   "district": "Belville",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -1375,
+    "y": 2897,
+    "radius": 653,
+    "widened": true
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche élargie autour de Belville (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pfister-comet-s2",
+  "type": "vehicle",
+  "name": "Pfister Comet S2",
+  "make": "Pfister",
+  "model": "Comet S2",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "red",
+   "support": [
+    {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-company-cars-speak-to-the-concierge-walkthrough",
+     "quote": "When you are ready speak to the salesman that was arguing with the other man near the red car."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Starting Location: Vice Beach > Washington Beach",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-company-cars-speak-to-the-concierge-walkthrough",
+      "quote": "Starting Location: Vice Beach > Washington Beach"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Washington Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1702,
+    "y": 2183,
+    "radius": 642,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": {
+    "value": "Pool Day",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-company-cars-speak-to-the-concierge-walkthrough",
+      "quote": "Note this may have a lock icon on it immediately after Pool Day, but you can still go there now and speak to him."
+     }
+    ],
+    "conflicts": []
+   },
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-company-cars-speak-to-the-concierge-walkthrough",
+    "title": "GTA 6 company cars speak to the concierge walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Zone de recherche autour de Washington Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pfister-growler",
+  "type": "vehicle",
+  "name": "Pfister Growler",
+  "make": "Pfister",
+  "model": "Growler",
+  "year": null,
+  "aliases": null,
+  "kind": "dynamic",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Multistorey parking structure on Fig Street; reported afternoon sighting.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Multistorey parking structure on Fig Street; reported afternoon sighting."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Mehrstöckiges Parkhaus in der Fig Street; berichtete über eine Nachmittagssichtung."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-piccia-furia",
+  "type": "vehicle",
+  "name": "Piccia Furia",
+  "make": "Piccia",
+  "model": "Furia",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Mansion garage on Palladia Lane, Peacock Estates.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Mansion garage on Palladia Lane, Peacock Estates."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Herrenhausgarage in der Palladia Lane, Peacock Estates."
+     }
+    ]
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-progen-emerus",
+  "type": "vehicle",
+  "name": "Progen Emerus",
+  "make": "Progen",
+  "model": "Emerus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "If your garage fantasy starts with a supercar, put the Emerus near the top of the shopping list.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "If your garage fantasy starts with a supercar, put the Emerus near the top of the shopping list."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Leonida",
+   "regionId": "ambrosia",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-truffade-thrax",
+  "type": "vehicle",
+  "name": "Truffade Thrax",
+  "make": "Truffade",
+  "model": "Thrax",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-western-nightblade",
+  "type": "vehicle",
+  "name": "Western Nightblade",
+  "make": "Western",
+  "model": "Nightblade",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "\"The Final Chapter motorcycle club has a Western Nightblade in Ambrosia.\" Reward: $6,310",
+    "support": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "\"The Final Chapter motorcycle club has a Western Nightblade in Ambrosia.\" Reward: $6,310"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ambrosia",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -2796,
+    "y": 3954,
+    "radius": 778,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+    "title": "GTA 6 steal vehicles for moses walkthrough",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ambrosia (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ }
+]
