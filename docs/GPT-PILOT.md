@@ -2,6 +2,27 @@
 
 Branche : experiment/openai-gpt-leonida. Base : experiment/claude-artifact, PR #11 de Claude. Les secrets et l'activation réelle sont exclusivement à la charge du propriétaire ; aucun appel API n'est réalisé par le build ni par les tests.
 
+## État du pilote, 21 novembre 2026
+
+- Worker déjà déployé : `leonida-gpt-private` sur Cloudflare (secret OPENAI_API_KEY + code LEONIDA_ACCESS_TOKEN).
+- Préversion web : `https://teoselimo.github.io/leonida-os/gpt-preview/` (pas de second Worker, même origine que GitHub Pages).
+- La version stable `main` n'est **pas** remplacée : seule la préversion du sous-dossier est compilée depuis cette branche expérimentale.
+- **À confirmer avant GO** : une vraie réponse GPT sur iPhone. Erreur SSE `error` vue sur le Worker ; désormais classifiée sans exposer le message ou les secrets.
+- **Recherche web** : une option explicite dans le chat, désactivée par défaut. La recherche n'est **pas encore activée dans le Worker** sans la variable de Dashboard `WEB_SEARCH_ENABLED=1`. Les appels sans recherche restent possibles.
+- La recherche web native de Responses API utilise `web_search`, maximum `max_tool_calls=1` par tour. Facturation publique au 21/11/2026 : **$0.01 par appel** + tokens d'entrée/sortie et des résultats (prix variables). Le Worker réserve conservativement un appel et des tokens supplémentaires, puis ajuste avec l'usage API reçu. **Ce plafond estimé ne remplace pas un plafonnement au niveau OpenAI Platform.** Ne pas activer la recherche automatique sans accord et contrôles de consommation.
+- Les liens cités proviennent des annotations `url_citation` de l'API, pas de liens inventés par le modèle. Ils sont affichés et cliquables dans le chat. Une citation ne garantit pas à elle seule la véracité de l'affirmation ; les rumeurs restent marquées comme signalées.
+- Documentation officielle : https://developers.openai.com/api/docs/guides/tools-web-search ; tarifs : https://developers.openai.com/api/docs/pricing .
+
+### Procédure d'activation recherche web (après résolution du chat GPT de base)
+
+1. Cloudflare Workers → `leonida-gpt-private` → **Settings → Variables and Secrets**.
+2. Ajouter une variable **Production** (non secret) `WEB_SEARCH_ENABLED=1` ; conserver les deux secrets existants sans les réécrire.
+3. Appliquer/déployer la nouvelle version du Worker (vérifier le SHA GitHub et le nouvel onglet Deployments). Le code de branche doit contenir le support `web_search`.
+4. Dans la préversion LEONIDA, cliquer sur `🌐 Rechercher sur Internet` avant de lancer la requête.
+5. Vérifier que les sources web s'affichent réellement sous la réponse et que le budget/usage du projet OpenAI reflète l'appel.
+
+Ne pas activer pour les tests sans vérifier l'état du Worker. Une recherche web ne donne pas au modèle accès à une sauvegarde de jeu, à ChatGPT Memory, ni aux actions non déclarées de l'application.
+
 ## Objectif / choix du modèle
 - Profil du joueur + contexte GTA VI sourcé + personnalité naturelle / questions de suivi.
 - Modèle initial : **gpt-6.1-terra**, coût standard API public (novembre 2026) : $1,00 / 1M tokens entrants et $5,00 / 1M sortants. Alternatives approuvées dans le serveur : gpt-6-luna et gpt-6.2-sol. Vérifier les tarifs avant tout changement.
