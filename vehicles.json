@@ -114,12 +114,17 @@
   "variant": null,
   "edition": {
    "exclusive": "ultimate",
-   "status": "reported",
+   "status": "confirmed",
    "support": [
     {
      "sourceName": "Push Square",
      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
      "quote": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses"
+    },
+    {
+     "sourceName": "PC Gamer",
+     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+     "quote": "You'll be able to start looking for GTA 6 Transgressor locations after you complete the Thrillbillies mission in Chapter 2 and collect the Vapid Dominator from Wyman (if you have the Ultimate Edition , that is)."
     }
    ]
   },
@@ -133,7 +138,13 @@
       "quote": "The Paradise garage is in Watson Bay, Mariana County ."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+      "quote": "The second wrecked Transgressor is further north in the garage of the house opposite the Kolt & Associate's Stash House robbery (there's a metal sunflower standing in the garden, which makes it easier to recognise.) I…"
+     }
+    ]
    },
    "district": "Watson Bay",
    "regionId": "grassrivers",
@@ -145,7 +156,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Port Gellhorn",
+     "text": "The second wrecked Transgressor is further north in the garage of the house opposite the Kolt & Associate's Stash House robbery (there's a metal sunflower standing in the garden, which makes it easier to recognise.) I…",
+     "sourceName": "PC Gamer",
+     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations"
+    }
+   ]
   },
   "access": {
    "chapterMin": {
@@ -155,13 +173,28 @@
       "sourceName": "Push Square",
       "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
       "quote": "Available from Chapter 2 ."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+      "quote": "You'll be able to start looking for GTA 6 Transgressor locations after you complete the Thrillbillies mission in Chapter 2 and collect the Vapid Dominator from Wyman (if you have the Ultimate Edition , that is)."
      }
     ],
     "conflicts": []
    },
    "inferredChapter": null,
    "until": null,
-   "mission": null,
+   "mission": {
+    "value": "Thrillbillies",
+    "support": [
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+      "quote": "You'll be able to start looking for GTA 6 Transgressor locations after you complete the Thrillbillies mission in Chapter 2 and collect the Vapid Dominator from Wyman (if you have the Ultimate Edition , that is)."
+     }
+    ],
+    "conflicts": []
+   },
    "early": false,
    "keyCloner": null,
    "tracker": null,
@@ -182,7 +215,23 @@
    "rule": null,
    "mode": "yes"
   },
-  "steps": [],
+  "steps": [
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+    "quote": "Head north, cross the road, and jump over the wall to find it there."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+    "quote": "Head around the side of the house via the driveway to find the car in an open garage at the back."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+    "quote": "Open the app, select the payment requests option, and then pay him the $1,500 for the car."
+   }
+  ],
   "risks": [
    {
     "sourceName": "Push Square",
@@ -199,23 +248,38 @@
     "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
     "official": false,
     "readAt": "2026-11-21T10:16:04.154Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
+    "title": "GTA 6 Transgressor locations: How to restore the first car for Wyman",
+    "official": false,
+    "readAt": "2026-11-21T16:16:05.114Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Exclusivité Ultimate signalée : compatibilité à vérifier.",
    "Zone de recherche autour de Watson Bay (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T16:16:05.114Z",
   "revisions": [
    {
     "at": "2026-11-21T09:57:39.890Z",
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   },
+   {
+    "at": "2026-11-21T16:16:05.114Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2",
+     "édition : ultimate (reported) → ultimate (confirmed)"
     ]
    }
   ]
