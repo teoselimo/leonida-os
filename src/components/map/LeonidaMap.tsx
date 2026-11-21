@@ -187,7 +187,7 @@ export function LeonidaMap(props: MapViewProps) {
                 id: "lm-label",
                 type: "symbol",
                 source: "landmarks",
-                minzoom: 5.6,
+                minzoom: 4.15,
                 filter: labelFilter(null),
                 layout: {
                   "icon-image": ["concat", "lbl:", ["get", "id"]],

@@ -97,7 +97,9 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       return;
     }
     const d = placeFocus.district ? norm(placeFocus.district) : "";
-    const pts = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
+    const region = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
+    const inCategory = placeFocus.poiCat ? region.filter((l) => poiCategory(l) === placeFocus.poiCat) : [];
+    const pts = inCategory.length ? inCategory : region;
     if (!pts.length) return;
     const x = pts.reduce((a, l) => a + l.x, 0) / pts.length;
     const y = pts.reduce((a, l) => a + l.y, 0) / pts.length;
@@ -325,7 +327,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       markers={markers}
       selectedId={selectedId}
       onSelect={selectDiscovery}
-      focusNonce={focusNonce}
+      focusNonce={focusNonce + placeFocus.nonce}
       occlusion={occlusion}
       landmarks={landmarks}
       showLandmarks={showLandmarks}

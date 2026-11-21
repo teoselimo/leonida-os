@@ -18,7 +18,7 @@ type Snap = "half" | "full";
  *  - Clavier iOS : la fiche passe en plein écran et se place au-dessus du clavier (visualViewport).
  * `onHeight` reçoit la hauteur visible une fois la fiche immobile (pour recentrer la carte au-dessus).
  */
-export function Sheet({ children, onClose, onHeight, tall, testId, label, initial = "half" }: { children: ReactNode; onClose: () => void; onHeight?: (h: number) => void; tall?: boolean; testId?: string; label?: string; initial?: Snap }) {
+export function Sheet({ children, onClose, onHeight, tall, testId, label, initial = "half", dragHandleOnly = false }: { children: ReactNode; onClose: () => void; onHeight?: (h: number) => void; tall?: boolean; testId?: string; label?: string; initial?: Snap; dragHandleOnly?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -173,7 +173,7 @@ export function Sheet({ children, onClose, onHeight, tall, testId, label, initia
   // Défilement interne : en haut + tirer vers le bas → la fiche prend le relais (et le rend si on remonte)
   useEffect(() => {
     const el = scroller.current;
-    if (!el) return;
+    if (!el || dragHandleOnly) return;
     let startY = 0;
     let engaged = false;
     const ts = (e: TouchEvent) => {

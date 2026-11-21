@@ -50,7 +50,7 @@ export class LlmError extends Error {
 }
 
 export interface LlmTransport {
-  id: "claude-artifact" | "claude-api";
+  id: "claude-artifact" | "claude-api" | "openai-api";
   /** Libellé montré au joueur (« Claude · via ton compte »). */
   label: string;
   /** Vrai seulement si un appel peut réellement aboutir dans cet environnement. */
@@ -69,7 +69,7 @@ export interface CopilotAnswer {
   replies?: string[];
   more?: string[];
   /** « claude » : rédigé par Claude ; « direct » : moteur déterministe (sans IA générative). */
-  engine: "claude" | "direct";
+  engine: "claude" | "gpt" | "direct";
   model?: string;
   /** Remarque d'honnêteté (repli, limite atteinte, réponse écartée). */
   note?: string;

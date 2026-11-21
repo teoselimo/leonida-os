@@ -94,10 +94,10 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const ids = [...new Set([...(draft.evidence ?? []), ...(draft.evidence?.length ? [] : extraEvidence(o.question, o.ctx))])];
   const evidence = buildEvidence(o.ctx.feed, ids, o.ctx.places ?? []);
   const actions: AiAction[] = draft.actions;
-  const hint = draft.intent === "clarify" ? "aucune entité reconnue ; réponds avec les preuves si elles conviennent, sinon pose une question de précision." : draft.text;
+  const hint = draft.intent === "clarify" ? "Entité incertaine : pose une question de précision si nécessaire." : "Vérifie les faits dans les PREUVES. Le moteur local fournit seulement des garde-fous et des actions, pas une réponse à paraphraser.";
   const messages: LlmMessage[] = [
     { role: "user", content: RULES },
-    ...o.history.slice(-8),
+    ...o.history.slice(-12),
     { role: "user", content: composeTurn({ question: o.question, player: playerContext(o.ctx.state, o.ctx.feed), evidence, hint, actions }) },
   ];
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
@@ -108,7 +108,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     // Validation : aucun nombre absent des preuves, du contexte, de la question ou de la piste vérifiée
     const allowed = new Set([...digits(evidence), ...digits(draft.text), ...digits(o.question), ...digits(playerContext(o.ctx.state, o.ctx.feed)), "1", "2", "3", "4"]);
     const bad = digits(message).filter((n) => !allowed.has(n));
-    if (bad.length) return fromDirect(draft, `Réponse de Claude écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`);
+    if (bad.length) return fromDirect(draft, `Réponse du modèle écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`);
     const idx = Array.isArray(meta?.actions) ? (meta!.actions as unknown[]).filter((i): i is number => Number.isInteger(i) && (i as number) >= 0 && (i as number) < actions.length) : null;
     const chosen = (idx && idx.length ? idx.map((i) => actions[i]) : actions).slice(0, 2);
     const used = Array.isArray(meta?.sources) ? (meta!.sources as unknown[]).map(String).filter((s) => ids.includes(s)) : [];
@@ -116,14 +116,14 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const sources: Source[] = sourcesFor(used.length ? used : ids, o.ctx, draft.sources);
     return {
       intent: draft.intent,
-      message: message.slice(0, 1200),
+      message: message.slice(0, 2300),
       trust,
       sources,
       actions: chosen,
       topic: draft.topic ?? o.topic,
       replies: draft.replies,
       more: draft.more,
-      engine: "claude",
+      engine: o.transport.id === "openai-api" ? "gpt" : "claude",
       model: r.model,
       note: r.truncated ? "Réponse coupée par la limite de longueur." : undefined,
       evidence: ids,
@@ -132,9 +132,9 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const code = e instanceof LlmError ? e.code : "upstream_error";
     if (code === "cancelled") {
       const partial = e instanceof LlmError && e.partial ? visiblePart(e.partial) : "";
-      return { ...fromDirect(draft), message: partial || draft.text, engine: partial ? "claude" : "direct", note: "Réponse interrompue." };
+      return { ...fromDirect(draft), message: partial || draft.text, engine: partial ? (o.transport.id === "openai-api" ? "gpt" : "claude") : "direct", note: "Réponse interrompue." };
     }
-    return fromDirect(draft, NOTE[code] ?? "Claude n'a pas pu répondre (erreur passagère) : réponse directe. Tu peux reposer la question.");
+    return fromDirect(draft, NOTE[code] ?? "Le modèle n'a pas pu répondre (erreur passagère) : réponse directe. Tu peux reposer la question.");
   }
 }
 
