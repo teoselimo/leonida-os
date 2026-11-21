@@ -35,7 +35,8 @@ jobs:
       - name: Recuperer LEONIDA GPT (branche de test seulement)
         uses: actions/checkout@v4
         with:
-          ref: experiment/openai-gpt-leonida
+          # Version GPT explicitement épinglée, jamais la branche main.
+          ref: 3fb8a7d792ba88787cb5f82c4d566ac843c66a28
           path: gpt-preview-src
           persist-credentials: false
       - name: Installer les dependances de la preversion
