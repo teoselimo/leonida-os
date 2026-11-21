@@ -29,6 +29,8 @@ export interface LlmRequest {
   signal?: AbortSignal;
   /** « quick » : réponse quasi immédiate ; « default » : plus réfléchie, plus lente. */
   tier?: "quick" | "default";
+  /** Recherche web facultative, autorisée et plafonnée côté Worker. */
+  web?: boolean;
 }
 
 export interface LlmResult {
@@ -36,6 +38,8 @@ export interface LlmResult {
   /** Modèle ou gamme qui a réellement répondu (preuve que la réponse vient de Claude). */
   model?: string;
   truncated?: boolean;
+  /** URLs renvoyées par les annotations OpenAI, jamais par le modèle seul. */
+  webSources?: { url: string; title: string }[];
 }
 
 /** Erreur de transport normalisée (codes du fournisseur conservés). */
