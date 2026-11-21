@@ -933,6 +933,15 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .live--off { background: var(--dim) !important; animation: none !important; box-shadow: none !important; }
 
 /* Connexion GPT personnelle (code applicatif, jamais la clé API). */
+/* Opt-in web search and visible clickable citations in LEONIDA AI. */
+.ai__web-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 10px; }
+.ai__web-tools > span { color: var(--muted); font-size: 11px; }
+.ai__web-tools .chip { min-height: 31px; font-size: 12px; }
+.bubble__web-sources { display: flex; flex-direction: column; gap: 6px; padding: 10px 11px;
+  border: 1px solid rgba(46,230,214,.26); border-radius: 12px;
+  background: rgba(46,230,214,.055); font-size: 12px; min-width: 0; }
+.bubble__web-sources strong { color: var(--turq); font-size: 12px; }
+.bubble__web-sources a { color: var(--turq); text-decoration: underline; overflow-wrap: anywhere; }
 .gpt-access { display:flex; flex-wrap:wrap; gap:8px; padding:9px; border:1px solid var(--line2); border-radius:14px; background:rgba(25,19,39,.96); }
 .gpt-access label { flex: 1 0 100%; font-size:12px; color:var(--muted); }
 .gpt-access input { flex:1; min-width:130px; padding:9px 10px; color:var(--text); background:#100c1b; border:1px solid var(--line2); border-radius:10px; font-size:16px; }
