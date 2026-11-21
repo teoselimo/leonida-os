@@ -75,6 +75,8 @@ export interface AskOptions {
   onText?: (visible: string) => void;
   signal?: AbortSignal;
   tier?: "quick" | "default";
+  /** Le joueur demande explicitement une recherche web pour ce tour. */
+  web?: boolean;
 }
 
 const NOTE: Record<string, string> = {
@@ -104,6 +106,16 @@ const NOTE: Record<string, string> = {
   upstream_no_text: "OpenAI a terminé la génération sans produire de texte utilisable.",
   upstream_unknown: "Une erreur non classée a interrompu le streaming GPT. Consulte les journaux Cloudflare.",
   upstream_error: "Le streaming GPT a échoué. Recharge la préversion pour récupérer le diagnostic détaillé du Worker.",
+  openai_stream_quota: "Le flux OpenAI indique un quota ou des crédits API insuffisants.",
+  openai_stream_rate_limit: "OpenAI a limité momentanément la fréquence des appels. Réessaie plus tard.",
+  openai_stream_auth: "OpenAI a refusé l'authentification de la clé du projet API.",
+  openai_stream_model: "Le flux OpenAI indique un modèle indisponible pour ce projet.",
+  openai_stream_context: "Le contexte de la conversation dépasse la limite acceptée par OpenAI.",
+  openai_stream_request: "OpenAI a signalé un paramètre de requête invalide pendant le streaming.",
+  openai_stream_server: "OpenAI a indiqué une erreur serveur durant la génération.",
+  openai_stream_timeout: "OpenAI a dépassé son délai de réponse.",
+  openai_stream_content_filter: "OpenAI a interrompu cette réponse pour des raisons de sécurité.",
+  web_search_disabled: "La recherche web n'est pas encore activée sur le Worker Cloudflare. Désactive le bouton Web pour continuer en mode GPT sans recherche.",
 };
 
 export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
@@ -122,7 +134,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   ];
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
   try {
-    const r = await o.transport.generate({ messages, signal: o.signal, tier: o.tier ?? "quick", onText: (t) => o.onText?.(visiblePart(t)) });
+    const r = await o.transport.generate({ messages, signal: o.signal, tier: o.tier ?? "quick", web: o.web === true, onText: (t) => o.onText?.(visiblePart(t)) });
     const { message, meta } = parseReply(r.text);
     if (!message) return fromDirect(draft, NOTE.refused);
     // Validation : aucun nombre absent des preuves, du contexte, de la question ou de la piste vérifiée
@@ -133,7 +145,13 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const chosen = (idx && idx.length ? idx.map((i) => actions[i]) : actions).slice(0, 2);
     const used = Array.isArray(meta?.sources) ? (meta!.sources as unknown[]).map(String).filter((s) => ids.includes(s)) : [];
     const trust = TRUST.includes(meta?.confiance as Trust) ? (meta!.confiance as Trust) : draft.reliability;
-    const sources: Source[] = sourcesFor(used.length ? used : ids, o.ctx, draft.sources);
+    const localSources: Source[] = sourcesFor(used.length ? used : ids, o.ctx, draft.sources);
+    // Une source web est affichée uniquement si l'API l'a renvoyée comme annotation.
+    // Ne pas accepter de liens improvisés par le texte généré.
+    const webSources: Source[] = (r.webSources ?? []).slice(0, 5).map((s) => ({
+      name: s.title || new URL(s.url).hostname, title: s.title, url: s.url, when: null, kind: "web" as const,
+    }));
+    const sources: Source[] = [...webSources, ...localSources.filter((s) => !webSources.some((w) => w.url === s.url))].slice(0, 8);
     return {
       intent: draft.intent,
       message: message.slice(0, 2300),
