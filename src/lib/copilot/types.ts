@@ -93,4 +93,5 @@ export interface WebHit {
   date: string | null;
 }
 /** Recherche web injectée par l'environnement (connecteur de l'Artifact, ou futur backend) : le moteur n'en dépend pas. */
-export type WebSearchFn = (query: string, signal?: AbortSignal) => Promise<{ status: WebStatus; hits: WebHit[] }>;
+/** `objective` : ce que la recherche doit privilégier ou exclure (champ requis par Exa). */
+export type WebSearchFn = (query: string, signal?: AbortSignal, objective?: string) => Promise<{ status: WebStatus; hits: WebHit[] }>;

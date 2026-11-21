@@ -61,8 +61,8 @@ export function parseHits(res: CallResult): WebHit[] {
         return {
           title: String(o.title ?? "").slice(0, 160),
           url,
-          text: String(o.text ?? o.summary ?? o.snippet ?? (Array.isArray(o.highlights) ? o.highlights.join(" … ") : "")).replace(/\s+/g, " ").slice(0, 900),
-          date: typeof o.publishedDate === "string" ? o.publishedDate.slice(0, 10) : typeof o.published_date === "string" ? o.published_date.slice(0, 10) : null,
+          text: String(o.text ?? o.summary ?? o.snippet ?? (Array.isArray(o.highlights) ? o.highlights.join(" … ") : "")).replace(/\s+/g, " ").slice(0, 1_500),
+          date: [o.publishedDate, o.published_date, o.published].map((d) => (typeof d === "string" && /^\d{4}-\d{2}-\d{2}/.test(d) ? d.slice(0, 10) : null)).find(Boolean) ?? null,
         };
       })
       .filter((h) => /^https:\/\//.test(h.url));
@@ -80,22 +80,26 @@ export function parseHits(res: CallResult): WebHit[] {
   } catch {
     /* texte libre */
   }
+  // format texte d'Exa (vérifié le 22/11/2026) : blocs « Title / URL / Published / Author / Highlights » séparés par « --- »
   const blocks = text.split(/\n(?=Title:)/);
   return fromArr(
     blocks.map((b) => ({
       title: b.match(/^Title:\s*(.*)$/m)?.[1] ?? "",
       url: b.match(/^URL:\s*(\S+)/m)?.[1] ?? "",
-      publishedDate: b.match(/^Published Date:\s*(\S+)/m)?.[1],
-      text: b.replace(/^(Title|URL|Published Date|Author|ID|Image|Favicon):.*$/gm, "").replace(/^Text:\s*/m, ""),
+      publishedDate: b.match(/^Published(?: Date)?:\s*(\S+)/m)?.[1],
+      text: b
+        .replace(/^(Title|URL|Published Date|Published|Author|ID|Image|Favicon):.*$/gm, "")
+        .replace(/^(Text|Highlights):\s*/gm, "")
+        .replace(/^(-{3,}|\.{3})\s*$/gm, " "),
     })),
   );
 }
 
 /** Recherche web avec sources ; un seul nouvel essai si le connecteur le permet. */
-export const exaSearch: WebSearchFn = async (query, signal) => {
+export const exaSearch: WebSearchFn = async (query, signal, objective) => {
   const m = await mcp();
   if (!m) return { status: "unavailable", hits: [] };
-  const call = () => m.callTool(WEB_SERVER, WEB_TOOL, { query, numResults: 5 }, { signal, cache: { staleTime: 10 * 60_000, gcTime: 30 * 60_000 } });
+  const call = () => m.callTool(WEB_SERVER, WEB_TOOL, { query, objective: (objective || `Pages about the video game GTA VI (GTA 6) answering: ${query}. Prefer recent guides; exclude GTA V and older games.`).slice(0, 4_000), numResults: 5 }, { signal, cache: { staleTime: 10 * 60_000, gcTime: 30 * 60_000 } });
   try {
     let res: CallResult;
     try {

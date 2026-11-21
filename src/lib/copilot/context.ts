@@ -114,7 +114,7 @@ export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[]
         extraits: [v.location.text?.value ?? ""].filter(Boolean).map(q),
       });
   }
-  for (const w of web.slice(0, 5)) out.push({ id: w.id, web: w.titre, site: w.site, date: w.date, fiabilite: "web non vérifié (une source)", extrait: q(w.extrait) });
+  for (const w of web.slice(0, 5)) out.push({ id: w.id, web: w.titre, site: w.site, date: w.date, fiabilite: "web non vérifié (une source)", extrait: w.extrait.slice(0, 1_200) });
   let s = JSON.stringify(out);
   if (s.length > CONTEXT_LIMITS.maxChars) s = s.slice(0, CONTEXT_LIMITS.maxChars);
   return s;

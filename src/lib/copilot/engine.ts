@@ -113,6 +113,14 @@ function webQuery(o: AskOptions): string {
   return `GTA 6 ${m && !clean.toLowerCase().includes(m.toLowerCase()) && /\b(l[aà]|cette mission|ici)\b/i.test(clean) ? `"${m}" ` : ""}${clean}`.slice(0, 200);
 }
 
+/** Objectif de recherche (Exa) : ce qui doit ressortir en premier, ce qui est exclu. */
+function webObjective(o: AskOptions): string {
+  const m = o.mission ?? o.ctx.state.profile.nextMission ?? "";
+  if (o.mode === "checklist")
+    return `Guides and walkthroughs of the GTA VI (GTA 6, 2026) story mission "${m}": what can be missed, optional objectives, choices and their consequences, rewards, points of no return. Rank dedicated mission guides first. Exclude GTA V, GTA Online and older games.`;
+  return `Pages about GTA VI (GTA 6, released 2026) that answer this player question: "${o.question}"${m ? ` (current mission: ${m})` : ""}. Prefer dedicated guides and wikis; exclude GTA V, GTA Online and older games.`;
+}
+
 const host = (u: string) => {
   try {
     return new URL(u).hostname.replace(/^www\./, "");
@@ -142,7 +150,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   if (wantWeb) {
     o.onStage?.("search");
     try {
-      const r = await o.search!(webQuery(o), o.signal);
+      const r = await o.search!(webQuery(o), o.signal, webObjective(o));
       hits = r.hits.slice(0, 5);
       web = { status: r.status, count: hits.length };
     } catch {

@@ -138,6 +138,25 @@ test.describe("Recherche web (connecteur simulé)", () => {
     expect(r.web?.status).toBe("not_connected");
     expect(t.calls[0].messages.at(-1)!.content).toContain("ne prétends pas avoir cherché");
   });
+  test("format texte réel d'Exa (Title / URL / Published / Author / Highlights, séparés par ---)", () => {
+    const txt = "Title: Mission guide A\nURL: https://a.example/guide\nPublished: 2026-11-18T18:30:36.000Z\nAuthor: X\nHighlights:\nFirst highlight about the mission.\n...\nSecond highlight.\n\n---\n\nTitle: Wiki B\nURL: https://b.example/wiki\nPublished: N/A\nAuthor: N/A\nHighlights:\nChapter 1 story mission.";
+    const h = parseHits({ content: [{ type: "text", text: txt }] });
+    expect(h).toHaveLength(2);
+    expect(h[0]).toMatchObject({ title: "Mission guide A", url: "https://a.example/guide", date: "2026-11-18" });
+    expect(h[0].text).toContain("First highlight");
+    expect(h[0].text).not.toMatch(/Author|Highlights:|---/);
+    expect(h[1].date).toBeNull();
+  });
+  test("la recherche transmet un objectif (champ requis par Exa)", async () => {
+    let got: string | undefined;
+    const search: WebSearchFn = async (_q, _s, objective) => {
+      got = objective;
+      return { status: "empty", hits: [] };
+    };
+    await askCopilot({ question: "Rien à manquer dans Swamped ?", ctx: ctx(), topic: null, history: [], transport: mock("Ok\n@@@\n{}"), mode: "checklist", mission: "Swamped", search });
+    expect(got).toContain('"Swamped"');
+    expect(got).toMatch(/Exclude GTA V/);
+  });
   test("formats de réponse d'Exa reconnus (objet results, blocs texte)", () => {
     expect(parseHits({ payload: { results: [{ title: "A", url: "https://a.com", text: "x", publishedDate: "2026-11-20T00:00:00Z" }] } })[0]).toMatchObject({ title: "A", url: "https://a.com", date: "2026-11-20" });
     const txt = "Title: B\nURL: https://b.com/x\nPublished Date: 2026-11-19\nText: hello world\n\nTitle: C\nURL: http://insecure.com\nText: no";
