@@ -7,3 +7,8 @@ test-report
 captures
 data-branch
 *.tsbuildinfo
+
+# Configuration locale Cloudflare GPT (les secrets restent des secrets Worker)
+proxy/wrangler.openai.toml
+.env*
+!.env.example

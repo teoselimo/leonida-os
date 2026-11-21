@@ -43,6 +43,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const [hideDone, setHideDone] = useState(false);
   const [onlyNew, setOnlyNew] = useState(false);
   const [showLandmarks, setShowLandmarks] = useState(true);
+  const [indexOpen, setIndexOpen] = useState(false);
   // Catégories de lieux affichées, conservées entre les visites
   const [poiCats, setPoiCatsState] = useState<PoiCat[]>([]);
   useEffect(() => {
@@ -97,7 +98,9 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       return;
     }
     const d = placeFocus.district ? norm(placeFocus.district) : "";
-    const pts = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
+    const region = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
+    const inCategory = placeFocus.poiCat ? region.filter((l) => poiCategory(l) === placeFocus.poiCat) : [];
+    const pts = inCategory.length ? inCategory : region;
     if (!pts.length) return;
     const x = pts.reduce((a, l) => a + l.x, 0) / pts.length;
     const y = pts.reduce((a, l) => a + l.y, 0) / pts.length;
@@ -253,6 +256,12 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     </div>
   );
 
+  const poiCounts = useMemo(() => {
+    const counts = {} as Record<PoiCat, number>;
+    for (const cat of POI_FILTERS) counts[cat] = 0;
+    for (const item of landmarks) counts[poiCategory(item)]++;
+    return counts;
+  }, [landmarks]);
   const togglePoi = (c: PoiCat) => setPoiCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]));
   const toggleCat = (c: CategoryId) =>
     setCats((s) => {
@@ -313,6 +322,25 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     </div>
   );
 
+  const indexPanel = indexOpen && (
+    <aside className="poiindex glass" data-testid="poi-index" aria-label="Index des lieux de Leonida" onClick={(e) => e.stopPropagation()}>
+      <div className="poiindex__head">
+        <div><strong>Index de Leonida</strong><small>Repères communautaires, non nécessairement interactifs en jeu</small></div>
+        <button className="iconbtn" type="button" aria-label="Fermer l'index" onClick={() => setIndexOpen(false)}><Icon name="close" size={17}/></button>
+      </div>
+      <div className="poiindex__items">
+        <button type="button" className={!poiCats.length && !garage ? "is-on" : ""} onClick={() => { setGarage(false); setShowLandmarks(true); setPoiCats([]); setIndexOpen(false); }}><span>◎</span><strong>Tous les lieux</strong><em>{landmarks.length}</em></button>
+        {POI_FILTERS.map((cat) => (
+          <button type="button" key={cat} data-testid={`poi-index-${cat}`} className={!garage && poiCats.length === 1 && poiCats[0] === cat ? "is-on" : ""} onClick={() => { setGarage(false); setShowLandmarks(true); setPoiCats([cat]); setIndexOpen(false); }}>
+            <span style={{ color: POI_CATS[cat].color }}>{POI_CATS[cat].glyph}</span><strong>{POI_CATS[cat].plural}</strong><em>{poiCounts[cat]}</em>
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
+  const indexBtn = (
+    <button className="iconbtn iconbtn--glass" type="button" onClick={() => setIndexOpen((v) => !v)} aria-label="Index des lieux" aria-expanded={indexOpen} data-testid="poi-index-btn"><Icon name="layers" size={18} /></button>
+  );
   const searchBtn = (
     <button className="iconbtn iconbtn--glass" onClick={() => setSearchOpen(true)} aria-label="Rechercher un lieu" data-testid="search-btn">
       <Icon name="search" size={18} />
@@ -325,7 +353,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       markers={markers}
       selectedId={selectedId}
       onSelect={selectDiscovery}
-      focusNonce={focusNonce}
+      focusNonce={focusNonce + placeFocus.nonce}
       occlusion={occlusion}
       landmarks={landmarks}
       showLandmarks={showLandmarks}
@@ -404,8 +432,10 @@ export function MapScreen({ active = true }: { active?: boolean }) {
           )}
         </aside>
         <div className="mapsplit__map">
+          <div className="poiindex__ipadbutton">{indexBtn}</div>
           {mapEl({ top: 64, bottom: 0, left: 0 })}
           <div className="mapsplit__filters">{filters}</div>
+          {indexPanel}
           {cartoBar && <div className="mapsplit__carto">{cartoBar}</div>}
         </div>
       </div>
@@ -420,10 +450,11 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       <div className="mapphone__top" ref={topRef}>
         <div className="row between">
           <h1 className="h2 shadowtxt">Carte</h1>
-          <div className="row gap8">{cartoBtn}{searchBtn}<ShieldChip /></div>
+          <div className="row gap8">{cartoBtn}{indexBtn}{searchBtn}<ShieldChip /></div>
         </div>
         {searchOpen ? search : filters}
       </div>
+      {indexPanel}
       {!sheetOpen && cartoBar}
       {!sheetOpen && !carto && (
         <div className="strip" onClick={(e) => e.stopPropagation()} data-testid={garage ? "garage-strip" : undefined}>

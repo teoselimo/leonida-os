@@ -8,6 +8,7 @@ import type { AiAction, AiAnswer, PlaceRef, Topic } from "@/lib/ai/engine";
 import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
 import { askCopilot, pickTransport } from "@/lib/copilot";
+import { gptApiEnabled, saveGptAccessCode, clearGptAccessCode } from "@/lib/copilot/transports/openaiApi";
 import type { CopilotAnswer, LlmMessage, LlmTransport } from "@/lib/copilot";
 import { lngLatToGame, loadLandmarks } from "@/lib/gtadb";
 import { useIsTablet } from "@/lib/useMedia";
@@ -17,7 +18,7 @@ import { Sheet } from "./Sheet";
 import { BrandMark } from "./Brand";
 import { Icon } from "./ui/Icon";
 
-type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean };
+type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "gpt" | "direct"; model?: string; note?: string; streaming?: boolean };
 type Msg = { id: number; role: "user"; text: string } | AiMsg;
 const HISTORY_KEY = "leonida-os/ai-history/v2";
 
@@ -61,6 +62,10 @@ export function AiCopilot() {
   const [pending, setPending] = useState<{ key: string; action: AiAction } | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const stickBottom = useRef(true);
+  const [gptKeyEpoch, setGptKeyEpoch] = useState(0);
+  const [accessOpen, setAccessOpen] = useState(false);
+  const [accessCode, setAccessCode] = useState("");
 
   useEffect(() => setMsgs(loadHistory()), []);
   const msgsRef = useRef<Msg[]>([]);
@@ -69,8 +74,10 @@ export function AiCopilot() {
   const [transport, setTransport] = useState<LlmTransport | null>(null);
   useEffect(() => {
     void pickTransport().then(setTransport);
-  }, []);
+  }, [gptKeyEpoch]);
   const [deep, setDeep] = useState(false);
+  // Explicite : une recherche web consomme des appels API facturés. OFF par défaut.
+  const [web, setWeb] = useState(false);
   useEffect(() => {
     try {
       setDeep(localStorage.getItem("leonida-os/ai-tier/v1") === "default");
@@ -92,7 +99,7 @@ export function AiCopilot() {
   const historyOf = (list: Msg[]): LlmMessage[] =>
     list
       .filter((m) => (m.role === "user" ? m.text : m.a.text))
-      .slice(-8)
+      .slice(-12)
       .map((m) => (m.role === "user" ? { role: "user" as const, content: m.text } : { role: "assistant" as const, content: m.a.text }));
   const toAi = (c: CopilotAnswer): AiAnswer => ({ intent: c.intent, text: c.message, reliability: c.trust, sources: c.sources, actions: c.actions, more: c.more, replies: c.replies, topic: c.topic, evidence: c.evidence });
   const [places, setPlaces] = useState<PlaceRef[]>([]);
@@ -108,7 +115,7 @@ export function AiCopilot() {
   }, [msgs]);
   useLayoutEffect(() => {
     const el = listRef.current;
-    if (el) el.scrollTo({ top: el.scrollHeight, behavior: msgs.length > 1 ? "smooth" : "auto" });
+    if (el && stickBottom.current) el.scrollTop = el.scrollHeight;
   }, [msgs, aiOpen]);
 
   // Sujet de la conversation (dernière réponse) : permet « et comment je la garde ? »
@@ -125,6 +132,7 @@ export function AiCopilot() {
       const question = q.trim().slice(0, 300);
       if (!question) return;
       setText("");
+      stickBottom.current = true;
       // repères gtadb (cache partagé avec la carte) : nécessaires pour proposer « voir sur la carte »
       const pl = places.length ? places : await loadLandmarks();
       const ctx = { feed, state, position: mapPosition(), places: pl };
@@ -146,6 +154,7 @@ export function AiCopilot() {
           transport,
           signal: ctl.signal,
           tier: deep ? "default" : "quick",
+          web: transport.id === "openai-api" && web,
           onText: (v) => setMsgs((m) => m.map((x) => (x.id === id + 1 && x.role === "ai" ? { ...x, a: { ...x.a, text: v } } : x))),
         });
         if (ctlRef.current === ctl) {
@@ -172,7 +181,7 @@ export function AiCopilot() {
         }),
       );
     },
-    [feed, state, places, transport, deep],
+    [feed, state, places, transport, deep, web],
   );
 
   // Questions lancées depuis l'accueil (amorces)
@@ -266,15 +275,26 @@ export function AiCopilot() {
   const body = (
     <div className="ai" data-testid="ai-panel">
       <header className="ai__head">
-        <BrandMark size={30} />
-        <div>
-          <strong>LEONIDA AI</strong>
-          <span data-testid="ai-mode">{transport ? `${transport.label} · données LEONIDA RADAR` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+        <div className="ai__identity">
+          <BrandMark size={30} />
+          <div className="ai__identity-copy">
+            <strong>LEONIDA AI</strong>
+            <span data-testid="ai-mode">{transport ? `${transport.label} · données LEONIDA RADAR` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+          </div>
         </div>
-        {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
-        {isTablet && <button className="iconbtn" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>}
+        <div className="ai__head-actions">
+          {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
+          {gptApiEnabled() && transport?.id !== "openai-api" && <button className="link small" type="button" onClick={() => setAccessOpen((v) => !v)} data-testid="gpt-connect">Activer GPT</button>}
+          {gptApiEnabled() && transport?.id === "openai-api" && <button className="link small" type="button" onClick={() => { clearGptAccessCode(); setGptKeyEpoch((n) => n + 1); }} data-testid="gpt-disconnect">Déconnecter GPT</button>}
+        </div>
+        <button className="iconbtn ai__head-close" onClick={() => setAiOpen(false)} aria-label="Fermer LEONIDA AI"><Icon name="close" /></button>
       </header>
-      <div className="ai__list" ref={listRef} data-testid="ai-list">
+      {accessOpen && <form className="gpt-access" onSubmit={(e) => { e.preventDefault(); if (accessCode.trim()) { saveGptAccessCode(accessCode.trim()); setAccessCode(""); setAccessOpen(false); setGptKeyEpoch((n) => n + 1); } }}>
+        <label htmlFor="gpt-access-code">Code personnel LEONIDA (jamais ta clé API OpenAI)</label>
+        <input id="gpt-access-code" type="password" autoComplete="off" value={accessCode} onChange={(e) => setAccessCode(e.target.value)} placeholder="Code d’accès au serveur privé" />
+        <button type="submit" className="btn btn--primary btn--xs" disabled={!accessCode.trim()}>Connecter</button>
+      </form>}
+      <div className="ai__list" ref={listRef} onScroll={(e) => { const el=e.currentTarget; stickBottom.current = el.scrollHeight-el.scrollTop-el.clientHeight < 100; }} data-testid="ai-list">
         {msgs.length === 0 && (
           <div className="ai__intro">
             <p>Salut ! Dis-moi quelle mission tu vas lancer ou ce que tu cherches. Je réponds avec les fiches vérifiées de la veille, selon ton chapitre, ton édition et ce que tu as déjà fait.</p>
@@ -325,11 +345,19 @@ export function AiCopilot() {
                   <ul>{m.a.more!.map((l, i) => <li key={i}>{l}</li>)}</ul>
                 </details>
               )}
-              {m.a.sources.length > 0 && (
+              {m.a.sources.some((s) => s.kind === "web") && (
+                <div className="bubble__web-sources" data-testid="ai-web-sources">
+                  <strong>🌐 Sources consultées</strong>
+                  {m.a.sources.filter((s) => s.kind === "web").map((s, i) => (
+                    <a key={i} href={s.url} target="_blank" rel="noopener noreferrer">{s.name}</a>
+                  ))}
+                </div>
+              )}
+              {m.a.sources.some((s) => s.kind !== "web") && (
                 <details className="bubble__more" data-testid="ai-sources">
-                  <summary>Sources et preuves ({m.a.sources.length})</summary>
+                  <summary>Sources et preuves ({m.a.sources.filter((s) => s.kind !== "web").length})</summary>
                   <ul>
-                    {m.a.sources.map((s, i) => (
+                    {m.a.sources.filter((s) => s.kind !== "web").map((s, i) => (
                       <li key={i}>
                         <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>{s.when ? ` · ${s.when}` : ""}
                         {s.title && <em className="bubble__orig" lang="en">Titre d’origine : {s.title}</em>}
@@ -346,7 +374,7 @@ export function AiCopilot() {
                   ))}
                 </div>
               )}
-              {!m.streaming && m.engine === "claude" && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? "Claude"} à partir des données LEONIDA RADAR</p>}
+              {!m.streaming && (m.engine === "claude" || m.engine === "gpt") && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? (m.engine === "gpt" ? "GPT" : "Claude")} {m.a.sources.some((s) => s.kind === "web") ? "avec recherche web sourcée" : "à partir des données LEONIDA RADAR"}</p>}
               {m.note && <p className="bubble__note" data-testid="ai-note">{m.note}</p>}
               {m.llm && m.llm !== "pending" && m.llm !== "generated" && m.llm !== "cached" && m.llm !== "skipped" && (
                 <p className="bubble__note" data-testid="ai-llm-note">Réponse directe : la synthèse IA n’est pas disponible pour le moment.</p>
@@ -355,6 +383,15 @@ export function AiCopilot() {
           ),
         )}
       </div>
+      {transport?.id === "openai-api" && (
+        <div className="ai__web-tools">
+          <button className={`chip chip--reply press${web ? " is-on" : ""}`} type="button"
+            onClick={() => setWeb((v) => !v)} aria-pressed={web} data-testid="ai-web-toggle">
+            {web ? "🌐 Recherche web activée" : "🌐 Rechercher sur Internet"}
+          </button>
+          <span>{web ? "1 recherche maximum par question · coût API" : "Désactivée par défaut · option facturée"}</span>
+        </div>
+      )}
       <form
         className="ai__input"
         onSubmit={(e) => {
@@ -362,7 +399,7 @@ export function AiCopilot() {
           void ask(text);
         }}
       >
-        <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)} placeholder="Demande à Leonida…" enterKeyHint="send" aria-label="Question pour LEONIDA AI" data-testid="ai-input" maxLength={300} autoComplete="off" />
+        <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)} placeholder="Demande à Leonida…" enterKeyHint="send" aria-label="Question pour LEONIDA AI" data-testid="ai-input" maxLength={800} autoComplete="off" />
         {streaming ? (
           <button type="button" className="ai__send ai__send--stop press" onClick={() => ctlRef.current?.abort()} aria-label="Arrêter la réponse" data-testid="ai-stop"><span className="ai__stopsq" /></button>
         ) : (
@@ -382,7 +419,7 @@ export function AiCopilot() {
       )}
       {aiOpen && !isTablet && (
         <div className="ailayer">
-          <Sheet tall initial="full" onClose={() => setAiOpen(false)} testId="ai-sheet" label="LEONIDA AI">
+          <Sheet tall initial="full" dragHandleOnly onClose={() => setAiOpen(false)} testId="ai-sheet" label="LEONIDA AI">
             {body}
           </Sheet>
         </div>

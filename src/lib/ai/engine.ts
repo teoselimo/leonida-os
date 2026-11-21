@@ -54,6 +54,8 @@ export interface Source {
   /** Titre d'origine (souvent en anglais) : affiché uniquement dans « Sources et preuves ». */
   title?: string;
   quote?: string;
+  /** Source web récupérée par l'outil OpenAI, à afficher visiblement et en lien. */
+  kind?: "web";
 }
 
 export interface AiAnswer {

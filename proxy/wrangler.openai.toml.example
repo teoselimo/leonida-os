@@ -1,0 +1,24 @@
+# Example only. Copy to proxy/wrangler.openai.toml and explicitly enable after configuring both secrets.
+name = "leonida-gpt-private"
+main = "./openai-worker.ts"
+compatibility_date = "2026-11-01"
+
+[vars]
+AI_ENABLED = "0"
+MODEL = "gpt-6.1-terra"
+ALLOWED_ORIGIN = "https://teoselimo.github.io"
+MONTHLY_BUDGET_USD = "2.00"
+MAX_CALLS_PER_MONTH = "400"
+MAX_CALLS_PER_MINUTE = "6"
+
+[[durable_objects.bindings]]
+name = "BUDGET"
+class_name = "BudgetLedger"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["BudgetLedger"]
+
+# Secrets (NEVER commit their values):
+# npx wrangler secret put OPENAI_API_KEY -c proxy/wrangler.openai.toml
+# npx wrangler secret put LEONIDA_ACCESS_TOKEN -c proxy/wrangler.openai.toml

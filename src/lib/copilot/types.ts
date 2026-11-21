@@ -29,6 +29,8 @@ export interface LlmRequest {
   signal?: AbortSignal;
   /** « quick » : réponse quasi immédiate ; « default » : plus réfléchie, plus lente. */
   tier?: "quick" | "default";
+  /** Recherche web facultative, autorisée et plafonnée côté Worker. */
+  web?: boolean;
 }
 
 export interface LlmResult {
@@ -36,6 +38,8 @@ export interface LlmResult {
   /** Modèle ou gamme qui a réellement répondu (preuve que la réponse vient de Claude). */
   model?: string;
   truncated?: boolean;
+  /** URLs renvoyées par les annotations OpenAI, jamais par le modèle seul. */
+  webSources?: { url: string; title: string }[];
 }
 
 /** Erreur de transport normalisée (codes du fournisseur conservés). */
@@ -50,7 +54,7 @@ export class LlmError extends Error {
 }
 
 export interface LlmTransport {
-  id: "claude-artifact" | "claude-api";
+  id: "claude-artifact" | "claude-api" | "openai-api";
   /** Libellé montré au joueur (« Claude · via ton compte »). */
   label: string;
   /** Vrai seulement si un appel peut réellement aboutir dans cet environnement. */
@@ -69,7 +73,7 @@ export interface CopilotAnswer {
   replies?: string[];
   more?: string[];
   /** « claude » : rédigé par Claude ; « direct » : moteur déterministe (sans IA générative). */
-  engine: "claude" | "direct";
+  engine: "claude" | "gpt" | "direct";
   model?: string;
   /** Remarque d'honnêteté (repli, limite atteinte, réponse écartée). */
   note?: string;
