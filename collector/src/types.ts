@@ -96,6 +96,8 @@ export interface FactRef<T> {
 export interface DeepRead {
   /** Version des règles d'extraction : une amélioration des règles relance la lecture des articles concernés. */
   v?: number;
+  /** Relecture échouée : faits précédents conservés, nouvel essai après cette date. */
+  retryAfter?: string;
   at: string;
   ok: boolean;
   reason: string | null;

@@ -36,6 +36,8 @@ export async function deepReadPhase(records: RadarRecord[], sources: Map<string,
       // Déjà lu avec les règles actuelles ; un échec réseau est retenté après 24 h, un refus robots.txt jamais
       const d = ev.deep;
       if (d && d.v === RULES_VERSION && (d.ok || d.reason === "refusé par robots.txt" || opts.now.getTime() - Date.parse(d.at) < 86400_000)) continue;
+      // relecture (nouvelles règles) qui a échoué récemment : on garde les faits déjà extraits et on réessaie dans 24 h
+      if (d?.retryAfter && Date.parse(d.retryAfter) > opts.now.getTime()) continue;
       candidates.push({ rec, ev });
     }
   }
@@ -51,6 +53,12 @@ export async function deepReadPhase(records: RadarRecord[], sources: Map<string,
   for (const { rec, ev } of candidates.slice(0, max)) {
     read++;
     const art = await readArticle(ev.url, opts.fetchImpl);
+    if (!art.ok && ev.deep?.ok && art.reason !== "refusé par robots.txt") {
+      // échec transitoire d'une relecture : les faits précédents restent valables
+      ev.deep = { ...ev.deep, retryAfter: new Date(opts.now.getTime() + 86400_000).toISOString() };
+      opts.log(`– relecture reportée : ${ev.sourceName} · ${art.reason}`);
+      continue;
+    }
     if (!art.ok) {
       ev.deep = { v: RULES_VERSION, at: opts.now.toISOString(), ok: false, reason: art.reason ?? "lecture impossible", aiOptOut: art.aiOptOut, method: "rules", facts: null, videoIds: [] };
       opts.log(`– lecture : ${ev.sourceName} · ${art.reason}`);
