@@ -76,6 +76,8 @@ export function AiCopilot() {
     void pickTransport().then(setTransport);
   }, [gptKeyEpoch]);
   const [deep, setDeep] = useState(false);
+  // Explicite : une recherche web consomme des appels API facturés. OFF par défaut.
+  const [web, setWeb] = useState(false);
   useEffect(() => {
     try {
       setDeep(localStorage.getItem("leonida-os/ai-tier/v1") === "default");
@@ -152,6 +154,7 @@ export function AiCopilot() {
           transport,
           signal: ctl.signal,
           tier: deep ? "default" : "quick",
+          web: transport.id === "openai-api" && web,
           onText: (v) => setMsgs((m) => m.map((x) => (x.id === id + 1 && x.role === "ai" ? { ...x, a: { ...x.a, text: v } } : x))),
         });
         if (ctlRef.current === ctl) {
@@ -178,7 +181,7 @@ export function AiCopilot() {
         }),
       );
     },
-    [feed, state, places, transport, deep],
+    [feed, state, places, transport, deep, web],
   );
 
   // Questions lancées depuis l'accueil (amorces)
@@ -342,11 +345,19 @@ export function AiCopilot() {
                   <ul>{m.a.more!.map((l, i) => <li key={i}>{l}</li>)}</ul>
                 </details>
               )}
-              {m.a.sources.length > 0 && (
+              {m.a.sources.some((s) => s.kind === "web") && (
+                <div className="bubble__web-sources" data-testid="ai-web-sources">
+                  <strong>🌐 Sources consultées</strong>
+                  {m.a.sources.filter((s) => s.kind === "web").map((s, i) => (
+                    <a key={i} href={s.url} target="_blank" rel="noopener noreferrer">{s.name}</a>
+                  ))}
+                </div>
+              )}
+              {m.a.sources.some((s) => s.kind !== "web") && (
                 <details className="bubble__more" data-testid="ai-sources">
-                  <summary>Sources et preuves ({m.a.sources.length})</summary>
+                  <summary>Sources et preuves ({m.a.sources.filter((s) => s.kind !== "web").length})</summary>
                   <ul>
-                    {m.a.sources.map((s, i) => (
+                    {m.a.sources.filter((s) => s.kind !== "web").map((s, i) => (
                       <li key={i}>
                         <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>{s.when ? ` · ${s.when}` : ""}
                         {s.title && <em className="bubble__orig" lang="en">Titre d’origine : {s.title}</em>}
@@ -363,7 +374,7 @@ export function AiCopilot() {
                   ))}
                 </div>
               )}
-              {!m.streaming && (m.engine === "claude" || m.engine === "gpt") && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? (m.engine === "gpt" ? "GPT" : "Claude")} à partir des données LEONIDA RADAR</p>}
+              {!m.streaming && (m.engine === "claude" || m.engine === "gpt") && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? (m.engine === "gpt" ? "GPT" : "Claude")} {m.a.sources.some((s) => s.kind === "web") ? "avec recherche web sourcée" : "à partir des données LEONIDA RADAR"}</p>}
               {m.note && <p className="bubble__note" data-testid="ai-note">{m.note}</p>}
               {m.llm && m.llm !== "pending" && m.llm !== "generated" && m.llm !== "cached" && m.llm !== "skipped" && (
                 <p className="bubble__note" data-testid="ai-llm-note">Réponse directe : la synthèse IA n’est pas disponible pour le moment.</p>
@@ -372,6 +383,15 @@ export function AiCopilot() {
           ),
         )}
       </div>
+      {transport?.id === "openai-api" && (
+        <div className="ai__web-tools">
+          <button className={`chip chip--reply press${web ? " is-on" : ""}`} type="button"
+            onClick={() => setWeb((v) => !v)} aria-pressed={web} data-testid="ai-web-toggle">
+            {web ? "🌐 Recherche web activée" : "🌐 Rechercher sur Internet"}
+          </button>
+          <span>{web ? "1 recherche maximum par question · coût API" : "Désactivée par défaut · option facturée"}</span>
+        </div>
+      )}
       <form
         className="ai__input"
         onSubmit={(e) => {
