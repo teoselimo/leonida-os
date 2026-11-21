@@ -1,7 +1,7 @@
 {
  "rockstar-youtube": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -17,7 +17,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "youtube-search": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
@@ -25,8 +25,8 @@
   "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
  },
  "gtaseries-youtube": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -34,8 +34,8 @@
   "etag": null
  },
  "rockstarintel": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -43,8 +43,8 @@
   "etag": "\"85ba2f9f7c45bebf6897fde545f9e7f6\""
  },
  "gtaboom": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -52,8 +52,8 @@
   "etag": null
  },
  "pcgamer": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -61,8 +61,8 @@
   "etag": null
  },
  "gamesradar": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -78,7 +78,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "reddit-gta6": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
@@ -86,17 +86,17 @@
   "statusDetail": "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif."
  },
  "powerpyx": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
-  "statusDetail": "10 éléments lus",
+  "statusDetail": "Inchangé depuis la dernière collecte (304)",
   "etag": "\"0b3aafe8132a18b01b619a9755d00ea9\""
  },
  "powerpyx-sitemap": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -104,8 +104,8 @@
   "etag": null
  },
  "gtaxtreme-sitemap": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -113,8 +113,8 @@
   "etag": null
  },
  "pushsquare": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -122,8 +122,8 @@
   "etag": null
  },
  "alcasthq": {
-  "lastAttemptAt": "2026-11-21T09:50:22.874Z",
-  "lastSuccessAt": "2026-11-21T09:50:22.874Z",
+  "lastAttemptAt": "2026-11-21T09:57:39.890Z",
+  "lastSuccessAt": "2026-11-21T09:57:39.890Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",

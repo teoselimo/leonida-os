@@ -1,5 +1,375 @@
 [
  {
+  "id": "v-vapid-stanier",
+  "type": "vehicle",
+  "name": "'55 Vapid Stanier",
+  "make": "Vapid",
+  "model": "Stanier",
+  "year": "55",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "preorder",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Your Vintage Vice City Pack pre-order bonus will become available shortly after you arrive in Vice City ."
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "A marker will appear on your map telling you to visit the familiar Ocean View Hotel in Vice Beach , telling you to pick up your '55 Vapid Stanier , which can be located like below:",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "A marker will appear on your map telling you to visit the familiar Ocean View Hotel in Vice Beach , telling you to pick up your '55 Vapid Stanier , which can be located like below:"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1636,
+    "y": 1096,
+    "radius": 1198,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 3,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 3 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Vice Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-vapid-dominator",
+  "type": "vehicle",
+  "name": "'67 Vapid Dominator",
+  "make": "Vapid",
+  "model": "Dominator",
+  "year": "67",
+  "aliases": null,
+  "kind": "delivery",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "The Paradise garage is in Watson Bay, Mariana County .",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "The Paradise garage is in Watson Bay, Mariana County ."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Watson Bay",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -4987,
+    "y": -3272,
+    "radius": 380,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 2,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 2 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Get inside the '67 Dominator Buggy to register it.",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Get inside the '67 Dominator Buggy to register it."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "Here's its location on your map just in case you get lost:"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Watson Bay (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-cheetah",
+  "type": "vehicle",
+  "name": "'95 Grotti Cheetah",
+  "make": "Grotti",
+  "model": "Cheetah",
+  "year": "95",
+  "aliases": null,
+  "kind": "delivery",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "confirmed",
+   "support": [
+    {
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+     "quote": "Edition check: The pictured ’95 Cheetah is an Ultimate Edition item ."
+    },
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "The white ’95 Cheetah in Rockstar&#x27;s official image looks right at home outside the Ocean View, and we&#x27;d make room for that look on any Vice City wishlist.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "The white ’95 Cheetah in Rockstar&#x27;s official image looks right at home outside the Ocean View, and we&#x27;d make room for that look on any Vice City wishlist."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Follow the waypoint to Pegassi Residences and go through the main front door, as shown:"
+     }
+    ]
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 5,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 5 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": {
+    "value": "Honest Abe",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "You'll get a notification about the '95 Grotti Cheetah upon completing Honest Abe in Chapter 5 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "Follow the waypoint to Pegassi Residences and go through the main front door, as shown:"
+   },
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "Go inside the main entrance and use the lift opposite the entrance:"
+   },
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "Head down to Parking B1 in the lift:"
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T09:44:56.655Z"
+   },
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "confirmed",
+  "reasons": [
+   "2 sources indépendantes concordantes sur l'exclusivité d'édition.",
+   "Exclusivité Ultimate recoupée."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2",
+     "édition : ultimate (reported) → ultimate (confirmed)"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-maibatsu-penumbra-ff",
   "type": "vehicle",
   "name": "'97 Maibatsu Penumbra FF",
@@ -863,6 +1233,126 @@
   ]
  },
  {
+  "id": "v-crest-kayak",
+  "type": "vehicle",
+  "name": "Crest Kayak",
+  "make": "Crest",
+  "model": "Kayak",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Here's what the Retro livery looks like; you'll find it under Pro Builds > Full Kits > Retro Build - Ultimate Edition :"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "You'll find the Dinka Enduro motorcycle and Crest Kayak around Jason's House in Key Lento, Mariana County .",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "You'll find the Dinka Enduro motorcycle and Crest Kayak around Jason's House in Key Lento, Mariana County ."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Key Lento",
+   "regionId": "keys",
+   "precision": "zone",
+   "zone": {
+    "x": -2510,
+    "y": -5919,
+    "radius": 804,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "These items are only available in Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "These items are only available in Chapter 1 ."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Key Lento (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-declasse-vamos",
   "type": "vehicle",
   "name": "Declasse Vamos",
@@ -1063,11 +1553,11 @@
   ]
  },
  {
-  "id": "v-grotti-cheetah",
+  "id": "v-dinka-enduro",
   "type": "vehicle",
-  "name": "Grotti Cheetah",
-  "make": "Grotti",
-  "model": "Cheetah",
+  "name": "Dinka Enduro",
+  "make": "Dinka",
+  "model": "Enduro",
   "year": null,
   "aliases": null,
   "kind": "hidden",
@@ -1077,35 +1567,60 @@
    "status": "reported",
    "support": [
     {
-     "sourceName": "GTA Xtreme (sitemap)",
-     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
-     "quote": "Edition check: The pictured ’95 Cheetah is an Ultimate Edition item ."
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Here's what the Retro livery looks like; you'll find it under Pro Builds > Full Kits > Retro Build - Ultimate Edition :"
     }
    ]
   },
   "location": {
    "text": {
-    "value": "The white ’95 Cheetah in Rockstar&#x27;s official image looks right at home outside the Ocean View, and we&#x27;d make room for that look on any Vice City wishlist.",
+    "value": "You'll find the Dinka Enduro motorcycle and Crest Kayak around Jason's House in Key Lento, Mariana County .",
     "support": [
      {
-      "sourceName": "GTA Xtreme (sitemap)",
-      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
-      "quote": "The white ’95 Cheetah in Rockstar&#x27;s official image looks right at home outside the Ocean View, and we&#x27;d make room for that look on any Vice City wishlist."
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "You'll find the Dinka Enduro motorcycle and Crest Kayak around Jason's House in Key Lento, Mariana County ."
      }
     ],
     "conflicts": []
    },
-   "district": "Vice City",
-   "regionId": "vicecity",
-   "precision": "text",
-   "zone": null,
+   "district": "Key Lento",
+   "regionId": "keys",
+   "precision": "zone",
+   "zone": {
+    "x": -2510,
+    "y": -5919,
+    "radius": 804,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
   "access": {
-   "chapterMin": null,
+   "chapterMin": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
    "inferredChapter": null,
-   "until": null,
+   "until": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "These items are only available in Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
    "mission": null,
    "early": false,
    "keyCloner": null,
@@ -1118,35 +1633,41 @@
    "mode": "yes"
   },
   "steps": [],
-  "risks": [],
+  "risks": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "These items are only available in Chapter 1 ."
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
-    "title": "GTA 6 best cars evidence guide",
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T09:57:39.890Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
-   "Exclusivité Ultimate signalée : compatibilité à vérifier."
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Key Lento (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
-  "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
   "revisions": [
    {
-    "at": "2026-11-21T09:44:56.655Z",
+    "at": "2026-11-21T09:57:39.890Z",
     "reason": "Détection automatique",
     "changes": [
-     "source : GTA Xtreme (sitemap)"
+     "source : Push Square"
     ]
    }
   ]
@@ -1324,6 +1845,114 @@
   ]
  },
  {
+  "id": "v-garage-paradise",
+  "type": "garage",
+  "name": "Paradise Garage",
+  "make": "",
+  "model": "Paradise Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "delivery",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "The Paradise garage is in Watson Bay, Mariana County .",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "The Paradise garage is in Watson Bay, Mariana County ."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Watson Bay",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -4987,
+    "y": -3272,
+    "radius": 380,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 2,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "You'll get a notification as you progress through Chapter 2 that your '67 Dominator Buggy is available to collect from your Paradise garage, which looks like this:"
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "Here's its location on your map just in case you get lost:"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Watson Bay (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-pegassi-infernus",
   "type": "vehicle",
   "name": "Pegassi Infernus",
@@ -1437,6 +2066,77 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-pegassi-residences",
+  "type": "garage",
+  "name": "Pegassi Residences Garage",
+  "make": "",
+  "model": "Pegassi Residences Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-all-garage-locations",
+    "title": "GTA 6 all garage locations",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
     ]
    }
   ]
@@ -2352,6 +3052,77 @@
   ]
  },
  {
+  "id": "v-garage-port-gellhorn-station",
+  "type": "garage",
+  "name": "Port Gellhorn Station Garage",
+  "make": "",
+  "model": "Port Gellhorn Station Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-all-garage-locations",
+    "title": "GTA 6 all garage locations",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-progen-emerus",
   "type": "vehicle",
   "name": "Progen Emerus",
@@ -2443,6 +3214,267 @@
   ]
  },
  {
+  "id": "v-shitzu-squalo",
+  "type": "vehicle",
+  "name": "Shitzu Squalo",
+  "make": "Shitzu",
+  "model": "Squalo",
+  "year": null,
+  "aliases": null,
+  "kind": "delivery",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "You can collect your Shitzu Squalo beginning Chapter 4 , docked near to Atlantic Ave, Washington Beach, Vice Beach, Vice-Dale County .",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "You can collect your Shitzu Squalo beginning Chapter 4 , docked near to Atlantic Ave, Washington Beach, Vice Beach, Vice-Dale County ."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Washington Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1702,
+    "y": 2183,
+    "radius": 642,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 4 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Washington Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-shore-court",
+  "type": "garage",
+  "name": "Shore Court Garage",
+  "make": "",
+  "model": "Shore Court Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "preorder",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Vintage Vice City Pack Location"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "The car is unlocked, and once you get inside you'll automatically receive the Shore Court garage as well as new clothes in your wardrobe.",
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "The car is unlocked, and once you get inside you'll automatically receive the Shore Court garage as well as new clothes in your wardrobe."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-thompson-court",
+  "type": "garage",
+  "name": "Thompson Court Garage",
+  "make": "",
+  "model": "Thompson Court Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+    "url": "https://www.powerpyx.com/gta-6-all-garage-locations",
+    "title": "GTA 6 all garage locations",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-truffade-thrax",
   "type": "vehicle",
   "name": "Truffade Thrax",
@@ -2529,6 +3561,120 @@
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme (sitemap)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-vapid-ganado",
+  "type": "vehicle",
+  "name": "Vapid Ganado",
+  "make": "Vapid",
+  "model": "Ganado",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": {
+   "value": "livrée Retro",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "You can also equip a custom Retro livery to Jason's Vapid Ganado by taking it to any Mod Shop , like Coastal Auto Care ."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Here's what the Retro livery looks like; you'll find it under Pro Builds > Full Kits > Retro Build - Ultimate Edition :"
+    }
+   ]
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "These items are only available in Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "These items are only available in Chapter 1 ."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T09:57:39.890Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier."
+  ],
+  "missing": [
+   "emplacement"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
     ]
    }
   ]
