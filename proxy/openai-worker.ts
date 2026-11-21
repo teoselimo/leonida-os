@@ -245,17 +245,40 @@ export default {
         let gotText = false;
         let measured: number | null = null;
         let actualModel = model;
+        const searchCalls = new Set<string>();
+        const citations = new Map<string, { url: string; title: string }>();
+        type Citation = { type?: string; url?: string; title?: string };
+        const addCitation = (annotation: Citation | undefined) => {
+          if (annotation?.type !== "url_citation" || typeof annotation.url !== "string") return;
+          try {
+            const url = new URL(annotation.url);
+            if (url.protocol !== "https:" || url.username || url.password || !url.hostname.includes(".")) return;
+            if (url.href.length > 1500) return;
+            if (!citations.has(url.href) && citations.size < 6) citations.set(url.href, {
+              url: url.href,
+              title: (typeof annotation.title === "string" ? annotation.title : url.hostname).slice(0, 110),
+            });
+          } catch { /* malformed citation URL */ }
+        };
+        const addSearchItem = (item: { type?: string; id?: string } | undefined) => {
+          if (item?.type === "web_search_call" && item.id) searchCalls.add(item.id);
+        };
         type FinalResponse = {
           usage?: { input_tokens?: number; output_tokens?: number } | null;
           model?: string;
           error?: { code?: string } | null;
           incomplete_details?: { reason?: string } | null;
-          output?: { type?: string; content?: { type?: string; text?: string }[] }[];
+          output?: { type?: string; id?: string; content?: { type?: string; text?: string; annotations?: Citation[] }[] }[];
         };
         const recordUsage = (response?: FinalResponse) => {
+          for (const item of response?.output || []) {
+            addSearchItem(item);
+            for (const c of item.content || []) for (const a of c.annotations || []) addCitation(a);
+          }
           const usage = response?.usage;
           if (usage && Number.isFinite(usage.input_tokens) && Number.isFinite(usage.output_tokens)) {
-            measured = chargeMicros(usage.input_tokens || 0, usage.output_tokens || 0, price);
+            measured = chargeMicros(usage.input_tokens || 0, usage.output_tokens || 0, price)
+              + searchCalls.size * WEB_TOOL_CALL_MICROS;
           }
           if (response?.model) actualModel = response.model;
         };
@@ -264,7 +287,13 @@ export default {
           if (!data || data === "[DONE]") return;
           let event: Record<string, unknown>;
           try { event = JSON.parse(data) as Record<string, unknown>; } catch { return; }
-          if (event.type === "response.output_text.delta" && typeof event.delta === "string") {
+          if ((event.type === "response.output_item.added" || event.type === "response.output_item.done")
+            && event.item && typeof event.item === "object") {
+            addSearchItem(event.item as { type?: string; id?: string });
+          } else if (event.type === "response.output_text.annotation.added"
+            && event.annotation && typeof event.annotation === "object") {
+            addCitation(event.annotation as Citation);
+          } else if (event.type === "response.output_text.delta" && typeof event.delta === "string") {
             gotText = true;
             send({ type: "delta", text: event.delta });
           } else if (event.type === "response.completed") {
@@ -306,6 +335,7 @@ export default {
           if (pending.trim()) handleBlock(pending);
           if (!completed) throw new Error("upstream_stream_ended");
           if (!gotText) throw new Error("upstream_no_text");
+          if (citations.size) send({ type: "sources", sources: Array.from(citations.values()).slice(0, 5) });
           send({ type: "done", model: actualModel });
         } catch (e) {
           const reason = e instanceof Error ? e.message : "";
