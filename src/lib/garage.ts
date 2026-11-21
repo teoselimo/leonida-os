@@ -18,13 +18,14 @@ export const STATE_FR: Record<VehicleState | "none", string> = {
   stored: "Rangé au garage",
 };
 
-/** Compatibilité avec l'édition du joueur. */
-export type Compat = "ok" | "ultimate-only" | "check" | "preorder";
+/** Compatibilité avec l'édition du joueur et son éligibilité aux bonus de précommande (deux réglages distincts). */
+export type Compat = "ok" | "ultimate-only" | "check" | "preorder" | "preorder-no";
 
-export function compatibility(v: VehicleRecord, edition: EditionId): Compat {
+export function compatibility(v: VehicleRecord, edition: EditionId, preorder: "yes" | "no" | "unknown" = "unknown"): Compat {
   const ex = v.edition.exclusive;
   if (!ex) return "ok";
-  if (ex === "preorder") return "preorder"; // bonus de précommande : les deux éditions, selon la date d'achat
+  // bonus de précommande : les deux éditions, uniquement si le joueur y a droit (jamais déduit de l'édition)
+  if (ex === "preorder") return preorder === "yes" ? "ok" : preorder === "no" ? "preorder-no" : "preorder";
   if (edition === "ultimate") return v.edition.status === "confirmed" ? "ok" : "check";
   if (edition === "standard") return v.edition.status === "confirmed" ? "ultimate-only" : "check";
   return "check";
@@ -35,9 +36,13 @@ export function chapterNeeded(v: VehicleRecord): number {
   return Math.max(v.access.chapterMin?.value ?? 0, v.access.inferredChapter?.value ?? 0);
 }
 
+/** Accès pour ce joueur : maintenant (conditions établies), à confirmer (conditions inconnues), plus tard, dépassé, ou exclu. */
+export type Access = "now" | "confirm" | "later" | "expired" | "excluded";
+
 export interface VehicleView {
   v: VehicleRecord;
   compat: Compat;
+  access: Access;
   need: number;
   /** Plus tard dans l'histoire (masqué en anti-spoiler strict). */
   later: boolean;
@@ -52,22 +57,28 @@ export interface VehicleView {
 }
 
 export function viewOf(v: VehicleRecord, s: Pick<PersistedState, "profile" | "vehicles">): VehicleView {
-  const compat = compatibility(v, s.profile.edition);
+  const compat = compatibility(v, s.profile.edition, s.profile.preorder);
   const need = chapterNeeded(v);
+  // le chapitre d'accès n'est « établi » que s'il est cité, déduit d'une règle sourcée, ou si la source dit « accessible tôt »
+  const accessKnown = v.access.chapterMin != null || v.access.inferredChapter != null || v.access.early;
   const later = need > s.profile.chapter;
   const until = v.access.until?.value ?? null;
   const expired = until != null && s.profile.chapter > until;
   const owned = s.vehicles[v.id]?.state ?? null;
   const locatable = v.type === "vehicle" && v.location.precision !== "none" && v.kind !== "news";
-  const now = locatable && !later && !expired && (compat === "ok" || compat === "preorder") && v.reliability !== "rumor" && (!owned || owned === "spotted");
-  const urgent = !expired && !later && (until != null || v.risks.some((r) => /\b(lose|lost|disappear|only available)\b/i.test(r.quote))) && compat !== "ultimate-only";
+  const compatible = compat === "ok";
+  const now = locatable && accessKnown && !later && !expired && compatible && v.reliability !== "rumor" && (!owned || owned === "spotted");
+  const access: Access = compat === "ultimate-only" || compat === "preorder-no" ? "excluded" : expired ? "expired" : later ? "later" : now ? "now" : "confirm";
+  // « À ne pas manquer » : seulement une fenêtre limitée explicite, encore ouverte, pour un contenu auquel le joueur a droit
+  const urgent = until != null && !expired && !later && compatible && (!owned || owned === "spotted");
   const hidden = later && s.profile.spoilerMode === "strict";
-  return { v, compat, need, later, expired, owned, now, urgent, hidden };
+  return { v, compat, access, need, later, expired, owned, now, urgent, hidden };
 }
 
-export type GarageFilter = "now" | "hidden" | "ultimate" | "garages" | "urgent" | "owned" | "unconfirmed" | "locate";
+export type GarageFilter = "now" | "confirm" | "hidden" | "ultimate" | "garages" | "urgent" | "owned" | "unconfirmed" | "locate";
 export const FILTERS: Array<{ id: GarageFilter; label: string }> = [
   { id: "now", label: "Accessibles maintenant" },
+  { id: "confirm", label: "Accès à confirmer" },
   { id: "hidden", label: "Garées ou en circulation" },
   { id: "ultimate", label: "Exclusifs Ultimate" },
   { id: "garages", label: "Garages et propriétés" },
@@ -81,6 +92,8 @@ export function matches(x: VehicleView, f: GarageFilter): boolean {
   switch (f) {
     case "now":
       return x.now;
+    case "confirm":
+      return x.access === "confirm" && x.v.type === "vehicle";
     case "hidden":
       return x.v.type === "vehicle" && (x.v.kind === "hidden" || x.v.kind === "dynamic");
     case "ultimate":
@@ -107,7 +120,7 @@ export function vehicleRecommendations(list: VehicleRecord[], s: Pick<PersistedS
   return list
     .map((v) => viewOf(v, s))
     // localisable (zone ou point) — ou bonus remis au joueur (notification en jeu), qui n'a pas besoin d'être cherché
-    .filter((x) => x.now && x.compat !== "check" && (x.v.location.precision === "zone" || x.v.location.precision === "exact" || x.v.kind === "delivery"))
+    .filter((x) => x.now && (x.v.location.precision === "zone" || x.v.location.precision === "exact" || x.v.kind === "delivery"))
     .sort((a, b) => Number(b.urgent) - Number(a.urgent) || Number(b.v.edition.exclusive === "ultimate") - Number(a.v.edition.exclusive === "ultimate") || RW[b.v.reliability] - RW[a.v.reliability] || b.v.evidence.length - a.v.evidence.length)
     .slice(0, limit);
 }
@@ -124,7 +137,16 @@ export const COMPAT_FR: Record<Compat, string> = {
   ok: "Compatible avec ton édition",
   "ultimate-only": "Réservé à l'édition Ultimate",
   check: "Compatibilité à vérifier",
-  preorder: "Bonus de précommande (les deux éditions)",
+  preorder: "Bonus de précommande : renseigne ton éligibilité dans Profil",
+  "preorder-no": "Bonus de précommande : tu n'y as pas droit",
+};
+
+export const ACCESS_FR: Record<Access, string> = {
+  now: "Accessible maintenant",
+  confirm: "Accès à confirmer",
+  later: "Plus tard dans l'histoire",
+  expired: "Fenêtre dépassée",
+  excluded: "Non disponible pour toi",
 };
 
 /** Texte de conservation, sans rien inventer : bonus conservé d'office, règle d'immatriculation sourcée, ou inconnu. */

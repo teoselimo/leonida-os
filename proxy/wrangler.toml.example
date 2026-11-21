@@ -1,0 +1,14 @@
+name = "leonida-ai-proxy"
+main = "worker.ts"
+compatibility_date = "2026-11-01"
+
+[vars]
+ANTHROPIC_MODEL = "claude-haiku-5-5"
+ALLOWED_ORIGIN = "https://teoselimo.github.io"
+DAILY_BUDGET_CALLS = "300"
+PER_IP_PER_MIN = "6"
+
+[[kv_namespaces]]
+binding = "QUOTA"
+id = "<à créer : wrangler kv namespace create QUOTA>"
+# Secret : wrangler secret put ANTHROPIC_API_KEY

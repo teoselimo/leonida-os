@@ -5,7 +5,7 @@ import { derive, diff, matches, newRecord, toEvidence } from "./pipeline/records
 import { GTA6, NOISE, OTHER_GAMES, categorize } from "./pipeline/rules.ts";
 import { enrichWithLLM } from "./pipeline/llm.ts";
 import { deepReadPhase, mergeByFacts } from "./pipeline/deep.ts";
-import { buildVehicles } from "./pipeline/garage.ts";
+import { buildVehicles, collectMechanics } from "./pipeline/garage.ts";
 import type { VehicleOverride } from "./pipeline/garage.ts";
 import type { Store } from "./store/fileStore.ts";
 import type { Override, RadarFeed, RadarRecord, RawItem, RunLog, SourceConfig, SourceState } from "./types.ts";
@@ -287,6 +287,10 @@ export function buildFeed(store: Store, sources: SourceConfig[], summary: RunSum
     }),
     health: { cadenceMinutes: 15, cycles: (store.cycles ?? []).slice(-48) },
     vehicles: store.vehicles ?? [],
+    mechanics: (() => {
+      const m = collectMechanics(store.records.filter((r) => r.status !== "retracted").flatMap((r) => r.evidence));
+      return { register: m.register.slice(0, 12), keyCloner: m.keyCloner };
+    })(),
     lastRun: summary ? { at: now.toISOString(), newItems: summary.newItems, updatedItems: summary.updatedItems, errors: summary.runs.filter((r) => !r.ok && !r.skipped).length } : null,
     items,
   };

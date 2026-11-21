@@ -21,7 +21,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Sheet } from "@/components/Sheet";
 import { VehicleSheet } from "@/components/VehicleSheet";
 import { useLiveRadar } from "@/lib/live";
-import { FILTERS, matches, viewOf } from "@/lib/garage";
+import { ACCESS_FR, FILTERS, matches, viewOf } from "@/lib/garage";
 import type { GarageFilter, VehicleView } from "@/lib/garage";
 import type { MapZone } from "@/components/map/types";
 import type { Discovery } from "@/lib/types";
@@ -29,10 +29,12 @@ import type { Discovery } from "@/lib/types";
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 export function MapScreen({ active = true }: { active?: boolean }) {
-  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle } = useStore();
+  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle, garage: gState, setGarage: setGarageStore, placeFocus } = useStore();
   const { feed } = useLiveRadar();
-  const [garage, setGarage] = useState(false);
-  const [gFilter, setGFilter] = useState<GarageFilter | null>(null);
+  const garage = gState.on;
+  const gFilter = gState.filter as GarageFilter | null;
+  const setGarage = (v: boolean | ((x: boolean) => boolean)) => setGarageStore({ on: typeof v === "function" ? v(garage) : v });
+  const setGFilter = (f: GarageFilter | null | ((x: GarageFilter | null) => GarageFilter | null)) => setGarageStore({ on: true, filter: typeof f === "function" ? f(gFilter) : f });
   const isTablet = useIsTablet();
   const [cats, setCats] = useState<Set<CategoryId>>(new Set());
   const [onlyAvailable, setOnlyAvailable] = useState(false);
@@ -61,7 +63,30 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     return () => ro.disconnect();
   }, [isTablet]);
 
+  // Lieu demandé par LEONIDA AI : repère gtadb exact, ou quartier → zone approximative (jamais un point inventé)
+  const [placeZone, setPlaceZone] = useState<MapZone | null>(null);
+  useEffect(() => {
+    if (!placeFocus.nonce || !landmarks.length) return;
+    if (placeFocus.landmarkId && landmarks.some((l) => l.id === placeFocus.landmarkId)) {
+      setPlaceZone(null);
+      setLmId(placeFocus.landmarkId);
+      return;
+    }
+    const d = placeFocus.district ? norm(placeFocus.district) : "";
+    const pts = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
+    if (!pts.length) return;
+    const x = pts.reduce((a, l) => a + l.x, 0) / pts.length;
+    const y = pts.reduce((a, l) => a + l.y, 0) / pts.length;
+    const dist = pts.map((l) => Math.hypot(l.x - x, l.y - y)).sort((a, b) => a - b);
+    const radius = Math.min(2500, Math.max(350, dist[Math.floor(dist.length * 0.8)] ?? 350));
+    setLmId(null);
+    setPlaceZone({ id: `place:${placeFocus.district}`, x, y, radius, color: "#2EE6D6", label: placeFocus.district! });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placeFocus.nonce, landmarks.length]);
+
   const selectDiscovery = (id: string | null) => {
+    if (id?.startsWith("place:")) return;
+    setPlaceZone(null);
     if (id?.startsWith("veh:")) {
       setLmId(null);
       selectVehicle(id.slice(4));
@@ -78,13 +103,11 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const vehicleViews = useMemo(() => (feed?.vehicles ?? []).map((v) => viewOf(v, state)), [feed, state]);
   const shownVehicles = vehicleViews.filter((x) => !x.hidden && (!gFilter || matches(x, gFilter)));
   const hiddenVehicles = vehicleViews.filter((x) => x.hidden).length;
-  useEffect(() => {
-    if (vehicleId) setGarage(true);
-  }, [vehicleId]);
   const VCOLOR = (x: VehicleView) => (x.v.type === "garage" ? "#5AB8FF" : x.v.edition.exclusive === "ultimate" ? "#FFB547" : x.now ? "#2EE6D6" : x.v.reliability === "reported" ? "#B98CFF" : "#FF3D8B");
-  const zones: MapZone[] = garage
+  const vehicleZones: MapZone[] = garage
     ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened }))
     : [];
+  const zones: MapZone[] = placeZone ? [...vehicleZones, placeZone] : vehicleZones;
   const vehicleMarkers: MapMarker[] = garage
     ? shownVehicles
         .filter((x) => x.v.location.point)
@@ -98,6 +121,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     : [];
   const guide = (id: string) => focusVehicle(id);
   const selectLandmark = (id: string | null) => {
+    if (id) setPlaceZone(null);
     if (id) {
       select(null);
       selectVehicle(null);
@@ -213,7 +237,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     });
 
   const garageChip = (
-    <button className={`fchip fchip--garage ${garage ? "is-on" : ""}`} onClick={() => { setGarage((v) => !v); setGFilter(null); selectVehicle(null); }} aria-pressed={garage} data-testid="filter-garage">
+    <button className={`fchip fchip--garage ${garage ? "is-on" : ""}`} onClick={() => { setGarageStore({ on: !garage, filter: null }); selectVehicle(null); }} aria-pressed={garage} data-testid="filter-garage">
       <span aria-hidden>🚗</span> Voitures cachées <b>{vehicleViews.filter((x) => !x.hidden && x.v.type === "vehicle").length}</b>
     </button>
   );
@@ -278,7 +302,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       draft={editor ? { x: editor.x, y: editor.y } : null}
       onDraftMove={(x, y) => setEditor((e) => (e ? { ...e, x, y } : e))}
       zones={zones}
-      selectedZoneId={vehicleId && zones.some((z) => z.id === `veh:${vehicleId}`) ? `veh:${vehicleId}` : null}
+      selectedZoneId={vehicleId && zones.some((z) => z.id === `veh:${vehicleId}`) ? `veh:${vehicleId}` : placeZone && !vehicleId ? placeZone.id : null}
       onSelectZone={(id) => selectDiscovery(id)}
     />
   );
@@ -291,8 +315,8 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       <span className="vrow__body">
         <strong>{x.v.name}</strong>
         <em>
-          {x.v.edition.exclusive === "ultimate" ? (x.compat === "ultimate-only" ? "Ultimate · non disponible" : "Ultimate · ") : ""}
-          {x.owned && x.owned !== "spotted" ? "Possédé" : x.now ? "Récupérable maintenant" : x.later ? `Chapitre ${x.need}` : x.compat === "check" ? "Compatibilité à vérifier" : x.v.location.precision === "none" || x.v.location.precision === "text" ? "À localiser" : x.v.reliability === "reported" ? "À vérifier" : ""}
+          {x.v.edition.exclusive === "ultimate" ? "Ultimate · " : ""}
+          {x.owned && x.owned !== "spotted" ? "Possédé" : x.later ? `Chapitre ${x.need}` : x.access === "confirm" && (x.v.location.precision === "none" || x.v.location.precision === "text") ? "À localiser" : ACCESS_FR[x.access]}
         </em>
       </span>
       {x.v.location.precision === "zone" && <span className="vrow__tag">zone</span>}
@@ -355,7 +379,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const sheetOpen = Boolean(selectedId || lm || editor || vehicleId);
   return (
     <div className="mapphone">
-      {mapEl({ top: topH, bottom: sheetOpen ? sheetH : carto ? 96 : 118, left: 0 })}
+      {mapEl({ top: topH, bottom: sheetOpen ? sheetH : (carto ? 96 : 118) + 86, left: 0 })}
       <div className="mapphone__top" ref={topRef}>
         <div className="row between">
           <h1 className="h2 shadowtxt">Carte</h1>

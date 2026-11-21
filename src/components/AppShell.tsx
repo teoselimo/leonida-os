@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { applyGlass, sampleTransition } from "@/lib/glass";
+import { AiCopilot } from "./AiCopilot";
+import { BrandMark } from "./Brand";
+import { tick } from "@/lib/motion";
 import { useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
 import { alerts } from "@/lib/engine";
@@ -19,13 +23,22 @@ const NAV: { id: ViewId; label: string; icon: string }[] = [
 ];
 
 export function AppShell() {
-  const { view, setView, hydrated, state, toast, dismissToast, undo, focusOnMap, discoveries, signals } = useStore();
+  const { view, setView, hydrated, state, toast, dismissToast, undo, focusOnMap, discoveries, signals, celebration } = useStore();
+  // Sens de la transition entre onglets (comme une pile de navigation iOS)
+  const order: ViewId[] = ["accueil", "carte", "radar", "profil"];
+  const prev = useRef<ViewId>(view);
+  const dir = Math.sign(order.indexOf(view) - order.indexOf(prev.current)) || 0;
+  useEffect(() => {
+    if (prev.current !== view) sampleTransition();
+    prev.current = view;
+  }, [view]);
+  useEffect(() => applyGlass(), []);
   const scroller = useRef<HTMLElement>(null);
   const live = useLiveRadar();
   const radarBadge = live.feed
     ? live.feed.items.filter((r) => Date.now() - Date.parse(r.firstSeenAt) < 6 * 3600_000 && !(r.spoiler === "high" && state.profile.spoilerMode === "strict")).length
     : signals.filter((g) => !state.seenSignals.includes(g.id) && g.spoilerChapter <= state.profile.chapter).length;
-  const homeBadge = alerts(discoveries, signals, state).filter((a) => a.level === "high").length;
+  const homeBadge = state.showDemo ? alerts(discoveries, signals, state).filter((a) => a.level === "high").length : 0;
 
   const [mapMounted, setMapMounted] = useState(view === "carte");
   useEffect(() => {
@@ -34,14 +47,15 @@ export function AppShell() {
   }, [view]);
 
   return (
-    <div className={`app ${hydrated ? "is-ready" : ""} view-${view}`}>
-      <nav className="nav" aria-label="Navigation principale">
+    <div className={`app ${hydrated ? "is-ready" : ""} view-${view}`} style={{ ["--dir" as string]: dir }}>
+      <nav className="nav glass" aria-label="Navigation principale" style={{ ["--idx" as string]: order.indexOf(view) }}>
         <div className="nav__brand">
-          <span className="logo">L</span>
+          <BrandMark size={38} />
           <span className="nav__name">LEONIDA<b>OS</b></span>
         </div>
+        <span className="nav__pill" aria-hidden />
         {NAV.map((n) => (
-          <button key={n.id} className={`nav__item ${view === n.id ? "is-on" : ""}`} onClick={() => setView(n.id)} aria-current={view === n.id ? "page" : undefined} data-testid={`nav-${n.id}`}>
+          <button key={n.id} className={`nav__item ${view === n.id ? "is-on" : ""}`} onClick={() => { if (view !== n.id) tick(); setView(n.id); }} aria-current={view === n.id ? "page" : undefined} data-testid={`nav-${n.id}`}>
             <span className="nav__icon">
               <Icon name={n.icon} size={22} />
               {n.id === "radar" && radarBadge > 0 && <i className="nav__badge">{radarBadge > 99 ? "99+" : radarBadge}</i>}
@@ -50,7 +64,7 @@ export function AppShell() {
             <span className="nav__label">{n.label}</span>
           </button>
         ))}
-        <div className="nav__foot">V0.6 · garage des légendes</div>
+        <div className="nav__foot">V0.7</div>
       </nav>
 
       <div className="stage">
@@ -68,6 +82,16 @@ export function AppShell() {
           </section>
         )}
       </div>
+
+      <AiCopilot />
+
+      {celebration && (
+        <div className="celebrate" key={celebration.key} role="status" aria-live="polite" data-testid="celebrate">
+          <span className="celebrate__ring" />
+          <span className="celebrate__check"><Icon name="check" size={30} stroke={3} /></span>
+          <span className="celebrate__label">{celebration.label}</span>
+        </div>
+      )}
 
       {toast && (
         <div className="toast" key={toast.key} role="status" data-testid="toast">

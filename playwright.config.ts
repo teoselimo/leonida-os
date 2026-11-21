@@ -35,12 +35,12 @@ export default defineConfig({
     { name: "unit", testMatch: /unit\.spec\.ts/ },
     {
       name: "iphone",
-      testMatch: /(e2e|live)\.spec\.ts/,
+      testMatch: /(e2e|live|v07)\.spec\.ts/,
       use: { viewport: { width: 393, height: 852 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, userAgent: devices["iPhone 15 Pro"].userAgent },
     },
     {
       name: "ipad",
-      testMatch: /(e2e|live)\.spec\.ts/,
+      testMatch: /(e2e|live|v07)\.spec\.ts/,
       use: { viewport: { width: 1194, height: 834 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, userAgent: devices["iPad Pro 11"].userAgent },
     },
   ],

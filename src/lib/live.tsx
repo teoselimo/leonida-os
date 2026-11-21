@@ -164,15 +164,53 @@ export function collectorHealth(feed: RadarFeed, now = Date.now()): CollectorHea
 export const TRIGGER_FR: Record<string, string> = { schedule: "planifié (cron)", workflow_dispatch: "manuel", push: "déploiement", local: "local" };
 
 // ── Conseils personnalisés (« Que faire maintenant ? ») ────────────────────────
-/** Conseils exploitables, fiables, compatibles avec le chapitre du joueur et l'anti-spoiler. */
-export function liveAdvice(feed: RadarFeed | null, profile: { chapter: number; spoilerMode: "strict" | "relaxed" }, done: string[] = []) {
-  if (!feed) return { now: [] as RadarRecord[], later: 0 };
-  const usable = feed.items.filter(
-    (r) => r.advice && r.actionable && r.status === "active" && (r.reliability === "official" || r.reliability === "confirmed") && !done.includes(r.id),
-  );
+export interface AdviceItem {
+  r: RadarRecord;
+  text: string;
+  urgency: "now" | "soon" | "anytime";
+  /** La mission de contexte n'est plus disponible pour ce joueur (chapitre dépassé ou mission limite terminée). */
+  missionGone: boolean;
+}
+
+/**
+ * Conseils exploitables, fiables, compatibles avec la progression réelle du joueur et l'anti-spoiler.
+ * Une mission limitée devenue indisponible n'est JAMAIS présentée comme urgente :
+ *  - elle disparaît si la source dit que le contenu se perd ;
+ *  - elle reste en conseil ordinaire si la source dit qu'on ne rate rien (le lieu/butin reste accessible).
+ */
+export function liveAdvice(
+  feed: RadarFeed | null,
+  profile: { chapter: number; spoilerMode: "strict" | "relaxed"; missionsDone?: string[] },
+  done: Record<string, string> | string[] = {},
+) {
+  if (!feed) return { now: [] as AdviceItem[], later: 0 };
+  const isDone = (id: string) => (Array.isArray(done) ? done.includes(id) : !!done[id]);
+  const finished = new Set((profile.missionsDone ?? []).map((m) => m.toLowerCase().trim()));
+  const usable = feed.items.filter((r) => r.advice && r.actionable && r.status === "active" && (r.reliability === "official" || r.reliability === "confirmed") && !isDone(r.id));
   const fits = (r: RadarRecord) => (r.advice!.chapterMin ?? 0) <= profile.chapter && spoilerVisibility(r, profile.spoilerMode, profile.chapter) === "visible";
-  const now = usable.filter(fits).sort((a, b) => Number(b.advice!.urgency === "now") - Number(a.advice!.urgency === "now") || b.score - a.score);
-  return { now, later: usable.length - now.length };
+  const items: AdviceItem[] = [];
+  for (const r of usable.filter(fits)) {
+    const d = r.details;
+    const until = d?.contextMissable?.value.until ?? null;
+    const subject = d?.contextMissable?.value.subject ?? d?.mission?.value ?? null;
+    const recChapter = r.advice!.chapterMin;
+    const gone = !!until && (finished.has(until.toLowerCase()) || (subject != null && finished.has(subject.toLowerCase())) || (recChapter != null && profile.chapter > recChapter));
+    if (!gone) {
+      items.push({ r, text: r.advice!.text, urgency: r.advice!.urgency, missionGone: false });
+      continue;
+    }
+    if (d?.missable?.value !== false) continue; // contenu perdu avec la mission : on n'en parle plus
+    const where = d.place ? `${d.place.value.name}${d.place.value.district ? ` (${d.place.value.district})` : ""}` : null;
+    const gain = r.conditions.reward;
+    items.push({
+      r,
+      text: `${[gain, where].filter(Boolean).join(" · ")}. ${subject ? `La mission « ${subject} » n'est plus disponible pour toi, mais` : ""} la source indique qu'on ne rate rien : le lieu reste accessible.`.replace(/^\. /, ""),
+      urgency: "anytime",
+      missionGone: true,
+    });
+  }
+  const now = items.sort((a, b) => Number(b.urgency === "now") - Number(a.urgency === "now") || b.r.score - a.r.score);
+  return { now, later: usable.length - usable.filter(fits).length };
 }
 
 const DONE_KEY = "leonida-os/advice-done/v1";

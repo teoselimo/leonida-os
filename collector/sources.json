@@ -148,7 +148,7 @@
     },
     {
       "id": "powerpyx-sitemap",
-      "name": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "name": "PowerPyx",
       "kind": "sitemap",
       "official": false,
       "enabled": true,
@@ -163,7 +163,7 @@
     },
     {
       "id": "gtaxtreme-sitemap",
-      "name": "GTA Xtreme (sitemap)",
+      "name": "GTA Xtreme",
       "kind": "sitemap",
       "official": false,
       "enabled": true,

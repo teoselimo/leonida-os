@@ -2,6 +2,7 @@ import type { Category, Evidence, Override, RadarRecord, RawItem, Reliability, R
 import { hostOf, sha1 } from "../util.ts";
 import { ACTIONABLE, CATEGORY_FR, CLAIM_QUESTION, categorize, extractMoney, jaccard, MISSABLE, RUMOR, SPOILER, tokens } from "./rules.ts";
 import { adviceFor, consolidate, suggestionFor } from "./deep.ts";
+import { districtIndex } from "./vehicles.ts";
 import { findPlace } from "./places.ts";
 
 /** Origines d'une preuve : chaîne/domaine éditeur + vidéos citées. */
@@ -137,11 +138,13 @@ export function derive(rec: RadarRecord, sources: Map<string, SourceConfig>, now
   const dPlace = details?.place ? `${details.place.value.name}${details.place.value.district ? `, ${details.place.value.district}` : ""}` : null;
   const dRegion = details?.place ? (evs.map((e) => e.deep?.facts?.place?.value.regionId).find(Boolean) ?? null) : null;
   const suggestion = override?.location ? null : suggestionFor(details);
+  const dz = details?.place?.value.district ? districtIndex().get(details.place.value.district) : undefined;
+  const zone = dz && dz.radius <= 1500 ? { x: dz.x, y: dz.y, radius: dz.radius } : null;
 
   const location = override?.location
     ? { regionId: override.location.regionId ?? place?.regionId ?? null, place: override.location.place ?? place?.place ?? null, precision: "validated" as const, x: override.location.x, y: override.location.y }
     : dPlace
-      ? { regionId: dRegion ?? place?.regionId ?? null, place: dPlace, precision: "named-place" as const, x: null, y: null, suggestion }
+      ? { regionId: dRegion ?? place?.regionId ?? null, place: dPlace, precision: "named-place" as const, x: null, y: null, suggestion, zone }
       : { regionId: place?.regionId ?? null, place: place?.place ?? null, precision: place?.precision ?? ("none" as const), x: null, y: null };
 
   const spoilerHit = text.match(SPOILER);
