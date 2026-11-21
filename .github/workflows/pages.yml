@@ -30,6 +30,32 @@ jobs:
           NEXT_PUBLIC_RADAR_URL: https://raw.githubusercontent.com/${{ github.repository }}/data/radar.json
           NEXT_TELEMETRY_DISABLED: "1"
         run: npm run build
+      # Construire la preversion GPT de la branche experimentale dans un dossier dedie.
+      # AUCUN changement de code ni de variables sur la version publique a la racine.
+      - name: Recuperer LEONIDA GPT (branche de test seulement)
+        uses: actions/checkout@v4
+        with:
+          ref: experiment/openai-gpt-leonida
+          path: gpt-preview-src
+          persist-credentials: false
+      - name: Installer les dependances de la preversion
+        working-directory: gpt-preview-src
+        run: npm ci --no-audit --no-fund
+      - name: Construire la preversion GPT, sans secrets navigateur
+        working-directory: gpt-preview-src
+        env:
+          NEXT_PUBLIC_RADAR_URL: https://raw.githubusercontent.com/${{ github.repository }}/data/radar.json
+          NEXT_PUBLIC_GPT_ENABLED: "1"
+          NEXT_PUBLIC_GPT_PROXY_URL: https://leonida-gpt-private.spitfier9.workers.dev/v1/chat
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: npm run build
+      - name: Ajouter la preversion en /gpt-preview/ (racine publique conservee)
+        run: |
+          test -s out/index.html
+          test -s gpt-preview-src/out/index.html
+          mkdir -p out/gpt-preview
+          cp -a gpt-preview-src/out/. out/gpt-preview/
+          test -s out/gpt-preview/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
