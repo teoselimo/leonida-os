@@ -3,6 +3,8 @@
 name = "leonida-gpt-private"
 main = "./openai-worker.ts"
 compatibility_date = "2026-11-01"
+keep_vars = true
+preview_urls = false
 
 [vars]
 AI_ENABLED = "0"
