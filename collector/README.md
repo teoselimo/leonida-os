@@ -4,4 +4,5 @@ Moteur de veille exécuté par GitHub Actions (`.github/workflows/collect.yml`, 
 
 - Architecture et sources : [`docs/V0.5-VEILLE.md`](../docs/V0.5-VEILLE.md)
 - Extraction, recoupement, conseils, santé : [`docs/V0.5.1-EXTRACTION.md`](../docs/V0.5.1-EXTRACTION.md)
+- Garage des légendes (véhicules, éditions, zones, validation) : [`docs/V0.6-GARAGE.md`](../docs/V0.6-GARAGE.md)
 - Tests : `npm test` · diagnostic sans écriture : `npm run diagnose`
