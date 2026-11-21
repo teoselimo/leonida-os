@@ -83,7 +83,17 @@ const NOTE: Record<string, string> = {
   rate_limited: "Quota du modèle ou budget du pilote atteint : réponse directe. Le coût est bloqué côté serveur.",
   session_expired: "Session du modèle expirée : reconnecte-toi. Réponse directe en attendant.",
   refused: "Claude n'a pas répondu à cette demande : réponse directe.",
-  unavailable: "Claude n'est pas joignable ici : réponse directe.",
+  unavailable: "Le modèle n'est pas joignable ici : réponse directe.",
+  network_error: "Impossible de joindre le Worker GPT depuis Safari. Vérifie le réseau et l'autorisation du domaine (CORS).",
+  origin_rejected: "Le serveur GPT a refusé l'origine de cette préversion. Vérifier ALLOWED_ORIGIN dans Cloudflare.",
+  server_disabled: "GPT n'est pas complètement activé côté Cloudflare : vérifie AI_ENABLED=1 et les deux secrets dans Production.",
+  ledger_unavailable: "Le contrôle budgétaire Cloudflare ne répond pas (Durable Object BUDGET). Aucun appel OpenAI n'a été lancé.",
+  openai_key: "OpenAI a refusé la clé API. Vérifie la clé du projet LEONIDA OS dans les secrets Cloudflare.",
+  openai_quota: "OpenAI a refusé l'appel pour une question de crédit ou de quota API. Vérifie le solde et la facturation du projet OpenAI Platform.",
+  openai_access: "Le projet API OpenAI n'a pas les autorisations nécessaires pour ce modèle.",
+  openai_request: "OpenAI rejette la configuration du modèle ou les paramètres. Le connecteur doit être corrigé.",
+  openai_upstream: "L'API OpenAI a refusé la requête. Le journal Cloudflare donnera le code précis.",
+  request_too_large: "La conversation est trop longue pour notre passerelle. Essaie une nouvelle conversation après Effacer.",
 };
 
 export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
@@ -134,7 +144,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
       const partial = e instanceof LlmError && e.partial ? visiblePart(e.partial) : "";
       return { ...fromDirect(draft), message: partial || draft.text, engine: partial ? (o.transport.id === "openai-api" ? "gpt" : "claude") : "direct", note: "Réponse interrompue." };
     }
-    return fromDirect(draft, NOTE[code] ?? "Le modèle n'a pas pu répondre (erreur passagère) : réponse directe. Tu peux reposer la question.");
+    return fromDirect(draft, NOTE[code] ?? (o.transport.id === "openai-api" && e instanceof LlmError ? `GPT : ${e.message}. Réponse directe en attendant.` : "Le modèle n'a pas pu répondre (erreur passagère) : réponse directe. Tu peux reposer la question."));
   }
 }
 
