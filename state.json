@@ -1,7 +1,7 @@
 {
  "rockstar-youtube": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
-  "lastSuccessAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -17,7 +17,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "youtube-search": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
@@ -25,8 +25,8 @@
   "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
  },
  "gtaseries-youtube": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
-  "lastSuccessAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -34,8 +34,8 @@
   "etag": null
  },
  "rockstarintel": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
-  "lastSuccessAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -43,8 +43,8 @@
   "etag": "\"85ba2f9f7c45bebf6897fde545f9e7f6\""
  },
  "gtaboom": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
-  "lastSuccessAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -52,8 +52,8 @@
   "etag": null
  },
  "pcgamer": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
-  "lastSuccessAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -61,8 +61,8 @@
   "etag": null
  },
  "gamesradar": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
-  "lastSuccessAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
+  "lastSuccessAt": "2026-11-21T08:14:45.274Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -78,7 +78,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "reddit-gta6": {
-  "lastAttemptAt": "2026-11-21T00:56:35.959Z",
+  "lastAttemptAt": "2026-11-21T08:14:45.274Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,

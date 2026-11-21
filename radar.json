@@ -1,6 +1,6 @@
 {
  "version": 1,
- "generatedAt": "2026-11-21T00:56:42.747Z",
+ "generatedAt": "2026-11-21T08:14:56.404Z",
  "sources": [
   {
    "id": "rockstar-youtube",
@@ -9,8 +9,8 @@
    "official": true,
    "status": "ok",
    "statusDetail": "15 éléments lus",
-   "lastSuccessAt": "2026-11-21T00:56:35.959Z",
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "rockstar-newswire",
@@ -30,7 +30,7 @@
    "status": "disabled",
    "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs).",
    "lastSuccessAt": null,
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "gtaseries-youtube",
@@ -39,8 +39,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "15 éléments lus",
-   "lastSuccessAt": "2026-11-21T00:56:35.959Z",
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "rockstarintel",
@@ -49,8 +49,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "Inchangé depuis la dernière collecte (304)",
-   "lastSuccessAt": "2026-11-21T00:56:35.959Z",
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "gtaboom",
@@ -59,8 +59,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "30 éléments lus",
-   "lastSuccessAt": "2026-11-21T00:56:35.959Z",
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "pcgamer",
@@ -69,8 +69,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "50 éléments lus",
-   "lastSuccessAt": "2026-11-21T00:56:35.959Z",
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "gamesradar",
@@ -79,8 +79,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "50 éléments lus",
-   "lastSuccessAt": "2026-11-21T00:56:35.959Z",
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastSuccessAt": "2026-11-21T08:14:45.274Z",
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   },
   {
    "id": "polygon",
@@ -100,7 +100,7 @@
    "status": "disabled",
    "statusDetail": "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif.",
    "lastSuccessAt": null,
-   "lastAttemptAt": "2026-11-21T00:56:35.959Z"
+   "lastAttemptAt": "2026-11-21T08:14:45.274Z"
   }
  ],
  "health": {
@@ -138,12 +138,23 @@
     "updatedItems": 3,
     "deepReads": 15,
     "merged": 0
+   },
+   {
+    "at": "2026-11-21T08:14:45.274Z",
+    "trigger": "schedule",
+    "runId": "44883935820",
+    "sourcesAttempted": 6,
+    "sourcesOk": 6,
+    "newItems": 6,
+    "updatedItems": 3,
+    "deepReads": 15,
+    "merged": 2
    }
   ]
  },
  "lastRun": {
-  "at": "2026-11-21T00:56:42.747Z",
-  "newItems": 17,
+  "at": "2026-11-21T08:14:56.404Z",
+  "newItems": 6,
   "updatedItems": 3,
   "errors": 0
  },
@@ -351,7 +362,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-19T18:50:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -386,9 +397,9 @@
      ]
     }
    ],
-   "score": 74,
+   "score": 72,
    "opportunity": {
-    "score": 81,
+    "score": 78,
     "angle": "testé",
     "ideas": [
      "Testé en jeu : « GTA 6 Early Money: The Three Sheets Liquor Parrot Stash »",
@@ -582,7 +593,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T13:59:56+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -593,9 +604,9 @@
      ]
     }
    ],
-   "score": 66,
+   "score": 64,
    "opportunity": {
-    "score": 77,
+    "score": 74,
     "angle": "actu",
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI Now Available »"
@@ -660,7 +671,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-10T13:55:42+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -671,9 +682,9 @@
      ]
     }
    ],
-   "score": 66,
+   "score": 64,
    "opportunity": {
-    "score": 77,
+    "score": 74,
     "angle": "actu",
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI: Pre-Load Now »"
@@ -738,7 +749,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-10T13:55:06+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -749,9 +760,9 @@
      ]
     }
    ],
-   "score": 66,
+   "score": 64,
    "opportunity": {
-    "score": 77,
+    "score": 74,
     "angle": "actu",
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI: Out Now »"
@@ -816,7 +827,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-10T12:59:01+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -827,9 +838,9 @@
      ]
     }
    ],
-   "score": 66,
+   "score": 64,
    "opportunity": {
-    "score": 77,
+    "score": 74,
     "angle": "actu",
     "ideas": [
      "L'essentiel en 30 secondes : « Grand Theft Auto VI: The Festival »"
@@ -894,7 +905,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-09T20:59:12+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -905,9 +916,9 @@
      ]
     }
    ],
-   "score": 66,
+   "score": 64,
    "opportunity": {
-    "score": 77,
+    "score": 74,
     "angle": "actu",
     "ideas": [
      "L'essentiel en 30 secondes : « A Night in Vice City »"
@@ -1012,7 +1023,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-21T00:46:11.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -1026,9 +1037,9 @@
      ]
     }
    ],
-   "score": 58,
+   "score": 56,
    "opportunity": {
-    "score": 83,
+    "score": 81,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to Get Paul Walker’s Mitsubishi Eclipse in GTA 6 »",
@@ -1178,7 +1189,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:06:52.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -1192,9 +1203,9 @@
      ]
     }
    ],
-   "score": 58,
+   "score": 56,
    "opportunity": {
-    "score": 83,
+    "score": 81,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Skunk Ape Walkthrough (Part 3 of 3): Help Kirk Find Mr. Mangrove »",
@@ -1249,8 +1260,293 @@
    "advice": null
   },
   {
+   "id": "r-788925c85e",
+   "title": "GTA 6 Moses Walkthrough and How to Register a Car for Free",
+   "summary": "Véhicule · GTA BOOM — You can start Moses’ mission in GTA 6 with one car and save your free registration for a different car with no tracker.",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide).",
+    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": "gellhorn",
+    "place": "Watkins Auto Parts, Port Gellhorn",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": {
+     "x": -6445,
+     "y": 3278,
+     "landmark": "Watkins Auto Parts, Port Gellhorn"
+    }
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+     "title": "GTA 6 Moses Walkthrough and How to Register a Car for Free",
+     "excerpt": "You can start Moses’ mission in GTA 6 with one car and save your free registration for a different car with no tracker.",
+     "publishedAt": "2026-11-21T07:48:02.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "Browse the Chapter 2 walkthroughs .",
+      "Bring a suitable vehicle to Watkins Auto Parts"
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 2,
+        "quote": "Browse the Chapter 2 walkthroughs .",
+        "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Watkins Auto Parts",
+         "district": "Port Gellhorn",
+         "regionId": "gellhorn"
+        },
+        "quote": "Bring a suitable vehicle to Watkins Auto Parts",
+        "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T07:48:02.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM",
+      "localisation : none → named-place",
+      "lieu : Watkins Auto Parts, Port Gellhorn",
+      "chapitre : 2"
+     ]
+    }
+   ],
+   "score": 55,
+   "opportunity": {
+    "score": 82,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Moses Walkthrough and How to Register a Car for Free »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 2,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+       "quote": "Browse the Chapter 2 walkthroughs ."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Watkins Auto Parts",
+      "district": "Port Gellhorn"
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+       "quote": "Bring a suitable vehicle to Watkins Auto Parts"
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-b6da975c3d",
+   "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
+   "summary": "Véhicule · GTA BOOM — Look for the driveway loop at the northeast tip of Starfish Island. The mansion's garage has three cars; scan them before choosing which one to take.",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
+     "excerpt": "Look for the driveway loop at the northeast tip of Starfish Island. The mansion's garage has three cars; scan them before choosing which one to take.",
+     "publishedAt": "2026-11-21T06:57:06.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "In Chapter 3, unlock the Key Cloner."
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 3,
+        "quote": "In Chapter 3, unlock the Key Cloner.",
+        "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "supercar"
+       ]
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T06:57:06.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM",
+      "chapitre : 3"
+     ]
+    }
+   ],
+   "score": 55,
+   "opportunity": {
+    "score": 73,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX … »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 3,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+       "quote": "In Chapter 3, unlock the Key Cloner."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
    "id": "r-2faf59eac8",
-   "title": "12 Free Early-Game Weapons in GTA VI",
+   "title": "12 Free Early Weapons in GTA VI and Where to Find Them",
    "summary": "Argent · GTA BOOM — Find 12 free weapons in GTA VI, including a suppressed pistol in the Permit Keys and a rocket launcher under a trailer across from Griffin...",
    "category": "money",
    "reliability": "reported",
@@ -1284,7 +1580,7 @@
      "sourceId": "gtaboom",
      "sourceName": "GTA BOOM",
      "url": "https://www.gtaboom.com/10-best-free-early-game-weapons-in-gta-vi-e01f",
-     "title": "12 Free Early-Game Weapons in GTA VI",
+     "title": "12 Free Early Weapons in GTA VI and Where to Find Them",
      "excerpt": "Find 12 free weapons in GTA VI, including a suppressed pistol in the Permit Keys and a rocket launcher under a trailer across from Griffin...",
      "publishedAt": "2026-11-20T15:34:17.000Z",
      "official": false,
@@ -1298,7 +1594,7 @@
      ],
      "deep": {
       "v": 1,
-      "at": "2026-11-21T00:56:35.959Z",
+      "at": "2026-11-21T08:14:45.274Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -1347,9 +1643,9 @@
    ],
    "media": null,
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
-   "updatedAt": "2026-11-21T00:56:35.959Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-20T15:34:17.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -1377,14 +1673,22 @@
       "extrait modifié",
       "titre : « 10 Best Free Early Game Weapons in GTA VI » → « 12 Free Early-Game Weapons in GTA VI »"
      ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Source modifiée (GTA BOOM)",
+     "changes": [
+      "titre source : « 12 Free Early-Game Weapons in GTA VI » → « 12 Free Early Weapons in GTA VI and Where to Find Them »",
+      "titre : « 12 Free Early-Game Weapons in GTA VI » → « 12 Free Early Weapons in GTA VI and Where to Find Them »"
+     ]
     }
    ],
-   "score": 56,
+   "score": 54,
    "opportunity": {
-    "score": 81,
+    "score": 79,
     "angle": "vrai ou faux ?",
     "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « 12 Free Early-Game Weapons in GTA VI »",
+     "Vrai ou faux ? Je vérifie en jeu : « 12 Free Early Weapons in GTA VI and Where to Find Them »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
    },
@@ -1436,6 +1740,695 @@
     "contextMissable": null,
     "handsOn": false,
     "missing": [
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-085ac2b59d",
+   "title": "GTA 6 Skunk Ape Walkthrough (Part 1 of 3): Speak with the Drone Operator",
+   "summary": "Argent · GTA BOOM — Find Kirk's drone near Pelican River, follow it into the swamp and use Focus to track Mr. Mangrove.",
+   "category": "money",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : mission associée, condition d'accès, risque de manquer (laissé vide).",
+    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": "grassrivers",
+    "place": "Pelican River",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": {
+     "x": -3716.4,
+     "y": -3085.2,
+     "landmark": "Pelican River, Mariana County"
+    }
+   },
+   "conditions": {
+    "reward": "500 $",
+    "money": 500,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
+     "title": "GTA 6 Skunk Ape Walkthrough (Part 1 of 3): Speak with the Drone Operator",
+     "excerpt": "Find Kirk's drone near Pelican River, follow it into the swamp and use Focus to track Mr. Mangrove.",
+     "publishedAt": "2026-11-19T21:32:31.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "Pelican River",
+      "Starting in Chapter 2, wait for Kirk to text again, then meet him at night as Lucia.",
+      "If you see $500 Pending alongside the account-full warning, the money hasn't arrived yet.",
+      "Find Kirk near Pelican River"
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 2,
+        "quote": "Starting in Chapter 2, wait for Kirk to text again, then meet him at night as Lucia.",
+        "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94"
+       },
+       "money": {
+        "value": {
+         "amount": 500,
+         "max": null,
+         "approx": false
+        },
+        "quote": "If you see $500 Pending alongside the account-full warning, the money hasn't arrived yet.",
+        "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94"
+       },
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Pelican River",
+         "district": null,
+         "regionId": null
+        },
+        "quote": "Find Kirk near Pelican River",
+        "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T19:23:01.978Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-19T21:32:31.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T19:23:01.978Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM"
+     ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "catégorie : guide → money",
+      "localisation : none → named-place",
+      "lieu : Pelican River",
+      "récompense : 500 $",
+      "chapitre : 2"
+     ]
+    }
+   ],
+   "score": 54,
+   "opportunity": {
+    "score": 79,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Skunk Ape Walkthrough (Part 1 of 3): Speak with the Drone Ope… »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 2,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
+       "quote": "Starting in Chapter 2, wait for Kirk to text again, then meet him at night as Lucia."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": {
+     "value": {
+      "min": 500,
+      "max": null,
+      "approx": false
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
+       "quote": "If you see $500 Pending alongside the account-full warning, the money hasn't arrived yet."
+      }
+     ],
+     "conflicts": []
+    },
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Pelican River",
+      "district": null
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
+       "quote": "Find Kirk near Pelican River"
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-85294319fa",
+   "title": "GTA 6 BuckMe Guide to Locked Savings, Checking Limits and Discounts",
+   "summary": "Argent · GTA BOOM — In GTA 6, BuckMe savings permanently lock cash for higher Checking caps and discounts, while Chapter 4 grants Premium regardless of savings.",
+   "category": "money",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : mission associée, risque de manquer (laissé vide).",
+    "Spoiler possible (« Chapter 4 ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": "keys",
+    "place": "Apollo Aggregates, Key Lento",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": null
+   },
+   "conditions": {
+    "reward": "1 000 $",
+    "money": 1000,
+    "requirement": "Après « BuckMe a »",
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
+     "title": "GTA 6 BuckMe Guide to Locked Savings, Checking Limits and Discounts",
+     "excerpt": "In GTA 6, BuckMe savings permanently lock cash for higher Checking caps and discounts, while Chapter 4 grants Premium regardless of savings.",
+     "publishedAt": "2026-11-19T20:51:20.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "Family Savings totals are cumulative and BuckMe Premium unlocks automatically at the start of Chapter 4.",
+      "Pocket cash under $1,000 is the part you lose on death, so anything you are not about to spend is safer deposited at an ATM or moved to your savings account.",
+      "You unlock BuckMe almost as soon as the story opens up.",
+      "The Apollo Aggregates warehouse clears for roughly $12,000 to $14,000 in one visit and it's repeatable."
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 4,
+        "quote": "Family Savings totals are cumulative and BuckMe Premium unlocks automatically at the start of Chapter 4.",
+        "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990"
+       },
+       "money": {
+        "value": {
+         "amount": 1000,
+         "max": null,
+         "approx": false
+        },
+        "quote": "Pocket cash under $1,000 is the part you lose on death, so anything you are not about to spend is safer deposited at an ATM or moved to your savings account.",
+        "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990"
+       },
+       "mission": null,
+       "giver": null,
+       "unlockAfter": {
+        "value": "BuckMe a",
+        "quote": "You unlock BuckMe almost as soon as the story opens up.",
+        "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990"
+       },
+       "place": {
+        "value": {
+         "name": "Apollo Aggregates",
+         "district": "Key Lento",
+         "regionId": "keys"
+        },
+        "quote": "The Apollo Aggregates warehouse clears for roughly $12,000 to $14,000 in one visit and it's repeatable.",
+        "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "cash"
+       ]
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T19:23:01.978Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-19T20:51:20.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T19:23:01.978Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM"
+     ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "catégorie : guide → money",
+      "localisation : none → named-place",
+      "lieu : Apollo Aggregates, Key Lento",
+      "récompense : 1 000 $",
+      "conditions : Après « BuckMe a »",
+      "chapitre : 4"
+     ]
+    }
+   ],
+   "score": 54,
+   "opportunity": {
+    "score": 79,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 BuckMe Guide to Locked Savings, Checking Limits and Discounts »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 4,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
+       "quote": "Family Savings totals are cumulative and BuckMe Premium unlocks automatically at the start of Chapter 4."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": {
+     "value": {
+      "min": 1000,
+      "max": null,
+      "approx": false
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
+       "quote": "Pocket cash under $1,000 is the part you lose on death, so anything you are not about to spend is safer deposited at an ATM or moved to your savings account."
+      }
+     ],
+     "conflicts": []
+    },
+    "mission": null,
+    "giver": null,
+    "unlockAfter": {
+     "value": "BuckMe a",
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
+       "quote": "You unlock BuckMe almost as soon as the story opens up."
+      }
+     ],
+     "conflicts": []
+    },
+    "place": {
+     "value": {
+      "name": "Apollo Aggregates",
+      "district": "Key Lento"
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
+       "quote": "The Apollo Aggregates warehouse clears for roughly $12,000 to $14,000 in one visit and it's repeatable."
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "mission associée",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-afbc19359d",
+   "title": "GTA 6 Got Pills? Walkthrough",
+   "summary": "Guide · GTA BOOM + 2 autres sources — After asking Zach about painkillers, knock on Vicki’s door with the stickers at Starlet Motel room 10 to finish Got Pills? and start Girls’ Trip.",
+   "category": "guide",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "2 relais de la même origine non comptés comme indépendants.",
+    "Fiche structurée extraite de 3 articles lus en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide).",
+    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": "gellhorn",
+    "place": "Starlet Motel",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": {
+     "x": -5354.7,
+     "y": 3461.9,
+     "landmark": "Starlet Motel, Historic Route 628, Kelly County"
+    }
+   },
+   "conditions": {
+    "reward": null,
+    "money": 55,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+     "title": "GTA 6 Got Pills? Walkthrough",
+     "excerpt": "After asking Zach about painkillers, knock on Vicki’s door with the stickers at Starlet Motel room 10 to finish Got Pills? and start Girls’ Trip.",
+     "publishedAt": "2026-11-21T07:40:45.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "Browse the Chapter 2 walkthroughs .",
+      "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In ."
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 2,
+        "quote": "Browse the Chapter 2 walkthroughs .",
+        "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Starlet Motel",
+         "district": null,
+         "regionId": null
+        },
+        "quote": "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In .",
+        "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "motel"
+       ]
+      },
+      "videoIds": []
+     }
+    },
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-just-moved-in-walkthrough-0df9",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-just-moved-in-walkthrough-0df9",
+     "title": "How to Complete Just Moved In in GTA 6",
+     "excerpt": "In Just Moved In, follow the pink markers at the Alpha store across from the Starlet Motel to buy about $55 in supplies, then take the bag to Jason.",
+     "publishedAt": "2026-11-21T07:40:17.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "$55",
+      "Browse the Chapter 2 walkthroughs .",
+      "Just Moved In sends Lucia across the road from the Starlet Motel to buy supplies while Jason recovers."
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 2,
+        "quote": "Browse the Chapter 2 walkthroughs .",
+        "url": "https://www.gtaboom.com/gta-6-just-moved-in-walkthrough-0df9"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Starlet Motel",
+         "district": null,
+         "regionId": null
+        },
+        "quote": "Just Moved In sends Lucia across the road from the Starlet Motel to buy supplies while Jason recovers.",
+        "url": "https://www.gtaboom.com/gta-6-just-moved-in-walkthrough-0df9"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "motel"
+       ]
+      },
+      "videoIds": []
+     }
+    },
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-overnight-charges-walkthrough-c32e",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-overnight-charges-walkthrough-c32e",
+     "title": "GTA 6 Overnight Charges Walkthrough",
+     "excerpt": "Lucia can finish Overnight Charges by leaving her necklace with Linda as collateral for the $900 bill, then get it back by paying off the balance.",
+     "publishedAt": "2026-11-21T07:39:48.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "Pay when you can afford it to get the necklace back: the bill can rise as you advance through Chapter 2 .",
+      "Overnight Charges sends Lucia to the Starlet Motel office to sort out the room bill."
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 2,
+        "quote": "Pay when you can afford it to get the necklace back: the bill can rise as you advance through Chapter 2 .",
+        "url": "https://www.gtaboom.com/gta-6-overnight-charges-walkthrough-c32e"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Starlet Motel",
+         "district": "Port Gellhorn",
+         "regionId": "gellhorn"
+        },
+        "quote": "Overnight Charges sends Lucia to the Starlet Motel office to sort out the room bill.",
+        "url": "https://www.gtaboom.com/gta-6-overnight-charges-walkthrough-c32e"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "motel",
+        "cash"
+       ]
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T07:39:48.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM"
+     ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Même découverte décrite par une autre source",
+     "changes": [
+      "fusion : « How to Complete Just Moved In in GTA 6 » (GTA BOOM)"
+     ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Même découverte décrite par une autre source",
+     "changes": [
+      "fusion : « GTA 6 Overnight Charges Walkthrough » (GTA BOOM)",
+      "localisation : none → named-place",
+      "lieu : Starlet Motel",
+      "chapitre : 2"
+     ]
+    }
+   ],
+   "score": 54,
+   "opportunity": {
+    "score": 67,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Got Pills? Walkthrough »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "mergedFrom": [
+    "r-c3878ea3ff",
+    "r-e608698427"
+   ],
+   "details": {
+    "chapter": {
+     "value": 2,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+       "quote": "Browse the Chapter 2 walkthroughs ."
+      },
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-just-moved-in-walkthrough-0df9",
+       "quote": "Browse the Chapter 2 walkthroughs ."
+      },
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-overnight-charges-walkthrough-c32e",
+       "quote": "Pay when you can afford it to get the necklace back: the bill can rise as you advance through Chapter 2 ."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Starlet Motel",
+      "district": null
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+       "quote": "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In ."
+      },
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-just-moved-in-walkthrough-0df9",
+       "quote": "Just Moved In sends Lucia across the road from the Starlet Motel to buy supplies while Jason recovers."
+      },
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-overnight-charges-walkthrough-c32e",
+       "quote": "Overnight Charges sends Lucia to the Starlet Motel office to sort out the room bill."
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
      "mission associée",
      "condition d'accès",
      "risque de manquer"
@@ -1541,7 +2534,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T22:19:16.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -1561,9 +2554,9 @@
      ]
     }
    ],
-   "score": 56,
+   "score": 54,
    "opportunity": {
-    "score": 81,
+    "score": 79,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Find the Lost Drugs: All Four Search Areas »",
@@ -1728,7 +2721,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T16:29:59.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -1748,9 +2741,9 @@
      ]
     }
    ],
-   "score": 56,
+   "score": 54,
    "opportunity": {
-    "score": 81,
+    "score": 79,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Early Money: Motel Tiger Attack »",
@@ -1892,7 +2885,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T16:42:08.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -1902,9 +2895,9 @@
      ]
     }
    ],
-   "score": 56,
+   "score": 54,
    "opportunity": {
-    "score": 72,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « 'I'm all about the heist': 43 soldiers re-enlisted in the US army t… »",
@@ -2022,7 +3015,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-21T00:46:24.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -2034,9 +3027,9 @@
      ]
     }
    ],
-   "score": 55,
+   "score": 53,
    "opportunity": {
-    "score": 85,
+    "score": 82,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 has secret playlists, and all you have to do is scan a few po… »",
@@ -2153,7 +3146,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:07:57.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -2163,9 +3156,9 @@
      ]
     }
    ],
-   "score": 55,
+   "score": 53,
    "opportunity": {
-    "score": 75,
+    "score": 73,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « 15 hidden GTA 6 controls and features you should know about »",
@@ -2273,7 +3266,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T22:34:25.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -2283,9 +3276,9 @@
      ]
     }
    ],
-   "score": 55,
+   "score": 53,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Despite GTA 6's huge map, it only takes about 4 minutes to fly acro… »",
@@ -2317,7 +3310,7 @@
   {
    "id": "r-195efcb75e",
    "title": "GTA 6 Collectible Card Locations: Three Early Pickups",
-   "summary": "Objet unique · GTA BOOM — Find three GTA 6 cards on the Key Lento charter shop porch, in the tower control room and inside the Apollo Aggregates warehouse safe.",
+   "summary": "Objet unique · GTA BOOM — We picked up three GTA 6 cards at the Key Lento charter shop porch and tower control room, and in the Apollo Aggregates safe east of Hamlet.",
    "category": "unique_item",
    "reliability": "reported",
    "status": "active",
@@ -2330,8 +3323,8 @@
    "spoiler": "low",
    "actionable": false,
    "location": {
-    "regionId": "keys",
-    "place": "Apollo Aggregates, Key Lento",
+    "regionId": "vicecity",
+    "place": "Apollo Aggregates, Vice City",
     "precision": "named-place",
     "x": null,
     "y": null,
@@ -2351,7 +3344,7 @@
      "sourceName": "GTA BOOM",
      "url": "https://www.gtaboom.com/gta-6-collectible-card-locations-bbf1",
      "title": "GTA 6 Collectible Card Locations: Three Early Pickups",
-     "excerpt": "Find three GTA 6 cards on the Key Lento charter shop porch, in the tower control room and inside the Apollo Aggregates warehouse safe.",
+     "excerpt": "We picked up three GTA 6 cards at the Key Lento charter shop porch and tower control room, and in the Apollo Aggregates safe east of Hamlet.",
      "publishedAt": "2026-11-21T00:16:38.000Z",
      "official": false,
      "origins": [
@@ -2364,7 +3357,7 @@
      ],
      "deep": {
       "v": 1,
-      "at": "2026-11-21T00:56:35.959Z",
+      "at": "2026-11-21T08:14:45.274Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -2382,8 +3375,8 @@
        "place": {
         "value": {
          "name": "Apollo Aggregates",
-         "district": "Key Lento",
-         "regionId": "keys"
+         "district": "Vice City",
+         "regionId": "vicecity"
         },
         "quote": "East of Hamlet: Silver Leroy Rook at Apollo Aggregates",
         "url": "https://www.gtaboom.com/gta-6-collectible-card-locations-bbf1"
@@ -2403,9 +3396,9 @@
    ],
    "media": null,
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
-   "updatedAt": "2026-11-21T00:56:35.959Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-21T00:16:38.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -2416,11 +3409,19 @@
       "lieu : Apollo Aggregates, Key Lento",
       "conditions : Après « Don't Touch My Deck »"
      ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Source modifiée (GTA BOOM)",
+     "changes": [
+      "extrait modifié",
+      "lieu : Apollo Aggregates, Vice City"
+     ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 80,
+    "score": 77,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Collectible Card Locations: Three Early Pickups »",
@@ -2446,7 +3447,7 @@
     "place": {
      "value": {
       "name": "Apollo Aggregates",
-      "district": "Key Lento"
+      "district": "Vice City"
      },
      "support": [
       {
@@ -2559,7 +3560,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T10:45:09.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -2578,9 +3579,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 80,
+    "score": 78,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6: Where to Find Three Legendary Weapons in Chapter 1 »",
@@ -2714,7 +3715,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T01:01:43.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -2731,9 +3732,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 80,
+    "score": 78,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA+ for GTA 6 singleplayer is like subscription-based horse armor »",
@@ -2860,7 +3861,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T21:24:15.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -2880,9 +3881,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 80,
+    "score": 78,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Fact check: Does GTA 6 stop players from shooting inside gay nightc… »",
@@ -3011,7 +4012,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T20:12:34.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3030,9 +4031,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 83,
+    "score": 80,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Where to have a bona fide bigfoot (skunk ape) sighting in GTA 6 »",
@@ -3149,7 +4150,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T11:55:40.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3166,9 +4167,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 71,
+    "score": 69,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to get Paul Walker's Fast and Furious car in GTA 6 »",
@@ -3264,7 +4265,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T04:35:10+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3274,9 +4275,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 92,
+    "score": 89,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Easter Egg - Cool Dog on a Jet Ski »",
@@ -3357,7 +4358,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T09:03:21.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3367,9 +4368,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 74,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Why XBOX Has a Secret GTA VI Performance Advantage Over PS5 »",
@@ -3470,7 +4471,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:36:11.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3480,9 +4481,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 71,
+    "score": 69,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Where to Find the SM-69 Sniper Early in GTA 6 »",
@@ -3591,7 +4592,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:09:50.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3601,9 +4602,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 74,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « The 5 year-long mystery of the UFO house has finally been solved in… »",
@@ -3702,7 +4703,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T19:54:22.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3712,9 +4713,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 71,
+    "score": 69,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Your GTA 6 car is your Red Dead 2 horse, and it's perfect »",
@@ -3813,7 +4814,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:38:51.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3823,9 +4824,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 74,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Grand Theft Auto 5 protagonists are referenced in a perfect GTA 6 E… »",
@@ -3927,7 +4928,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:16:03.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -3937,9 +4938,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 74,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to find Bigfoot, or Mr. Mangrove the Skunk Ape, in GTA 6 »",
@@ -4038,7 +5039,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:53:25.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4048,9 +5049,9 @@
      ]
     }
    ],
-   "score": 53,
+   "score": 51,
    "opportunity": {
-    "score": 71,
+    "score": 69,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 is a movie and TV goldmine, as players discover Fast and Furi… »",
@@ -4166,7 +5167,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-19T21:40:36+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4197,9 +5198,9 @@
      ]
     }
    ],
-   "score": 52,
+   "score": 50,
    "opportunity": {
-    "score": 65,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 - 100% Walkthrough Part 3 | 4K Livestream [No Commentary] »",
@@ -4297,7 +5298,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T01:00:00+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4321,9 +5322,9 @@
      ]
     }
    ],
-   "score": 52,
+   "score": 50,
    "opportunity": {
-    "score": 65,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mission #14 - Down to Earth (Chapter 1) [Full Walkthrough - P… »",
@@ -4410,7 +5411,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:13:05.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4420,9 +5421,9 @@
      ]
     }
    ],
-   "score": 51,
+   "score": 49,
    "opportunity": {
-    "score": 69,
+    "score": 66,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to Lose Heat in GTA 6 by Swapping Outfits From Your Trunk »",
@@ -4455,6 +5456,118 @@
      "mission associée",
      "condition d'accès",
      "lieu"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-ec87c3e613",
+   "title": "GTA 6 Girls' Trip Walkthrough",
+   "summary": "Guide · GTA BOOM — Follow Vicki through Port Gellhorn, find Dunk at the car wash and get him home to finish the Chapter 2 mission.",
+   "category": "guide",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
+    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-girls-trip-walkthrough-a927",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-girls-trip-walkthrough-a927",
+     "title": "GTA 6 Girls' Trip Walkthrough",
+     "excerpt": "Follow Vicki through Port Gellhorn, find Dunk at the car wash and get him home to finish the Chapter 2 mission.",
+     "publishedAt": "2026-11-21T07:41:07.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T07:41:07.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM"
+     ]
+    }
+   ],
+   "score": 48,
+   "opportunity": {
+    "score": 63,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Girls' Trip Walkthrough »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
     ]
    },
    "capture": null,
@@ -4532,7 +5645,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T00:21:07+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4549,9 +5662,9 @@
      ]
     }
    ],
-   "score": 49,
+   "score": 47,
    "opportunity": {
-    "score": 67,
+    "score": 64,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mission #13 - Clean Up After Donnie (Chapter 1) [Full Walkthr… »",
@@ -4634,7 +5747,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:00:31+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4651,9 +5764,9 @@
      ]
     }
    ],
-   "score": 49,
+   "score": 47,
    "opportunity": {
-    "score": 67,
+    "score": 64,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mission #16 - Day Release (Chapter 1) [Full Walkthrough - PS5… »",
@@ -4736,7 +5849,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T14:00:37+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4753,9 +5866,9 @@
      ]
     }
    ],
-   "score": 49,
+   "score": 47,
    "opportunity": {
-    "score": 67,
+    "score": 64,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mission #11 - Coming Home (Chapter 1) [Full Walkthrough - PS5… »",
@@ -4838,7 +5951,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T02:00:30+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4855,9 +5968,9 @@
      ]
     }
    ],
-   "score": 49,
+   "score": 47,
    "opportunity": {
-    "score": 67,
+    "score": 64,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mission #9 - Island Dreams (Chapter 1) [Full Walkthrough - PS… »",
@@ -4947,7 +6060,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:22.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -4958,9 +6071,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 63,
+    "score": 60,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 What's in the Bag? Walkthrough »",
@@ -5075,7 +6188,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:18.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5086,9 +6199,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 63,
+    "score": 60,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Discharge Time Walkthrough »",
@@ -5200,7 +6313,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:15.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5210,9 +6323,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 63,
+    "score": 60,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Home Sweet Home Walkthrough »",
@@ -5318,7 +6431,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:11.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5329,9 +6442,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 63,
+    "score": 60,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Tourist Trap Walkthrough »",
@@ -5442,7 +6555,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:08.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5452,9 +6565,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 63,
+    "score": 60,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Recalibration Walkthrough »",
@@ -5554,7 +6667,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:05.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5564,9 +6677,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 63,
+    "score": 60,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Don Gone Walkthrough »",
@@ -5642,7 +6755,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:40:39.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5652,9 +6765,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 66,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Did Not Kill Physical Games, It Just Proved They Were Already… »",
@@ -5712,7 +6825,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T22:02:48.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5722,9 +6835,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 66,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Florida Joker gets his wish: He's a 'special voice actor' in Grand … »",
@@ -5782,7 +6895,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:52:04.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5792,9 +6905,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 66,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Try this GTA 6 movement speed setting to make Jason and Lucia walk … »",
@@ -5852,7 +6965,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:58:32.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5862,9 +6975,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 66,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 guides and walkthroughs »",
@@ -5922,7 +7035,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:49:49.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -5932,9 +7045,9 @@
      ]
     }
    ],
-   "score": 48,
+   "score": 46,
    "opportunity": {
-    "score": 66,
+    "score": 63,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 PC port could come from hackers before Rockstar, if Cyberleek… »",
@@ -6021,7 +7134,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T11:51:58.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -6038,9 +7151,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How To Unlock The Venturas Blvd Elegy In GTA VI »",
@@ -6166,7 +7279,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T07:53:38.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -6184,9 +7297,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to Use Focus and Stealth in GTA 6 »",
@@ -6310,7 +7423,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T18:19:06.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -6328,9 +7441,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to get a GTA 6 jet easily and cause chaos in the skies »",
@@ -6418,7 +7531,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:18:30.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6428,9 +7541,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 62,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « 35,000 More Students Missed School in England on GTA VI Release Day »",
@@ -6490,7 +7603,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:45:38.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6500,9 +7613,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 73,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA VI Breaks Records With 32.5 Million Copies Sold, $4 Billion On … »",
@@ -6560,7 +7673,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:20:59.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6570,9 +7683,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 62,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Just Set the Biggest Entertainment Launch Record in History »",
@@ -6630,7 +7743,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:56:56.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6640,9 +7753,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 62,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6: The Album Is Out Now With All 34 Original Tracks »",
@@ -6700,7 +7813,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:41:34.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6710,9 +7823,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 62,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « 21% of Rockstar staff have been employed by the company for over 10… »",
@@ -6772,7 +7885,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:51:48.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6782,9 +7895,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 73,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Grand Theft Auto 6 earned $3.79 billion on launch day »",
@@ -6844,7 +7957,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:33:04.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6854,9 +7967,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 73,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Let's put GTA 6's $3.79 billion launch into perspective: GTA 5 made… »",
@@ -6916,7 +8029,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:47:33.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -6926,9 +8039,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 73,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 sold 32.5 million copies before it was even released – Elden … »",
@@ -7011,7 +8124,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:29:39.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7021,9 +8134,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA VI Features Multiple References to Red Dead Redemption »",
@@ -7122,7 +8235,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:01:55.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7132,9 +8245,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Best GTA VI Settings You Need To Change »",
@@ -7233,7 +8346,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-18T17:38:43.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7243,9 +8356,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA VI Hands-On Gameplay Impressions »",
@@ -7321,7 +8434,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:34:11.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7331,9 +8444,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to fix the railing in GTA 6 »",
@@ -7391,7 +8504,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T01:00:12.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7401,9 +8514,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 is playable in first-person, here's how to activate it »",
@@ -7461,7 +8574,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:40:19.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7471,9 +8584,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « This is technically the worst version of GTA 6 that we'll ever play »",
@@ -7531,7 +8644,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T17:18:27.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7541,9 +8654,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « These 13 Black Friday deals will help you upgrade your GTA 6 setup »",
@@ -7601,7 +8714,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:36:23.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7611,9 +8724,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 glitch adds the first-person mode that Rockstar skipped »",
@@ -7671,7 +8784,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:34:37.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7681,9 +8794,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to skip and pass time in GTA 6 »",
@@ -7741,7 +8854,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:05:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7751,9 +8864,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « How to workout in GTA 6 to build Strength and Cardio quickly »",
@@ -7812,7 +8925,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:23:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7822,9 +8935,9 @@
      ]
     }
    ],
-   "score": 47,
+   "score": 45,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 features a late-game cameo that's worth avoiding spoilers for »",
@@ -7832,6 +8945,174 @@
     ]
    },
    "details": null,
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-7dcacbefd5",
+   "title": "GTA 6 Sex, Nudity and Relationships: The Complete Guide",
+   "summary": "Guide · GTA BOOM — We tried to split up Jason and Lucia in Grand Theft Auto VI, but even at Running on Empty, the story keeps them working together.",
+   "category": "guide",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": "Jack of Hearts",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": {
+     "x": -685.9,
+     "y": 1194.9,
+     "landmark": "Jack of Hearts, Miramar Dr, Crosstown, Vice City"
+    }
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
+     "title": "GTA 6 Sex, Nudity and Relationships: The Complete Guide",
+     "excerpt": "We tried to split up Jason and Lucia in Grand Theft Auto VI, but even at Running on Empty, the story keeps them working together.",
+     "publishedAt": "2026-11-20T18:44:50.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "The clearest and earliest way to test this is Mandy, Jason's neighbor from Chapter 1.",
+      "Answer texts and calls, send check-ins and selfies, hold hands by holding R2, hug and kiss when the heart prompt appears, talk in the car and dance together at clubs like the Jack of Hearts ."
+     ],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 1,
+        "quote": "The clearest and earliest way to test this is Mandy, Jason's neighbor from Chapter 1.",
+        "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Jack of Hearts",
+         "district": null,
+         "regionId": null
+        },
+        "quote": "Answer texts and calls, send check-ins and selfies, hold hands by holding R2, hug and kiss when the heart prompt appears, talk in the car and dance together at clubs like the Jack of Hearts .",
+        "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-20T19:23:01.978Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-20T18:44:50.000Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
+   "revisions": [
+    {
+     "at": "2026-11-20T19:23:01.978Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM"
+     ]
+    },
+    {
+     "at": "2026-11-20T21:17:17.194Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "localisation : none → named-place",
+      "lieu : Jack of Hearts",
+      "chapitre : 1"
+     ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Source modifiée (GTA BOOM)",
+     "changes": [
+      "extrait modifié"
+     ]
+    }
+   ],
+   "score": 44,
+   "opportunity": {
+    "score": 68,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Sex, Nudity and Relationships: The Complete Guide »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
+       "quote": "The clearest and earliest way to test this is Mandy, Jason's neighbor from Chapter 1."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Jack of Hearts",
+      "district": null
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
+       "quote": "Answer texts and calls, send check-ins and selfies, hold hands by holding R2, hug and kiss when the heart prompt appears, talk in the car and dance together at clubs like the Jack of Hearts ."
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
    "capture": null,
    "advice": null
   },
@@ -7918,7 +9199,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T01:44:11.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -7936,9 +9217,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Day Release Walkthrough »",
@@ -8062,7 +9343,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T01:43:24.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8079,9 +9360,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Swamped Walkthrough »",
@@ -8113,167 +9394,6 @@
      "mission associée",
      "condition d'accès",
      "lieu",
-     "risque de manquer"
-    ]
-   },
-   "capture": null,
-   "advice": null
-  },
-  {
-   "id": "r-7dcacbefd5",
-   "title": "GTA 6 Sex, Nudity and Relationships: The Complete Guide",
-   "summary": "Guide · GTA BOOM — In GTA 6, Jason and Lucia cannot romance anyone else, and their partnership survives even at the lowest relationship level.",
-   "category": "guide",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée.",
-    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
-    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide)."
-   ],
-   "spoiler": "low",
-   "actionable": false,
-   "location": {
-    "regionId": null,
-    "place": "Jack of Hearts",
-    "precision": "named-place",
-    "x": null,
-    "y": null,
-    "suggestion": {
-     "x": -685.9,
-     "y": 1194.9,
-     "landmark": "Jack of Hearts, Miramar Dr, Crosstown, Vice City"
-    }
-   },
-   "conditions": {
-    "reward": null,
-    "money": null,
-    "requirement": null,
-    "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
-     "sourceId": "gtaboom",
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
-     "title": "GTA 6 Sex, Nudity and Relationships: The Complete Guide",
-     "excerpt": "In GTA 6, Jason and Lucia cannot romance anyone else, and their partnership survives even at the lowest relationship level.",
-     "publishedAt": "2026-11-20T18:44:50.000Z",
-     "official": false,
-     "origins": [
-      "site:gtaboom.com"
-     ],
-     "quotes": [
-      "The clearest and earliest way to test this is Mandy, Jason's neighbor from Chapter 1.",
-      "Answer texts and calls, send check-ins and selfies, hold hands by holding R2, hug and kiss when the heart prompt appears, talk in the car and dance together at clubs like the Jack of Hearts ."
-     ],
-     "deep": {
-      "v": 1,
-      "at": "2026-11-20T21:17:17.194Z",
-      "ok": true,
-      "reason": null,
-      "aiOptOut": false,
-      "method": "rules",
-      "facts": {
-       "chapter": {
-        "value": 1,
-        "quote": "The clearest and earliest way to test this is Mandy, Jason's neighbor from Chapter 1.",
-        "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2"
-       },
-       "money": null,
-       "mission": null,
-       "giver": null,
-       "unlockAfter": null,
-       "place": {
-        "value": {
-         "name": "Jack of Hearts",
-         "district": null,
-         "regionId": null
-        },
-        "quote": "Answer texts and calls, send check-ins and selfies, hold hands by holding R2, hug and kiss when the heart prompt appears, talk in the car and dance together at clubs like the Jack of Hearts .",
-        "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2"
-       },
-       "missable": null,
-       "contextMissable": null,
-       "handsOn": null,
-       "keywords": []
-      },
-      "videoIds": []
-     }
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-20T19:23:01.978Z",
-   "updatedAt": "2026-11-20T21:17:17.194Z",
-   "publishedAt": "2026-11-20T18:44:50.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
-   "revisions": [
-    {
-     "at": "2026-11-20T19:23:01.978Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : GTA BOOM"
-     ]
-    },
-    {
-     "at": "2026-11-20T21:17:17.194Z",
-     "reason": "Réévaluation",
-     "changes": [
-      "localisation : none → named-place",
-      "lieu : Jack of Hearts",
-      "chapitre : 1"
-     ]
-    }
-   ],
-   "score": 46,
-   "opportunity": {
-    "score": 70,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Sex, Nudity and Relationships: The Complete Guide »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
-    ]
-   },
-   "details": {
-    "chapter": {
-     "value": 1,
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
-       "quote": "The clearest and earliest way to test this is Mandy, Jason's neighbor from Chapter 1."
-      }
-     ],
-     "conflicts": []
-    },
-    "money": null,
-    "mission": null,
-    "giver": null,
-    "unlockAfter": null,
-    "place": {
-     "value": {
-      "name": "Jack of Hearts",
-      "district": null
-     },
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-sex-nudity-and-relationships-the-complete-guide-97c2",
-       "quote": "Answer texts and calls, send check-ins and selfies, hold hands by holding R2, hug and kiss when the heart prompt appears, talk in the car and dance together at clubs like the Jack of Hearts ."
-      }
-     ],
-     "conflicts": []
-    },
-    "missable": null,
-    "contextMissable": null,
-    "handsOn": false,
-    "missing": [
-     "récompense",
-     "mission associée",
-     "condition d'accès",
      "risque de manquer"
     ]
    },
@@ -8362,7 +9482,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T10:24:18.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8379,9 +9499,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Skunk Ape Walkthrough (Part 2 of 3): Search for Tree Effigies »",
@@ -8466,7 +9586,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T13:57:44.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8484,9 +9604,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA VI's Famous Bikini Girl From Trailer 1 Has Been Found »",
@@ -8544,7 +9664,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T12:01:54.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8562,9 +9682,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Stephen Smith Walks Back on Calling GTA 6 a \"Major Problem\" for NBA… »",
@@ -8624,7 +9744,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T14:29:35.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8642,9 +9762,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « A 'GTA 6 PC scam kit' using a fake PC port as bait is available for… »",
@@ -8703,7 +9823,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T21:56:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8721,9 +9841,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Should you give the statue to Benedict Halifax in GTA 6? »",
@@ -8781,7 +9901,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T21:46:10.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8799,9 +9919,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « In the GTA 6 Delights robbery mission, help or don't help Frankie a… »",
@@ -8859,7 +9979,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T19:03:31.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8877,9 +9997,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Peter Moore, who famously announced GTA 4 with a tattoo, posts fake… »",
@@ -8937,7 +10057,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T17:23:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -8955,9 +10075,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Should you sell to Donnie or Brian in GTA 6? »",
@@ -9015,7 +10135,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T12:06:32.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9033,9 +10153,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « 120 hours in GTA 6: What's it really like to review the biggest ent… »",
@@ -9102,7 +10222,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:10:42+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9112,9 +10232,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 70,
+    "score": 68,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Pause Menu Music (2 Hours) »",
@@ -9181,7 +10301,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-18T23:00:17+00:00",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9191,9 +10311,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 70,
+    "score": 68,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mission #6 - Unwanted Attention (Chapter 1) [Full Walkthrough… »",
@@ -9253,7 +10373,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T17:49:55.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9263,9 +10383,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Florida Joker Is In GTA VI, Rockstar Confirms »",
@@ -9323,7 +10443,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T19:55:25.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9333,9 +10453,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « New GTA VI Backgrounds Added To PS5 »",
@@ -9393,7 +10513,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T15:35:06.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9403,9 +10523,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA Online Event Week: GTA VI Launch Week (November 19th-25th) »",
@@ -9486,7 +10606,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T14:53:40.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9496,9 +10616,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Full GTA VI Map Officially Revealed »",
@@ -9574,7 +10694,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T14:36:19.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9584,9 +10704,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « The Florida Joker Really Made It Into GTA 6 as a Background Face »",
@@ -9644,7 +10764,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:22:32.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9654,9 +10774,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Over 2 Million Players Used the New Zealand Trick to Play GTA 6 Early »",
@@ -9739,7 +10859,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:25:33.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9749,9 +10869,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Treasure Diving Part 2 Guide to Kenton's Next Three Wrecks »",
@@ -9850,7 +10970,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T06:22:18.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9860,9 +10980,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Police Escape Guide to Chases, Wanted, Clues and Residual Heat »",
@@ -9940,7 +11060,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T05:20:25.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -9950,9 +11070,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Miami Heat Sold Over $1.5 Million in Merch on GTA 6 Launch Eve »",
@@ -10010,7 +11130,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T04:19:55.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10020,9 +11140,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Returning Characters Include Niko Bellic, Jimmy De Santa and … »",
@@ -10080,7 +11200,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T03:45:17.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10090,9 +11210,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Strauss Zelnick Checked His Watch at a GTA 7 Question on GTA 6 Laun… »",
@@ -10150,7 +11270,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T03:12:16.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10160,9 +11280,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Censorship in Japan Covers Nudity and Reduces Gore »",
@@ -10183,6 +11303,8 @@
    "reviewed": false,
    "reasons": [
     "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
     "Spoiler possible (« Walkthrough ») : masqué en mode strict."
    ],
    "spoiler": "high",
@@ -10214,14 +11336,35 @@
      "origins": [
       "site:gtaboom.com"
      ],
-     "quotes": []
+     "quotes": [],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
     }
    ],
    "media": null,
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:40:49.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10231,16 +11374,34 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Down to Earth Walkthrough »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
    },
-   "details": null,
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
    "capture": null,
    "advice": null
   },
@@ -10254,6 +11415,8 @@
    "reviewed": false,
    "reasons": [
     "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
     "Spoiler possible (« Walkthrough ») : masqué en mode strict."
    ],
    "spoiler": "high",
@@ -10285,14 +11448,37 @@
      "origins": [
       "site:gtaboom.com"
      ],
-     "quotes": []
+     "quotes": [],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "cash"
+       ]
+      },
+      "videoIds": []
+     }
     }
    ],
    "media": null,
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:40:20.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10302,16 +11488,34 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Buck Me Walkthrough and BuckMe Setup Guide »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
    },
-   "details": null,
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
    "capture": null,
    "advice": null
   },
@@ -10325,6 +11529,8 @@
    "reviewed": false,
    "reasons": [
     "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
     "Spoiler possible (« Walkthrough ») : masqué en mode strict."
    ],
    "spoiler": "high",
@@ -10356,14 +11562,35 @@
      "origins": [
       "site:gtaboom.com"
      ],
-     "quotes": []
+     "quotes": [],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
     }
    ],
    "media": null,
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:39:46.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10373,16 +11600,34 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Clear Skies Walkthrough to Rescue Donnie and Escape »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
    },
-   "details": null,
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
+    ]
+   },
    "capture": null,
    "advice": null
   },
@@ -10396,6 +11641,8 @@
    "reviewed": false,
    "reasons": [
     "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
     "Spoiler possible (« Walkthrough ») : masqué en mode strict."
    ],
    "spoiler": "high",
@@ -10427,14 +11674,35 @@
      "origins": [
       "site:gtaboom.com"
      ],
-     "quotes": []
+     "quotes": [],
+     "deep": {
+      "v": 1,
+      "at": "2026-11-21T08:14:45.274Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
     }
    ],
    "media": null,
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:33:30.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10444,158 +11712,34 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 61,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Building a Life Walkthrough »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
    },
-   "details": null,
-   "capture": null,
-   "advice": null
-  },
-  {
-   "id": "r-085ac2b59d",
-   "title": "GTA 6 Skunk Ape Walkthrough (Part 1 of 3): Speak with the Drone Operator",
-   "summary": "Guide · GTA BOOM — Find Kirk's drone near Pelican River, follow it into the swamp and use Focus to track Mr. Mangrove.",
-   "category": "guide",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée.",
-    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
-   ],
-   "spoiler": "high",
-   "actionable": false,
-   "location": {
-    "regionId": null,
-    "place": null,
-    "precision": "none",
-    "x": null,
-    "y": null
-   },
-   "conditions": {
-    "reward": null,
+   "details": {
+    "chapter": null,
     "money": null,
-    "requirement": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
     "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
-     "sourceId": "gtaboom",
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-skunk-ape-walkthrough-3a94",
-     "title": "GTA 6 Skunk Ape Walkthrough (Part 1 of 3): Speak with the Drone Operator",
-     "excerpt": "Find Kirk's drone near Pelican River, follow it into the swamp and use Focus to track Mr. Mangrove.",
-     "publishedAt": "2026-11-19T21:32:31.000Z",
-     "official": false,
-     "origins": [
-      "site:gtaboom.com"
-     ],
-     "quotes": []
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-20T19:23:01.978Z",
-   "updatedAt": "2026-11-20T19:23:01.978Z",
-   "publishedAt": "2026-11-19T21:32:31.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
-   "revisions": [
-    {
-     "at": "2026-11-20T19:23:01.978Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : GTA BOOM"
-     ]
-    }
-   ],
-   "score": 46,
-   "opportunity": {
-    "score": 61,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Skunk Ape Walkthrough (Part 1 of 3): Speak with the Drone Ope… »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
+     "risque de manquer"
     ]
    },
-   "details": null,
-   "capture": null,
-   "advice": null
-  },
-  {
-   "id": "r-85294319fa",
-   "title": "GTA 6 BuckMe Guide to Locked Savings, Checking Limits and Discounts",
-   "summary": "Guide · GTA BOOM — In GTA 6, BuckMe savings permanently lock cash for higher Checking caps and discounts, while Chapter 4 grants Premium regardless of savings.",
-   "category": "guide",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée.",
-    "Spoiler possible (« Chapter 4 ») : masqué en mode strict."
-   ],
-   "spoiler": "high",
-   "actionable": false,
-   "location": {
-    "regionId": null,
-    "place": null,
-    "precision": "none",
-    "x": null,
-    "y": null
-   },
-   "conditions": {
-    "reward": null,
-    "money": null,
-    "requirement": null,
-    "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
-     "sourceId": "gtaboom",
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-buckme-guide-how-the-family-savings-milestones-work-2990",
-     "title": "GTA 6 BuckMe Guide to Locked Savings, Checking Limits and Discounts",
-     "excerpt": "In GTA 6, BuckMe savings permanently lock cash for higher Checking caps and discounts, while Chapter 4 grants Premium regardless of savings.",
-     "publishedAt": "2026-11-19T20:51:20.000Z",
-     "official": false,
-     "origins": [
-      "site:gtaboom.com"
-     ],
-     "quotes": []
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-20T19:23:01.978Z",
-   "updatedAt": "2026-11-20T19:23:01.978Z",
-   "publishedAt": "2026-11-19T20:51:20.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
-   "revisions": [
-    {
-     "at": "2026-11-20T19:23:01.978Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : GTA BOOM"
-     ]
-    }
-   ],
-   "score": 46,
-   "opportunity": {
-    "score": 61,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 BuckMe Guide to Locked Savings, Checking Limits and Discounts »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
-    ]
-   },
-   "details": null,
    "capture": null,
    "advice": null
   },
@@ -10646,7 +11790,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T20:01:34.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10656,9 +11800,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Miami Late Night Orders Rose Nearly 25% on GTA 6 Launch Night, Says… »",
@@ -10716,7 +11860,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T18:14:50.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10726,9 +11870,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Just Set an All-Time Internet Traffic Record at Launch »",
@@ -10786,7 +11930,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:13:47.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10796,9 +11940,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « The GTA 6 Actors Behind Jason and Lucia Just Revealed Themselves »",
@@ -10856,7 +12000,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:45:10.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10866,9 +12010,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GameStop boss calls for return of physical discs just as GTA 6 does… »",
@@ -10926,7 +12070,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:22:53.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -10936,9 +12080,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Want to stay anonymous when doing crimes in GTA 6? Grab yourself a … »",
@@ -10996,7 +12140,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:36:06.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11006,9 +12150,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « We may have forgiven GTA 6 for having no physical media, but I’ve p… »",
@@ -11066,7 +12210,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:26:52.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11076,9 +12220,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « The actress who plays Mandy in GTA 6 has revealed herself: 'If you … »",
@@ -11136,7 +12280,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:33:56.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11146,9 +12290,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Modders reckon GTA 6 will be playable on PC within a week »",
@@ -11206,7 +12350,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:46:37.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11216,9 +12360,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Help: I can't stop obeying traffic laws in GTA 6 »",
@@ -11276,7 +12420,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:28:33.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11286,9 +12430,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 has the best use of the PS5 controller I've ever seen »",
@@ -11346,7 +12490,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:00:43.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11356,9 +12500,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 5's Steam concurrents have gone up rather than down now that GT… »",
@@ -11416,7 +12560,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T18:35:22.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11426,9 +12570,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Cheats in GTA 6 are weirdly restrictive, and I'm counting the minut… »",
@@ -11486,7 +12630,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:22:43.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11496,9 +12640,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Even our bunch of diehard PC gamers aren't that bothered by 30 fps … »",
@@ -11556,7 +12700,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:07:18.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11566,9 +12710,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Yes, you're hearing 'Weird Al' Yankovic hosting a radio station in … »",
@@ -11626,7 +12770,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:05:50.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11636,9 +12780,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « I just found a verrrry familiar-looking hat in GTA 6, and it was in… »",
@@ -11696,7 +12840,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:01:04.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11706,9 +12850,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « I'm twiddling my thumbs waiting for the PC release of GTA 6, but no… »",
@@ -11766,7 +12910,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T16:57:11.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11776,9 +12920,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « As a PC gamer, of course the first thing I did in GTA 6 was try a m… »",
@@ -11836,7 +12980,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T16:19:58.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11846,9 +12990,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Rockstar has finally posted GTA 6's full map online—thank goodness,… »",
@@ -11906,7 +13050,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T18:28:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11916,9 +13060,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « As GTA 6 soars, Rockstar confirms about 1,000 employees have worked… »",
@@ -11976,7 +13120,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T18:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11986,9 +13130,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 exec: \"Stop thinking in tasks, completion percentages, online… »",
@@ -12046,7 +13190,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T17:48:49.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12056,9 +13200,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « After accusing Rockstar of stealing his likeness for GTA 6, Florida… »",
@@ -12116,7 +13260,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:55:36.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12126,9 +13270,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Bowling Alley safe code »",
@@ -12186,7 +13330,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:35:45.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12196,9 +13340,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Naughty Dog dev stunned by GTA 6: \"Appears to me as a Bugatti Veyro… »",
@@ -12256,7 +13400,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:34:07.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12266,9 +13410,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mandy actor bravely raises her hand: \"If you play the game, l… »",
@@ -12326,7 +13470,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T14:37:49.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12336,9 +13480,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « The first GTA 6 speedrun is less than 40 hours, from a streamer who… »",
@@ -12396,7 +13540,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:44:49.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12406,9 +13550,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Mandy thirst levels reach heights that even former Nintendo b… »",
@@ -12466,7 +13610,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:29:02.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12476,9 +13620,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Former Take-Two CEO says GTA 6 is \"the last pre-AI blockbuster vide… »",
@@ -12538,7 +13682,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:43:21.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12548,9 +13692,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 73,
+    "score": 70,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « GTA 6 sales are almost at 25 million as Rockstar earns $2.36 billio… »",
@@ -12608,7 +13752,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:34:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12618,9 +13762,9 @@
      ]
     }
    ],
-   "score": 46,
+   "score": 44,
    "opportunity": {
-    "score": 64,
+    "score": 61,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Clair Obscur: Expedition 33 writer hopes GTA 6 devs are \"successful… »",
@@ -12678,7 +13822,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:44:35.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12689,9 +13833,9 @@
      ]
     }
    ],
-   "score": 34,
+   "score": 32,
    "opportunity": {
-    "score": 62,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Is Niko Bellic in GTA 6? »",
@@ -12749,7 +13893,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T23:17:00.000Z",
-   "lastVerifiedAt": "2026-11-21T00:56:35.959Z",
+   "lastVerifiedAt": "2026-11-21T08:14:45.274Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12760,9 +13904,9 @@
      ]
     }
    ],
-   "score": 34,
+   "score": 32,
    "opportunity": {
-    "score": 62,
+    "score": 59,
     "angle": "vrai ou faux ?",
     "ideas": [
      "Vrai ou faux ? Je vérifie en jeu : « Cyberleek drops what they claim is a near-complete GTA 6 Xbox build… »",
