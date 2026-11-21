@@ -24,7 +24,7 @@ export interface DeepOptions {
  * Priorité : fiches touchées à ce cycle, puis rattrapage des plus récentes jamais lues.
  */
 export async function deepReadPhase(records: RadarRecord[], sources: Map<string, SourceConfig>, touched: Set<string>, opts: DeepOptions): Promise<{ read: number; ok: number; ai: number }> {
-  const max = Number(opts.env.DEEP_READ_MAX || 25);
+  const max = Number(opts.env.DEEP_READ_MAX || 40);
   const horizon = opts.now.getTime() - 21 * 86400_000;
   const candidates: Array<{ rec: RadarRecord; ev: Evidence }> = [];
   for (const rec of records) {
