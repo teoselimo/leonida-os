@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import worker from "../proxy/openai-worker";
+import worker, { classifyOpenAiStreamError } from "../proxy/openai-worker";
 import type { Env } from "../proxy/openai-worker";
 
 /** Tests sans réseau ni clés réelles : flux OpenAI simulés, réserve budgétaire simulée. */
@@ -81,4 +81,21 @@ test("GPT Worker uses final output text when streamed deltas were absent", async
   }));
   expect(result.body).toContain("Leonida te souhaite bienvenue.");
   expect(result.body).toContain('"type":"done"');
+});
+
+test("Classifies OpenAI SSE root error without leaking raw message", async () => {
+  expect(classifyOpenAiStreamError({ code: "insufficient_quota", message: "Sensitive API detail" })).toBe("openai_stream_quota");
+  expect(classifyOpenAiStreamError({ error: { code: "rate_limit_exceeded" } })).toBe("openai_stream_rate_limit");
+  expect(classifyOpenAiStreamError({ code: "server_error" })).toBe("openai_stream_server");
+  const result = await simulate(sse({ type: "error", code: "insufficient_quota", message: "SECRET_PAYLOAD" }));
+  expect(result.body).toContain('"code":"openai_stream_quota"');
+  expect(result.body).not.toContain("SECRET_PAYLOAD");
+});
+
+test("Web mode is disabled without Cloudflare explicit opt-in", async () => {
+  const req = post();
+  const body = JSON.stringify({ messages: [{ role: "user", content: "Trouve un guide récent" }], web: true });
+  const response = await worker.fetch(new Request(req.url, { method: "POST", headers: req.headers, body }), env());
+  expect(response.status).toBe(409);
+  expect(await response.text()).toContain("web_search_disabled");
 });
