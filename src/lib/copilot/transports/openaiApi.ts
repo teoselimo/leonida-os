@@ -26,10 +26,32 @@ export const openaiApiTransport: LlmTransport = {
         headers: { "content-type": "application/json", authorization: "Bearer " + key },
         body: JSON.stringify({ messages: req.messages.slice(-16), tier: req.tier ?? "quick" }),
       });
-    } catch (e) { throw new LlmError(req.signal?.aborted ? "cancelled" : "unavailable", String(e)); }
-    if (res.status === 401 || res.status === 403) throw new LlmError("not_granted", "Code LEONIDA invalide");
-    if (res.status === 429 || res.status === 402) throw new LlmError("rate_limited", "Budget mensuel ou quota de test atteint");
-    if (!res.ok || !res.body) throw new LlmError("upstream_error", "GPT HTTP " + res.status);
+    } catch (e) {
+      throw new LlmError(req.signal?.aborted ? "cancelled" : "network_error", req.signal?.aborted ? "Requête annulée" : "Connexion au Worker impossible (réseau ou CORS)");
+    }
+    // Ne jamais afficher les en-têtes, les secrets ni le corps brut d'une erreur OpenAI.
+    // Le Worker ne renvoie que des codes sûrs et une indication HTTP.
+    if (!res.ok || !res.body) {
+      let serverError = "";
+      try {
+        const body = await res.json() as { error?: unknown };
+        if (typeof body.error === "string") serverError = body.error.slice(0, 100);
+      } catch { /* Cloudflare peut renvoyer du HTML sur une erreur 5xx */ }
+      if (res.status === 401) throw new LlmError("not_granted", "Code d'accès LEONIDA refusé (401)");
+      if (res.status === 403) throw new LlmError("origin_rejected", "Origine de l'application refusée (403)");
+      if (res.status === 429 || res.status === 402) throw new LlmError("rate_limited", "Plafond ou quota de notre Worker atteint (" + res.status + ")");
+      if (res.status === 413) throw new LlmError("request_too_large", "Contexte envoyé trop volumineux (413)");
+      if (res.status === 503) throw new LlmError(serverError.includes("budget guard") ? "ledger_unavailable" : "server_disabled", "Worker indisponible (503 : " + (serverError || "service") + ")");
+      if (res.status === 502 && serverError.includes("upstream rejected")) {
+        const status = Number(serverError.match(/\d{3}/)?.[0]);
+        if (status === 401) throw new LlmError("openai_key", "OpenAI refuse la clé API (401)");
+        if (status === 429 || status === 402) throw new LlmError("openai_quota", "OpenAI refuse la requête : crédit ou quota API (429/402)");
+        if (status === 403) throw new LlmError("openai_access", "Accès au projet ou au modèle refusé par OpenAI (403)");
+        if (status === 400 || status === 404) throw new LlmError("openai_request", "OpenAI rejette les paramètres ou le modèle (" + status + ")");
+        throw new LlmError("openai_upstream", "OpenAI a refusé l'appel (" + status + ")");
+      }
+      throw new LlmError("upstream_error", "Worker GPT HTTP " + res.status + (serverError ? " : " + serverError : ""));
+    }
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = ""; let answer = ""; let model = "GPT"; let done = false;
