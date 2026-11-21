@@ -99,3 +99,43 @@ test("Web mode is disabled without Cloudflare explicit opt-in", async () => {
   expect(response.status).toBe(409);
   expect(await response.text()).toContain("web_search_disabled");
 });
+
+test("Web research is strictly one tool call and returns verifiable citation links", async () => {
+  const request = post();
+  const original = globalThis.fetch;
+  const captured: { body?: Record<string, unknown> } = {};
+  globalThis.fetch = async (_input, init) => {
+    captured.body = JSON.parse(String(init?.body || "{}")) as Record<string, unknown>;
+    return new Response(sse(
+      { type: "response.output_item.added", item: { type: "web_search_call", id: "web_1" } },
+      { type: "response.output_text.delta", delta: "Informations récentes vérifiées." },
+      { type: "response.completed", response: {
+        model: "gpt-6.1-terra",
+        usage: { input_tokens: 900, output_tokens: 100 },
+        output: [
+          { type: "web_search_call", id: "web_1" },
+          { type: "message", content: [{
+            type: "output_text", text: "Informations récentes vérifiées.",
+            annotations: [{ type: "url_citation", url: "https://www.rockstargames.com/", title: "Rockstar Games" }],
+          }] },
+        ],
+      } },
+    ), { status: 200, headers: { "content-type": "text/event-stream" } });
+  };
+  try {
+    const liveEnv = { ...env(), WEB_SEARCH_ENABLED: "1" };
+    const res = await worker.fetch(new Request(request.url, {
+      method: "POST", headers: request.headers,
+      body: JSON.stringify({ messages: [{ role: "user", content: "Actualités officielles récentes ?" }], web: true }),
+    }), liveEnv);
+    const body = await res.text();
+    expect(res.status).toBe(200);
+    expect(captured.body?.max_tool_calls).toBe(1);
+    expect(Array.isArray(captured.body?.tools)).toBe(true);
+    expect(body).toContain('"type":"sources"');
+    expect(body).toContain("https://www.rockstargames.com/");
+    expect(body).toContain('"type":"done"');
+  } finally {
+    globalThis.fetch = original;
+  }
+});
