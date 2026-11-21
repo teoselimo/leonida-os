@@ -39,6 +39,17 @@ async function mapReady(page: Page) {
   await page.waitForTimeout(400);
 }
 
+/**
+ * Carte immobile ET fiche iPhone arrivée à sa détente. La carte se recentre au-dessus de la fiche une fois
+ * celle-ci immobile (hauteur connue) : mesurer avant reviendrait à tester un état intermédiaire (cause du run rouge
+ * 44910940543 sur main, déjà vue en V0.6 au run 44893496972).
+ */
+async function mapSettled(page: Page) {
+  if (isPhone(page) && (await page.locator(".sheet").count())) await expect(page.locator(".sheet")).toHaveAttribute("data-settled", "true");
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(null)))));
+  await mapReady(page);
+}
+
 async function pct(page: Page) {
   return Number((await page.getByTestId("progress-pct").innerText()).replace(/\D/g, ""));
 }
@@ -69,6 +80,7 @@ test.describe("Parcours essentiels", () => {
     await expect(page).toHaveURL(/#carte$/);
     await mapReady(page);
     await expect(page.getByTestId("detail").locator(".detail__title")).toHaveText(title);
+    await mapSettled(page);
     const id = await page.evaluate(() => (document.querySelector(".mk.is-selected") as HTMLElement)?.dataset.testid);
     expect(id).toBeTruthy();
     const box = (await page.getByTestId(id!).boundingBox())!;
