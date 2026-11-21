@@ -54,9 +54,19 @@ function cleanName(raw: string): string | null {
   return n;
 }
 
+const catCache = new WeakMap<object, Map<string, MissionInfo>>();
+/** Catalogue mis en cache par flux (recalculé seulement quand la veille publie un nouveau flux). */
 export function missionCatalog(feed: RadarFeed | null): Map<string, MissionInfo> {
+  if (!feed) return new Map();
+  const hit = catCache.get(feed);
+  if (hit) return hit;
+  const map = buildCatalog(feed);
+  catCache.set(feed, map);
+  return map;
+}
+
+function buildCatalog(feed: RadarFeed): Map<string, MissionInfo> {
   const map = new Map<string, MissionInfo>();
-  if (!feed) return map;
   const add = (rawName: string | null | undefined, rec: RadarRecord, extra: Partial<Pick<MissionInfo, "chapter">> & { alias?: string | null; order?: number | null; guide?: boolean } = {}) => {
     const name = rawName ? cleanName(rawName) : null;
     if (!name) return;

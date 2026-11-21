@@ -1,0 +1,88 @@
+{
+ "answerToBubbleMs": [
+  22,
+  78,
+  35,
+  36
+ ],
+ "engine": "chromium",
+ "dpr": 3,
+ "glass": true,
+ "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+ "date": "2026-11-21T16:54:19.716Z",
+ "tapToFrameMs": [
+  69,
+  35,
+  19,
+  33
+ ],
+ "mapInstances": 1,
+ "results": [
+  {
+   "scenario": "changement d'onglet ×5",
+   "frames": 145,
+   "fpsMedian": 59.9,
+   "p95ms": 16.8,
+   "maxMs": 83.4,
+   "janky": 3,
+   "jankyPct": 2.1,
+   "longTasks": 2,
+   "longTaskMaxMs": 88
+  },
+  {
+   "scenario": "changement d'onglet ×5 (verre désactivé)",
+   "frames": 145,
+   "fpsMedian": 59.9,
+   "p95ms": 16.8,
+   "maxMs": 50.1,
+   "janky": 2,
+   "jankyPct": 1.4,
+   "longTasks": 1,
+   "longTaskMaxMs": 53
+  },
+  {
+   "scenario": "fiche IA : ouverture + fermeture",
+   "frames": 81,
+   "fpsMedian": 59.9,
+   "p95ms": 16.7,
+   "maxMs": 16.8,
+   "janky": 0,
+   "jankyPct": 0,
+   "longTasks": 0,
+   "longTaskMaxMs": 0
+  },
+  {
+   "scenario": "parcours Accueil → Préparer → voiture → carte + fiche → Accueil",
+   "frames": 171,
+   "fpsMedian": 59.9,
+   "p95ms": 116.7,
+   "maxMs": 316.6,
+   "janky": 26,
+   "jankyPct": 15.2,
+   "longTasks": 21,
+   "longTaskMaxMs": 265
+  },
+  {
+   "scenario": "carte : glisser (pan) 600 ms",
+   "frames": 115,
+   "fpsMedian": 8.6,
+   "p95ms": 133.4,
+   "maxMs": 166.6,
+   "janky": 91,
+   "jankyPct": 79.1,
+   "longTasks": 91,
+   "longTaskMaxMs": 158
+  },
+  {
+   "scenario": "fiche glissante : drag haut + bas + fermeture",
+   "frames": 168,
+   "fpsMedian": 59.9,
+   "p95ms": 16.8,
+   "maxMs": 99.9,
+   "janky": 4,
+   "jankyPct": 2.4,
+   "longTasks": 1,
+   "longTaskMaxMs": 116
+  }
+ ]
+}
