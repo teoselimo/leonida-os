@@ -94,6 +94,16 @@ const NOTE: Record<string, string> = {
   openai_request: "OpenAI rejette la configuration du modèle ou les paramètres. Le connecteur doit être corrigé.",
   openai_upstream: "L'API OpenAI a refusé la requête. Le journal Cloudflare donnera le code précis.",
   request_too_large: "La conversation est trop longue pour notre passerelle. Essaie une nouvelle conversation après Effacer.",
+  upstream_output_limit: "GPT a atteint sa limite de génération avant de terminer. Le budget de tokens du serveur a été augmenté.",
+  upstream_incomplete: "La génération GPT s'est interrompue sans réponse complète. Le Worker a reçu un événement OpenAI « incomplete ».",
+  upstream_failed: "OpenAI a indiqué que la génération avait échoué (response.failed). Réessaie une fois ; si cela persiste, regarde les journaux du Worker.",
+  upstream_failed_server: "OpenAI a renvoyé une erreur de génération côté serveur (server_error).",
+  upstream_event_error: "OpenAI a envoyé un événement d'erreur pendant la génération.",
+  upstream_stream: "Le flux entre OpenAI et Cloudflare a été interrompu avant la fin de la réponse.",
+  upstream_stream_ended: "Le flux s'est terminé sans confirmation de fin de génération.",
+  upstream_no_text: "OpenAI a terminé la génération sans produire de texte utilisable.",
+  upstream_unknown: "Une erreur non classée a interrompu le streaming GPT. Consulte les journaux Cloudflare.",
+  upstream_error: "Le streaming GPT a échoué. Recharge la préversion pour récupérer le diagnostic détaillé du Worker.",
 };
 
 export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
