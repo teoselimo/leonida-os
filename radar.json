@@ -1,6 +1,6 @@
 {
  "version": 1,
- "generatedAt": "2026-11-21T09:58:57.328Z",
+ "generatedAt": "2026-11-21T10:09:24.997Z",
  "sources": [
   {
    "id": "rockstar-youtube",
@@ -9,8 +9,8 @@
    "official": true,
    "status": "ok",
    "statusDetail": "15 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "rockstar-newswire",
@@ -30,7 +30,7 @@
    "status": "disabled",
    "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs).",
    "lastSuccessAt": null,
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "gtaseries-youtube",
@@ -39,8 +39,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "15 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "rockstarintel",
@@ -49,8 +49,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "Inchangé depuis la dernière collecte (304)",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "gtaboom",
@@ -59,8 +59,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "30 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "pcgamer",
@@ -69,8 +69,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "50 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "gamesradar",
@@ -79,8 +79,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "50 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "polygon",
@@ -100,7 +100,7 @@
    "status": "disabled",
    "statusDetail": "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif.",
    "lastSuccessAt": null,
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "powerpyx",
@@ -108,9 +108,9 @@
    "kind": "rss",
    "official": false,
    "status": "ok",
-   "statusDetail": "Inchangé depuis la dernière collecte (304)",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "statusDetail": "10 éléments lus",
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "powerpyx-sitemap",
@@ -119,8 +119,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "25 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "gtaxtreme-sitemap",
@@ -129,8 +129,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "11 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "pushsquare",
@@ -139,8 +139,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "25 éléments lus",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "alcasthq",
@@ -149,8 +149,8 @@
    "official": false,
    "status": "ok",
    "statusDetail": "Inchangé depuis la dernière collecte (304)",
-   "lastSuccessAt": "2026-11-21T09:57:39.890Z",
-   "lastAttemptAt": "2026-11-21T09:57:39.890Z"
+   "lastSuccessAt": "2026-11-21T10:08:37.824Z",
+   "lastAttemptAt": "2026-11-21T10:08:37.824Z"
   },
   {
    "id": "keengamer",
@@ -248,6 +248,18 @@
     "at": "2026-11-21T09:57:39.890Z",
     "trigger": "push",
     "runId": "44891998272",
+    "sourcesAttempted": 11,
+    "sourcesOk": 11,
+    "newItems": 0,
+    "updatedItems": 0,
+    "deepReads": 39,
+    "merged": 0,
+    "vehicles": 33
+   },
+   {
+    "at": "2026-11-21T10:08:37.824Z",
+    "trigger": "push",
+    "runId": "44892886134",
     "sourcesAttempted": 11,
     "sourcesOk": 11,
     "newItems": 0,
@@ -592,7 +604,7 @@
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "Push Square",
@@ -638,14 +650,9 @@
    "year": "97",
    "aliases": {
     "value": [
-     "mitsubishi-eclipse"
+     "eclipse"
     ],
     "support": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
-     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -674,13 +681,7 @@
       "quote": "Finding, buying, and stealing your dream car or bike is a peak part of Grand Theft Auto, and mine is the Fast and Furious Mitsubishi Eclipse in GTA 6, based on the bright green car driven by Paul Walker as Brian O'Con…"
      }
     ],
-    "conflicts": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
-     }
-    ]
+    "conflicts": []
    },
    "edition": {
     "exclusive": null,
@@ -698,11 +699,6 @@
       }
      ],
      "conflicts": [
-      {
-       "sourceName": "AlcastHQ",
-       "url": "https://alcasthq.com/gta-6-paul-walker-car",
-       "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City."
-      },
       {
        "sourceName": "GTA Xtreme (sitemap)",
        "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -738,17 +734,7 @@
     "alternatives": []
    },
    "access": {
-    "chapterMin": {
-     "value": 2,
-     "support": [
-      {
-       "sourceName": "AlcastHQ",
-       "url": "https://alcasthq.com/gta-6-paul-walker-car",
-       "quote": "Yes, once registering cars unlocks in Chapter 2."
-      }
-     ],
-     "conflicts": []
-    },
+    "chapterMin": null,
     "inferredChapter": null,
     "until": null,
     "mission": null,
@@ -758,11 +744,6 @@
     "alarm": {
      "value": true,
      "support": [
-      {
-       "sourceName": "AlcastHQ",
-       "url": "https://alcasthq.com/gta-6-paul-walker-car",
-       "quote": "The side door sets off an alarm, and that brings people running before you are even in the car."
-      },
       {
        "sourceName": "GamesRadar+",
        "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
@@ -783,11 +764,6 @@
       }
      ],
      "conflicts": [
-      {
-       "sourceName": "AlcastHQ",
-       "url": "https://alcasthq.com/gta-6-paul-walker-car",
-       "quote": "Below I show you where it is, how to get it out of the garage and how to keep it."
-      },
       {
        "sourceName": "GTA Xtreme (sitemap)",
        "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -824,19 +800,19 @@
      "quote": "Use the main garage door to open it from inside, then drive the bright green Penumbra FF out."
     },
     {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Drive west from Vice Beach to Vespucci Island."
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+     "quote": "Take the causeway through the Rialto Islands west of Vice Beach."
     },
     {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Go through the small green door on your left into the garage area."
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+     "quote": "Open the garage door here too, break into the car, hotwire it, and drive away - simple as that."
     },
     {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Open the garage from the main garage door, not the side door."
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+     "quote": "Take it to Moses as your first steal, and he'll register it to you for free, saving you a few thousand dollars."
     }
    ],
    "risks": [
@@ -846,19 +822,9 @@
      "quote": "After taking the car, deal with any wanted level and register it at a workshop."
     },
     {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "If you take it in Chapter 1, you lose it again once you die, get busted or leave it behind."
-    },
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Check whether the car has a tracker before you drive off with it."
-    },
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "GTA 6 Police Wanted Level Explained"
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+     "quote": "You don't need this, but it will prevent the car alarm going off, which itself might avoid police presence, but you shouldn't have too much of a problem there anyway."
     }
    ],
    "price": null,
@@ -869,53 +835,48 @@
      "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
      "title": "GTA 6 paul walker car location",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
-    },
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "title": "GTA 6 Paul Walker Car Location: Fast and Furious Eclipse",
-     "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GamesRadar+",
      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
      "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GamesRadar+",
      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-is-a-movie-and-tv-goldmine-as-players-discover-everything-from-fast-and-furious-cars-to-dexters-apartment",
      "title": "GTA 6 is a movie and TV goldmine, as players discover Fast and Furious cars and Dexter's apartment",
      "official": false,
-     "readAt": "2026-11-21T09:50:22.874Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
-   "reliability": "confirmed",
+   "reliability": "reported",
    "reasons": [
-    "2 sources indépendantes concordantes sur l'emplacement.",
+    "Une seule source : à vérifier en jeu.",
     "Certaines sources reprennent la même origine : comptées une seule fois.",
     "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
    ],
-   "missing": [],
+   "missing": [
+    "chapitre"
+   ],
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
-   "updatedAt": "2026-11-21T09:50:22.874Z",
+   "updatedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -933,6 +894,14 @@
      "reason": "Réévaluation",
      "changes": [
       "preuves : 5 → 6"
+     ]
+    },
+    {
+     "at": "2026-11-21T10:08:37.824Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "fiabilité : confirmed → reported",
+      "preuves : 6 → 5"
      ]
     }
    ]
@@ -1010,7 +979,7 @@
      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
      "title": "GTA 6 steal vehicles for moses walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1108,14 +1077,14 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1222,7 +1191,7 @@
      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
      "title": "GTA 6 steal vehicles for moses walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1326,14 +1295,14 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1452,21 +1421,21 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1691,7 +1660,7 @@
      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
      "title": "GTA 6 steal vehicles for moses walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1788,7 +1757,7 @@
      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
      "title": "GTA 6 steal vehicles for moses walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -1990,7 +1959,7 @@
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2081,7 +2050,7 @@
      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
      "title": "GTA 6 steal vehicles for moses walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2298,14 +2267,14 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2480,21 +2449,21 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2598,21 +2567,21 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2722,21 +2691,21 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2856,14 +2825,14 @@
      "url": "https://www.powerpyx.com/gta-6-company-cars-speak-to-the-concierge-walkthrough",
      "title": "GTA 6 company cars speak to the concierge walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -2968,14 +2937,14 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -3177,7 +3146,7 @@
      "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
      "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
      "official": false,
-     "readAt": "2026-11-21T09:50:22.874Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -3279,14 +3248,14 @@
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
      "title": "GTA 6 — Hidden cars",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -3450,7 +3419,7 @@
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -3802,7 +3771,7 @@
      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
      "title": "GTA 6 best cars evidence guide",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -4012,7 +3981,7 @@
      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
      "title": "GTA 6 steal vehicles for moses walkthrough",
      "official": false,
-     "readAt": "2026-11-21T09:44:56.655Z"
+     "readAt": "2026-11-21T10:08:37.824Z"
     }
    ],
    "reliability": "reported",
@@ -4038,7 +4007,7 @@
   }
  ],
  "lastRun": {
-  "at": "2026-11-21T09:58:57.328Z",
+  "at": "2026-11-21T10:09:24.997Z",
   "newItems": 0,
   "updatedItems": 0,
   "errors": 0
@@ -4053,19 +4022,18 @@
    "status": "active",
    "reviewed": false,
    "reasons": [
-    "3 sources indépendantes concordantes sur le lieu.",
-    "Fiche structurée extraite de 3 articles lus en entier (règles déterministes).",
-    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide)."
+    "3 sources indépendantes concordantes avec des éléments précis.",
+    "Fiche structurée extraite de 2 articles lus en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
    ],
    "spoiler": "high",
    "actionable": true,
    "location": {
     "regionId": "vicecity",
-    "place": "Vespucci Island, Vice City",
-    "precision": "named-place",
+    "place": null,
+    "precision": "region",
     "x": null,
-    "y": null,
-    "suggestion": null
+    "y": null
    },
    "conditions": {
     "reward": null,
@@ -4091,8 +4059,8 @@
       "You can break into the car easier with the Slim Jim obtained from Moses at the beginning of Chapter 2."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -4208,8 +4176,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -4300,171 +4268,25 @@
       "site:alcasthq.com"
      ],
      "quotes": [
-      "Vice City",
-      "Important : Registering cars to keep them only opens up after you reach Chapter 2!",
-      "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City."
+      "Vice City"
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
-      "ok": true,
-      "reason": null,
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
+      "ok": false,
+      "reason": "HTTP 403 sur https://alcasthq.com/gta-6-paul-walker-car",
       "aiOptOut": false,
       "method": "rules",
-      "facts": {
-       "chapter": {
-        "value": 2,
-        "quote": "Important : Registering cars to keep them only opens up after you reach Chapter 2!",
-        "url": "https://alcasthq.com/gta-6-paul-walker-car"
-       },
-       "money": null,
-       "mission": null,
-       "giver": null,
-       "unlockAfter": null,
-       "place": {
-        "value": {
-         "name": "Vespucci Island",
-         "district": "Vice City",
-         "regionId": "vicecity"
-        },
-        "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City.",
-        "url": "https://alcasthq.com/gta-6-paul-walker-car"
-       },
-       "missable": null,
-       "contextMissable": null,
-       "handsOn": null,
-       "keywords": []
-      },
-      "videoIds": [],
-      "vehicles": [
-       {
-        "name": "'97 Maibatsu Penumbra FF",
-        "make": "Maibatsu",
-        "model": "Penumbra FF",
-        "year": "97",
-        "key": "maibatsu-penumbra-ff",
-        "type": "vehicle",
-        "variant": {
-         "value": "green",
-         "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "location": {
-         "value": {
-          "text": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City.",
-          "district": "Vice City",
-          "relative": false
-         },
-         "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "spawn": {
-         "value": "fixed",
-         "quote": "Below I show you where it is, how to get it out of the garage and how to keep it.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "edition": null,
-        "chapter": {
-         "value": 2,
-         "quote": "Yes, once registering cars unlocks in Chapter 2.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "mission": null,
-        "early": {
-         "value": true,
-         "quote": "The GTA 6 Paul Walker car is free, you can grab it early in the game and it is a lot faster than Jason's starter car.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "keyCloner": null,
-        "tracker": null,
-        "alarm": {
-         "value": true,
-         "quote": "The side door sets off an alarm, and that brings people running before you are even in the car.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "keep": {
-         "value": "Below I show you where it is, how to get it out of the garage and how to keep it.",
-         "quote": "Below I show you where it is, how to get it out of the garage and how to keep it.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        },
-        "price": null,
-        "steps": [
-         {
-          "value": "Drive west from Vice Beach to Vespucci Island.",
-          "quote": "Drive west from Vice Beach to Vespucci Island.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         },
-         {
-          "value": "Go through the small green door on your left into the garage area.",
-          "quote": "Go through the small green door on your left into the garage area.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         },
-         {
-          "value": "Open the garage from the main garage door, not the side door.",
-          "quote": "Open the garage from the main garage door, not the side door.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         },
-         {
-          "value": "Get in the Eclipse, hotwire it and drive off.",
-          "quote": "Get in the Eclipse, hotwire it and drive off.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         },
-         {
-          "value": "Scan it with WAiNK first.",
-          "quote": "Scan it with WAiNK first.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         }
-        ],
-        "risks": [
-         {
-          "value": "If you take it in Chapter 1, you lose it again once you die, get busted or leave it behind.",
-          "quote": "If you take it in Chapter 1, you lose it again once you die, get busted or leave it behind.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         },
-         {
-          "value": "Check whether the car has a tracker before you drive off with it.",
-          "quote": "Check whether the car has a tracker before you drive off with it.",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         },
-         {
-          "value": "GTA 6 Police Wanted Level Explained",
-          "quote": "GTA 6 Police Wanted Level Explained",
-          "url": "https://alcasthq.com/gta-6-paul-walker-car"
-         }
-        ],
-        "until": null,
-        "aliases": {
-         "value": [
-          "mitsubishi-eclipse"
-         ],
-         "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        }
-       }
-      ],
-      "mechanics": {
-       "register": [
-        {
-         "value": {
-          "chapter": 2,
-          "where": "Pay 'n' Spray",
-          "tracker": null
-         },
-         "quote": "Take it to a Pay 'n' Spray and register it.",
-         "url": "https://alcasthq.com/gta-6-paul-walker-car"
-        }
-       ],
-       "keyCloner": null,
-       "garages": null
-      }
+      "facts": null,
+      "videoIds": []
      }
     }
    ],
    "media": null,
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
-   "updatedAt": "2026-11-21T09:44:56.655Z",
+   "updatedAt": "2026-11-21T10:08:37.824Z",
    "publishedAt": "2026-11-19T16:33:28.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4496,6 +4318,13 @@
       "localisation : none → named-place",
       "lieu : Vespucci Island, Vice City"
      ]
+    },
+    {
+     "at": "2026-11-21T10:08:37.824Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "localisation : named-place → region"
+     ]
     }
    ],
    "score": 72,
@@ -4515,11 +4344,6 @@
        "sourceName": "GamesRadar+",
        "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
        "quote": "You can break into the car easier with the Slim Jim obtained from Moses at the beginning of Chapter 2."
-      },
-      {
-       "sourceName": "AlcastHQ",
-       "url": "https://alcasthq.com/gta-6-paul-walker-car",
-       "quote": "Important : Registering cars to keep them only opens up after you reach Chapter 2!"
       }
      ],
      "conflicts": []
@@ -4528,20 +4352,7 @@
     "mission": null,
     "giver": null,
     "unlockAfter": null,
-    "place": {
-     "value": {
-      "name": "Vespucci Island",
-      "district": "Vice City"
-     },
-     "support": [
-      {
-       "sourceName": "AlcastHQ",
-       "url": "https://alcasthq.com/gta-6-paul-walker-car",
-       "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City."
-      }
-     ],
-     "conflicts": []
-    },
+    "place": null,
     "missable": null,
     "contextMissable": null,
     "handsOn": false,
@@ -4549,15 +4360,12 @@
      "récompense",
      "mission associée",
      "condition d'accès",
+     "lieu",
      "risque de manquer"
     ]
    },
    "capture": null,
-   "advice": {
-    "text": "Vespucci Island (Vice City).",
-    "chapterMin": 2,
-    "urgency": "anytime"
-   }
+   "advice": null
   },
   {
    "id": "r-48606a2278",
@@ -4609,8 +4417,8 @@
       "You don't necessarily miss anything if you skip it though."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -4699,8 +4507,8 @@
       "Out the back of the Three Sheets Liquor Store in Key Lento is a heavily guarded exotic birds smuggling operation, with one particularly talkative parrot hinting that there's a stash of money somewhere nearby."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -4756,7 +4564,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-19T18:50:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -4987,7 +4795,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T13:59:56+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -5065,7 +4873,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-10T13:55:42+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -5143,7 +4951,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-10T13:55:06+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -5221,7 +5029,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-10T12:59:01+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -5299,7 +5107,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-09T20:59:12+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -5540,7 +5348,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:50:22.874Z",
    "publishedAt": "2026-11-19T18:45:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -5799,7 +5607,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:50:22.874Z",
    "publishedAt": "2026-11-19T18:45:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -6060,7 +5868,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:50:22.874Z",
    "publishedAt": "2026-11-19T18:45:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -6222,8 +6030,8 @@
       "Vicki – Kelly County > Gellhorn MISSABLE , in the bathroom in the office of the Starlet Motel, on the ground by the toilet."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -6282,8 +6090,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -6355,7 +6163,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T18:45:03.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -6463,6 +6271,192 @@
    "advice": null
   },
   {
+   "id": "r-62760d5dee",
+   "title": "GTA 6 Teddy Bear Factory: $20,000 Early Money Loot Spot",
+   "summary": "Argent · AlcastHQ — This is my guide to the Teddy Bear Factory in GTA 6, a secret loot room southeast of Hamlet. From the outside it is just a red warehouse with an Apollo Aggregates sign. Inside, the guards are already dead, and they left behind marked bills, cocaine stuffed into teddy bear vans,…",
+   "category": "money",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : mission associée, condition d'accès, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "low",
+   "actionable": false,
+   "location": {
+    "regionId": "vicecity",
+    "place": "Apollo Aggregates, Vice-Dale County",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": null
+   },
+   "conditions": {
+    "reward": "≈ 20 000 $",
+    "money": 20000,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "alcasthq:https://alcasthq.com/?p=87791",
+     "sourceId": "alcasthq",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-teddy-bear-factory",
+     "title": "GTA 6 Teddy Bear Factory: $20,000 Early Money Loot Spot",
+     "excerpt": "This is my guide to the Teddy Bear Factory in GTA 6, a secret loot room southeast of Hamlet. From the outside it is just a red warehouse with an Apollo Aggregates sign. Inside, the guards are already dead, and they left behind marked bills, cocaine stuffed into teddy bear vans,…",
+     "publishedAt": "2026-11-20T11:56:14.000Z",
+     "official": false,
+     "origins": [
+      "site:alcasthq.com"
+     ],
+     "quotes": [
+      "$20,000",
+      "Apollo Aggregates",
+      "The GTA 6 teddy bear factory is the best early money spot I found in Chapter 1.",
+      "Nobody is alive inside, and the loot is worth around $20,000 with the Leroy Rook card.",
+      "From the outside it is just a red warehouse with an Apollo Aggregates sign."
+     ],
+     "deep": {
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 1,
+        "quote": "The GTA 6 teddy bear factory is the best early money spot I found in Chapter 1.",
+        "url": "https://alcasthq.com/gta-6-teddy-bear-factory"
+       },
+       "money": {
+        "value": {
+         "amount": 20000,
+         "max": null,
+         "approx": true
+        },
+        "quote": "Nobody is alive inside, and the loot is worth around $20,000 with the Leroy Rook card.",
+        "url": "https://alcasthq.com/gta-6-teddy-bear-factory"
+       },
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Apollo Aggregates",
+         "district": "Vice-Dale County",
+         "regionId": "vicecity"
+        },
+        "quote": "From the outside it is just a red warehouse with an Apollo Aggregates sign.",
+        "url": "https://alcasthq.com/gta-6-teddy-bear-factory"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "safe",
+        "sniper"
+       ]
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T09:44:56.655Z",
+   "updatedAt": "2026-11-21T10:08:37.824Z",
+   "publishedAt": "2026-11-20T11:56:14.000Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T09:44:56.655Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : AlcastHQ",
+      "localisation : none → named-place",
+      "lieu : Apollo Aggregates"
+     ]
+    },
+    {
+     "at": "2026-11-21T10:08:37.824Z",
+     "reason": "Réévaluation",
+     "changes": [
+      "lieu : Apollo Aggregates, Vice-Dale County",
+      "récompense : ≈ 20 000 $",
+      "chapitre : 1"
+     ]
+    }
+   ],
+   "score": 58,
+   "opportunity": {
+    "score": 83,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Teddy Bear Factory: $20,000 Early Money Loot Spot »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 1,
+     "support": [
+      {
+       "sourceName": "AlcastHQ",
+       "url": "https://alcasthq.com/gta-6-teddy-bear-factory",
+       "quote": "The GTA 6 teddy bear factory is the best early money spot I found in Chapter 1."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": {
+     "value": {
+      "min": 20000,
+      "max": null,
+      "approx": true
+     },
+     "support": [
+      {
+       "sourceName": "AlcastHQ",
+       "url": "https://alcasthq.com/gta-6-teddy-bear-factory",
+       "quote": "Nobody is alive inside, and the loot is worth around $20,000 with the Leroy Rook card."
+      }
+     ],
+     "conflicts": []
+    },
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Apollo Aggregates",
+      "district": "Vice-Dale County"
+     },
+     "support": [
+      {
+       "sourceName": "AlcastHQ",
+       "url": "https://alcasthq.com/gta-6-teddy-bear-factory",
+       "quote": "From the outside it is just a red warehouse with an Apollo Aggregates sign."
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
    "id": "r-a10f2823c3",
    "title": "GTA 6 Watson Bay Safehouse Guide: Where to Find the VF-G1 and Open the Safe",
    "summary": "Argent · GTA BOOM — Climb the blue tarp at Watson Bay to reach the suppressed rifle upstairs, then read the kitchen computer’s email for the safe code.",
@@ -6510,8 +6504,8 @@
       "The Apollo Aggregates warehouse guide explains how to compare buyer offers and sell what you're carrying."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:57:39.890Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -6556,7 +6550,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-21T09:09:28.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -6633,91 +6627,6 @@
    "advice": null
   },
   {
-   "id": "r-62760d5dee",
-   "title": "GTA 6 Teddy Bear Factory: $20,000 Early Money Loot Spot",
-   "summary": "Argent · AlcastHQ — This is my guide to the Teddy Bear Factory in GTA 6, a secret loot room southeast of Hamlet. From the outside it is just a red warehouse with an Apollo Aggregates sign. Inside, the guards are already dead, and they left behind marked bills, cocaine stuffed into teddy bear vans,…",
-   "category": "money",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée."
-   ],
-   "spoiler": "low",
-   "actionable": false,
-   "location": {
-    "regionId": "grassrivers",
-    "place": "Apollo Aggregates",
-    "precision": "named-place",
-    "x": null,
-    "y": null
-   },
-   "conditions": {
-    "reward": null,
-    "money": 20000,
-    "requirement": null,
-    "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "alcasthq:https://alcasthq.com/?p=87791",
-     "sourceId": "alcasthq",
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-teddy-bear-factory",
-     "title": "GTA 6 Teddy Bear Factory: $20,000 Early Money Loot Spot",
-     "excerpt": "This is my guide to the Teddy Bear Factory in GTA 6, a secret loot room southeast of Hamlet. From the outside it is just a red warehouse with an Apollo Aggregates sign. Inside, the guards are already dead, and they left behind marked bills, cocaine stuffed into teddy bear vans,…",
-     "publishedAt": "2026-11-20T11:56:14.000Z",
-     "official": false,
-     "origins": [
-      "site:alcasthq.com"
-     ],
-     "quotes": [
-      "$20,000",
-      "Apollo Aggregates"
-     ],
-     "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
-      "ok": false,
-      "reason": "HTTP 403 sur https://alcasthq.com/gta-6-teddy-bear-factory",
-      "aiOptOut": false,
-      "method": "rules",
-      "facts": null,
-      "videoIds": []
-     }
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-   "updatedAt": "2026-11-21T09:44:56.655Z",
-   "publishedAt": "2026-11-20T11:56:14.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
-   "revisions": [
-    {
-     "at": "2026-11-21T09:44:56.655Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : AlcastHQ",
-      "localisation : none → named-place",
-      "lieu : Apollo Aggregates"
-     ]
-    }
-   ],
-   "score": 58,
-   "opportunity": {
-    "score": 83,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Teddy Bear Factory: $20,000 Early Money Loot Spot »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
-    ]
-   },
-   "details": null,
-   "capture": null,
-   "advice": null
-  },
-  {
    "id": "r-93ed5c6a5a",
    "title": "How to Make Money Early in GTA 6: Best Chapter 1 Methods✅",
    "summary": "Argent · AlcastHQ — This is my guide on How to Make Money Early in GTA 6. The start of the game is rough: Jason has almost nothing, guns and gear cost money and some story missions want cash before they start. The good news is that Chapter 1 has plenty of ways to make money early in GTA [...] The…",
@@ -6767,8 +6676,8 @@
       "Strange Noises at the Liquor Store"
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -6824,7 +6733,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T09:57:06.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -6963,8 +6872,8 @@
       "How to Pay the Starlet Motel Rent"
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -7014,7 +6923,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T09:05:55.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -7140,8 +7049,8 @@
       "If you come back much later, the wreck can still be there, but the loot is gone."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -7181,7 +7090,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T15:14:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -7362,7 +7271,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T18:45:03.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -7472,8 +7381,8 @@
       "Note this may have a lock icon on it immediately after Pool Day, but you can still go there now and speak to him."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -7551,7 +7460,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T17:08:19.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -7658,8 +7567,8 @@
       "Requirement: Finished Chapter 2 \" Girl’s Trip (Find Painkillers) \""
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -7717,7 +7626,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T16:49:19.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -7815,8 +7724,8 @@
       "Requirement: Complete Chapter 2 \" Daily Driver \""
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -8063,7 +7972,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T16:46:34.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -8160,8 +8069,8 @@
       "Chapter 2 onward"
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -8190,7 +8099,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T01:44:22.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -8295,8 +8204,8 @@
       "Bring the suitable car to Watkins Auto Parts in Port Gellhorn."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -8354,7 +8263,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T16:00:24.374Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -8466,8 +8375,8 @@
       "M7 junkyard off Galerina Street, east of Boone Speedway."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -8905,7 +8814,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T15:57:20.674Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -9007,8 +8916,8 @@
       "M7-Schrottplatz an der Galerina Street, östlich von Boone Speedway."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -9364,7 +9273,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T15:57:20.674Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -9465,8 +9374,8 @@
       "The Zorrusso has a useful connection beyond a database entry: Randy&#x27;s Chapter 3 vehicle job puts it in the spotlight."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -9770,7 +9679,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T15:55:57.432Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -9873,8 +9782,8 @@
       "Notebookcheck identifies the setting as the area outside Sahara Arena ."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -9912,7 +9821,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T11:10:32.035Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -10011,8 +9920,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -10040,7 +9949,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T17:30:58.234Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -10130,8 +10039,8 @@
       "The Expanded Ammu-Nations are Big Shots in Hamlet, Woodhatch in Capri, Phil's Ammu-Nation and Iron & Oak in Vice City, Black Eagle north-west of Vice City and Prestige Firearms in Ocean Beach."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -10166,7 +10075,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T11:00:10.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -10268,8 +10177,8 @@
       "Looted properly, the whole camp is worth close to $2,000."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -10308,7 +10217,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T09:56:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -10420,8 +10329,8 @@
       "You can still hold on to a stolen car for a while."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -10487,7 +10396,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T16:47:44.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -10548,405 +10457,6 @@
    "advice": null
   },
   {
-   "id": "r-788925c85e",
-   "title": "GTA 6 Moses Walkthrough and How to Register a Car for Free",
-   "summary": "Véhicule · GTA BOOM — You can start Moses’ mission in GTA 6 with one car and save your free registration for a different car with no tracker.",
-   "category": "vehicle",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée.",
-    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
-    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide).",
-    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
-   ],
-   "spoiler": "high",
-   "actionable": false,
-   "location": {
-    "regionId": "gellhorn",
-    "place": "Watkins Auto Parts, Port Gellhorn",
-    "precision": "named-place",
-    "x": null,
-    "y": null,
-    "suggestion": {
-     "x": -6445,
-     "y": 3278,
-     "landmark": "Watkins Auto Parts, Port Gellhorn"
-    }
-   },
-   "conditions": {
-    "reward": null,
-    "money": null,
-    "requirement": null,
-    "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
-     "sourceId": "gtaboom",
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
-     "title": "GTA 6 Moses Walkthrough and How to Register a Car for Free",
-     "excerpt": "You can start Moses’ mission in GTA 6 with one car and save your free registration for a different car with no tracker.",
-     "publishedAt": "2026-11-21T07:48:02.000Z",
-     "official": false,
-     "origins": [
-      "site:gtaboom.com"
-     ],
-     "quotes": [
-      "Browse the Chapter 2 walkthroughs .",
-      "Bring a suitable vehicle to Watkins Auto Parts"
-     ],
-     "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
-      "ok": true,
-      "reason": null,
-      "aiOptOut": false,
-      "method": "rules",
-      "facts": {
-       "chapter": {
-        "value": 2,
-        "quote": "Browse the Chapter 2 walkthroughs .",
-        "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093"
-       },
-       "money": null,
-       "mission": null,
-       "giver": null,
-       "unlockAfter": null,
-       "place": {
-        "value": {
-         "name": "Watkins Auto Parts",
-         "district": "Port Gellhorn",
-         "regionId": "gellhorn"
-        },
-        "quote": "Bring a suitable vehicle to Watkins Auto Parts",
-        "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093"
-       },
-       "missable": null,
-       "contextMissable": null,
-       "handsOn": null,
-       "keywords": []
-      },
-      "videoIds": []
-     }
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-21T08:14:45.274Z",
-   "updatedAt": "2026-11-21T08:14:45.274Z",
-   "publishedAt": "2026-11-21T07:48:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
-   "revisions": [
-    {
-     "at": "2026-11-21T08:14:45.274Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : GTA BOOM",
-      "localisation : none → named-place",
-      "lieu : Watkins Auto Parts, Port Gellhorn",
-      "chapitre : 2"
-     ]
-    }
-   ],
-   "score": 55,
-   "opportunity": {
-    "score": 81,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Moses Walkthrough and How to Register a Car for Free »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
-    ]
-   },
-   "details": {
-    "chapter": {
-     "value": 2,
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
-       "quote": "Browse the Chapter 2 walkthroughs ."
-      }
-     ],
-     "conflicts": []
-    },
-    "money": null,
-    "mission": null,
-    "giver": null,
-    "unlockAfter": null,
-    "place": {
-     "value": {
-      "name": "Watkins Auto Parts",
-      "district": "Port Gellhorn"
-     },
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
-       "quote": "Bring a suitable vehicle to Watkins Auto Parts"
-      }
-     ],
-     "conflicts": []
-    },
-    "missable": null,
-    "contextMissable": null,
-    "handsOn": false,
-    "missing": [
-     "récompense",
-     "mission associée",
-     "condition d'accès",
-     "risque de manquer"
-    ]
-   },
-   "capture": null,
-   "advice": null
-  },
-  {
-   "id": "r-b6da975c3d",
-   "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
-   "summary": "Véhicule · GTA BOOM — Look for the driveway loop at the northeast tip of Starfish Island. The mansion's garage has three cars; scan them before choosing which one to take.",
-   "category": "vehicle",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée.",
-    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
-    "Non établi par les sources : récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
-   ],
-   "spoiler": "high",
-   "actionable": false,
-   "location": {
-    "regionId": null,
-    "place": null,
-    "precision": "none",
-    "x": null,
-    "y": null
-   },
-   "conditions": {
-    "reward": null,
-    "money": null,
-    "requirement": null,
-    "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
-     "sourceId": "gtaboom",
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
-     "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
-     "excerpt": "Look for the driveway loop at the northeast tip of Starfish Island. The mansion's garage has three cars; scan them before choosing which one to take.",
-     "publishedAt": "2026-11-21T06:57:06.000Z",
-     "official": false,
-     "origins": [
-      "site:gtaboom.com"
-     ],
-     "quotes": [
-      "In Chapter 3, unlock the Key Cloner."
-     ],
-     "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
-      "ok": true,
-      "reason": null,
-      "aiOptOut": false,
-      "method": "rules",
-      "facts": {
-       "chapter": {
-        "value": 3,
-        "quote": "In Chapter 3, unlock the Key Cloner.",
-        "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-       },
-       "money": null,
-       "mission": null,
-       "giver": null,
-       "unlockAfter": null,
-       "place": null,
-       "missable": null,
-       "contextMissable": null,
-       "handsOn": null,
-       "keywords": [
-        "supercar"
-       ]
-      },
-      "videoIds": [],
-      "vehicles": [
-       {
-        "name": "Piccia Big Cat Furia",
-        "make": "Piccia",
-        "model": "Big Cat Furia",
-        "year": null,
-        "key": "piccia-big-cat-furia",
-        "type": "vehicle",
-        "variant": {
-         "value": "livrée Its yellow spotted",
-         "quote": "Its yellow spotted livery and POUNCE plate set it apart from the cars inside the garage.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "location": {
-         "value": {
-          "text": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
-          "district": "Starfish Island",
-          "relative": false
-         },
-         "quote": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "spawn": {
-         "value": "fixed",
-         "quote": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "edition": null,
-        "chapter": null,
-        "mission": {
-         "value": "Clonin' Keys",
-         "quote": "Randy gives you access during Clonin' Keys, Makin' Gs, the job where you steal a Zorrusso for him.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "early": {
-         "value": true,
-         "quote": "Still early in the story?",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "keyCloner": {
-         "value": true,
-         "quote": "All four need the Key Cloner.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "tracker": {
-         "value": "standard",
-         "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "alarm": {
-         "value": true,
-         "quote": "The WAiNK scan showed Key Cloner access, an alarm and an advanced tracker.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "keep": {
-         "value": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
-         "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
-         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-        },
-        "price": null,
-        "steps": [
-         {
-          "value": "Take the road onto Starfish Island from Waxman Island and follow it to the turnaround at the northeast end.",
-          "quote": "Take the road onto Starfish Island from Waxman Island and follow it to the turnaround at the northeast end.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         },
-         {
-          "value": "Use the driveway with the small oval loop beside the large waterfront house.",
-          "quote": "Use the driveway with the small oval loop beside the large waterfront house.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         },
-         {
-          "value": "Scan the cars with WAiNK before you try a door.",
-          "quote": "Scan the cars with WAiNK before you try a door.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         },
-         {
-          "value": "Go for the Paul Walker Eclipse instead.",
-          "quote": "Go for the Paul Walker Eclipse instead.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         }
-        ],
-        "risks": [
-         {
-          "value": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
-          "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         },
-         {
-          "value": "You'll need the advanced-tracker unlock to register any of the three sports cars.",
-          "quote": "You'll need the advanced-tracker unlock to register any of the three sports cars.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         },
-         {
-          "value": "The tracker and the cost to register are what set them apart.",
-          "quote": "The tracker and the cost to register are what set them apart.",
-          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-         }
-        ],
-        "until": null
-       }
-      ],
-      "mechanics": {
-       "register": [],
-       "keyCloner": {
-        "value": {
-         "chapter": 3,
-         "mission": null
-        },
-        "quote": "In Chapter 3, unlock the Key Cloner.",
-        "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
-       },
-       "garages": null
-      }
-     }
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-21T08:14:45.274Z",
-   "updatedAt": "2026-11-21T08:14:45.274Z",
-   "publishedAt": "2026-11-21T06:57:06.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
-   "revisions": [
-    {
-     "at": "2026-11-21T08:14:45.274Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : GTA BOOM",
-      "chapitre : 3"
-     ]
-    }
-   ],
-   "score": 55,
-   "opportunity": {
-    "score": 72,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX … »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
-    ]
-   },
-   "details": {
-    "chapter": {
-     "value": 3,
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
-       "quote": "In Chapter 3, unlock the Key Cloner."
-      }
-     ],
-     "conflicts": []
-    },
-    "money": null,
-    "mission": null,
-    "giver": null,
-    "unlockAfter": null,
-    "place": null,
-    "missable": null,
-    "contextMissable": null,
-    "handsOn": false,
-    "missing": [
-     "récompense",
-     "mission associée",
-     "condition d'accès",
-     "lieu",
-     "risque de manquer"
-    ]
-   },
-   "capture": null,
-   "advice": null
-  },
-  {
    "id": "r-05f2cea04e",
    "title": "How to Get Paul Walker’s Mitsubishi Eclipse in GTA 6",
    "summary": "Argent · GTA BOOM — Get GTA 6's Paul Walker inspired Penumbra FF before finishing Moses' mission, then use his one time offer to save $6,750 on registration.",
@@ -10999,8 +10509,8 @@
       "Head to the Vice Vinyl mod shop in Vice City with $185 for the paint job, or $540 if the car also needs repairs."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -11041,7 +10551,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-21T00:46:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -11207,7 +10717,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:06:52.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -11326,8 +10836,8 @@
       "Once you open a bank account and can pay through BuckMe , the Duke 556 carbine is the best all-round early primary, an automatic that covers every range for around $1,450."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -11378,7 +10888,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-20T15:34:17.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11582,7 +11092,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-19T21:32:31.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11771,7 +11281,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-19T20:51:20.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -11861,6 +11371,405 @@
     "handsOn": false,
     "missing": [
      "mission associée",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-788925c85e",
+   "title": "GTA 6 Moses Walkthrough and How to Register a Car for Free",
+   "summary": "Véhicule · GTA BOOM — You can start Moses’ mission in GTA 6 with one car and save your free registration for a different car with no tracker.",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide).",
+    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": "gellhorn",
+    "place": "Watkins Auto Parts, Port Gellhorn",
+    "precision": "named-place",
+    "x": null,
+    "y": null,
+    "suggestion": {
+     "x": -6445,
+     "y": 3278,
+     "landmark": "Watkins Auto Parts, Port Gellhorn"
+    }
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+     "title": "GTA 6 Moses Walkthrough and How to Register a Car for Free",
+     "excerpt": "You can start Moses’ mission in GTA 6 with one car and save your free registration for a different car with no tracker.",
+     "publishedAt": "2026-11-21T07:48:02.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "Browse the Chapter 2 walkthroughs .",
+      "Bring a suitable vehicle to Watkins Auto Parts"
+     ],
+     "deep": {
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 2,
+        "quote": "Browse the Chapter 2 walkthroughs .",
+        "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": {
+        "value": {
+         "name": "Watkins Auto Parts",
+         "district": "Port Gellhorn",
+         "regionId": "gellhorn"
+        },
+        "quote": "Bring a suitable vehicle to Watkins Auto Parts",
+        "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093"
+       },
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T07:48:02.000Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM",
+      "localisation : none → named-place",
+      "lieu : Watkins Auto Parts, Port Gellhorn",
+      "chapitre : 2"
+     ]
+    }
+   ],
+   "score": 54,
+   "opportunity": {
+    "score": 81,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Moses Walkthrough and How to Register a Car for Free »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 2,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+       "quote": "Browse the Chapter 2 walkthroughs ."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": {
+     "value": {
+      "name": "Watkins Auto Parts",
+      "district": "Port Gellhorn"
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-moses-walkthrough-3093",
+       "quote": "Bring a suitable vehicle to Watkins Auto Parts"
+      }
+     ],
+     "conflicts": []
+    },
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-b6da975c3d",
+   "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
+   "summary": "Véhicule · GTA BOOM — Look for the driveway loop at the northeast tip of Starfish Island. The mansion's garage has three cars; scan them before choosing which one to take.",
+   "category": "vehicle",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide)."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
+     "excerpt": "Look for the driveway loop at the northeast tip of Starfish Island. The mansion's garage has three cars; scan them before choosing which one to take.",
+     "publishedAt": "2026-11-21T06:57:06.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [
+      "In Chapter 3, unlock the Key Cloner."
+     ],
+     "deep": {
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": {
+        "value": 3,
+        "quote": "In Chapter 3, unlock the Key Cloner.",
+        "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+       },
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": [
+        "supercar"
+       ]
+      },
+      "videoIds": [],
+      "vehicles": [
+       {
+        "name": "Piccia Big Cat Furia",
+        "make": "Piccia",
+        "model": "Big Cat Furia",
+        "year": null,
+        "key": "piccia-big-cat-furia",
+        "type": "vehicle",
+        "variant": {
+         "value": "livrée Its yellow spotted",
+         "quote": "Its yellow spotted livery and POUNCE plate set it apart from the cars inside the garage.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "location": {
+         "value": {
+          "text": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
+          "district": "Starfish Island",
+          "relative": false
+         },
+         "quote": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "spawn": {
+         "value": "fixed",
+         "quote": "The Starfish Island mansion garage in GTA 6 has two supercars and a G-Wagon-style SUV, but the Dubsta is the easier one to keep.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "edition": null,
+        "chapter": null,
+        "mission": {
+         "value": "Clonin' Keys",
+         "quote": "Randy gives you access during Clonin' Keys, Makin' Gs, the job where you steal a Zorrusso for him.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "early": {
+         "value": true,
+         "quote": "Still early in the story?",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "keyCloner": {
+         "value": true,
+         "quote": "All four need the Key Cloner.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "tracker": {
+         "value": "standard",
+         "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "alarm": {
+         "value": true,
+         "quote": "The WAiNK scan showed Key Cloner access, an alarm and an advanced tracker.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "keep": {
+         "value": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
+         "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
+         "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+        },
+        "price": null,
+        "steps": [
+         {
+          "value": "Take the road onto Starfish Island from Waxman Island and follow it to the turnaround at the northeast end.",
+          "quote": "Take the road onto Starfish Island from Waxman Island and follow it to the turnaround at the northeast end.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         },
+         {
+          "value": "Use the driveway with the small oval loop beside the large waterfront house.",
+          "quote": "Use the driveway with the small oval loop beside the large waterfront house.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         },
+         {
+          "value": "Scan the cars with WAiNK before you try a door.",
+          "quote": "Scan the cars with WAiNK before you try a door.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         },
+         {
+          "value": "Go for the Paul Walker Eclipse instead.",
+          "quote": "Go for the Paul Walker Eclipse instead.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         }
+        ],
+        "risks": [
+         {
+          "value": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
+          "quote": "Only the Dubsta has a standard tracker and its registration quote was less than half the Vitello's.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         },
+         {
+          "value": "You'll need the advanced-tracker unlock to register any of the three sports cars.",
+          "quote": "You'll need the advanced-tracker unlock to register any of the three sports cars.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         },
+         {
+          "value": "The tracker and the cost to register are what set them apart.",
+          "quote": "The tracker and the cost to register are what set them apart.",
+          "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+         }
+        ],
+        "until": null
+       }
+      ],
+      "mechanics": {
+       "register": [],
+       "keyCloner": {
+        "value": {
+         "chapter": 3,
+         "mission": null
+        },
+        "quote": "In Chapter 3, unlock the Key Cloner.",
+        "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3"
+       },
+       "garages": null
+      }
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T06:57:06.000Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM",
+      "chapitre : 3"
+     ]
+    }
+   ],
+   "score": 54,
+   "opportunity": {
+    "score": 72,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX … »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": {
+     "value": 3,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+       "quote": "In Chapter 3, unlock the Key Cloner."
+      }
+     ],
+     "conflicts": []
+    },
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
      "risque de manquer"
     ]
    },
@@ -11964,7 +11873,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T22:19:16.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12091,8 +12000,8 @@
       "Keep a longarm ready: armed men can still arrive while you're looting."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -12151,7 +12060,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T16:29:59.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12315,7 +12224,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T16:42:08.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -12441,7 +12350,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:50:22.874Z",
    "publishedAt": "2026-11-19T18:45:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -12593,7 +12502,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:50:22.874Z",
    "publishedAt": "2026-11-19T22:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -12714,8 +12623,8 @@
       "After card is obtained it can then be sold at any of the Pawn Shops present in the game, for differing values depending on the \"rarity\" of the card, ranging from $20 to upwards of $1000+."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:44:56.655Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -12750,7 +12659,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T14:18:31.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -12875,7 +12784,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T18:45:03.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -12988,7 +12897,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T18:45:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -13077,8 +12986,8 @@
       "The Sniper of La Perle , Kodak Black's 22-track playlist, becomes available as soon as you scan four posters around La Perle at TWA Ponya Tattoo, Drip Drops, Aunt Zola's Soul Food, and the Jack of Hearts nightclub."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -13114,7 +13023,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T09:50:22.874Z",
    "publishedAt": "2026-11-21T00:46:24.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -13222,8 +13131,8 @@
       "Hey, it turns out you can push vehicles anytime you want—who knows when, if ever, GTA 6 was going to explain that mechanic."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -13252,7 +13161,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:07:57.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -13372,7 +13281,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T22:34:25.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -13462,8 +13371,8 @@
       "Continue west to the narrow island in the Permit Keys."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -13502,7 +13411,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T10:45:09.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -13657,7 +13566,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T01:01:43.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -13803,7 +13712,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T21:24:15.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -13918,8 +13827,8 @@
       "The skunk ape sighting I've found so far is just across Gambit Bay from Jason's initial house."
      ],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -13954,7 +13863,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T20:12:34.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14074,7 +13983,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T04:35:10+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14141,8 +14050,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -14167,7 +14076,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T09:03:21.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14252,8 +14161,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": false,
@@ -14280,7 +14189,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:36:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14401,7 +14310,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:09:50.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14486,8 +14395,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -14512,7 +14421,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T19:54:22.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14623,7 +14532,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:38:51.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14708,8 +14617,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -14737,7 +14646,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:16:03.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -14822,8 +14731,8 @@
      ],
      "quotes": [],
      "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:50:22.874Z",
+      "v": 4,
+      "at": "2026-11-21T10:08:37.824Z",
       "ok": true,
       "reason": null,
       "aiOptOut": true,
@@ -14903,7 +14812,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:53:25.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -15035,7 +14944,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-21T00:16:38.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -15195,7 +15104,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-19T21:40:36+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -15326,7 +15235,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T01:00:00+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -15439,7 +15348,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-19T01:44:28.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -15566,7 +15475,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T18:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -15680,7 +15589,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T12:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -15791,7 +15700,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T17:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -15902,7 +15811,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T13:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16013,7 +15922,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T00:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16111,7 +16020,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T14:05:34.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16210,7 +16119,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:13:05.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -16337,7 +16246,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T19:52:34.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16471,7 +16380,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T19:51:05.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16621,7 +16530,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T19:50:31.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16780,7 +16689,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T15:26:32.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -16938,7 +16847,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T15:25:30.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -17096,7 +17005,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T14:59:13.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -17244,7 +17153,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T14:58:14.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -17378,7 +17287,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T14:57:16.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -17512,7 +17421,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T14:56:17.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -17728,7 +17637,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T14:16:27.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -18312,7 +18221,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T23:45:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -18473,7 +18382,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-20T09:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -18628,7 +18537,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-18T21:50:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -18782,7 +18691,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:57:39.890Z",
    "publishedAt": "2026-11-19T11:45:30.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -18847,187 +18756,6 @@
      "mission associée",
      "condition d'accès",
      "lieu",
-     "risque de manquer"
-    ]
-   },
-   "capture": null,
-   "advice": null
-  },
-  {
-   "id": "r-afbc19359d",
-   "title": "GTA 6 Got Pills? Walkthrough",
-   "summary": "Guide · GTA BOOM — After asking Zach about painkillers, knock on Vicki’s door with the stickers at Starlet Motel room 10 to finish Got Pills? and start Girls’ Trip.",
-   "category": "guide",
-   "reliability": "reported",
-   "status": "active",
-   "reviewed": false,
-   "reasons": [
-    "Une seule source identifiée, non corroborée.",
-    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
-    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide).",
-    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
-   ],
-   "spoiler": "high",
-   "actionable": false,
-   "location": {
-    "regionId": null,
-    "place": "Starlet Motel",
-    "precision": "named-place",
-    "x": null,
-    "y": null,
-    "suggestion": {
-     "x": -5354.7,
-     "y": 3461.9,
-     "landmark": "Starlet Motel, Historic Route 628, Kelly County"
-    }
-   },
-   "conditions": {
-    "reward": null,
-    "money": null,
-    "requirement": null,
-    "missable": null,
-    "platform": null
-   },
-   "evidence": [
-    {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
-     "sourceId": "gtaboom",
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
-     "title": "GTA 6 Got Pills? Walkthrough",
-     "excerpt": "After asking Zach about painkillers, knock on Vicki’s door with the stickers at Starlet Motel room 10 to finish Got Pills? and start Girls’ Trip.",
-     "publishedAt": "2026-11-21T07:40:45.000Z",
-     "official": false,
-     "origins": [
-      "site:gtaboom.com"
-     ],
-     "quotes": [
-      "Browse the Chapter 2 walkthroughs .",
-      "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In ."
-     ],
-     "deep": {
-      "v": 3,
-      "at": "2026-11-21T09:57:39.890Z",
-      "ok": true,
-      "reason": null,
-      "aiOptOut": false,
-      "method": "rules",
-      "facts": {
-       "chapter": {
-        "value": 2,
-        "quote": "Browse the Chapter 2 walkthroughs .",
-        "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2"
-       },
-       "money": null,
-       "mission": null,
-       "giver": null,
-       "unlockAfter": null,
-       "place": {
-        "value": {
-         "name": "Starlet Motel",
-         "district": null,
-         "regionId": null
-        },
-        "quote": "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In .",
-        "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2"
-       },
-       "missable": null,
-       "contextMissable": null,
-       "handsOn": null,
-       "keywords": [
-        "motel"
-       ]
-      },
-      "videoIds": []
-     }
-    }
-   ],
-   "media": null,
-   "firstSeenAt": "2026-11-21T08:14:45.274Z",
-   "updatedAt": "2026-11-21T09:44:56.655Z",
-   "publishedAt": "2026-11-21T07:40:45.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
-   "revisions": [
-    {
-     "at": "2026-11-21T08:14:45.274Z",
-     "reason": "Création automatique",
-     "changes": [
-      "source : GTA BOOM"
-     ]
-    },
-    {
-     "at": "2026-11-21T08:14:45.274Z",
-     "reason": "Même découverte décrite par une autre source",
-     "changes": [
-      "fusion : « How to Complete Just Moved In in GTA 6 » (GTA BOOM)"
-     ]
-    },
-    {
-     "at": "2026-11-21T08:14:45.274Z",
-     "reason": "Même découverte décrite par une autre source",
-     "changes": [
-      "fusion : « GTA 6 Overnight Charges Walkthrough » (GTA BOOM)",
-      "localisation : none → named-place",
-      "lieu : Starlet Motel",
-      "chapitre : 2"
-     ]
-    },
-    {
-     "at": "2026-11-21T09:44:56.655Z",
-     "reason": "Fusion annulée (sources distinctes)",
-     "changes": [
-      "séparée : « How to Complete Just Moved In in GTA 6 »",
-      "séparée : « GTA 6 Overnight Charges Walkthrough »"
-     ]
-    }
-   ],
-   "score": 48,
-   "opportunity": {
-    "score": 71,
-    "angle": "vrai ou faux ?",
-    "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Got Pills? Walkthrough »",
-     "Rumeur ou réalité : ce que montrent vraiment les sources"
-    ]
-   },
-   "mergedFrom": [],
-   "details": {
-    "chapter": {
-     "value": 2,
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
-       "quote": "Browse the Chapter 2 walkthroughs ."
-      }
-     ],
-     "conflicts": []
-    },
-    "money": null,
-    "mission": null,
-    "giver": null,
-    "unlockAfter": null,
-    "place": {
-     "value": {
-      "name": "Starlet Motel",
-      "district": null
-     },
-     "support": [
-      {
-       "sourceName": "GTA BOOM",
-       "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
-       "quote": "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In ."
-      }
-     ],
-     "conflicts": []
-    },
-    "missable": null,
-    "contextMissable": null,
-    "handsOn": false,
-    "missing": [
-     "récompense",
-     "mission associée",
-     "condition d'accès",
      "risque de manquer"
     ]
    },
@@ -19127,7 +18855,7 @@
    "firstSeenAt": "2026-11-21T07:40:17.000Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-21T07:40:17.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19244,7 +18972,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T21:59:46.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19314,7 +19042,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T08:25:49.178Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19384,7 +19112,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T17:30:58.234Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19454,7 +19182,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-21T03:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19524,7 +19252,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-21T02:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19594,7 +19322,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T19:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19664,7 +19392,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T15:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19734,7 +19462,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T14:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19804,7 +19532,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-20T00:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19874,7 +19602,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T18:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -19967,7 +19695,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T17:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -20055,7 +19783,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T12:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -20148,7 +19876,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-19T01:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -20236,7 +19964,7 @@
    "firstSeenAt": "2026-11-21T09:44:56.655Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-18T23:30:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -20260,9 +19988,9 @@
    "advice": null
   },
   {
-   "id": "r-ec87c3e613",
-   "title": "GTA 6 Girls' Trip Walkthrough",
-   "summary": "Guide · GTA BOOM — Follow Vicki through Port Gellhorn, find Dunk at the car wash and get him home to finish the Chapter 2 mission.",
+   "id": "r-afbc19359d",
+   "title": "GTA 6 Got Pills? Walkthrough",
+   "summary": "Guide · GTA BOOM — After asking Zach about painkillers, knock on Vicki’s door with the stickers at Starlet Motel room 10 to finish Got Pills? and start Girls’ Trip.",
    "category": "guide",
    "reliability": "reported",
    "status": "active",
@@ -20270,17 +19998,22 @@
    "reasons": [
     "Une seule source identifiée, non corroborée.",
     "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
-    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
+    "Non établi par les sources : récompense, mission associée, condition d'accès, risque de manquer (laissé vide).",
     "Spoiler possible (« Walkthrough ») : masqué en mode strict."
    ],
    "spoiler": "high",
    "actionable": false,
    "location": {
     "regionId": null,
-    "place": null,
-    "precision": "none",
+    "place": "Starlet Motel",
+    "precision": "named-place",
     "x": null,
-    "y": null
+    "y": null,
+    "suggestion": {
+     "x": -5354.7,
+     "y": 3461.9,
+     "landmark": "Starlet Motel, Historic Route 628, Kelly County"
+    }
    },
    "conditions": {
     "reward": null,
@@ -20291,18 +20024,21 @@
    },
    "evidence": [
     {
-     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-girls-trip-walkthrough-a927",
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
      "sourceId": "gtaboom",
      "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-girls-trip-walkthrough-a927",
-     "title": "GTA 6 Girls' Trip Walkthrough",
-     "excerpt": "Follow Vicki through Port Gellhorn, find Dunk at the car wash and get him home to finish the Chapter 2 mission.",
-     "publishedAt": "2026-11-21T07:41:07.000Z",
+     "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+     "title": "GTA 6 Got Pills? Walkthrough",
+     "excerpt": "After asking Zach about painkillers, knock on Vicki’s door with the stickers at Starlet Motel room 10 to finish Got Pills? and start Girls’ Trip.",
+     "publishedAt": "2026-11-21T07:40:45.000Z",
      "official": false,
      "origins": [
       "site:gtaboom.com"
      ],
-     "quotes": [],
+     "quotes": [
+      "Browse the Chapter 2 walkthroughs .",
+      "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In ."
+     ],
      "deep": {
       "v": 3,
       "at": "2026-11-21T09:57:39.890Z",
@@ -20311,16 +20047,30 @@
       "aiOptOut": false,
       "method": "rules",
       "facts": {
-       "chapter": null,
+       "chapter": {
+        "value": 2,
+        "quote": "Browse the Chapter 2 walkthroughs .",
+        "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2"
+       },
        "money": null,
        "mission": null,
        "giver": null,
        "unlockAfter": null,
-       "place": null,
+       "place": {
+        "value": {
+         "name": "Starlet Motel",
+         "district": null,
+         "regionId": null
+        },
+        "quote": "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In .",
+        "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2"
+       },
        "missable": null,
        "contextMissable": null,
        "handsOn": null,
-       "keywords": []
+       "keywords": [
+        "motel"
+       ]
       },
       "videoIds": []
      }
@@ -20328,9 +20078,9 @@
    ],
    "media": null,
    "firstSeenAt": "2026-11-21T08:14:45.274Z",
-   "updatedAt": "2026-11-21T08:14:45.274Z",
-   "publishedAt": "2026-11-21T07:41:07.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "updatedAt": "2026-11-21T09:44:56.655Z",
+   "publishedAt": "2026-11-21T07:40:45.000Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T08:14:45.274Z",
@@ -20338,33 +20088,80 @@
      "changes": [
       "source : GTA BOOM"
      ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Même découverte décrite par une autre source",
+     "changes": [
+      "fusion : « How to Complete Just Moved In in GTA 6 » (GTA BOOM)"
+     ]
+    },
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Même découverte décrite par une autre source",
+     "changes": [
+      "fusion : « GTA 6 Overnight Charges Walkthrough » (GTA BOOM)",
+      "localisation : none → named-place",
+      "lieu : Starlet Motel",
+      "chapitre : 2"
+     ]
+    },
+    {
+     "at": "2026-11-21T09:44:56.655Z",
+     "reason": "Fusion annulée (sources distinctes)",
+     "changes": [
+      "séparée : « How to Complete Just Moved In in GTA 6 »",
+      "séparée : « GTA 6 Overnight Charges Walkthrough »"
+     ]
     }
    ],
-   "score": 48,
+   "score": 47,
    "opportunity": {
-    "score": 62,
+    "score": 71,
     "angle": "vrai ou faux ?",
     "ideas": [
-     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Girls' Trip Walkthrough »",
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Got Pills? Walkthrough »",
      "Rumeur ou réalité : ce que montrent vraiment les sources"
     ]
    },
+   "mergedFrom": [],
    "details": {
-    "chapter": null,
+    "chapter": {
+     "value": 2,
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+       "quote": "Browse the Chapter 2 walkthroughs ."
+      }
+     ],
+     "conflicts": []
+    },
     "money": null,
     "mission": null,
     "giver": null,
     "unlockAfter": null,
-    "place": null,
+    "place": {
+     "value": {
+      "name": "Starlet Motel",
+      "district": null
+     },
+     "support": [
+      {
+       "sourceName": "GTA BOOM",
+       "url": "https://www.gtaboom.com/gta-6-got-pills-walkthrough-f6e2",
+       "quote": "The GTA 6 mission Got Pills? sends Lucia around the Starlet Motel to find painkillers for Jason after Just Moved In ."
+      }
+     ],
+     "conflicts": []
+    },
     "missable": null,
     "contextMissable": null,
     "handsOn": false,
     "missing": [
-     "chapitre",
      "récompense",
      "mission associée",
      "condition d'accès",
-     "lieu",
      "risque de manquer"
     ]
    },
@@ -20462,7 +20259,7 @@
    "firstSeenAt": "2026-11-21T07:39:48.000Z",
    "updatedAt": "2026-11-21T09:44:56.655Z",
    "publishedAt": "2026-11-21T07:39:48.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T09:44:56.655Z",
@@ -20526,6 +20323,118 @@
      "récompense",
      "mission associée",
      "condition d'accès",
+     "risque de manquer"
+    ]
+   },
+   "capture": null,
+   "advice": null
+  },
+  {
+   "id": "r-ec87c3e613",
+   "title": "GTA 6 Girls' Trip Walkthrough",
+   "summary": "Guide · GTA BOOM — Follow Vicki through Port Gellhorn, find Dunk at the car wash and get him home to finish the Chapter 2 mission.",
+   "category": "guide",
+   "reliability": "reported",
+   "status": "active",
+   "reviewed": false,
+   "reasons": [
+    "Une seule source identifiée, non corroborée.",
+    "Fiche structurée extraite de 1 article lu en entier (règles déterministes).",
+    "Non établi par les sources : chapitre, récompense, mission associée, condition d'accès, lieu, risque de manquer (laissé vide).",
+    "Spoiler possible (« Walkthrough ») : masqué en mode strict."
+   ],
+   "spoiler": "high",
+   "actionable": false,
+   "location": {
+    "regionId": null,
+    "place": null,
+    "precision": "none",
+    "x": null,
+    "y": null
+   },
+   "conditions": {
+    "reward": null,
+    "money": null,
+    "requirement": null,
+    "missable": null,
+    "platform": null
+   },
+   "evidence": [
+    {
+     "rawKey": "gtaboom:https://www.gtaboom.com/gta-6-girls-trip-walkthrough-a927",
+     "sourceId": "gtaboom",
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-girls-trip-walkthrough-a927",
+     "title": "GTA 6 Girls' Trip Walkthrough",
+     "excerpt": "Follow Vicki through Port Gellhorn, find Dunk at the car wash and get him home to finish the Chapter 2 mission.",
+     "publishedAt": "2026-11-21T07:41:07.000Z",
+     "official": false,
+     "origins": [
+      "site:gtaboom.com"
+     ],
+     "quotes": [],
+     "deep": {
+      "v": 3,
+      "at": "2026-11-21T09:57:39.890Z",
+      "ok": true,
+      "reason": null,
+      "aiOptOut": false,
+      "method": "rules",
+      "facts": {
+       "chapter": null,
+       "money": null,
+       "mission": null,
+       "giver": null,
+       "unlockAfter": null,
+       "place": null,
+       "missable": null,
+       "contextMissable": null,
+       "handsOn": null,
+       "keywords": []
+      },
+      "videoIds": []
+     }
+    }
+   ],
+   "media": null,
+   "firstSeenAt": "2026-11-21T08:14:45.274Z",
+   "updatedAt": "2026-11-21T08:14:45.274Z",
+   "publishedAt": "2026-11-21T07:41:07.000Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
+   "revisions": [
+    {
+     "at": "2026-11-21T08:14:45.274Z",
+     "reason": "Création automatique",
+     "changes": [
+      "source : GTA BOOM"
+     ]
+    }
+   ],
+   "score": 47,
+   "opportunity": {
+    "score": 62,
+    "angle": "vrai ou faux ?",
+    "ideas": [
+     "Vrai ou faux ? Je vérifie en jeu : « GTA 6 Girls' Trip Walkthrough »",
+     "Rumeur ou réalité : ce que montrent vraiment les sources"
+    ]
+   },
+   "details": {
+    "chapter": null,
+    "money": null,
+    "mission": null,
+    "giver": null,
+    "unlockAfter": null,
+    "place": null,
+    "missable": null,
+    "contextMissable": null,
+    "handsOn": false,
+    "missing": [
+     "chapitre",
+     "récompense",
+     "mission associée",
+     "condition d'accès",
+     "lieu",
      "risque de manquer"
     ]
    },
@@ -20604,7 +20513,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T00:21:07+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -20706,7 +20615,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:00:31+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -20808,7 +20717,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T14:00:37+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -20910,7 +20819,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T02:00:30+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -21019,7 +20928,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:22.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21147,7 +21056,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:18.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21272,7 +21181,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:15.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21390,7 +21299,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21514,7 +21423,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:08.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21626,7 +21535,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T23:10:05.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21714,7 +21623,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:40:39.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21784,7 +21693,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T22:02:48.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21854,7 +21763,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:52:04.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21924,7 +21833,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:58:32.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -21994,7 +21903,7 @@
    "firstSeenAt": "2026-11-21T00:56:35.959Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T21:49:49.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-21T00:56:35.959Z",
@@ -22093,7 +22002,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T11:51:58.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22238,7 +22147,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T07:53:38.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22382,7 +22291,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T18:19:06.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22515,7 +22424,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:29:39.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22626,7 +22535,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:01:55.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22737,7 +22646,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-18T17:38:43.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22825,7 +22734,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:34:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22895,7 +22804,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T01:00:12.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -22965,7 +22874,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:40:19.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23035,7 +22944,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T17:18:27.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23105,7 +23014,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:36:23.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23175,7 +23084,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:34:37.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23245,7 +23154,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:05:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23316,7 +23225,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:23:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23429,7 +23338,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T08:14:45.274Z",
    "publishedAt": "2026-11-20T18:44:50.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23590,7 +23499,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T01:44:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23734,7 +23643,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-21T00:56:35.959Z",
    "publishedAt": "2026-11-20T01:43:24.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23873,7 +23782,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T21:17:17.194Z",
    "publishedAt": "2026-11-20T10:24:18.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -23977,7 +23886,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T13:57:44.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24055,7 +23964,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T12:01:54.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24135,7 +24044,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T14:29:35.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24214,7 +24123,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T21:56:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24292,7 +24201,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T21:46:10.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24370,7 +24279,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-19T19:03:31.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24448,7 +24357,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T17:23:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24526,7 +24435,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T12:06:32.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -24604,7 +24513,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:18:30.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -24676,7 +24585,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:45:38.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -24746,7 +24655,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:20:59.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -24816,7 +24725,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:56:56.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -24886,7 +24795,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:41:34.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -24958,7 +24867,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:51:48.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -25030,7 +24939,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T20:33:04.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -25102,7 +25011,7 @@
    "firstSeenAt": "2026-11-20T20:53:17.007Z",
    "updatedAt": "2026-11-20T20:53:17.007Z",
    "publishedAt": "2026-11-20T19:47:33.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T20:53:17.007Z",
@@ -25181,7 +25090,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:10:42+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25260,7 +25169,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-18T23:00:17+00:00",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25332,7 +25241,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T17:49:55.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25402,7 +25311,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T19:55:25.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25472,7 +25381,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T15:35:06.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25565,7 +25474,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T14:53:40.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25653,7 +25562,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T14:36:19.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25723,7 +25632,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:22:32.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25818,7 +25727,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:25:33.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -25929,7 +25838,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T06:22:18.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26019,7 +25928,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T05:20:25.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26089,7 +25998,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T04:19:55.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26159,7 +26068,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T03:45:17.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26229,7 +26138,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T03:12:16.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26323,7 +26232,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:40:49.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26437,7 +26346,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:40:20.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26549,7 +26458,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:39:46.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26661,7 +26570,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T21:33:30.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26749,7 +26658,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T20:01:34.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26819,7 +26728,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T18:14:50.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26889,7 +26798,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:13:47.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -26959,7 +26868,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:45:10.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27029,7 +26938,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:22:53.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27099,7 +27008,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:36:06.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27169,7 +27078,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:26:52.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27239,7 +27148,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T10:33:56.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27309,7 +27218,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:46:37.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27379,7 +27288,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:28:33.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27449,7 +27358,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T22:00:43.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27519,7 +27428,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T18:35:22.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27589,7 +27498,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:22:43.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27659,7 +27568,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:07:18.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27729,7 +27638,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:05:50.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27799,7 +27708,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T17:01:04.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27869,7 +27778,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T16:57:11.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -27939,7 +27848,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T16:19:58.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28009,7 +27918,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T18:28:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28079,7 +27988,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T18:00:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28149,7 +28058,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T17:48:49.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28219,7 +28128,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:55:36.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28289,7 +28198,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T16:35:45.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28359,7 +28268,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T15:34:07.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28429,7 +28338,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T14:37:49.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28499,7 +28408,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:44:49.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28569,7 +28478,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:29:02.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28641,7 +28550,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:43:21.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28711,7 +28620,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T11:34:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28781,7 +28690,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-20T12:44:35.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",
@@ -28852,7 +28761,7 @@
    "firstSeenAt": "2026-11-20T19:23:01.978Z",
    "updatedAt": "2026-11-20T19:23:01.978Z",
    "publishedAt": "2026-11-19T23:17:00.000Z",
-   "lastVerifiedAt": "2026-11-21T09:57:39.890Z",
+   "lastVerifiedAt": "2026-11-21T10:08:37.824Z",
    "revisions": [
     {
      "at": "2026-11-20T19:23:01.978Z",

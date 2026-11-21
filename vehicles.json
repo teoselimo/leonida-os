@@ -332,7 +332,7 @@
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "Push Square",
@@ -378,14 +378,9 @@
   "year": "97",
   "aliases": {
    "value": [
-    "mitsubishi-eclipse"
+    "eclipse"
    ],
    "support": [
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
-    },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -414,13 +409,7 @@
      "quote": "Finding, buying, and stealing your dream car or bike is a peak part of Grand Theft Auto, and mine is the Fast and Furious Mitsubishi Eclipse in GTA 6, based on the bright green car driven by Paul Walker as Brian O'Con…"
     }
    ],
-   "conflicts": [
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
-    }
-   ]
+   "conflicts": []
   },
   "edition": {
    "exclusive": null,
@@ -438,11 +427,6 @@
      }
     ],
     "conflicts": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City."
-     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -478,17 +462,7 @@
    "alternatives": []
   },
   "access": {
-   "chapterMin": {
-    "value": 2,
-    "support": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Yes, once registering cars unlocks in Chapter 2."
-     }
-    ],
-    "conflicts": []
-   },
+   "chapterMin": null,
    "inferredChapter": null,
    "until": null,
    "mission": null,
@@ -498,11 +472,6 @@
    "alarm": {
     "value": true,
     "support": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "The side door sets off an alarm, and that brings people running before you are even in the car."
-     },
      {
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
@@ -523,11 +492,6 @@
      }
     ],
     "conflicts": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Below I show you where it is, how to get it out of the garage and how to keep it."
-     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -564,19 +528,19 @@
     "quote": "Use the main garage door to open it from inside, then drive the bright green Penumbra FF out."
    },
    {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Drive west from Vice Beach to Vespucci Island."
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Take the causeway through the Rialto Islands west of Vice Beach."
    },
    {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Go through the small green door on your left into the garage area."
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+    "quote": "Open the garage door here too, break into the car, hotwire it, and drive away - simple as that."
    },
    {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Open the garage from the main garage door, not the side door."
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+    "quote": "Take it to Moses as your first steal, and he'll register it to you for free, saving you a few thousand dollars."
    }
   ],
   "risks": [
@@ -586,19 +550,9 @@
     "quote": "After taking the car, deal with any wanted level and register it at a workshop."
    },
    {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "If you take it in Chapter 1, you lose it again once you die, get busted or leave it behind."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Check whether the car has a tracker before you drive off with it."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "GTA 6 Police Wanted Level Explained"
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
+    "quote": "You don't need this, but it will prevent the car alarm going off, which itself might avoid police presence, but you shouldn't have too much of a problem there anyway."
    }
   ],
   "price": null,
@@ -609,53 +563,48 @@
     "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
     "title": "GTA 6 paul walker car location",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "title": "GTA 6 Paul Walker Car Location: Fast and Furious Eclipse",
-    "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GamesRadar+",
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
     "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GamesRadar+",
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-is-a-movie-and-tv-goldmine-as-players-discover-everything-from-fast-and-furious-cars-to-dexters-apartment",
     "title": "GTA 6 is a movie and TV goldmine, as players discover Fast and Furious cars and Dexter's apartment",
     "official": false,
-    "readAt": "2026-11-21T09:50:22.874Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
-  "reliability": "confirmed",
+  "reliability": "reported",
   "reasons": [
-   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Une seule source : à vérifier en jeu.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [],
+  "missing": [
+   "chapitre"
+  ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:50:22.874Z",
+  "updatedAt": "2026-11-21T10:08:37.824Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -673,6 +622,14 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 5 → 6"
+    ]
+   },
+   {
+    "at": "2026-11-21T10:08:37.824Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : confirmed → reported",
+     "preuves : 6 → 5"
     ]
    }
   ]
@@ -750,7 +707,7 @@
     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
     "title": "GTA 6 steal vehicles for moses walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -848,14 +805,14 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -962,7 +919,7 @@
     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
     "title": "GTA 6 steal vehicles for moses walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -1066,14 +1023,14 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -1192,21 +1149,21 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -1431,7 +1388,7 @@
     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
     "title": "GTA 6 steal vehicles for moses walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -1528,7 +1485,7 @@
     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
     "title": "GTA 6 steal vehicles for moses walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -1730,7 +1687,7 @@
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -1821,7 +1778,7 @@
     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
     "title": "GTA 6 steal vehicles for moses walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2038,14 +1995,14 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2220,21 +2177,21 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2338,21 +2295,21 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2462,21 +2419,21 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2596,14 +2553,14 @@
     "url": "https://www.powerpyx.com/gta-6-company-cars-speak-to-the-concierge-walkthrough",
     "title": "GTA 6 company cars speak to the concierge walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2708,14 +2665,14 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -2917,7 +2874,7 @@
     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
     "title": "GTA 6 Starfish Island Garage: Where to Find the Vitello, Itali RSX and Dubsta",
     "official": false,
-    "readAt": "2026-11-21T09:50:22.874Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -3019,14 +2976,14 @@
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
     "title": "GTA 6 — Hidden cars",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -3190,7 +3147,7 @@
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -3542,7 +3499,7 @@
     "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
     "title": "GTA 6 best cars evidence guide",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
@@ -3752,7 +3709,7 @@
     "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
     "title": "GTA 6 steal vehicles for moses walkthrough",
     "official": false,
-    "readAt": "2026-11-21T09:44:56.655Z"
+    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "reported",
