@@ -4,10 +4,10 @@ Branche : experiment/openai-gpt-leonida. Base : experiment/claude-artifact, PR #
 
 ## Objectif / choix du modèle
 - Profil du joueur + contexte GTA VI sourcé + personnalité naturelle / questions de suivi.
-- Modèle initial : **gpt-6.1-terra**, coût standard API public (novembre 2026) : $0,50 / 1M tokens entrants et $2,50 / 1M sortants. Alternatives approuvées dans le serveur : gpt-6-luna et gpt-6.2-sol. Vérifier les tarifs avant tout changement.
-- 20 questions/jour × 30 jours × (3 000 entrants, 400 sortants) : **~$1,50 HT/mois** pour Terra, hors effets du raisonnement et des contextes plus longs. Ce chiffre n'est pas une garantie de facture.
-- Budget pilote : **$2/mois configurables** dans le Worker, pas $2/jour. Si tu ne veux aucune dépense : conserver AI_ENABLED=0.
-- Tarif source : https://developers.openai.com/api/docs/pricing . API distincte de ChatGPT Plus. Aucun accès à la mémoire de cette discussion ChatGPT n'est transmis automatiquement.
+- Modèle initial : **gpt-6.1-terra**, coût standard API public (novembre 2026) : $1,00 / 1M tokens entrants et $5,00 / 1M sortants. Alternatives approuvées dans le serveur : gpt-6-luna et gpt-6.2-sol. Vérifier les tarifs avant tout changement.
+- 20 questions/jour × 30 jours × (3 000 entrants, 400 sortants) : **~$3,00 HT/mois** pour Terra, hors effets du raisonnement et des contextes plus longs. Ce chiffre n'est pas une garantie de facture.
+- Budget pilote : **$2/mois configurables** (limite environ 13 questions/jour à 3 000 tokens entrants + 400 sortants, hors raisonnement supplémentaire) dans le Worker, pas $2/jour. Si tu ne veux aucune dépense : conserver AI_ENABLED=0.
+- Tarif officiel Standard (ne pas confondre avec Batch/Flex remisé) : https://developers.openai.com/api/docs/models/gpt-6.1-terra . API distincte de ChatGPT Plus. Aucun accès à la mémoire de cette discussion ChatGPT n'est transmis automatiquement.
 
 ## Architecture
 - Frontend statique Next / GitHub Pages → transport GPT SSE → Cloudflare Worker privé → OpenAI Responses API.

@@ -28,8 +28,8 @@ export interface Env {
 }
 type Money = { input: number; output: number };
 const PRICES: Record<string, Money> = {
-  "gpt-6-luna": { input: 0.05, output: 0.25 },
-  "gpt-6.1-terra": { input: 0.50, output: 2.50 },
+  "gpt-6-luna": { input: 0.10, output: 0.50 },
+  "gpt-6.1-terra": { input: 1.00, output: 5.00 },
   "gpt-6.2-sol": { input: 2.00, output: 10.00 },
 };
 const OUTPUT_LIMIT = 1200;
@@ -154,6 +154,7 @@ export default {
 
     const requestBody = {
       model, instructions: SERVER_RULES, input: messages,
+      reasoning: { effort: payload.tier === "default" ? "medium" : model === "gpt-6.2-sol" ? "low" : "none" },
       max_output_tokens: OUTPUT_LIMIT, store: false, stream: true,
     };
     // Extremely conservative bound: a UTF-8 byte is at least as granular as a
