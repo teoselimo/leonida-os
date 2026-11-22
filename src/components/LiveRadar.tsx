@@ -82,10 +82,12 @@ export function SyncStatus() {
 }
 
 /** Bandeau d'alerte : flux non renouvelé (collecteur en retard ou arrêté). Silencieux quand tout va bien. */
-export function CollectorAlert() {
+export function CollectorAlert({ hideSnapshot = false }: { hideSnapshot?: boolean } = {}) {
   const { feed, state } = useLiveRadar();
   if (!feed) return null;
   if (FEED_SNAPSHOT) {
+    // accueil : la date de l'instantané n'est pas actionnable en pleine partie ; elle reste visible dans le Radar
+    if (hideSnapshot) return null;
     const days = Math.floor((Date.now() - Date.parse(feed.generatedAt)) / 86_400_000);
     return (
       <div className="collector-alert collector-alert--snapshot" role="status" data-testid="snapshot-banner">

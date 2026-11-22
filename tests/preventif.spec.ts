@@ -39,7 +39,7 @@ async function start(page: Page, profile: Record<string, unknown> = {}) {
 }
 const briefCalls = (page: Page) => page.evaluate(() => (window as unknown as Win).__calls.filter((c) => /RIEN À MANQUER/.test(c.at(-1)!.content)).map((c) => c.at(-1)!.content.match(/MESSAGE DU JOUEUR : (.*)/)?.[1] ?? ""));
 
-test("Écran mission : nom, état en un geste, analyse automatique de LA mission, question libre", async ({ page }, info) => {
+test("Écran mission : nom, état en un geste, analyse automatique de LA mission, question via le bouton LEONIDA", async ({ page }, info) => {
   await start(page, { nextMission: "Swamped", missionInProgress: false });
   await expect(page.getByTestId("next-mission-name")).toHaveText("Swamped");
   await expect(page.getByTestId("mission-stop")).toHaveAttribute("aria-pressed", "true");
@@ -56,11 +56,16 @@ test("Écran mission : nom, état en un geste, analyse automatique de LA mission
     await expect(alert.getByTestId("brief-source").first()).toHaveAttribute("href", /^https:\/\//);
     await alert.getByTestId("brief-add").click();
     await expect(page.getByTestId("objective").first()).toContainText("Point critique de Swamped");
+    // aucun doublon : le point passé en objectif quitte la liste d'alertes
+    await expect(page.getByTestId("brief")).not.toContainText("Point critique de Swamped");
   } else await expect(page.getByTestId("brief-empty")).toBeVisible();
   await page.getByTestId("mission-start").click();
   await expect(page.getByTestId("mission-live")).toBeVisible();
-  await page.getByTestId("ask-mission-input").fill("Je prends quelle arme ?");
-  await page.getByTestId("ask-mission-input").press("Enter");
+  // aucune autre zone de discussion sur la fiche : seule entrée = bouton LEONIDA
+  await expect(page.getByTestId("ask-mission")).toHaveCount(0);
+  await page.getByTestId("ai-open").click();
+  await page.getByTestId("ai-input").fill("Je prends quelle arme ?");
+  await page.getByTestId("ai-input").press("Enter");
   await expect(page.getByTestId("ai-answer").last().getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
   const chat = await page.evaluate(() => (window as unknown as Win).__calls.at(-1)!.at(-1)!.content);
   expect(chat).toContain("Je prends quelle arme ?");
@@ -101,4 +106,39 @@ test("Diagnostic web : sans connecteur dans cette vue, l'app dit « indisponible
   await d.getByTestId("web-diag-run").click();
   await expect(d.getByTestId("web-diag-result")).toHaveAttribute("data-status", "unavailable");
   await expect(d.getByTestId("web-diag-result")).toContainText("0 résultat");
+});
+
+test("V0.10 compacité : mission visible tout de suite, une seule alerte, le reste dans « Voir plus », bouton LEONIDA sans chevauchement", async ({ page }) => {
+  await page.route("**/__live/radar.json*", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ...prod, generatedAt: new Date().toISOString() }) }));
+  await page.addInitScript(() => {
+    const sample = async (messages: { role: string; content: string }[]) => {
+      const ids = [...messages.at(-1)!.content.matchAll(/"id":"([^"]+)"/g)].map((m) => m[1]);
+      const el = (t: string, p: string) => `{"texte":"${t}","quand":"pendant","type":"manquable","priorite":"${p}","sources":["${ids[0]}"]}`;
+      return { text: `Ok.\n@@@\n{"confiance":"signalé","sources":[],"actions":[],"elements":[${el("Alerte A", "haute")},${el("Alerte B", "haute")},${el("Point C", "normale")}]}` };
+    };
+    (window as unknown as { claude: unknown }).claude = { use: async (n: string) => (n === "sample" ? sample : null) };
+    localStorage.clear();
+    localStorage.setItem("leonida-os/radar-url", `${location.origin}/__live/radar.json`);
+    localStorage.setItem("leonida-os/progress/v1", JSON.stringify({ schema: 1, rev: 7, showDemo: false, done: {}, vehicles: {}, profile: { pseudo: "Théo", console: "ps5", edition: "standard", preorder: "unknown", chapter: 1, lastMission: "Swamped", nextMission: "Don Gone", missionsDone: ["Swamped"], spoilerMode: "strict" } }));
+  });
+  await page.goto("/#accueil");
+  await page.waitForSelector(".app.is-ready");
+  await expect(page.getByTestId("brief-alert")).toHaveCount(1, { timeout: 15_000 });
+  await expect(page.getByTestId("brief-alert")).toContainText("Alerte A");
+  await expect(page.getByTestId("brief")).not.toContainText("Alerte B");
+  await page.getByTestId("brief-more").click();
+  await expect(page.getByTestId("brief-item")).toHaveCount(2);
+  const g = await page.evaluate(() => {
+    const r = (s: string) => document.querySelector(s)!.getBoundingClientRect();
+    const h = r('[data-testid="home-header"]'), m = r('[data-testid="next-mission-name"]'), f = r('[data-testid="ai-open"]');
+    const nav = document.querySelector(".nav")!.getBoundingClientRect();
+    return { header: h.height, missionTop: m.top, fab: [f.left, f.top, f.right, f.bottom], nav: [nav.left, nav.top, nav.right, nav.bottom], vw: innerWidth, vh: innerHeight };
+  });
+  expect(g.header).toBeLessThan(56);
+  if (g.vw < 760) {
+    expect(g.missionTop).toBeLessThan(260); // sans bandeau d'alerte (instantané masqué sur l'accueil dans l'Artifact), la mission arrive encore plus haut
+    expect(g.fab[0]).toBeGreaterThanOrEqual(g.nav[2]); // jamais sur la navigation
+    expect(g.fab[2]).toBeLessThanOrEqual(g.vw);
+    expect(g.fab[3]).toBeLessThanOrEqual(g.vh);
+  }
 });

@@ -112,11 +112,13 @@ test("Mission en cours (Swamped) : déclarée en cours, jamais considérée term
   await page.getByTestId("next-mission-live").click();
   await expect(page.getByTestId("mission-live")).toBeVisible();
   await expect(page.getByTestId("next-mission-name")).toHaveText("Swamped");
-  // l'analyse « Rien à manquer » se lance seule sur l'écran de mission ; la conversation reste ouverte depuis « Aide en mission »
-  await page.getByTestId("prepare-mission").click();
+  // l'analyse « Rien à manquer » se lance seule sur l'écran de mission ; la conversation passe par le bouton LEONIDA
+  await page.getByTestId("ai-open").click();
+  await page.getByTestId("ai-input").fill("Je suis en pleine mission, un conseil ?");
+  await page.getByTestId("ai-input").press("Enter");
   const a = page.getByTestId("ai-answer").last();
   await expect(a.getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
-  const sent = await page.evaluate(() => (window as unknown as Win).__calls.find((c) => /Je suis en pleine mission/.test(c.at(-1)!.content))!);
+  const sent = await page.evaluate(() => (window as unknown as Win).__calls.find((c) => /MESSAGE DU JOUEUR : Je suis en pleine mission/.test(c.at(-1)!.content))!);
   expect(sent.at(-1)!.content).toContain("Mission EN COURS");
   expect(sent.at(-1)!.content).toContain("PAS terminée");
   if (isPhone(page)) await page.getByTestId("ai-close").click();

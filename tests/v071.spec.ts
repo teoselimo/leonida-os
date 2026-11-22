@@ -40,8 +40,10 @@ async function ask(page: Page, q: string) {
 test("Test 4 — Accueil : prochaine mission, récupérable (ou incertitude honnête), avant, 2 envies, sans anglais", async ({ page }, info) => {
   await start(page, { nextMission: "Clean Up After Donnie" });
   await expect(page.getByTestId("next-mission-name")).toHaveText("Clean Up After Donnie");
-  await expect(page.getByTestId("mission-during")).toContainText("aucune récompense particulière confirmée");
-  await expect(page.getByTestId("prepare-mission")).toBeVisible();
+  // V0.10 : état de la mission + « Rien à manquer » ; la conversation passe par le bouton LEONIDA (seule entrée)
+  await expect(page.getByTestId("mission-state")).toBeVisible();
+  await expect(page.getByTestId("brief")).toBeVisible();
+  await expect(page.getByTestId("ai-open")).toBeVisible();
   const before = page.getByTestId("live-advice").locator("article");
   expect(await before.count()).toBeGreaterThan(0);
   expect(await before.count()).toBeLessThanOrEqual(3);
@@ -111,8 +113,7 @@ test("Test 2 — conversation suivie : Penumbra FF puis « Et comment je la cons
 test("Parcours continu : Accueil → Préparer ma mission → voiture sympa → carte → c'est fait → Accueil et garage à jour, conversation conservée", async ({ page }, info) => {
   await start(page, { nextMission: "Clean Up After Donnie" });
   const funBefore = await page.getByTestId("fun-picks").locator("button.funcard").allInnerTexts();
-  await page.getByTestId("prepare-mission").click();
-  const a = page.getByTestId("ai-answer").last();
+  const a = await ask(page, "Je vais lancer Clean Up After Donnie");
   await expect(a).toHaveAttribute("data-intent", "before");
   await expect(a).toContainText("Clean Up After Donnie");
   await a.getByTestId("ai-reply").filter({ hasText: "voiture sympa" }).click();

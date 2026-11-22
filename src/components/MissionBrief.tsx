@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
 import { loadLandmarks } from "@/lib/gtadb";
@@ -82,11 +82,14 @@ export function MissionBriefPanel({ mission, during, risk }: { mission: string; 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, transport, feed, key, !!brief]);
 
-  const items = brief?.items ?? [];
-  const alerts = useMemo(() => items.filter((b) => b.priority === "haute" || b.when === "avant").slice(0, 3), [items]);
-  const rest = items.filter((b) => !alerts.includes(b));
-  const stale = brief && Date.now() - Date.parse(brief.at) > BRIEF_TTL_MS;
   const has = (t: string) => (state.profile.objectives ?? []).some((o) => o.mission.toLowerCase() === mission.toLowerCase() && o.text.toLowerCase() === t.toLowerCase());
+  // aucun doublon : un point déjà passé en objectif n'est plus répété ici (il vit dans « Objectifs »)
+  const items = (brief?.items ?? []).filter((b) => !has(b.text));
+  const main = items[0] ?? null;
+  const rest = items.slice(1);
+  const stale = brief && Date.now() - Date.parse(brief.at) > BRIEF_TTL_MS;
+  const radarLine = during && !/^aucune/i.test(during) ? during : null;
+  const extra = rest.length + (radarLine ? 1 : 0) + (risk && main ? 1 : 0);
 
   const row = (b: BriefItem, i: number, tid: string) => (
     <li key={`${tid}${i}`} className={`bitem bitem--${STATUS_CLS[b.status]}${b.priority === "haute" ? " is-high" : ""}`} data-testid={tid} data-status={b.status}>
@@ -97,18 +100,14 @@ export function MissionBriefPanel({ mission, during, risk }: { mission: string; 
       <p className="bitem__text">{b.text}</p>
       {b.note && <p className="bitem__note"><Icon name="alert" size={12} /> {b.note}</p>}
       <div className="bitem__foot">
-        <span className="srcchips">
+        <span className="srcline">
           {b.sources.slice(0, 3).map((s, j) => (
-            <a key={j} className="srcchip" href={s.url} target="_blank" rel="noreferrer" data-testid="brief-source">{s.name}</a>
+            <a key={j} href={s.url} target="_blank" rel="noreferrer" data-testid="brief-source">{s.name.replace(/\s*·\s*web$/, "")}</a>
           ))}
         </span>
-        {has(b.text) ? (
-          <span className="bitem__added" aria-label="Déjà dans tes objectifs"><Icon name="check" size={14} /></span>
-        ) : (
-          <button className="btn btn--xs btn--ghost press" onClick={() => { tick(); addObjective({ mission, text: b.text, basis: b.status === "confirmé" ? "vérifié" : "incertain", source: b.sources[0] }); }} data-testid="brief-add">
-            <Icon name="plus" size={12} /> Objectif
-          </button>
-        )}
+        <button className="btn btn--xs btn--ghost press" onClick={() => { tick(); addObjective({ mission, text: b.text, basis: b.status === "confirmé" ? "vérifié" : "incertain", source: b.sources[0] }); }} data-testid="brief-add" aria-label={`Ajouter aux objectifs : ${b.text}`}>
+          <Icon name="plus" size={12} /> Objectif
+        </button>
       </div>
     </li>
   );
@@ -130,60 +129,37 @@ export function MissionBriefPanel({ mission, during, risk }: { mission: string; 
                   : "Analyse IA disponible dans l'Artifact Claude"}
           </span>
         </div>
-        <button className={`btn btn--sm press ${brief ? "btn--ghost" : "btn--primary"}`} disabled={!!stage || !feed} onClick={() => { tick(); void run(); }} data-testid="nothing-to-miss">
-          {stage ? <span className="spin" aria-hidden /> : <Icon name="check" size={16} />} {brief ? "Mettre à jour" : "Analyser"}
+        <button className={`iconbtn brief__refresh press${!brief ? " is-primary" : ""}`} disabled={!!stage || !feed} onClick={() => { tick(); void run(); }} data-testid="nothing-to-miss" aria-label={brief ? "Mettre à jour l'analyse" : "Analyser la mission"}>
+          {stage ? <span className="spin" aria-hidden /> : <Icon name={brief ? "reset" : "check"} size={18} />}
         </button>
       </header>
 
       {failed && <p className="bitem__note" data-testid="brief-error">L&apos;analyse n&apos;a pas abouti. Réessaie dans un instant.</p>}
 
-      {alerts.length > 0 && (
-        <>
-          <p className="brief__label"><Icon name="alert" size={13} /> Alertes prioritaires</p>
-          <ul className="bitems">{alerts.map((b, i) => row(b, i, "brief-alert"))}</ul>
-        </>
-      )}
-      {rest.length > 0 && (
-        <>
-          <button className="link small" onClick={() => setAll((v) => !v)} aria-expanded={all} data-testid="brief-more">{all ? "Masquer" : `Tout voir (${rest.length} de plus)`}</button>
-          {all && <ul className="bitems">{rest.map((b, i) => row(b, i, "brief-item"))}</ul>}
-        </>
-      )}
+      {main && <ul className="bitems">{row(main, 0, "brief-alert")}</ul>}
+      {!main && risk && <p className="missioncard__risk"><Icon name="alert" size={13} /> {risk}</p>}
       {brief && !items.length && !stage && (
         <p className="brief__empty" data-testid="brief-empty">
-          {brief.engine === "claude" ? "Aucun élément manquable trouvé dans les sources consultées — ce n'est pas une garantie." : "Analyse IA indisponible : seules les fiches LEONIDA RADAR ci-dessous sont utilisées."}
+          {(brief.items ?? []).length
+            ? "Tous les points sont dans tes objectifs."
+            : brief.engine === "claude"
+              ? "Rien de manquable trouvé dans les sources consultées — ce n'est pas une garantie."
+              : "Analyse IA indisponible ici : seules les fiches LEONIDA RADAR sont utilisées."}
         </p>
       )}
-      {brief?.engine === "claude" && brief.summary && (
-        <details className="brief__sum">
-          <summary>Résumé de Claude</summary>
-          <p>{brief.summary}</p>
-        </details>
-      )}
-      <p className="missioncard__during" data-testid="mission-during">
-        <b>LEONIDA RADAR :</b> {during ?? "aucune récompense particulière confirmée pour le moment."}
-      </p>
-      {risk && <p className="missioncard__risk"><Icon name="alert" size={13} /> {risk}</p>}
-    </section>
-  );
-}
 
-/** Question libre à Claude sur la mission affichée, sans quitter l'écran. */
-export function AskMission({ mission, known, live }: { mission: string; known: boolean; live: boolean }) {
-  const { setAiOpen } = useStore();
-  const [q, setQ] = useState("");
-  const send = () => {
-    const t = q.trim();
-    if (!t) return;
-    tick();
-    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: t, topic: { kind: "mission", name: mission, known } } }));
-    setAiOpen(true);
-    setQ("");
-  };
-  return (
-    <form className="askm" onSubmit={(e) => { e.preventDefault(); send(); }} data-testid="ask-mission">
-      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={live ? `Une question pendant ${mission} ?` : `Une question sur ${mission} ?`} maxLength={300} enterKeyHint="send" aria-label={`Question à Claude sur ${mission}`} data-testid="ask-mission-input" />
-      <button className="ai__send press" disabled={!q.trim()} aria-label="Demander à Claude"><Icon name="arrow" size={18} /></button>
-    </form>
+      {extra > 0 && (
+        <button className="brief__more press" onClick={() => setAll((v) => !v)} aria-expanded={all} data-testid="brief-more">
+          {all ? "Voir moins" : `Voir plus (${extra})`} <Icon name="chevronRight" size={14} />
+        </button>
+      )}
+      {all && (
+        <>
+          {rest.length > 0 && <ul className="bitems">{rest.map((b, i) => row(b, i, "brief-item"))}</ul>}
+          {risk && main && <p className="missioncard__risk"><Icon name="alert" size={13} /> {risk}</p>}
+          {radarLine && <p className="missioncard__during" data-testid="mission-during"><b>LEONIDA RADAR :</b> {radarLine}</p>}
+        </>
+      )}
+    </section>
   );
 }

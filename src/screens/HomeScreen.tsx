@@ -15,7 +15,7 @@ import { RecoCard } from "@/components/RecoCard";
 import { ShieldChip } from "@/components/ShieldChip";
 import { CollectorAlert } from "@/components/LiveRadar";
 import { BrandMark } from "@/components/Brand";
-import { MissionBriefPanel, AskMission } from "@/components/MissionBrief";
+import { MissionBriefPanel } from "@/components/MissionBrief";
 
 function greeting(d = new Date()) {
   const h = d.getHours();
@@ -66,7 +66,7 @@ function FunCard({ it, onGo }: { it: SessionItem; onGo: () => void }) {
 }
 
 export function HomeScreen() {
-  const { state, focusOnMap, setView, discoveries: all, signals, focusVehicle, openRecord, setDone, setVehicle, setAiOpen, celebrate, setNextMission, setMission, setMissionInProgress } = useStore();
+  const { state, focusOnMap, setView, discoveries: all, signals, focusVehicle, openRecord, setDone, setVehicle, celebrate, setNextMission, setMission, setMissionInProgress } = useStore();
   const { feed } = useLiveRadar();
   const regions = repo.regions();
   const plan = useMemo(() => sessionPlan(feed, state), [feed, state]);
@@ -87,13 +87,6 @@ export function HomeScreen() {
     if (it.vehicleId) setVehicle(it.vehicleId, "stolen");
     celebrate(it.vehicleId ? "Véhicule récupéré" : "Activité terminée");
   };
-  const prepare = () => {
-    if (!m.name) return;
-    tick();
-    const q = p.missionInProgress ? `Je suis en pleine mission ${m.name}` : `Je vais lancer ${m.name}`;
-    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: q, topic: { kind: "mission", name: m.name, known: !!m.info } } }));
-    setAiOpen(true);
-  };
   const saveNext = (name: string, inProgress = false) => {
     const n = name.trim();
     if (!n) return;
@@ -105,15 +98,17 @@ export function HomeScreen() {
 
   return (
     <div className="screen home">
-      <header className="topbar">
-        <div>
-          <p className="eyebrow"><BrandMark size={18} /> {greeting()}{p.pseudo && p.pseudo !== "Joueur" ? `, ${p.pseudo}` : ""}</p>
-          <h1 className="h1">Ta session <span className="grad">Leonida</span></h1>
-        </div>
+      {/* En-tête compact : marque + salutation sur une ligne, anti-spoiler à droite (V0.10) */}
+      <header className="hbar" data-testid="home-header">
+        <BrandMark size={26} />
+        <h1 className="hbar__title">
+          <span className="hbar__brand">LEONIDA</span>
+          <span className="hbar__hi">{greeting()}{p.pseudo && p.pseudo !== "Joueur" ? `, ${p.pseudo}` : ""}</span>
+        </h1>
         <ShieldChip />
       </header>
 
-      <CollectorAlert />
+      <CollectorAlert hideSnapshot />
 
       <div className="home__grid">
         <div className="home__col">
@@ -144,12 +139,8 @@ export function HomeScreen() {
                   </span>
                 )}
                 <MissionBriefPanel mission={m.name} during={m.during} risk={m.risk} />
-                <AskMission mission={m.name} known={!!m.info} live={!!p.missionInProgress} />
                 <Objectives mission={m.name} />
                 <div className="missioncard__links">
-                  <button className="btn btn--ghost btn--xs press" onClick={prepare} data-testid="prepare-mission">
-                    <BrandMark size={16} /> {p.missionInProgress ? "Aide en mission" : "Préparer ma mission"}
-                  </button>
                   <button className="link small" onClick={() => { setDraft(""); setEditing(true); }} data-testid="mission-change">Changer de mission</button>
                 </div>
               </>
