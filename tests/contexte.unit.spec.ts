@@ -95,19 +95,21 @@ test.describe("Scénarios", () => {
     expect(a.actions.length).toBeGreaterThan(1);
     expect(a.actions.every((x) => x.type === "objective_done" && "confirm" in x)).toBe(true);
   });
-  test("C — « Meilleurs magasins de vêtements à Key Lento » : référentiel confirmé + recherche web automatique (sans le demander)", async () => {
+  test("C — « Meilleurs magasins de vêtements à Key Lento » : référentiel confirmé + recherche web automatique (sans le demander), UN seul appel Claude", async () => {
     const a = answer("Meilleurs magasins de vêtements à Key Lento", ctx());
     expect(a.intent).toBe("shops");
     expect(a.text).toContain("The Wonder Whale");
     expect(a.text).toContain("position non établie"); // Billie's, Kahuna, Leroy's : aucune coordonnée inventée
-    expect(a.actions.some((x) => x.type === "show_place" && "landmarkId" in x && x.landmarkId === "L332")).toBe(true);
+    expect(a.text).toContain("Nifty Threads Island Wear"); // comté de Mariana, île non précisée : signalé à part
+    expect(a.actions.some((x) => x.type === "show_place" && x.query?.includes("Key Lento"))).toBe(true);
+    expect(a.actions.some((x) => x.type === "show_place" && !!x.district)).toBe(false); // plus de zone de quartier
     const queries: string[] = [];
     const search: WebSearchFn = async (q) => (queries.push(q), { status: "ok", hits: [{ title: "Clothing stores", url: "https://guide.example/clothes", text: "Billie's Key Lento Gift Shop sells tops.", date: null }] });
-    const t = mock((r, i) => (i === 0 ? '{"web":true,"requetes":["GTA 6 Key Lento clothing stores list"]}' : "Voilà.\n@@@\n{}"));
+    const t = mock(() => "Voilà.\n@@@\n{}");
     const c = await askCopilot({ question: "Meilleurs magasins de vêtements à Key Lento", ctx: ctx(), topic: null, history: [], transport: t, search });
-    expect(queries).toEqual(["GTA 6 Key Lento clothing stores list"]); // requête anglaise choisie par Claude
+    expect(queries).toEqual(['GTA 6 "Key Lento" clothing stores best']); // requête anglaise construite localement
+    expect(t.calls).toHaveLength(1); // plus d'appel de planification
     expect(c.web?.status).toBe("ok");
-    expect(t.calls[1].messages.at(-1)!.content).toContain("web non vérifié");
   });
   test("D — activité secondaire verrouillée : prérequis documenté expliqué, sans nommer une mission principale future en mode complet", () => {
     const a = answer("Quelles missions secondaires sont dispo ?", ctx({ missionsDone: ["Swamped", "Gear Up", "Lab Fees", "Just a Scratch", "Unwanted Attention"] }));
@@ -139,18 +141,32 @@ test.describe("Recherche web automatique", () => {
     expect(n).toBe(0);
     expect(t.calls).toHaveLength(1);
   });
-  test("question factuelle sans « recherche » : le planificateur déclenche Exa ; il peut aussi le juger inutile", async () => {
+  test("question factuelle sans « recherche » : Exa est lancé sans appel de planification ; une question d'avis n'en déclenche pas", async () => {
     let n = 0;
     const search: WebSearchFn = async () => (n++, { status: "ok", hits });
-    await askCopilot({ question: "Combien coûte la coupe Caesar chez Barnacle Beauties ?", ctx: ctx(), topic: null, history: [], transport: mock((r, i) => (i === 0 ? '{"web":true,"requetes":["GTA 6 Barnacle Beauties haircut prices"]}' : "Ok\n@@@\n{}")), search });
+    const t1 = mock(() => "Ok\n@@@\n{}");
+    await askCopilot({ question: "Combien coûte la coupe Caesar chez Barnacle Beauties ?", ctx: ctx(), topic: null, history: [], transport: t1, search });
     expect(n).toBe(1);
-    await askCopilot({ question: "Tu préfères la plage ou la ville ?", ctx: ctx(), topic: null, history: [], transport: mock((r, i) => (i === 0 ? '{"web":false,"requetes":[]}' : "La plage !\n@@@\n{}")), search });
+    expect(t1.calls).toHaveLength(1);
+    const t2 = mock(() => "La plage !\n@@@\n{}");
+    await askCopilot({ question: "Tu préfères la plage ou la ville ?", ctx: ctx(), topic: null, history: [], transport: t2, search });
     expect(n).toBe(1);
+    expect(t2.calls).toHaveLength(1);
   });
-  test("planificateur muet : repli heuristique ; aucun résultat : une reformulation avant d'abandonner, statut honnête", async () => {
+  test("ancien planificateur (comparaison A/B) : toujours disponible, 2 appels Claude", async () => {
+    let n = 0;
+    const search: WebSearchFn = async () => (n++, { status: "ok", hits });
+    const t = mock((r, i) => (i === 0 ? '{"web":true,"requetes":["GTA 6 Barnacle Beauties haircut prices"]}' : "Ok\n@@@\n{}"));
+    const seen: Array<{ claudeCalls: number; router: string }> = [];
+    await askCopilot({ question: "Combien coûte la coupe Caesar chez Barnacle Beauties ?", ctx: ctx(), topic: null, history: [], transport: t, search, planner: true, onMetrics: (m) => seen.push(m) });
+    expect(n).toBe(1);
+    expect(t.calls).toHaveLength(2);
+    expect(seen[0]).toMatchObject({ router: "planner", claudeCalls: 2 });
+  });
+  test("aucun résultat : une reformulation avant d'abandonner, statut honnête", async () => {
     const queries: string[] = [];
     const search: WebSearchFn = async (q) => (queries.push(q), { status: "empty", hits: [] });
-    const t = mock((r, i) => (i === 0 ? "pas du JSON" : "Rien trouvé.\n@@@\n{}"));
+    const t = mock(() => "Rien trouvé.\n@@@\n{}");
     const c = await askCopilot({ question: "Où trouver le Skunk Ape la nuit ?", ctx: ctx(), topic: null, history: [], transport: t, search });
     expect(queries).toHaveLength(2);
     expect(c.web).toMatchObject({ status: "empty", tries: 2 });
@@ -159,8 +175,8 @@ test.describe("Recherche web automatique", () => {
   test("connecteur non branché : pas de reformulation inutile, Claude prévenu", async () => {
     const queries: string[] = [];
     const search: WebSearchFn = async (q) => (queries.push(q), { status: "not_connected", hits: [] });
-    const t = mock((r, i) => (i === 0 ? '{"web":true,"requetes":["GTA 6 test"]}' : "Ok\n@@@\n{}"));
-    await askCopilot({ question: "Où est le premier coiffeur ?", ctx: ctx(), topic: null, history: [], transport: t, search });
+    const t = mock(() => "Ok\n@@@\n{}");
+    await askCopilot({ question: "Où trouver le Skunk Ape la nuit ?", ctx: ctx(), topic: null, history: [], transport: t, search });
     expect(queries).toHaveLength(1);
     expect(t.calls.at(-1)!.messages.at(-1)!.content).toContain("ne prétends pas avoir cherché");
   });

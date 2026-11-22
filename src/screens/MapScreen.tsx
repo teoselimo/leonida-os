@@ -26,12 +26,15 @@ import type { GarageFilter, VehicleView } from "@/lib/garage";
 import type { MapZone } from "@/components/map/types";
 import type { Discovery } from "@/lib/types";
 import { POI_CATS, POI_FILTERS, poiCategory, poiName, poiStatus, searchPois } from "@/lib/poi";
+import { EST_CATS, ESTABLISHMENTS } from "@/data/establishments";
+import { placementOf, PRECISION_FR, searchEstablishments } from "@/lib/places";
+import { EstablishmentCard } from "@/components/EstablishmentCard";
 import type { PoiCat } from "@/lib/poi";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 export function MapScreen({ active = true }: { active?: boolean }) {
-  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle, garage: gState, setGarage: setGarageStore, placeFocus, notify } = useStore();
+  const { state, selectedId, select, focusNonce, focusOnMap, discoveries: all, signals, vehicleId, selectVehicle, focusVehicle, garage: gState, setGarage: setGarageStore, placeFocus, notify, setPin } = useStore();
   const { feed } = useLiveRadar();
   const garage = gState.on;
   const gFilter = gState.filter as GarageFilter | null;
@@ -70,6 +73,9 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const [carto, setCarto] = useState(false);
   const [editor, setEditor] = useState<EditorDraft | null>(null);
   const [pickNonce, setPickNonce] = useState(0);
+  // Établissement confirmé affiché (fiche) et établissement en cours de placement par le joueur (V0.13)
+  const [estId, setEstId] = useState<string | null>(null);
+  const [pinFor, setPinFor] = useState<string | null>(null);
   const [sheetH, setSheetH] = useState(420);
   const [topH, setTopH] = useState(110);
   const topRef = useRef<HTMLDivElement>(null);
@@ -85,15 +91,37 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     return () => ro.disconnect();
   }, [isTablet]);
 
-  // Lieu demandé par LEONIDA AI (#15) : repère gtadb exact, ou catégorie + quartier → zone couvrant les lieux trouvés.
-  // Jamais un point inventé ; chaque commande est acquittée (data-place-ack) et un échec est dit au joueur.
+  // Lieu demandé par LEONIDA AI (#15) : repère gtadb exact, établissement confirmé (point / zone restreinte / fiche
+  // sans position), ou recherche pré-remplie. V0.13 : plus jamais de zone couvrant un quartier entier.
+  // Chaque commande est acquittée (data-place-ack) et un échec est dit au joueur.
   const [placeZone, setPlaceZone] = useState<MapZone | null>(null);
   const [placeAck, setPlaceAck] = useState("");
+  const [view, setView] = useState<{ x: number; y: number; radius: number; nonce: number } | null>(null);
+  const openEst = (id: string, lms = landmarks) => {
+    const e = ESTABLISHMENTS.find((x) => x.id === id);
+    if (!e) return false;
+    const pl = placementOf(e, lms, state.pins ?? {});
+    select(null);
+    selectVehicle(null);
+    setLmId(null);
+    setEstId(id);
+    setPlaceZone(
+      pl.precision === "inconnue"
+        ? null
+        : { id: `place:est:${id}`, x: pl.x!, y: pl.y!, radius: pl.precision === "point" ? 45 : pl.radius!, color: pl.precision === "point" ? "#7CF29A" : "#2EE6D6", kind: pl.precision === "point" ? "point" : "zone", label: e.name },
+    );
+    return pl.precision;
+  };
   useEffect(() => {
     if (!placeFocus.nonce || !landmarks.length) return;
     const n = placeFocus.nonce;
     setShowLandmarks(true);
     const cat = placeFocus.poiCat && placeFocus.poiCat in POI_CATS ? (placeFocus.poiCat as PoiCat) : null;
+    if (placeFocus.estId) {
+      const pr = openEst(placeFocus.estId);
+      setPlaceAck(pr ? `applied:${n}:est:${pr}` : `error:${n}:est`);
+      return;
+    }
     if (placeFocus.landmarkId) {
       const l = landmarks.find((x) => x.id === placeFocus.landmarkId);
       if (l) {
@@ -101,6 +129,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
         const c = poiCategory(l);
         setPoiCats((cur) => (cur.length && !cur.includes(c) ? [...cur, c] : cur));
         setPlaceZone(null);
+        setEstId(null);
         setLmId(l.id);
         setPlaceAck(`applied:${n}:${l.id}`);
         return;
@@ -109,29 +138,41 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       setPlaceAck(`error:${n}:landmark`);
       return;
     }
-    if (cat) setPoiCats([cat]);
-    const d = placeFocus.district ? norm(placeFocus.district) : "";
-    const inD = d ? landmarks.filter((l) => norm(l.district.split(",")[0] ?? "") === d) : [];
-    const pts = cat ? inD.filter((l) => poiCategory(l) === cat) : inD;
-    if (!pts.length) {
-      notify(inD.length ? `Aucun ${POI_CATS[cat!].label.toLowerCase()} répertorié ici` : "Zone non localisable", inD.length ? `La carte communautaire n'en signale pas à ${placeFocus.district}.` : "Ce quartier n'est pas dans notre référentiel de la carte.");
-      setPlaceAck(`error:${n}:${inD.length ? "empty" : "district"}`);
-      if (!inD.length) return;
+    // recherche pré-remplie (ou ancien format « quartier [+ catégorie] ») : la LISTE, y compris les lieux sans position
+    const q = placeFocus.query ?? [cat ? POI_CATS[cat].plural : "", placeFocus.district ?? ""].join(" ").trim();
+    if (q) {
+      if (cat) setPoiCats([cat]);
+      setPlaceZone(null);
+      setLmId(null);
+      setEstId(null);
+      setQuery(q);
+      setSearchOpen(true);
+      // cadrer la caméra sur les lieux situés de la liste (établissements placés + repères de la catégorie)
+      const pts: Array<{ x: number; y: number }> = [];
+      for (const e of searchEstablishments(q, 20)) {
+        const pl = placementOf(e, landmarks, state.pins ?? {});
+        if (pl.precision !== "inconnue") pts.push({ x: pl.x!, y: pl.y! });
+      }
+      for (const l of searchPois(q, landmarks, 20)) if (!cat || poiCategory(l) === cat) pts.push(l);
+      if (pts.length) {
+        const x = pts.reduce((a, p) => a + p.x, 0) / pts.length;
+        const y = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+        const radius = Math.min(1800, Math.max(...pts.map((p) => Math.hypot(p.x - x, p.y - y))) + 150);
+        setView({ x, y, radius, nonce: n });
+      }
+      setPlaceAck(`applied:${n}:search`);
     }
-    const use = pts.length ? pts : inD;
-    const x = use.reduce((a, l) => a + l.x, 0) / use.length;
-    const y = use.reduce((a, l) => a + l.y, 0) / use.length;
-    const dist = use.map((l) => Math.hypot(l.x - x, l.y - y)).sort((a, b) => a - b);
-    const radius = Math.min(2500, Math.max(300, (dist[Math.floor(dist.length * 0.9)] ?? 300) * 1.1));
-    setLmId(null);
-    setPlaceZone({ id: `place:${placeFocus.district}`, x, y, radius, color: "#2EE6D6", label: cat && pts.length ? `${placeFocus.district} · ${pts.length} ${(pts.length > 1 ? POI_CATS[cat].plural : POI_CATS[cat].label).toLowerCase()}` : placeFocus.district! });
-    if (pts.length && cat) setPlaceAck(`applied:${n}:${pts.length}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeFocus.nonce, landmarks.length]);
 
   const selectDiscovery = (id: string | null) => {
+    if (id?.startsWith("place:est:")) {
+      openEst(id.slice(10));
+      return;
+    }
     if (id?.startsWith("place:")) return;
     setPlaceZone(null);
+    setEstId(null);
     if (id?.startsWith("veh:")) {
       setLmId(null);
       selectVehicle(id.slice(4));
@@ -152,7 +193,13 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const vehicleZones: MapZone[] = garage
     ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened }))
     : [];
-  const zones: MapZone[] = placeZone ? [...vehicleZones, placeZone] : vehicleZones;
+  // positions observées par le joueur : toujours visibles (hors mode Voitures cachées)
+  const pinZones: MapZone[] = garage
+    ? []
+    : Object.entries(state.pins ?? {})
+        .filter(([id]) => placeZone?.id !== `place:est:${id}`)
+        .map(([id, p]) => ({ id: `place:est:${id}`, x: p.x, y: p.y, radius: 40, color: "#7CF29A", kind: "point" as const, label: ESTABLISHMENTS.find((e) => e.id === id)?.name ?? "Position" }));
+  const zones: MapZone[] = [...vehicleZones, ...pinZones, ...(placeZone ? [placeZone] : [])];
   const vehicleMarkers: MapMarker[] = garage
     ? shownVehicles
         .filter((x) => x.v.location.point)
@@ -167,6 +214,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const guide = (id: string) => focusVehicle(id);
   const selectLandmark = (id: string | null) => {
     if (id) setPlaceZone(null);
+    if (id) setEstId(null);
     if (id) {
       select(null);
       selectVehicle(null);
@@ -199,6 +247,17 @@ export function MapScreen({ active = true }: { active?: boolean }) {
 
   // ── Mode cartographe ─────────────────────────────────────────────────────────
   const onPick = (x: number, y: number) => {
+    if (pinFor) {
+      const e = ESTABLISHMENTS.find((z) => z.id === pinFor);
+      setPin(pinFor, { x, y });
+      notify("Position enregistrée", `${e?.name ?? "Établissement"} · observé par toi en jeu`, "flag");
+      const id = pinFor;
+      setPinFor(null);
+      setEstId(id);
+      setPlaceZone({ id: `place:est:${id}`, x, y, radius: 45, color: "#7CF29A", kind: "point", label: e?.name ?? "" });
+      setPlaceAck(`applied:pin:${id}`);
+      return;
+    }
     select(null);
     setLmId(null);
     setEditor((e) => (e ? { ...e, x, y } : { x, y }));
@@ -236,10 +295,13 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const visibleCount = markers.filter((m) => m.visible && m.status === "available").length;
   const results = useMemo(() => {
     const q = norm(query.trim());
-    if (q.length < 2) return { disc: [], lms: [] as Landmark[] };
+    if (q.length < 2) return { disc: [], lms: [] as Landmark[], ests: [] as typeof ESTABLISHMENTS };
     const disc = allMarkers.filter((m) => m.status !== "hidden" && norm(m.discovery.title).includes(q)).slice(0, 4);
-    const lms = searchPois(query, landmarks, 10);
-    return { disc, lms };
+    const ests = searchEstablishments(query, 12);
+    // un repère déjà couvert par un établissement (même nom) n'apparaît qu'une fois
+    const covered = new Set(ests.map((e) => e.position?.landmarkId).filter(Boolean));
+    const lms = searchPois(query, landmarks, 10).filter((l) => !covered.has(l.id));
+    return { disc, lms, ests };
   }, [query, allMarkers, landmarks]);
 
   const closeSearch = () => {
@@ -254,8 +316,20 @@ export function MapScreen({ active = true }: { active?: boolean }) {
         <input autoFocus placeholder={`Rechercher parmi ${landmarks.length.toLocaleString("fr-FR")} lieux…`} value={query} onChange={(e) => setQuery(e.target.value)} data-testid="search-input" />
         <button onClick={closeSearch} aria-label="Fermer la recherche"><Icon name="close" size={16} /></button>
       </div>
-      {(results.disc.length > 0 || results.lms.length > 0) && (
-        <div className="search__results">
+      {(results.disc.length > 0 || results.lms.length > 0 || results.ests.length > 0) && (
+        <div className="search__results" data-testid="search-results">
+          {results.ests.length > 0 && <p className="search__group">Établissements confirmés · {results.ests.length}</p>}
+          {results.ests.map((e) => {
+            const pl = placementOf(e, landmarks, state.pins ?? {});
+            return (
+              <button key={e.id} onClick={() => { closeSearch(); openEst(e.id); }} data-testid={`est-${e.id}`} data-precision={pl.precision}>
+                <span className="glyph glyph--lm" style={{ width: 28, height: 28, color: "#7CF29A" }}><Icon name="check" size={14} /></span>
+                <span><strong>{e.name}</strong><em>{e.kind ?? EST_CATS[e.cats[0]].label} · {e.district === "Mariana County" ? "comté de Mariana" : e.district}</em></span>
+                <span className={`search__prec search__prec--${pl.precision}`}>{PRECISION_FR[pl.precision]}</span>
+              </button>
+            );
+          })}
+          {results.lms.length > 0 && results.ests.length > 0 && <p className="search__group">Carte communautaire (gtadb)</p>}
           {results.disc.map((m) => (
             <button key={m.discovery.id} onClick={() => { closeSearch(); focusOnMap(m.discovery.id); setLmId(null); }}>
               <CategoryGlyph id={m.discovery.category} size={28} />
@@ -270,7 +344,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
           ))}
         </div>
       )}
-      {query.trim().length >= 2 && !results.disc.length && !results.lms.length && <div className="search__results"><p className="muted small pad">Aucun résultat.</p></div>}
+      {query.trim().length >= 2 && !results.disc.length && !results.lms.length && !results.ests.length && <div className="search__results"><p className="muted small pad">Aucun résultat.</p></div>}
     </div>
   );
 
@@ -354,7 +428,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       selectedLandmarkId={lmId}
       onSelectLandmark={selectLandmark}
       active={active}
-      pickMode={carto || Boolean(editor)}
+      pickMode={carto || Boolean(editor) || Boolean(pinFor)}
       onPick={onPick}
       pickCenterNonce={pickNonce}
       draft={editor ? { x: editor.x, y: editor.y } : null}
@@ -362,6 +436,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       zones={zones}
       selectedZoneId={vehicleId && zones.some((z) => z.id === `veh:${vehicleId}`) ? `veh:${vehicleId}` : placeZone && !vehicleId ? placeZone.id : null}
       onSelectZone={(id) => selectDiscovery(id)}
+      view={view}
     />
   );
 
@@ -380,11 +455,30 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       {x.v.location.precision === "zone" && <span className="vrow__tag">zone</span>}
     </button>
   );
+  const startPin = (id: string) => {
+    setEstId(null);
+    setPinFor(id);
+    setCarto(false);
+    setEditor(null);
+  };
+  const est = estId && !selectedId && !vehicleId ? <EstablishmentCard id={estId} landmarks={landmarks} onClose={() => { setEstId(null); setPlaceZone(null); }} onPlace={startPin} /> : null;
+  const pinBar = pinFor && (
+    <div className="cartobar" onClick={(e) => e.stopPropagation()} data-testid="pin-bar">
+      <div>
+        <strong>Placer {ESTABLISHMENTS.find((e) => e.id === pinFor)?.name}</strong>
+        <span>Touche l'endroit exact vu en jeu, ou vise avec la mire.</span>
+      </div>
+      <div className="row gap8">
+        <button className="btn btn--ghost btn--sm" style={{ width: "auto" }} onClick={() => { const id = pinFor; setPinFor(null); setEstId(id); }}>Annuler</button>
+        <button className="btn btn--primary btn--sm" style={{ width: "auto" }} onClick={() => setPickNonce((n) => n + 1)} data-testid="pin-center">Poser ici</button>
+      </div>
+    </div>
+  );
   const vehicleEl = vehicleId && <VehicleSheet id={vehicleId} onClose={() => selectVehicle(null)} onGuide={guide} />;
 
   // ── Tablette : panneau + carte côte à côte ─────────────────────────────────
   if (isTablet) {
-    const detailOpen = Boolean(selectedId || lm || vehicleId);
+    const detailOpen = Boolean(selectedId || lm || vehicleId || est);
     return (
       <div className="mapsplit" data-place-ack={placeAck}>
         <aside className="panel">
@@ -392,9 +486,9 @@ export function MapScreen({ active = true }: { active?: boolean }) {
             <div className="panel__scroll" style={{ paddingTop: "calc(var(--sat) + 18px)" }}>{editorEl}</div>
           ) : detailOpen ? (
             <>
-              <button className="back" onClick={() => { select(null); setLmId(null); selectVehicle(null); }}><Icon name="chevronLeft" size={16} /> {garage ? "Voitures cachées" : "Recommandations"}</button>
+              <button className="back" onClick={() => { select(null); setLmId(null); selectVehicle(null); setEstId(null); setPlaceZone(null); }}><Icon name="chevronLeft" size={16} /> {garage ? "Voitures cachées" : "Recommandations"}</button>
               <div className="panel__scroll">
-                {vehicleId ? vehicleEl : selectedId ? <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} /> : lm && <LandmarkCard lm={lm} onClose={() => setLmId(null)} />}
+                {vehicleId ? vehicleEl : selectedId ? <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} /> : est ? est : lm && <LandmarkCard lm={lm} onClose={() => setLmId(null)} />}
               </div>
             </>
           ) : (
@@ -428,13 +522,14 @@ export function MapScreen({ active = true }: { active?: boolean }) {
           {mapEl({ top: 64, bottom: 0, left: 0 })}
           <div className="mapsplit__filters">{filters}</div>
           {cartoBar && <div className="mapsplit__carto">{cartoBar}</div>}
+          {pinBar && <div className="mapsplit__carto">{pinBar}</div>}
         </div>
       </div>
     );
   }
 
   // ── iPhone : carte plein écran + fiche glissante ───────────────────────────
-  const sheetOpen = Boolean(selectedId || lm || editor || vehicleId);
+  const sheetOpen = Boolean(selectedId || lm || editor || vehicleId || est);
   return (
     <div className="mapphone" data-place-ack={placeAck}>
       {mapEl({ top: topH, bottom: sheetOpen ? sheetH : (carto ? 96 : 118) + 86, left: 0 })}
@@ -446,7 +541,8 @@ export function MapScreen({ active = true }: { active?: boolean }) {
         {searchOpen ? search : filters}
       </div>
       {!sheetOpen && cartoBar}
-      {!sheetOpen && !carto && (
+      {!sheetOpen && pinBar}
+      {!sheetOpen && !carto && !pinFor && (
         <div className="strip" onClick={(e) => e.stopPropagation()} data-testid={garage ? "garage-strip" : undefined}>
           {garage ? sortedVehicles.map((x) => vrow(x, true)) : recs.map((r) => <RecoCard key={r.discovery.id} rec={r} variant="chip" />)}
         </div>
@@ -466,7 +562,12 @@ export function MapScreen({ active = true }: { active?: boolean }) {
           <DiscoveryDetail id={selectedId} onClose={() => select(null)} onEdit={openEdit} />
         </Sheet>
       )}
-      {!editor && !vehicleId && !selectedId && lm && (
+      {!editor && !vehicleId && !selectedId && est && (
+        <Sheet key={`est-${estId}`} onClose={() => { setEstId(null); setPlaceZone(null); }} onHeight={setSheetH}>
+          {est}
+        </Sheet>
+      )}
+      {!editor && !vehicleId && !selectedId && !est && lm && (
         <Sheet key={lm.id} onClose={() => setLmId(null)} onHeight={setSheetH}>
           <LandmarkCard lm={lm} onClose={() => setLmId(null)} />
         </Sheet>

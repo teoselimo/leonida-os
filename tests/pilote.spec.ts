@@ -92,11 +92,14 @@ test("Pilote 2 — voiture rare puis suivi « comment je la garde définitivemen
   await page.screenshot({ path: `captures/${info.project.name}-61-pilote-suivi.png` });
 });
 
-test("Pilote 3 — « magasin à Key Lento » : la carte s'ouvre filtrée sur les commerces de Key Lento", async ({ page }, info) => {
+test("Pilote 3 — « magasin à Key Lento » : la carte s'ouvre sur la liste des commerces de Key Lento, filtre commerces actif (V0.13 : sans zone de quartier)", async ({ page }, info) => {
   await start(page);
   const a = await ask(page, "Je cherche un magasin à Key Lento");
   await a.getByTestId("ai-action-show_place").first().click();
   await expect(page).toHaveURL(/#carte$/);
+  await expect(page.getByTestId("search-results")).toContainText("Billie's Key Lento Gift Shop");
+  await expect(page.getByTestId("zone-tag")).toHaveCount(0);
+  await page.getByRole("button", { name: "Fermer la recherche" }).click();
   await expect(page.getByTestId("filter-landmarks")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("poi-commerce")).toHaveAttribute("aria-pressed", "true");
   await page.waitForTimeout(900);

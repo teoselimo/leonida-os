@@ -139,6 +139,10 @@ export interface PersistedState {
   rev?: number;
   /** Analyses « Rien à manquer », une par mission (clé = nom normalisé). Jamais mélangées entre missions. */
   briefs?: Record<string, MissionAlertBrief>;
+  /** Positions d'établissements observées en jeu par le joueur (id d'établissement → point). V0.13. */
+  pins?: Record<string, { x: number; y: number; at: string; by: "joueur" }>;
+  /** Mesures des dernières réponses du copilote (latence, appels, recherches) — comparaison avant / après V0.13. */
+  metrics?: import("./copilot/route").TurnMetrics[];
 }
 
 export type BriefWhen = "avant" | "pendant" | "apres";

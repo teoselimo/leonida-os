@@ -9,6 +9,7 @@ import type { PersistedState } from "../types";
 import type { Landmark } from "../gtadb";
 import { categoryFromQuery, districtFromQuery, findPoi, POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus, searchPois } from "../poi";
 import { afterDone, progressAnswer, progressIntent } from "./progressAnswers";
+import { ESTABLISHMENTS } from "@/data/establishments";
 
 /**
  * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
@@ -41,7 +42,7 @@ export type AiAction =
   | { type: "objective_done"; mission: string; text: string; label: string; confirm: string }
   | { type: "ask"; question: string; label: string }
   /** Lieu de la carte communautaire : repère gtadb (point) ou quartier (zone approximative). Jamais de coordonnées inventées. */
-  | { type: "show_place"; label: string; landmarkId?: string; district?: string; poiCat?: string };
+  | { type: "show_place"; label: string; landmarkId?: string; district?: string; poiCat?: string; estId?: string; query?: string };
 
 /** Sujet de la conversation, pour comprendre « et comment je la garde ? », « et où exactement ? », « et après ? ». */
 export type Topic =
@@ -91,7 +92,7 @@ const asLm = (p: PlaceRef): Landmark => ({ id: p.id, name: p.name, district: p.d
 
 export interface AiContext {
   feed: RadarFeed | null;
-  state: Pick<PersistedState, "profile" | "vehicles" | "done">;
+  state: Pick<PersistedState, "profile" | "vehicles" | "done" | "pins">;
   /** Centre de carte courant (coordonnées de jeu), pour « près de moi ». */
   position?: { x: number; y: number } | null;
   /** Repères gtadb chargés par la carte : permettent « voir sur la carte » sans inventer de position. */
@@ -132,7 +133,8 @@ export function placeAction(r: RadarRecord, ctx: AiContext): AiAction | null {
   }
   for (const c of cited) {
     const d = places.find((l) => norm(l.district.split(",")[0] ?? "") === norm(c));
-    if (d) return { type: "show_place", district: d.district.split(",")[0].trim(), label: `Voir la zone ${d.district.split(",")[0].trim()}` };
+    // V0.13 : plus de zone couvrant tout un quartier — la carte ouvre la liste des lieux du quartier
+    if (d) return { type: "show_place", query: d.district.split(",")[0].trim(), label: `Voir les lieux de ${d.district.split(",")[0].trim()}` };
   }
   return null;
 }
@@ -431,7 +433,7 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
           text: `${list.length > 1 ? `Sur la carte communautaire, je vois ${list.length} ${POI_CATS[cat].plural.toLowerCase()}` : `Sur la carte communautaire, je vois un lieu de ce type`}${district ? ` à ${district}` : ""} : ${list.slice(0, 3).map((l) => poiName(l)).join(", ")}${list.length > 3 ? "…" : ""}. Ce sont des repères communautaires : rien ne garantit encore qu'ils soient ouverts ou utilisables en jeu.`,
           reliability: "non établi",
           sources: [{ name: "gtadb.org (carte communautaire)", url: "https://map.gtadb.org", when: null }],
-          actions: [{ type: "show_place", district: district ?? undefined, poiCat: cat, landmarkId: district ? undefined : list[0].id, label: `Voir les ${POI_CATS[cat].plural.toLowerCase()} sur la carte` }],
+          actions: [district ? { type: "show_place", query: `${POI_CATS[cat].plural} ${district}`, poiCat: cat, label: `Voir les ${POI_CATS[cat].plural.toLowerCase()} sur la carte` } : { type: "show_place", landmarkId: list[0].id, label: `Voir ${poiName(list[0])} sur la carte` }],
           topic: { kind: "place", id: list[0].id },
           evidence: list.slice(0, 5).map((l) => `poi:${l.id}`),
         };
@@ -689,7 +691,14 @@ export function isValidAction(a: AiAction, feed: RadarFeed | null): boolean {
     case "ask":
       return a.question.length > 1 && a.question.length < 200;
     case "show_place":
-      return ((!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) || (!!a.district && a.district.length > 1 && a.district.length < 60) || (!!a.poiCat && a.poiCat in POI_CATS)) && (!a.poiCat || a.poiCat in POI_CATS);
+      return (
+        ((!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) ||
+          (!!a.estId && ESTABLISHMENTS.some((e) => e.id === a.estId)) ||
+          (!!a.query && a.query.length > 1 && a.query.length < 80 && !/[<>{}]/.test(a.query)) ||
+          (!!a.district && a.district.length > 1 && a.district.length < 60) ||
+          (!!a.poiCat && a.poiCat in POI_CATS)) &&
+        (!a.poiCat || a.poiCat in POI_CATS)
+      );
     default:
       return true;
   }

@@ -1,6 +1,7 @@
 import type { ProgNode } from "@/data/progression";
 import { ESTABLISHMENTS, establishmentCategoryFromQuery, EST_CATS } from "@/data/establishments";
 import type { EstCat, Establishment } from "@/data/establishments";
+import { placementOf } from "../places";
 import { computeProgress, nextPointOfNoReturn, pendingMissables, shownName } from "../progress";
 import type { NodeState, ProgressView } from "../progress";
 import { nk } from "../missions";
@@ -75,7 +76,7 @@ export function afterDone(profile: Profile, name: string): { text: string; actio
 export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiAnswer | null {
   const p = ctx.state.profile;
   const mode = p.spoilerMode;
-  const v = computeProgress({ profile: p });
+  const v = computeProgress({ profile: p, done: ctx.state.done });
   const cur = curOf(v);
   const acc = v.states.filter((x) => x.status === "accessible" && x.node.id !== cur?.node.id);
   const pot = v.states.filter((x) => x.status === "potentiellement accessible");
@@ -153,7 +154,7 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
           : "L'achat d'armes s'ouvre avec une mission principale du début du chapitre 1 que je ne vois pas encore dans ta progression.",
         reliability: "recoupé",
         sources: (gear?.node.unlocks?.[0]?.sources ?? []).map((s) => ({ name: s.name, url: s.url, when: null })),
-        actions: shops.filter((e) => e.position?.landmarkId).slice(0, 1).map((e) => ({ type: "show_place" as const, landmarkId: e.position!.landmarkId!, label: `Voir ${e.name}` })),
+        actions: shops.slice(0, 1).map((e) => ({ type: "show_place" as const, estId: e.id, label: `Voir ${e.name}` })),
         topic: base.topic,
       };
     }
@@ -184,22 +185,29 @@ function shopsAnswer(kind: ProgIntent, q: string, ctx: AiContext, v: ProgressVie
       miss.length ? `Dans ta mission : ${list(miss.map((m) => short(m.text)))}.` : "",
       `Commerces confirmés sur place : ${list(pool.slice(0, 6).map((e) => e.name))}.`,
     ].filter(Boolean);
-    return { intent: "zone_left", text: parts.join(" "), reliability: "recoupé", sources: [], actions: [{ type: "show_place", district: district ?? "Key Lento", label: `Voir ${district ?? "Key Lento"} sur la carte` }] };
+    return { intent: "zone_left", text: parts.join(" "), reliability: "recoupé", sources: [], actions: [{ type: "show_place", query: `Magasins ${district ?? "Key Lento"}`, label: `Voir les commerces de ${district ?? "Key Lento"}` }] };
   }
   if (!pool.length)
     return { intent: "shops", text: `Je n'ai pas d'établissement ${cat ? EST_CATS[cat].label.toLowerCase() : ""} confirmé${district ? ` à ${district}` : ""} dans mon référentiel.`, reliability: null, sources: [], actions: [] };
-  const withPos = pool.filter((e) => e.position?.landmarkId);
+  // V0.13 : précision de position par établissement (point / zone probable / inconnue) — jamais de zone de quartier
+  const lms = (ctx.places ?? []).map((p) => ({ id: p.id, name: p.name, district: p.district, tags: p.tags ?? [], x: p.x ?? 0, y: p.y ?? 0, real: p.real ?? "" }));
+  const placed = pool.map((e) => ({ e, pl: placementOf(e, lms, ctx.state.pins ?? {}) }));
+  const where = (x: (typeof placed)[number]) => (x.pl.precision === "point" ? "sur la carte" : x.pl.precision === "zone" ? "zone probable sur la carte" : x.e.position?.text ? x.e.position.text : "position non établie");
+  // boutiques du comté sans île précisée : signalées à part, jamais présentées comme « à Key Lento »
+  const county = district === "Key Lento" && cat ? ESTABLISHMENTS.filter((e) => e.district === "Mariana County" && e.cats.includes(cat)) : [];
+  const firstPlaced = placed.find((x) => x.pl.precision === "point") ?? placed.find((x) => x.pl.precision === "zone");
   return {
     intent: "shops",
-    text: `${cat ? EST_CATS[cat].plural : "Établissements"} confirmés${district ? ` à ${district}` : ""} : ${list(
-      pool.map((e) => `${e.name}${e.what ? ` (${e.what})` : ""} — ${stateOf(e)}${e.position?.landmarkId ? "" : e.position?.text ? `, ${e.position.text}` : ", position non établie"}`),
-    )}.`,
+    // une ligne par établissement : nom — ce qu'on y trouve · ouverture · position (lisible d'un coup d'œil)
+    text: `${cat ? EST_CATS[cat].plural : "Établissements"} confirmés${district ? ` à ${district}` : ""} :\n${placed
+      .map((x) => `• ${x.e.name}${x.e.what ? ` — ${x.e.what}` : ""} · ${stateOf(x.e)} · ${where(x)}`)
+      .join("\n")}${county.length ? `\nDans le comté, île non précisée par la source : ${list(county.map((e) => `${e.name}${e.what ? ` (${e.what})` : ""}`))}.` : ""}`,
     reliability: pool.every((e) => e.verification === "confirmé") ? "recoupé" : "signalé",
-    sources: pool.flatMap((e) => e.sources.slice(0, 1)).slice(0, 4).map((s) => ({ name: s.name, url: s.url, when: null })),
+    sources: [...new Map(pool.flatMap((e) => e.sources.slice(0, 2)).map((s) => [s.url, s])).values()].slice(0, 5).map((s) => ({ name: s.name, url: s.url, when: null })),
     actions: [
-      ...withPos.slice(0, 1).map((e) => ({ type: "show_place" as const, landmarkId: e.position!.landmarkId!, label: `Voir ${e.name}` })),
-      { type: "show_place" as const, district: district ?? "Key Lento", poiCat: "commerce", label: `Voir ${district ?? "Key Lento"} sur la carte` },
+      { type: "show_place" as const, query: `${cat ? EST_CATS[cat].plural : "Magasins"} ${district ?? ""}`.trim(), poiCat: "commerce", label: `Voir les ${pool.length} sur la carte` },
+      ...(firstPlaced ? [{ type: "show_place" as const, estId: firstPlaced.e.id, label: `Voir ${firstPlaced.e.name}` }] : []),
     ],
-    evidence: withPos.map((e) => `poi:${e.position!.landmarkId}`),
+    evidence: placed.filter((x) => x.pl.landmarkId).map((x) => `poi:${x.pl.landmarkId}`),
   };
 }

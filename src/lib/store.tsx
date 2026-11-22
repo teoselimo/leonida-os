@@ -1,6 +1,8 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { MAX_METRICS } from "./copilot/route";
+import type { TurnMetrics } from "./copilot/route";
 import type { ReactNode } from "react";
 import { DEMO_SEED_COMPLETED, DISCOVERIES, RADAR } from "@/data/demo";
 import { progress, wouldUnlock } from "./engine";
@@ -44,7 +46,9 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
     }
   }
   const briefs = saved.briefs && typeof saved.briefs === "object" ? Object.fromEntries(Object.entries(saved.briefs).filter(([, b]) => b && typeof b.mission === "string" && Array.isArray(b.items))) : {};
-  return { ...base, ...saved, profile, custom, vehicles, done, briefs, showDemo, rev: 7, schema: 1 };
+  const metrics = Array.isArray(saved.metrics) ? saved.metrics.filter((m) => m && typeof m.totalMs === "number").slice(-MAX_METRICS) : [];
+  const pins = saved.pins && typeof saved.pins === "object" ? Object.fromEntries(Object.entries(saved.pins).filter(([, v]) => v && Number.isFinite(v.x) && Number.isFinite(v.y) && typeof v.at === "string").map(([k, v]) => [k, { x: v.x, y: v.y, at: v.at, by: "joueur" as const }])) : {};
+  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, metrics, showDemo, rev: 7, schema: 1 };
 }
 
 export const initialState = (): PersistedState => ({
@@ -75,6 +79,8 @@ type Action =
   | { type: "showDemo"; value: boolean }
   | { type: "vehicle"; id: string; progress: VehicleProgress | null }
   | { type: "done"; id: string; value: boolean }
+  | { type: "pin"; id: string; pin: { x: number; y: number } | null }
+  | { type: "metric"; m: TurnMetrics }
   | { type: "mission"; name: string | null; done: boolean }
   | { type: "objectives"; fn: (list: Objective[]) => Objective[] }
   | { type: "brief"; key: string; brief: MissionAlertBrief };
@@ -122,6 +128,12 @@ function reducer(s: PersistedState, a: Action): PersistedState {
     }
     case "showDemo":
       return { ...s, showDemo: a.value, freshUnlocks: [] };
+    case "metric":
+      return { ...s, metrics: [...(s.metrics ?? []), a.m].slice(-MAX_METRICS) };
+    case "pin": {
+      const { [a.id]: _old, ...rest } = s.pins ?? {};
+      return { ...s, pins: a.pin ? { ...rest, [a.id]: { x: Math.round(a.pin.x), y: Math.round(a.pin.y), at: new Date().toISOString(), by: "joueur" } } : rest };
+    }
     case "done": {
       const { [a.id]: _o, ...rest } = s.done;
       return { ...s, done: a.value ? { ...rest, [a.id]: new Date().toISOString() } : rest };
@@ -218,8 +230,21 @@ interface Ctx {
   selectVehicle: (id: string | null) => void;
   focusVehicle: (id: string) => void;
   /** Lieu de la carte communautaire à montrer (action de LEONIDA AI). */
-  placeFocus: { landmarkId?: string; district?: string; poiCat?: string; nonce: number };
-  showPlace: (p: { landmarkId?: string; district?: string; poiCat?: string }) => void;
+  placeFocus: PlaceFocus & { nonce: number };
+  showPlace: (p: PlaceFocus) => void;
+  /** Position d'un établissement observée en jeu (null = retirer). */
+  setPin: (estId: string, pin: { x: number; y: number } | null) => void;
+  addMetric: (m: TurnMetrics) => void;
+}
+
+/** Ce que LEONIDA AI demande de montrer : repère, établissement, ou recherche (jamais une zone de quartier entier). */
+export interface PlaceFocus {
+  landmarkId?: string;
+  district?: string;
+  poiCat?: string;
+  estId?: string;
+  /** Ouvre la recherche de la carte avec ce texte (liste, y compris les lieux sans position). */
+  query?: string;
 }
 
 const StoreContext = createContext<Ctx | null>(null);
@@ -241,7 +266,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [garage, setGarageState] = useState<{ on: boolean; filter: string | null }>({ on: false, filter: null });
   const [radarFocus, setRadarFocus] = useState<{ id: string | null; category: string | null; nonce: number }>({ id: null, category: null, nonce: 0 });
   const [aiOpen, setAiOpen] = useState(false);
-  const [placeFocus, setPlaceFocus] = useState<{ landmarkId?: string; district?: string; poiCat?: string; nonce: number }>({ nonce: 0 });
+  const [placeFocus, setPlaceFocus] = useState<PlaceFocus & { nonce: number }>({ nonce: 0 });
   const [celebration, setCelebration] = useState<{ key: number; label: string } | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -385,6 +410,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       toast,
       dismissToast: () => setToast(null),
       setDone: (id, value) => dispatch({ type: "done", id, value }),
+      setPin: (id, pin) => dispatch({ type: "pin", id, pin }),
+      addMetric: (m) => dispatch({ type: "metric", m }),
       setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
       setNextMission: (name, inProgress = false) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress } }),
       setMissionInProgress: (on) => dispatch({ type: "profile", patch: { missionInProgress: on } }),

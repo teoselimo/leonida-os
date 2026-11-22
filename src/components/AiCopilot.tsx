@@ -1,5 +1,6 @@
 "use client";
 
+import { ROUTER_KEY } from "@/lib/copilot/route";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
@@ -32,6 +33,13 @@ const WEB_FAIL: Partial<Record<WebStatus, string>> = {
 type Msg = { id: number; role: "user"; text: string } | AiMsg;
 const HISTORY_KEY = "leonida-os/ai-history/v2";
 const DRAFT_KEY = "leonida-os/ai-draft/v1";
+const routerMode = (): "local" | "planner" => {
+  try {
+    return localStorage.getItem(ROUTER_KEY) === "planner" ? "planner" : "local";
+  } catch {
+    return "local";
+  }
+};
 /** Longueur maximale d'un message (le contexte envoyé à Claude reste borné). */
 const MAX_CHARS = 2_000;
 const finePointer = () => typeof window !== "undefined" && !!window.matchMedia?.("(pointer: fine)").matches;
@@ -147,10 +155,73 @@ export function AiCopilot() {
       /* stockage plein : l'historique reste en mémoire */
     }
   }, [msgs]);
-  useLayoutEffect(() => {
+  // Défilement du fil (V0.13) :
+  // - à l'ouverture (et après rechargement) : directement au dernier message, sans animation ;
+  // - ensuite, on ne suit les nouveaux contenus (réponse en streaming, hauteur qui change, clavier iOS) QUE si le
+  //   joueur est déjà en bas ; s'il remonte lire, on ne le ramène jamais de force : un bouton « Dernier message »
+  //   apparaît quand quelque chose arrive. Défilement instantané : un défilement animé interrompu par l'animation
+  //   de la fiche (ou par le clavier sur iPhone) laissait le fil à mi-hauteur.
+  const stickRef = useRef(true);
+  const [away, setAway] = useState(false);
+  // élément du fil (la fiche iPhone le monte après son ouverture) et dernier geste du joueur : seul un défilement
+  // FAIT PAR LE JOUEUR (doigt, molette, clavier) décroche le suivi ; un recalage de mise en page ne le décroche jamais
+  const [listEl, setListEl] = useState<HTMLDivElement | null>(null);
+  const userInput = useRef(0);
+  const setList = useCallback((el: HTMLDivElement | null) => {
+    listRef.current = el;
+    setListEl(el);
+  }, []);
+  const markUser = () => {
+    userInput.current = Date.now();
+  };
+  const toBottom = useCallback(() => {
     const el = listRef.current;
-    if (el) el.scrollTo({ top: el.scrollHeight, behavior: msgs.length > 1 ? "smooth" : "auto" });
-  }, [msgs, aiOpen]);
+    if (el) el.scrollTop = el.scrollHeight;
+  }, []);
+  const onListScroll = () => {
+    const el = listRef.current;
+    if (!el) return;
+    const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 72;
+    if (atBottom) {
+      stickRef.current = true;
+      setAway(false);
+    } else if (Date.now() - userInput.current < 1_500) stickRef.current = false;
+  };
+  useLayoutEffect(() => {
+    if (!aiOpen) return;
+    stickRef.current = true;
+    setAway(false);
+    toBottom();
+    const el = listEl;
+    if (!el) return;
+    const follow = () => {
+      if (stickRef.current) toBottom();
+    };
+    // taille du fil (animation d'ouverture, clavier) et de chaque bulle (streaming, détails dépliés, images)
+    const ro = new ResizeObserver(follow);
+    ro.observe(el);
+    const watchChildren = () => Array.from(el.children).forEach((c) => ro.observe(c));
+    watchChildren();
+    const mo = new MutationObserver(() => {
+      watchChildren();
+      follow();
+    });
+    mo.observe(el, { childList: true, subtree: true, characterData: true });
+    const vv = typeof window !== "undefined" ? window.visualViewport : null;
+    vv?.addEventListener("resize", follow);
+    // la fiche s'ouvre avec un ressort : on se recale une fois la hauteur stabilisée
+    const t = window.setTimeout(follow, 420);
+    return () => {
+      ro.disconnect();
+      mo.disconnect();
+      vv?.removeEventListener("resize", follow);
+      window.clearTimeout(t);
+    };
+  }, [aiOpen, isTablet, listEl, toBottom]);
+  useLayoutEffect(() => {
+    if (stickRef.current) toBottom();
+    else if (msgs.length) setAway(true);
+  }, [msgs, toBottom]);
 
   // Sujet de la conversation (dernière réponse) : permet « et comment je la garde ? »
   const topicOf = (list: Msg[]): Topic | null => {
@@ -166,6 +237,9 @@ export function AiCopilot() {
       const question = q.trim().slice(0, MAX_CHARS);
       if (!question) return;
       setText("");
+      // le joueur vient d'écrire : on le suit jusqu'à la réponse
+      stickRef.current = true;
+      setAway(false);
       // repères gtadb (cache partagé avec la carte) : nécessaires pour proposer « voir sur la carte »
       const pl = places.length ? places : await loadLandmarks();
       const ctx = { feed, state, position: mapPosition(), places: pl };
@@ -191,6 +265,8 @@ export function AiCopilot() {
           transport,
           signal: ctl.signal,
           tier: deep ? "default" : "quick",
+          planner: routerMode() === "planner",
+          onMetrics: (mt) => store.addMetric(mt),
           onText: (v) => setMsgs((m) => m.map((x) => (x.id === id + 1 && x.role === "ai" ? { ...x, a: { ...x.a, text: v } } : x))),
         });
         if (ctlRef.current === ctl) {
@@ -255,7 +331,7 @@ export function AiCopilot() {
         leave();
         break;
       case "show_place":
-        store.showPlace({ landmarkId: a.landmarkId, district: a.district, poiCat: a.poiCat });
+        store.showPlace({ landmarkId: a.landmarkId, district: a.district, poiCat: a.poiCat, estId: a.estId, query: a.query });
         leave();
         break;
       case "open_record":
@@ -334,7 +410,7 @@ export function AiCopilot() {
         {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
         <button className="iconbtn ai__close" onClick={() => { tick(); setAiOpen(false); }} aria-label="Fermer LEONIDA AI" data-testid="ai-close"><Icon name="close" /></button>
       </header>
-      <div className="ai__list" ref={listRef} data-testid="ai-list">
+      <div className="ai__list" ref={setList} data-testid="ai-list" onScroll={onListScroll} onWheel={markUser} onTouchStart={markUser} onTouchMove={markUser} onPointerDown={markUser} onKeyDown={markUser}>
         {msgs.length === 0 && (
           <div className="ai__intro">
             <p>{transport ? "Salut ! Je joue avec toi : parle-moi comme à un pote (« je lance Swamped », « j'ai la caisse ! », « ça vaut le coup ? »). Je m'appuie sur la veille LEONIDA RADAR" + (web === "ok" ? " et le web" : "") + ", ton chapitre et ce que tu as déjà fait — sans rien inventer." : "Salut ! Dis-moi quelle mission tu vas lancer ou ce que tu cherches. Je réponds avec les fiches vérifiées de la veille, selon ton chapitre, ton édition et ce que tu as déjà fait."}</p>
@@ -426,6 +502,11 @@ export function AiCopilot() {
           ),
         )}
       </div>
+      {away && (
+        <button className="ai__jump press" onClick={() => { stickRef.current = true; setAway(false); toBottom(); }} data-testid="ai-jump">
+          <Icon name="arrow" size={13} /> Dernier message
+        </button>
+      )}
       <form
         className="ai__input"
         onSubmit={(e) => {
@@ -446,7 +527,7 @@ export function AiCopilot() {
                 void ask(text);
               }
             }}
-            onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)}
+            onFocus={() => setTimeout(() => stickRef.current && toBottom(), 320)}
             placeholder="Demande à LEONIDA…"
             enterKeyHint="enter"
             aria-label="Question pour LEONIDA AI"

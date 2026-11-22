@@ -708,6 +708,8 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
   .main { padding-bottom: calc(var(--dock) + 28px); }
   .mapphone { bottom: 0; }
   .strip { bottom: calc(var(--dock) + 8px); }
+  /* barre du mode cartographe / placement : au-dessus du dock (elle était masquée par la navigation) */
+  .mapphone .cartobar { bottom: calc(var(--dock) + 8px); flex-wrap: wrap; }
   .toast { bottom: calc(var(--dock) + 10px); }
   /* sur la carte, la notification reste en haut (sous les filtres) : jamais étirée entre deux ancrages */
   .view-carte .toast { top: calc(var(--sat) + 112px); bottom: auto; }
@@ -1097,3 +1099,39 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .estbox__src a { color: var(--muted); }
 .estbox__pos { font-size: 11.5px; color: var(--muted); }
 .bubble--me { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* V0.13 — précision de position d'un établissement */
+.precision { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: 12px; font-size: 12.5px; color: var(--muted); background: rgba(255, 255, 255, 0.04); }
+.precision strong { font-size: 12px; letter-spacing: 0.02em; text-transform: uppercase; }
+.precision--point strong { color: var(--ok); }
+.precision--zone strong { color: #2ee6d6; }
+.precision--inconnue strong { color: #c9c3d8; }
+.search__group { padding: 8px 12px 2px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.search__prec { margin-left: auto; flex: none; font-size: 10.5px; padding: 2px 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); color: var(--muted); white-space: nowrap; }
+.search__prec--point { color: var(--ok); }
+.search__prec--zone { color: #2ee6d6; }
+
+/* V0.13 — « À découvrir maintenant » (accueil) : sobre, accents de couleur discrets */
+.discover { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+.discover__head { display: flex; align-items: baseline; justify-content: space-between; padding: 0 4px; }
+.discover__head h3 { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.discover__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.dsc { border-radius: 14px; background: rgba(255, 255, 255, 0.035); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); overflow: hidden; }
+.dsc.is-high { box-shadow: inset 3px 0 0 var(--c), inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+.dsc__main { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; text-align: left; background: none; border: 0; color: inherit; }
+.dsc__ico { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); }
+.dsc__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.dsc__body strong { font-size: 14px; font-weight: 620; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.dsc__body em { font-style: normal; font-size: 11.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.dsc__st { font-style: normal; padding: 1px 6px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); }
+.dsc__st--vérifié { color: var(--ok); }
+.dsc__st--probable { color: #ffd166; }
+.dsc__src { font-style: normal; opacity: 0.8; }
+.dsc__pnr { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; color: #ff9db1; }
+.dsc__detail { padding: 0 12px 12px 50px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #e4def2; }
+.dsc__links { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; }
+.dsc__links a { color: var(--muted); }
+
+/* V0.13 — retour au dernier message (le fil ne force plus le bas pendant la lecture) */
+.ai__jump { align-self: center; margin: -36px 0 4px; position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; border: 0; font-size: 12.5px; font-weight: 600; color: #fff; background: rgba(40, 30, 60, 0.92); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+.ai__jump svg { transform: rotate(90deg); }

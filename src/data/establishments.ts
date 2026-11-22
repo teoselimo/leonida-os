@@ -6,7 +6,8 @@ import type { Src } from "./progression";
  * - `position` : seulement si elle est établie. `landmarkId` = repère gtadb dont le NOM correspond exactement
  *   (position communautaire) ; `text` = indication en clair d'une source ; aucune coordonnée inventée ;
  * - `unlock` : nœud de progression qui ouvre l'établissement, avec sources.
- * Incrément 1 : Key Lento (zone de départ, chapitre 1), vérifié le 22/11/2026 via Exa.
+ * Incrément 1 : Key Lento (zone de départ, chapitre 1), vérifié le 22/11/2026 via Exa ; V0.13 : types PowerPyx et
+ * 2 boutiques du comté de Mariana sans île précisée.
  */
 export type EstCat = "vetements" | "armurerie" | "tatoueur" | "coiffeur" | "garage" | "paint" | "custom" | "station" | "restaurant" | "service";
 
@@ -35,8 +36,19 @@ export interface Establishment {
   district: string;
   what?: string;
   verification: "confirmé" | "signalé";
+  /** Type de boutique tel que classé par un guide (ex. PowerPyx : « Souvenirs & maillots de bain »). */
+  kind?: string;
   sources: Src[];
-  position: { landmarkId?: string; text?: string } | null;
+  /**
+   * Ce que l'on sait de la position, du plus précis au moins précis (V0.13) :
+   * - `landmarkId` : repère gtadb du MÊME NOM → point ;
+   * - `near` : repère gtadb cité par la source comme voisin (« à côté de… », « au sud de la maison de Jason ») → zone restreinte ;
+   * - `candidateTag` : type de commerce indiqué par gtadb (#hair, #tattoos…) dans le même quartier, recoupé par la
+   *   description de la source → zone restreinte autour du ou des candidats, jamais tout le quartier ;
+   * - `text` : indication en clair d'une source, affichée telle quelle.
+   * Sans aucun de ces éléments : position inconnue (description et source, pas de faux point).
+   */
+  position: { landmarkId?: string; near?: string; candidateTag?: string; text?: string } | null;
   unlock?: { node: string; text: string; sources: Src[] };
 }
 
@@ -55,6 +67,7 @@ const S = {
   fextraRum: { name: "Fextralife", url: "https://gta6.wiki.fextralife.com/Get_Shirley%27s_Rum" },
   checklists: { name: "Game Checklists", url: "https://game-checklists.com/gta6/side-missions-checklist/" },
   wikiOptional: { name: "The Games Wiki", url: "https://thegameswiki.com/gta6/wiki/optional-missions" },
+  powerpyxClothes: { name: "PowerPyx", url: "https://www.powerpyx.com/gta-6-all-clothing-stores-locations/" },
 } satisfies Record<string, Src>;
 
 export const ESTABLISHMENTS: Establishment[] = [
@@ -66,17 +79,20 @@ export const ESTABLISHMENTS: Establishment[] = [
     what: "armes, munitions, premier masque (Reel Neck Gaiter), tenues de travail",
     verification: "confirmé",
     sources: [S.outputlag, S.leonidaguide, S.game8GearUp],
-    position: { text: "à l'est de la maison de Jason (selon Leonida Guide)" },
+    position: { near: "L266", text: "à l'est de la maison de Jason (selon Leonida Guide)" },
     unlock: { node: "gear-up", text: "après Gear Up", sources: [S.game8GearUp, S.wikiWeapons] },
   },
-  { id: "billies-gift-shop", name: "Billie's Key Lento Gift Shop", cats: ["vetements"], district: "Key Lento", what: "tops Vice City et Leonida, shorts de bain, lunettes, jeans", verification: "confirmé", sources: [S.outputlag, S.leonidaguide, S.openleonida], position: null },
-  { id: "wonder-whale", name: "The Wonder Whale", cats: ["vetements"], district: "Key Lento", what: "souvenirs, tenues d'été, accessoires", verification: "confirmé", sources: [S.outputlag, S.leonidaguide, S.openleonida], position: { landmarkId: "L332", text: "village des artistes, statue de baleine juste au sud" } },
-  { id: "key-lento-kahuna", name: "Key Lento Kahuna", cats: ["vetements"], district: "Key Lento", what: "souvenirs", verification: "confirmé", sources: [S.outputlag, S.leonidaguide, S.openleonida], position: null },
-  { id: "leroys", name: "Leroy's", cats: ["vetements"], district: "Key Lento", what: "t-shirts, souvenirs", verification: "confirmé", sources: [S.gta6db, S.outputlag, S.openleonida], position: null },
-  { id: "barnacle-beauties", name: "Barnacle Beauties", cats: ["coiffeur"], district: "Key Lento", what: "coupes, couleurs, barbes", verification: "confirmé", sources: [S.gta6db, S.leonidaguide, S.outputlag, S.intel], position: { text: "au sud de l'île, à côté de la bijouterie The Siren's Chest" } },
-  { id: "inked-mermaid", name: "The Inked Mermaid", cats: ["tatoueur"], district: "Key Lento", what: "tatouages style American traditional, piercings", verification: "confirmé", sources: [S.gta6db, S.leonidaguide, S.outputlag, S.intel], position: null },
-  { id: "sirens-chest", name: "The Siren's Chest", cats: ["service"], district: "Key Lento", what: "bijouterie", verification: "confirmé", sources: [S.gtabaseList, S.leonidaguide], position: { text: "au sud de l'île, à côté de Barnacle Beauties" } },
-  { id: "three-sheets", name: "Three Sheets Liquor", cats: ["service"], district: "Key Lento", what: "magasin d'alcool", verification: "confirmé", sources: [S.fextraRum, S.checklists], position: { text: "au sud de la maison de Jason, auvent rayé rouge et drapeau pirate" } },
+  { id: "billies-gift-shop", name: "Billie's Key Lento Gift Shop", cats: ["vetements"], district: "Key Lento", what: "tops Vice City et Leonida, shorts de bain, lunettes, jeans", kind: "Souvenirs & maillots de bain", verification: "confirmé", sources: [S.outputlag, S.leonidaguide, S.openleonida, S.powerpyxClothes], position: null },
+  { id: "wonder-whale", name: "The Wonder Whale", cats: ["vetements"], district: "Key Lento", what: "souvenirs, tenues d'été, accessoires", kind: "Souvenirs & maillots de bain", verification: "confirmé", sources: [S.outputlag, S.leonidaguide, S.openleonida, S.powerpyxClothes], position: { landmarkId: "L332", text: "village des artistes, statue de baleine juste au sud" } },
+  { id: "key-lento-kahuna", name: "Key Lento Kahuna", cats: ["vetements"], district: "Key Lento", what: "souvenirs", kind: "Souvenirs & maillots de bain", verification: "confirmé", sources: [S.outputlag, S.leonidaguide, S.openleonida, S.powerpyxClothes], position: null },
+  { id: "leroys", name: "Leroy's", cats: ["vetements"], district: "Key Lento", what: "t-shirts, souvenirs", kind: "Souvenirs & maillots de bain", verification: "confirmé", sources: [S.gta6db, S.outputlag, S.openleonida, S.powerpyxClothes], position: null },
+  // Listés par PowerPyx dans le comté de Mariana (Leonida Keys) sans préciser l'île : rattachés au comté, pas à Key Lento
+  { id: "nifty-threads", name: "Nifty Threads Island Wear", cats: ["vetements"], district: "Mariana County", what: "friperie", kind: "Friperie", verification: "signalé", sources: [S.powerpyxClothes], position: null },
+  { id: "lost-mines-souvenirs", name: "Lost Mines Souvenirs", cats: ["vetements"], district: "Mariana County", what: "souvenirs", kind: "Souvenirs & maillots de bain", verification: "signalé", sources: [S.powerpyxClothes], position: null },
+  { id: "barnacle-beauties", name: "Barnacle Beauties", cats: ["coiffeur"], district: "Key Lento", what: "coupes, couleurs, barbes", verification: "confirmé", sources: [S.gta6db, S.leonidaguide, S.outputlag, S.intel], position: { candidateTag: "hair", text: "au sud de l'île, à côté de la bijouterie The Siren's Chest" } },
+  { id: "inked-mermaid", name: "The Inked Mermaid", cats: ["tatoueur"], district: "Key Lento", what: "tatouages style American traditional, piercings", verification: "confirmé", sources: [S.gta6db, S.leonidaguide, S.outputlag, S.intel], position: { candidateTag: "tattoos" } },
+  { id: "sirens-chest", name: "The Siren's Chest", cats: ["service"], district: "Key Lento", what: "bijouterie", verification: "confirmé", sources: [S.gtabaseList, S.leonidaguide], position: { candidateTag: "hair", text: "au sud de l'île, à côté de Barnacle Beauties (salon de coiffure)" } },
+  { id: "three-sheets", name: "Three Sheets Liquor", cats: ["service"], district: "Key Lento", what: "magasin d'alcool", verification: "confirmé", sources: [S.fextraRum, S.checklists], position: { near: "L266", text: "au sud de la maison de Jason, auvent rayé rouge et drapeau pirate" } },
   { id: "rusty-anchor", name: "The Rusty Anchor", cats: ["restaurant"], district: "Key Lento", what: "bar", verification: "confirmé", sources: [S.wikiOptional, S.gtabaseList], position: { landmarkId: "L325" } },
   {
     id: "coastal-auto-care",
@@ -86,7 +102,7 @@ export const ESTABLISHMENTS: Establishment[] = [
     what: "atelier de customisation spécialisé rétro (Joey), réparations et peinture",
     verification: "confirmé",
     sources: [S.notebookScratch, S.notebookMods, S.house],
-    position: { text: "extrémité sud de Key Lento" },
+    position: { candidateTag: "modshop", text: "extrémité sud de Key Lento" },
     unlock: { node: "just-a-scratch", text: "avec Just a Scratch", sources: [S.house, S.notebookScratch] },
   },
 ];

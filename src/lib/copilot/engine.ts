@@ -7,6 +7,8 @@ import { buildEvidence, playerContext } from "./context";
 import type { WebEvidence } from "./context";
 import { META_MARK, RULES, composeTurn } from "./prompt";
 import { LlmError } from "./types";
+import { decideWeb, englishQuery, WEB_ASK } from "./route";
+import type { TurnMetrics, WebReason } from "./route";
 import type { BriefItem, ChecklistItem, CopilotAnswer, LlmMessage, LlmTransport, Trust, WebHit, WebSearchFn, WebStatus } from "./types";
 
 /**
@@ -83,6 +85,10 @@ export interface AskOptions {
   mission?: string;
   /** Recherche web fournie par l'environnement ; absente = pas de web. */
   search?: WebSearchFn | null;
+  /** Ancien routage (appel Claude de planification avant chaque question) — conservé pour la comparaison A/B. */
+  planner?: boolean;
+  /** Mesure de la réponse (V0.13). */
+  onMetrics?: (m: TurnMetrics) => void;
 }
 
 const NOTE: Record<string, string> = {
@@ -160,8 +166,6 @@ ${last ? `DERNIERS ÉCHANGES :\n${last}\n` : ""}MESSAGE : ${o.question.slice(0, 
   }
 }
 
-/** Le joueur demande explicitement une recherche web / l'info la plus récente. */
-const WEB_ASK = /\b(cherche|recherche|regarde|google|web|internet|en ligne|sur le net|derni[eè]res? infos?|actu|reddit|youtube)\b/i;
 /** Question factuelle (vaut une recherche web quand le Radar n'a rien). */
 const FACTUAL = /\b(o[uù]|comment|combien|quand|quel(le)?s?|est-ce|faut-il|r[eé]compense|manquable|cach[ée]|trouver|d[ée]bloquer)\b|\?/i;
 /** Messages de conversation pure : pas de faits à injecter, pas de recherche. */
@@ -246,23 +250,48 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     ids = [...new Set([...b.during.map((r) => r.id), ...b.before.map((r) => r.id), ...(b.guide ? [b.guide.id] : []), ...ids, ...extraEvidence(o.mission!, o.ctx, 3)])];
   } else if (!ids.length) ids = extraEvidence(o.question, o.ctx);
 
-  // 2. Recherche web automatique (V0.12) : Claude décide s'il faut chercher et écrit les requêtes en anglais ;
-  //    repli heuristique si ce planificateur ne répond pas ; reformulation si la première recherche ne donne rien.
+  // 2. Recherche web automatique.
+  //    V0.13 (par défaut) : décision et requête anglaise calculées localement → un seul appel Claude.
+  //    `planner: true` : ancien routage V0.12 (appel Claude de planification), gardé pour la comparaison.
+  const t0 = Date.now();
+  let planMs = 0;
+  let searchMs = 0;
+  let claudeCalls = 0;
+  let reason: WebReason | "planner" = "insufficient";
   let web: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null = null;
   let hits: WebHit[] = [];
   let plans: Array<[string, string]> = [];
-  if (o.search && !NO_WEB.has(draft.intent)) {
-    if (checklist) plans = [[webQuery(o), webObjective(o)], missablesQuery(o)];
-    else {
-      const plan = await planWeb(o, ids);
-      if (plan) plans = plan.web ? plan.queries.map((q) => [q, webObjective(o, q)] as [string, string]) : [];
-      else if (heuristicWeb(o, draft.intent)) plans = [[webQuery(o), webObjective(o)]];
+  let searches = 0;
+  let cachedSearches = 0;
+  if (checklist && o.search) {
+    plans = [[webQuery(o), webObjective(o)], missablesQuery(o)];
+    reason = "checklist";
+  } else if (o.planner && o.search && !NO_WEB.has(draft.intent)) {
+    reason = "planner";
+    const tp = Date.now();
+    const plan = await planWeb(o, ids);
+    claudeCalls++;
+    planMs = Date.now() - tp;
+    if (plan) plans = plan.web ? plan.queries.map((q) => [q, webObjective(o, q)] as [string, string]) : [];
+    else if (heuristicWeb(o, draft.intent)) plans = [[webQuery(o), webObjective(o)]];
+  } else {
+    const d = decideWeb({ question: o.question, draft, ids, feed: o.ctx.feed, hasSearch: !!o.search, checklist: false });
+    reason = d.reason;
+    if (d.web) {
+      const m = o.ctx.state.profile.nextMission;
+      const { query, objective } = englishQuery(o.question, m);
+      plans = [[query, objective]];
     }
   }
   const wantWeb = plans.length > 0;
   if (wantWeb) {
     o.onStage?.("search");
-    const run = (ps: Array<[string, string]>) => Promise.all(ps.map(([q, obj]) => o.search!(q, o.signal, obj).catch(() => ({ status: "error" as WebStatus, hits: [] as WebHit[], cached: false }))));
+    const ts = Date.now();
+    const run = async (ps: Array<[string, string]>) => {
+      const out = await Promise.all(ps.map(([q, obj]) => o.search!(q, o.signal, obj).catch(() => ({ status: "error" as WebStatus, hits: [] as WebHit[], cached: false }))));
+      for (const x of out) x.cached ? cachedSearches++ : searches++;
+      return out;
+    };
     let res = await run(plans);
     let tries = 1;
     const hard = (st: WebStatus) => st === "not_connected" || st === "needs_reauth" || st === "denied" || st === "unavailable";
@@ -275,6 +304,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     hits = hits.slice(0, checklist ? 8 : 6);
     const st: WebStatus = hits.length ? "ok" : res.find((x) => x.status !== "ok" && x.status !== "empty")?.status ?? "empty";
     web = { status: st, count: hits.length, cached: res.every((x) => x.cached), tries };
+    searchMs = Date.now() - ts;
   }
   const focus = checklist ? [...MISS_TERMS, ...nk(o.mission!).split(" ").filter((w) => w.length >= 4)] : nk(o.question).split(" ").filter((w) => w.length >= 5);
   const webEv: WebEvidence[] = hits.map((h, i) => ({ id: `web:${i + 1}`, titre: h.title, url: h.url, site: host(h.url), date: h.date, extrait: focusExcerpt(h.text, focus) }));
@@ -290,7 +320,9 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const webNote = !o.search
     ? "recherche web indisponible ici (pas de connecteur) — ne prétends pas avoir cherché sur le web"
     : !wantWeb
-      ? "recherche web jugée inutile pour ce message"
+      ? reason === "local_ok"
+        ? "pas de recherche web : les données LEONIDA sourcées répondent (si le joueur veut plus, propose de vérifier sur le web)"
+        : "recherche web inutile pour ce message (conversation ou action dans l'app)"
       : web?.status === "ok"
         ? `${hits.length} résultat(s) web${web.cached ? " (cache récent)" : ""}, données tierces à recouper`
         : web?.status === "empty"
@@ -305,7 +337,20 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
   try {
     o.onStage?.("write");
-    const r = await o.transport.generate({ messages, signal: o.signal, tier: checklist ? "default" : o.tier ?? "quick", onText: (t) => o.onText?.(visiblePart(t)) });
+    let firstText: number | null = null;
+    claudeCalls++;
+    const r = await o.transport.generate({
+      messages,
+      signal: o.signal,
+      tier: checklist ? "default" : o.tier ?? "quick",
+      onText: (t) => {
+        const v = visiblePart(t);
+        if (firstText === null && v.trim()) firstText = Date.now() - t0;
+        o.onText?.(v);
+      },
+    });
+    const metrics: TurnMetrics = { at: new Date().toISOString(), router: o.planner ? "planner" : "local", reason, claudeCalls, searches, cachedSearches, planMs, searchMs, firstTextMs: firstText, totalMs: Date.now() - t0, webStatus: web?.status ?? null, hits: hits.length };
+    if (!checklist) o.onMetrics?.(metrics);
     const { message, meta } = parseReply(r.text);
     if (!message) return { ...fromDirect(draft, NOTE.refused), web };
     // Validation : aucun nombre « significatif » absent des preuves, du contexte, de la conversation ou de la question

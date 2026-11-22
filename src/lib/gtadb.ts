@@ -83,5 +83,8 @@ const TAG_FR: Record<string, string> = {
   hotel: "Hôtel", residential: "Résidentiel", retail: "Commerce", restaurant: "Restaurant", leisure: "Loisirs",
   industrial: "Industriel", transportation: "Transport", natural: "Nature", government: "Public", utilities: "Infrastructure",
   enterable: "Accessible à l'intérieur", landmark: "Monument", demolished: "Démoli (IRL)", unconfirmed: "Non confirmé", events: "Événements", public: "Public",
+  // types de commerce indiqués par gtadb (« #clothes »…), conservés depuis la V0.13
+  clothes: "Type : vêtements", hair: "Type : coiffeur", tattoos: "Type : tatoueur", modshop: "Type : garage tuning", gas: "Type : station-service",
+  supermarket: "Type : supérette", fastfood: "Type : restauration rapide", bar: "Type : bar", marina: "Type : marina", safehouse: "Planque", hospital: "Hôpital", police: "Police",
 };
 export const tagFr = (t: string) => TAG_FR[t] ?? t;

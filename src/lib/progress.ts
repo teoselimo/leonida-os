@@ -49,7 +49,10 @@ export function nodeByName(name: string | null | undefined): ProgNode | null {
   );
 }
 
-export function computeProgress(s: Pick<PersistedState, "profile">): ProgressView {
+/** Clé du registre « fait » (state.done) d'une activité facultative cochée par le joueur depuis l'accueil. */
+export const progDoneKey = (id: string) => `prog:${id}`;
+
+export function computeProgress(s: Pick<PersistedState, "profile"> & { done?: Record<string, string> }): ProgressView {
   const p = s.profile;
   const declared = new Set<string>();
   for (const m of [...p.missionsDone, p.lastMission]) {
@@ -66,6 +69,14 @@ export function computeProgress(s: Pick<PersistedState, "profile">): ProgressVie
     if (!n?.prereq || n.prereq.basis !== "explicite") continue;
     for (const d of n.prereq.all) if (!done.has(d)) (done.add(d), queue.push(d));
   }
+  // activités FACULTATIVES cochées « Fait » (avec confirmation) : faites elles-mêmes, ouvrent leurs suites, mais
+  // n'entraînent AUCUNE déduction sur les missions principales (pas de fermeture sur leurs prérequis)
+  const ticked = new Set<string>();
+  for (const k of Object.keys(s.done ?? {})) {
+    if (!k.startsWith("prog:")) continue;
+    const n = PROG_BY_ID.get(k.slice(5));
+    if (n && n.kind !== "main" && !done.has(n.id)) (done.add(n.id), ticked.add(n.id));
+  }
   const started = (id: string) => done.has(id) || cur?.id === id;
   // Story Recap : une mission principale listée AVANT une mission faite est « probablement faite » (signal faible, affiché comme tel)
   const maxRecap = Math.max(0, ...[...done, ...(cur ? [cur.id] : [])].map((id) => PROG_BY_ID.get(id)?.recap ?? 0));
@@ -74,7 +85,7 @@ export function computeProgress(s: Pick<PersistedState, "profile">): ProgressVie
     return !!n && n.kind === "main" && !done.has(id) && (n.recap ?? 99) < maxRecap;
   };
   const states = PROGRESSION.map((node): NodeState => {
-    if (done.has(node.id)) return { node, status: "terminé", how: declared.has(node.id) ? "déclaré" : "déduit" };
+    if (done.has(node.id)) return { node, status: "terminé", how: declared.has(node.id) || ticked.has(node.id) ? "déclaré" : "déduit" };
     if (cur?.id === node.id) return { node, status: "en cours" };
     if (node.lostAt && (node.lostAt.at === "start" ? started(node.lostAt.node) : done.has(node.lostAt.node))) return { node, status: "plus disponible" };
     if (likely(node.id)) return { node, status: "inconnu", likelyDone: true };
@@ -114,7 +125,7 @@ export function nextPointOfNoReturn(v: ProgressView): NodeState | null {
  * Bloc PROGRESSION du contexte envoyé à Claude à chaque message (le joueur n'a pas à répéter où il en est).
  * Compact (≈ 1 500 caractères), sans spoiler selon le niveau choisi.
  */
-export function progressionContext(s: Pick<PersistedState, "profile">): string {
+export function progressionContext(s: Pick<PersistedState, "profile"> & { done?: Record<string, string> }): string {
   const v = computeProgress(s);
   const mode = s.profile.spoilerMode;
   const by = (st: ProgStatus) => v.states.filter((x) => x.status === st);

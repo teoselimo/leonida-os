@@ -16,6 +16,7 @@ import { ShieldChip } from "@/components/ShieldChip";
 import { CollectorAlert } from "@/components/LiveRadar";
 import { BrandMark } from "@/components/Brand";
 import { MissionBriefPanel, useBriefRunning } from "@/components/MissionBrief";
+import { DiscoverNow } from "@/components/DiscoverNow";
 import { briefKey } from "@/lib/copilot/brief";
 import { useCopilotRuntime } from "@/lib/useCopilot";
 
@@ -77,6 +78,11 @@ export function HomeScreen() {
   const [draft, setDraft] = useState("");
   const [confirmDone, setConfirmDone] = useState(false);
   const m = plan.mission;
+  // éléments déjà affichés ailleurs sur l'accueil : jamais répétés dans « À découvrir maintenant »
+  const shownElsewhere = useMemo(
+    () => new Set([...plan.before, ...plan.fun].flatMap((it) => [it.id, it.recordId ?? "", it.vehicleId ? `veh:${it.vehicleId}` : ""]).filter(Boolean)),
+    [plan],
+  );
 
   const go = (it: SessionItem) => {
     tick();
@@ -158,6 +164,9 @@ export function HomeScreen() {
               </>
             )}
           </section>
+
+          {/* A bis — À découvrir maintenant (V0.13) */}
+          <DiscoverNow exclude={shownElsewhere} />
 
           {/* B — Avant de la lancer */}
           <section className="beforesec" data-testid="live-advice">

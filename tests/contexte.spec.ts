@@ -80,7 +80,8 @@ test("C — boutique confirmée : l'action IA ouvre la fiche avec le badge « É
   await start(page);
   const a = await say(page, "Meilleurs magasins de vêtements à Key Lento");
   await expect(a).toHaveAttribute("data-intent", "shops");
-  await a.getByTestId("ai-action-show_place").first().click();
+  // V0.13 : 1er bouton = liste de la carte ; 2e = l'établissement le mieux situé (The Wonder Whale, repère du même nom)
+  await a.getByTestId("ai-action-show_place").filter({ hasText: "Wonder Whale" }).click();
   await expect(page).toHaveURL(/#carte$/);
   const est = page.getByTestId("establishment");
   await expect(est).toContainText("Établissement confirmé");

@@ -110,7 +110,7 @@ export function LeonidaMap(props: MapViewProps) {
   const poiKey = poiCats.join(",");
   const lmIndex = useRef(new Map<string, Landmark>());
   lmIndex.current = new Map(props.landmarks.map((l) => [l.id, l]));
-  const { regions, markers, selectedId, onSelect, focusNonce, occlusion, landmarks, showLandmarks, selectedLandmarkId, onSelectLandmark, pickMode, onPick, pickCenterNonce, draft, onDraftMove, active, zones = [], selectedZoneId = null, onSelectZone } = props;
+  const { regions, markers, selectedId, onSelect, focusNonce, occlusion, landmarks, showLandmarks, selectedLandmarkId, onSelectLandmark, pickMode, onPick, pickCenterNonce, draft, onDraftMove, active, zones = [], selectedZoneId = null, onSelectZone, view = null } = props;
   const [tileError, setTileError] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MLMap | null>(null);
@@ -423,7 +423,7 @@ export function LeonidaMap(props: MapViewProps) {
   }, [ready, showLandmarks, selectedLandmarkId, poiKey]);
 
   // Zones de recherche : cercles calculés en coordonnées de jeu puis projetés
-  const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}`).join("|") + `#${selectedZoneId ?? ""}`;
+  const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}:${z.kind ?? ""}`).join("|") + `#${selectedZoneId ?? ""}`;
   useEffect(() => {
     const map = mapRef.current;
     if (!ready || !map) return;
@@ -437,7 +437,7 @@ export function LeonidaMap(props: MapViewProps) {
     };
     (map.getSource("zones") as GeoJSONSource | undefined)?.setData({
       type: "FeatureCollection",
-      features: zones.map((z) => ({ type: "Feature", properties: { id: z.id, color: z.color, sel: z.id === selectedZoneId ? 1 : 0, r: z.radius }, geometry: { type: "Polygon", coordinates: [circle(z)] } })),
+      features: zones.map((z) => ({ type: "Feature", properties: { id: z.id, color: z.color, sel: z.id === selectedZoneId ? 1 : z.kind === "point" ? 1 : 0, r: z.radius }, geometry: { type: "Polygon", coordinates: [circle(z)] } })),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, zoneKey]);
@@ -448,9 +448,19 @@ export function LeonidaMap(props: MapViewProps) {
     if (!map || !ready || !selectedZoneId) return;
     const z = zones.find((x) => x.id === selectedZoneId);
     if (!z) return;
-    map.fitBounds([gameToLngLat(z.x - z.radius, z.y - z.radius), gameToLngLat(z.x + z.radius, z.y + z.radius)], { padding: padding(), duration: 850, maxZoom: 6.2 });
+        const r = Math.max(z.radius, z.kind === "point" ? 260 : 0);
+    map.fitBounds([gameToLngLat(z.x - r, z.y - r), gameToLngLat(z.x + r, z.y + r)], { padding: padding(), duration: 850, maxZoom: 6.2 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, focusNonce, selectedZoneId, occlusion.bottom, occlusion.left]);
+
+  // Cadrage d'une liste de lieux (sans dessin) : jusqu'au zoom où les icônes de commerces apparaissent
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || !view) return;
+    const r = Math.max(view.radius, 350);
+    map.fitBounds([gameToLngLat(view.x - r, view.y - r), gameToLngLat(view.x + r, view.y + r)], { padding: padding(), duration: 850, maxZoom: 5.2 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, view?.nonce]);
 
   // Recentrage sur la sélection (découverte ou lieu)
   useEffect(() => {
@@ -509,7 +519,7 @@ export function LeonidaMap(props: MapViewProps) {
 
       {zones.filter((z) => z.id === selectedZoneId).map((z) => (
         <div key={z.id} className="zonetag" style={{ top: occlusion.top + 10, left: occlusion.left + 12 }} data-testid="zone-tag">
-          <Icon name="target" size={13} /> Zone approximative · {z.label}
+          <Icon name="target" size={13} /> {z.kind === "point" ? "Position" : "Zone approximative"} · {z.label}
         </div>
       ))}
       {markers.map(({ discovery: d, status, fresh, tracked }) => {

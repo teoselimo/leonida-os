@@ -8,5 +8,5 @@
  "landmarks": 3663,
  "license": "CC BY 4.0",
  "attribution": "GTA VI Landmarks Data & Map Tiles (CC BY 4.0) — map.gtadb.org",
- "changes": "Tuiles ré-assemblées en grandes tuiles et recompressées, assombries à l'affichage ; données réduites."
+ "changes": "Tuiles ré-assemblées en grandes tuiles et recompressées, assombries à l'affichage ; données réduites (type de commerce « #… » conservé)."
 }

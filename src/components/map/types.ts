@@ -25,6 +25,8 @@ export interface MapZone {
   label: string;
   /** Zone élargie (« à l'est de… ») : trait pointillé plus marqué. */
   widened?: boolean;
+  /** « point » : position vérifiée (dessinée comme un petit cercle plein, sans mention « approximative »). */
+  kind?: "zone" | "point";
 }
 
 export interface MapViewProps {
@@ -56,4 +58,6 @@ export interface MapViewProps {
   zones?: MapZone[];
   selectedZoneId?: string | null;
   onSelectZone?: (id: string) => void;
+  /** Cadrage demandé (liste de lieux) : la caméra montre ce cercle, RIEN n'est dessiné. */
+  view?: { x: number; y: number; radius: number; nonce: number } | null;
 }

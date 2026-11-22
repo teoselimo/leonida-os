@@ -154,3 +154,66 @@ Les analyses enregistrées par l'app dans la sauvegarde du joueur portent `web: 
 
 ### Tests
 `tests/contexte.unit.spec.ts` (15) et `tests/contexte.spec.ts` (4 × iPhone, iPad, WebKit) : scénarios A (« je peux faire quoi maintenant ? »), B (« j'ai terminé » → confirmation → déblocages), C (vêtements à Key Lento → référentiel + web automatique + carte), D (activité verrouillée, prérequis sans spoiler), E (emplacement incertain conservé), F (1 000 caractères), G (progression, historique et brouillon après rechargement). Claude et Exa y sont simulés.
+
+## 13. V0.13 « Plus rapide, plus pertinent » (22/11/2026) — même Artifact
+
+### Recherche : un seul appel Claude par question
+- **Recherche web native de Claude dans l'Artifact : non disponible.** La documentation de la capacité `sample` (contrat 0.2.98) le dit : Claude « cannot browse » et n'a d'autres outils que les fonctions de la page. Exa reste donc l'outil web.
+- **Planificateur supprimé par défaut** (`src/lib/copilot/route.ts`). La décision et la requête anglaise sont calculées localement, sans appel :
+  1. conversation ou action dans l'app → pas de web ;
+  2. données sourcées suffisantes (progression, référentiel d'établissements hors question d'évaluation, fiche officielle ou recoupée, « montre-moi sur la carte ») → pas de web, sauf demande explicite ;
+  3. sinon, question factuelle → Exa automatique. Requête construite avec un glossaire FR→EN, les noms propres et la mission si la question en dépend, puis une reformulation si rien ne sort.
+- L'ancien planificateur reste activable pour comparer (Profil › Recherche web › « Comparer »).
+- **Mesures** : chaque réponse enregistre ses appels Claude, ses recherches, le temps jusqu'au premier texte et le temps total (`state.metrics`, 30 dernières, sauvegardées et synchronisées). Les médianes s'affichent dans Profil › Recherche web.
+- **Banc simulé** (`npx tsx scripts/bench-router.ts`, 10 questions de session) :
+  - routage local : 10 appels Claude, 5 recherches ;
+  - planificateur : 19 appels Claude, 9 recherches.
+  - Avec un modèle de délai de 1,5 s par appel et 2,5 s par recherche, cela donne environ 27,5 s contre 51 s cumulés. C'est une estimation : le planificateur simulé répond toujours « chercher ». La mesure réelle vient de l'Artifact publié.
+- **Consigne** : plus de « je n'ai pas l'information ici ». Claude dit laquelle des situations s'applique :
+  - le web n'a pas été consulté, et il propose de vérifier ;
+  - le web a été consulté sans résultat fiable ;
+  - le web est indisponible.
+
+### Cartographie : sources étudiées
+| Source | Ce que c'est | Licence | Décision |
+|---|---|---|---|
+| github.com/rolux/gtadb.org (map.gtadb.org) | Repères communautaires (3 754, dont 3 663 positionnés) au format `landmarks.json`, coordonnées de jeu, tags | Code MIT, données et tuiles **CC BY 4.0** ; « ne pas interroger le site en direct, faire un `git pull` » | **Conservée** (déjà le fond de carte et les repères). V0.13 garde désormais les **types de commerce** `#clothes`, `#hair`, `#tattoos`, `#modshop`… qui étaient filtrés. |
+| api.gtadb.org | API Flask du même dépôt (`/landmarks`, `/geocode`, `/elevation`, `/staticmap`) | idem | Non utilisée : l'Artifact ne peut pas faire d'appel réseau (CSP), et l'instantané du dépôt contient les mêmes données. |
+| github.com/navanem/gta6-leonida-atlas | Atlas MapLibre local-first, dérivé de gtadb (commit du 17/11, plus ancien que le nôtre) | Code **AGPL-3.0**, données CC BY via gtadb | Code non repris (licence). On adopte sa méthode : « unknown locations remain unknown ». |
+| gtadb.**net** (/gta-6-map/interactive) | Site distinct de gtadb.org | Non vérifiable : page inaccessible depuis cet environnement | Non intégré, pour ne pas confondre les deux sites. |
+| gtamap.io | Carte tierce | Non vérifiable : page inaccessible ici | Non intégrée. |
+| PowerPyx — clothing stores | Guide : 67 boutiques par type et par comté, plus des captures | Contenu protégé | Seuls les **faits** sont repris (nom, type, comté), avec un lien. Ni capture ni texte. |
+
+### Établissements : trois niveaux de précision (`src/lib/places.ts`)
+- **Point** : position placée par le joueur en jeu, ou repère gtadb portant le même nom (The Wonder Whale, The Rusty Anchor).
+- **Zone probable** : rayon de quelques centaines d'unités, jamais un quartier. Elle vient de deux types d'indices :
+  - un voisin cité par la source (« à l'est de la maison de Jason » pour Chuck's) ;
+  - un type de commerce gtadb unique dans le quartier et cohérent avec la description (#hair au sud pour Barnacle Beauties, #tattoos pour The Inked Mermaid, #modshop au sud pour Coastal Auto Care).
+- **Position inconnue** : description et source, sans point (Billie's, Key Lento Kahuna, Leroy's). Le repère `#clothes` non nommé de Route 1 n'est attribué à aucune boutique : rien ne dit laquelle c'est.
+- **Recherche de la carte** : les établissements confirmés apparaissent en premier, avec leur précision, même sans coordonnées.
+- **Zone de quartier supprimée** : les actions de l'IA ouvrent la liste de la carte (`show_place.query`) ou l'établissement (`show_place.estId`).
+- **« Je l'ai trouvé : le placer »** : le joueur pose le point depuis la carte. Il est enregistré dans la sauvegarde (`pins`, date, provenance « joueur »), toujours affiché, et peut être corrigé ou retiré.
+- Ajouts PowerPyx (comté de Mariana, île non précisée) : Nifty Threads Island Wear et Lost Mines Souvenirs, « signalé ».
+- **Plus tard — capture PS5** : une capture de la carte en jeu ne sera convertie en coordonnées qu'après un calage vérifié sur plusieurs repères connus. Pas d'extraction automatique annoncée sans ce calage.
+
+### Accueil « À découvrir maintenant » (`src/lib/discover.ts`, `DiscoverNow.tsx`)
+- Placé juste sous la mission principale, avec 4 suggestions et « Tout voir ».
+- **Sources des suggestions** :
+  - activités facultatives accessibles selon le moteur de progression ;
+  - fiches Radar actionnables (argent, objets, armes, secrets) ;
+  - véhicules récupérables.
+- **Ordre** : pertes définitives vérifiées, puis découvertes rares, puis activités annexes. Une arme rare n'est jamais « haute » sans perte documentée.
+- **Chaque ligne** : pictogramme, catégorie, statut (vérifié / probable), point de non-retour nommé sans spoiler, nombre de sources.
+- **Détail dépliable** :
+  - où et condition ;
+  - liens vers les sources ;
+  - « Fait », avec confirmation ;
+  - « Voir sur la carte », seulement si la position est fiable.
+- **Sans doublon** avec « Rien à manquer » (manquables de la mission), les objectifs, « Avant de la lancer » et « Envie de t'amuser ».
+- **« Fait »** écrit dans `state.done`, en gardant la date. Une activité facultative cochée ouvre sa suite (Get Shirley's Rum → Steal the Scooter) sans déclarer de mission principale.
+
+### Chat
+- À l'ouverture et après rechargement, le dernier message s'affiche directement, sans animation interrompue.
+- Le fil suit le contenu (streaming, bulles qui grandissent, clavier iOS, ressort de la fiche) **seulement si le joueur est en bas**. Seul un geste du joueur le décroche.
+- Un bouton « Dernier message » apparaît quand quelque chose arrive pendant la lecture.
+- Correction annexe : la barre du mode cartographe était cachée par le dock sur iPhone ; elle est maintenant au-dessus.

@@ -82,11 +82,11 @@ test.describe("Copilote : moteur direct (sans Claude)", () => {
     const act = a.actions.find((x) => x.type === "show_place");
     expect(act && "landmarkId" in act && act.landmarkId).toBeTruthy();
   });
-  test("« un magasin à Key Lento » → liste et filtre de carte par catégorie et zone", () => {
+  test("« un magasin à Key Lento » → liste sur la carte (recherche), jamais une zone couvrant tout le quartier (V0.13)", () => {
     const a = answer("Je cherche un magasin à Key Lento", ctx(), null);
-    const act = a.actions.find((x) => x.type === "show_place") as { district?: string; poiCat?: string } | undefined;
-    expect(act?.district).toBe("Key Lento");
-    expect(act?.poiCat).toBe("commerce");
+    const act = a.actions.find((x) => x.type === "show_place") as { district?: string; query?: string } | undefined;
+    expect(act?.query).toContain("Key Lento");
+    expect(act?.district).toBeUndefined();
   });
 });
 
