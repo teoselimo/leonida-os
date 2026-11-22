@@ -137,6 +137,32 @@ export interface PersistedState {
   done: Record<string, string>;
   /** Version de migration appliquée. */
   rev?: number;
+  /** Analyses « Rien à manquer », une par mission (clé = nom normalisé). Jamais mélangées entre missions. */
+  briefs?: Record<string, MissionAlertBrief>;
+}
+
+export type BriefWhen = "avant" | "pendant" | "apres";
+export type BriefKind = "manquable" | "objet_unique" | "facultatif" | "decision" | "non_retour" | "preparation";
+/** Statut calculé par l'app (pas déclaré par le modèle) : fiche fiable ou ≥ 2 sites distincts = confirmé. */
+export type BriefStatus = "confirmé" | "contradictoire" | "une source";
+export interface BriefItem {
+  text: string;
+  when: BriefWhen;
+  kind: BriefKind;
+  priority: "haute" | "normale";
+  status: BriefStatus;
+  /** Ce sur quoi les sources divergent (statut contradictoire). */
+  note?: string;
+  sources: Array<{ name: string; url: string }>;
+}
+export interface MissionAlertBrief {
+  mission: string;
+  at: string;
+  summary: string;
+  items: BriefItem[];
+  web: { status: string; count: number } | null;
+  engine: "claude" | "direct";
+  model?: string;
 }
 
 /** Repéré, volé et possédé sont trois choses différentes. */

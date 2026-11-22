@@ -21,7 +21,7 @@ async function start(page: Page, profile: Record<string, unknown> = {}, history:
         const last = messages[messages.length - 1].content;
         const ids = [...last.matchAll(/"id":"([^"]+)"/g)].map((m) => m[1]);
         const text = /RIEN À MANQUER/.test(last)
-          ? `On passe la mission au crible.\n@@@\n{"confiance":"signalé","sources":[],"actions":[],"verifie":[],"incertain":[{"texte":"Objectif repéré par une source","source":"${ids[0] ?? "none"}"}]}`
+          ? `On passe la mission au crible.\n@@@\n{"confiance":"signalé","sources":[],"actions":[],"elements":[{"texte":"Objectif repéré par une source","quand":"pendant","type":"facultatif","priorite":"haute","sources":["${ids[0] ?? "none"}"]}]}`
           : "Bien vu ! On continue.\n@@@\n{\"confiance\":\"non établi\",\"sources\":[],\"actions\":[]}";
         for (let i = 15; i < text.length; i += 15) {
           await new Promise((r) => setTimeout(r, 8));
@@ -112,22 +112,23 @@ test("Mission en cours (Swamped) : déclarée en cours, jamais considérée term
   await page.getByTestId("next-mission-live").click();
   await expect(page.getByTestId("mission-live")).toBeVisible();
   await expect(page.getByTestId("next-mission-name")).toHaveText("Swamped");
-  await page.getByTestId("nothing-to-miss").click();
+  // l'analyse « Rien à manquer » se lance seule sur l'écran de mission ; la conversation reste ouverte depuis « Aide en mission »
+  await page.getByTestId("prepare-mission").click();
   const a = page.getByTestId("ai-answer").last();
   await expect(a.getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
-  const sent = await page.evaluate(() => (window as unknown as Win).__calls[0]);
+  const sent = await page.evaluate(() => (window as unknown as Win).__calls.find((c) => /Je suis en pleine mission/.test(c.at(-1)!.content))!);
   expect(sent.at(-1)!.content).toContain("Mission EN COURS");
   expect(sent.at(-1)!.content).toContain("PAS terminée");
-  const add = a.getByTestId("checklist-add");
+  if (isPhone(page)) await page.getByTestId("ai-close").click();
+  const add = page.getByTestId("brief-add");
   if (await add.count()) {
     await add.first().click();
-    if (isPhone(page)) await page.getByTestId("ai-close").click();
     const obj = page.getByTestId("objective").first();
     await expect(obj).toContainText("Objectif repéré par une source");
     await expect(obj).toContainText(/incertain/i);
     await obj.locator(".objs__check").click();
     await expect(obj).toHaveClass(/is-done/);
-  } else if (isPhone(page)) await page.getByTestId("ai-close").click();
+  }
   // objectif perso
   await page.getByTestId("objective-input").fill("Garder le bateau intact");
   await page.getByTestId("objective-add").click();

@@ -14,6 +14,7 @@ import { repo, useStore } from "@/lib/store";
 import type { Chapter, ConsoleId, EditionId, SpoilerMode } from "@/lib/types";
 import { ShieldChip } from "@/components/ShieldChip";
 import { Icon } from "@/components/ui/Icon";
+import { WebDiag } from "@/components/WebDiag";
 import { Bar, CategoryGlyph, SectionHead, Segmented } from "@/components/ui/primitives";
 
 export function ProfileScreen() {
@@ -185,6 +186,8 @@ export function ProfileScreen() {
               ]}
             />
           </section>
+
+          <WebDiag />
 
           <section className="card form" data-testid="my-garage">
             <h4>Mon garage</h4>

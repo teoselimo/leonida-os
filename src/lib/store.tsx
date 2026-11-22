@@ -8,7 +8,7 @@ import { asPlayerRecord, isValidRecordInput } from "./records";
 import { liveToDiscoveries, useLiveRadar } from "./live";
 import { demoRepository, localProgressStore } from "./repository";
 import { cloudLoad, cloudSave } from "./runtime/cloud";
-import type { Discovery, Objective, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
+import type { Discovery, MissionAlertBrief, Objective, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
 
 const STORAGE_KEY = "leonida-os/progress/v1";
 const SAVED_AT_KEY = "leonida-os/progress-saved-at/v1";
@@ -43,7 +43,8 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
       done = { ...done };
     }
   }
-  return { ...base, ...saved, profile, custom, vehicles, done, showDemo, rev: 7, schema: 1 };
+  const briefs = saved.briefs && typeof saved.briefs === "object" ? Object.fromEntries(Object.entries(saved.briefs).filter(([, b]) => b && typeof b.mission === "string" && Array.isArray(b.items))) : {};
+  return { ...base, ...saved, profile, custom, vehicles, done, briefs, showDemo, rev: 7, schema: 1 };
 }
 
 export const initialState = (): PersistedState => ({
@@ -75,7 +76,8 @@ type Action =
   | { type: "vehicle"; id: string; progress: VehicleProgress | null }
   | { type: "done"; id: string; value: boolean }
   | { type: "mission"; name: string | null; done: boolean }
-  | { type: "objectives"; fn: (list: Objective[]) => Objective[] };
+  | { type: "objectives"; fn: (list: Objective[]) => Objective[] }
+  | { type: "brief"; key: string; brief: MissionAlertBrief };
 
 function reducer(s: PersistedState, a: Action): PersistedState {
   switch (a.type) {
@@ -134,6 +136,12 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       const nextMission = wasNext ? null : s.profile.nextMission;
       return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone, nextMission, missionInProgress: wasNext ? false : s.profile.missionInProgress } };
     }
+    case "brief": {
+      // une analyse par mission ; on garde les 8 plus récentes
+      const all = { ...(s.briefs ?? {}), [a.key]: a.brief };
+      const keep = Object.entries(all).sort((x, y) => y[1].at.localeCompare(x[1].at)).slice(0, 8);
+      return { ...s, briefs: Object.fromEntries(keep) };
+    }
     case "objectives":
       return { ...s, profile: { ...s.profile, objectives: a.fn(s.profile.objectives ?? []).slice(-80) } };
     case "vehicle": {
@@ -189,6 +197,7 @@ interface Ctx {
   addObjective: (o: Omit<Objective, "id" | "done" | "at">) => void;
   toggleObjective: (id: string) => void;
   removeObjective: (id: string) => void;
+  setBrief: (key: string, brief: MissionAlertBrief) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
   /** Véhicule sélectionné sur la carte (mode Voitures cachées). */
@@ -389,6 +398,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         }),
       toggleObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.map((x) => (x.id === id ? { ...x, done: !x.done } : x)) }),
       removeObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.filter((x) => x.id !== id) }),
+      setBrief: (key, brief) => dispatch({ type: "brief", key, brief }),
       setVehicle: (id, st, storage) => {
         const prev = state.vehicles[id];
         dispatch({ type: "vehicle", id, progress: st ? { state: st, at: new Date().toISOString(), storage: storage ?? prev?.storage } : null });

@@ -61,7 +61,7 @@ export function parseHits(res: CallResult): WebHit[] {
         return {
           title: String(o.title ?? "").slice(0, 160),
           url,
-          text: String(o.text ?? o.summary ?? o.snippet ?? (Array.isArray(o.highlights) ? o.highlights.join(" … ") : "")).replace(/\s+/g, " ").slice(0, 1_500),
+          text: String(o.text ?? o.summary ?? o.snippet ?? (Array.isArray(o.highlights) ? o.highlights.join(" … ") : "")).replace(/\s+/g, " ").slice(0, 12_000),
           date: [o.publishedDate, o.published_date, o.published].map((d) => (typeof d === "string" && /^\d{4}-\d{2}-\d{2}/.test(d) ? d.slice(0, 10) : null)).find(Boolean) ?? null,
         };
       })
@@ -111,7 +111,8 @@ export const exaSearch: WebSearchFn = async (query, signal, objective) => {
       res = await call();
     }
     const hits = parseHits(res);
-    return { status: hits.length ? "ok" : "empty", hits };
+    const rawChars = JSON.stringify(res.payload ?? res.content ?? "").length;
+    return { status: hits.length ? "ok" : "empty", hits, rawChars };
   } catch (e) {
     return { status: mapError(e), hits: [] };
   }

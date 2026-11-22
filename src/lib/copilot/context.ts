@@ -8,7 +8,7 @@ import type { PersistedState } from "../types";
 import { CONSOLES, SPOILER_FR } from "../meta";
 
 /** Limites de contexte : jamais des dizaines de fiches sans rapport. */
-export const CONTEXT_LIMITS = { maxEvidence: 8, maxQuote: 280, maxChars: 9_000 };
+export const CONTEXT_LIMITS = { maxEvidence: 8, maxQuote: 280, maxChars: 16_000 };
 
 const EDITION: Record<string, string> = { standard: "Standard", ultimate: "Ultimate", unknown: "non renseignée" };
 const PREORDER: Record<string, string> = { yes: "oui", no: "non", unknown: "inconnu" };
@@ -114,7 +114,7 @@ export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[]
         extraits: [v.location.text?.value ?? ""].filter(Boolean).map(q),
       });
   }
-  for (const w of web.slice(0, 5)) out.push({ id: w.id, web: w.titre, site: w.site, date: w.date, fiabilite: "web non vérifié (une source)", extrait: w.extrait.slice(0, 1_200) });
+  for (const w of web.slice(0, 8)) out.push({ id: w.id, web: w.titre, site: w.site, date: w.date, fiabilite: "web non vérifié (une source)", extrait: w.extrait.slice(0, 1_500) });
   let s = JSON.stringify(out);
   if (s.length > CONTEXT_LIMITS.maxChars) s = s.slice(0, CONTEXT_LIMITS.maxChars);
   return s;

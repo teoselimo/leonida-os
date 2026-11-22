@@ -15,6 +15,7 @@ import { RecoCard } from "@/components/RecoCard";
 import { ShieldChip } from "@/components/ShieldChip";
 import { CollectorAlert } from "@/components/LiveRadar";
 import { BrandMark } from "@/components/Brand";
+import { MissionBriefPanel, AskMission } from "@/components/MissionBrief";
 
 function greeting(d = new Date()) {
   const h = d.getHours();
@@ -93,12 +94,6 @@ export function HomeScreen() {
     window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: q, topic: { kind: "mission", name: m.name, known: !!m.info } } }));
     setAiOpen(true);
   };
-  const checklist = () => {
-    if (!m.name) return;
-    tick();
-    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: { question: `Rien à manquer dans ${m.name} ?`, topic: { kind: "mission", name: m.name, known: !!m.info }, mode: "checklist", mission: m.name } }));
-    setAiOpen(true);
-  };
   const saveNext = (name: string, inProgress = false) => {
     const n = name.trim();
     if (!n) return;
@@ -135,37 +130,27 @@ export function HomeScreen() {
                   {!m.info ? "Pas encore documentée par la veille" : m.info.chapter != null ? `Chapitre ${m.info.chapter}` : "Chapitre non documenté"}
                   {m.brief?.guide ? " · guide disponible" : ""}
                 </p>
-                <p className="missioncard__during" data-testid="mission-during">
-                  <b>À récupérer pendant :</b> {m.during ?? "aucune récompense particulière confirmée pour le moment."}
-                </p>
-                {m.risk && <p className="missioncard__risk"><Icon name="alert" size={13} /> {m.risk}</p>}
-                <div className="missioncard__ctas">
-                  <button className="btn btn--primary missioncard__cta press" onClick={checklist} data-testid="nothing-to-miss">
-                    <Icon name="check" size={18} /> Rien à manquer
-                  </button>
-                  <button className="btn btn--ghost missioncard__cta press" onClick={prepare} data-testid="prepare-mission">
-                    <BrandMark size={18} /> {p.missionInProgress ? "Aide en mission" : "Préparer ma mission"}
-                  </button>
+                {/* État de la mission : déclaré par le joueur, en un geste ; « Terminée » demande confirmation */}
+                <div className="mstate" role="group" aria-label="État de la mission" data-testid="mission-state">
+                  <button className={`mstate__b press${!p.missionInProgress ? " is-on" : ""}`} aria-pressed={!p.missionInProgress} onClick={() => { tick(); setMissionInProgress(false); setConfirmDone(false); }} data-testid="mission-stop">À venir</button>
+                  <button className={`mstate__b press${p.missionInProgress ? " is-on is-live" : ""}`} aria-pressed={!!p.missionInProgress} onClick={() => { tick(); setMissionInProgress(true); setConfirmDone(false); }} data-testid="mission-start">En cours</button>
+                  <button className={`mstate__b press${confirmDone ? " is-on is-ask" : ""}`} onClick={() => { tick(); setConfirmDone(true); }} data-testid="mission-done">Terminée</button>
                 </div>
+                {confirmDone && (
+                  <span className="confirm confirm--block" data-testid="mission-done-confirm">
+                    <span>« {m.name} » terminée ? Elle passera dans tes missions faites.</span>
+                    <button className="btn btn--primary btn--xs" onClick={() => { setMission(m.name!, true); setConfirmDone(false); celebrate("Mission terminée"); }}>Oui</button>
+                    <button className="btn btn--ghost btn--xs" onClick={() => setConfirmDone(false)}>Non</button>
+                  </span>
+                )}
+                <MissionBriefPanel mission={m.name} during={m.during} risk={m.risk} />
+                <AskMission mission={m.name} known={!!m.info} live={!!p.missionInProgress} />
                 <Objectives mission={m.name} />
                 <div className="missioncard__links">
-                  {confirmDone ? (
-                    <span className="confirm" data-testid="mission-done-confirm">
-                      <span>« {m.name} » terminée ?</span>
-                      <button className="btn btn--primary btn--xs" onClick={() => { setMission(m.name!, true); setConfirmDone(false); celebrate("Mission terminée"); }}>Oui</button>
-                      <button className="btn btn--ghost btn--xs" onClick={() => setConfirmDone(false)}>Non</button>
-                    </span>
-                  ) : (
-                    <>
-                      {p.missionInProgress ? (
-                        <button className="link small" onClick={() => setMissionInProgress(false)} data-testid="mission-stop">Pas encore lancée</button>
-                      ) : (
-                        <button className="link small" onClick={() => { tick(); setMissionInProgress(true); }} data-testid="mission-start">Je l&apos;ai lancée</button>
-                      )}
-                      <button className="link small" onClick={() => setConfirmDone(true)} data-testid="mission-done">Je l&apos;ai terminée</button>
-                      <button className="link small" onClick={() => { setDraft(""); setEditing(true); }} data-testid="mission-change">Changer</button>
-                    </>
-                  )}
+                  <button className="btn btn--ghost btn--xs press" onClick={prepare} data-testid="prepare-mission">
+                    <BrandMark size={16} /> {p.missionInProgress ? "Aide en mission" : "Préparer ma mission"}
+                  </button>
+                  <button className="link small" onClick={() => { setDraft(""); setEditing(true); }} data-testid="mission-change">Changer de mission</button>
                 </div>
               </>
             ) : (

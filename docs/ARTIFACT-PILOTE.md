@@ -100,3 +100,16 @@ Objectif : utiliser LEONIDA pendant une session de jeu, sur iPhone et iPad.
 
 Tests : `tests/enpartie.unit.spec.ts` (16) et `tests/enpartie.spec.ts` (4 parcours × iPhone, iPad, WebKit). Suite complète : 200+ tests.
 Non vérifiable ici : rendu et gestes sur iPhone réel, ton des réponses du vrai Claude, réponses réelles d'Exa.
+
+## 9. V0.9 « Préventif » (22/11/2026, 01:15) — même Artifact
+
+| Fonction | État | Ce qui a réellement été vérifié |
+|---|---|---|
+| Progression corrigée | **Fait** | Stockage personnel de l'Artifact (`data/users/<id>/progress`) réécrit à la demande du joueur : Swamped terminée, Don Gone prochaine mission **non lancée**. Relu après publication : intact. |
+| Écran mission | **Opérationnel** | État À venir / En cours / Terminée (confirmation), analyse, alertes prioritaires, question libre, objectifs. Tests iPhone, iPad, WebKit (Playwright). |
+| « Rien à manquer » préventif | **Opérationnel** | Lancé automatiquement une fois par mission, stocké par mission (jamais mélangé). Deux recherches Exa (déroulé + manquables), extrait ciblé des pages longues. Chaque élément cite ses preuves ; **statut calculé par l'app** : fiche fiable ou ≥ 2 sites distincts = confirmé, divergence = contradictoire, sinon une source. |
+| Détection de l'arme de Don Gone | **Données vérifiées, rendu Claude à confirmer** | Les deux requêtes exactes de l'app, lancées sur le vrai Exa le 22/11, renvoient 7 pages qui citent le revolver du coffre (PowerPyx, wiki, GTABase, GTA BOOM, Game8, ViceBoard, CryptoGames). Sur 3 d'entre elles, l'info est au-delà du 1 200ᵉ caractère : l'extrait ciblé la conserve (test unitaire). Que Claude la remonte en alerte, c'est ce que le joueur verra sur l'iPhone. |
+| Exa depuis l'Artifact publié | **Non vérifiable d'ici** | Diagnostic réel dans Profil › Recherche web : vrai appel, statut, nombre de résultats lus, taille brute, durée. Aucune simulation. Le premier appel déclenche la demande d'accord du connecteur. |
+| Réponses | Consignes renforcées | Court par défaut + bouton « Détaille » ; confirmé / contradictoire / une source / hypothèse ; anti-spoiler strict appliqué aux guides web (action de jeu sans intrigue) ; puces de sources visibles. |
+
+Tests : 219 passés (2 ignorés) — dont `tests/preventif.unit.spec.ts` (9) et `tests/preventif.spec.ts` (3 × iPhone, iPad, WebKit). Claude y est simulé ; le web y est absent (l'app doit le dire).

@@ -7,9 +7,10 @@ import { answer, isValidAction, starters } from "@/lib/ai/engine";
 import type { AiAction, AiAnswer, PlaceRef, Topic } from "@/lib/ai/engine";
 import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
-import { askCopilot, pickTransport } from "@/lib/copilot";
-import type { CopilotAnswer, LlmMessage, LlmTransport, WebStatus } from "@/lib/copilot";
-import { exaSearch, webStatus } from "@/lib/runtime/web";
+import { askCopilot } from "@/lib/copilot";
+import type { CopilotAnswer, LlmMessage, WebStatus } from "@/lib/copilot";
+import { exaSearch } from "@/lib/runtime/web";
+import { reportWeb, useCopilotRuntime } from "@/lib/useCopilot";
 import { lngLatToGame, loadLandmarks } from "@/lib/gtadb";
 import { useIsTablet } from "@/lib/useMedia";
 import { SPRINGS, spring, tick } from "@/lib/motion";
@@ -75,12 +76,7 @@ export function AiCopilot() {
   const msgsRef = useRef<Msg[]>([]);
   msgsRef.current = msgs;
   // Moteur conversationnel : Claude (Artifact ou API) si disponible, sinon mode direct
-  const [transport, setTransport] = useState<LlmTransport | null>(null);
-  const [web, setWeb] = useState<WebStatus>("unavailable");
-  useEffect(() => {
-    void pickTransport().then(setTransport);
-    void webStatus().then(setWeb);
-  }, []);
+  const { transport, web } = useCopilotRuntime();
   const [deep, setDeep] = useState(false);
   useEffect(() => {
     try {
@@ -168,7 +164,7 @@ export function AiCopilot() {
           setStreaming(false);
         }
         const webNote = c.web && c.web.status !== "ok" ? WEB_FAIL[c.web.status] : undefined;
-        if (c.web) setWeb(c.web.status === "ok" || c.web.status === "empty" ? "ok" : c.web.status);
+        if (c.web) reportWeb(c.web.status === "ok" || c.web.status === "empty" ? "ok" : c.web.status);
         setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: [c.note, webNote].filter(Boolean).join(" ") || undefined, checklist: c.checklist, web: c.web, mission: opts.mission } : x)));
         return;
       }
@@ -314,6 +310,13 @@ export function AiCopilot() {
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
               {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{m.a.text}</p>}
               {m.checklist && <ChecklistView c={m.checklist} mission={m.mission ?? ""} />}
+              {!m.streaming && m.engine === "claude" && m.a.sources.length > 0 && (
+                <div className="bubble__srcs" data-testid="ai-source-chips">
+                  {m.a.sources.slice(0, 3).map((s, i) => (
+                    <a key={i} className="srcchip" href={s.url} target="_blank" rel="noreferrer">{s.name}</a>
+                  ))}
+                </div>
+              )}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.reliability && (
                 <p className={`bubble__rel relchip--${REL_CLS[m.a.reliability]}`}><i />{REL_FR[m.a.reliability]}</p>
@@ -357,9 +360,12 @@ export function AiCopilot() {
                   </ul>
                 </details>
               )}
-              {m === lastAi && (m.a.replies?.length ?? 0) > 0 && (
+              {m === lastAi && !m.streaming && ((m.a.replies?.length ?? 0) > 0 || m.engine === "claude") && (
                 <div className="bubble__replies">
-                  {m.a.replies!.map((r) => (
+                  {m.engine === "claude" && m.a.intent !== "checklist" && (
+                    <button className="chip chip--reply press" onClick={() => ask("Détaille ta dernière réponse.")} data-testid="ai-detail">Détaille</button>
+                  )}
+                  {(m.a.replies ?? []).map((r) => (
                     <button key={r} className="chip chip--reply press" onClick={() => ask(r)} data-testid="ai-reply">{r}</button>
                   ))}
                 </div>

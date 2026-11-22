@@ -12,6 +12,7 @@
  * Migrer vers l'API Claude = activer `transports/claudeApi.ts` + le backend sécurisé, sans toucher au reste.
  */
 import type { AiAction, Reliab, Source, Topic } from "../ai/engine";
+import type { BriefItem } from "../types";
 
 export type { AiAction, Source, Topic };
 export type Trust = Reliab;
@@ -76,10 +77,13 @@ export interface CopilotAnswer {
   evidence?: string[];
   /** Mode « Rien à manquer » : éléments validés (chaque élément cite une preuve existante). */
   checklist?: { verified: ChecklistItem[]; uncertain: ChecklistItem[] };
+  /** Mode « Rien à manquer » : éléments typés (quand, type, priorité) avec statut de recoupement calculé. */
+  brief?: BriefItem[];
   /** Recherche web effectuée pour cette réponse (null = non tentée). */
   web?: { status: WebStatus; count: number } | null;
 }
 
+export type { BriefItem };
 export interface ChecklistItem {
   text: string;
   source: Source | null;
@@ -94,4 +98,4 @@ export interface WebHit {
 }
 /** Recherche web injectée par l'environnement (connecteur de l'Artifact, ou futur backend) : le moteur n'en dépend pas. */
 /** `objective` : ce que la recherche doit privilégier ou exclure (champ requis par Exa). */
-export type WebSearchFn = (query: string, signal?: AbortSignal, objective?: string) => Promise<{ status: WebStatus; hits: WebHit[] }>;
+export type WebSearchFn = (query: string, signal?: AbortSignal, objective?: string) => Promise<{ status: WebStatus; hits: WebHit[]; rawChars?: number }>;
