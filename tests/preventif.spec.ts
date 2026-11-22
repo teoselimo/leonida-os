@@ -108,7 +108,7 @@ test("Diagnostic web : sans connecteur dans cette vue, l'app dit « indisponible
   await expect(d.getByTestId("web-diag-result")).toContainText("0 résultat");
 });
 
-test("V0.10 compacité : mission visible tout de suite, une seule alerte, le reste dans « Voir plus », bouton LEONIDA sans chevauchement", async ({ page }) => {
+test("V0.10–0.11 compacité et bandeau d'état : mission visible tout de suite, une seule alerte, le reste dans « Voir plus », bouton LEONIDA sans chevauchement", async ({ page }) => {
   await page.route("**/__live/radar.json*", (r) => r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ...prod, generatedAt: new Date().toISOString() }) }));
   await page.addInitScript(() => {
     const sample = async (messages: { role: string; content: string }[]) => {
@@ -134,7 +134,13 @@ test("V0.10 compacité : mission visible tout de suite, une seule alerte, le res
     const nav = document.querySelector(".nav")!.getBoundingClientRect();
     return { header: h.height, missionTop: m.top, fab: [f.left, f.top, f.right, f.bottom], nav: [nav.left, nav.top, nav.right, nav.bottom], vw: innerWidth, vh: innerHeight };
   });
-  expect(g.header).toBeLessThan(56);
+  expect(g.header).toBeLessThan(72);
+  // V0.11 : bandeau d'état utile — mission, état, alertes de l'analyse, anti-spoiler explicite
+  await expect(page.getByTestId("status-mission")).toHaveText("Don Gone");
+  await expect(page.getByTestId("mission-upcoming")).toHaveText("À venir");
+  await expect(page.getByTestId("status-line")).toContainText("2 alertes");
+  await expect(page.getByTestId("shield").first()).toContainText("Masqués");
+  await expect(page.getByTestId("ai-open").locator(".copilotglyph")).toHaveCount(1);
   if (g.vw < 760) {
     expect(g.missionTop).toBeLessThan(260); // sans bandeau d'alerte (instantané masqué sur l'accueil dans l'Artifact), la mission arrive encore plus haut
     expect(g.fab[0]).toBeGreaterThanOrEqual(g.nav[2]); // jamais sur la navigation

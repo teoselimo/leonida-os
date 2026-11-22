@@ -89,11 +89,11 @@ test("Anti-spoiler : complet → léger → aucun, mémorisé au rechargement et
   await start(page);
   const shield = page.getByTestId("shield").first();
   await expect(shield).toHaveAttribute("data-mode", "strict");
-  await expect(shield).toContainText("Complet");
+  await expect(shield).toContainText("Masqués");
   await shield.click();
-  await expect(shield).toContainText("Léger");
+  await expect(shield).toContainText("Floutés");
   await shield.click();
-  await expect(shield).toContainText("Aucun");
+  await expect(shield).toContainText("Visibles");
   await page.reload();
   await page.waitForSelector(".app.is-ready");
   await expect(page.getByTestId("shield").first()).toHaveAttribute("data-mode", "off");

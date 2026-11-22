@@ -32,9 +32,27 @@ const WEB_FR: Partial<Record<WebStatus, string>> = {
   unavailable: "sans web",
 };
 
-/** Analyses en cours (une par mission), partagées entre montages de l'écran. */
+/** Analyses en cours (une par mission), partagées entre montages de l'écran et avec le bandeau d'état. */
 const running = new Set<string>();
 const attempted = new Set<string>();
+const runListeners = new Set<() => void>();
+function setRunning(key: string, on: boolean) {
+  if (on) running.add(key);
+  else running.delete(key);
+  for (const f of runListeners) f();
+}
+/** Vrai pendant l'analyse « Rien à manquer » de cette mission (pour le bandeau d'état). */
+export function useBriefRunning(key: string): boolean {
+  const [, force] = useState(0);
+  useEffect(() => {
+    const f = () => force((x) => x + 1);
+    runListeners.add(f);
+    return () => {
+      runListeners.delete(f);
+    };
+  }, []);
+  return running.has(key);
+}
 
 function ago(iso: string) {
   const m = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 60_000));
@@ -59,7 +77,7 @@ export function MissionBriefPanel({ mission, during, risk }: { mission: string; 
 
   const run = async () => {
     if (running.has(key) || !feed) return;
-    running.add(key);
+    setRunning(key, true);
     setFailed(false);
     setStage(web === "unavailable" ? "write" : "search");
     try {
@@ -69,7 +87,7 @@ export function MissionBriefPanel({ mission, during, risk }: { mission: string; 
     } catch {
       setFailed(true);
     } finally {
-      running.delete(key);
+      setRunning(key, false);
       setStage(null);
     }
   };

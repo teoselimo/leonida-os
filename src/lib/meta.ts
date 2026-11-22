@@ -51,6 +51,13 @@ export const DIFFICULTY = ["", "Facile", "Moyen", "Exigeant"] as const;
 
 /** Anti-spoiler : libellés courts (puce) et cycle au toucher. */
 export const SPOILER_LABEL: Record<SpoilerMode, string> = { strict: "Complet", relaxed: "Léger", off: "Aucun" };
+/** Ce que le joueur voit réellement, plus parlant qu'un nom de niveau. */
+export const SPOILER_STATE: Record<SpoilerMode, string> = { strict: "Masqués", relaxed: "Floutés", off: "Visibles" };
+export const SPOILER_HINT: Record<SpoilerMode, string> = {
+  strict: "Rien au-delà de ta progression.",
+  relaxed: "La suite est floutée, révélable au toucher.",
+  off: "Tout est affiché, révélations comprises.",
+};
 export const SPOILER_NEXT: Record<SpoilerMode, SpoilerMode> = { strict: "relaxed", relaxed: "off", off: "strict" };
 export const SPOILER_FR: Record<SpoilerMode, string> = {
   strict: "complet — ne rien révéler au-delà du chapitre et de la mission atteints (ni nom de mission future, ni personnage, ni lieu de l'histoire)",

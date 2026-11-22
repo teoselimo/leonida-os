@@ -121,3 +121,11 @@ Tests : 219 passés (2 ignorés) — dont `tests/preventif.unit.spec.ts` (9) et 
 **Icône d'écran d'accueil — limite Claude** : sur iPhone, l'icône d'un raccourci « Sur l'écran d'accueil » vient du document de premier niveau (la page claude.ai), via ses balises `apple-touch-icon` / manifeste. LEONIDA tourne dans un cadre isolé sur un autre domaine : ses propres balises (présentes depuis la V0.4) sont ignorées, ce que confirme l'icône générique observée. Seuls réglages exposés par l'hébergeur : le **titre** de l'Artifact (renommé « LEONIDA OS », probable nom proposé par iOS) et un mot d'icône d'onglet générique (`icon`) dont l'effet sur l'écran d'accueil n'est pas documenté. Contournements réels : Raccourcis iOS (action « Ouvrir l'URL » + image personnalisée — mais l'ouverture se fait alors dans Safari, avec sa barre) ; version GitHub Pages (icône respectée, mais sans Claude ni Exa).
 
 Tests : 222 passés (2 ignorés), dont un test de compacité (en-tête < 56 px, mission < 260 px du haut, une seule alerte, bouton sans chevauchement).
+
+## 11. V0.11 « Identité » (22/11/2026, 03:35) — même Artifact
+
+**Audit** : le logo in-app était l'icône d'écran d'accueil (soleil à bandes + palmiers) réduite à 26–38 px : détails illisibles, ressemblance « pin », image matricielle floue. Le bandeau « LEONIDA / Bonne nuit » n'informait de rien. Le bouton flottant recopiait ce logo : il ne disait pas « conversation ». Le badge « Complet » nommait un niveau sans dire ce qu'il protège.
+
+**Fait** : logo de marque vectoriel (tuile à angles continus violet → rose, monogramme L épais + étincelle), net à toute taille ; bouton flottant = icône d'action (bulle de dialogue + étincelle) sur le dégradé de marque, libellé « Demander à LEONIDA » sur iPad ; bandeau d'état de session (mission active + état, alertes prioritaires de l'analyse et nombre vérifié, fraîcheur, ou « Copilote prêt · web actif » / « Analyse en cours… », pastille de couleur) ; zone droite = anti-spoiler explicite « Spoilers · Masqués / Floutés / Visibles » (couleur et icône par niveau, confirmation au toucher) ; plus de doublon du nom de mission entre bandeau et fiche ; iPad : logo seulement dans la barre latérale.
+
+Tests : 222 passés (2 ignorés) ; captures iPhone 393 × 852 et 375 × 667, iPad 1194 × 834.

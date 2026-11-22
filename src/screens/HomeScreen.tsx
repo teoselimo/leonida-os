@@ -15,7 +15,9 @@ import { RecoCard } from "@/components/RecoCard";
 import { ShieldChip } from "@/components/ShieldChip";
 import { CollectorAlert } from "@/components/LiveRadar";
 import { BrandMark } from "@/components/Brand";
-import { MissionBriefPanel } from "@/components/MissionBrief";
+import { MissionBriefPanel, useBriefRunning } from "@/components/MissionBrief";
+import { briefKey } from "@/lib/copilot/brief";
+import { useCopilotRuntime } from "@/lib/useCopilot";
 
 function greeting(d = new Date()) {
   const h = d.getHours();
@@ -98,15 +100,7 @@ export function HomeScreen() {
 
   return (
     <div className="screen home">
-      {/* En-tête compact : marque + salutation sur une ligne, anti-spoiler à droite (V0.10) */}
-      <header className="hbar" data-testid="home-header">
-        <BrandMark size={26} />
-        <h1 className="hbar__title">
-          <span className="hbar__brand">LEONIDA</span>
-          <span className="hbar__hi">{greeting()}{p.pseudo && p.pseudo !== "Joueur" ? `, ${p.pseudo}` : ""}</span>
-        </h1>
-        <ShieldChip />
-      </header>
+      <StatusBar mission={m.name} live={!!p.missionInProgress} />
 
       <CollectorAlert hideSnapshot />
 
@@ -114,13 +108,11 @@ export function HomeScreen() {
         <div className="home__col">
           {/* A — Ta prochaine mission */}
           <section className="missioncard glass" data-testid="next-mission">
-            <p className="missioncard__eyebrow">
-              <Icon name="flag" size={14} /> {m.name && p.missionInProgress && !editing ? "Mission en cours" : "Ta prochaine mission"}
-              {m.name && p.missionInProgress && !editing && <b className="pill pill--live pill--mini" data-testid="mission-live">EN COURS</b>}
-            </p>
+            {(!m.name || editing) && <p className="missioncard__eyebrow"><Icon name="flag" size={14} /> Ta prochaine mission</p>}
             {m.name && !editing ? (
               <>
-                <h2 className="missioncard__name" data-testid="next-mission-name">{m.name}</h2>
+                {/* le nom est déjà dans le bandeau d'état : titre conservé pour l'accessibilité, sans doublon visuel */}
+                <h2 className="missioncard__name sr-only" data-testid="next-mission-name">{m.name}</h2>
                 <p className="missioncard__meta">
                   {!m.info ? "Pas encore documentée par la veille" : m.info.chapter != null ? `Chapitre ${m.info.chapter}` : "Chapitre non documenté"}
                   {m.brief?.guide ? " · guide disponible" : ""}
@@ -313,5 +305,52 @@ function Objectives({ mission }: { mission: string }) {
         </form>
       )}
     </div>
+  );
+}
+
+/**
+ * Bandeau d'état de session (V0.11) : ce dont le joueur a besoin d'un coup d'œil — mission active et son état,
+ * alertes prioritaires de l'analyse, fraîcheur de l'analyse, copilote prêt — et l'anti-spoiler à droite.
+ * La marque reste présente mais discrète (logo seul).
+ */
+function StatusBar({ mission, live }: { mission: string | null; live: boolean }) {
+  const { state } = useStore();
+  const { transport, web, ready } = useCopilotRuntime();
+  const key = mission ? briefKey(mission) : "";
+  const runningNow = useBriefRunning(key);
+  const brief = mission ? state.briefs?.[key] : undefined;
+  const inObj = (t: string) => (state.profile.objectives ?? []).some((o) => mission && o.mission.toLowerCase() === mission.toLowerCase() && o.text.toLowerCase() === t.toLowerCase());
+  const open = (brief?.items ?? []).filter((b) => b.priority === "haute" && !inObj(b.text));
+  const verified = open.filter((b) => b.status === "confirmé").length;
+  const mins = brief ? Math.max(0, Math.round((Date.now() - Date.parse(brief.at)) / 60_000)) : 0;
+  const fresh = !brief ? "" : mins < 1 ? "à l'instant" : mins < 60 ? `il y a ${mins} min` : `il y a ${Math.round(mins / 60)} h`;
+  const tone = !mission ? "idle" : runningNow ? "busy" : open.length ? "alert" : brief ? "ok" : "idle";
+  const line2 = !mission
+    ? "Choisis ta prochaine mission"
+    : runningNow
+      ? "Analyse « Rien à manquer » en cours…"
+      : brief
+        ? `${open.length ? `${open.length} alerte${open.length > 1 ? "s" : ""}${verified ? ` · ${verified} vérifiée${verified > 1 ? "s" : ""}` : ""}` : "Aucune alerte prioritaire"} · analyse ${fresh}`
+        : !ready
+          ? "Préparation du copilote…"
+          : transport
+            ? `Copilote prêt${web === "ok" ? " · web actif" : ""}`
+            : "Mode direct (sans IA générative)";
+  const goto = () => document.querySelector('[data-testid="next-mission"]')?.scrollIntoView({ behavior: "smooth", block: "start" });
+  return (
+    <header className={`sbar sbar--${tone}`} data-testid="home-header">
+      <BrandMark size={34} title="LEONIDA OS" />
+      <button className="sbar__main press" onClick={goto} data-testid="status-main">
+        <span className="sbar__l1">
+          <strong data-testid="status-mission">{mission ?? "Aucune mission active"}</strong>
+          {mission && <b className={`sbar__state${live ? " is-live" : ""}`} data-testid={live ? "mission-live" : "mission-upcoming"}>{live ? "En cours" : "À venir"}</b>}
+        </span>
+        <span className="sbar__l2" data-testid="status-line">
+          <i className="sbar__dot" aria-hidden />
+          {line2}
+        </span>
+      </button>
+      <ShieldChip />
+    </header>
   );
 }

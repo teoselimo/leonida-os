@@ -16,7 +16,7 @@ import { useIsTablet } from "@/lib/useMedia";
 import { SPRINGS, spring, tick } from "@/lib/motion";
 import type { SpringHandle } from "@/lib/motion";
 import { Sheet } from "./Sheet";
-import { BrandMark } from "./Brand";
+import { BrandMark, CopilotGlyph } from "./Brand";
 import { Icon } from "./ui/Icon";
 
 type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean; stage?: "search" | "write"; checklist?: CopilotAnswer["checklist"]; web?: CopilotAnswer["web"]; mission?: string };
@@ -399,9 +399,9 @@ export function AiCopilot() {
   return (
     <>
       {!aiOpen && (
-        <button className={`aifab glass press view-${view}`} onClick={() => { tick(); setAiOpen(true); }} data-testid="ai-open" aria-label="Demander à Leonida">
-          <BrandMark size={24} />
-          <span>Demander à Leonida</span>
+        <button className={`aifab press view-${view}`} onClick={() => { tick(); setAiOpen(true); }} data-testid="ai-open" aria-label="Parler au copilote LEONIDA">
+          <CopilotGlyph size={26} />
+          <span>Demander à LEONIDA</span>
         </button>
       )}
       {aiOpen && !isTablet && (
