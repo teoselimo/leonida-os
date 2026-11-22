@@ -7,11 +7,11 @@
   "model": "Stanier",
   "year": "55",
   "aliases": null,
-  "kind": "hidden",
+  "kind": "delivery",
   "variant": null,
   "edition": {
    "exclusive": "preorder",
-   "status": "reported",
+   "status": "confirmed",
    "support": [
     {
      "sourceName": "Push Square",
@@ -30,15 +30,21 @@
       "quote": "A marker will appear on your map telling you to visit the familiar Ocean View Hotel in Vice Beach , telling you to pick up your '55 Vapid Stanier , which can be located like below:"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+      "quote": "Select Collect Your ’55 Vapid Stanier, then follow the marker to Ocean View Hotel in Ocean Beach."
+     }
+    ]
    },
-   "district": "Vice Beach",
+   "district": "Ocean Beach",
    "regionId": "vicecity",
    "precision": "zone",
    "zone": {
-    "x": 1636,
-    "y": 1096,
-    "radius": 1198,
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
     "widened": false
    },
    "point": null,
@@ -69,7 +75,13 @@
    "rule": null,
    "mode": "yes"
   },
-  "steps": [],
+  "steps": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+    "quote": "Get in to claim it."
+   }
+  ],
   "risks": [],
   "price": null,
   "media": null,
@@ -80,24 +92,38 @@
     "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
     "official": false,
     "readAt": "2026-11-21T10:16:04.154Z"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+    "title": "How to Claim the Vintage Vice City Pack Rewards in GTA 6",
+    "official": false,
+    "readAt": "2026-11-22T22:28:08.190Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Zone de recherche autour de Vice Beach (repères de la carte communautaire), pas un point exact."
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "sécurité (traqueur, alarme, clé)"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-22T22:28:08.190Z",
   "revisions": [
    {
     "at": "2026-11-21T09:57:39.890Z",
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   },
+   {
+    "at": "2026-11-22T22:28:08.190Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2",
+     "édition : preorder (reported) → preorder (confirmed)"
     ]
    }
   ]
@@ -1908,6 +1934,11 @@
       "sourceName": "GTA BOOM",
       "url": "https://www.gtaboom.com/gta-6-moses-vehicle-theft-guide-2d3f",
       "quote": "Open the main garage door with the switch beside it, use the Slim Jim on the red Vamos and drive it back to Port Gellhorn."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+      "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
      }
     ]
    },
@@ -1967,6 +1998,11 @@
     "sourceName": "GTA BOOM",
     "url": "https://www.gtaboom.com/gta-6-moses-vehicle-theft-guide-2d3f",
     "quote": "Open the main garage door with the switch beside it, use the Slim Jim on the red Vamos and drive it back to Port Gellhorn."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+    "quote": "Enter the code to open the garage, break in with the slimjim, then hit the button to open the door."
    }
   ],
   "risks": [],
@@ -1986,11 +2022,18 @@
     "title": "GTA 6 Moses Vehicle Theft Guide: All Five Cars and Where to Find Them",
     "official": false,
     "readAt": "2026-11-21T21:44:06.017Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+    "title": "How to steal the Declasse Vamos in GTA 6",
+    "official": false,
+    "readAt": "2026-11-22T22:28:08.190Z"
    }
   ],
   "reliability": "confirmed",
   "reasons": [
-   "2 sources indépendantes concordantes sur l'emplacement.",
+   "3 sources indépendantes concordantes sur l'emplacement.",
    "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -1998,7 +2041,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T21:44:06.017Z",
+  "updatedAt": "2026-11-22T22:28:08.190Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -2013,6 +2056,13 @@
     "changes": [
      "fiabilité : reported → confirmed",
      "preuves : 1 → 2"
+    ]
+   },
+   {
+    "at": "2026-11-22T22:28:08.190Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
     ]
    }
   ]
@@ -2333,6 +2383,104 @@
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-find-shore-court",
+  "type": "garage",
+  "name": "Find Shore Court Garage",
+  "make": "",
+  "model": "Find Shore Court Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "teal",
+   "support": [
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+     "quote": "Once you’ve claimed the car, follow the teal Shore Court Garage marker in Ocean Beach."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Once you’ve claimed the car, follow the teal Shore Court Garage marker in Ocean Beach.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+      "quote": "Once you’ve claimed the car, follow the teal Shore Court Garage marker in Ocean Beach."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+    "title": "How to Claim the Vintage Vice City Pack Rewards in GTA 6",
+    "official": false,
+    "readAt": "2026-11-22T22:28:08.190Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-22T22:28:08.190Z",
+  "updatedAt": "2026-11-22T22:28:08.190Z",
+  "revisions": [
+   {
+    "at": "2026-11-22T22:28:08.190Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA BOOM"
     ]
    }
   ]
@@ -4025,7 +4173,17 @@
   "year": null,
   "aliases": null,
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "teal",
+   "support": [
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+     "quote": "Once you’ve claimed the car, follow the teal Shore Court Garage marker in Ocean Beach."
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
    "exclusive": "preorder",
    "status": "reported",
@@ -4047,12 +4205,23 @@
       "quote": "The car is unlocked, and once you get inside you'll automatically receive the Shore Court garage as well as new clothes in your wardrobe."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+      "quote": "Once you’ve claimed the car, follow the teal Shore Court Garage marker in Ocean Beach."
+     }
+    ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -4082,24 +4251,40 @@
     "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
     "official": false,
     "readAt": "2026-11-21T10:16:04.154Z"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-vintage-vice-city-pack-claim-guide-3ca6",
+    "title": "How to Claim the Vintage Vice City Pack Rewards in GTA 6",
+    "official": false,
+    "readAt": "2026-11-22T22:28:08.190Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-22T22:28:08.190Z",
   "revisions": [
    {
     "at": "2026-11-21T09:57:39.890Z",
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   },
+   {
+    "at": "2026-11-22T22:28:08.190Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2",
+     "localisation : text → zone"
     ]
    }
   ]
