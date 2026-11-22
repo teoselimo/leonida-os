@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { frHeadline, frSummary } from "@/lib/fr";
+import { useRedact } from "@/lib/useRedact";
+import { JOURNAL_FR, recordKind } from "@/lib/journal";
 import { glossaryOf } from "@/lib/missions";
 import { useStore } from "@/lib/store";
 /** Build de l'Artifact : flux = instantané daté embarqué (NEXT_PUBLIC_FEED_SNAPSHOT=1). */
@@ -118,6 +120,7 @@ const fmtDate = (d: string) => new Date(d).toLocaleString("fr-FR", { day: "numer
 function FactSheet({ r }: { r: RadarRecord }) {
   const d = r.details;
   const [open, setOpen] = useState<string | null>(null);
+  const redact = useRedact();
   if (!d) return null;
   type Row = { k: string; label: string; value: string | null; field: { support: { sourceName: string; url: string; quote: string }[]; conflicts: { sourceName: string; quote: string }[] } | null; warn?: boolean };
   const rows: Row[] = [
@@ -141,7 +144,7 @@ function FactSheet({ r }: { r: RadarRecord }) {
           <span className="fsrow__label">{row.label}</span>
           {row.value ? (
             <button className="fsrow__value" onClick={() => setOpen(open === row.k ? null : row.k)} aria-expanded={open === row.k}>
-              {row.value}
+              {redact(row.value)}
               <small>{row.field ? `${row.field.support.length} source${row.field.support.length > 1 ? "s" : ""}` : ""}{row.field?.conflicts.length ? " · contesté" : ""}</small>
             </button>
           ) : (
@@ -149,8 +152,8 @@ function FactSheet({ r }: { r: RadarRecord }) {
           )}
           {open === row.k && row.field && (
             <div className="fsrow__proof">
-              {row.field.support.map((p) => <q key={p.url + p.quote}><a href={p.url} target="_blank" rel="noreferrer">{p.sourceName}</a> « {p.quote} »</q>)}
-              {row.field.conflicts.map((p) => <q key={"c" + p.quote} className="is-conflict">Contredit par {p.sourceName} : « {p.quote} »</q>)}
+              {row.field.support.map((p) => <q key={p.url + p.quote}><a href={p.url} target="_blank" rel="noreferrer">{p.sourceName}</a> « {redact(p.quote)} »</q>)}
+              {row.field.conflicts.map((p) => <q key={"c" + p.quote} className="is-conflict">Contredit par {p.sourceName} : « {redact(p.quote)} »</q>)}
             </div>
           )}
         </div>
@@ -161,10 +164,10 @@ function FactSheet({ r }: { r: RadarRecord }) {
 
 const cleanName = (s: string) => s.replace(/\s*\([^)]*\)\s*$/, "");
 
-function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; focused?: boolean }) {
+export function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; focused?: boolean }) {
   const [open, setOpen] = useState(!!focused);
   const ref = useRef<HTMLElement>(null);
-  const { state, setDone, celebrate } = useStore();
+  const { state, setDone, markDone } = useStore();
   useEffect(() => {
     if (!focused) return;
     setOpen(true);
@@ -174,7 +177,8 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
   const lead = r.evidence[0];
   const sources = Array.from(new Set(r.evidence.map((e) => cleanName(e.sourceName))));
   const { feed } = useLiveRadar();
-  const title = frHeadline(r, glossaryOf(feed));
+  const redact = useRedact();
+  const title = redact(frHeadline(r, glossaryOf(feed)));
   const isDone = !!state.done[r.id];
   return (
     <article ref={ref} className={`signal live-card${Date.now() - Date.parse(r.firstSeenAt) < 6 * 3600_000 ? " is-new" : ""}${focused ? " is-focused" : ""}${isDone ? " is-done" : ""}`} data-testid={`live-${r.id}`}>
@@ -211,8 +215,8 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
       )}
 
       <h3>{blurred ? <SpoilerText strict={false} hint="Spoiler possible">{title}</SpoilerText> : title}</h3>
-      {!blurred && (r.category === "news" || r.category === "patch") && title !== r.title && <p className="small muted live-orig" lang="en">Titre d’origine (en anglais) : {r.title}</p>}
-      {!blurred && <p className="muted" data-testid="live-summary">{frSummary(r)}</p>}
+      {!blurred && (r.category === "news" || r.category === "patch") && title !== r.title && <p className="small muted live-orig" lang="en">Titre d’origine (en anglais) : {redact(r.title)}</p>}
+      {!blurred && <p className="muted" data-testid="live-summary">{redact(frSummary(r))}</p>}
       {!blurred && <FactSheet r={r} />}
 
       <div className="live-tags">
@@ -234,8 +238,8 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
           </a>
         )}
         {(r.actionable || r.details) && (
-          <button className={`btn btn--sm ${isDone ? "btn--on" : "btn--ghost"}`} onClick={() => { setDone(r.id, !isDone); if (!isDone) celebrate("Activité terminée"); }} data-testid="record-done" aria-pressed={isDone}>
-            <Icon name="check" size={15} /> {isDone ? "Fait" : "C'est fait"}
+          <button className={`btn btn--sm ${isDone ? "btn--on" : "btn--ghost"}`} onClick={() => (isDone ? setDone(r.id, false) : markDone(r.id, JOURNAL_FR[recordKind(r.category)].done, title))} data-testid="record-done" aria-pressed={isDone}>
+            <Icon name="check" size={15} /> {isDone ? "Fait ✓ (annuler)" : "Fait"}
           </button>
         )}
         <button className="btn btn--sm btn--ghost" onClick={() => setOpen((v) => !v)} aria-expanded={open}>{open ? "Moins" : "Détails"}</button>
@@ -250,7 +254,7 @@ function LiveCard({ r, blurred, focused }: { r: RadarRecord; blurred: boolean; f
             {r.evidence.map((e) => (
               <li key={e.rawKey}>
                 <a href={e.url} target="_blank" rel="noreferrer">{cleanName(e.sourceName)}</a> · {e.publishedAt ? fmtDate(e.publishedAt) : "date inconnue"}
-                <em className="small muted live-orig" lang="en"> · Titre d’origine : {e.title}</em>
+                <em className="small muted live-orig" lang="en"> · Titre d’origine : {redact(e.title)}</em>
                 {e.deep && <span className="small muted"> · {e.deep.ok ? `article lu ${timeAgo(e.deep.at)}${e.deep.aiOptOut ? " · IA exclue (souhait du site)" : ""}` : `non lu : ${e.deep.reason}`}</span>}
                 {e.quotes.length > 0 && <q>{e.quotes.join(" … ")}</q>}
               </li>

@@ -1,213 +1,293 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { alerts, progress, recommend } from "@/lib/engine";
-import { CATEGORIES, CHAPTERS, EDITIONS } from "@/lib/meta";
+import { CATEGORIES } from "@/lib/meta";
 import { repo, useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
 import { sessionPlan } from "@/lib/session";
-import type { SessionItem } from "@/lib/session";
 import { tick } from "@/lib/motion";
 import { Icon } from "@/components/ui/Icon";
 import { CategoryGlyph, DemoBadge, ProgressRing, SectionHead } from "@/components/ui/primitives";
-import { Visual } from "@/components/ui/Visual";
 import { RecoCard } from "@/components/RecoCard";
 import { ShieldChip } from "@/components/ShieldChip";
 import { CollectorAlert } from "@/components/LiveRadar";
-import { BrandMark } from "@/components/Brand";
-import { MissionBriefPanel, useBriefRunning } from "@/components/MissionBrief";
-import { DiscoverNow } from "@/components/DiscoverNow";
-import { briefKey } from "@/lib/copilot/brief";
-import { useCopilotRuntime } from "@/lib/useCopilot";
+import { useMissionBrief } from "@/components/MissionBrief";
+import { discoverNow, DISCOVER_CATS } from "@/lib/discover";
+import { buildBefore, BEFORE_KIND_FR } from "@/lib/before";
+import type { BeforeItem } from "@/lib/before";
+import { JOURNAL_FR } from "@/lib/journal";
+import { loadLandmarks } from "@/lib/gtadb";
+import type { Landmark } from "@/lib/gtadb";
+import { computeProgress } from "@/lib/progress";
+import { progressDelta } from "@/lib/ai/progressAnswers";
+import type { ProgressDelta } from "@/lib/ai/progressAnswers";
+import { useRedact } from "@/lib/useRedact";
 
-function greeting(d = new Date()) {
-  const h = d.getHours();
-  return h < 6 ? "Bonne nuit" : h < 18 ? "Bonjour" : "Bonsoir";
-}
+const SHOWN_CRITICAL = 3;
+const SHOWN_OPTIONAL = 2;
 
-function Thumb({ it, size = "thumb" }: { it: SessionItem; size?: "thumb" | "hero" }) {
-  return <Visual media={it.media} icon={it.icon} color={it.color} label={it.title} size={size} />;
-}
-
-/** Ligne « Avant de la lancer » : un visuel, un titre français, une phrase, deux actions. */
-function BeforeRow({ it, i, onGo, onDone }: { it: SessionItem; i: number; onGo: () => void; onDone: () => void }) {
-  return (
-    <article className={`brow${it.urgent ? " is-urgent" : ""}`} style={{ ["--i" as string]: i }} data-testid={it.vehicleId ? `car-advice-${it.vehicleId}` : `advice-${it.recordId}`}>
-      <button className="brow__main press" onClick={onGo} aria-label={`${it.go === "guide" ? "Me guider vers" : "Voir"} ${it.title}`}>
-        <Thumb it={it} />
-        <span className="brow__body">
-          <strong>{it.title}</strong>
-          <em>
-            {it.ultimate && <b className="edtag edtag--mini">ULTIMATE</b>}
-            {it.urgent && <b className="pill pill--warn pill--mini">À ne pas rater</b>}
-            {it.sub}
-          </em>
-        </span>
-      </button>
-      <div className="brow__actions">
-        <button className="btn btn--xs btn--on press" onClick={onGo}>{it.go === "guide" ? "Me guider" : "Voir"}</button>
-        <button className="btn btn--xs btn--ghost press" onClick={onDone} data-testid="advice-done">C&apos;est fait</button>
-      </div>
-    </article>
-  );
-}
-
-function FunCard({ it, onGo }: { it: SessionItem; onGo: () => void }) {
-  return (
-    <button className="funcard press" onClick={onGo} data-testid={it.vehicleId ? `car-advice-${it.vehicleId}` : `fun-${it.recordId}`}>
-      <span className="funcard__media">
-        <Thumb it={it} size="hero" />
-        {!it.media && <span className="funcard__ill">Illustration</span>}
-      </span>
-      <span className="funcard__body">
-        <strong>{it.kind === "vehicle" ? `🚗 ${it.title}` : it.title}</strong>
-        <em>{it.ultimate && <b className="edtag edtag--mini">ULTIMATE</b>}{it.sub}</em>
-        <span className="funcard__go"><Icon name={it.go === "guide" ? "locate" : "arrow"} size={14} /> {it.go === "guide" ? "Voir sur la carte" : "Voir"}</span>
-      </span>
-    </button>
-  );
-}
-
+/**
+ * Accueil V0.14 — une mission, une priorité, des découvertes.
+ * A. Mission (nom, état, changer, bouclier) · B. À faire avant de continuer (UNE liste priorisée)
+ * C. Une action principale selon l'état · D. Si tu as le temps (2 suggestions, puis « Tout voir »).
+ * Les sections vides disparaissent ; rien n'est dupliqué.
+ */
 export function HomeScreen() {
-  const { state, focusOnMap, setView, discoveries: all, signals, focusVehicle, openRecord, setDone, setVehicle, celebrate, setNextMission, setMission, setMissionInProgress } = useStore();
+  const store = useStore();
+  const { state, setMission, setMissionInProgress, setNextMission, notify, celebrate } = store;
   const { feed } = useLiveRadar();
-  const regions = repo.regions();
   const plan = useMemo(() => sessionPlan(feed, state), [feed, state]);
   const p = state.profile;
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState("");
-  const [confirmDone, setConfirmDone] = useState(false);
-  const m = plan.mission;
-  // éléments déjà affichés ailleurs sur l'accueil : jamais répétés dans « À découvrir maintenant »
-  const shownElsewhere = useMemo(
-    () => new Set([...plan.before, ...plan.fun].flatMap((it) => [it.id, it.recordId ?? "", it.vehicleId ? `veh:${it.vehicleId}` : ""]).filter(Boolean)),
-    [plan],
-  );
+  const mission = plan.mission.name;
+  const live = !!p.missionInProgress && !!mission;
+  const mb = useMissionBrief(mission);
+  const [landmarks, setLandmarks] = useState<Landmark[]>([]);
+  useEffect(() => void loadLandmarks().then(setLandmarks), []);
+  const byName = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const l of landmarks) if (!/^\?|Lieu non identifié/.test(l.name)) m.set(l.name.toLowerCase().replace(/^the /, ""), l.id);
+    return (n: string) => m.get(n.toLowerCase().replace(/^the /, "").trim()) ?? null;
+  }, [landmarks]);
+  const discover = useMemo(() => discoverNow(feed, state, { landmarkByName: byName }), [feed, state, byName]);
+  const view = useMemo(() => buildBefore(state, feed, discover, plan.before, mb.brief), [state, feed, discover, plan.before, mb.brief]);
+  const [justDone, setJustDone] = useState<{ name: string; delta: ProgressDelta } | null>(null);
+  const [confirmEnd, setConfirmEnd] = useState(false);
 
-  const go = (it: SessionItem) => {
+  const finish = () => {
+    if (!mission) return;
     tick();
-    if (it.vehicleId) focusVehicle(it.vehicleId);
-    else if (it.recordId) openRecord(it.recordId);
+    const delta = progressDelta(p, mission, state.done);
+    setMission(mission, true);
+    setConfirmEnd(false);
+    setJustDone({ name: mission, delta });
+    celebrate("Mission terminée");
   };
-  const done = (it: SessionItem) => {
+  const choose = (name: string, inProgress = false) => {
     tick();
-    if (it.recordId) setDone(it.recordId, true);
-    if (it.vehicleId) setVehicle(it.vehicleId, "stolen");
-    celebrate(it.vehicleId ? "Véhicule récupéré" : "Activité terminée");
-  };
-  const saveNext = (name: string, inProgress = false) => {
-    const n = name.trim();
-    if (!n) return;
-    tick();
-    setNextMission(n, inProgress);
-    setEditing(false);
-    setDraft("");
+    setNextMission(name, inProgress);
+    setJustDone(null);
+    notify(inProgress ? "Mission en cours" : "Prochaine mission notée", name, "flag");
   };
 
   return (
-    <div className="screen home">
-      <StatusBar mission={m.name} live={!!p.missionInProgress} />
-
+    <div className="screen home home14">
+      <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} />
       <CollectorAlert hideSnapshot />
 
-      <div className="home__grid">
-        <div className="home__col">
-          {/* A — Ta prochaine mission */}
-          <section className="missioncard glass" data-testid="next-mission">
-            {(!m.name || editing) && <p className="missioncard__eyebrow"><Icon name="flag" size={14} /> Ta prochaine mission</p>}
-            {m.name && !editing ? (
-              <>
-                {/* le nom est déjà dans le bandeau d'état : titre conservé pour l'accessibilité, sans doublon visuel */}
-                <h2 className="missioncard__name sr-only" data-testid="next-mission-name">{m.name}</h2>
-                <p className="missioncard__meta">
-                  {!m.info ? "Pas encore documentée par la veille" : m.info.chapter != null ? `Chapitre ${m.info.chapter}` : "Chapitre non documenté"}
-                  {m.brief?.guide ? " · guide disponible" : ""}
-                </p>
-                {/* État de la mission : déclaré par le joueur, en un geste ; « Terminée » demande confirmation */}
-                <div className="mstate" role="group" aria-label="État de la mission" data-testid="mission-state">
-                  <button className={`mstate__b press${!p.missionInProgress ? " is-on" : ""}`} aria-pressed={!p.missionInProgress} onClick={() => { tick(); setMissionInProgress(false); setConfirmDone(false); }} data-testid="mission-stop">À venir</button>
-                  <button className={`mstate__b press${p.missionInProgress ? " is-on is-live" : ""}`} aria-pressed={!!p.missionInProgress} onClick={() => { tick(); setMissionInProgress(true); setConfirmDone(false); }} data-testid="mission-start">En cours</button>
-                  <button className={`mstate__b press${confirmDone ? " is-on is-ask" : ""}`} onClick={() => { tick(); setConfirmDone(true); }} data-testid="mission-done">Terminée</button>
-                </div>
-                {confirmDone && (
-                  <span className="confirm confirm--block" data-testid="mission-done-confirm">
-                    <span>« {m.name} » terminée ? Elle passera dans tes missions faites.</span>
-                    <button className="btn btn--primary btn--xs" onClick={() => { setMission(m.name!, true); setConfirmDone(false); celebrate("Mission terminée"); }}>Oui</button>
-                    <button className="btn btn--ghost btn--xs" onClick={() => setConfirmDone(false)}>Non</button>
-                  </span>
-                )}
-                <MissionBriefPanel mission={m.name} during={m.during} risk={m.risk} />
-                <Objectives mission={m.name} />
-                <div className="missioncard__links">
-                  <button className="link small" onClick={() => { setDraft(""); setEditing(true); }} data-testid="mission-change">Changer de mission</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <h2 className="missioncard__name">{m.guess && !editing ? `« ${m.guess.name} » ?` : "Quelle est ta prochaine mission ?"}</h2>
-                <p className="missioncard__meta">
-                  {m.guess && !editing ? `Proposition ${m.guess.basis}. Confirme-la, je ne la devine pas.` : "Je ne la déduis pas de ton chapitre : indique-la pour préparer ta session."}
-                </p>
-                {m.guess && !editing ? (
-                  <div className="row gap8 wrap">
-                    <button className="btn btn--primary btn--sm press" onClick={() => saveNext(m.guess!.name)} data-testid="confirm-guess">Oui, c&apos;est elle</button>
-                    <button className="btn btn--ghost btn--sm press" onClick={() => setEditing(true)}>Une autre</button>
-                  </div>
-                ) : (
-                  <form className="missionform" onSubmit={(e) => { e.preventDefault(); saveNext(draft); }}>
-                    <input list="next-missions" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Nom de la mission (ex. Tourist Trap)" aria-label="Prochaine mission" data-testid="next-mission-input" maxLength={80} />
-                    <datalist id="next-missions">{m.choices.map((c) => <option key={c} value={c} />)}</datalist>
-                    <button className="btn btn--primary btn--sm" disabled={!draft.trim()} data-testid="next-mission-save">À venir</button>
-                    <button type="button" className="btn btn--ghost btn--sm" disabled={!draft.trim()} onClick={() => saveNext(draft, true)} data-testid="next-mission-live">En cours</button>
-                  </form>
-                )}
-              </>
-            )}
-          </section>
-
-          {/* A bis — À découvrir maintenant (V0.13) */}
-          <DiscoverNow exclude={shownElsewhere} />
-
-          {/* B — Avant de la lancer */}
-          <section className="beforesec" data-testid="live-advice">
-            <SectionHead title={m.name ? "Avant de la lancer" : "Avant de continuer"} />
-            {plan.before.length ? (
-              <div className="brows stagger">
-                {plan.before.map((it, i) => <BeforeRow key={it.id} it={it} i={i} onGo={() => go(it)} onDone={() => done(it)} />)}
-              </div>
-            ) : (
-              <p className="card empty" data-testid="now-empty">{feed ? `Rien d'urgent confirmé avant ${m.name ? "cette mission" : "de continuer"}.` : "Chargement de la veille…"}</p>
-            )}
-          </section>
-        </div>
-
-        <div className="home__col">
-          {/* C — Envie de t'amuser ? */}
-          {plan.fun.length > 0 && (
-            <section className="funsec" data-testid="fun-picks">
-              <SectionHead title="Envie de t’amuser avant de poursuivre ?" />
-              <div className="funrow">
-                {plan.fun.map((it) => <FunCard key={it.id} it={it} onGo={() => go(it)} />)}
-              </div>
-            </section>
+      {(mission || view.critical.length > 0) && (
+        <section className="before glass" data-testid="before">
+          <header className="before__head">
+            <h2>{live ? "Pendant la mission" : "Avant de continuer"}</h2>
+            {mission && <button className="before__meta press" onClick={() => { tick(); void mb.run(); }} disabled={mb.busy || !mb.canRun} data-testid="nothing-to-miss" aria-label="Mettre à jour l'analyse de la mission">
+              <span data-testid="brief-meta">{mb.meta}</span>
+              {mb.busy ? <span className="spin" aria-hidden /> : <Icon name="reset" size={14} />}
+            </button>}
+          </header>
+          <BeforeList items={view.critical} shown={SHOWN_CRITICAL} mission={mission ?? ""} testid="before-item" empty={
+            mb.busy
+              ? "Analyse de la mission en cours…"
+              : view.analysed
+                ? "Aucune perte définitive documentée pour cette mission dans les sources consultées. Ce n'est pas une garantie : garde l'œil ouvert."
+                : "Pas encore d'analyse pour cette mission. Aucune perte n'est documentée dans nos fiches, ce qui ne garantit rien."
+          } />
+          {view.pnr && (
+            <p className="before__pnr" data-testid="pnr"><Icon name="clock" size={13} /><span>Point de non-retour {view.pnr} : les éléments marqués « non-retour » y sont perdus.</span></p>
           )}
+          {mb.failed && <p className="before__note">L&apos;analyse n&apos;a pas abouti. Réessaie dans un instant.</p>}
+        </section>
+      )}
 
-          {/* D — Le reste : progression compacte, liens vers les onglets */}
-          <section className="progcompact" data-testid="my-game">
-            <button className="progcompact__line press" onClick={() => setView("profil")} data-testid="context-bar">
-              <span>{CHAPTERS[p.chapter]}</span><i />
-              <span>{EDITIONS[p.edition] === "Je ne sais pas" ? "Édition ?" : EDITIONS[p.edition]}</span><i />
-              <span>{plan.stats.missions} mission{plan.stats.missions > 1 ? "s" : ""}</span><i />
-              <span>{plan.stats.vehicles} véhicule{plan.stats.vehicles > 1 ? "s" : ""} gardé{plan.stats.vehicles > 1 ? "s" : ""}</span>
-              <Icon name="chevronRight" size={14} />
-            </button>
-            <button className="link small" onClick={() => setView("radar")} data-testid="explore-more">Explorer davantage <Icon name="chevronRight" size={12} /></button>
-          </section>
+      {/* C — action principale */}
+      {mission && !confirmEnd && (
+        <button className={`maincta press${live ? " is-live" : ""}`} onClick={() => (live ? setConfirmEnd(true) : (tick(), setMissionInProgress(true), notify("Mission en cours", mission, "flag")))} data-testid={live ? "mission-done" : "mission-start"}>
+          {live ? "J'ai terminé" : "Je lance la mission"}
+        </button>
+      )}
+      {mission && confirmEnd && (
+        <div className="maincta__confirm glass" data-testid="mission-done-confirm">
+          <span>« {mission} » terminée ? Elle passera dans tes missions faites.</span>
+          <div className="row gap8">
+            <button className="btn btn--ghost btn--sm press" onClick={() => setConfirmEnd(false)}>Non</button>
+            <button className="btn btn--primary btn--sm press" onClick={finish}>Oui, terminée</button>
+          </div>
         </div>
-      </div>
+      )}
+      {live && <Objectives mission={mission!} />}
 
-      {state.showDemo && <DemoSection regions={regions} all={all} signals={signals} focusOnMap={focusOnMap} setView={setView} />}
+      {!mission && <NextChoice justDone={justDone} onChoose={choose} guess={plan.mission.guess} choices={plan.mission.choices} />}
+
+      {view.optional.length > 0 && <MaybeList items={view.optional} />}
+
+      {state.showDemo && <DemoSection regions={repo.regions()} all={store.discoveries} signals={store.signals} focusOnMap={store.focusOnMap} setView={store.setView} />}
     </div>
+  );
+}
+
+/** A — mission principale : nom, état (menu), bouclier discret. */
+function MissionHeader({ mission, live, onEnd }: { mission: string | null; live: boolean; onEnd: () => void }) {
+  const { setMissionInProgress, setNextMission } = useStore();
+  const [menu, setMenu] = useState(false);
+  return (
+    <header className="mhead" data-testid="home-header">
+      <div className="mhead__main" data-testid="next-mission">
+        <div className="mhead__row">
+          <p className="mhead__eyebrow">{mission ? "Mission principale" : "Aucune mission choisie"}</p>
+          {mission && (
+            <div className="mhead__statewrap">
+              <button className={`mstate14 press${live ? " is-live" : ""}`} onClick={() => (tick(), setMenu((v) => !v))} aria-haspopup="menu" aria-expanded={menu} data-testid={live ? "mission-live" : "mission-upcoming"}>
+                <i aria-hidden /> {live ? "En cours" : "À venir"} <Icon name="chevronRight" size={12} />
+              </button>
+              {menu && (
+                <div className="mstate14__menu" role="menu" data-testid="mission-state">
+                  <button role="menuitem" onClick={() => (tick(), setMissionInProgress(false), setMenu(false))} data-testid="mission-stop">À venir</button>
+                  <button role="menuitem" onClick={() => (tick(), setMissionInProgress(true), setMenu(false))}>En cours</button>
+                  <button role="menuitem" onClick={() => (setMenu(false), onEnd())}>Terminée…</button>
+                  <button role="menuitem" onClick={() => (tick(), setNextMission(null), setMenu(false))} data-testid="mission-change">Changer de mission</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        <h1 className="mhead__name" data-testid="next-mission-name">{mission ?? "Prochaine mission à choisir"}</h1>
+      </div>
+      <ShieldChip />
+    </header>
+  );
+}
+
+/** Marque « Fait » en un toucher (V0.14) — chaque type garde son stockage ; « Annuler » ~5 s, puis depuis Partie. */
+function useDone() {
+  const { markDone, addObjective, notifyUndo, undoObjective } = useStore();
+  return (it: BeforeItem) => {
+    tick();
+    if (it.done.type === "done") markDone(it.done.key, JOURNAL_FR[it.done.kind].done, it.text);
+    else {
+      const { mission, text, source } = it.done;
+      addObjective({ mission, text, basis: it.status === "Vérifié" ? "vérifié" : "incertain", source, done: true });
+      notifyUndo(it.cat === "unique" ? "Objet récupéré" : "Noté comme fait", text, () => undoObjective(mission, text));
+    }
+  };
+}
+
+function TrustChip({ s }: { s: BeforeItem["status"] }) {
+  return <i className={`trust trust--${s === "Vérifié" ? "ok" : s === "Probable" ? "warn" : "low"}`}>{s}</i>;
+}
+
+/** B — liste priorisée : 3 éléments visibles, détails au toucher, « Tout voir ». */
+function BeforeList({ items, shown, empty, testid }: { items: BeforeItem[]; shown: number; mission: string; empty: string; testid: string }) {
+  const [all, setAll] = useState(false);
+  const [open, setOpen] = useState<string | null>(null);
+  const done = useDone();
+  const { showPlace, focusVehicle, openRecord } = useStore();
+  if (!items.length) return <p className="before__empty" data-testid="before-empty">{empty}</p>;
+  const list = all ? items : items.slice(0, shown);
+  return (
+    <>
+      <ul className="blist">
+        {list.map((it) => {
+          const isOpen = open === it.key;
+          return (
+            <li key={it.key} className={`bl${it.high ? " is-high" : ""}`} data-testid={testid} data-kind={it.kind} data-status={it.status}>
+              <button className="bl__check press" onClick={() => done(it)} aria-label={`Fait : ${it.text}`} data-testid="done-btn"><span /></button>
+              <button className="bl__body" onClick={() => setOpen(isOpen ? null : it.key)} aria-expanded={isOpen}>
+                <strong>{it.text}</strong>
+                <em>
+                  <TrustChip s={it.status} />
+                  {it.atPnr ? <b className="bl__pnr" title="Perdu au point de non-retour"><Icon name="clock" size={10} /> non-retour</b> : <span>{it.when ?? BEFORE_KIND_FR[it.kind]}</span>}
+                </em>
+              </button>
+              {isOpen && (
+                <div className="bl__detail" data-testid="before-detail">
+                  <p className="bl__kind">{BEFORE_KIND_FR[it.kind]}{it.high ? " · important" : ""}</p>
+                  {it.detail.map((d, i) => <p key={i}>{d}</p>)}
+                  {it.sources.length > 0 && <p className="bl__src">{it.sources.slice(0, 4).map((s, i) => <a key={i} href={s.url} target="_blank" rel="noreferrer">{s.name}</a>)}</p>}
+                  <div className="row gap8 wrap">
+                    {it.map?.vehicleId && <button className="btn btn--xs btn--on press" onClick={() => focusVehicle(it.map!.vehicleId!)} data-testid="before-map">Voir sur la carte</button>}
+                    {it.map?.landmarkId && <button className="btn btn--xs btn--on press" onClick={() => showPlace({ landmarkId: it.map!.landmarkId })} data-testid="before-map">Voir sur la carte</button>}
+                    {it.recordId && <button className="btn btn--xs btn--ghost press" onClick={() => openRecord(it.recordId!)}>Fiche du Guide</button>}
+                  </div>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      {items.length > shown && (
+        <button className="before__all press" onClick={() => setAll((v) => !v)} data-testid="before-all">{all ? "Réduire" : `Tout voir (${items.length})`}</button>
+      )}
+    </>
+  );
+}
+
+/** D — « Si tu as le temps » : annexes, véhicules, objets, argent, secrets. */
+function MaybeList({ items }: { items: BeforeItem[] }) {
+  const [all, setAll] = useState(false);
+  const done = useDone();
+  const { showPlace, focusVehicle, openRecord } = useStore();
+  const list = all ? items : items.slice(0, SHOWN_OPTIONAL);
+  return (
+    <section className="maybe" data-testid="discover-now">
+      <header className="maybe__head">
+        <h2>Si tu as le temps</h2>
+        {items.length > SHOWN_OPTIONAL && <button className="link small press" onClick={() => setAll((v) => !v)} data-testid="discover-all">{all ? "Réduire" : `Tout voir (${items.length})`}</button>}
+      </header>
+      <ul className="mlist">
+        {list.map((it) => {
+          const c = DISCOVER_CATS[it.cat];
+          const go = it.map?.vehicleId ? () => focusVehicle(it.map!.vehicleId!) : it.map?.landmarkId ? () => showPlace({ landmarkId: it.map!.landmarkId }) : it.recordId ? () => openRecord(it.recordId!) : null;
+          return (
+            <li key={it.key} className="ml" style={{ ["--c" as string]: c.color }} data-testid={`discover-${it.key}`} data-cat={it.cat} data-status={it.status}>
+              <span className="ml__ico" aria-hidden><Icon name={c.icon} size={15} /></span>
+              <button className="ml__body" onClick={() => go?.()} disabled={!go}>
+                <strong>{it.text}</strong>
+                <em>{c.label} · <TrustChip s={it.status} /></em>
+              </button>
+              <button className="ml__done press" onClick={() => done(it)} aria-label={`Fait : ${it.text}`} data-testid="discover-done"><Icon name="check" size={15} /></button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+/** C bis — après « J'ai terminé » ou sans mission : ce qui s'ouvre, choix sans progression linéaire inventée. */
+function NextChoice({ justDone, onChoose, guess, choices }: { justDone: { name: string; delta: ProgressDelta } | null; onChoose: (n: string, live?: boolean) => void; guess: { name: string; basis: string } | null; choices: string[] }) {
+  const { state } = useStore();
+  const redact = useRedact();
+  const [draft, setDraft] = useState("");
+  const v = useMemo(() => computeProgress(state), [state]);
+  const d = justDone?.delta;
+  // sans « terminé » récent : missions principales accessibles selon le graphe, sinon la proposition du catalogue
+  const open = d ? [...d.mains, ...d.potentials] : v.states.filter((x) => x.node.kind === "main" && (x.status === "accessible" || x.status === "potentiellement accessible") && !x.likelyDone);
+  return (
+    <section className="nextc glass" data-testid="next-choice">
+      {justDone && <p className="nextc__done"><Icon name="check" size={14} /> « {justDone.name} » terminée.</p>}
+      <h2>{open.length ? (open.length > 1 ? "Plusieurs suites possibles" : "Ça s'ouvre") : "Quelle mission ensuite ?"}</h2>
+      {open.length > 0 ? (
+        <ul className="nextc__list">
+          {open.map((x) => (
+            <li key={x.node.id}>
+              <span><b>{x.node.name}</b><em>{x.status === "accessible" ? "accessible d'après les sources" : "probablement accessible · à confirmer en jeu"}</em></span>
+              <button className="btn btn--xs btn--on press" onClick={() => onChoose(x.node.name)} data-testid="choose-next">Choisir</button>
+            </li>
+          ))}
+        </ul>
+      ) : guess ? (
+        <ul className="nextc__list"><li><span><b>{guess.name}</b><em>proposition {guess.basis}</em></span><button className="btn btn--xs btn--on press" onClick={() => onChoose(guess.name)} data-testid="confirm-guess">Choisir</button></li></ul>
+      ) : (
+        <p className="nextc__note">Je ne déduis pas la suite sans source : indique la mission affichée dans ton jeu.</p>
+      )}
+      {d && d.sides.length > 0 && <p className="nextc__line"><b>Activités débloquées :</b> {d.sides.map((x) => x.node.name).join(", ")}</p>}
+      {d && d.lost.length > 0 && <p className="nextc__line is-lost"><b>Plus disponible :</b> {d.lost.map((x) => x.node.name).join(", ")}</p>}
+      {d?.pnr && <p className="nextc__line is-pnr"><Icon name="clock" size={12} /> {redact(`Prochain point de non-retour ${d.pnr.where}`)}{d.pnr.lose.length ? ` : ${d.pnr.lose.slice(0, 2).join(", ")}` : ""}.</p>}
+      <form className="missionform" onSubmit={(e) => { e.preventDefault(); if (draft.trim()) onChoose(draft.trim()); }}>
+        <input list="next-missions" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Autre mission (nom affiché en jeu)" aria-label="Prochaine mission" data-testid="next-mission-input" maxLength={80} />
+        <datalist id="next-missions">{choices.map((c) => <option key={c} value={c} />)}</datalist>
+        <button className="btn btn--primary btn--sm" disabled={!draft.trim()} data-testid="next-mission-save">Choisir</button>
+      </form>
+    </section>
   );
 }
 
@@ -317,49 +397,3 @@ function Objectives({ mission }: { mission: string }) {
   );
 }
 
-/**
- * Bandeau d'état de session (V0.11) : ce dont le joueur a besoin d'un coup d'œil — mission active et son état,
- * alertes prioritaires de l'analyse, fraîcheur de l'analyse, copilote prêt — et l'anti-spoiler à droite.
- * La marque reste présente mais discrète (logo seul).
- */
-function StatusBar({ mission, live }: { mission: string | null; live: boolean }) {
-  const { state } = useStore();
-  const { transport, web, ready } = useCopilotRuntime();
-  const key = mission ? briefKey(mission) : "";
-  const runningNow = useBriefRunning(key);
-  const brief = mission ? state.briefs?.[key] : undefined;
-  const inObj = (t: string) => (state.profile.objectives ?? []).some((o) => mission && o.mission.toLowerCase() === mission.toLowerCase() && o.text.toLowerCase() === t.toLowerCase());
-  const open = (brief?.items ?? []).filter((b) => b.priority === "haute" && !inObj(b.text));
-  const verified = open.filter((b) => b.status === "confirmé").length;
-  const mins = brief ? Math.max(0, Math.round((Date.now() - Date.parse(brief.at)) / 60_000)) : 0;
-  const fresh = !brief ? "" : mins < 1 ? "à l'instant" : mins < 60 ? `il y a ${mins} min` : `il y a ${Math.round(mins / 60)} h`;
-  const tone = !mission ? "idle" : runningNow ? "busy" : open.length ? "alert" : brief ? "ok" : "idle";
-  const line2 = !mission
-    ? "Choisis ta prochaine mission"
-    : runningNow
-      ? "Analyse « Rien à manquer » en cours…"
-      : brief
-        ? `${open.length ? `${open.length} alerte${open.length > 1 ? "s" : ""}${verified ? ` · ${verified} vérifiée${verified > 1 ? "s" : ""}` : ""}` : "Aucune alerte prioritaire"} · analyse ${fresh}`
-        : !ready
-          ? "Préparation du copilote…"
-          : transport
-            ? `Copilote prêt${web === "ok" ? " · web actif" : ""}`
-            : "Mode direct (sans IA générative)";
-  const goto = () => document.querySelector('[data-testid="next-mission"]')?.scrollIntoView({ behavior: "smooth", block: "start" });
-  return (
-    <header className={`sbar sbar--${tone}`} data-testid="home-header">
-      <BrandMark size={34} title="LEONIDA OS" />
-      <button className="sbar__main press" onClick={goto} data-testid="status-main">
-        <span className="sbar__l1">
-          <strong data-testid="status-mission">{mission ?? "Aucune mission active"}</strong>
-          {mission && <b className={`sbar__state${live ? " is-live" : ""}`} data-testid={live ? "mission-live" : "mission-upcoming"}>{live ? "En cours" : "À venir"}</b>}
-        </span>
-        <span className="sbar__l2" data-testid="status-line">
-          <i className="sbar__dot" aria-hidden />
-          {line2}
-        </span>
-      </button>
-      <ShieldChip />
-    </header>
-  );
-}

@@ -12,11 +12,12 @@ export const CATEGORIES: Record<CategoryId, { label: string; plural: string; col
 export const CATEGORY_ORDER: CategoryId[] = ["activity", "collectible", "vehicle", "secret", "mission", "event"];
 
 export const RELIABILITY: Record<Reliability, { label: string; short: string; level: number; color: string }> = {
-  official: { label: "Source officielle (Rockstar)", short: "Officiel", level: 4, color: "#7CF29A" },
-  confirmed: { label: "Confirmé par plusieurs sources", short: "Confirmé", level: 3, color: "#2EE6D6" },
-  reported: { label: "Signalement isolé", short: "Signalé", level: 2, color: "#FFB547" },
-  rumor: { label: "Rumeur non confirmée", short: "Rumeur", level: 1, color: "#FF5C7A" },
-  personal: { label: "Relevé personnel, non vérifié", short: "Perso · non vérifié", level: 0, color: "#A9A4BC" },
+  // V0.14 : un seul vocabulaire dans toute l'app — Vérifié / Probable / Non confirmé
+  official: { label: "Vérifié — source officielle (Rockstar)", short: "Vérifié", level: 4, color: "#7CF29A" },
+  confirmed: { label: "Vérifié — sources indépendantes concordantes", short: "Vérifié", level: 3, color: "#7CF29A" },
+  reported: { label: "Probable — une seule source", short: "Probable", level: 2, color: "#FFD166" },
+  rumor: { label: "Non confirmé — rumeur", short: "Non confirmé", level: 1, color: "#C9C3D8" },
+  personal: { label: "Noté par toi, non vérifié", short: "Noté par toi", level: 0, color: "#A9A4BC" },
 };
 
 /** Seuil « fiable » : officiel ou confirmé. Un relevé personnel n'est jamais fiable par défaut. */
@@ -54,8 +55,8 @@ export const SPOILER_LABEL: Record<SpoilerMode, string> = { strict: "Complet", r
 /** Ce que le joueur voit réellement, plus parlant qu'un nom de niveau. */
 export const SPOILER_STATE: Record<SpoilerMode, string> = { strict: "Masqués", relaxed: "Floutés", off: "Visibles" };
 export const SPOILER_HINT: Record<SpoilerMode, string> = {
-  strict: "Rien au-delà de ta progression.",
-  relaxed: "La suite est floutée, révélable au toucher.",
+  strict: "Aucune mission future nommée, rien au-delà de ta progression.",
+  relaxed: "Noms de missions visibles ; fiches des chapitres suivants floutées.",
   off: "Tout est affiché, révélations comprises.",
 };
 export const SPOILER_NEXT: Record<SpoilerMode, SpoilerMode> = { strict: "relaxed", relaxed: "off", off: "strict" };

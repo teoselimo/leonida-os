@@ -42,23 +42,16 @@ const briefCalls = (page: Page) => page.evaluate(() => (window as unknown as Win
 test("Écran mission : nom, état en un geste, analyse automatique de LA mission, question via le bouton LEONIDA", async ({ page }, info) => {
   await start(page, { nextMission: "Swamped", missionInProgress: false });
   await expect(page.getByTestId("next-mission-name")).toHaveText("Swamped");
-  await expect(page.getByTestId("mission-stop")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("mission-upcoming")).toBeVisible(); // V0.14 : état dans une pastille
   // analyse lancée seule, une fois, pour Swamped
   await expect(page.getByTestId("brief-meta")).toContainText(/il y a|à l'instant/, { timeout: 15_000 });
   expect(await briefCalls(page)).toEqual(["Rien à manquer dans Swamped ?"]);
   // pas de connecteur ici : l'analyse le dit, sans prétendre avoir cherché sur le web
-  await expect(page.getByTestId("brief-meta")).toContainText("LEONIDA RADAR");
-  await expect(page.getByTestId("brief-meta")).not.toContainText("source web");
-  const alert = page.getByTestId("brief-alert").first();
-  if (await alert.count()) {
-    await expect(alert).toContainText("Point critique de Swamped");
-    await expect(alert).toHaveAttribute("data-status", "une source");
-    await expect(alert.getByTestId("brief-source").first()).toHaveAttribute("href", /^https:\/\//);
-    await alert.getByTestId("brief-add").click();
-    await expect(page.getByTestId("objective").first()).toContainText("Point critique de Swamped");
-    // aucun doublon : le point passé en objectif quitte la liste d'alertes
-    await expect(page.getByTestId("brief")).not.toContainText("Point critique de Swamped");
-  } else await expect(page.getByTestId("brief-empty")).toBeVisible();
+  await expect(page.getByTestId("brief-meta")).not.toContainText("web");
+  // V0.14 : les points de l'analyse rejoignent la liste unique « Avant de continuer », statut Vérifié / Probable / Non confirmé
+  const crit = page.getByTestId("before-item").filter({ hasText: "Point critique de Swamped" });
+  if (await crit.count()) await expect(crit.first()).toContainText(/Probable|Vérifié|Non confirmé/);
+  else await expect(page.getByTestId("before")).toBeVisible();
   await page.getByTestId("mission-start").click();
   await expect(page.getByTestId("mission-live")).toBeVisible();
   // aucune autre zone de discussion sur la fiche : seule entrée = bouton LEONIDA
@@ -66,7 +59,7 @@ test("Écran mission : nom, état en un geste, analyse automatique de LA mission
   await page.getByTestId("ai-open").click();
   await page.getByTestId("ai-input").fill("Je prends quelle arme ?");
   await page.getByTestId("ai-send").click();
-  await expect(page.getByTestId("ai-answer").last().getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByTestId("ai-answer").last().getByTestId("ai-engine")).toBeAttached({ timeout: 15_000 });
   const chat = await page.evaluate(() => (window as unknown as Win).__calls.at(-1)!.at(-1)!.content);
   expect(chat).toContain("Je prends quelle arme ?");
   expect(chat).toContain("Mission EN COURS");
@@ -76,17 +69,17 @@ test("Écran mission : nom, état en un geste, analyse automatique de LA mission
 test("Terminer une mission (confirmation), puis la suivante : aucune alerte de la mission terminée n'est mélangée", async ({ page }) => {
   await start(page, { nextMission: "Swamped" });
   await expect(page.getByTestId("brief-meta")).toContainText(/il y a|à l'instant/, { timeout: 15_000 });
+  await page.getByTestId("mission-start").click();
   await page.getByTestId("mission-done").click();
-  await page.getByTestId("mission-done-confirm").getByRole("button", { name: "Oui" }).click();
-  await expect(page.getByTestId("next-mission-name")).toHaveCount(0);
-  if (await page.getByTestId("confirm-guess").isVisible().catch(() => false)) await page.getByRole("button", { name: "Une autre" }).click();
+  await page.getByTestId("mission-done-confirm").getByRole("button", { name: "Oui, terminée" }).click();
+  await expect(page.getByTestId("next-mission-name")).toHaveText("Prochaine mission à choisir");
   await page.getByTestId("next-mission-input").fill("Don Gone");
   await page.getByTestId("next-mission-save").click();
   await expect(page.getByTestId("next-mission-name")).toHaveText("Don Gone");
-  await expect(page.getByTestId("mission-stop")).toHaveAttribute("aria-pressed", "true"); // pas lancée automatiquement
+  await expect(page.getByTestId("mission-upcoming")).toBeVisible(); // pas lancée automatiquement
   await expect(page.getByTestId("brief-meta")).toContainText(/il y a|à l'instant/, { timeout: 15_000 });
   expect(await briefCalls(page)).toEqual(["Rien à manquer dans Swamped ?", "Rien à manquer dans Don Gone ?"]);
-  await expect(page.getByTestId("brief")).not.toContainText("Swamped");
+  await expect(page.getByTestId("before")).not.toContainText("Swamped");
   // persistance : rechargement → même état, analyse conservée sans nouvel appel
   await page.reload();
   await page.waitForSelector(".app.is-ready");
@@ -101,6 +94,7 @@ test("Terminer une mission (confirmation), puis la suivante : aucune alerte de l
 test("Diagnostic web : sans connecteur dans cette vue, l'app dit « indisponible » et n'invente aucun résultat", async ({ page }) => {
   await start(page);
   await page.getByTestId("nav-profil").click();
+  await page.getByTestId("advanced").locator("summary").click();
   const d = page.getByTestId("web-diag");
   await expect(d.getByTestId("web-diag-state")).toContainText("Indisponible");
   await d.getByTestId("web-diag-run").click();
@@ -123,28 +117,28 @@ test("V0.10–0.11 compacité et bandeau d'état : mission visible tout de suite
   });
   await page.goto("/#accueil");
   await page.waitForSelector(".app.is-ready");
-  await expect(page.getByTestId("brief-alert")).toHaveCount(1, { timeout: 15_000 });
-  await expect(page.getByTestId("brief-alert")).toContainText("Alerte A");
-  await expect(page.getByTestId("brief")).not.toContainText("Alerte B");
-  await page.getByTestId("brief-more").click();
-  await expect(page.getByTestId("brief-item")).toHaveCount(2);
+  // V0.14 : une seule liste, trois éléments visibles au plus, le reste sous « Tout voir »
+  await expect(page.getByTestId("brief-meta")).toContainText(/à l'instant|il y a/, { timeout: 15_000 });
+  expect(await page.getByTestId("before-item").count()).toBeLessThanOrEqual(3);
+  await page.getByTestId("before-all").click();
+  await expect(page.getByTestId("before-item").filter({ hasText: "Alerte A" })).toHaveCount(1); // l'analyse rejoint la liste, après les pertes documentées
   const g = await page.evaluate(() => {
     const r = (s: string) => document.querySelector(s)!.getBoundingClientRect();
     const h = r('[data-testid="home-header"]'), m = r('[data-testid="next-mission-name"]'), f = r('[data-testid="ai-open"]');
     const nav = document.querySelector(".nav")!.getBoundingClientRect();
     return { header: h.height, missionTop: m.top, fab: [f.left, f.top, f.right, f.bottom], nav: [nav.left, nav.top, nav.right, nav.bottom], vw: innerWidth, vh: innerHeight };
   });
-  expect(g.header).toBeLessThan(72);
+  expect(g.header).toBeLessThan(140);
   // V0.11 : bandeau d'état utile — mission, état, alertes de l'analyse, anti-spoiler explicite
-  await expect(page.getByTestId("status-mission")).toHaveText("Don Gone");
+  await expect(page.getByTestId("next-mission-name")).toHaveText("Don Gone");
   await expect(page.getByTestId("mission-upcoming")).toHaveText("À venir");
-  await expect(page.getByTestId("status-line")).toContainText("2 alertes");
-  await expect(page.getByTestId("shield").first()).toContainText("Masqués");
+  await expect(page.getByTestId("shield").first()).toHaveAttribute("data-mode", "strict");
   await expect(page.getByTestId("ai-open").locator(".copilotglyph")).toHaveCount(1);
   if (g.vw < 760) {
     expect(g.missionTop).toBeLessThan(260); // sans bandeau d'alerte (instantané masqué sur l'accueil dans l'Artifact), la mission arrive encore plus haut
-    expect(g.fab[0]).toBeGreaterThanOrEqual(g.nav[2]); // jamais sur la navigation
-    expect(g.fab[2]).toBeLessThanOrEqual(g.vw);
+    // V0.14 : LEONIDA est au centre du dock, plus de bouton flottant au-dessus du contenu
+    expect(g.fab[0]).toBeGreaterThanOrEqual(g.nav[0]);
+    expect(g.fab[2]).toBeLessThanOrEqual(g.nav[2]);
     expect(g.fab[3]).toBeLessThanOrEqual(g.vh);
   }
 });

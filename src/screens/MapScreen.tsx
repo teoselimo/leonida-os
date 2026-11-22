@@ -27,9 +27,10 @@ import type { MapZone } from "@/components/map/types";
 import type { Discovery } from "@/lib/types";
 import { POI_CATS, POI_FILTERS, poiCategory, poiName, poiStatus, searchPois } from "@/lib/poi";
 import { EST_CATS, ESTABLISHMENTS } from "@/data/establishments";
-import { placementOf, PRECISION_FR, searchEstablishments } from "@/lib/places";
+import { isPoint, placementOf, PRECISION_FR, searchEstablishments } from "@/lib/places";
 import { EstablishmentCard } from "@/components/EstablishmentCard";
 import type { PoiCat } from "@/lib/poi";
+import { nodeByName } from "@/lib/progress";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
@@ -108,7 +109,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     setPlaceZone(
       pl.precision === "inconnue"
         ? null
-        : { id: `place:est:${id}`, x: pl.x!, y: pl.y!, radius: pl.precision === "point" ? 45 : pl.radius!, color: pl.precision === "point" ? "#7CF29A" : "#2EE6D6", kind: pl.precision === "point" ? "point" : "zone", label: e.name },
+        : { id: `place:est:${id}`, x: pl.x!, y: pl.y!, radius: isPoint(pl.precision) ? 45 : pl.radius!, color: isPoint(pl.precision) ? "#7CF29A" : "#2EE6D6", kind: isPoint(pl.precision) ? "point" : "zone", tag: PRECISION_FR[pl.precision], label: e.name },
     );
     return pl.precision;
   };
@@ -164,6 +165,29 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeFocus.nonce, landmarks.length]);
+
+  // V0.14 — premier cadrage : le quartier documenté de la mission du joueur (une fois par mission et par session),
+  // sinon la dernière vue consultée (gérée par la carte), sinon la vue d'ensemble. Jamais de position du personnage.
+  useEffect(() => {
+    if (!landmarks.length || placeFocus.nonce) return;
+    const node = nodeByName(state.profile.nextMission);
+    if (!node?.district) return;
+    const key = `leonida-os/framed/${node.id}`;
+    try {
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+    } catch {
+      return;
+    }
+    const d = node.district.toLowerCase();
+    const pts = landmarks.filter((l) => (l.district ?? "").toLowerCase().split(",")[0].trim() === d);
+    if (pts.length < 5) return; // quartier mal couvert par la carte communautaire : pas de cadrage approximatif
+    const x = pts.reduce((a, p) => a + p.x, 0) / pts.length;
+    const y = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+    const ds = pts.map((p) => Math.hypot(p.x - x, p.y - y)).sort((a, b) => a - b);
+    setView({ x, y, radius: Math.min(2200, ds[Math.floor(ds.length * 0.85)] + 150), nonce: -1 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [landmarks.length, state.profile.nextMission]);
 
   const selectDiscovery = (id: string | null) => {
     if (id?.startsWith("place:est:")) {
@@ -254,7 +278,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       const id = pinFor;
       setPinFor(null);
       setEstId(id);
-      setPlaceZone({ id: `place:est:${id}`, x, y, radius: 45, color: "#7CF29A", kind: "point", label: e?.name ?? "" });
+      setPlaceZone({ id: `place:est:${id}`, x, y, radius: 45, color: "#7CF29A", kind: "point", tag: "Placée par toi", label: e?.name ?? "" });
       setPlaceAck(`applied:pin:${id}`);
       return;
     }
@@ -309,13 +333,18 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     setQuery("");
   };
 
-  const search = (
+  const actionOf = (pr: string) => (pr === "inconnue" ? "Placer" : pr === "zone" ? "Zone" : "Voir");
+  const searchField = (
     <div className="search" onClick={(e) => e.stopPropagation()}>
       <div className="search__field">
         <Icon name="search" size={16} />
         <input autoFocus placeholder={`Rechercher parmi ${landmarks.length.toLocaleString("fr-FR")} lieux…`} value={query} onChange={(e) => setQuery(e.target.value)} data-testid="search-input" />
         <button onClick={closeSearch} aria-label="Fermer la recherche"><Icon name="close" size={16} /></button>
       </div>
+    </div>
+  );
+  const searchResults = (
+    <div className="search search--results" onClick={(e) => e.stopPropagation()}>
       {(results.disc.length > 0 || results.lms.length > 0 || results.ests.length > 0) && (
         <div className="search__results" data-testid="search-results">
           {results.ests.length > 0 && <p className="search__group">Établissements confirmés · {results.ests.length}</p>}
@@ -325,7 +354,10 @@ export function MapScreen({ active = true }: { active?: boolean }) {
               <button key={e.id} onClick={() => { closeSearch(); openEst(e.id); }} data-testid={`est-${e.id}`} data-precision={pl.precision}>
                 <span className="glyph glyph--lm" style={{ width: 28, height: 28, color: "#7CF29A" }}><Icon name="check" size={14} /></span>
                 <span><strong>{e.name}</strong><em>{e.kind ?? EST_CATS[e.cats[0]].label} · {e.district === "Mariana County" ? "comté de Mariana" : e.district}</em></span>
-                <span className={`search__prec search__prec--${pl.precision}`}>{PRECISION_FR[pl.precision]}</span>
+                <span className="search__side">
+                  <span className={`search__prec search__prec--${pl.precision}`}>{PRECISION_FR[pl.precision]}</span>
+                  <span className="search__act">{actionOf(pl.precision)}</span>
+                </span>
               </button>
             );
           })}
@@ -340,6 +372,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
             <button key={l.id} onClick={() => { closeSearch(); selectLandmark(l.id); }} data-testid={`result-${l.id}`}>
               <span className="glyph glyph--lm" style={{ width: 28, height: 28, color: POI_CATS[poiCategory(l)].color }}><b style={{ fontSize: 13 }}>{POI_CATS[poiCategory(l)].glyph}</b></span>
               <span><strong>{poiName(l)}</strong><em>{POI_CATS[poiCategory(l)].label} · {l.district || "Leonida"}{poiStatus(l) === "uncertain" ? " · incertain" : ""}</em></span>
+              <span className="search__side"><span className="search__prec search__prec--repere">Repère communautaire</span><span className="search__act">Voir</span></span>
             </button>
           ))}
         </div>
@@ -347,6 +380,16 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       {query.trim().length >= 2 && !results.disc.length && !results.lms.length && !results.ests.length && <div className="search__results"><p className="muted small pad">Aucun résultat.</p></div>}
     </div>
   );
+  const hasResults = searchOpen && query.trim().length >= 2;
+  const search = (
+    <>
+      {searchField}
+      {searchResults}
+    </>
+  );
+  const [more, setMore] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const shopsOn = showLandmarks && poiCats.length === 1 && poiCats[0] === "commerce";
 
   const togglePoi = (c: PoiCat) => setPoiCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]));
   const toggleCat = (c: CategoryId) =>
@@ -358,7 +401,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
 
   const garageChip = (
     <button className={`fchip fchip--garage ${garage ? "is-on" : ""}`} onClick={() => { setGarageStore({ on: !garage, filter: null }); selectVehicle(null); }} aria-pressed={garage} data-testid="filter-garage">
-      <span aria-hidden>🚗</span> Voitures cachées <b>{vehicleViews.filter((x) => !x.hidden && x.v.type === "vehicle").length}</b>
+      {garage && <span aria-hidden>🚗</span>} Voitures{garage && <b>{vehicleViews.filter((x) => !x.hidden && x.v.type === "vehicle").length}</b>}
     </button>
   );
   const filters = garage ? (
@@ -374,11 +417,21 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       })}
     </div>
   ) : (
-    <div className="filters" onClick={(e) => e.stopPropagation()}>
+    <div className="filters14" onClick={(e) => e.stopPropagation()}>
+    <div className="filters">
+      <button className={`fchip ${shopsOn ? "is-on" : ""}`} onClick={() => { if (shopsOn) setPoiCats([]); else { setShowLandmarks(true); setPoiCats(["commerce"]); } }} aria-pressed={shopsOn} data-testid="filter-shops">
+        <i className="fchip__dot" style={{ background: POI_CATS.commerce.color }} /> Commerces
+      </button>
       {garageChip}
       <button className={`fchip ${showLandmarks ? "is-on" : ""}`} onClick={() => setShowLandmarks((v) => !v)} aria-pressed={showLandmarks} data-testid="filter-landmarks">
-        <i className="fchip__dot" style={{ background: "#e9f6ff" }} /> Lieux
+        <i className="fchip__dot" style={{ background: "#e9f6ff" }} /> Repères
       </button>
+      <button className={`fchip ${more ? "is-on" : ""}`} onClick={() => setMore((v) => !v)} aria-expanded={more} data-testid="filter-more">
+        <Icon name="plus" size={14} /> Plus
+      </button>
+    </div>
+    {more && (
+    <div className="filters filters--more" data-testid="filters-more">
       <button className={`fchip ${onlyNew ? "is-on" : ""}`} onClick={() => setOnlyNew((v) => !v)} aria-pressed={onlyNew} data-testid="filter-new">
         <Icon name="sparkle" size={14} /> Nouveau
       </button>
@@ -406,13 +459,10 @@ export function MapScreen({ active = true }: { active?: boolean }) {
         </button>
       ))}
     </div>
+    )}
+    </div>
   );
 
-  const searchBtn = (
-    <button className="iconbtn iconbtn--glass" onClick={() => setSearchOpen(true)} aria-label="Rechercher un lieu" data-testid="search-btn">
-      <Icon name="search" size={18} />
-    </button>
-  );
 
   const mapEl = (occlusion: { top: number; bottom: number; left: number }) => (
     <LeonidaMap
@@ -495,8 +545,8 @@ export function MapScreen({ active = true }: { active?: boolean }) {
             <>
               <header className="panel__head">
                 <div>
-                  <p className="eyebrow">Carte · {visibleCount} accessibles</p>
-                  <h1 className="h2">Recommandations</h1>
+                  <p className="eyebrow">Lieux, voitures et repères</p>
+                  <h1 className="h2">Carte</h1>
                 </div>
                 <ShieldChip />
               </header>
@@ -512,7 +562,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
               ) : (
                 <div className="panel__scroll list">
                   {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} />)}
-                  <p className="fineprint pad">Les recommandations se recalculent à chaque découverte terminée.</p>
+                  {!recs.length && <p className="muted small pad" data-testid="map-hint">Cherche un commerce, un lieu ou une voiture : les résultats s&apos;affichent ici avec leur précision (placée par toi, repère communautaire, zone estimée ou position inconnue). LEONIDA ne connaît pas la position de Jason et Lucia.</p>}
                 </div>
               )}
             </>
@@ -534,15 +584,23 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     <div className="mapphone" data-place-ack={placeAck}>
       {mapEl({ top: topH, bottom: sheetOpen ? sheetH : (carto ? 96 : 118) + 86, left: 0 })}
       <div className="mapphone__top" ref={topRef}>
-        <div className="row between">
-          <h1 className="h2 shadowtxt">Carte</h1>
-          <div className="row gap8">{cartoBtn}{searchBtn}<ShieldChip /></div>
+        <div className="maptop14">
+          {searchOpen ? searchField : <button className="searchfake" onClick={() => { setSearchOpen(true); setEstId(null); setPlaceZone(null); setLmId(null); select(null); }} data-testid="search-btn"><Icon name="search" size={16} /> Rechercher un commerce, un lieu…</button>}
+          {carto && cartoBtn}
+          <button className="iconbtn iconbtn--glass" onClick={(e) => { e.stopPropagation(); setMenu((v) => !v); }} aria-label="Plus d'options" aria-expanded={menu} data-testid="map-menu"><Icon name="more" size={18} /></button>
+          {menu && (
+            <div className="mapmenu" onClick={(e) => e.stopPropagation()} data-testid="map-menu-panel">
+              <div onClick={() => setMenu(false)}>{!carto && cartoBtn}</div>
+              <div className="mapmenu__row"><span>Anti-spoiler</span><ShieldChip /></div>
+            </div>
+          )}
         </div>
-        {searchOpen ? search : filters}
+        {!searchOpen && filters}
       </div>
+      {hasResults && !sheetOpen && <div className="mapsheet14" data-testid="map-results">{searchResults}</div>}
       {!sheetOpen && cartoBar}
       {!sheetOpen && pinBar}
-      {!sheetOpen && !carto && !pinFor && (
+      {!sheetOpen && !carto && !pinFor && !hasResults && (
         <div className="strip" onClick={(e) => e.stopPropagation()} data-testid={garage ? "garage-strip" : undefined}>
           {garage ? sortedVehicles.map((x) => vrow(x, true)) : recs.map((r) => <RecoCard key={r.discovery.id} rec={r} variant="chip" />)}
         </div>

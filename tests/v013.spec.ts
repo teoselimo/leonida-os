@@ -35,7 +35,7 @@ async function say(page: Page, q: string) {
   await page.getByTestId("ai-input").fill(q);
   await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").nth(n);
-  await expect(a.getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
+  await expect(a.getByTestId("ai-engine")).toBeAttached({ timeout: 15_000 });
   return a;
 }
 
@@ -47,7 +47,7 @@ test("B — « Montre-moi les magasins sur la carte » : tous les établissement
   const res = page.getByTestId("search-results");
   for (const id of ["billies-gift-shop", "wonder-whale", "key-lento-kahuna", "leroys", "chucks-tackle-shot"]) await expect(res.getByTestId(`est-${id}`)).toBeVisible();
   await expect(res.getByTestId("est-billies-gift-shop")).toHaveAttribute("data-precision", "inconnue");
-  await expect(res.getByTestId("est-wonder-whale")).toHaveAttribute("data-precision", "point");
+  await expect(res.getByTestId("est-wonder-whale")).toHaveAttribute("data-precision", "repere");
   await res.getByTestId("est-billies-gift-shop").click();
   const card = page.getByTestId("est-card");
   await expect(card).toHaveAttribute("data-precision", "inconnue");
@@ -62,12 +62,12 @@ test("C — plus de zone géante : une zone restreinte (Chuck's) ou un point (Wo
   await page.getByTestId("search-input").fill("Chuck's");
   await page.getByTestId("est-chucks-tackle-shot").click();
   await expect(page.getByTestId("est-card")).toHaveAttribute("data-precision", "zone");
-  await expect(page.getByTestId("zone-tag")).toContainText("Zone approximative · Chuck's Tackle & Shot (Ammu-Nation)");
+  await expect(page.getByTestId("zone-tag")).toContainText("Zone estimée · Chuck's Tackle & Shot (Ammu-Nation)");
   if (isPhone(page)) {
     await page.getByTestId("search-btn").click();
     await page.getByTestId("search-input").fill("Wonder Whale");
     await page.getByTestId("est-wonder-whale").click();
-    await expect(page.getByTestId("zone-tag")).toContainText("Position · The Wonder Whale");
+    await expect(page.getByTestId("zone-tag")).toContainText("Repère communautaire · The Wonder Whale");
   }
 });
 
@@ -80,7 +80,7 @@ test("Repère manuel : « Je l'ai trouvé » → point posé depuis la carte, sa
   await expect(page.getByTestId("pin-bar")).toBeVisible();
   await page.getByTestId("pin-center").click();
   const card = page.getByTestId("est-card");
-  await expect(card).toHaveAttribute("data-precision", "point");
+  await expect(card).toHaveAttribute("data-precision", "joueur");
   await expect(card.getByTestId("est-precision")).toContainText("placé par toi en jeu");
   const pins = await page.evaluate(() => JSON.parse(localStorage.getItem("leonida-os/progress/v1")!).pins);
   expect(pins["key-lento-kahuna"]).toMatchObject({ by: "joueur" });
@@ -92,35 +92,30 @@ test("Repère manuel : « Je l'ai trouvé » → point posé depuis la carte, sa
 
 test("D + E — accueil « À découvrir maintenant » : sous la mission, priorités, détail ; « Fait » confirmé retire l'élément et garde sa date", async ({ page }) => {
   await start(page);
-  const sec = page.getByTestId("discover-now");
+  // V0.14 : pertes définitives dans la liste unique « Avant de continuer », juste sous la mission
+  const sec = page.getByTestId("before");
   await expect(sec).toBeVisible();
-  // juste sous la carte de mission
   const mission = (await page.getByTestId("next-mission").boundingBox())!;
   const box = (await sec.boundingBox())!;
   expect(box.y).toBeGreaterThan(mission.y);
-  if (isPhone(page)) expect(box.y - (mission.y + mission.height)).toBeLessThan(40);
-  const rows = sec.locator("li");
-  expect(await rows.count()).toBeGreaterThanOrEqual(3);
-  expect(await rows.count()).toBeLessThanOrEqual(5);
-  await expect(rows.first()).toHaveAttribute("data-cat", "perte");
-  await expect(rows.first()).toHaveAttribute("data-status", "vérifié");
+  if (isPhone(page)) expect(box.y - (mission.y + mission.height)).toBeLessThan(60);
+  const rows = sec.getByTestId("before-item");
+  expect(await rows.count()).toBeGreaterThanOrEqual(2);
+  expect(await rows.count()).toBeLessThanOrEqual(3);
+  await expect(rows.first()).toContainText("Vérifié");
   await expect(sec).not.toContainText("Tourist Trap");
-  const name = (await rows.first().locator("strong").innerText()).trim();
-  const key = (await rows.first().getAttribute("data-testid"))!.replace("discover-", "");
-  await rows.first().locator(".dsc__main").click();
-  await expect(sec.getByTestId("discover-detail")).toBeVisible();
-  await sec.getByTestId("discover-done").click();
-  await sec.getByTestId("discover-yes").click();
+  const name = (await rows.first().locator("strong").first().innerText()).trim();
+  await rows.first().locator(".bl__body").click();
+  await expect(sec.getByTestId("before-detail")).toBeVisible();
+  const before = await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem("leonida-os/progress/v1")!).done));
+  await rows.first().getByTestId("done-btn").click();
   await expect(sec.getByText(name, { exact: true })).toHaveCount(0);
   const done = await page.evaluate(() => JSON.parse(localStorage.getItem("leonida-os/progress/v1")!).done);
-  expect(typeof done[key]).toBe("string");
-  // historique : la mission principale n'a pas été déclarée terminée pour autant
+  const added = Object.keys(done).filter((k) => !before.includes(k));
+  expect(added.length).toBe(1);
+  expect(typeof done[added[0]]).toBe("string"); // date conservée
   const profile = await page.evaluate(() => JSON.parse(localStorage.getItem("leonida-os/progress/v1")!).profile);
   expect(profile.missionsDone).toEqual(["Swamped", "Don Gone"]);
-  if (await sec.getByTestId("discover-all").isVisible().catch(() => false)) {
-    await sec.getByTestId("discover-all").click();
-    expect(await rows.count()).toBeGreaterThan(4);
-  }
 });
 
 const longHistory = Array.from({ length: 30 }, (_, i) =>

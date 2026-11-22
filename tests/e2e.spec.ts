@@ -151,7 +151,10 @@ test.describe("Anti-spoiler", () => {
     await tab(page, "radar");
     await expect(page.locator(".note", { hasText: "masqué" })).toBeVisible();
     await expect(page.getByTestId("signal-sig-5")).toHaveCount(0);
-    await page.locator(".shield").first().click(); // → modéré
+    // V0.14 : le bouclier ouvre un menu ; baisser la protection se confirme
+    await page.getByTestId("shield").first().click();
+    await page.getByTestId("shield-relaxed").click();
+    await page.getByTestId("shield-ok").click();
     await expect(page.getByTestId("signal-sig-5").locator(".spoiler")).toBeVisible();
     await tab(page, "carte");
     await expect(page.getByTestId("marker-gr-anomaly")).toBeVisible();
@@ -237,6 +240,7 @@ test.describe("Fiabilité des relevés", () => {
   test("un relevé personnel n'apparaît jamais comme vérifié", async ({ page }, info) => {
     await freshStart(page, "#carte");
     await mapReady(page);
+    if (isPhone(page)) await page.getByTestId("map-menu").click(); // V0.14 : Cartographe dans le menu « ⋯ »
     await page.getByTestId("carto-btn").first().click();
     await page.getByTestId("pick-center").click();
     await page.getByTestId("editor-title").fill("Coffre sous le ponton");
@@ -270,9 +274,10 @@ test.describe("Fiabilité des relevés", () => {
   test("un import qui se prétend « officiel » est ramené à « personnel »", async ({ page }) => {
     await freshStart(page, "#profil");
     const forged = { items: [{ id: "x-forge", title: "Faux officiel", x: -500, y: 800, category: "secret", regionId: "vicecity", source: { label: "Rockstar", reliability: "official" }, provenance: { kind: "official", source: "x", checkedAt: "2026" } }] };
-    await page.getByRole("button", { name: "Importer" }).first().click();
-    await page.locator(".carto textarea").fill(JSON.stringify(forged));
-    await page.locator(".carto .btn--on").click();
+    await page.getByTestId("advanced").locator("summary").click(); // V0.14 : Partie › Avancé
+    await page.getByTestId("import-open").click();
+    await page.getByTestId("import-text").fill(JSON.stringify(forged));
+    await page.getByTestId("import-go").click();
     const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("leonida-os/progress/v1")!).custom[0]);
     expect(stored.source.reliability).toBe("personal");
     expect(stored.provenance.kind).toBe("player");

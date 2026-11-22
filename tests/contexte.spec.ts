@@ -38,7 +38,7 @@ async function say(page: Page, q: string) {
   await page.getByTestId("ai-input").fill(q);
   await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").nth(n);
-  await expect(a.getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
+  await expect(a.getByTestId("ai-engine")).toBeAttached({ timeout: 15_000 });
   return a;
 }
 

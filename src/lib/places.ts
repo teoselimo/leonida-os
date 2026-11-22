@@ -4,12 +4,13 @@ import type { Establishment } from "@/data/establishments";
 
 /**
  * Position d'un établissement confirmé, en trois niveaux de précision (V0.13) :
- * - « point » : observation vérifiée — placée par le joueur en jeu, ou repère gtadb portant exactement le même nom ;
+ * - « joueur » : position observée et placée par le joueur en jeu (la seule « exacte ») ;
+ * - « repere » : repère communautaire gtadb portant exactement le même nom (position communautaire, non vérifiée en jeu) ;
  * - « zone » : zone restreinte déduite d'une source localisable (voisin cité, type de commerce gtadb unique dans le
  *   quartier) — rayon de quelques centaines d'unités, jamais un quartier entier ;
  * - « inconnue » : description et source seulement, aucun point affiché.
  */
-export type Precision = "point" | "zone" | "inconnue";
+export type Precision = "joueur" | "repere" | "zone" | "inconnue";
 
 export interface PlacePin {
   x: number;
@@ -38,11 +39,11 @@ const firstPart = (d: string) => (d.split(",").pop() ?? d).trim();
 
 export function placementOf(e: Establishment, landmarks: Landmark[], pins: Record<string, PlacePin> = {}): Placement {
   const pin = pins[e.id];
-  if (pin) return { precision: "point", x: pin.x, y: pin.y, provenance: `placé par toi en jeu le ${new Date(pin.at).toLocaleDateString("fr-FR")}` };
+  if (pin) return { precision: "joueur", x: pin.x, y: pin.y, provenance: `placé par toi en jeu le ${new Date(pin.at).toLocaleDateString("fr-FR")}` };
   const pos = e.position;
   if (pos?.landmarkId) {
     const l = landmarks.find((x) => x.id === pos.landmarkId);
-    if (l) return { precision: "point", x: l.x, y: l.y, landmarkId: l.id, provenance: "repère de la carte communautaire gtadb portant le même nom (position communautaire)" };
+    if (l) return { precision: "repere", x: l.x, y: l.y, landmarkId: l.id, provenance: "repère de la carte communautaire gtadb portant le même nom (position communautaire)" };
   }
   if (pos?.near) {
     const l = landmarks.find((x) => x.id === pos.near);
@@ -67,7 +68,9 @@ export function placementOf(e: Establishment, landmarks: Landmark[], pins: Recor
   return { precision: "inconnue", provenance: pos?.text ? `position non établie — indication de la source : ${pos.text}` : "position non établie : aucune source localisable pour l'instant" };
 }
 
-export const PRECISION_FR: Record<Precision, string> = { point: "Point", zone: "Zone probable", inconnue: "Position inconnue" };
+export const PRECISION_FR: Record<Precision, string> = { joueur: "Placée par toi", repere: "Repère communautaire", zone: "Zone estimée", inconnue: "Position inconnue" };
+/** Position dessinée comme un point (et non une zone). */
+export const isPoint = (p: Precision) => p === "joueur" || p === "repere";
 
 const nk = (s: string) =>
   s

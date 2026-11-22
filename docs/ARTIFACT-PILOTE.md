@@ -217,3 +217,25 @@ Les analyses enregistrées par l'app dans la sauvegarde du joueur portent `web: 
 - Le fil suit le contenu (streaming, bulles qui grandissent, clavier iOS, ressort de la fiche) **seulement si le joueur est en bas**. Seul un geste du joueur le décroche.
 - Un bouton « Dernier message » apparaît quand quelque chose arrive pendant la lecture.
 - Correction annexe : la barre du mode cartographe était cachée par le dock sur iPhone ; elle est maintenant au-dessus.
+
+## 14. V0.14 « Stabilisation et refonte UX » (22/11/2026) — même Artifact, version `1795374071-b58f`
+
+Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, stockages inchangés.
+
+**P0 — fiabilité**
+- Anti-spoiler appliqué à la source (`src/lib/spoiler.ts`) : plan de session, « Avant de continuer », Guide, fiches, chat (texte, actions, sources, suggestions) et sortie du moteur. En strict, une mission future est remplacée par « une mission à venir ».
+- Bouclier : un toucher ouvre un menu ; baisser la protection demande une confirmation qui ne révèle rien.
+- Accueil : « Rien à manquer », « À découvrir » et « Avant de la lancer » fusionnés à l'affichage (`src/lib/before.ts`), sans fusion des données. Quatre natures distinguées (pendant la mission, avant, disparaît plus tard, opportunité). Une seule mention du point de non-retour. Aucune promesse « rien à manquer ».
+- Après « Terminée » : `progressDelta` montre missions accessibles, potentielles, activités ouvertes, contenus perdus et prochain point de non-retour ; le joueur choisit la suite.
+- Vocabulaire de confiance unique : Vérifié / Probable / Non confirmé (« Vérifié » exige deux sites indépendants). Précision des lieux : placée par toi / repère communautaire / zone estimée / position inconnue.
+- Version centralisée (`src/lib/version.ts`), affichage du stockage réel (compte Claude via l'Artifact, ou navigateur seul).
+
+**P1 — UX**
+- Dock à cinq positions Accueil | Carte | LEONIDA | Guide | Partie ; bouton flottant supprimé.
+- Carte : recherche toujours visible, filtres Commerces / Voitures / Repères / Plus, Cartographe et anti-spoiler dans le menu « ⋯ », résultats en feuille basse avec précision et action (Voir / Zone / Placer). Premier cadrage : quartier documenté de la mission (≥ 5 repères communautaires), sinon dernière vue. Pas de position du personnage.
+- LEONIDA : en-tête court (contexte de mission), menu « ⋯ » (mode, réponses approfondies, Effacer avec confirmation), une ligne de confiance repliable par réponse, deux actions visibles au plus. Demi-fiche depuis la carte (iPhone) ; panneau à côté de la carte (iPad).
+- Guide (ex-Radar) et Partie (ex-Profil) : progression, journal daté « Récupéré / Fait » avec annulation par type (`src/lib/journal.ts`), Réglages, Avancé (diagnostic Exa, mesures, sauvegarde, démo, crédits).
+- « Fait » unifié avec annulation de 5 s ; « Réinitialiser la démonstration » conserve désormais aussi positions, analyses et mesures.
+
+**Tests** : `tests/v014.unit.spec.ts`, `tests/v014.spec.ts` (iPhone, iPad, WebKit) ; anciens tests adaptés.
+**À vérifier sur l'iPhone réel** : clavier avec message long, demi-fiche du chat depuis la carte, synchro iPhone ↔ iPad, lisibilité des puces de filtres.

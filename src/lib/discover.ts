@@ -3,7 +3,7 @@ import { spoilerVisibility } from "./feed";
 import { viewOf } from "./garage";
 import { frHeadline } from "./fr";
 import { missionCatalog, nk } from "./missions";
-import { computeProgress, progDoneKey, shownName } from "./progress";
+import { computeProgress, nodeByName, progDoneKey, shownName } from "./progress";
 import type { NodeState } from "./progress";
 import type { Src } from "@/data/progression";
 import type { PersistedState } from "./types";
@@ -45,6 +45,9 @@ export interface DiscoverItem {
   /** Action carte : uniquement si la position est fiable (repère nommé, zone ou point documentés). */
   map: { landmarkId?: string; vehicleId?: string; recordId?: string } | null;
   recordId?: string;
+  vehicleId?: string;
+  /** Moment documenté de la perte (nœud du graphe + début/fin), pour ne parler d'un point de non-retour commun que s'il l'est vraiment. */
+  lost?: { node: string; at: "start" | "end" } | null;
   score: number;
 }
 
@@ -107,6 +110,7 @@ export function discoverNow(
       sources: [...new Map(allSrc.map((x) => [x.url, x])).values()].slice(0, 4),
       detail: [st.node.where ? `Où : ${st.node.where}${st.node.district ? ` (${st.node.district})` : ""}` : st.node.district ? `Où : ${st.node.district}` : "", st.node.prereq?.condition ? `Condition : ${st.node.prereq.condition}` : "", st.node.prereq?.note ?? "", st.status === "potentiellement accessible" ? "Accès probable d'après les sources : à confirmer en jeu." : ""].filter(Boolean),
       map: lm ? { landmarkId: lm } : null,
+      lost: st.node.lostAt ? { node: st.node.lostAt.node, at: st.node.lostAt.at } : null,
       // perte vérifiée ET accès établi d'abord ; perte vérifiée mais accès probable ensuite
       score: (cat === "perte" ? (verifiedLoss ? (status === "vérifié" ? 100 : 85) : 70) : 40) + (status === "vérifié" ? 5 : 0),
     });
@@ -143,6 +147,7 @@ export function discoverNow(
       sources: recSources(r),
       detail: [r.conditions.reward ? `Gain : ${r.conditions.reward}` : "", place ? `Où : ${place.name}${place.district ? ` (${place.district})` : ""}` : "Lieu : voir la fiche"].filter(Boolean),
       map: lm ? { landmarkId: lm } : null,
+      lost: until && nodeByName(until) ? { node: nodeByName(until)!.id, at: "start" } : null,
       score: (missable ? (status === "vérifié" ? 95 : 65) : cat === "unique" ? 60 : cat === "argent" ? 35 + Math.min(10, (r.conditions.money ?? 0) / 2000) : 30) + (status === "vérifié" ? 5 : 0),
     });
   }
@@ -164,6 +169,7 @@ export function discoverNow(
       sources: x.v.evidence.slice(0, 3).map((e) => ({ name: e.sourceName.replace(/^www\./, ""), url: e.url })),
       detail: [x.v.location.district ? `Où : ${x.v.location.precision === "zone" ? "zone de " : ""}${x.v.location.district}` : "Lieu : voir la fiche", x.v.edition.exclusive === "ultimate" ? "Exclusivité Ultimate" : ""].filter(Boolean),
       map: reliable ? { vehicleId: x.v.id } : null,
+      vehicleId: x.v.id,
       score: (x.urgent ? (status === "vérifié" ? 90 : 60) : 55) + (status === "vérifié" ? 5 : 0) + (x.v.media ? 1 : 0),
     });
   }

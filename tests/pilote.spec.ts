@@ -101,7 +101,7 @@ test("Pilote 3 — « magasin à Key Lento » : la carte s'ouvre sur la liste de
   await expect(page.getByTestId("zone-tag")).toHaveCount(0);
   await page.getByRole("button", { name: "Fermer la recherche" }).click();
   await expect(page.getByTestId("filter-landmarks")).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByTestId("poi-commerce")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("filter-shops")).toHaveAttribute("aria-pressed", "true"); // V0.14 : filtre « Commerces »
   await page.waitForTimeout(900);
   await page.screenshot({ path: `captures/${info.project.name}-62-pilote-key-lento.png` });
 });
@@ -128,23 +128,25 @@ test("Pilote 5 — une action de Claude ouvre la fiche d'un lieu (The Rusty Anch
 
 test("Pilote 6 — « C'est fait » : mémorisé localement et dans le stockage personnel de l'Artifact, restauré au rechargement", async ({ page }) => {
   await start(page, "#accueil", { nextMission: "Tourist Trap" });
-  const first = page.getByTestId("live-advice").locator("article").first();
-  const id = (await first.getAttribute("data-testid"))!;
-  await first.getByTestId("advice-done").click();
-  await expect(page.getByTestId(id)).toHaveCount(0);
+  // V0.14 : « Fait » depuis « Avant de continuer »
+  const first = page.getByTestId("before-item").first();
+  const name = (await first.locator("strong").first().textContent())!;
+  await first.getByTestId("done-btn").click();
+  await expect(page.getByTestId("before-item").filter({ hasText: name })).toHaveCount(0);
   await page.waitForFunction(() => Object.keys((window as unknown as Win).__db).length > 0, null, { timeout: 8_000 });
   const saved = await page.evaluate(() => (window as unknown as Win).__db["data/users/u-test/progress"] as { state: string; savedAt: string });
   expect(saved.savedAt).toBeTruthy();
   expect(Object.keys(JSON.parse(saved.state).done).length).toBeGreaterThan(0);
   await page.reload();
   await page.waitForSelector(".app.is-ready");
-  await expect(page.getByTestId("live-advice")).toBeVisible();
-  await expect(page.getByTestId(id)).toHaveCount(0);
+  await expect(page.getByTestId("before")).toBeVisible();
+  await expect(page.getByTestId("before-item").filter({ hasText: name })).toHaveCount(0);
 });
 
 test("Pilote 7 — aller-retour IA ↔ carte sans perdre la conversation, les filtres ni recréer la carte", async ({ page }) => {
   await start(page, "#carte");
   await page.waitForFunction(() => !!(window as unknown as { __leonidaMap?: unknown }).__leonidaMap);
+  await page.getByTestId("filter-more").click(); // V0.14 : catégories détaillées sous « Plus »
   await page.getByTestId("poi-station").click();
   await expect(page.getByTestId("poi-station")).toHaveAttribute("aria-pressed", "true");
   const a = await ask(page, "Où trouver la Penumbra FF ?");
@@ -154,7 +156,7 @@ test("Pilote 7 — aller-retour IA ↔ carte sans perdre la conversation, les fi
   await page.getByTestId("vehicle-sheet").locator(".vmedia__close").click();
   await page.getByTestId("filter-garage").click(); // retour aux lieux
   await expect(page.getByTestId("poi-station")).toHaveAttribute("aria-pressed", "true");
-  if (isPhone(page)) await page.getByTestId("ai-open").click();
+  if (!(await page.getByTestId("ai-panel").isVisible().catch(() => false))) await page.getByTestId("ai-open").click();
   expect(await page.getByTestId("ai-answer").count()).toBeGreaterThanOrEqual(1);
   expect(await mapCount(page)).toBe(1);
 });

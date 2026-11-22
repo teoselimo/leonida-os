@@ -89,7 +89,7 @@ test.describe("Routage des recherches sans appel de planification", () => {
 test.describe("Établissements : trois niveaux de précision, jamais une zone de quartier", () => {
   const est = (id: string) => ESTABLISHMENTS.find((e) => e.id === id)!;
   test("point (repère du même nom), zone restreinte (voisin cité ou type gtadb unique), inconnue (description seule)", () => {
-    expect(placementOf(est("wonder-whale"), landmarks)).toMatchObject({ precision: "point", landmarkId: "L332" });
+    expect(placementOf(est("wonder-whale"), landmarks)).toMatchObject({ precision: "repere", landmarkId: "L332" });
     const chuck = placementOf(est("chucks-tackle-shot"), landmarks);
     expect(chuck).toMatchObject({ precision: "zone", radius: NEAR_RADIUS });
     expect(chuck.provenance).toContain("Jason");
@@ -110,7 +110,7 @@ test.describe("Établissements : trois niveaux de précision, jamais une zone de
   });
   test("une position placée par le joueur passe avant toute estimation (point, provenance datée)", () => {
     const p = placementOf(est("billies-gift-shop"), landmarks, { "billies-gift-shop": { x: -3170, y: -6660, at: "2026-11-22T14:00:00Z", by: "joueur" } });
-    expect(p).toMatchObject({ precision: "point", x: -3170, y: -6660 });
+    expect(p).toMatchObject({ precision: "joueur", x: -3170, y: -6660 });
     expect(p.provenance).toContain("placé par toi");
   });
   test("B — « magasins de vêtements Key Lento » : tous les établissements connus sont trouvables, y compris sans position", () => {

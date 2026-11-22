@@ -45,9 +45,18 @@ function collected(p: Profile) {
 }
 const describeLock = (st: NodeState, v: ProgressView, mode: Profile["spoilerMode"]) => `après ${list(st.missing!.map((m) => shownName(v.byId.get(m.id)!, mode)))}`;
 
-/** Après « terminée » : ce qui s'ouvre réellement (statuts recalculés), sans ordre linéaire inventé. */
-export function afterDone(profile: Profile, name: string): { text: string; actions: AiAnswer["actions"] } {
-  const before = computeProgress({ profile });
+/** Ce que change « mission terminée » dans le graphe (V0.14) : données structurées pour l'accueil et le copilote. */
+export interface ProgressDelta {
+  mains: NodeState[];
+  potentials: NodeState[];
+  sides: NodeState[];
+  lost: NodeState[];
+  /** Prochain point de non-retour pertinent, nommé sans spoiler (ou null). */
+  pnr: { where: string; lose: string[]; node: string; prereq: string[] } | null;
+}
+
+export function progressDelta(profile: Profile, name: string, done: Record<string, string> = {}): ProgressDelta {
+  const before = computeProgress({ profile, done });
   const nextProfile: Profile = {
     ...profile,
     missionsDone: profile.missionsDone.some((m) => nk(m) === nk(name)) ? profile.missionsDone : [...profile.missionsDone, name],
@@ -55,18 +64,32 @@ export function afterDone(profile: Profile, name: string): { text: string; actio
     nextMission: profile.nextMission && nk(profile.nextMission) === nk(name) ? null : profile.nextMission,
     missionInProgress: profile.nextMission && nk(profile.nextMission) === nk(name) ? false : profile.missionInProgress,
   };
-  const after = computeProgress({ profile: nextProfile });
+  const after = computeProgress({ profile: nextProfile, done });
   const opened = after.states.filter((x) => (x.status === "accessible" || x.status === "potentiellement accessible") && before.byId.get(x.node.id)?.status === "verrouillé");
-  const mains = opened.filter((x) => x.node.kind === "main");
-  const sides = opened.filter((x) => x.node.kind !== "main");
-  const lost = after.states.filter((x) => x.status === "plus disponible" && before.byId.get(x.node.id)?.status !== "plus disponible");
-  const pnr = nextPointOfNoReturn(after);
+  const pnrNode = nextPointOfNoReturn(after);
+  const mode = profile.spoilerMode;
+  const pnr = pnrNode?.node.pointOfNoReturn
+    ? { where: shownName(pnrNode, mode) === pnrNode.node.name ? `au début de ${pnrNode.node.name}` : "au début d'une mission principale à venir", lose: pnrNode.node.pointOfNoReturn.lose, node: pnrNode.node.id, prereq: pnrNode.node.prereq?.all ?? [] }
+    : null;
+  return {
+    mains: opened.filter((x) => x.node.kind === "main" && x.status === "accessible"),
+    potentials: opened.filter((x) => x.node.kind === "main" && x.status !== "accessible"),
+    sides: opened.filter((x) => x.node.kind !== "main"),
+    lost: after.states.filter((x) => x.status === "plus disponible" && before.byId.get(x.node.id)?.status !== "plus disponible"),
+    pnr,
+  };
+}
+
+/** Après « terminée » : ce qui s'ouvre réellement (statuts recalculés), sans ordre linéaire inventé. */
+export function afterDone(profile: Profile, name: string): { text: string; actions: AiAnswer["actions"] } {
+  const d = progressDelta(profile, name);
+  const opened = [...d.mains, ...d.potentials, ...d.sides];
+  const mains = [...d.mains, ...d.potentials];
   const parts: string[] = [];
   if (opened.length) parts.push(`Débloqué d'après les sources : ${list(opened.map((x) => `${x.node.name}${x.node.kind !== "main" ? " (facultative)" : ""}${x.status === "potentiellement accessible" ? " — à confirmer en jeu" : ""}`))}.`);
   else parts.push("Je n'ai pas de nouvelle mission documentée comme débloquée par celle-ci : regarde ta carte en jeu, je ne devine pas la suite.");
-  if (lost.length) parts.push(`Plus disponible désormais : ${list(lost.map((x) => x.node.name))}.`);
-  if (pnr?.node.pointOfNoReturn && mains.some((m) => m.node.id === pnr.node.id || pnr.node.prereq?.all.includes(m.node.id)))
-    parts.push(`Attention : le point de non-retour du chapitre approche (${pnr.node.pointOfNoReturn.lose.slice(0, 2).join(", ")} perdus). Finis tes activités avant.`);
+  if (d.lost.length) parts.push(`Plus disponible désormais : ${list(d.lost.map((x) => x.node.name))}.`);
+  if (d.pnr && mains.some((m) => m.node.id === d.pnr!.node || d.pnr!.prereq.includes(m.node.id))) parts.push(`Attention : le point de non-retour du chapitre approche (${d.pnr.lose.slice(0, 2).join(", ")} perdus). Finis tes activités avant.`);
   return {
     text: parts.join(" "),
     actions: mains.slice(0, 2).map((x) => ({ type: "start_mission" as const, name: x.node.name, label: `Lancer ${x.node.name}`, confirm: `Noter « ${x.node.name} » comme mission en cours ?` })),
@@ -192,10 +215,10 @@ function shopsAnswer(kind: ProgIntent, q: string, ctx: AiContext, v: ProgressVie
   // V0.13 : précision de position par établissement (point / zone probable / inconnue) — jamais de zone de quartier
   const lms = (ctx.places ?? []).map((p) => ({ id: p.id, name: p.name, district: p.district, tags: p.tags ?? [], x: p.x ?? 0, y: p.y ?? 0, real: p.real ?? "" }));
   const placed = pool.map((e) => ({ e, pl: placementOf(e, lms, ctx.state.pins ?? {}) }));
-  const where = (x: (typeof placed)[number]) => (x.pl.precision === "point" ? "sur la carte" : x.pl.precision === "zone" ? "zone probable sur la carte" : x.e.position?.text ? x.e.position.text : "position non établie");
+  const where = (x: (typeof placed)[number]) => (x.pl.precision === "joueur" ? "placé par toi sur la carte" : x.pl.precision === "repere" ? "repère communautaire sur la carte" : x.pl.precision === "zone" ? "zone estimée sur la carte" : x.e.position?.text ? x.e.position.text : "position non établie");
   // boutiques du comté sans île précisée : signalées à part, jamais présentées comme « à Key Lento »
   const county = district === "Key Lento" && cat ? ESTABLISHMENTS.filter((e) => e.district === "Mariana County" && e.cats.includes(cat)) : [];
-  const firstPlaced = placed.find((x) => x.pl.precision === "point") ?? placed.find((x) => x.pl.precision === "zone");
+  const firstPlaced = placed.find((x) => x.pl.precision === "joueur") ?? placed.find((x) => x.pl.precision === "repere") ?? placed.find((x) => x.pl.precision === "zone");
   return {
     intent: "shops",
     // une ligne par établissement : nom — ce qu'on y trouve · ouverture · position (lisible d'un coup d'œil)

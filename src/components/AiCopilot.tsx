@@ -1,5 +1,6 @@
 "use client";
 
+import { useRedact } from "@/lib/useRedact";
 import { ROUTER_KEY } from "@/lib/copilot/route";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useStore } from "@/lib/store";
@@ -67,7 +68,7 @@ function mapPosition(): { x: number; y: number } | null {
 }
 
 const REL_CLS: Record<string, string> = { officiel: "official", recoupé: "confirmed", signalé: "reported", "non établi": "rumor", "déclaré par toi": "personal" };
-const REL_FR: Record<string, string> = { officiel: "Information officielle", recoupé: "Recoupé par plusieurs sources", signalé: "Signalé par une source", "non établi": "Non établi", "déclaré par toi": "D’après ce que tu m’as dit" };
+const REL_FR: Record<string, string> = { officiel: "Vérifié · officiel", recoupé: "Vérifié", signalé: "Probable", "non établi": "Non confirmé", "déclaré par toi": "D’après toi" };
 
 /**
  * LEONIDA AI : accès permanent et discret (pas d'onglet).
@@ -76,6 +77,8 @@ const REL_FR: Record<string, string> = { officiel: "Information officielle", rec
  */
 export function AiCopilot() {
   const store = useStore();
+  // anti-spoiler appliqué au texte avant rendu (même un ancien message, même si Claude a dérapé)
+  const redact = useRedact();
   const { state, aiOpen, setAiOpen, view } = store;
   const { feed } = useLiveRadar();
   const isTablet = useIsTablet();
@@ -318,7 +321,8 @@ export function AiCopilot() {
     }
     setPending(null);
     // Sur iPhone, une action vers la carte ou le radar referme la fiche : la conversation est conservée
-    const leave = () => !isTablet && setAiOpen(false);
+    // iPhone, et iPad où carte + panneau de résultats + LEONIDA ne tiennent pas côte à côte : on laisse la place à la carte
+    const leave = () => (!isTablet || window.innerWidth < 1280) && setAiOpen(false);
     switch (a.type) {
       case "focus_vehicle":
         store.focusVehicle(a.id);
@@ -398,6 +402,9 @@ export function AiCopilot() {
   };
 
   const lastAi = [...msgs].reverse().find((m): m is AiMsg => m.role === "ai");
+  const [menu, setMenu] = useState(false);
+  const [askClear, setAskClear] = useState(false);
+  const ctxLine = state.profile.nextMission ? `${state.profile.missionInProgress ? "En mission" : "Prochaine mission"} · ${redact(state.profile.nextMission)}` : view === "carte" ? "Depuis la carte" : "Ton copilote de partie";
 
   const body = (
     <div className="ai" data-testid="ai-panel">
@@ -405,10 +412,27 @@ export function AiCopilot() {
         <BrandMark size={30} />
         <div>
           <strong>LEONIDA AI</strong>
-          <span data-testid="ai-mode">{transport ? `${transport.label} · LEONIDA RADAR${web === "ok" ? " + web" : ""}` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</span>
+          <span data-testid="ai-context">{ctxLine}</span>
         </div>
-        {msgs.length > 0 && <button className="link small" onClick={clear} data-testid="ai-clear">Effacer</button>}
+        <button className="iconbtn ai__menubtn" onClick={() => { setMenu((v) => !v); setAskClear(false); }} aria-label="Options de LEONIDA" aria-expanded={menu} data-testid="ai-menu"><Icon name="more" size={18} /></button>
         <button className="iconbtn ai__close" onClick={() => { tick(); setAiOpen(false); }} aria-label="Fermer LEONIDA AI" data-testid="ai-close"><Icon name="close" /></button>
+        <div className="ai__menu" hidden={!menu} data-testid="ai-menu-panel">
+          <p className="small muted" data-testid="ai-mode">{transport ? `${transport.label} · LEONIDA RADAR${web === "ok" ? " + web" : ""}` : proxyEnabled() ? "Données vérifiées + synthèse IA" : "Mode direct · données vérifiées, sans IA générative"}</p>
+          {transport && (
+            <button className={`chip chip--reply press${deep ? " is-on" : ""}`} onClick={toggleDeep} aria-pressed={deep}>
+              {deep ? "Réponses approfondies (plus lentes)" : "Réponses rapides"}
+            </button>
+          )}
+          {msgs.length > 0 && (askClear ? (
+            <span className="ai__menuconfirm">
+              <span className="small">Effacer toute la conversation ?</span>
+              <button className="btn btn--danger btn--xs" onClick={() => { clear(); setAskClear(false); setMenu(false); }} data-testid="ai-clear-ok">Effacer</button>
+              <button className="btn btn--ghost btn--xs" onClick={() => setAskClear(false)}>Garder</button>
+            </span>
+          ) : (
+            <button className="btn btn--ghost btn--xs" onClick={() => setAskClear(true)} data-testid="ai-clear">Effacer la conversation</button>
+          ))}
+        </div>
       </header>
       <div className="ai__list" ref={setList} data-testid="ai-list" onScroll={onListScroll} onWheel={markUser} onTouchStart={markUser} onTouchMove={markUser} onPointerDown={markUser} onKeyDown={markUser}>
         {msgs.length === 0 && (
@@ -431,22 +455,12 @@ export function AiCopilot() {
             <div key={m.id} className="bubble bubble--me">{m.text}</div>
           ) : (
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
-              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{m.a.text}</p>}
+              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{redact(m.a.text)}</p>}
               {m.checklist && <ChecklistView c={m.checklist} mission={m.mission ?? ""} />}
-              {!m.streaming && m.engine === "claude" && m.a.sources.length > 0 && (
-                <div className="bubble__srcs" data-testid="ai-source-chips">
-                  {m.a.sources.slice(0, 3).map((s, i) => (
-                    <a key={i} className="srcchip" href={s.url} target="_blank" rel="noreferrer">{s.name}</a>
-                  ))}
-                </div>
-              )}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
-              {m.a.reliability && (
-                <p className={`bubble__rel relchip--${REL_CLS[m.a.reliability]}`}><i />{REL_FR[m.a.reliability]}</p>
-              )}
               {m.a.actions.length > 0 && (
                 <div className="bubble__actions">
-                  {m.a.actions.map((a, i) => {
+                  {m.a.actions.slice(0, 2).map((a, i) => {
                     const key = `${m.id}:${JSON.stringify(a)}`;
                     const asking = pending?.key === key && "confirm" in a;
                     return asking ? (
@@ -457,30 +471,38 @@ export function AiCopilot() {
                       </span>
                     ) : (
                       <button key={i} className={`btn btn--xs press ${i === 0 ? "btn--on" : "btn--ghost"}`} onClick={() => run(a, false, key)} data-testid={`ai-action-${a.type}`}>
-                        {a.label}
+                        {redact(a.label)}
                       </button>
                     );
                   })}
                 </div>
               )}
-              {(m.a.more?.length ?? 0) > 0 && (
-                <details className="bubble__more" data-testid="ai-more">
-                  <summary>En savoir plus</summary>
-                  <ul>{m.a.more!.map((l, i) => <li key={i}>{l}</li>)}</ul>
-                </details>
-              )}
-              {m.a.sources.length > 0 && (
-                <details className="bubble__more" data-testid="ai-sources">
-                  <summary>Sources et preuves ({m.a.sources.length})</summary>
-                  <ul>
-                    {m.a.sources.map((s, i) => (
-                      <li key={i}>
-                        <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>{s.when ? ` · ${s.when}` : ""}
-                        {s.title && <em className="bubble__orig" lang="en">Titre d’origine : {s.title}</em>}
-                        {s.quote && <q lang="en">{s.quote.slice(0, 220)}</q>}
-                      </li>
-                    ))}
-                  </ul>
+              {!m.streaming && (m.a.reliability || m.a.sources.length > 0 || (m.a.more?.length ?? 0) > 0 || m.engine === "claude") && (
+                <details className="bubble__trust" data-testid="ai-sources">
+                  <summary>
+                    {m.a.reliability && <span className={`bubble__rel relchip--${REL_CLS[m.a.reliability]}`}><i />{REL_FR[m.a.reliability]}</span>}
+                    <span className="bubble__trustn">{m.a.sources.length ? `${m.a.sources.length} source${m.a.sources.length > 1 ? "s" : ""}` : "Détails"}</span>
+                  </summary>
+                  {m.a.actions.length > 2 && (
+                    <div className="bubble__actions">
+                      {m.a.actions.slice(2).map((a, i) => (
+                        <button key={i} className="btn btn--xs btn--ghost press" onClick={() => run(a, false, `${m.id}:${JSON.stringify(a)}`)} data-testid={`ai-action-${a.type}`}>{redact(a.label)}</button>
+                      ))}
+                    </div>
+                  )}
+                  {(m.a.more?.length ?? 0) > 0 && <ul data-testid="ai-more">{m.a.more!.map((l, i) => <li key={i}>{l}</li>)}</ul>}
+                  {m.a.sources.length > 0 && (
+                    <ul>
+                      {m.a.sources.map((s, i) => (
+                        <li key={i}>
+                          <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>{s.when ? ` · ${s.when}` : ""}
+                          {s.title && <em className="bubble__orig" lang="en">Titre d’origine : {redact(s.title)}</em>}
+                          {s.quote && <q lang="en">{redact(s.quote.slice(0, 220))}</q>}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {m.engine === "claude" && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? "Claude"} à partir des données LEONIDA RADAR{m.web?.status === "ok" ? ` et de ${m.web.count} résultat${m.web.count > 1 ? "s" : ""} web (Exa)` : ""}</p>}
                 </details>
               )}
               {m === lastAi && !m.streaming && ((m.a.replies?.length ?? 0) > 0 || m.engine === "claude") && (
@@ -489,11 +511,10 @@ export function AiCopilot() {
                     <button className="chip chip--reply press" onClick={() => ask("Détaille ta dernière réponse.")} data-testid="ai-detail">Détaille</button>
                   )}
                   {(m.a.replies ?? []).map((r) => (
-                    <button key={r} className="chip chip--reply press" onClick={() => ask(r)} data-testid="ai-reply">{r}</button>
+                    <button key={r} className="chip chip--reply press" onClick={() => ask(r)} data-testid="ai-reply">{redact(r)}</button>
                   ))}
                 </div>
               )}
-              {!m.streaming && m.engine === "claude" && <p className="bubble__engine" data-testid="ai-engine">Rédigé par {m.model ?? "Claude"} à partir des données LEONIDA RADAR{m.web?.status === "ok" ? ` et de ${m.web.count} résultat${m.web.count > 1 ? "s" : ""} web` : ""}</p>}
               {m.note && <p className="bubble__note" data-testid="ai-note">{m.note}</p>}
               {m.llm && m.llm !== "pending" && m.llm !== "generated" && m.llm !== "cached" && m.llm !== "skipped" && (
                 <p className="bubble__note" data-testid="ai-llm-note">Réponse directe : la synthèse IA n’est pas disponible pour le moment.</p>
@@ -550,20 +571,16 @@ export function AiCopilot() {
 
   return (
     <>
-      {!aiOpen && (
-        <button className={`aifab press view-${view}`} onClick={() => { tick(); setAiOpen(true); }} data-testid="ai-open" aria-label="Parler au copilote LEONIDA">
-          <CopilotGlyph size={26} />
-          <span>Demander à LEONIDA</span>
-        </button>
-      )}
+      {/* V0.14 : plus de bouton flottant — LEONIDA est au centre du dock (et dans la barre latérale iPad) */}
       {aiOpen && !isTablet && (
         <div className="ailayer">
-          <Sheet tall handleOnly initial="full" onClose={() => setAiOpen(false)} testId="ai-sheet" label="LEONIDA AI">
+          <Sheet tall handleOnly initial={view === "carte" ? "half" : "full"} onClose={() => setAiOpen(false)} testId="ai-sheet" label="LEONIDA AI">
             {body}
           </Sheet>
         </div>
       )}
       {isTablet && <AiSidePanel open={aiOpen}>{body}</AiSidePanel>}
+      {isTablet && aiOpen && <DockSpace />}
     </>
   );
 }
@@ -629,4 +646,13 @@ function ChecklistView({ c, mission }: { c: NonNullable<CopilotAnswer["checklist
       {block("Incertain — à confirmer en jeu", c.uncertain, "incertain", "checklist-uncertain")}
     </div>
   );
+}
+
+/** iPad : réserve la place du panneau LEONIDA à côté de la carte (elle se redimensionne au lieu d'être couverte). */
+function DockSpace() {
+  useEffect(() => {
+    document.documentElement.classList.add("ai-docked");
+    return () => document.documentElement.classList.remove("ai-docked");
+  }, []);
+  return null;
 }

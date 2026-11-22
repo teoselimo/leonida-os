@@ -33,6 +33,18 @@ async function start(page: Page, hash = "#radar") {
   await page.goto(`/${hash}`);
   await page.reload(); // l'ancre seule ne recharge pas le document
   await page.waitForSelector(".app.is-ready");
+  if (hash === "#radar") await page.getByTestId("guide-full").click({ timeout: 6000 }).catch(() => {}); // flux injoignable : pas de Guide
+
+}
+/** V0.14 : bouclier = menu ; baisser la protection demande confirmation. */
+async function spoiler(page: Page, mode: "strict" | "relaxed" | "off") {
+  await page.getByTestId("shield").first().click();
+  await page.getByTestId(`shield-${mode}`).click();
+  if (await page.getByTestId("shield-ok").isVisible().catch(() => false)) await page.getByTestId("shield-ok").click();
+}
+/** V0.14 : le Radar complet (statuts, actualités, santé de la collecte) est derrière le Guide. */
+async function fullRadar(page: Page) {
+  await page.getByTestId("guide-full").click();
 }
 
 test("une nouvelle fiche publiée par la collecte apparaît sans redéployer l'interface", async ({ page }, info) => {
@@ -59,7 +71,7 @@ test("anti-spoiler du flux : strict retire, modéré floute", async ({ page }) =
   await page.getByRole("radio", { name: /À vérifier/ }).click();
   await expect(page.getByTestId("live-list")).not.toContainText("ending");
   await expect(page.getByTestId("live-hidden")).toContainText("1 fiche masquée");
-  await page.locator(".shield").first().click();
+  await spoiler(page, "relaxed");
   await expect(page.getByTestId("live-list").locator(".spoiler").first()).toBeVisible();
 });
 
@@ -95,13 +107,13 @@ test("la fiche retirée par un administrateur disparaît", async ({ page }) => {
   let current: unknown = load("v1");
   await serveFeed(page, () => current);
   await start(page);
-  await page.locator(".shield").first().click(); // modéré : la rumeur (spoiler) est visible floutée
+  await spoiler(page, "relaxed"); // modéré : la rumeur (spoiler) est visible floutée
   await page.getByRole("radio", { name: /À vérifier/ }).click();
-  await expect(page.getByTestId("live-list")).toContainText("Rumeur");
+  await expect(page.getByTestId("live-list")).toContainText("Non confirmé"); // V0.14 : « rumeur » → « Non confirmé »
   current = load("v2");
   await page.getByTestId("sync-status").locator(".sync__main").click();
   await page.getByRole("button", { name: "Relire le flux" }).click();
-  await expect(page.getByTestId("live-list")).not.toContainText("Rumeur");
+  await expect(page.getByTestId("live-list")).not.toContainText("Non confirmé");
 });
 
 test("dégradation : flux injoignable → bascule propre en démonstration", async ({ page }) => {
@@ -121,9 +133,10 @@ test("V0.5.1 : la cache du perroquet devient une fiche structurée sourcée dans
   await expect(sheet).toContainText("≈ 1 000–1 400 $");
   await expect(sheet).toContainText("Three Sheets Liquor, Key Lento");
   await expect(sheet).toContainText("Get Shirley's Rum (Shirley)");
-  await expect(sheet).toContainText("Après « Pipework »");
+  await expect(sheet).toContainText("Après une mission à venir"); // V0.14 : strict, mission future jamais nommée
+  await expect(sheet).not.toContainText("Pipework");
   await expect(sheet).toContainText("Chapitre 1");
-  await expect(sheet).toContainText("au lancement de « Tourist Trap »");
+  await expect(sheet).not.toContainText("Tourist Trap");
   await sheet.getByRole("button", { name: /≈ 1 000–1 400 \$/ }).click();
   await expect(sheet.locator(".fsrow__proof q")).toHaveCount(2); // une citation par source
   await expect(card.getByTestId("propose-point")).toHaveAttribute("href", /github\.com\/teoselimo\/leonida-os\/issues\/new/);
@@ -134,14 +147,14 @@ test("V0.5.1 : la cache du perroquet devient une fiche structurée sourcée dans
 test("V0.5.1 : « Que faire maintenant ? » propose le conseil au chapitre 1, pas avant", async ({ page }, info) => {
   await serveFeed(page, () => load("v4"));
   await start(page, "#accueil");
-  const adv = page.getByTestId("live-advice");
+  // V0.14 : le conseil vit dans « Avant de continuer » (anti-spoiler strict : la mission future n'est pas nommée)
+  const adv = page.getByTestId("before");
   await expect(adv).toContainText("Three Sheets Liquor");
-  await expect(adv).toContainText("À ne pas rater");
-  await expect(adv).toContainText("Tourist Trap");
+  await expect(adv).not.toContainText("Tourist Trap");
   await page.screenshot({ path: `captures/${info.project.name}-21-conseil-accueil.png` });
   // « C'est fait » retire le conseil (et le mémorise)
-  await adv.getByTestId("advice-done").first().click();
-  await expect(page.getByTestId("live-advice")).not.toContainText("Three Sheets Liquor");
+  await adv.getByTestId("before-item").filter({ hasText: "Three Sheets Liquor" }).getByTestId("done-btn").click();
+  await expect(page.getByTestId("before-item").filter({ hasText: "Three Sheets Liquor" })).toHaveCount(0);
 });
 
 test("V0.5.1 : chapitre du joueur antérieur → conseil gardé pour plus tard", async ({ page }) => {
@@ -150,8 +163,8 @@ test("V0.5.1 : chapitre du joueur antérieur → conseil gardé pour plus tard",
   await page.getByTestId("chapter-0").click();
   await page.goto("/#accueil");
   await page.waitForSelector(".app.is-ready");
-  await expect(page.getByTestId("my-game")).toBeVisible();
-  await expect(page.getByTestId("live-advice")).not.toContainText("Three Sheets Liquor");
+  await expect(page.getByTestId("next-mission")).toBeVisible();
+  await expect(page.locator(".main")).not.toContainText("Three Sheets Liquor");
 });
 
 test("V0.5.1 : collecteur arrêté → alerte claire sur l'accueil et le Radar", async ({ page }, info) => {
@@ -159,6 +172,7 @@ test("V0.5.1 : collecteur arrêté → alerte claire sur l'accueil et le Radar",
   await start(page, "#accueil");
   await expect(page.getByTestId("collector-alert").first()).toContainText("Veille arrêtée");
   await page.goto("/#radar");
+  await fullRadar(page);
   await expect(page.getByTestId("collector-alert")).toContainText("aucune nouvelle collecte depuis 4 h");
   await expect(page.getByTestId("sync-status")).toContainText("Collecteur arrêté");
   await page.getByTestId("sync-status").locator(".sync__main").click();
@@ -186,12 +200,17 @@ test("V0.6 : Standard et Ultimate au même chapitre obtiennent des recommandatio
   await start(page, "#profil");
   await setProfile(page, "Standard", 1);
   await page.goto("/#accueil");
-  await expect(page.getByTestId("car-advice-v-maibatsu-penumbra-ff")).toBeVisible();
-  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toHaveCount(0);
+  const car = async (id: string) => {
+    const all = page.getByTestId("discover-all");
+    if ((await all.count()) && /Tout voir/.test((await all.textContent()) ?? "")) await all.click();
+    return page.locator(`[data-testid="discover-veh:${id}"]`);
+  };
+  // V0.14 : les voitures recommandées sont dans « Si tu as le temps »
+  await expect(await car("v-maibatsu-penumbra-ff")).toBeVisible();
+  await expect(page.locator(".main")).not.toContainText("Dinka Enduro");
   await setProfile(page, "Ultimate", 1);
   await page.goto("/#accueil");
-  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toBeVisible();
-  await expect(page.getByTestId("car-advice-v-dinka-enduro")).toContainText("jusqu'au chapitre 1");
+  await expect(page.getByTestId("before-item").filter({ hasText: "Dinka Enduro" })).toContainText("jusqu'au chapitre 1"); // limité dans le temps → « Avant de continuer »
   await page.screenshot({ path: `captures/${info.project.name}-30-accueil-ultimate.png` });
 });
 
@@ -200,7 +219,7 @@ test("V0.6 : filtre Voitures cachées — zone approximative, point exact valid�
   await start(page, "#profil");
   await setProfile(page, "Standard", 1);
   await openGarage(page);
-  await expect(page.getByTestId("filter-garage")).toContainText("Voitures cachées");
+  await expect(page.getByTestId("filter-garage")).toContainText("Voitures");
   // point validé : épingle ; zone : pas d'épingle
   await expect(page.locator('[data-testid="marker-veh:v-pegassi-vitello"]')).toHaveCount(1);
   await expect(page.locator('[data-testid="marker-veh:v-maibatsu-penumbra-ff"]')).toHaveCount(0);
@@ -210,7 +229,7 @@ test("V0.6 : filtre Voitures cachées — zone approximative, point exact valid�
   await expect(sheet.getByTestId("v-location")).toContainText("Zone de recherche : Rialto Islands");
   await expect(sheet.getByTestId("compat")).toContainText("Compatible");
   await expect(sheet.getByTestId("v-keep-text")).toContainText("chapitre 2");
-  await expect(page.getByTestId("zone-tag")).toContainText("Zone approximative");
+  await expect(page.getByTestId("zone-tag")).toContainText("Zone estimée");
   await page.waitForTimeout(900);
   await page.screenshot({ path: `captures/${info.project.name}-31-fiche-auto.png` });
   // exclusivité Ultimate vue par un joueur Standard : consultable, indicateur explicite, jamais « récupérable »

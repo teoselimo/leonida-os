@@ -389,6 +389,21 @@ export function LeonidaMap(props: MapViewProps) {
   useEffect(() => {
     if (active && ready) mapRef.current?.resize();
   }, [active, ready]);
+  // V0.14 : le panneau LEONIDA iPad se range à côté de la carte → la carte suit la taille de son conteneur
+  useEffect(() => {
+    const el = box.current;
+    if (!el || !ready || typeof ResizeObserver === "undefined") return;
+    let raf = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => mapRef.current?.resize());
+    });
+    ro.observe(el);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+    };
+  }, [ready]);
 
   const retryTiles = async () => {
     const map = mapRef.current;
@@ -519,7 +534,7 @@ export function LeonidaMap(props: MapViewProps) {
 
       {zones.filter((z) => z.id === selectedZoneId).map((z) => (
         <div key={z.id} className="zonetag" style={{ top: occlusion.top + 10, left: occlusion.left + 12 }} data-testid="zone-tag">
-          <Icon name="target" size={13} /> {z.kind === "point" ? "Position" : "Zone approximative"} · {z.label}
+          <Icon name="target" size={13} /> {z.kind === "point" ? (z.tag ?? "Position") : "Zone estimée"} · {z.label}
         </div>
       ))}
       {markers.map(({ discovery: d, status, fresh, tracked }) => {

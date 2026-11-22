@@ -8,6 +8,7 @@ import type { WebEvidence } from "./context";
 import { META_MARK, RULES, composeTurn } from "./prompt";
 import { LlmError } from "./types";
 import { decideWeb, englishQuery, WEB_ASK } from "./route";
+import { redactorFor } from "../spoiler";
 import type { TurnMetrics, WebReason } from "./route";
 import type { BriefItem, ChecklistItem, CopilotAnswer, LlmMessage, LlmTransport, Trust, WebHit, WebSearchFn, WebStatus } from "./types";
 
@@ -367,11 +368,19 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const used = Array.isArray(meta?.sources) ? (meta!.sources as unknown[]).map(String).filter((s) => allIds.includes(s)) : [];
     const trust = TRUST.includes(meta?.confiance as Trust) ? (meta!.confiance as Trust) : draft.reliability;
     const sources: Source[] = sourcesFor(used.length ? used : allIds, o.ctx, draft.sources, hits);
+    // anti-spoiler à la source : un nom de mission future glissé par le modèle est retiré avant stockage
+    const red = redactorFor(o.ctx.state, o.ctx.feed);
     return {
       intent: checklist ? "checklist" : draft.intent,
-      message: message.slice(0, MAX_ANSWER),
+      message: red(message.slice(0, MAX_ANSWER)),
       // un fait issu du seul web ne peut pas être « officiel » ni « recoupé »
-      trust: used.length && used.every((u) => u.startsWith("web:")) && (trust === "officiel" || trust === "recoupé") ? "signalé" : trust,
+      // « Vérifié » exige des sources INDÉPENDANTES : au moins deux sites distincts parmi celles affichées
+      // (ou une fiche officielle) ; un fait issu du seul web, ou d'un seul site, reste « Probable »
+      trust:
+        (used.length && used.every((u) => u.startsWith("web:")) && (trust === "officiel" || trust === "recoupé")) ||
+        (trust === "recoupé" && new Set(sources.map((x) => host(x.url))).size < 2)
+          ? "signalé"
+          : trust,
       sources,
       actions: chosen,
       topic: checklist ? { kind: "mission", name: o.mission!, known: true } : draft.topic ?? o.topic,

@@ -105,7 +105,8 @@ function reducer(s: PersistedState, a: Action): PersistedState {
     case "seen":
       return { ...s, seenSignals: Array.from(new Set([...s.seenSignals, ...a.ids])) };
     case "reset":
-      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile };
+      // ne remet à zéro que le contenu de démonstration : la vraie partie (profil, coches, garage, positions, analyses, mesures) est conservée
+      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile, pins: s.pins, briefs: s.briefs, metrics: s.metrics };
     case "upsertCustom": {
       const exists = s.custom.some((c) => c.id === a.d.id);
       return { ...s, custom: exists ? s.custom.map((c) => (c.id === a.d.id ? a.d : c)) : [...s.custom, a.d] };
@@ -170,6 +171,8 @@ export interface Toast {
   body?: string;
   undoId?: string;
   nextId?: string;
+  /** Annulation immédiate (≈ 5 s) d'une action « Fait » (V0.14). */
+  onUndo?: () => void;
 }
 
 interface Ctx {
@@ -184,6 +187,10 @@ interface Ctx {
   importProgress: (state: unknown) => boolean;
   setShowDemo: (v: boolean) => void;
   notify: (title: string, body?: string, icon?: string) => void;
+  /** « Fait » en un toucher (V0.14) : enregistre `done[key]` et propose « Annuler » pendant ~5 s. */
+  markDone: (key: string, title: string, name: string) => void;
+  /** Toast avec annulation personnalisée (véhicule, objectif…). */
+  notifyUndo: (title: string, body: string, onUndo: () => void) => void;
   hydrated: boolean;
   view: ViewId;
   setView: (v: ViewId) => void;
@@ -209,6 +216,8 @@ interface Ctx {
   addObjective: (o: Omit<Objective, "id" | "done" | "at"> & { done?: boolean }) => void;
   toggleObjective: (id: string) => void;
   removeObjective: (id: string) => void;
+  /** Annule un « Fait » posé comme objectif (V0.14) : retire l'objectif coché de ce texte pour cette mission. */
+  undoObjective: (mission: string, text: string) => void;
   setBrief: (key: string, brief: MissionAlertBrief) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
@@ -382,6 +391,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
       setShowDemo: (v) => dispatch({ type: "showDemo", value: v }),
       notify: (title, body, icon) => showToast({ title, body, icon }),
+      markDone: (key, title, name) => {
+        dispatch({ type: "done", id: key, value: true });
+        showToast({ title, body: name, icon: "check", onUndo: () => dispatch({ type: "done", id: key, value: false }) });
+      },
+      notifyUndo: (title, body, onUndo) => showToast({ title, body, icon: "check", onUndo }),
       hydrated,
       view,
       setView,
@@ -425,6 +439,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         }),
       toggleObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.map((x) => (x.id === id ? { ...x, done: !x.done } : x)) }),
       removeObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.filter((x) => x.id !== id) }),
+      undoObjective: (mission, text) =>
+        dispatch({ type: "objectives", fn: (list) => list.filter((x) => !(x.done && x.mission.toLowerCase() === mission.toLowerCase() && x.text.trim().toLowerCase() === text.trim().toLowerCase())) }),
       setBrief: (key, brief) => dispatch({ type: "brief", key, brief }),
       setVehicle: (id, st, storage) => {
         const prev = state.vehicles[id];

@@ -181,3 +181,52 @@ export function MissionBriefPanel({ mission, during, risk }: { mission: string; 
     </section>
   );
 }
+
+/**
+ * V0.14 : l'analyse « Rien à manquer » sans son panneau — l'accueil la fusionne dans « À faire avant de continuer ».
+ * Même déclenchement automatique (une fois par mission), même stockage (`briefs`), même bouton de mise à jour.
+ */
+export function useMissionBrief(mission: string | null) {
+  const { state, setBrief } = useStore();
+  const { feed } = useLiveRadar();
+  const { transport, web, ready } = useCopilotRuntime();
+  const key = mission ? briefKey(mission) : "";
+  const brief: MissionAlertBrief | undefined = mission ? state.briefs?.[key] : undefined;
+  const busy = useBriefRunning(key);
+  const [stage, setStage] = useState<"search" | "write" | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [places, setPlaces] = useState<Landmark[]>([]);
+  useEffect(() => void loadLandmarks().then(setPlaces), []);
+  const run = async () => {
+    if (!mission || running.has(key) || !feed) return;
+    setRunning(key, true);
+    setFailed(false);
+    setStage(web === "unavailable" ? "write" : "search");
+    try {
+      const b = await runMissionBrief({ mission, ctx: { feed, state, places }, transport, search: web === "unavailable" ? null : exaSearch, onStage: setStage });
+      setBrief(key, b);
+      if (b.web) reportWeb(b.web.status === "ok" || b.web.status === "empty" ? "ok" : (b.web.status as WebStatus));
+    } catch {
+      setFailed(true);
+    } finally {
+      setRunning(key, false);
+      setStage(null);
+    }
+  };
+  useEffect(() => {
+    if (!mission || !ready || !transport || !feed || brief || attempted.has(key)) return;
+    attempted.add(key);
+    void run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, transport, feed, key, !!brief]);
+  const meta = busy || stage
+    ? stage === "search"
+      ? "recherche sur le web…"
+      : "analyse en cours…"
+    : brief
+      ? `analysée ${ago(brief.at)}${brief.web?.status === "ok" ? ` · ${brief.web.count} source${brief.web.count > 1 ? "s" : ""} web` : ""}${Date.now() - Date.parse(brief.at) > BRIEF_TTL_MS ? " · à rafraîchir" : ""}`
+      : transport
+        ? "pas encore analysée"
+        : "analyse IA indisponible ici";
+  return { brief, busy: busy || !!stage, failed, run, meta, canRun: !!feed && !!mission };
+}

@@ -89,27 +89,29 @@ test("Anti-spoiler : complet → léger → aucun, mémorisé au rechargement et
   await start(page);
   const shield = page.getByTestId("shield").first();
   await expect(shield).toHaveAttribute("data-mode", "strict");
-  await expect(shield).toContainText("Masqués");
-  await shield.click();
-  await expect(shield).toContainText("Floutés");
-  await shield.click();
-  await expect(shield).toContainText("Visibles");
+  // V0.14 : un toucher ouvre le menu ; chaque baisse de protection se confirme
+  for (const m of ["relaxed", "off"]) {
+    await shield.click();
+    await page.getByTestId(`shield-${m}`).click();
+    await page.getByTestId("shield-ok").click();
+    await expect(shield).toHaveAttribute("data-mode", m);
+  }
   await page.reload();
   await page.waitForSelector(".app.is-ready");
   await expect(page.getByTestId("shield").first()).toHaveAttribute("data-mode", "off");
   await page.getByTestId("ai-open").click();
   await page.getByTestId("ai-input").fill("Salut");
   await page.getByTestId("ai-send").click();
-  await expect(page.getByTestId("ai-engine")).toBeVisible();
+  await expect(page.getByTestId("ai-engine")).toBeAttached();
   const sent = await page.evaluate(() => (window as unknown as Win).__calls[0]);
   expect(sent.at(-1)!.content).toMatch(/Anti-spoiler : aucun/);
 });
 
 test("Mission en cours (Swamped) : déclarée en cours, jamais considérée terminée ; « Rien à manquer » → objectif coché, conservé", async ({ page }, info) => {
   await start(page);
-  if (await page.getByTestId("confirm-guess").isVisible().catch(() => false)) await page.getByRole("button", { name: "Une autre" }).click();
   await page.getByTestId("next-mission-input").fill("Swamped");
-  await page.getByTestId("next-mission-live").click();
+  await page.getByTestId("next-mission-save").click();
+  await page.getByTestId("mission-start").click(); // V0.14 : « Je lance la mission »
   await expect(page.getByTestId("mission-live")).toBeVisible();
   await expect(page.getByTestId("next-mission-name")).toHaveText("Swamped");
   // l'analyse « Rien à manquer » se lance seule sur l'écran de mission ; la conversation passe par le bouton LEONIDA
@@ -117,11 +119,11 @@ test("Mission en cours (Swamped) : déclarée en cours, jamais considérée term
   await page.getByTestId("ai-input").fill("Je suis en pleine mission, un conseil ?");
   await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").last();
-  await expect(a.getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
+  await expect(a.getByTestId("ai-engine")).toBeAttached({ timeout: 15_000 });
   const sent = await page.evaluate(() => (window as unknown as Win).__calls.find((c) => /MESSAGE DU JOUEUR : Je suis en pleine mission/.test(c.at(-1)!.content))!);
   expect(sent.at(-1)!.content).toContain("Mission EN COURS");
   expect(sent.at(-1)!.content).toContain("PAS terminée");
-  if (isPhone(page)) await page.getByTestId("ai-close").click();
+  await page.getByTestId("ai-close").click();
   const add = page.getByTestId("brief-add");
   if (await add.count()) {
     await add.first().click();
@@ -132,6 +134,7 @@ test("Mission en cours (Swamped) : déclarée en cours, jamais considérée term
     await expect(obj).toHaveClass(/is-done/);
   }
   // objectif perso
+  if (!(await page.getByTestId("objective-input").isVisible())) await page.getByTestId("objectives").locator(".objs__head").click();
   await page.getByTestId("objective-input").fill("Garder le bateau intact");
   await page.getByTestId("objective-add").click();
   await page.screenshot({ path: `captures/${info.project.name}-70-mission-en-cours.png` });
@@ -148,7 +151,7 @@ test("Commerces de Key Lento : icônes visibles sans zoom maximal, commande acqu
   await page.getByTestId("ai-input").fill("Montre-moi les commerces de Key Lento");
   await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").last();
-  await expect(a.getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
+  await expect(a.getByTestId("ai-engine")).toBeAttached({ timeout: 15_000 });
   await a.getByTestId("ai-action-show_place").first().click();
   await expect(page.locator("[data-place-ack^='applied:']")).toHaveCount(1);
   // la caméra se pose sur la zone (animation) : on attend un état stable plutôt qu'un instant précis

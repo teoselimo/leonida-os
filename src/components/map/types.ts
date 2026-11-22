@@ -27,6 +27,8 @@ export interface MapZone {
   widened?: boolean;
   /** « point » : position vérifiée (dessinée comme un petit cercle plein, sans mention « approximative »). */
   kind?: "zone" | "point";
+  /** Libellé de provenance d'un point (« Placée par toi », « Repère communautaire »). */
+  tag?: string;
 }
 
 export interface MapViewProps {

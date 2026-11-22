@@ -69,7 +69,7 @@ test("« voiture Fast & Furious » : zone + fiche Penumbra + conseil pour la gar
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet.getByTestId("vehicle-name")).toHaveText("'97 Maibatsu Penumbra FF");
   await expect(sheet.getByTestId("v-keep-text")).toContainText("chapitre 2");
-  await expect(page.getByTestId("zone-tag")).toContainText("Zone approximative");
+  await expect(page.getByTestId("zone-tag")).toContainText("Zone estimée");
   expect(await mapCount(page)).toBe(1);
   await page.waitForTimeout(700);
   await page.screenshot({ path: `captures/${info.project.name}-41-ia-fast-furious.png` });
@@ -81,10 +81,9 @@ test("« voiture Fast & Furious » : zone + fiche Penumbra + conseil pour la gar
 
 test("chapitre 5 : aucune injonction Shirley, ni sur l'accueil ni dans l'IA", async ({ page }) => {
   await start(page, { chapter: 5 });
-  await expect(page.getByTestId("live-advice")).toBeVisible();
-  // la planque reste mentionnée comme simple information (la source dit qu'on ne rate rien), jamais comme urgence
-  await expect(page.getByTestId("live-advice")).not.toContainText("À faire avant de continuer");
-  await expect(page.getByTestId("live-advice")).not.toContainText("Pendant « Get Shirley's Rum »");
+  await expect(page.getByTestId("next-mission")).toBeVisible();
+  // V0.14 : au chapitre 5, rien sur Shirley dans « Avant de continuer »
+  expect(await page.getByTestId("before-item").filter({ hasText: "Shirley" }).count()).toBe(0);
   const a = await ask(page, "Je peux lancer ma prochaine mission sans rien manquer ?");
   await expect(a).not.toContainText("Shirley");
 });
@@ -109,7 +108,9 @@ test("historique local effaçable ; aucune requête vers un fournisseur d'IA dep
   await start(page, {});
   await ask(page, "Comment acheter une voiture ?");
   expect(await page.evaluate(() => localStorage.getItem("leonida-os/ai-history/v2"))).toContain("acheter");
+  await page.getByTestId("ai-menu").click(); // V0.14 : « Effacer » dans le menu, avec confirmation
   await page.getByTestId("ai-clear").click();
+  await page.getByTestId("ai-clear-ok").click();
   await expect(page.getByTestId("ai-answer")).toHaveCount(0);
   expect(external).toEqual([]);
 });
@@ -126,9 +127,9 @@ test("build statique : aucune clé ni secret d'IA embarqué", async ({}, info) =
 
 test("rendu : dock, bouton IA et carte « à la une » ne se chevauchent pas", async ({ page }, info) => {
   await start(page, { edition: "ultimate" });
-  await expect(page.getByTestId("live-advice")).toBeVisible();
+  await expect(page.getByTestId("next-mission")).toBeVisible();
   const fab = (await page.getByTestId("ai-open").boundingBox())!;
   const nav = (await page.locator(".nav").boundingBox())!;
-  if (isPhone(page)) expect(fab.x).toBeGreaterThanOrEqual(nav.x + nav.width); // bouton IA à côté du dock, jamais dessus
+  if (isPhone(page)) expect(fab.x + fab.width).toBeLessThanOrEqual(nav.x + nav.width); // V0.14 : LEONIDA au centre du dock, plus de bouton flottant
   await page.screenshot({ path: `captures/${info.project.name}-42-accueil-v07.png` });
 });
