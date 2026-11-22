@@ -4,9 +4,9 @@
  "updatedAt": "2026-11-19T17:51:06+01:00",
  "tileset": "day",
  "tileSize": 2048,
- "maxzoom": 4,
+ "maxzoom": 5,
  "landmarks": 3663,
  "license": "CC BY 4.0",
  "attribution": "GTA VI Landmarks Data & Map Tiles (CC BY 4.0) — map.gtadb.org",
- "changes": "Tuiles ré-assemblées en grandes tuiles et recompressées, assombries à l'affichage ; données réduites (type de commerce « #… » conservé)."
+ "changes": "Tuiles ré-assemblées en 2048 px et recompressées (JPEG 84 pour le niveau natif ajouté en V0.15), légèrement assombries à l'affichage ; données réduites (type de commerce « #… » conservé) ; tuiles de pleine mer omises au niveau natif (la carte réutilise alors le niveau inférieur, identique)."
 }

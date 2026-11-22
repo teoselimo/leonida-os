@@ -53,4 +53,5 @@ walk("out-artifact");
 const total = files.reduce((a, f) => a + f.size, 0);
 writeFileSync("out-artifact/manifest.json", JSON.stringify({ generatedAt, builtAt: new Date().toISOString(), count: files.length, totalBytes: total, files }, null, 1));
 console.log(`Artifact : ${files.length} fichiers, ${(total / 1048576).toFixed(1)} Mio, instantané du ${generatedAt}`);
-if (files.length > 256 || total > 64 << 20 || files.some((f) => f.size > 20 << 20)) throw new Error("Limites de publication dépassées");
+if (files.some((f) => f.size > 20 << 20)) throw new Error("Fichier > 20 Mio : limite de publication dépassée");
+if (files.length > 256 || total > 64 << 20) console.warn(`Publication en plusieurs envois nécessaire (${files.length} fichiers, 256 maximum par envoi ; 64 Mio maximum par envoi).`);

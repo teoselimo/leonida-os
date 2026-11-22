@@ -8,7 +8,10 @@ import { CATEGORIES } from "@/lib/meta";
 import { assetUrl, CC_BY_URL, gameToLngLat, GTADB_URL, LAND, lngLatToGame } from "@/lib/gtadb";
 import { Icon } from "@/components/ui/Icon";
 import type { MapViewProps } from "./types";
-import { POI_CATS, poiCategory, poiName, poiStatus } from "@/lib/poi";
+import { POI_CATS, poiCategory, poiKind, poiName, poiStatus } from "@/lib/poi";
+import { drawCluster, drawDistrict, drawKind } from "./icons";
+import type { PoiKind } from "./icons";
+import { ESTABLISHMENTS } from "@/data/establishments";
 import type { PoiCat } from "@/lib/poi";
 import type { Landmark } from "@/lib/gtadb";
 
@@ -23,7 +26,7 @@ const POI_ZOOM = 5.8;
 function zoomFilter(cats: PoiCat[] | null | undefined, extra: unknown[] = [], offset = 0): FilterSpecification {
   const base = [...(cats && cats.length ? [["in", ["get", "cat"], ["literal", cats]]] : []), ...extra];
   const at = (z: number) => ["all", ["<=", ["get", "minz"], z - offset], ...base];
-  const steps = [...new Set(Object.values(POI_CATS).map((c) => c.minZoom + offset))].sort((a, b) => a - b);
+  const steps = [...new Set([...Object.values(POI_CATS).map((c) => c.minZoom), 7].map((z) => z + offset))].sort((a, b) => a - b);
   return ["step", ["zoom"], at(0), ...steps.flatMap((z) => [z, at(z)])] as unknown as FilterSpecification;
 }
 const lmFilter = (cats: PoiCat[] | null | undefined) => zoomFilter(cats);
@@ -73,6 +76,10 @@ function drawLabel(text: string): ImageData {
   return g.getImageData(0, 0, w, 36);
 }
 const CAMERA_KEY = "leonida-os/map-camera/v1";
+/** Comparaison V0.15 : « ?carte=v014 » rend l'ancien fond (z4, 2048 px, sombre) et les anciens symboles. */
+const LEGACY = typeof window !== "undefined" && /[?&]carte=v014\b/.test(window.location.search);
+/** Repères gtadb qui sont la position d'un établissement confirmé (anneau blanc sur le pictogramme). */
+const EST_LM = new Set(ESTABLISHMENTS.map((e) => e.position?.landmarkId).filter((x): x is string => !!x));
 
 type Camera = { center: [number, number]; zoom: number };
 function loadCamera(): Camera | null {
@@ -144,7 +151,7 @@ export function LeonidaMap(props: MapViewProps) {
           dragRotate: false,
           pitchWithRotate: false,
           touchPitch: false,
-          maxZoom: 8.6,
+          maxZoom: LEGACY ? 8.6 : 8.4,
           minZoom: 0.6,
           renderWorldCopies: false,
           maxBounds: [gameToLngLat(Math.max(-16300, LAND.minX - 6000), Math.max(-16300, LAND.minY - 6000)), gameToLngLat(Math.min(16300, LAND.maxX + 6000), Math.min(16300, LAND.maxY + 6000))],
@@ -153,13 +160,19 @@ export function LeonidaMap(props: MapViewProps) {
           style: {
             version: 8,
             sources: {
-              leonida: { type: "raster", tiles: [assetUrl("tiles/") + "{z}/{x}/{y}.jpg"], tileSize: 2048, minzoom: 0, maxzoom: 4, bounds: [-135, -74.0195, 67.5, 79.1713] },
+              // V0.15 : niveau natif z5 (fond « day » gtadb à 2 px par unité de jeu) ; tuiles de 2048 px déclarées en 1024
+              // pour que l'écran Retina reçoive le niveau de détail supérieur au lieu d'un agrandissement flou.
+              leonida: { type: "raster", tiles: [assetUrl("tiles/") + "{z}/{x}/{y}.jpg"], tileSize: LEGACY ? 2048 : 1024, minzoom: 0, maxzoom: LEGACY ? 4 : 5, bounds: [-135, -74.0195, 67.5, 79.1713] },
+              lmf: { type: "geojson", data: { type: "FeatureCollection", features: [] }, cluster: true, clusterMaxZoom: 5, clusterRadius: 44 },
+              districts: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
               landmarks: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
               zones: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
             },
             layers: [
               { id: "bg", type: "background", paint: { "background-color": "#071019" } },
-              { id: "base", type: "raster", source: "leonida", paint: { "raster-brightness-max": 0.72, "raster-saturation": -0.25, "raster-contrast": 0.12, "raster-fade-duration": 120 } },
+              { id: "base", type: "raster", source: "leonida", paint: LEGACY ? { "raster-brightness-max": 0.72, "raster-saturation": -0.25, "raster-contrast": 0.12, "raster-fade-duration": 120 } : { "raster-brightness-max": 0.9, "raster-saturation": -0.06, "raster-contrast": 0.05, "raster-fade-duration": 120, "raster-resampling": "linear" } },
+              // Noms de quartiers (calculés depuis les repères) entre la vue d'île et la vue de rue
+              { id: "dist", type: "symbol", source: "districts", minzoom: 3.2, maxzoom: 6.6, layout: { "icon-image": ["concat", "dist:", ["get", "name"]], "icon-allow-overlap": false, "symbol-sort-key": ["-", 0, ["get", "n"]] } },
               // Zones de recherche approximatives (Garage des légendes) : remplissage léger + contour pointillé
               { id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": ["get", "color"], "fill-opacity": ["case", ["==", ["get", "sel"], 1], 0.28, 0.14] } },
               {
@@ -167,20 +180,6 @@ export function LeonidaMap(props: MapViewProps) {
                 type: "line",
                 source: "zones",
                 paint: { "line-color": ["get", "color"], "line-width": ["case", ["==", ["get", "sel"], 1], 2.6, 1.4], "line-dasharray": [2, 1.5], "line-opacity": 0.9 },
-              },
-              // Repères communautaires : icônes par catégorie (images dessinées sur canvas, sans serveur de polices),
-              // apparition progressive selon le zoom et l'importance, collisions gérées par MapLibre.
-              {
-                id: "lm",
-                type: "symbol",
-                source: "landmarks",
-                filter: lmFilter(null),
-                layout: {
-                  "icon-image": ["concat", "cat:", ["get", "cat"]],
-                  "icon-size": ["interpolate", ["linear"], ["zoom"], 2, 0.62, 5, 0.85, 7, 1.05],
-                  "icon-allow-overlap": false,
-                  "symbol-sort-key": ["get", "rank"],
-                },
               },
               // Noms des lieux à partir d'un zoom de quartier (une image par nom, créée à la demande)
               {
@@ -192,7 +191,21 @@ export function LeonidaMap(props: MapViewProps) {
                 layout: {
                   "icon-image": ["concat", "lbl:", ["get", "id"]],
                   "icon-anchor": "left",
-                  "icon-offset": [16, 0],
+                  "icon-offset": LEGACY ? [16, 0] : [21, 0],
+                  "icon-allow-overlap": false,
+                  "symbol-sort-key": ["get", "rank"],
+                },
+              },
+              // Repères communautaires : icônes par catégorie (images dessinées sur canvas, sans serveur de polices),
+              // apparition progressive selon le zoom et l'importance, collisions gérées par MapLibre.
+              {
+                id: "lm",
+                type: "symbol",
+                source: "landmarks",
+                filter: lmFilter(null),
+                layout: {
+                  "icon-image": LEGACY ? ["concat", "cat:", ["get", "cat"]] : ["concat", "k:", ["get", "kind"], ":", ["get", "est"]],
+                  "icon-size": ["interpolate", ["linear"], ["zoom"], 2, 0.72, 5, 0.9, 7, 1.05],
                   "icon-allow-overlap": false,
                   "symbol-sort-key": ["get", "rank"],
                 },
@@ -204,6 +217,11 @@ export function LeonidaMap(props: MapViewProps) {
                 filter: ["==", ["get", "id"], ""],
                 paint: { "circle-radius": 9, "circle-color": "#2EE6D6", "circle-stroke-color": "#ffffff", "circle-stroke-width": 3 },
               },
+              // Filtre actif : ses résultats visibles tout de suite, regroupés quand ils sont trop proches
+              { id: "lmf-cl", type: "symbol", source: "lmf", filter: ["has", "point_count"], layout: { "icon-image": ["concat", "cl:", ["to-string", ["get", "point_count"]]], "icon-allow-overlap": true, visibility: "none" } },
+              { id: "lmf-pt", type: "symbol", source: "lmf", filter: ["!", ["has", "point_count"]], layout: { "icon-image": ["concat", "k:", ["get", "kind"], ":", ["get", "est"]], "icon-size": 0.95, "icon-allow-overlap": false, "symbol-sort-key": ["get", "rank"], visibility: "none" } },
+              // Le lieu sélectionné reste affiché même si ses voisins le chevauchent
+              { id: "lm-sel-icon", type: "symbol", source: "landmarks", filter: ["==", ["get", "id"], ""], layout: { "icon-image": ["concat", "k:", ["get", "kind"], ":", ["get", "est"]], "icon-size": 1.25, "icon-allow-overlap": true, "icon-ignore-placement": true } },
             ],
           },
         });
@@ -246,9 +264,18 @@ export function LeonidaMap(props: MapViewProps) {
             cb.current.onSelectZone(String(z.properties?.id));
             return;
           }
-          const hits = map!.getLayer("lm") && map!.getLayoutProperty("lm", "visibility") !== "none"
-            ? map!.queryRenderedFeatures([[p.x - 14, p.y - 14], [p.x + 14, p.y + 14]], { layers: ["lm", "lm-label"] })
-            : [];
+          const box: [[number, number], [number, number]] = [[p.x - 14, p.y - 14], [p.x + 14, p.y + 14]];
+          const cl = map!.getLayoutProperty("lmf-cl", "visibility") !== "none" ? map!.queryRenderedFeatures(box, { layers: ["lmf-cl"] }) : [];
+          if (cl.length) {
+            const f = cl[0];
+            const src = map!.getSource("lmf") as GeoJSONSource;
+            void src.getClusterExpansionZoom(Number(f.properties?.cluster_id)).then((z) => {
+              map!.easeTo({ center: (f.geometry as unknown as { coordinates: [number, number] }).coordinates, zoom: Math.min(z + 0.2, 8), duration: 600 });
+            });
+            return;
+          }
+          const layersHit = ["lm", "lm-label", "lmf-pt", "lm-sel-icon"].filter((l) => map!.getLayer(l) && map!.getLayoutProperty(l, "visibility") !== "none");
+          const hits = layersHit.length ? map!.queryRenderedFeatures(box, { layers: layersHit }) : [];
           if (hits.length) {
             cb.current.onSelect(null);
             cb.current.onSelectLandmark(String(hits[0].properties?.id));
@@ -261,7 +288,14 @@ export function LeonidaMap(props: MapViewProps) {
         map.on("styleimagemissing", (e: { id: string }) => {
           const id = e.id;
           if (map!.hasImage(id)) return;
-          if (id.startsWith("cat:")) {
+          if (id.startsWith("k:")) {
+            const [, kind, est] = id.split(":");
+            map!.addImage(id, drawKind(kind as PoiKind, est === "1"), { pixelRatio: 2 });
+          } else if (id.startsWith("cl:")) {
+            map!.addImage(id, drawCluster(Number(id.slice(3)) || 0), { pixelRatio: 2 });
+          } else if (id.startsWith("dist:")) {
+            map!.addImage(id, drawDistrict(id.slice(5)), { pixelRatio: 2 });
+          } else if (id.startsWith("cat:")) {
             const meta = POI_CATS[id.slice(4) as PoiCat];
             if (meta) map!.addImage(id, drawPin(meta.color, meta.glyph), { pixelRatio: 2 });
           } else if (id.startsWith("lbl:")) {
@@ -422,20 +456,53 @@ export function LeonidaMap(props: MapViewProps) {
       type: "FeatureCollection",
       features: landmarks.map((l) => {
         const cat = poiCategory(l);
-        return { type: "Feature", properties: { id: l.id, cat, minz: POI_CATS[cat].minZoom, rank: POI_CATS[cat].rank + (poiStatus(l) === "uncertain" ? 0.5 : 0), named: l.name === "Lieu non identifié" ? 0 : 1 }, geometry: { type: "Point", coordinates: gameToLngLat(l.x, l.y) } };
+        const est = EST_LM.has(l.id) ? 1 : 0;
+        // établissements confirmés d'abord, puis métiers précis, puis catégorie
+        const rank = POI_CATS[cat].rank - est * 1.5 + (poiStatus(l) === "uncertain" ? 0.5 : 0);
+        const named = l.name === "Lieu non identifié" ? 0 : 1;
+        // V0.15 : les milliers de bâtiments sans nom ne couvrent plus la carte (toujours trouvables par la recherche)
+        const minz = est ? Math.min(POI_CATS[cat].minZoom, 2) : cat === "autre" && !LEGACY ? (named ? 7 : 99) : POI_CATS[cat].minZoom;
+        return { type: "Feature", properties: { id: l.id, cat, kind: poiKind(l), est, minz, rank, named }, geometry: { type: "Point", coordinates: gameToLngLat(l.x, l.y) } };
       }),
+    });
+    // quartiers : centre des repères qui partagent le même premier élément d'adresse (au moins 6)
+    const groups = new Map<string, { x: number; y: number; n: number }>();
+    for (const l of landmarks) {
+      const d = (l.district || "").split(",")[0].trim();
+      if (!d || d === "Leonida" || /county/i.test(d) || /\b(route|street|st|ave|avenue|blvd|boulevard|road|rd|highway|hwy|drive|dr|way|lane|ln)\b|\d/i.test(d)) continue;
+      const g = groups.get(d) ?? { x: 0, y: 0, n: 0 };
+      g.x += l.x;
+      g.y += l.y;
+      g.n++;
+      groups.set(d, g);
+    }
+    (map.getSource("districts") as GeoJSONSource).setData({
+      type: "FeatureCollection",
+      features: LEGACY ? [] : [...groups].filter(([, g]) => g.n >= 6).map(([name, g]) => ({ type: "Feature", properties: { name, n: g.n }, geometry: { type: "Point", coordinates: gameToLngLat(g.x / g.n, g.y / g.n) } })),
     });
   }, [ready, landmarks]);
 
   useEffect(() => {
     const map = mapRef.current;
     if (!ready || !map) return;
-    map.setLayoutProperty("lm", "visibility", showLandmarks ? "visible" : "none");
+    // filtre de catégorie (V0.15) : résultats visibles à tous les zooms, regroupés ; sans filtre, apparition par zoom
+    const filtered = !LEGACY && showLandmarks && poiCats.length > 0;
+    map.setLayoutProperty("lm", "visibility", showLandmarks && !filtered ? "visible" : "none");
     map.setLayoutProperty("lm-label", "visibility", showLandmarks ? "visible" : "none");
+    map.setLayoutProperty("lmf-cl", "visibility", filtered ? "visible" : "none");
+    map.setLayoutProperty("lmf-pt", "visibility", filtered ? "visible" : "none");
+    (map.getSource("lmf") as GeoJSONSource).setData({
+      type: "FeatureCollection",
+      features: filtered
+        ? landmarks.filter((l) => poiCats.includes(poiCategory(l))).map((l) => ({ type: "Feature" as const, properties: { id: l.id, kind: poiKind(l), est: EST_LM.has(l.id) ? 1 : 0, rank: EST_LM.has(l.id) ? 0 : 1 }, geometry: { type: "Point" as const, coordinates: gameToLngLat(l.x, l.y) } }))
+        : [],
+    });
     map.setFilter("lm", lmFilter(poiCats));
     map.setFilter("lm-label", labelFilter(poiCats));
     map.setFilter("lm-sel", ["==", ["get", "id"], selectedLandmarkId ?? ""]);
-  }, [ready, showLandmarks, selectedLandmarkId, poiKey]);
+    if (!LEGACY) map.setFilter("lm-sel-icon", ["==", ["get", "id"], selectedLandmarkId ?? ""]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, showLandmarks, selectedLandmarkId, poiKey, landmarks]);
 
   // Zones de recherche : cercles calculés en coordonnées de jeu puis projetés
   const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}:${z.kind ?? ""}`).join("|") + `#${selectedZoneId ?? ""}`;

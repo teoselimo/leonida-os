@@ -89,7 +89,7 @@ test.describe("5 · journal « Récupéré / Fait »", () => {
 
 test("précision des lieux et version centralisée", () => {
   expect(Object.values(PRECISION_FR)).toEqual(["Placée par toi", "Repère communautaire", "Zone estimée", "Position inconnue"]);
-  expect(APP_VERSION).toBe("V0.14.1");
+  expect(APP_VERSION).toBe("V0.15");
 });
 
 test.describe("V0.14.1 · salutation", () => {

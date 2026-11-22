@@ -159,10 +159,11 @@ test("Commerces de Key Lento : icônes visibles sans zoom maximal, commande acqu
     .poll(
       () =>
         page.evaluate(() => {
-          const m = (window as unknown as { __leonidaMap: { getZoom(): number; isMoving(): boolean; queryRenderedFeatures(o: unknown): Array<{ properties: { cat: string } }> } }).__leonidaMap;
+          const m = (window as unknown as { __leonidaMap: { getZoom(): number; isMoving(): boolean; queryRenderedFeatures(o: unknown): Array<{ properties: { cat?: string; kind?: string } }> } }).__leonidaMap;
           if (!m) return "no map";
           if (m.isMoving()) return "moving";
-          const shops = m.queryRenderedFeatures({ layers: ["lm"] }).filter((f) => f.properties.cat === "commerce").length;
+          // V0.15 : filtre « Commerces » actif → résultats dans la couche filtrée (points ou groupes)
+          const shops = m.queryRenderedFeatures({ layers: ["lm", "lmf-pt", "lmf-cl"] }).filter((f) => f.properties.cat === "commerce" || f.properties.kind !== undefined || (f.properties as { point_count?: number }).point_count).length;
           return m.getZoom() < 5.5 && shops > 0 ? "ok" : `zoom ${m.getZoom().toFixed(2)}, ${shops} commerces`;
         }),
       { timeout: 15_000 },

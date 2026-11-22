@@ -10,7 +10,7 @@ Sorties (dans public/) :
   data/gtadb.json         métadonnées (révision, date, licence)
 
 Licence des données/tuiles : CC BY 4.0 — "GTA VI Landmarks Data / Map Tiles (CC BY 4.0) — https://map.gtadb.org".
-Modifications : tuiles ré-assemblées en 1024 px et recompressées ; données réduites aux champs utiles.
+Modifications : tuiles ré-assemblées en 2048 px et recompressées (V0.15 : niveau natif z6 inclus, JPEG 84) ; données réduites aux champs utiles.
 """
 import json, os, subprocess, sys, argparse
 from PIL import Image
@@ -18,8 +18,10 @@ from PIL import Image
 ap = argparse.ArgumentParser()
 ap.add_argument("src")
 ap.add_argument("--tileset", default="day")
-ap.add_argument("--maxz", type=int, default=5)
+ap.add_argument("--maxz", type=int, default=6, help="zoom gtadb maximal (6 = résolution native du fond « day », 2 px par unité de jeu)")
 ap.add_argument("--block", type=int, default=8, help="tuiles 256 px assemblées par côté (8 → tuiles 2048 px)")
+ap.add_argument("--quality", type=int, default=84, help="qualité JPEG (84, sous-échantillonnage 4:2:0 : indiscernable de la source à l'œil)")
+ap.add_argument("--minz", type=int, default=0, help="ne régénère que les niveaux gtadb >= minz")
 ap.add_argument("--data-only", action="store_true", help="ne régénère que data/*.json")
 ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "public"))
 a = ap.parse_args()
@@ -36,7 +38,7 @@ first = None
 if not a.data_only:
   first = os.path.join(tdir, "0", sorted(os.listdir(os.path.join(tdir, "0")))[0])
   ocean = Image.open(first).convert("RGB").getpixel((4, 4))
-for z in range(0, a.maxz + 1):
+for z in range(a.minz, a.maxz + 1):
     zdir = os.path.join(tdir, str(z))
     tiles = {}
     for f in os.listdir(zdir):
@@ -57,7 +59,7 @@ for z in range(0, a.maxz + 1):
                     im.paste(Image.open(p).convert("RGB"), (dx * 256, dy * 256))
         d = os.path.join(out_tiles, str(oz), str(MX))
         os.makedirs(d, exist_ok=True)
-        im.save(os.path.join(d, f"{MY}.jpg"), quality=80, optimize=True, progressive=True)
+        im.save(os.path.join(d, f"{MY}.jpg"), quality=a.quality, optimize=True, progressive=True, subsampling=2)
         count += 1
     print(f"z{oz}: {len(metas)} tuiles {256*B} px")
 

@@ -26,15 +26,16 @@ export interface PoiCatMeta {
  * d'ensemble, commerces / stations / garages dès la vue de quartier (~3), restos et loisirs un cran plus près.
  */
 export const POI_CATS: Record<PoiCat, PoiCatMeta> = {
-  repere: { label: "Repère", plural: "Repères", color: "#FFB35C", glyph: "★", minZoom: 0, rank: 1 },
-  commerce: { label: "Commerce", plural: "Commerces", color: "#FF3D8B", glyph: "$", minZoom: 3, rank: 2 },
-  station: { label: "Station-service", plural: "Stations", color: "#FF6F61", glyph: "⛽", minZoom: 3, rank: 3 },
-  garage: { label: "Garage", plural: "Garages", color: "#5AB8FF", glyph: "G", minZoom: 3, rank: 3 },
-  restaurant: { label: "Restaurant / bar", plural: "Restos & bars", color: "#FFD166", glyph: "R", minZoom: 4, rank: 4 },
-  loisirs: { label: "Loisirs", plural: "Loisirs", color: "#2EE6D6", glyph: "♪", minZoom: 4, rank: 4 },
-  hotel: { label: "Hôtel", plural: "Hôtels", color: "#B98CFF", glyph: "H", minZoom: 4, rank: 5 },
-  transport: { label: "Transport", plural: "Transports", color: "#9AA7C2", glyph: "T", minZoom: 5, rank: 6 },
-  autre: { label: "Lieu", plural: "Autres lieux", color: "#C9C3D8", glyph: "•", minZoom: 6, rank: 7 },
+  repere: { label: "Repère", plural: "Repères", color: "#F5A524", glyph: "★", minZoom: 0, rank: 1 },
+  // V0.15 : commerces et services dès la vue d'ensemble d'une île ou d'un quartier (zoom 2), sans zoomer à fond
+  commerce: { label: "Commerce", plural: "Commerces", color: "#FF3D8B", glyph: "$", minZoom: 2, rank: 2 },
+  station: { label: "Station-service", plural: "Stations", color: "#FF7A45", glyph: "⛽", minZoom: 3, rank: 3 },
+  garage: { label: "Garage", plural: "Garages", color: "#3BA3FF", glyph: "G", minZoom: 3, rank: 3 },
+  restaurant: { label: "Restaurant / bar", plural: "Restos & bars", color: "#FFC233", glyph: "R", minZoom: 3, rank: 4 },
+  loisirs: { label: "Loisirs", plural: "Loisirs", color: "#14E0C8", glyph: "♪", minZoom: 4, rank: 4 },
+  hotel: { label: "Hôtel", plural: "Hôtels", color: "#A879FF", glyph: "H", minZoom: 4, rank: 5 },
+  transport: { label: "Transport", plural: "Transports", color: "#94A3B8", glyph: "T", minZoom: 5, rank: 6 },
+  autre: { label: "Lieu", plural: "Autres lieux", color: "#B8B2C8", glyph: "•", minZoom: 6, rank: 7 },
 };
 
 /** Catégories proposées en filtre (ordre d'affichage). */
@@ -57,6 +58,25 @@ export function poiCategory(l: Landmark): PoiCat {
   if (t.has("landmark")) return "repere";
   if (t.has("transportation")) return "transport";
   if (FOOD.test(n) && t.has("enterable")) return "restaurant";
+  return "autre";
+}
+
+/** Pictogramme précis (V0.15) : le métier du lieu, lisible sans ouvrir la fiche. Le filtre reste la catégorie. */
+export function poiKind(l: Landmark): import("@/components/map/icons").PoiKind {
+  const t = new Set(l.tags);
+  const n = l.name;
+  if (t.has("safehouse")) return "maison";
+  const cat = poiCategory(l);
+  if (cat === "station") return "station";
+  if (t.has("guns") || /ammu-?\s?nation|gun (shop|store)|firearms/i.test(n)) return "armurerie";
+  if (t.has("modshop") || t.has("carwash") || /customs|pay ?['’]?n['’]? ?spray|car ?wash|tuning/i.test(n)) return "tuning";
+  if (cat === "garage") return "garage";
+  if (t.has("tattoos") || /tattoo|\bink\b/i.test(n)) return "tatoueur";
+  if (t.has("hair") || /barber|salon|beaut(y|ies)|hair/i.test(n)) return "coiffeur";
+  if (t.has("clothes") || t.has("shoes") || /cloth|apparel|boutique|fashion|swim|souvenir|t-?shirt/i.test(n)) return "vetements";
+  if (cat === "restaurant") return t.has("bar") || t.has("nightclub") || t.has("stripclub") || /\bbar\b|club|lounge|tavern|\bpub\b/i.test(n) ? "bar" : "restaurant";
+  if (cat === "commerce") return "boutique";
+  if (cat === "hotel" || cat === "loisirs" || cat === "transport" || cat === "repere") return cat;
   return "autre";
 }
 
