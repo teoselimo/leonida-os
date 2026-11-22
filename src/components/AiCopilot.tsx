@@ -321,8 +321,8 @@ export function AiCopilot() {
     }
     setPending(null);
     // Sur iPhone, une action vers la carte ou le radar referme la fiche : la conversation est conservée
-    // iPhone, et iPad où carte + panneau de résultats + LEONIDA ne tiennent pas côte à côte : on laisse la place à la carte
-    const leave = () => (!isTablet || window.innerWidth < 1280) && setAiOpen(false);
+    // iPhone et iPad portrait (copilote en volet par-dessus) : on referme pour laisser voir la carte ; en paysage il reste à côté
+    const leave = () => (!isTablet || window.innerWidth < 1100) && setAiOpen(false);
     switch (a.type) {
       case "focus_vehicle":
         store.focusVehicle(a.id);
@@ -581,6 +581,7 @@ export function AiCopilot() {
       )}
       {isTablet && <AiSidePanel open={aiOpen}>{body}</AiSidePanel>}
       {isTablet && aiOpen && <DockSpace />}
+      {isTablet && aiOpen && <div className="aiscrim" onClick={() => setAiOpen(false)} aria-hidden data-testid="ai-scrim" />}
     </>
   );
 }

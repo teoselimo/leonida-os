@@ -442,8 +442,11 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
   const topicVehicle = topic?.kind === "vehicle" ? vehicles.find((v) => v.id === topic.id) ?? null : null;
 
   switch (intent) {
-    case "hello":
-      return { intent, text: `Salut ${p.pseudo && p.pseudo !== "Joueur" ? p.pseudo : ""} ! Dis-moi quelle mission tu vas lancer, ou ce que tu cherches : une voiture, une arme, de l'argent…`.replace(" !", "!").replace("Salut!", "Salut !"), reliability: null, sources: [], actions: [], replies: starters(ctx).slice(0, 2) };
+    case "hello": {
+      const who = p.pseudo && p.pseudo !== "Joueur" ? ` ${p.pseudo}` : "";
+      const next = p.nextMission ? (p.missionInProgress ? ` Toujours dans « ${p.nextMission} » ?` : ` Prochaine étape : « ${p.nextMission} ».`) : "";
+      return { intent, text: `Salut${who} !${next} Dis-moi ce que tu cherches : une voiture, une arme, de l'argent, un magasin…`, reliability: null, sources: [], actions: [], replies: starters(ctx).slice(0, 2) };
+    }
     case "thanks":
       return { intent, text: "Avec plaisir ! Bonne session à Leonida 🌴", reliability: null, sources: [], actions: [] };
     case "mission_done": {

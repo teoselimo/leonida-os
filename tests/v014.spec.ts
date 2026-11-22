@@ -109,9 +109,9 @@ test("8 · dock à cinq positions : Accueil, Carte, LEONIDA, Guide, Partie ; le 
   await expect(page.locator(".aifab")).toHaveCount(0);
   if (isPhone(page)) {
     await page.locator(".main").evaluate((el) => el.scrollTo(0, 1e6));
-    const last = await page.locator(".main .screen > *").last().boundingBox();
+    const bottom = await page.locator(".main .screen").evaluate((el) => Math.max(...Array.from(el.querySelectorAll("*")).map((c) => c.getBoundingClientRect()).filter((r) => r.height > 0).map((r) => r.bottom)));
     const dock = await page.locator(".nav").boundingBox();
-    expect(last!.y + last!.height).toBeLessThanOrEqual(dock!.y + 2);
+    expect(bottom).toBeLessThanOrEqual(dock!.y + 2);
   }
 });
 
@@ -122,11 +122,14 @@ test("9–10 · chat ouvert depuis la carte (demi-fiche sur iPhone, panneau à c
   if (isPhone(page)) {
     const box = await page.getByTestId("ai-sheet").boundingBox();
     expect(box!.y).toBeGreaterThan((page.viewportSize()!.height) * 0.25); // la carte reste visible au-dessus
-  } else {
-    const side = await page.getByTestId("ai-side").boundingBox();
-    const map = await page.locator(".mapsplit__map").boundingBox();
-    expect(map!.x + map!.width).toBeLessThanOrEqual(side!.x + 2); // la carte n'est pas couverte
-  }
+  } else if (page.viewportSize()!.width >= 1100) {
+    // paysage : la carte se range à côté du panneau (fin des transitions attendue)
+    await expect.poll(async () => {
+      const side = (await page.getByTestId("ai-side").boundingBox())!;
+      const map = (await page.locator(".mapsplit__map").boundingBox())!;
+      return map.x + map.width - side.x;
+    }, { timeout: 3000 }).toBeLessThanOrEqual(2);
+  } else await expect(page.getByTestId("ai-scrim")).toBeVisible(); // portrait : volet par-dessus, un toucher à côté le referme
   const long = "Je cherche une arme, un véhicule rapide et un magasin de vêtements, ".repeat(6);
   await page.getByTestId("ai-input").fill(long);
   await expect(page.getByTestId("ai-input")).toHaveValue(long);
@@ -151,4 +154,39 @@ test("13 · la sauvegarde réelle est restaurée intacte après la mise à jour 
   await page.getByTestId("advanced").locator("summary").click();
   await expect(page.getByTestId("storage-note")).toContainText("uniquement dans ce navigateur"); // hors Artifact : pas de promesse de synchro
   await expect(page.getByTestId("partie-version")).toContainText("V0.14");
+});
+
+test("V0.14.1 · iPhone : la zone de saisie n'a plus de fond opaque ; iPad : LEONIDA est une action en bas du rail, pas un onglet", async ({ page }) => {
+  await start(page);
+  await page.getByTestId("ai-open").click();
+  const bg = await page.locator(".ai__input").evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(bg).toBe("rgba(0, 0, 0, 0)");
+  if (!isPhone(page)) {
+    const ai = (await page.getByTestId("ai-open").boundingBox())!;
+    const last = (await page.getByTestId("nav-profil").boundingBox())!;
+    expect(ai.y).toBeGreaterThan(last.y + last.height + 40); // séparé des onglets
+    await expect(page.getByTestId("ai-open")).toHaveAttribute("aria-pressed", "true");
+  }
+});
+
+test("V0.14.1 · iPad portrait : accueil en deux colonnes, copilote en volet refermable sans perdre la conversation, inspecteur de carte rempli", async ({ page }) => {
+  test.skip(isPhone(page), "iPad seulement");
+  await page.setViewportSize({ width: 820, height: 1180 });
+  await start(page);
+  const main = (await page.locator(".home__main").boundingBox())!;
+  const side = (await page.locator(".home__side").boundingBox())!;
+  expect(side.x).toBeGreaterThan(main.x + main.width - 2); // colonnes côte à côte
+  await page.getByTestId("ai-open").click();
+  await expect(page.getByTestId("ai-scrim")).toBeVisible();
+  await page.getByTestId("ai-input").fill("Où trouver un magasin de vêtements ?");
+  await page.getByTestId("ai-send").click();
+  await expect(page.getByTestId("ai-answer").last().getByTestId("ai-engine")).toBeAttached({ timeout: 15_000 });
+  await page.getByTestId("ai-scrim").click({ position: { x: 20, y: 600 } });
+  await expect(page.getByTestId("ai-scrim")).toHaveCount(0);
+  await page.getByTestId("ai-open").click();
+  await expect(page.getByTestId("ai-answer")).toHaveCount(1); // conversation conservée
+  await page.getByTestId("ai-close").click();
+  await page.getByTestId("nav-carte").click();
+  await expect(page.getByTestId("map-useful")).toBeVisible();
+  await expect(page.getByTestId("map-useful").locator("button").first()).toBeVisible();
 });

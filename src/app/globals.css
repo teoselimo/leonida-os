@@ -1341,14 +1341,12 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .bubble__trust .bubble__rel { margin: 0; }
 .bubble__trust ul { margin: 6px 0; padding-left: 18px; display: grid; gap: 6px; }
 .bubble__trust .bubble__engine { margin-top: 6px; }
-.ai__input { background: #0d0a16; }
-@media (min-width: 760px) {
-  .ai-docked .mapsplit { right: calc(min(400px, 42vw) + 24px); transition: right .25s ease; }
-}
-@media (min-width: 760px) and (max-width: 1279px) {
-  .ai-docked .mapsplit { grid-template-columns: 0 1fr !important; }
-  .ai-docked .mapsplit .panel { visibility: hidden; overflow: hidden; }
-}
+/* V0.14.1 : la zone de saisie hérite du fond arrondi de la fiche (plus de bande opaque) ;
+   marge basse = zone d'accueil iPhone, ramenée à 8 px quand le clavier est ouvert (la fiche est déjà au-dessus) */
+.ai__input { background: transparent; padding: 8px 0 max(10px, var(--sab)); margin-top: 2px; }
+.ailayer .sheet__scroll { padding-bottom: 0; }
+.sheet[data-kb="true"] .ai__input { padding-bottom: 8px; }
+.ai__input .ai__send { width: 44px; height: 44px; margin-bottom: 0; }
 .mapsplit__filters .filters14 { max-width: 100%; }
 @media (max-width: 759px) {
   .filters14 > .filters:first-child { gap: 6px; }
@@ -1357,4 +1355,58 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 @media (max-width: 759px) {
   .filters14 > .filters:first-child { overflow: visible; flex-wrap: nowrap; }
   .filters14 > .filters:first-child .fchip { flex: 1 1 auto; min-width: 0; justify-content: center; padding: 0 8px; white-space: nowrap; }
+}
+
+
+/* ── V0.14.1 — iPad (proposition A) : rail compact, copilote intégré, colonnes ── */
+@media (min-width: 760px) {
+  :root { --nav-w: 84px; --ai-w: 360px; }
+  .nav { align-items: center !important; padding-left: max(8px, env(safe-area-inset-left)) !important; padding-right: 8px !important; }
+  .nav__brand { flex-direction: column !important; gap: 4px !important; margin-bottom: 14px; }
+  .nav__name { display: none; }
+  .nav__item { flex-direction: column !important; gap: 3px !important; font-size: 11px !important; padding: 6px 0 !important; width: 68px; border-radius: 16px; }
+  .nav__item.is-on { background: none !important; }
+  /* LEONIDA n'est pas un onglet : action distincte, en bas du rail */
+  .nav__ai { order: 10; margin: auto 0 8px !important; flex-direction: column !important; gap: 4px !important; padding: 0 !important; width: 68px; font-size: 10.5px !important; color: var(--muted) !important; }
+  .nav__ai .nav__aibtn { width: 52px; height: 52px; border-radius: 18px; }
+  .nav__ai.is-on .nav__aibtn { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 10px 28px rgba(255, 61, 139, 0.45); }
+  .nav__foot { order: 11; margin-top: 0 !important; text-align: center !important; padding-left: 0 !important; }
+  .main { container-type: inline-size; }
+  .stage { transition: margin-right var(--dur-3) var(--ease-out); }
+  .mapsplit { grid-template-columns: 300px 1fr !important; }
+  /* volet par-dessus (portrait / largeur réduite), voile pour refermer */
+  .aiside { width: min(420px, 56vw); }
+  .aiscrim { position: fixed; inset: 0; z-index: 49; background: rgba(5, 2, 12, 0.45); animation: fadeIn var(--dur-2) both; }
+}
+@media (min-width: 1100px) {
+  /* paysage : panneau latéral intégré, le contenu se range à côté (rien n'est recouvert) */
+  .aiside { top: 0; bottom: 0; right: 0; width: var(--ai-w); border-radius: 0; padding: calc(var(--sat) + 14px) 16px 14px; box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.08); }
+  .ai-docked .stage { margin-right: var(--ai-w); }
+  .aiscrim { display: none; }
+}
+/* accueil en colonnes dès que l'espace principal le permet (paysage, ou portrait sans copilote) */
+.home__main, .home__side { display: contents; }
+@container (min-width: 700px) {
+  .screen.home14 { max-width: 1240px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: 20px; row-gap: 12px; align-items: start; }
+  .screen.home14 > .mhead, .screen.home14 > .demo { grid-column: 1 / -1; }
+  .home__main, .home__side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+}
+.search__results.inspect14 { position: static; max-height: none; box-shadow: none; background: none; border: 0; padding: 0; }
+.pmini { display: none; }
+@container (min-width: 700px) {
+  .home__side > .pmini { display: block; border-radius: 22px; padding: 14px 16px; }
+}
+.pmini__head { display: flex; align-items: center; justify-content: space-between; }
+.pmini__head h2 { font-size: 15px; margin: 0; }
+.pmini__stats { margin: 6px 0 8px; font-size: 13px; color: var(--muted); }
+.pmini__stats b { color: var(--text); }
+.pmini__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pmini__list li { display: grid; font-size: 13px; padding-top: 6px; border-top: 1px solid var(--line); }
+.pmini__list em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+/* inspecteur iPad : nom en entier, précision et action sur la ligne du dessous */
+@media (min-width: 760px) {
+  .panel .search__results button { flex-wrap: wrap; row-gap: 2px; }
+  .panel .search__results button > span:nth-child(2) { flex: 1; }
+  .panel .search__results .search__side { flex-basis: 100%; flex-direction: row; justify-content: space-between; align-items: center; padding-left: 38px; margin-left: 0; }
+  .panel .search__results strong, .panel .search__results em { white-space: normal; }
 }

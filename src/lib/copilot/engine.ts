@@ -171,6 +171,7 @@ ${last ? `DERNIERS ÉCHANGES :\n${last}\n` : ""}MESSAGE : ${o.question.slice(0, 
 const FACTUAL = /\b(o[uù]|comment|combien|quand|quel(le)?s?|est-ce|faut-il|r[eé]compense|manquable|cach[ée]|trouver|d[ée]bloquer)\b|\?/i;
 /** Messages de conversation pure : pas de faits à injecter, pas de recherche. */
 const SMALLTALK = new Set(["hello", "thanks"]);
+const SMALLTALK_LOCAL = SMALLTALK;
 
 /** Demande explicite de carte (« montre-moi », « où est », « sur la carte »). */
 const WANTS_MAP = /\b(montre|affiche|carte|o[uù] (est|se trouve|sont)|emm[eè]ne|guide-moi|centre)\b/i;
@@ -242,6 +243,8 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const draft = answer(checklist ? `Je vais lancer ${o.mission}` : o.question, o.ctx, o.topic);
   draft.actions = draft.actions.filter((x) => isValidAction(x, o.ctx.feed)).slice(0, 3);
   if (!o.transport || !o.ctx.feed) return fromDirect(draft);
+  // V0.14.1 : une salutation ou un merci reçoit une réponse locale immédiate — ni Claude, ni web, ni contexte narratif
+  if (SMALLTALK_LOCAL.has(draft.intent) && !checklist) return { ...fromDirect(draft), trust: null };
 
   // 1. Preuves LEONIDA RADAR
   let ids = [...new Set(draft.evidence ?? [])];

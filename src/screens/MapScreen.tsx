@@ -526,6 +526,16 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   );
   const vehicleEl = vehicleId && <VehicleSheet id={vehicleId} onClose={() => selectVehicle(null)} onGuide={guide} />;
 
+  // Inspecteur iPad au repos : établissements confirmés du quartier de la mission (sinon tous), les mieux situés d'abord
+  const RANK = { joueur: 0, repere: 1, zone: 2, inconnue: 3 } as const;
+  const missionDistrict = nodeByName(state.profile.nextMission)?.district ?? null;
+  const inDistrict = missionDistrict ? ESTABLISHMENTS.filter((e) => e.district === missionDistrict) : [];
+  const usefulTitle = inDistrict.length ? `Établissements confirmés · ${missionDistrict}` : "Établissements confirmés";
+  const useful = (inDistrict.length ? inDistrict : ESTABLISHMENTS)
+    .map((e) => ({ e, pl: placementOf(e, landmarks, state.pins ?? {}) }))
+    .sort((a, b) => RANK[a.pl.precision] - RANK[b.pl.precision] || a.e.name.localeCompare(b.e.name))
+    .slice(0, 14);
+
   // ── Tablette : panneau + carte côte à côte ─────────────────────────────────
   if (isTablet) {
     const detailOpen = Boolean(selectedId || lm || vehicleId || est);
@@ -562,7 +572,19 @@ export function MapScreen({ active = true }: { active?: boolean }) {
               ) : (
                 <div className="panel__scroll list">
                   {recs.map((r) => <RecoCard key={r.discovery.id} rec={r} />)}
-                  {!recs.length && <p className="muted small pad" data-testid="map-hint">Cherche un commerce, un lieu ou une voiture : les résultats s&apos;affichent ici avec leur précision (placée par toi, repère communautaire, zone estimée ou position inconnue). LEONIDA ne connaît pas la position de Jason et Lucia.</p>}
+                  {!recs.length && (
+                    <div className="search__results inspect14" data-testid="map-useful">
+                      <p className="search__group">{usefulTitle}</p>
+                      {useful.map(({ e, pl }) => (
+                        <button key={e.id} onClick={() => openEst(e.id)} data-testid={`useful-${e.id}`} data-precision={pl.precision}>
+                          <span className="glyph glyph--lm" style={{ width: 28, height: 28, color: "#7CF29A" }}><Icon name="check" size={14} /></span>
+                          <span><strong>{e.name}</strong><em>{e.kind ?? EST_CATS[e.cats[0]].label} · {e.district === "Mariana County" ? "comté de Mariana" : e.district}</em></span>
+                          <span className="search__side"><span className={`search__prec search__prec--${pl.precision}`}>{PRECISION_FR[pl.precision]}</span><span className="search__act">{actionOf(pl.precision)}</span></span>
+                        </button>
+                      ))}
+                      <p className="fineprint pad">Positions inconnues : listées, jamais épinglées. LEONIDA ne connaît pas la position de Jason et Lucia.</p>
+                    </div>
+                  )}
                 </div>
               )}
             </>

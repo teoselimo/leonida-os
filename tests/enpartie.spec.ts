@@ -100,7 +100,7 @@ test("Anti-spoiler : complet → léger → aucun, mémorisé au rechargement et
   await page.waitForSelector(".app.is-ready");
   await expect(page.getByTestId("shield").first()).toHaveAttribute("data-mode", "off");
   await page.getByTestId("ai-open").click();
-  await page.getByTestId("ai-input").fill("Salut");
+  await page.getByTestId("ai-input").fill("Quelle voiture rapide je peux trouver ?"); // V0.14.1 : « Salut » ne consulte plus Claude
   await page.getByTestId("ai-send").click();
   await expect(page.getByTestId("ai-engine")).toBeAttached();
   const sent = await page.evaluate(() => (window as unknown as Win).__calls[0]);

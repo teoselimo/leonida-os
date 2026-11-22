@@ -133,7 +133,8 @@ test("Pilote 6 — « C'est fait » : mémorisé localement et dans le stockage 
   const name = (await first.locator("strong").first().textContent())!;
   await first.getByTestId("done-btn").click();
   await expect(page.getByTestId("before-item").filter({ hasText: name })).toHaveCount(0);
-  await page.waitForFunction(() => Object.keys((window as unknown as Win).__db).length > 0, null, { timeout: 8_000 });
+  // la copie Artifact est écrite en différé : on attend celle qui contient la coche (une écriture antérieure peut précéder)
+  await page.waitForFunction(() => { const d = (window as unknown as Win).__db["data/users/u-test/progress"] as { state: string } | undefined; return !!d && Object.keys(JSON.parse(d.state).done ?? {}).length > 0; }, null, { timeout: 8_000 });
   const saved = await page.evaluate(() => (window as unknown as Win).__db["data/users/u-test/progress"] as { state: string; savedAt: string });
   expect(saved.savedAt).toBeTruthy();
   expect(Object.keys(JSON.parse(saved.state).done).length).toBeGreaterThan(0);

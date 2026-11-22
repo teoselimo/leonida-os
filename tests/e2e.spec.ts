@@ -311,7 +311,7 @@ test.describe("Responsive", () => {
       await mapReady(page);
       const panel = (await page.locator(".panel").boundingBox())!;
       const map = (await page.locator(".mapsplit__map").boundingBox())!;
-      expect(panel.width).toBeGreaterThan(300);
+      expect(panel.width).toBeGreaterThanOrEqual(280); // V0.14.1 : inspecteur compact (300 px), la carte garde la place
       expect(map.x).toBeGreaterThanOrEqual(panel.x + panel.width - 1); // carte et recommandations côte à côte
     }
   });

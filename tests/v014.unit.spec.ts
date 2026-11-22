@@ -89,5 +89,20 @@ test.describe("5 · journal « Récupéré / Fait »", () => {
 
 test("précision des lieux et version centralisée", () => {
   expect(Object.values(PRECISION_FR)).toEqual(["Placée par toi", "Repère communautaire", "Zone estimée", "Position inconnue"]);
-  expect(APP_VERSION).toBe("V0.14");
+  expect(APP_VERSION).toBe("V0.14.1");
+});
+
+test.describe("V0.14.1 · salutation", () => {
+  test("« Salut » : réponse locale brève, mission du joueur seulement, aucune conséquence narrative", async () => {
+    const { askCopilot } = await import("../src/lib/copilot");
+    const calls: unknown[] = [];
+    const t = { id: "claude-api" as const, label: "mock", available: async () => true, generate: async (r: unknown) => (calls.push(r), { text: "Tourist Trap fait tout perdre.\n@@@\n{}", model: "m", truncated: false }) };
+    for (const mode of ["strict", "relaxed", "off"] as const) {
+      const r = await askCopilot({ question: "Salut", ctx: { feed, places: [], state: st({ spoilerMode: mode }) }, topic: null, history: [], transport: t, search: async () => ({ status: "ok", hits: [] }) });
+      expect(r.message).toContain("Talk to Lucia");
+      expect(r.message).not.toMatch(/Tourist Trap|non-retour|perd/i);
+      expect(r.trust).toBeNull();
+    }
+    expect(calls).toHaveLength(0);
+  });
 });

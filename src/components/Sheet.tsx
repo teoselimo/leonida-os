@@ -247,6 +247,7 @@ export function Sheet({ children, onClose, onHeight, tall, testId, label, initia
       data-snap={snap}
       data-settled={settled ? "true" : "false"}
       data-handle-only={handleOnly ? "true" : undefined}
+      data-kb={kb ? "true" : undefined}
       role="dialog"
       aria-label={label}
     >

@@ -66,7 +66,7 @@ export function AppShell() {
             {i === 2 && (
               <button key="ai" className={`nav__ai press${aiOpen ? " is-on" : ""}`} onClick={() => { tick(); setAiOpen(!aiOpen); }} aria-label="Ouvrir le copilote LEONIDA" aria-pressed={aiOpen} data-testid="ai-open">
                 <span className="nav__aibtn"><CopilotGlyph size={24} /></span>
-                <span className="nav__label">LEONIDA</span>
+                <span className="nav__label">{aiOpen ? "Masquer" : "LEONIDA"}</span>
               </button>
             )}
             <button key={n.id} className={`nav__item ${view === n.id ? "is-on" : ""}`} onClick={() => { if (view !== n.id) tick(); setView(n.id); }} aria-current={view === n.id ? "page" : undefined} data-testid={`nav-${n.id}`}>

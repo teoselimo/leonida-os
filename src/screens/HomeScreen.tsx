@@ -16,7 +16,7 @@ import { useMissionBrief } from "@/components/MissionBrief";
 import { discoverNow, DISCOVER_CATS } from "@/lib/discover";
 import { buildBefore, BEFORE_KIND_FR } from "@/lib/before";
 import type { BeforeItem } from "@/lib/before";
-import { JOURNAL_FR } from "@/lib/journal";
+import { buildJournal, JOURNAL_FR } from "@/lib/journal";
 import { loadLandmarks } from "@/lib/gtadb";
 import type { Landmark } from "@/lib/gtadb";
 import { computeProgress } from "@/lib/progress";
@@ -73,6 +73,7 @@ export function HomeScreen() {
   return (
     <div className="screen home home14">
       <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} />
+      <div className="home__main">
       <CollectorAlert hideSnapshot />
 
       {(mission || view.critical.length > 0) && (
@@ -117,7 +118,11 @@ export function HomeScreen() {
 
       {!mission && <NextChoice justDone={justDone} onChoose={choose} guess={plan.mission.guess} choices={plan.mission.choices} />}
 
-      {view.optional.length > 0 && <MaybeList items={view.optional} />}
+      </div>
+      <div className="home__side">
+        {view.optional.length > 0 && <MaybeList items={view.optional} />}
+        <PartieMini />
+      </div>
 
       {state.showDemo && <DemoSection regions={repo.regions()} all={store.discoveries} signals={store.signals} focusOnMap={store.focusOnMap} setView={store.setView} />}
     </div>
@@ -397,3 +402,22 @@ function Objectives({ mission }: { mission: string }) {
   );
 }
 
+
+/** Grand écran (iPad) : résumé de partie dans la colonne de droite — masqué sur iPhone pour garder l'accueil court. */
+function PartieMini() {
+  const { state, setView } = useStore();
+  const { feed } = useLiveRadar();
+  const recent = useMemo(() => buildJournal(state, feed).filter((e) => e.at).slice(0, 3), [state, feed]);
+  const sides = useMemo(() => buildJournal(state, feed).filter((e) => e.kind === "activite").length, [state, feed]);
+  return (
+    <section className="pmini glass" data-testid="partie-mini">
+      <header className="pmini__head"><h2>Ta partie</h2><button className="link small press" onClick={() => setView("profil")}>Tout voir</button></header>
+      <p className="pmini__stats"><b>Chapitre {state.profile.chapter}</b> · {state.profile.missionsDone.length} mission{state.profile.missionsDone.length > 1 ? "s" : ""} principale{state.profile.missionsDone.length > 1 ? "s" : ""} · {sides} activité{sides > 1 ? "s" : ""}</p>
+      {recent.length > 0 && (
+        <ul className="pmini__list">
+          {recent.map((e) => <li key={e.id}><span>{e.name}</span><em>{JOURNAL_FR[e.kind].done} · {new Date(e.at!).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}</em></li>)}
+        </ul>
+      )}
+    </section>
+  );
+}

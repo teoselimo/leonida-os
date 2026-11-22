@@ -133,13 +133,16 @@ test.describe("Scénarios", () => {
 
 test.describe("Recherche web automatique", () => {
   const hits = [{ title: "Guide", url: "https://g.example/a", text: "Some facts.", date: null }];
-  test("salutation : ni planificateur ni recherche", async () => {
+  test("salutation : ni planificateur ni recherche, ni appel Claude (V0.14.1 : réponse locale sans contexte narratif)", async () => {
     let n = 0;
     const search: WebSearchFn = async () => (n++, { status: "ok", hits });
     const t = mock(() => "Salut !\n@@@\n{}");
-    await askCopilot({ question: "Salut", ctx: ctx(), topic: null, history: [], transport: t, search });
+    const r = await askCopilot({ question: "Salut", ctx: ctx(), topic: null, history: [], transport: t, search });
     expect(n).toBe(0);
-    expect(t.calls).toHaveLength(1);
+    expect(t.calls).toHaveLength(0);
+    expect(r.message).toMatch(/^Salut/);
+    expect(r.message).not.toMatch(/Tourist Trap|non-retour|perd/i);
+    expect(r.trust).toBeNull();
   });
   test("question factuelle sans « recherche » : Exa est lancé sans appel de planification ; une question d'avis n'en déclenche pas", async () => {
     let n = 0;

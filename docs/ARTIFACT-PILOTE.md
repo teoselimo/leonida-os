@@ -239,3 +239,9 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 
 **Tests** : `tests/v014.unit.spec.ts`, `tests/v014.spec.ts` (iPhone, iPad, WebKit) ; anciens tests adaptés.
 **À vérifier sur l'iPhone réel** : clavier avec message long, demi-fiche du chat depuis la carte, synchro iPhone ↔ iPad, lisibilité des puces de filtres.
+
+## 15. V0.14.1 « Chat iPhone et iPad » (22/11/2026) — même Artifact, version `1795378386-05ba`
+
+- Chat iPhone : la bande sombre venait de `.ai__input { background: #0d0a16 }` (ajout V0.14), un rectangle opaque plein cadre sous la saisie, prolongé par la marge de la zone d'accueil. Fond transparent (hérite du verre arrondi de la fiche), marge basse = zone d'accueil seulement, ramenée à 8 px clavier ouvert (`data-kb` sur la fiche), bouton Envoyer aligné sur le champ (44 px).
+- « Salut » / « merci » : réponse locale immédiate (mission du joueur seulement), sans Claude, sans web, sans contexte narratif, sans badge de confiance. Règle ajoutée au prompt : ne pas dérouler spontanément conséquences, pertes ou point de non-retour ; niveau de preuve réel sinon « d'après une source ».
+- iPad (proposition A retenue contre B « onglets en haut / dock bas ») : rail compact de 84 px ; LEONIDA devient une action en bas du rail (plus un onglet) ; en paysage le copilote est un panneau intégré de 360 px et le contenu se range à côté (carte comprise) ; en portrait, volet par-dessus avec voile, refermable sans perdre la conversation ; accueil en deux colonnes (container queries) avec « Ta partie » ; inspecteur de carte (300 px) rempli au repos par les établissements confirmés du quartier de la mission.
