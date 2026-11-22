@@ -94,6 +94,72 @@ const NOTE: Record<string, string> = {
   unavailable: "Claude n'est pas joignable ici : réponse directe.",
 };
 
+/** Intentions qui ne demandent jamais de recherche : politesse, actions dans l'app (progression). */
+const NO_WEB = new Set(["hello", "thanks", "mission_done", "got_item", "next_start"]);
+/** Intentions dont les actions (confirmées par le joueur) ne doivent jamais être retirées par le modèle. */
+const PROGRESS_ACT = new Set(["mission_done", "got_item", "next_start", "shops", "buy_weapons", "zone_left"]);
+
+/** Repli si le planificateur ne répond pas : toute question qui ressemble à une demande d'information. */
+function heuristicWeb(o: AskOptions, intent: string): boolean {
+  if (SMALLTALK.has(intent)) return false;
+  const q = o.question.trim();
+  return WEB_ASK.test(q) || FACTUAL.test(q) || q.split(/\s+/).length >= 4;
+}
+
+/** Deuxième essai, plus large, quand la première recherche ne renvoie rien d'exploitable. */
+function reformulate(o: AskOptions, first: string): [string, string] {
+  const words = nk(first.replace(/"/g, " ")).split(" ").filter((w) => w.length > 2 && !["gta", "the", "and", "for", "with", "page", "pages", "guide"].includes(w));
+  const q = `GTA 6 ${words.slice(0, 7).join(" ")} guide`;
+  return [q === first ? `GTA VI ${o.question.slice(0, 120)}` : q, webObjective(o)];
+}
+
+/**
+ * Planificateur de recherche : un appel court à Claude (modèle rapide) qui décide si le web est utile
+ * et écrit 1 ou 2 requêtes en anglais. Renvoie null en cas d'échec (repli heuristique).
+ */
+async function planWeb(o: AskOptions, ids: string[]): Promise<{ web: boolean; queries: string[] } | null> {
+  if (!o.transport) return null;
+  const p = o.ctx.state.profile;
+  const local = ids
+    .slice(0, 6)
+    .map((id) => {
+      const r = o.ctx.feed?.items.find((x) => x.id === id);
+      return r ? `- ${r.title} (${r.reliability})` : `- ${id}`;
+    })
+    .join("\n");
+  const last = o.history.slice(-2).map((m) => `${m.role === "user" ? "Joueur" : "LEONIDA"} : ${m.content.slice(0, 300)}`).join("\n");
+  const prompt = `Tu prépares les recherches de LEONIDA, copilote de GTA VI (sorti en 2026). Réponds UNIQUEMENT par un objet JSON sur une ligne :
+{"web":true|false,"requetes":["requête 1","requête 2"]}
+- "web": false pour une salutation, un remerciement, du bavardage, un avis sans fait à vérifier, ou si les FAITS LOCAUX répondent déjà entièrement avec une fiabilité official/confirmed.
+- "web": true pour toute question factuelle sur GTA VI (mission, lieu, magasin, objet, arme, véhicule, prix, déblocage, manquable, astuce, activité), même si le joueur ne demande pas de chercher.
+- "requetes" : 1 ou 2 requêtes en ANGLAIS qui décrivent la page idéale ; commence par "GTA 6", utilise les noms officiels anglais, ajoute la mission en cours si la question en dépend. Aucune donnée personnelle.
+Mission en cours ou prochaine : ${p.nextMission ?? "inconnue"}${p.missionInProgress ? " (en cours)" : ""}. Chapitre : ${p.chapter}.
+FAITS LOCAUX :
+${local || "(aucun)"}
+${last ? `DERNIERS ÉCHANGES :\n${last}\n` : ""}MESSAGE : ${o.question.slice(0, 600)}`;
+  try {
+    const r = await Promise.race([
+      o.transport.generate({ messages: [{ role: "user", content: prompt }], signal: o.signal, tier: "quick" }),
+      new Promise<null>((res) => setTimeout(() => res(null), 9_000)),
+    ]);
+    if (!r) return null;
+    const a = r.text.indexOf("{");
+    const b = r.text.lastIndexOf("}");
+    if (a < 0 || b <= a) return null;
+    const j = JSON.parse(r.text.slice(a, b + 1)) as { web?: unknown; requetes?: unknown };
+    if (typeof j.web !== "boolean") return null;
+    const queries = (Array.isArray(j.requetes) ? j.requetes : [])
+      .map((x) => String(x).replace(/\s+/g, " ").trim().slice(0, 200))
+      .filter((x) => /[a-z]{3}/i.test(x))
+      .slice(0, 2)
+      .map((x) => (/\bgta\s?(6|vi)\b/i.test(x) ? x : `GTA 6 ${x}`));
+    if (j.web && !queries.length) return null;
+    return { web: j.web, queries };
+  } catch {
+    return null;
+  }
+}
+
 /** Le joueur demande explicitement une recherche web / l'info la plus récente. */
 const WEB_ASK = /\b(cherche|recherche|regarde|google|web|internet|en ligne|sur le net|derni[eè]res? infos?|actu|reddit|youtube)\b/i;
 /** Question factuelle (vaut une recherche web quand le Radar n'a rien). */
@@ -151,11 +217,11 @@ function webQuery(o: AskOptions): string {
 }
 
 /** Objectif de recherche (Exa) : ce qui doit ressortir en premier, ce qui est exclu. */
-function webObjective(o: AskOptions): string {
+function webObjective(o: AskOptions, query?: string): string {
   const m = o.mission ?? o.ctx.state.profile.nextMission ?? "";
   if (o.mode === "checklist")
     return `Guides and walkthroughs of the GTA VI (GTA 6, 2026) story mission "${m}": what can be missed, optional objectives, choices and their consequences, rewards, points of no return. Rank dedicated mission guides first. Exclude GTA V, GTA Online and older games.`;
-  return `Pages about GTA VI (GTA 6, released 2026) that answer this player question: "${o.question}"${m ? ` (current mission: ${m})` : ""}. Prefer dedicated guides and wikis; exclude GTA V, GTA Online and older games.`;
+  return `Pages about GTA VI (GTA 6, released 2026) that answer this player question: "${o.question.slice(0, 400)}"${query ? ` (search: ${query})` : ""}${m ? ` (current mission: ${m})` : ""}. Prefer dedicated guides and wikis; exclude GTA V, GTA Online and older games.`;
 }
 
 const host = (u: string) => {
@@ -180,20 +246,35 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     ids = [...new Set([...b.during.map((r) => r.id), ...b.before.map((r) => r.id), ...(b.guide ? [b.guide.id] : []), ...ids, ...extraEvidence(o.mission!, o.ctx, 3)])];
   } else if (!ids.length) ids = extraEvidence(o.question, o.ctx);
 
-  // 2. Recherche web (connecteur), seulement quand elle sert : analyse de mission, demande explicite, ou Radar muet sur une question factuelle
-  let web: { status: WebStatus; count: number } | null = null;
+  // 2. Recherche web automatique (V0.12) : Claude décide s'il faut chercher et écrit les requêtes en anglais ;
+  //    repli heuristique si ce planificateur ne répond pas ; reformulation si la première recherche ne donne rien.
+  let web: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null = null;
   let hits: WebHit[] = [];
-  const wantWeb = !!o.search && !SMALLTALK.has(draft.intent) && (checklist || WEB_ASK.test(o.question) || (!ids.length && FACTUAL.test(o.question) && o.question.length > 10));
+  let plans: Array<[string, string]> = [];
+  if (o.search && !NO_WEB.has(draft.intent)) {
+    if (checklist) plans = [[webQuery(o), webObjective(o)], missablesQuery(o)];
+    else {
+      const plan = await planWeb(o, ids);
+      if (plan) plans = plan.web ? plan.queries.map((q) => [q, webObjective(o, q)] as [string, string]) : [];
+      else if (heuristicWeb(o, draft.intent)) plans = [[webQuery(o), webObjective(o)]];
+    }
+  }
+  const wantWeb = plans.length > 0;
   if (wantWeb) {
     o.onStage?.("search");
-    // analyse de mission : deux angles (déroulé + contenus manquables), pour recouper entre sites
-    const plans = checklist ? [[webQuery(o), webObjective(o)], missablesQuery(o)] : [[webQuery(o), webObjective(o)]];
-    const res = await Promise.all(plans.map(([q, obj]) => o.search!(q, o.signal, obj).catch(() => ({ status: "error" as WebStatus, hits: [] as WebHit[] }))));
+    const run = (ps: Array<[string, string]>) => Promise.all(ps.map(([q, obj]) => o.search!(q, o.signal, obj).catch(() => ({ status: "error" as WebStatus, hits: [] as WebHit[], cached: false }))));
+    let res = await run(plans);
+    let tries = 1;
+    const hard = (st: WebStatus) => st === "not_connected" || st === "needs_reauth" || st === "denied" || st === "unavailable";
+    if (!res.some((x) => x.hits.length) && !res.every((x) => hard(x.status)) && !o.signal?.aborted) {
+      res = await run([reformulate(o, plans[0][0])]);
+      tries = 2;
+    }
     const seenUrl = new Set<string>();
-    for (const r of res) for (const h of r.hits) if (!seenUrl.has(h.url)) (seenUrl.add(h.url), hits.push(h));
-    hits = hits.slice(0, checklist ? 8 : 5);
-    const st: WebStatus = hits.length ? "ok" : res.find((r) => r.status !== "ok" && r.status !== "empty")?.status ?? "empty";
-    web = { status: st, count: hits.length };
+    for (const x of res) for (const h of x.hits) if (!seenUrl.has(h.url)) (seenUrl.add(h.url), hits.push(h));
+    hits = hits.slice(0, checklist ? 8 : 6);
+    const st: WebStatus = hits.length ? "ok" : res.find((x) => x.status !== "ok" && x.status !== "empty")?.status ?? "empty";
+    web = { status: st, count: hits.length, cached: res.every((x) => x.cached), tries };
   }
   const focus = checklist ? [...MISS_TERMS, ...nk(o.mission!).split(" ").filter((w) => w.length >= 4)] : nk(o.question).split(" ").filter((w) => w.length >= 5);
   const webEv: WebEvidence[] = hits.map((h, i) => ({ id: `web:${i + 1}`, titre: h.title, url: h.url, site: host(h.url), date: h.date, extrait: focusExcerpt(h.text, focus) }));
@@ -203,12 +284,23 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const actions: AiAction[] = draft.actions;
   const facts = SMALLTALK.has(draft.intent) || draft.intent === "clarify" ? "" : draft.text;
   const player = playerContext(o.ctx.state, o.ctx.feed);
-  const webNote = !wantWeb ? undefined : web?.status === "ok" ? `${hits.length} résultat(s), données tierces non vérifiées` : web?.status === "empty" ? "aucun résultat pertinent" : "indisponible (connecteur non branché ou en erreur) — ne prétends pas avoir cherché sur le web";
+  // état exact des sources, pour ne jamais confondre « rien dans notre base », « web indisponible »,
+  // « pas de source fiable » et « le contenu n'existe pas »
+  const localNote = ids.length ? `${ids.length} élément(s) LEONIDA (fiches RADAR / lieux / progression)` : "aucune fiche LEONIDA RADAR sur ce sujet (cela ne prouve rien sur le jeu)";
+  const webNote = !o.search
+    ? "recherche web indisponible ici (pas de connecteur) — ne prétends pas avoir cherché sur le web"
+    : !wantWeb
+      ? "recherche web jugée inutile pour ce message"
+      : web?.status === "ok"
+        ? `${hits.length} résultat(s) web${web.cached ? " (cache récent)" : ""}, données tierces à recouper`
+        : web?.status === "empty"
+          ? `aucun résultat web pertinent après ${web.tries ?? 1} essai(s) — ce n'est pas une preuve d'inexistence`
+          : "recherche web en échec (connecteur non branché, refusé ou en erreur) — ne prétends pas avoir cherché sur le web";
   const history = o.history.slice(-MAX_HISTORY).map((m) => (m.role === "assistant" ? { ...m, content: m.content.slice(0, 1_200) } : m));
   const messages: LlmMessage[] = [
     { role: "user", content: RULES },
     ...history,
-    { role: "user", content: composeTurn({ question: o.question, player, evidence, facts, actions, checklist, web: webNote }) },
+    { role: "user", content: composeTurn({ question: o.question, player, evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}` }) },
   ];
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
   try {
@@ -222,6 +314,8 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     if (bad.length) return { ...fromDirect(draft, `Réponse de Claude écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`), web };
     const idx = Array.isArray(meta?.actions) ? (meta!.actions as unknown[]).filter((i): i is number => Number.isInteger(i) && (i as number) >= 0 && (i as number) < actions.length) : null;
     let chosen = (idx ? idx.map((i) => actions[i]) : actions).slice(0, 2);
+    // progression : les actions à confirmer (terminer, lancer, cocher) restent toujours proposées
+    if (PROGRESS_ACT.has(draft.intent) && actions.length) chosen = actions.slice(0, 3);
     // #15 : le joueur demande à voir sur la carte → le bouton carte reste proposé, même si Claude l'a omis
     const mapAct = actions.find((x) => x.type === "show_place" || x.type === "focus_vehicle" || x.type === "open_map");
     if (mapAct && WANTS_MAP.test(o.question) && !chosen.includes(mapAct)) chosen = [mapAct, ...chosen].slice(0, 2);

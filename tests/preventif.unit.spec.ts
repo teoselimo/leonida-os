@@ -102,7 +102,7 @@ test.describe("Analyse de mission", () => {
     expect(turn).toContain("Uniquement cette mission");
     expect(turn.match(/"id":"web:\d"/g)).toHaveLength(2); // dédoublonné par URL
     expect(b.mission).toBe("Don Gone");
-    expect(b.web).toEqual({ status: "ok", count: 2 });
+    expect(b.web).toMatchObject({ status: "ok", count: 2 });
     expect(b.items[0]).toMatchObject({ status: "confirmé", priority: "haute", kind: "objet_unique" });
     expect(briefKey("Don Gone")).not.toBe(briefKey("Swamped"));
   });

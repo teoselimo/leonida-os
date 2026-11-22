@@ -31,7 +31,7 @@ async function start(page: Page, profile: Record<string, unknown> = {}, extra: R
 async function ask(page: Page, q: string) {
   if (!(await page.getByTestId("ai-panel").isVisible().catch(() => false))) await page.getByTestId("ai-open").click();
   await page.getByTestId("ai-input").fill(q);
-  await page.getByTestId("ai-input").press("Enter");
+  await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").last();
   await expect(a).toBeVisible();
   return a;

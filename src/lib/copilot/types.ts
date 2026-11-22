@@ -80,7 +80,7 @@ export interface CopilotAnswer {
   /** Mode « Rien à manquer » : éléments typés (quand, type, priorité) avec statut de recoupement calculé. */
   brief?: BriefItem[];
   /** Recherche web effectuée pour cette réponse (null = non tentée). */
-  web?: { status: WebStatus; count: number } | null;
+  web?: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null;
 }
 
 export type { BriefItem };
@@ -98,4 +98,4 @@ export interface WebHit {
 }
 /** Recherche web injectée par l'environnement (connecteur de l'Artifact, ou futur backend) : le moteur n'en dépend pas. */
 /** `objective` : ce que la recherche doit privilégier ou exclure (champ requis par Exa). */
-export type WebSearchFn = (query: string, signal?: AbortSignal, objective?: string) => Promise<{ status: WebStatus; hits: WebHit[]; rawChars?: number }>;
+export type WebSearchFn = (query: string, signal?: AbortSignal, objective?: string) => Promise<{ status: WebStatus; hits: WebHit[]; rawChars?: number; cached?: boolean }>;

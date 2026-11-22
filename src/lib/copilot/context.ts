@@ -6,6 +6,7 @@ import { POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus } from "../poi
 import type { Landmark } from "../gtadb";
 import type { PersistedState } from "../types";
 import { CONSOLES, SPOILER_FR } from "../meta";
+import { progressionContext } from "../progress";
 
 /** Limites de contexte : jamais des dizaines de fiches sans rapport. */
 export const CONTEXT_LIMITS = { maxEvidence: 8, maxQuote: 280, maxChars: 16_000 };
@@ -38,6 +39,7 @@ export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "
     `Activités déjà faites : ${done.length ? done.slice(-10).join(" ; ") : "aucune renseignée"}`,
     `Véhicules et garages possédés : ${owned.length ? owned.slice(-10).join(", ") : "aucun renseigné"}`,
     `Anti-spoiler : ${SPOILER_FR[p.spoilerMode] ?? SPOILER_FR.strict}`,
+    progressionContext(s),
   ].join("\n");
 }
 

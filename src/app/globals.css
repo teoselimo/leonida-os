@@ -1080,3 +1080,20 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 @media (max-width: 359px) { .shield__txt em { display: none; } .sbar__l2 { font-size: 11.5px; } }
 .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 @media (min-width: 760px) { .sbar > .brandmark { display: none; } .sbar { padding-left: 14px; } }
+
+/* ── V0.12 composer multiligne (iMessage-like) ──────────────────────────────── */
+.ai__input { align-items: flex-end; }
+.ai__field { flex: 1; min-width: 0; position: relative; display: flex; }
+.ai__field textarea { flex: 1; min-width: 0; display: block; min-height: 44px; max-height: 148px; padding: 11px 15px; border-radius: 22px; border: 0; resize: none; background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px var(--line2); font: inherit; font-size: 16px; line-height: 21px; color: var(--text); overflow-y: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: thin; transition: box-shadow 0.15s; }
+.ai__field textarea:focus { outline: none; box-shadow: inset 0 0 0 1.5px var(--magenta); }
+.ai__field textarea::placeholder { color: var(--muted); }
+.ai__count { position: absolute; right: 12px; top: -18px; font-size: 11px; color: var(--muted); }
+.ai__input .ai__send { flex: none; margin-bottom: 0; }
+/* établissement confirmé (fiche lieu) */
+.estbox { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 14px; background: rgba(124, 242, 154, 0.07); box-shadow: inset 0 0 0 1px rgba(124, 242, 154, 0.22); }
+.estbox__head { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 650; color: var(--ok); }
+.estbox__what { font-size: 13.5px; color: #e4def2; }
+.estbox__src { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 8px; }
+.estbox__src a { color: var(--muted); }
+.estbox__pos { font-size: 11.5px; color: var(--muted); }
+.bubble--me { white-space: pre-wrap; overflow-wrap: anywhere; }

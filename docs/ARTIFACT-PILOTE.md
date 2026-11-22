@@ -129,3 +129,28 @@ Tests : 222 passés (2 ignorés), dont un test de compacité (en-tête < 56 px, 
 **Fait** : logo de marque vectoriel (tuile à angles continus violet → rose, monogramme L épais + étincelle), net à toute taille ; bouton flottant = icône d'action (bulle de dialogue + étincelle) sur le dégradé de marque, libellé « Demander à LEONIDA » sur iPad ; bandeau d'état de session (mission active + état, alertes prioritaires de l'analyse et nombre vérifié, fraîcheur, ou « Copilote prêt · web actif » / « Analyse en cours… », pastille de couleur) ; zone droite = anti-spoiler explicite « Spoilers · Masqués / Floutés / Visibles » (couleur et icône par niveau, confirmation au toucher) ; plus de doublon du nom de mission entre bandeau et fiche ; iPad : logo seulement dans la barre latérale.
 
 Tests : 222 passés (2 ignorés) ; captures iPhone 393 × 852 et 375 × 667, iPad 1194 × 834.
+
+## 12. V0.12 « Copilote contextuel » (22/11/2026) — même Artifact
+
+### Audit des quatre limites signalées
+| Limite | Constat dans le code | Correction |
+|---|---|---|
+| Catalogue de missions | `missions.ts` reconstruit des noms à partir des titres du RADAR : aucun prérequis, aucun déblocage, aucun manquable structuré | Graphe sourcé `src/data/progression.ts` (chapitre 1) + moteur `src/lib/progress.ts` |
+| Progression | `store.tsx` ne garde que lastMission / nextMission / missionsDone / missionInProgress, sans relations | Statuts calculés (terminé déclaré ou déduit, en cours, accessible, potentiellement accessible, verrouillé, inconnu, plus disponible), contexte permanent pour Claude, intentions « j'ai terminé / je l'ai / la suivante » |
+| Déclenchement d'Exa | regex « cherche / web » ou Radar muet + question courte : les questions naturelles ne cherchaient pas | Planificateur (appel court à Claude) qui décide et écrit 1–2 requêtes anglaises ; repli heuristique ; reformulation si rien ; cache 30 min |
+| Saisie | `<input>` monoligne, 300 caractères | `<textarea>` adaptatif 1 → 6 lignes, 2 000 caractères, brouillon persistant |
+
+### Limites réelles qui demeurent
+- **Graphe non exhaustif** : chapitre 1 seulement (missions principales Gear Up → Discharge Time, facultatives et activités de Key Lento). Les missions sans prérequis écrit restent « inconnues » ; celles placées avant une mission faite dans le Story Recap sont « probablement faites » (jamais comptées comme terminées). Pas de lecture de la sauvegarde PS5.
+- **Planificateur** : un appel Claude supplémentaire (modèle rapide) par question factuelle, sur le quota de l'abonnement ; si ce planificateur échoue, une règle simple prend le relais.
+- **Établissements** : 11 à Key Lento ; 2 seulement ont une position sur la carte (repère gtadb de même nom : The Wonder Whale, The Rusty Anchor) ; les autres ont une indication sourcée en clair ou « position non établie ».
+- **Données** : instantané du flux ; Claude ne voit que ce que l'app lui transmet.
+
+### Progression réelle du joueur
+La sauvegarde (22/11, 04:03 UTC, écrite par l'app) indique **Don Gone terminée** et « Talk to Lucia » comme prochaine mission (= Recalibration sur la carte, d'après PowerPyx). Elle est plus récente que la consigne « Don Gone en cours » : **elle n'a pas été écrasée**. Les noms de carte (Talk to Lucia, Head to Donnie's Trailer, Fix Your Car, Take Up Mattia's Offer) sont désormais reconnus.
+
+### Preuve d'Exa depuis l'Artifact publié
+Les analyses enregistrées par l'app dans la sauvegarde du joueur portent `web: ok, 8 résultats` pour Don Gone et Talk to Lucia : la recherche Exa fonctionne depuis l'Artifact publié (appels réels, sources citées).
+
+### Tests
+`tests/contexte.unit.spec.ts` (15) et `tests/contexte.spec.ts` (4 × iPhone, iPad, WebKit) : scénarios A (« je peux faire quoi maintenant ? »), B (« j'ai terminé » → confirmation → déblocages), C (vêtements à Key Lento → référentiel + web automatique + carte), D (activité verrouillée, prérequis sans spoiler), E (emplacement incertain conservé), F (1 000 caractères), G (progression, historique et brouillon après rechargement). Claude et Exa y sont simulés.

@@ -8,6 +8,7 @@ import type { AiAction, AiAnswer, PlaceRef, Topic } from "@/lib/ai/engine";
 import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
 import { askCopilot } from "@/lib/copilot";
+import { afterDone } from "@/lib/ai/progressAnswers";
 import type { CopilotAnswer, LlmMessage, WebStatus } from "@/lib/copilot";
 import { exaSearch } from "@/lib/runtime/web";
 import { reportWeb, useCopilotRuntime } from "@/lib/useCopilot";
@@ -30,6 +31,10 @@ const WEB_FAIL: Partial<Record<WebStatus, string>> = {
 };
 type Msg = { id: number; role: "user"; text: string } | AiMsg;
 const HISTORY_KEY = "leonida-os/ai-history/v2";
+const DRAFT_KEY = "leonida-os/ai-draft/v1";
+/** Longueur maximale d'un message (le contexte envoyé à Claude reste borné). */
+const MAX_CHARS = 2_000;
+const finePointer = () => typeof window !== "undefined" && !!window.matchMedia?.("(pointer: fine)").matches;
 
 function loadHistory(): Msg[] {
   try {
@@ -70,9 +75,38 @@ export function AiCopilot() {
   const [text, setText] = useState("");
   const [pending, setPending] = useState<{ key: string; action: AiAction } | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => setMsgs(loadHistory()), []);
+  // Brouillon : conservé si le chat est fermé par erreur, et après rechargement (cet appareil uniquement)
+  useEffect(() => {
+    try {
+      const d = localStorage.getItem(DRAFT_KEY);
+      if (d) setText(d.slice(0, MAX_CHARS));
+    } catch {
+      /* stockage indisponible */
+    }
+  }, []);
+  useEffect(() => {
+    const t = setTimeout(() => {
+      try {
+        if (text) localStorage.setItem(DRAFT_KEY, text);
+        else localStorage.removeItem(DRAFT_KEY);
+      } catch {
+        /* stockage plein */
+      }
+    }, 250);
+    return () => clearTimeout(t);
+  }, [text]);
+  // Hauteur adaptative : 1 ligne → 6 lignes visibles, défilement interne au-delà ; aucune incidence sur le fil
+  useLayoutEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    const max = parseFloat(getComputedStyle(el).maxHeight) || 150;
+    el.style.height = `${Math.min(el.scrollHeight, max)}px`;
+    el.style.overflowY = el.scrollHeight > max ? "auto" : "hidden";
+  }, [text, aiOpen]);
   const msgsRef = useRef<Msg[]>([]);
   msgsRef.current = msgs;
   // Moteur conversationnel : Claude (Artifact ou API) si disponible, sinon mode direct
@@ -129,7 +163,7 @@ export function AiCopilot() {
 
   const ask = useCallback(
     async (q: string, forcedTopic?: Topic | null, opts: AskOpts = {}) => {
-      const question = q.trim().slice(0, 300);
+      const question = q.trim().slice(0, MAX_CHARS);
       if (!question) return;
       setText("");
       // repères gtadb (cache partagé avec la carte) : nécessaires pour proposer « voir sur la carte »
@@ -201,7 +235,7 @@ export function AiCopilot() {
 
   const run = (a: AiAction, confirmed = false, key = "") => {
     tick();
-    const needs = a.type === "mark_done" || a.type === "vehicle_state" || a.type === "set_mission" || a.type === "set_next_mission";
+    const needs = a.type === "mark_done" || a.type === "vehicle_state" || a.type === "set_mission" || a.type === "set_next_mission" || a.type === "start_mission" || a.type === "objective_done";
     if (needs && !confirmed) {
       setPending({ key, action: a });
       return;
@@ -250,9 +284,22 @@ export function AiCopilot() {
         store.setVehicle(a.id, a.state);
         store.celebrate(a.state === "spotted" ? "Véhicule repéré" : "Véhicule mis à jour");
         break;
-      case "set_mission":
+      case "set_mission": {
+        // recalcul immédiat : ce que la mission terminée débloque (statuts du graphe sourcé), sans ordre inventé
+        const next = afterDone(state.profile, a.name);
         store.setMission(a.name, true);
-        store.celebrate("Mission notée");
+        store.celebrate("Mission terminée");
+        const id = Date.now();
+        setMsgs((m) => [...m, { id, role: "ai", a: { intent: "after_done", text: `C'est noté : « ${a.name} » terminée. ${next.text}`, reliability: "recoupé", sources: [], actions: next.actions } }]);
+        break;
+      }
+      case "start_mission":
+        store.setNextMission(a.name, true);
+        store.celebrate("Mission en cours");
+        break;
+      case "objective_done":
+        store.addObjective({ mission: a.mission, text: a.text, basis: "vérifié", done: true });
+        store.celebrate("Récupéré !");
         break;
       case "set_next_mission":
         store.setNextMission(a.name);
@@ -386,11 +433,35 @@ export function AiCopilot() {
           void ask(text);
         }}
       >
-        <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)} placeholder="Demande à Leonida…" enterKeyHint="send" aria-label="Question pour LEONIDA AI" data-testid="ai-input" maxLength={300} autoComplete="off" />
+        <div className="ai__field">
+          <textarea
+            ref={inputRef}
+            rows={1}
+            value={text}
+            onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
+            onKeyDown={(e) => {
+              // clavier physique (iPad, ordinateur) : Entrée envoie, Maj+Entrée va à la ligne ; écran tactile : Entrée = retour à la ligne
+              if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing && finePointer()) {
+                e.preventDefault();
+                void ask(text);
+              }
+            }}
+            onFocus={() => setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight }), 300)}
+            placeholder="Demande à LEONIDA…"
+            enterKeyHint="enter"
+            aria-label="Question pour LEONIDA AI"
+            data-testid="ai-input"
+            maxLength={MAX_CHARS}
+            autoComplete="off"
+            autoCorrect="on"
+            spellCheck
+          />
+          {text.length > MAX_CHARS * 0.75 && <span className="ai__count" aria-live="polite">{text.length.toLocaleString("fr-FR")} / {MAX_CHARS.toLocaleString("fr-FR")}</span>}
+        </div>
         {streaming ? (
           <button type="button" className="ai__send ai__send--stop press" onClick={() => ctlRef.current?.abort()} aria-label="Arrêter la réponse" data-testid="ai-stop"><span className="ai__stopsq" /></button>
         ) : (
-          <button type="submit" className="ai__send press" disabled={!text.trim()} aria-label="Envoyer"><Icon name="arrow" size={18} /></button>
+          <button type="submit" className="ai__send press" disabled={!text.trim()} aria-label="Envoyer" data-testid="ai-send"><Icon name="arrow" size={18} /></button>
         )}
       </form>
     </div>

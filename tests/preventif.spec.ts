@@ -65,7 +65,7 @@ test("Écran mission : nom, état en un geste, analyse automatique de LA mission
   await expect(page.getByTestId("ask-mission")).toHaveCount(0);
   await page.getByTestId("ai-open").click();
   await page.getByTestId("ai-input").fill("Je prends quelle arme ?");
-  await page.getByTestId("ai-input").press("Enter");
+  await page.getByTestId("ai-send").click();
   await expect(page.getByTestId("ai-answer").last().getByTestId("ai-engine")).toBeVisible({ timeout: 15_000 });
   const chat = await page.evaluate(() => (window as unknown as Win).__calls.at(-1)!.at(-1)!.content);
   expect(chat).toContain("Je prends quelle arme ?");

@@ -95,8 +95,52 @@ export function parseHits(res: CallResult): WebHit[] {
   );
 }
 
-/** Recherche web avec sources ; un seul nouvel essai si le connecteur le permet. */
+/**
+ * Cache des recherches récentes (30 min, 40 entrées, persistant sur l'appareil) : une même question reposée
+ * ne relance pas Exa. Seuls les succès sont mis en cache ; une erreur est toujours retentée.
+ */
+const CACHE_KEY = "leonida-os/web-cache/v1";
+const CACHE_TTL = 30 * 60_000;
+type CacheEntry = { at: number; hits: WebHit[]; rawChars: number };
+let memCache: Record<string, CacheEntry> | null = null;
+function cacheMap(): Record<string, CacheEntry> {
+  if (memCache) return memCache;
+  try {
+    memCache = JSON.parse(localStorage.getItem(CACHE_KEY) || "{}") as Record<string, CacheEntry>;
+  } catch {
+    memCache = {};
+  }
+  return memCache;
+}
+function cacheSave() {
+  const m = cacheMap();
+  const keep = Object.entries(m)
+    .filter(([, v]) => Date.now() - v.at < CACHE_TTL)
+    .sort((a, b) => b[1].at - a[1].at)
+    .slice(0, 40);
+  memCache = Object.fromEntries(keep);
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(memCache));
+  } catch {
+    /* stockage plein : le cache reste en mémoire */
+  }
+}
+const cacheKey = (q: string, o?: string) => `${q.trim().toLowerCase()}|${(o ?? "").trim().toLowerCase().slice(0, 300)}`;
+
 export const exaSearch: WebSearchFn = async (query, signal, objective) => {
+  const k = cacheKey(query, objective);
+  const hit = cacheMap()[k];
+  if (hit && Date.now() - hit.at < CACHE_TTL) return { status: hit.hits.length ? "ok" : "empty", hits: hit.hits, rawChars: hit.rawChars, cached: true };
+  const r = await exaSearchLive(query, signal, objective);
+  if (r.status === "ok") {
+    cacheMap()[k] = { at: Date.now(), hits: r.hits, rawChars: r.rawChars ?? 0 };
+    cacheSave();
+  }
+  return r;
+};
+
+/** Recherche web avec sources ; un seul nouvel essai si le connecteur le permet. */
+const exaSearchLive: WebSearchFn = async (query, signal, objective) => {
   const m = await mcp();
   if (!m) return { status: "unavailable", hits: [] };
   const call = () => m.callTool(WEB_SERVER, WEB_TOOL, { query, objective: (objective || `Pages about the video game GTA VI (GTA 6) answering: ${query}. Prefer recent guides; exclude GTA V and older games.`).slice(0, 4_000), numResults: 5 }, { signal, cache: { staleTime: 10 * 60_000, gcTime: 30 * 60_000 } });

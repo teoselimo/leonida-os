@@ -6,6 +6,8 @@ import { CC_BY_URL, GTADB_URL, tagFr } from "@/lib/gtadb";
 import type { Landmark } from "@/lib/gtadb";
 import { Icon } from "./ui/Icon";
 import { POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus } from "@/lib/poi";
+import { EST_CATS, establishmentForLandmark } from "@/data/establishments";
+import { computeProgress } from "@/lib/progress";
 
 /** Fiche d'un lieu de la carte communautaire gtadb.org. */
 export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => void }) {
@@ -17,6 +19,9 @@ export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => voi
   const tags = lm.tags.filter((t) => t !== "unconfirmed");
   const cat = POI_CATS[poiCategory(lm)];
   const status = poiStatus(lm);
+  // Établissement confirmé (référentiel LEONIDA, distinct de gtadb) rattaché à ce repère par son nom
+  const est = establishmentForLandmark(lm.id);
+  const unlockSt = est?.unlock ? computeProgress(state).byId.get(est.unlock.node) : null;
   return (
     <div className="detail" data-testid="landmark">
       <div className="detail__top">
@@ -26,7 +31,21 @@ export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => voi
       </div>
       <h3 className="detail__title">{poiName(lm)}</h3>
       {lm.district && <p className="muted">{lm.district}</p>}
-      <p className={`lmstatus lmstatus--${status}`} data-testid="poi-status"><Icon name={status === "uncertain" ? "alert" : "info"} size={13} /> {POI_STATUS_FR[status]}</p>
+      {est ? (
+        <div className="estbox" data-testid="establishment">
+          <p className="estbox__head"><Icon name="check" size={14} /> Établissement {est.verification} · {est.cats.map((c) => EST_CATS[c].label).join(", ")}</p>
+          {est.what && <p className="estbox__what">{est.what}</p>}
+          {est.unlock && <p className="estbox__what">{unlockSt?.status === "terminé" || unlockSt?.likelyDone ? "Ouvert pour ta progression" : `S'ouvre ${est.unlock.text}`}</p>}
+          <p className="estbox__src">
+            Sources : {est.sources.slice(0, 3).map((s, i) => (
+              <a key={i} href={s.url} target="_blank" rel="noreferrer">{s.name}</a>
+            ))}
+          </p>
+          <p className="estbox__pos">Position : repère de la carte communautaire gtadb (nom identique), non vérifiée en jeu.</p>
+        </div>
+      ) : (
+        <p className={`lmstatus lmstatus--${status}`} data-testid="poi-status"><Icon name={status === "uncertain" ? "alert" : "info"} size={13} /> {POI_STATUS_FR[status]}</p>
+      )}
       <div className="row gap8 wrap">
         {tags.map((t) => <span key={t} className="tagchip">{tagFr(t)}</span>)}
       </div>

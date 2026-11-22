@@ -116,7 +116,7 @@ test.describe("Recherche web (connecteur simulé)", () => {
     const r = await askCopilot({ question: "Rien à manquer dans Swamped ?", ctx: ctx(), topic: null, history: [], transport: t, mode: "checklist", mission: "Swamped", search });
     expect(queries[0]).toContain('"Swamped"');
     expect(t.calls[0].messages.at(-1)!.content).toContain("web non vérifié");
-    expect(r.web).toEqual({ status: "ok", count: 1 });
+    expect(r.web).toMatchObject({ status: "ok", count: 1 });
     expect(r.trust).toBe("signalé"); // un fait issu du seul web n'est jamais « officiel »
     expect(r.checklist!.verified).toHaveLength(0); // le web ne suffit pas pour « vérifié »
     expect(r.checklist!.uncertain[0].source?.url).toBe("https://example.com/swamped");
@@ -136,7 +136,7 @@ test.describe("Recherche web (connecteur simulé)", () => {
     const t = mock("Je n'ai pas pu chercher sur le web.\n@@@\n{}");
     const r = await askCopilot({ question: "Cherche sur le web les récompenses de Swamped", ctx: ctx(), topic: null, history: [], transport: t, search });
     expect(r.web?.status).toBe("not_connected");
-    expect(t.calls[0].messages.at(-1)!.content).toContain("ne prétends pas avoir cherché");
+    expect(t.calls.at(-1)!.messages.at(-1)!.content).toContain("ne prétends pas avoir cherché");
   });
   test("format texte réel d'Exa (Title / URL / Published / Author / Highlights, séparés par ---)", () => {
     const txt = "Title: Mission guide A\nURL: https://a.example/guide\nPublished: 2026-11-18T18:30:36.000Z\nAuthor: X\nHighlights:\nFirst highlight about the mission.\n...\nSecond highlight.\n\n---\n\nTitle: Wiki B\nURL: https://b.example/wiki\nPublished: N/A\nAuthor: N/A\nHighlights:\nChapter 1 story mission.";

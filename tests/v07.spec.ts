@@ -34,7 +34,7 @@ async function ask(page: Page, q: string) {
   await page.getByTestId("ai-open").click();
   await expect(page.getByTestId("ai-panel")).toBeVisible();
   await page.getByTestId("ai-input").fill(q);
-  await page.getByTestId("ai-input").press("Enter");
+  await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").last();
   await expect(a).toBeVisible();
   return a;

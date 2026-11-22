@@ -63,7 +63,7 @@ async function ask(page: Page, q: string) {
   await expect(page.getByTestId("ai-mode")).toContainText("Claude");
   const n = await page.getByTestId("ai-answer").count();
   await page.getByTestId("ai-input").fill(q);
-  await page.getByTestId("ai-input").press("Enter");
+  await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").nth(n);
   await expect(a.getByTestId("ai-engine")).toContainText("Rédigé par", { timeout: 15_000 });
   return a;
@@ -118,7 +118,7 @@ test("Pilote 5 — une action de Claude ouvre la fiche d'un lieu (The Rusty Anch
   await expect(page).toHaveURL(/#carte$/);
   const card = page.getByTestId("landmark");
   await expect(card).toContainText("The Rusty Anchor");
-  await expect(card.getByTestId("poi-status")).toContainText(/communautaire|incertain/i);
+  await expect(card).toContainText(/communautaire|incertain/i); // repère gtadb, ou établissement confirmé à position communautaire
   await page.waitForTimeout(900);
   await page.screenshot({ path: `captures/${info.project.name}-63-pilote-rusty-anchor.png` });
 });

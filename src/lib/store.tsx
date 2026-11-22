@@ -194,7 +194,7 @@ interface Ctx {
   setMission: (name: string | null, done?: boolean) => void;
   setNextMission: (name: string | null, inProgress?: boolean) => void;
   setMissionInProgress: (on: boolean) => void;
-  addObjective: (o: Omit<Objective, "id" | "done" | "at">) => void;
+  addObjective: (o: Omit<Objective, "id" | "done" | "at"> & { done?: boolean }) => void;
   toggleObjective: (id: string) => void;
   removeObjective: (id: string) => void;
   setBrief: (key: string, brief: MissionAlertBrief) => void;
@@ -393,8 +393,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           type: "objectives",
           fn: (list) =>
             list.some((x) => x.mission.toLowerCase() === o.mission.toLowerCase() && x.text.toLowerCase() === o.text.trim().toLowerCase())
-              ? list
-              : [...list, { ...o, text: o.text.trim().slice(0, 160), id: `o${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, done: false, at: new Date().toISOString() }],
+              ? list.map((x) => (o.done && x.mission.toLowerCase() === o.mission.toLowerCase() && x.text.toLowerCase() === o.text.trim().toLowerCase() ? { ...x, done: true } : x))
+              : [...list, { ...o, text: o.text.trim().slice(0, 160), id: `o${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, done: !!o.done, at: new Date().toISOString() }],
         }),
       toggleObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.map((x) => (x.id === id ? { ...x, done: !x.done } : x)) }),
       removeObjective: (id) => dispatch({ type: "objectives", fn: (list) => list.filter((x) => x.id !== id) }),

@@ -8,6 +8,7 @@ import { missionBrief, missionCatalog, missionVisible, nextMissionGuess, nk, res
 import type { PersistedState } from "../types";
 import type { Landmark } from "../gtadb";
 import { categoryFromQuery, districtFromQuery, findPoi, POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus, searchPois } from "../poi";
+import { afterDone, progressAnswer, progressIntent } from "./progressAnswers";
 
 /**
  * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
@@ -35,6 +36,9 @@ export type AiAction =
   | { type: "vehicle_state"; id: string; state: "spotted" | "stolen" | "registered"; label: string; confirm: string }
   | { type: "set_mission"; name: string; label: string; confirm: string }
   | { type: "set_next_mission"; name: string; label: string; confirm: string }
+  /** Progression (V0.12) : lancer une mission (en cours), cocher un objet récupéré. Toujours confirmées. */
+  | { type: "start_mission"; name: string; label: string; confirm: string }
+  | { type: "objective_done"; mission: string; text: string; label: string; confirm: string }
   | { type: "ask"; question: string; label: string }
   /** Lieu de la carte communautaire : repère gtadb (point) ou quartier (zone approximative). Jamais de coordonnées inventées. */
   | { type: "show_place"; label: string; landmarkId?: string; district?: string; poiCat?: string };
@@ -389,7 +393,7 @@ function askMission(ctx: AiContext, then: "before" | "done", candidates: Mission
 }
 
 export function answer(question: string, ctx: AiContext, topic: Topic | null = null): AiAnswer {
-  const q = question.trim().slice(0, 300);
+  const q = question.trim().slice(0, 2000);
   const p = ctx.state.profile;
   const vehicles = ctx.feed?.vehicles ?? [];
   if (!ctx.feed)
@@ -405,6 +409,12 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
   }
 
   const intent = intentOf(q, topic);
+  // Progression (V0.12) : « je fais quoi maintenant ? », « je l'ai », « la suivante », boutiques… (avant les intentions génériques)
+  const pi = progressIntent(q);
+  if (pi && intent !== "mission_done" && !(pi === "shops" && findPoi(q, (ctx.places ?? []).map(asLm), null))) {
+    const pa = progressAnswer(pi, q, ctx);
+    if (pa) return pa;
+  }
   const vMentioned = findVehicle(q, vehicles);
   // Lieux de la carte (repères gtadb) : nom cité, ou catégorie + quartier (« les commerces de Key Lento »)
   if (ctx.places?.length && !["weapon", "money", "mission_done", "keep", "ultimate"].includes(intent) && !vMentioned) {
@@ -438,6 +448,8 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
       const m = resolveMission(q, cat, opts);
       if (m.mission || m.raw) return doneAnswer(ctx, m.mission?.name ?? m.raw!);
       if (topic?.kind === "mission") return doneAnswer(ctx, topic.name);
+      // « J'ai terminé » sans nom : la mission en cours (ou prévue) du joueur, toujours à confirmer
+      if (p.nextMission && !m.candidates?.length) return doneAnswer(ctx, p.nextMission);
       return askMission(ctx, "done", m.candidates);
     }
     case "before": {
@@ -635,9 +647,10 @@ function doneAnswer(ctx: AiContext, name: string): AiAnswer {
   const p = ctx.state.profile;
   const already = p.missionsDone.some((m) => nk(m) === nk(name));
   if (already) return { intent: "mission_done", text: `« ${name} » est déjà notée comme terminée. Tu veux préparer la suivante ?`, reliability: "déclaré par toi", sources: [], actions: [], replies: ["Et après ?"], topic: { kind: "mission", name, known: true } };
+  const next = afterDone(p, name);
   return {
     intent: "mission_done",
-    text: `Bravo ! Je note « ${name} » comme terminée ? Les conseils liés à cette mission disparaîtront de tes recommandations.`,
+    text: `Bravo ! Je note « ${name} » comme terminée ? ${next.text}`,
     reliability: "déclaré par toi",
     sources: [],
     actions: [{ type: "set_mission", name, label: `Oui, « ${name} » est terminée`, confirm: `Indiquer que « ${name} » est terminée ?` }],
@@ -669,7 +682,10 @@ export function isValidAction(a: AiAction, feed: RadarFeed | null): boolean {
       return /^https:\/\//.test(a.url) && (feed.items.some((r) => r.evidence.some((e) => e.url === a.url) || r.media?.url === a.url) || !!feed.vehicles?.some((v) => v.media?.url === a.url || v.evidence.some((e) => e.url === a.url)));
     case "set_mission":
     case "set_next_mission":
+    case "start_mission":
       return a.name.length > 1 && a.name.length < 80 && !/[<>{}]/.test(a.name);
+    case "objective_done":
+      return a.mission.length > 1 && a.mission.length < 80 && a.text.length > 2 && a.text.length <= 220;
     case "ask":
       return a.question.length > 1 && a.question.length < 200;
     case "show_place":
