@@ -12,6 +12,7 @@ import { afterDone, progressAnswer, progressIntent } from "./progressAnswers";
 import { ESTABLISHMENTS } from "@/data/establishments";
 import { findRare, PRESENCE_FR, RVL_BY_ID, rvlView } from "../rvl";
 import { redactorFor } from "../spoiler";
+import { simulateLaunch } from "../story/engine";
 
 /**
  * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
@@ -94,7 +95,7 @@ const asLm = (p: PlaceRef): Landmark => ({ id: p.id, name: p.name, district: p.d
 
 export interface AiContext {
   feed: RadarFeed | null;
-  state: Pick<PersistedState, "profile" | "vehicles" | "done" | "pins">;
+  state: Pick<PersistedState, "profile" | "vehicles" | "done" | "pins"> & { story?: PersistedState["story"] };
   /** Centre de carte courant (coordonnées de jeu), pour « près de moi ». */
   position?: { x: number; y: number } | null;
   /** Repères gtadb chargés par la carte : permettent « voir sur la carte » sans inventer de position. */
@@ -321,6 +322,21 @@ function missionTopicAnswer(ctx: AiContext, mission: MissionInfo | null, rawName
   const sources = [...brief.before, ...brief.during].slice(0, 3).flatMap(recSources).slice(0, 3);
   const evidence = [...brief.before, ...brief.during].map((r) => r.id);
 
+  // V0.17 : le référentiel Story Intelligence répond d'abord (mêmes règles que l'Accueil)
+  const story = storyBefore(ctx, rawName, { short: !!brief.before[0] });
+  if (story) {
+    // les fiches de la veille sur cette mission restent citées (preuves transmises à la synthèse)
+    const feedFirst = brief.before[0] ?? brief.during[0];
+    const feedAct = feedFirst ? placeAction(feedFirst, ctx) ?? { type: "open_record" as const, id: feedFirst.id, label: `Voir : ${frHeadline(feedFirst, g)}`.slice(0, 48) } : null;
+    return {
+      ...story,
+      text: [story.text, brief.before[0] ? beforeSentence(brief.before[0], name) : ""].filter(Boolean).join(" "),
+      sources: [...sources, ...story.sources].filter((x, i, a) => a.findIndex((y) => y.url === x.url) === i).slice(0, 5),
+      actions: [...(feedAct ? [feedAct] : []), ...setNext].slice(0, 2),
+      topic,
+      evidence: [...evidence, ...(brief.guide ? [brief.guide.id] : [])],
+    };
+  }
   if (!mission) {
     const other = urgent.adv[0];
     return {
@@ -373,6 +389,38 @@ function missionTopicAnswer(ctx: AiContext, mission: MissionInfo | null, rawName
     replies: ["Et si je veux une voiture sympa avant ?", "Et après ?"],
     topic,
     evidence: [...evidence, ...(brief.guide ? [brief.guide.id] : [])],
+  };
+}
+
+/** « Je vais lancer X » à partir de la simulation Story Intelligence (anti-spoiler et couverture inclus). */
+function storyBefore(ctx: AiContext, name: string, opts: { short?: boolean } = {}): AiAnswer | null {
+  const sim = simulateLaunch(ctx.state, name);
+  if (!sim) return null;
+  const crit = [...sim.money, ...sim.disappears].filter((l) => l.tier === "Critique" || l.tier === "Fortement recommandé" || !l.tier);
+  const during = sim.during[0];
+  if (!crit.length && !during && !sim.choices.length) return null;
+  const parts: string[] = [];
+  const first = crit[0];
+  const lead = first ? `${first.text}${first.confidence === "Contesté" ? " (sources divergentes)" : ""}` : "";
+  if (sim.pointOfNoReturn) parts.push(lead ? `« ${sim.name} » est un point de non-retour : ${lead.charAt(0).toLowerCase()}${lead.slice(1)}` : `« ${sim.name} » est un point de non-retour.`);
+  else if (lead) parts.push(lead);
+  // montant : dans le texte seulement s'il est calculé à partir de ce que le joueur a indiqué
+  if (first?.money && !/inconnu/.test(first.money)) parts.push(first.money);
+  const gone = sim.disappears.filter((l) => / ne sera plus disponible$/.test(l.text)).map((l) => l.text.replace(/ \(facultative\) ne sera plus disponible$| ne sera plus disponible$/, ""));
+  if (gone.length && !opts.short) parts.push(`Disparaît au lancement : ${gone.join(", ")}.`);
+  if (during) parts.push(`Pendant la mission : ${during.text.charAt(0).toLowerCase()}${during.text.slice(1)}.`);
+  if (sim.choices[0]) parts.push(sim.choices[0].text);
+  if (sim.coverage !== "auditée") parts.push("Audit partiel : je ne garantis pas que tout soit recensé.");
+  const srcs = [...crit, during, ...sim.choices].filter(Boolean).flatMap((l) => l!.sources).filter((x, i, a) => a.findIndex((y) => y.url === x.url) === i).slice(0, 4);
+  const conf = first?.confidence ?? during?.confidence;
+  return {
+    intent: "before",
+    text: parts.join(" "),
+    reliability: conf === "Vérifié" ? "recoupé" : conf === "Probable" ? "signalé" : "non établi",
+    sources: srcs.map((x) => ({ name: x.name, url: x.url, when: null })),
+    actions: [],
+    more: [...(first?.money && /inconnu/.test(first.money) ? [first.money] : []), ...(opts.short && gone.length ? [`Disparaît au lancement : ${gone.join(", ")}.`] : []), ...crit.slice(1).map((l) => l.text), ...sim.during.slice(1).map((l) => l.text)].slice(0, 8),
+    replies: ["Et après ?", "Qu'est-ce qui n'est pas vérifié ?"],
   };
 }
 

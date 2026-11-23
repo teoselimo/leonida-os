@@ -8,6 +8,8 @@ import type { NodeState } from "./progress";
 import { nk } from "./missions";
 import type { BriefItem, MissionAlertBrief, PersistedState } from "./types";
 import { redactorFor } from "./spoiler";
+import { storyAlerts } from "./story/engine";
+import type { StoryAlert } from "./story/engine";
 
 /**
  * « À faire avant de continuer » (V0.14) : UNE liste priorisée qui remplace « Rien à manquer », les pertes de
@@ -19,7 +21,7 @@ import { redactorFor } from "./spoiler";
  * présentée comme certaine). Le point de non-retour n'est mentionné qu'une fois, et seuls les éléments documentés
  * comme perdus à ce moment-là y sont rattachés.
  */
-export type Trust3 = "Vérifié" | "Probable" | "Non confirmé";
+export type Trust3 = "Vérifié" | "Probable" | "Non confirmé" | "Contesté";
 export type BeforeKind = "pendant" | "avant" | "disparait" | "opportunite";
 
 export const BEFORE_KIND_FR: Record<BeforeKind, string> = {
@@ -74,7 +76,7 @@ const KIND_DONE = (cat: DiscoverItem["cat"], recordCat?: string): "arme" | "obje
   recordCat === "weapon" ? "arme" : recordCat === "unique_item" ? "objet" : cat === "argent" ? "argent" : cat === "vehicule" ? "vehicule" : cat === "unique" ? "objet" : cat === "annexe" || cat === "perte" ? "activite" : "secret";
 
 export function buildBefore(
-  s: Pick<PersistedState, "profile" | "done" | "vehicles" | "briefs">,
+  s: Pick<PersistedState, "profile" | "done" | "vehicles" | "briefs" | "story">,
   feed: RadarFeed | null,
   discover: DiscoverItem[],
   planBefore: SessionItem[],
@@ -90,7 +92,9 @@ export function buildBefore(
   const critical: BeforeItem[] = [];
   const optional: BeforeItem[] = [];
   const seen: string[] = [];
-  const isDup = (t: string) => seen.some((x) => sim(x, t));
+  // V0.17 : une règle Story Intelligence retenue couvre les fiches équivalentes (mêmes mots-clés) → pas de doublon
+  const storyMatch: string[] = [];
+  const isDup = (t: string) => seen.some((x) => sim(x, t)) || storyMatch.some((m) => nk(t).includes(m));
   const push = (list: BeforeItem[], it: BeforeItem) => {
     if (isDup(it.text)) return;
     seen.push(it.text);
@@ -109,6 +113,18 @@ export function buildBefore(
     const ref = n === st.node.name ? n : "d'une mission à venir";
     return `${lost.at === "start" ? "disparaît au début" : "disparaît à la fin"} ${ref.startsWith("d'") ? ref : `de ${ref}`}`;
   };
+
+  // 0. Story Intelligence (V0.17) : règles sourcées encore à venir dans ce chapitre — même liste que LEONIDA AI
+  for (const a of storyAlerts(s)) {
+    if (a.horizon !== "imminent" && a.horizon !== "chapitre") continue;
+    if (a.tier === "À explorer") continue;
+    const it = storyItem(a, !!p.missionInProgress);
+    if (isDup(it.text)) continue;
+    // le conseil est déjà rédigé sans spoiler par le moteur : on l'insère tel quel
+    seen.push(it.text);
+    (a.tier === "Intéressant" ? optional : critical).push(it);
+    storyMatch.push(...(a.rule.match ?? []).map((m) => nk(m)));
+  }
 
   // 1. manquables documentés de LA mission (graphe sourcé), hors objectifs déjà notés / récupérés
   if (node && mission) {
@@ -197,6 +213,29 @@ export function buildBefore(
   critical.sort((a, b) => rank(a) - rank(b));
   const anyPnr = critical.some((x) => x.atPnr);
   return { mission, critical, optional, pnr: anyPnr ? pnr : null, analysed: !!brief };
+}
+
+const TRUST_OF: Record<StoryAlert["confidence"], Trust3> = { Vérifié: "Vérifié", Probable: "Probable", "Non confirmé": "Non confirmé", Contesté: "Contesté" };
+
+/** Règle Story Intelligence → élément de la liste unique (conseil sans spoiler, explication en détail). */
+function storyItem(a: StoryAlert, live: boolean): BeforeItem {
+  const r = a.rule;
+  const money = r.effects.some((e) => "resource" in e && !!e.resource);
+  const endTrigger = !!r.trigger && "node" in r.trigger && r.trigger.at === "end";
+  return {
+    key: a.key,
+    text: a.advice,
+    kind: a.horizon === "imminent" ? (endTrigger && live ? "pendant" : "avant") : r.kind === "opportunité" ? "opportunite" : "disparait",
+    status: TRUST_OF[a.confidence],
+    high: a.tier === "Critique" && a.confidence === "Vérifié",
+    atPnr: false,
+    when: a.when,
+    sources: a.sources,
+    detail: [a.money ?? "", a.explain ?? (a.masked ? "Raison masquée par l'anti-spoiler." : ""), ...a.contradictions.map((c) => `Sources divergentes : ${c}`), `Niveau : ${a.tier}${r.reversible ? "" : " · irréversible"}`].filter(Boolean),
+    cat: money ? "argent" : r.kind === "manquable" ? "unique" : r.kind === "opportunité" ? "argent" : "perte",
+    done: { type: "done", key: a.key, kind: money ? "argent" : "activite" },
+    map: null,
+  };
 }
 
 export const catIcon = (c: DiscoverItem["cat"]) => DISCOVER_CATS[c];

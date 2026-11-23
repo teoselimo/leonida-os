@@ -11,6 +11,8 @@ import { decideWeb, englishQuery, WEB_ASK } from "./route";
 import { redactorFor } from "../spoiler";
 import type { TurnMetrics, WebReason } from "./route";
 import type { BriefItem, ChecklistItem, CopilotAnswer, LlmMessage, LlmTransport, Trust, WebHit, WebSearchFn, WebStatus } from "./types";
+import { docsBlock, resolveMapGuess, visionRules } from "./vision";
+import type { Attachment, AttachPurpose } from "./vision";
 
 /**
  * Moteur conversationnel indépendant du fournisseur :
@@ -90,6 +92,9 @@ export interface AskOptions {
   planner?: boolean;
   /** Mesure de la réponse (V0.13). */
   onMetrics?: (m: TurnMetrics) => void;
+  /** LEONIDA Vision (V0.17) : images et documents texte joints à ce message. */
+  attachments?: Attachment[];
+  purpose?: AttachPurpose;
 }
 
 const NOTE: Record<string, string> = {
@@ -242,9 +247,15 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const checklist = o.mode === "checklist" && !!o.mission;
   const draft = answer(checklist ? `Je vais lancer ${o.mission}` : o.question, o.ctx, o.topic);
   draft.actions = draft.actions.filter((x) => isValidAction(x, o.ctx.feed)).slice(0, 3);
+  const atts = o.attachments ?? [];
+  const images = atts.filter((a) => a.kind === "image" && a.blob).map((a) => a.blob!);
+  const docs = atts.filter((a) => a.kind === "text");
+  const vision = images.length > 0 || docs.length > 0;
+  if (vision && !o.transport)
+    return { ...fromDirect(draft), message: "Je ne peux pas analyser de pièce jointe ici : Claude n'est pas connecté dans cet environnement. Décris-moi ce que tu vois et je t'aide avec les données LEONIDA.", trust: null, actions: [], sources: [], note: "Analyse d'image indisponible." };
   if (!o.transport || !o.ctx.feed) return fromDirect(draft);
   // V0.14.1 : une salutation ou un merci reçoit une réponse locale immédiate — ni Claude, ni web, ni contexte narratif
-  if (SMALLTALK_LOCAL.has(draft.intent) && !checklist) return { ...fromDirect(draft), trust: null };
+  if (SMALLTALK_LOCAL.has(draft.intent) && !checklist && !vision) return { ...fromDirect(draft), trust: null };
 
   // 1. Preuves LEONIDA RADAR
   let ids = [...new Set(draft.evidence ?? [])];
@@ -336,7 +347,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const messages: LlmMessage[] = [
     { role: "user", content: RULES },
     ...history,
-    { role: "user", content: composeTurn({ question: o.question, player, evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}` }) },
+    { role: "user", content: composeTurn({ question: o.question, player, evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}`, vision: vision ? [visionRules(images.length, o.purpose ?? "capture", docs.length), docsBlock(atts)].filter(Boolean).join("\n\n") : undefined }) },
   ];
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
   try {
@@ -346,7 +357,9 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const r = await o.transport.generate({
       messages,
       signal: o.signal,
-      tier: checklist ? "default" : o.tier ?? "quick",
+      // une image demande le modèle standard (meilleure lecture) ; le texte seul reste rapide
+      tier: checklist || images.length ? "default" : o.tier ?? "quick",
+      ...(images.length ? { images } : {}),
       onText: (t) => {
         const v = visiblePart(t);
         if (firstText === null && v.trim()) firstText = Date.now() - t0;
@@ -358,11 +371,21 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const { message, meta } = parseReply(r.text);
     if (!message) return { ...fromDirect(draft, NOTE.refused), web };
     // Validation : aucun nombre « significatif » absent des preuves, du contexte, de la conversation ou de la question
-    const allowed = new Set([...digits(evidence), ...digits(draft.text), ...digits(o.question), ...digits(player), ...history.flatMap((m) => digits(m.content))]);
+    // Vision : un nombre que Claude déclare LU sur l'image (champ « lus ») ou présent dans un document joint est admis
+    const lus = vision && Array.isArray((meta as { lus?: unknown } | null)?.lus) ? ((meta as { lus: unknown[] }).lus.map(String).slice(0, 20)) : [];
+    const allowed = new Set([...digits(evidence), ...digits(draft.text), ...digits(o.question), ...digits(player), ...history.flatMap((m) => digits(m.content)), ...lus.flatMap(digits), ...docs.flatMap((d) => digits(d.text ?? ""))]);
     const bad = digits(message).filter((n) => !allowed.has(n) && !(Number(n) <= 20));
+    if (bad.length && vision)
+      return { ...fromDirect(draft), message: "Je préfère ne pas te donner cette réponse : elle citait un chiffre que je ne retrouve ni sur ta capture ni dans les sources. Renvoie une capture plus nette ou précise ta question.", trust: null, actions: [], sources: [], note: `Réponse de Claude écartée (chiffre non vérifiable : ${bad.slice(0, 2).join(", ")}).`, web };
     if (bad.length) return { ...fromDirect(draft, `Réponse de Claude écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`), web };
     const idx = Array.isArray(meta?.actions) ? (meta!.actions as unknown[]).filter((i): i is number => Number.isInteger(i) && (i as number) >= 0 && (i as number) < actions.length) : null;
     let chosen = (idx ? idx.map((i) => actions[i]) : actions).slice(0, 2);
+    // Capture de carte : on ne garde que des NOMS du modèle, retrouvés dans la carte LEONIDA (jamais ses coordonnées)
+    const mapGuess = o.purpose === "carte" && images.length ? resolveMapGuess((meta as { lieu?: unknown } | null)?.lieu, o.ctx.places ?? []) : null;
+    if (mapGuess?.matched.length) chosen = [{ type: "show_place" as const, label: "Voir la proposition sur la carte", landmarkId: mapGuess.matched[0].id }, ...chosen].slice(0, 2);
+    else if (mapGuess?.district) chosen = [{ type: "show_place" as const, label: `Voir ${mapGuess.district} sur la carte`, district: mapGuess.district }, ...chosen].slice(0, 2);
+    const vmeta = (meta as { vision?: { certain?: unknown; hypotheses?: unknown } } | null)?.vision;
+    const strs = (x: unknown) => (Array.isArray(x) ? x.filter((y): y is string => typeof y === "string").map((y) => y.slice(0, 160)).slice(0, 5) : []);
     // progression : les actions à confirmer (terminer, lancer, cocher) restent toujours proposées
     if (PROGRESS_ACT.has(draft.intent) && actions.length) chosen = actions.slice(0, 3);
     // #15 : le joueur demande à voir sur la carte → le bouton carte reste proposé, même si Claude l'a omis
@@ -394,6 +417,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
       note: r.truncated ? "Réponse coupée par la limite de longueur." : undefined,
       evidence: allIds,
       ...(checklist ? briefOf(meta, o.ctx, allIds, hits) : {}),
+      ...(vision ? { vision: { certain: strs(vmeta?.certain).map(red), hypotheses: strs(vmeta?.hypotheses).map(red) }, mapGuess } : {}),
       web,
     };
   } catch (e) {

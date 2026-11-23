@@ -7,6 +7,7 @@ import type { Landmark } from "../gtadb";
 import type { PersistedState } from "../types";
 import { CONSOLES, SPOILER_FR } from "../meta";
 import { progressionContext } from "../progress";
+import { storyContext } from "../story/engine";
 
 /** Limites de contexte : jamais des dizaines de fiches sans rapport. */
 export const CONTEXT_LIMITS = { maxEvidence: 8, maxQuote: 280, maxChars: 16_000 };
@@ -15,7 +16,7 @@ const EDITION: Record<string, string> = { standard: "Standard", ultimate: "Ultim
 const PREORDER: Record<string, string> = { yes: "oui", no: "non", unknown: "inconnu" };
 
 /** Contexte joueur en français, lu par le modèle avant chaque réponse (aucune donnée personnelle hors jeu). */
-export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "done">, feed: RadarFeed | null): string {
+export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "done"> & { story?: PersistedState["story"] }, feed: RadarFeed | null): string {
   const p = s.profile;
   const owned = Object.entries(s.vehicles)
     .filter(([, v]) => v.state !== "spotted")
@@ -40,6 +41,7 @@ export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "
     `Véhicules et garages possédés : ${owned.length ? owned.slice(-10).join(", ") : "aucun renseigné"}`,
     `Anti-spoiler : ${SPOILER_FR[p.spoilerMode] ?? SPOILER_FR.strict}`,
     progressionContext(s),
+    storyContext(s),
   ].join("\n");
 }
 

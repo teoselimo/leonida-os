@@ -23,6 +23,7 @@ import { computeProgress } from "@/lib/progress";
 import { progressDelta } from "@/lib/ai/progressAnswers";
 import type { ProgressDelta } from "@/lib/ai/progressAnswers";
 import { useRedact } from "@/lib/useRedact";
+import { StoryLaunch } from "@/components/StoryLaunch";
 
 const SHOWN_CRITICAL = 3;
 const SHOWN_OPTIONAL = 2;
@@ -96,6 +97,7 @@ export function HomeScreen() {
             <p className="before__pnr" data-testid="pnr"><Icon name="clock" size={13} /><span>Point de non-retour {view.pnr} : les éléments marqués « non-retour » y sont perdus.</span></p>
           )}
           {mb.failed && <p className="before__note">L&apos;analyse n&apos;a pas abouti. Réessaie dans un instant.</p>}
+          {mission && <StoryLaunch mission={mission} />}
         </section>
       )}
 

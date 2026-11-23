@@ -210,7 +210,8 @@ test("V0.6 : Standard et Ultimate au même chapitre obtiennent des recommandatio
   await expect(page.locator(".main")).not.toContainText("Dinka Enduro");
   await setProfile(page, "Ultimate", 1);
   await page.goto("/#accueil");
-  await expect(page.getByTestId("before-item").filter({ hasText: "Dinka Enduro" })).toContainText("jusqu'au chapitre 1"); // limité dans le temps → « Avant de continuer »
+  if (await page.getByTestId("before-all").count()) await page.getByTestId("before-all").click(); // V0.17 : Accueil limité à 3, « Tout voir » déplie
+  await expect(page.getByTestId("before-item").filter({ hasText: "Dinka Enduro" })).toContainText("chapitre 1"); // V0.17 : règle Story Intelligence (édition Ultimate) dans « Avant de continuer »
   await page.screenshot({ path: `captures/${info.project.name}-30-accueil-ultimate.png` });
 });
 

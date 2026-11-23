@@ -169,7 +169,7 @@ export const PROGRESSION: ProgNode[] = [
     prereq: { all: ["recalibration"], basis: "explicite", sources: [S.playgta6, S.gta6walkRecal] },
     pointOfNoReturn: {
       text: "Point de non-retour du chapitre 1 : enchaînement de trois missions sans exploration libre jusqu'au chapitre 2",
-      lose: ["la maison de Key Lento", "l'argent sur toi", "la planque et le compte BuckMe", "les véhicules personnels"],
+      lose: ["la maison de Key Lento", "l'argent sur toi", "la planque et le compte BuckMe", "les véhicules personnels (contesté : une source les dit récupérables)"],
       keep: ["l'épargne Family Savings (jusqu'à 5 000 $)", "les armes uniques", "la relation avec Lucia"],
       sources: [S.game8Missables, S.wikiMissables, S.howto, S.playgta6, S.viceAtlas],
       note: "PowerPyx place l'alerte dès Recalibration, IGN et VGC au début de Tourist Trap ; les pertes d'argent et de maison viennent surtout de PowerPyx",

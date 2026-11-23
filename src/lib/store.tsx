@@ -11,7 +11,8 @@ import { asPlayerRecord, isValidRecordInput } from "./records";
 import { liveToDiscoveries, useLiveRadar } from "./live";
 import { demoRepository, localProgressStore } from "./repository";
 import { cloudLoad, cloudSave } from "./runtime/cloud";
-import type { Discovery, MissionAlertBrief, Objective, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
+import type { Discovery, Gauge, MissionAlertBrief, Objective, PersistedState, Profile, RadarSignal, StoryState, VehicleProgress, VehicleState, ViewId } from "./types";
+import type { ResourceId } from "./story/model";
 
 const STORAGE_KEY = "leonida-os/progress/v1";
 const MAX_PROOFS = 4;
@@ -51,7 +52,22 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   const metrics = Array.isArray(saved.metrics) ? saved.metrics.filter((m) => m && typeof m.totalMs === "number").slice(-MAX_METRICS) : [];
   const pins = saved.pins && typeof saved.pins === "object" ? Object.fromEntries(Object.entries(saved.pins).filter(([, v]) => v && Number.isFinite(v.x) && Number.isFinite(v.y) && typeof v.at === "string").map(([k, v]) => [k, { x: v.x, y: v.y, at: v.at, by: "joueur" as const }])) : {};
   const proofs = saved.proofs && typeof saved.proofs === "object" ? Object.fromEntries(Object.entries(saved.proofs).map(([k, arr]) => [k, (Array.isArray(arr) ? arr : []).filter((p) => p && typeof p.id === "string" && (p.kind === "lien" || p.kind === "capture") && typeof p.value === "string" && typeof p.at === "string").slice(-MAX_PROOFS)]).filter(([, a]) => (a as unknown[]).length)) : {};
-  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, rev: 7, schema: 1 };
+  const story = sanitizeStory(saved.story);
+  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, story, rev: 8, schema: 1 };
+}
+
+/** V0.17 : jauges d'argent et choix déclarés — toute valeur invalide est retirée (jamais un solde inventé). */
+export function sanitizeStory(raw: unknown): StoryState {
+  const r = raw && typeof raw === "object" ? (raw as StoryState) : {};
+  const ok = (g: unknown): g is Gauge => {
+    const x = g as Gauge;
+    if (!x || typeof x !== "object") return false;
+    if (x.mode === "exact") return Number.isFinite(x.value) && x.value >= 0;
+    return x.mode === "range" && Number.isFinite(x.min) && x.min >= 0 && (x.max === null || (Number.isFinite(x.max) && x.max >= x.min));
+  };
+  const money = Object.fromEntries(Object.entries(r.money ?? {}).filter(([k, g]) => ["cash", "checking", "stash", "savings"].includes(k) && ok(g)));
+  const choices = Object.fromEntries(Object.entries(r.choices ?? {}).filter(([k, v]) => typeof k === "string" && typeof v === "string"));
+  return { money, choices, ...(typeof r.moneyAt === "string" ? { moneyAt: r.moneyAt } : {}) };
 }
 
 export const initialState = (): PersistedState => ({
@@ -65,7 +81,8 @@ export const initialState = (): PersistedState => ({
   showDemo: false,
   vehicles: {},
   done: {},
-  rev: 7,
+  story: { money: {}, choices: {} },
+  rev: 8,
 });
 
 type Action =
@@ -87,7 +104,8 @@ type Action =
   | { type: "metric"; m: TurnMetrics }
   | { type: "mission"; name: string | null; done: boolean }
   | { type: "objectives"; fn: (list: Objective[]) => Objective[] }
-  | { type: "brief"; key: string; brief: MissionAlertBrief };
+  | { type: "brief"; key: string; brief: MissionAlertBrief }
+  | { type: "money"; resource: ResourceId; gauge: Gauge | null };
 
 function reducer(s: PersistedState, a: Action): PersistedState {
   switch (a.type) {
@@ -110,7 +128,7 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       return { ...s, seenSignals: Array.from(new Set([...s.seenSignals, ...a.ids])) };
     case "reset":
       // ne remet à zéro que le contenu de démonstration : la vraie partie (profil, coches, garage, positions, analyses, mesures) est conservée
-      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile, pins: s.pins, proofs: s.proofs, briefs: s.briefs, metrics: s.metrics };
+      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile, pins: s.pins, proofs: s.proofs, briefs: s.briefs, metrics: s.metrics, story: s.story };
     case "upsertCustom": {
       const exists = s.custom.some((c) => c.id === a.d.id);
       return { ...s, custom: exists ? s.custom.map((c) => (c.id === a.d.id ? a.d : c)) : [...s.custom, a.d] };
@@ -158,6 +176,12 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       const wasNext = a.done && !!s.profile.nextMission && s.profile.nextMission.toLowerCase() === name.toLowerCase();
       const nextMission = wasNext ? null : s.profile.nextMission;
       return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone, nextMission, missionInProgress: wasNext ? false : s.profile.missionInProgress } };
+    }
+    case "money": {
+      const money = { ...(s.story?.money ?? {}) };
+      if (a.gauge) money[a.resource] = a.gauge;
+      else delete money[a.resource];
+      return { ...s, story: { ...(s.story ?? {}), money, moneyAt: new Date().toISOString() } };
     }
     case "brief": {
       // une analyse par mission ; on garde les 8 plus récentes
@@ -229,6 +253,8 @@ interface Ctx {
   /** Annule un « Fait » posé comme objectif (V0.14) : retire l'objectif coché de ce texte pour cette mission. */
   undoObjective: (mission: string, text: string) => void;
   setBrief: (key: string, brief: MissionAlertBrief) => void;
+  /** Story Intelligence : argent déclaré (exact, tranche, ou null = inconnu). */
+  setMoney: (resource: ResourceId, gauge: Gauge | null) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
   /** Véhicule sélectionné sur la carte (mode Voitures cachées). */
@@ -455,6 +481,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       undoObjective: (mission, text) =>
         dispatch({ type: "objectives", fn: (list) => list.filter((x) => !(x.done && x.mission.toLowerCase() === mission.toLowerCase() && x.text.trim().toLowerCase() === text.trim().toLowerCase())) }),
       setBrief: (key, brief) => dispatch({ type: "brief", key, brief }),
+      setMoney: (resource, gauge) => dispatch({ type: "money", resource, gauge }),
       setVehicle: (id, st, storage) => {
         const prev = state.vehicles[id];
         dispatch({ type: "vehicle", id, progress: st ? { state: st, at: new Date().toISOString(), storage: storage ?? prev?.storage } : null });

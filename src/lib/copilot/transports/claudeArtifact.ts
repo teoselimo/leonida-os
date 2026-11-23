@@ -8,7 +8,7 @@ import type { LlmRequest, LlmResult, LlmTransport } from "../types";
  *
  * C'est le SEUL fichier qui connaît `window.claude`. Hors d'un Artifact (GitHub Pages), il se déclare indisponible.
  */
-type SampleFn = ((input: unknown, opts?: unknown) => Promise<{ text: string; truncated: boolean; modelTierApplied?: string; modelApplied?: string }>) | null;
+type SampleFn = (((input: unknown, opts?: unknown) => Promise<{ text: string; truncated: boolean; modelTierApplied?: string; modelApplied?: string }>) & { limits?: () => Promise<{ images?: { maxCount: number; maxInputBytes: number; mediaTypes: string[] } }> }) | null;
 
 let samplePromise: Promise<SampleFn> | null = null;
 function getSample(): Promise<SampleFn> {
@@ -24,11 +24,18 @@ export const claudeArtifactTransport: LlmTransport = {
   async available() {
     return !!(await getSample());
   },
+  /** Images : seulement si l'Artifact les déclare ET si cette vue peut en envoyer (limits() local, gratuit). */
+  async visionLimits() {
+    const sample = await getSample();
+    const lim = sample?.limits ? await sample.limits().catch(() => null) : null;
+    return lim?.images ? { maxCount: lim.images.maxCount, maxInputBytes: lim.images.maxInputBytes, mediaTypes: lim.images.mediaTypes } : null;
+  },
   async generate(req: LlmRequest): Promise<LlmResult> {
     const sample = await getSample();
     if (!sample) throw new LlmError("unavailable");
     try {
       const r = await sample(req.messages, {
+        ...(req.images?.length ? { images: req.images } : {}),
         cache: false, // une conversation doit toujours produire une nouvelle réponse
         modelTier: req.tier ?? "quick",
         signal: req.signal,

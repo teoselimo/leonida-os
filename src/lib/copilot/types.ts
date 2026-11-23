@@ -30,6 +30,8 @@ export interface LlmRequest {
   signal?: AbortSignal;
   /** « quick » : réponse quasi immédiate ; « default » : plus réfléchie, plus lente. */
   tier?: "quick" | "default";
+  /** LEONIDA Vision : images jointes au dernier tour (jamais renvoyées dans l'historique). */
+  images?: Blob[];
 }
 
 export interface LlmResult {
@@ -57,6 +59,8 @@ export interface LlmTransport {
   /** Vrai seulement si un appel peut réellement aboutir dans cet environnement. */
   available(): Promise<boolean>;
   generate(req: LlmRequest): Promise<LlmResult>;
+  /** Limites d'images de cet environnement, ou null s'il ne peut pas en envoyer (jamais supposé). */
+  visionLimits?(): Promise<import("./vision").VisionLimits | null>;
 }
 
 /** Réponse du copilote, identique quel que soit le moteur. */
@@ -79,6 +83,10 @@ export interface CopilotAnswer {
   checklist?: { verified: ChecklistItem[]; uncertain: ChecklistItem[] };
   /** Mode « Rien à manquer » : éléments typés (quand, type, priorité) avec statut de recoupement calculé. */
   brief?: BriefItem[];
+  /** LEONIDA Vision : ce que Claude dit voir (certain) et ce qu'il suppose (hypothèses). */
+  vision?: { certain: string[]; hypotheses: string[] };
+  /** Capture de carte : proposition de localisation (à confirmer, jamais enregistrée seule). */
+  mapGuess?: import("./vision").MapGuess | null;
   /** Recherche web effectuée pour cette réponse (null = non tentée). */
   web?: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null;
 }

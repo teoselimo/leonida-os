@@ -2,6 +2,7 @@ import type { RadarFeed } from "./feed";
 import { missionCatalog, missionVisible } from "./missions";
 import { computeProgress, shownName } from "./progress";
 import type { PersistedState, SpoilerMode } from "./types";
+import { STORY_NODES } from "@/data/story";
 
 /**
  * Anti-spoiler à la SOURCE (V0.14) : la liste des noms de missions futures non accessibles, calculée une fois à partir
@@ -36,6 +37,14 @@ export function hiddenMissionNames(s: Pick<PersistedState, "profile"> & { done?:
   for (const m of missionCatalog(feed).values()) {
     if (shown.has(m.name.toLowerCase())) continue;
     if (!missionVisible(m, p.chapter, "strict") && !p.missionsDone.some((d) => d.toLowerCase() === m.name.toLowerCase()) && p.nextMission?.toLowerCase() !== m.name.toLowerCase()) names.add(m.name);
+  }
+  // V0.17 : missions et lieux des chapitres 2 à 5 (inventaire Story Intelligence) au-delà du chapitre atteint
+  const declared = [...p.missionsDone, p.nextMission ?? ""].map((m) => m.toLowerCase().replace(/[!.]/g, "").trim());
+  for (const n of STORY_NODES) {
+    if (n.chapter <= p.chapter) continue;
+    const all = [n.name, ...(n.aliases ?? [])];
+    if (all.some((x) => declared.includes(x.toLowerCase().replace(/[!.]/g, "").trim()))) continue;
+    all.forEach((x) => !shown.has(x.toLowerCase()) && names.add(x));
   }
   // plus longs d'abord : « Home Sweet Home » avant « Home »
   const out = [...names].filter((n) => n.trim().length >= 3).sort((a, b) => b.length - a.length);

@@ -21,9 +21,13 @@ import type { SpringHandle } from "@/lib/motion";
 import { Sheet } from "./Sheet";
 import { BrandMark, CopilotGlyph } from "./Brand";
 import { Icon } from "./ui/Icon";
+import { VisionAttach, VisionAnswer, attachmentNote } from "./VisionAttach";
+import type { AttachmentChip } from "./VisionAttach";
+import type { Attachment, AttachPurpose, VisionLimits } from "@/lib/copilot/vision";
+import { AttachError, MAX_DOCS, prepareImage, prepareText, TEXT_DOC } from "@/lib/copilot/vision";
 
-type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean; stage?: "search" | "write"; checklist?: CopilotAnswer["checklist"]; web?: CopilotAnswer["web"]; mission?: string };
-type AskOpts = { mode?: "chat" | "checklist"; mission?: string };
+type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean; stage?: "search" | "write"; checklist?: CopilotAnswer["checklist"]; web?: CopilotAnswer["web"]; mission?: string; vision?: CopilotAnswer["vision"]; mapGuess?: CopilotAnswer["mapGuess"]; attNames?: string[] };
+type AskOpts = { mode?: "chat" | "checklist"; mission?: string; attachments?: Attachment[]; purpose?: AttachPurpose };
 const WEB_FAIL: Partial<Record<WebStatus, string>> = {
   not_connected: "Recherche web indisponible : le connecteur Exa n'est pas branché sur ton compte Claude.",
   needs_reauth: "Recherche web indisponible : reconnecte le connecteur Exa dans les réglages de Claude.",
@@ -31,7 +35,7 @@ const WEB_FAIL: Partial<Record<WebStatus, string>> = {
   error: "La recherche web a échoué cette fois-ci ; réponse sans le web.",
   empty: "Aucun résultat web pertinent trouvé.",
 };
-type Msg = { id: number; role: "user"; text: string } | AiMsg;
+type Msg = { id: number; role: "user"; text: string; atts?: AttachmentChip[] } | AiMsg;
 const HISTORY_KEY = "leonida-os/ai-history/v2";
 const DRAFT_KEY = "leonida-os/ai-draft/v1";
 const routerMode = (): "local" | "planner" => {
@@ -43,6 +47,10 @@ const routerMode = (): "local" | "planner" => {
 };
 /** Longueur maximale d'un message (le contexte envoyé à Claude reste borné). */
 const MAX_CHARS = 2_000;
+/** Au plus 4 images par message (lisibilité de l'aperçu ; la plateforme peut en accepter davantage). */
+const MAX_IMAGES = 4;
+const defaultQuestion = (atts: Attachment[], purpose?: AttachPurpose) =>
+  purpose === "carte" ? "Où est-ce sur la carte ?" : atts.some((a) => a.kind === "image") ? "Regarde cette capture : qu'est-ce que je dois savoir ?" : "Lis ce document et compare-le à ce que tu sais.";
 const finePointer = () => typeof window !== "undefined" && !!window.matchMedia?.("(pointer: fine)").matches;
 
 function loadHistory(): Msg[] {
@@ -122,6 +130,64 @@ export function AiCopilot() {
   msgsRef.current = msgs;
   // Moteur conversationnel : Claude (Artifact ou API) si disponible, sinon mode direct
   const { transport, web } = useCopilotRuntime();
+  // ── LEONIDA Vision : pièces jointes (images seulement si cette vue peut réellement les envoyer à Claude) ──
+  const [vlim, setVlim] = useState<VisionLimits | null>(null);
+  useEffect(() => {
+    let live = true;
+    void transport?.visionLimits?.().then((l) => live && setVlim(l)).catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [transport]);
+  const [atts, setAtts] = useState<Attachment[]>([]);
+  const [purpose, setPurpose] = useState<AttachPurpose>("capture");
+  const [attErr, setAttErr] = useState<string | null>(null);
+  const addFiles = async (files: File[], kind: "photo" | "capture" | "carte" | "doc") => {
+    setAttErr(null);
+    const out: Attachment[] = [];
+    const errs: string[] = [];
+    const maxImg = Math.min(vlim?.maxCount ?? 0, MAX_IMAGES);
+    let imgs = atts.filter((a) => a.kind === "image").length;
+    let docs = atts.filter((a) => a.kind === "text").length;
+    for (const f of files) {
+      try {
+        if (kind === "doc" || TEXT_DOC.test(f.name)) {
+          if (docs >= MAX_DOCS) {
+            errs.push(`${MAX_DOCS} documents au maximum par message.`);
+            continue;
+          }
+          out.push(await prepareText(f));
+          docs++;
+        } else {
+          if (!vlim) {
+            errs.push("L'envoi d'images n'est pas disponible ici.");
+            break;
+          }
+          if (imgs >= maxImg) {
+            errs.push(`${maxImg} images au maximum par message.`);
+            break;
+          }
+          out.push(await prepareImage(f, vlim));
+          imgs++;
+        }
+      } catch (e) {
+        errs.push(e instanceof AttachError ? e.message : `Impossible de lire « ${f.name} ».`);
+      }
+    }
+    if (kind === "carte" && out.some((a) => a.kind === "image")) setPurpose("carte");
+    setAtts((a) => [...a, ...out]);
+    if (errs.length) setAttErr([...new Set(errs)].join(" "));
+  };
+  const removeAtt = (id: string) => {
+    setAtts((list) => {
+      const gone = list.find((a) => a.id === id);
+      if (gone?.preview) URL.revokeObjectURL(gone.preview);
+      const rest = list.filter((a) => a.id !== id);
+      if (!rest.some((a) => a.kind === "image")) setPurpose("capture");
+      return rest;
+    });
+    setAttErr(null);
+  };
   const [deep, setDeep] = useState(false);
   useEffect(() => {
     try {
@@ -145,7 +211,7 @@ export function AiCopilot() {
     list
       .filter((m) => (m.role === "user" ? m.text : m.a.text))
       .slice(-16)
-      .map((m) => (m.role === "user" ? { role: "user" as const, content: m.text } : { role: "assistant" as const, content: m.a.text }));
+      .map((m) => (m.role === "user" ? { role: "user" as const, content: m.text + attachmentNote(m.atts) } : { role: "assistant" as const, content: m.a.text }));
   const toAi = (c: CopilotAnswer): AiAnswer => ({ intent: c.intent, text: c.message, reliability: c.trust, sources: c.sources, actions: c.actions, more: c.more, replies: c.replies, topic: c.topic, evidence: c.evidence });
   const [places, setPlaces] = useState<PlaceRef[]>([]);
   useEffect(() => {
@@ -153,7 +219,8 @@ export function AiCopilot() {
   }, [aiOpen, places.length]);
   useEffect(() => {
     try {
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(msgs.slice(-40)));
+      // les aperçus d'images ne sont jamais conservés (seuls nom, type et taille restent)
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(msgs.slice(-40).map((m) => (m.role === "user" && m.atts ? { ...m, atts: m.atts.map(({ preview: _p, ...rest }) => rest) } : m))));
     } catch {
       /* stockage plein : l'historique reste en mémoire */
     }
@@ -237,9 +304,11 @@ export function AiCopilot() {
 
   const ask = useCallback(
     async (q: string, forcedTopic?: Topic | null, opts: AskOpts = {}) => {
-      const question = q.trim().slice(0, MAX_CHARS);
+      const atts = opts.attachments ?? [];
+      const question = (q.trim() || (atts.length ? defaultQuestion(atts, opts.purpose) : "")).slice(0, MAX_CHARS);
       if (!question) return;
       setText("");
+      const chips: AttachmentChip[] | undefined = atts.length ? atts.map((a) => ({ name: a.name, kind: a.kind, size: a.size, preview: a.preview, purpose: opts.purpose })) : undefined;
       // le joueur vient d'écrire : on le suit jusqu'à la réponse
       stickRef.current = true;
       setAway(false);
@@ -255,8 +324,10 @@ export function AiCopilot() {
         ctlRef.current?.abort();
         ctlRef.current = ctl;
         setStreaming(true);
-        setMsgs((m) => [...m, { id, role: "user", text: question }, { id: id + 1, role: "ai", a: { intent: "pending", text: "", reliability: null, sources: [], actions: [] }, engine: "claude", streaming: true, mission: opts.mission }]);
+        setMsgs((m) => [...m, { id, role: "user", text: question, atts: chips }, { id: id + 1, role: "ai", a: { intent: "pending", text: "", reliability: null, sources: [], actions: [] }, engine: "claude", streaming: true, mission: opts.mission, attNames: chips?.map((c) => c.name) }]);
         const c = await askCopilot({
+          attachments: atts,
+          purpose: opts.purpose,
           mode: opts.mode,
           mission: opts.mission,
           search: web === "unavailable" ? null : exaSearch,
@@ -278,7 +349,7 @@ export function AiCopilot() {
         }
         const webNote = c.web && c.web.status !== "ok" ? WEB_FAIL[c.web.status] : undefined;
         if (c.web) reportWeb(c.web.status === "ok" || c.web.status === "empty" ? "ok" : c.web.status);
-        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: [c.note, webNote].filter(Boolean).join(" ") || undefined, checklist: c.checklist, web: c.web, mission: opts.mission } : x)));
+        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: [c.note, webNote].filter(Boolean).join(" ") || undefined, checklist: c.checklist, web: c.web, mission: opts.mission, vision: c.vision, mapGuess: c.mapGuess, attNames: chips?.map((x) => x.name) } : x)));
         return;
       }
       const local = answer(question, ctx, topic);
@@ -286,7 +357,7 @@ export function AiCopilot() {
       const id = Date.now();
       // la réponse locale s'affiche tout de suite ; la synthèse serveur (si déployée) l'affine ensuite
       const remote = proxyEnabled() && !!(a.evidence ?? []).length;
-      setMsgs((m) => [...m, { id, role: "user", text: question }, { id: id + 1, role: "ai", a, llm: remote ? "pending" : undefined }]);
+      setMsgs((m) => [...m, { id, role: "user", text: question, atts: chips }, { id: id + 1, role: "ai", a, llm: remote ? "pending" : undefined }]);
       if (!remote) return;
       const r = await askProxy(question, state.profile, topic);
       setMsgs((m) =>
@@ -300,6 +371,16 @@ export function AiCopilot() {
     },
     [feed, state, places, transport, deep, web],
   );
+
+  const sendNow = () => {
+    if (!text.trim() && !atts.length) return;
+    const a = atts;
+    const pp = purpose;
+    setAtts([]);
+    setPurpose("capture");
+    setAttErr(null);
+    void ask(text, undefined, a.length ? { attachments: a, purpose: pp } : {});
+  };
 
   // Questions lancées depuis l'accueil (amorces)
   useEffect(() => {
@@ -452,10 +533,15 @@ export function AiCopilot() {
         )}
         {msgs.map((m) =>
           m.role === "user" ? (
-            <div key={m.id} className="bubble bubble--me">{m.text}</div>
+            <div key={m.id} className="bubble bubble--me">
+              {m.atts && <VisionAttach.Sent atts={m.atts} />}
+              {m.text}
+            </div>
           ) : (
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
-              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{redact(m.a.text)}</p>}
+              {m.attNames?.length ? <p className="bubble__about" data-testid="ai-about">Réponse à {m.attNames.length > 1 ? `tes ${m.attNames.length} pièces jointes` : `« ${m.attNames[0]} »`}</p> : null}
+              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.attNames?.length ? "Leonida regarde ta pièce jointe…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{redact(m.a.text)}</p>}
+              {!m.streaming && (m.vision || m.mapGuess) && <VisionAnswer vision={m.vision} guess={m.mapGuess ?? null} />}
               {m.checklist && <ChecklistView c={m.checklist} mission={m.mission ?? ""} />}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.actions.length > 0 && (
@@ -528,13 +614,15 @@ export function AiCopilot() {
           <Icon name="arrow" size={13} /> Dernier message
         </button>
       )}
+      <VisionAttach.Tray atts={atts} purpose={purpose} error={attErr} onRemove={removeAtt} />
       <form
         className="ai__input"
         onSubmit={(e) => {
           e.preventDefault();
-          void ask(text);
+          sendNow();
         }}
       >
+        {transport && <VisionAttach.Button limits={vlim} count={atts.length} onFiles={addFiles} disabled={streaming} />}
         <div className="ai__field">
           <textarea
             ref={inputRef}
@@ -545,7 +633,7 @@ export function AiCopilot() {
               // clavier physique (iPad, ordinateur) : Entrée envoie, Maj+Entrée va à la ligne ; écran tactile : Entrée = retour à la ligne
               if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing && finePointer()) {
                 e.preventDefault();
-                void ask(text);
+                sendNow();
               }
             }}
             onFocus={() => setTimeout(() => stickRef.current && toBottom(), 320)}
@@ -563,7 +651,7 @@ export function AiCopilot() {
         {streaming ? (
           <button type="button" className="ai__send ai__send--stop press" onClick={() => ctlRef.current?.abort()} aria-label="Arrêter la réponse" data-testid="ai-stop"><span className="ai__stopsq" /></button>
         ) : (
-          <button type="submit" className="ai__send press" disabled={!text.trim()} aria-label="Envoyer" data-testid="ai-send"><Icon name="arrow" size={18} /></button>
+          <button type="submit" className="ai__send press" disabled={!text.trim() && !atts.length} aria-label="Envoyer" data-testid="ai-send"><Icon name="arrow" size={18} /></button>
         )}
       </form>
     </div>

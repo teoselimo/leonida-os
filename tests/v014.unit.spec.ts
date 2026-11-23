@@ -61,7 +61,7 @@ test.describe("3 · « Avant de continuer » sans contradiction", () => {
   });
   test("vocabulaire de confiance unique ; jamais de promesse « rien à manquer » ni « tout se perd »", () => {
     for (const x of [...before.critical, ...before.optional]) {
-      expect(["Vérifié", "Probable", "Non confirmé"]).toContain(x.status);
+      expect(["Vérifié", "Probable", "Non confirmé", "Contesté"]).toContain(x.status);
       expect(x.text).not.toMatch(/tout se perd|rien à manquer/i);
     }
   });
@@ -89,7 +89,7 @@ test.describe("5 · journal « Récupéré / Fait »", () => {
 
 test("précision des lieux et version centralisée", () => {
   expect(Object.values(PRECISION_FR)).toEqual(["Placée par toi", "Repère communautaire", "Zone estimée", "Position inconnue"]);
-  expect(APP_VERSION).toBe("V0.16.1");
+  expect(APP_VERSION).toBe("V0.17");
 });
 
 test.describe("V0.14.1 · salutation", () => {

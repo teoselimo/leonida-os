@@ -145,6 +145,18 @@ export interface PersistedState {
   proofs?: Record<string, import("./evidence").PlayerProof[]>;
   /** Mesures des dernières réponses du copilote (latence, appels, recherches) — comparaison avant / après V0.13. */
   metrics?: import("./copilot/route").TurnMetrics[];
+  /** Story Intelligence (V0.17) : argent déclaré (facultatif) et choix narratifs déclarés. Jamais déduit. */
+  story?: StoryState;
+}
+
+/** Montant déclaré par le joueur : exact, ou tranche (max null = « plus de min »). Absent = inconnu. */
+export type Gauge = { mode: "exact"; value: number } | { mode: "range"; min: number; max: number | null };
+export interface StoryState {
+  money?: Partial<Record<import("./story/model").ResourceId, Gauge>>;
+  /** Date de la dernière saisie d'argent (un solde ancien est signalé comme tel). */
+  moneyAt?: string;
+  /** Choix narratifs déclarés (id de règle → option). */
+  choices?: Record<string, string>;
 }
 
 export type BriefWhen = "avant" | "pendant" | "apres";
