@@ -1,4 +1,5 @@
 import { autopilot } from "../autopilot";
+import { launchRisks } from "../story/engine";
 import type { ProgNode } from "@/data/progression";
 import { ESTABLISHMENTS, establishmentCategoryFromQuery, EST_CATS } from "@/data/establishments";
 import type { EstCat, Establishment } from "@/data/establishments";
@@ -139,7 +140,7 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
         reliability: sure ? "recoupé" : "signalé",
         sources: src(node(mains[0].id)),
         actions: [
-          ...mains.slice(0, mains.length === 1 ? 1 : 3).map((x) => ({ type: "start_mission" as const, name: x.name, label: `Lancer ${x.name}`, confirm: `Noter « ${x.name} » comme mission en cours ?` })),
+          ...mains.slice(0, mains.length === 1 ? 1 : 3).map((x) => ({ type: "start_mission" as const, name: x.name, label: `Lancer ${x.name}`, confirm: launchConfirm({ profile: p, done: ctx.state.done, story: ctx.state.story }, x.name) })),
           ...(mains.length === 1 ? [{ type: "set_next_mission" as const, name: mains[0].name, label: `Préparer ${mains[0].name}`, confirm: `Noter « ${mains[0].name} » comme prochaine mission (pas encore lancée) ?` }] : []),
         ],
       };
@@ -244,4 +245,13 @@ function shopsAnswer(kind: ProgIntent, q: string, ctx: AiContext, v: ProgressVie
     ],
     evidence: placed.filter((x) => x.pl.landmarkId).map((x) => `poi:${x.pl.landmarkId}`),
   };
+}
+
+
+/** V0.18.1 : confirmation de lancement — mentionne le point de non-retour et les risques critiques documentés. */
+export function launchConfirm(s: Parameters<typeof launchRisks>[0], name: string): string {
+  const r = launchRisks(s, name);
+  if (!r) return `Noter « ${name} » comme mission en cours ?`;
+  const what = [r.pnr ? "point de non-retour" : "", r.count ? `${r.count} risque${r.count > 1 ? "s" : ""} critique${r.count > 1 ? "s" : ""}` : ""].filter(Boolean).join(" et ");
+  return `Attention : ${what} au lancement de « ${name} » (vois « Avant de continuer »). La noter quand même comme mission en cours ?`;
 }

@@ -84,6 +84,7 @@ test("Test 5 — « C'est fait » retire la recommandation, statut conservé apr
   await expect(gone).toHaveCount(0);
   // mission terminée ⇒ elle n'est plus « prochaine »
   await page.getByTestId("mission-start").click();
+  await page.getByTestId("launch-guard").getByTestId("guard-go").click(); // V0.18.1 : point de non-retour → confirmation
   await page.getByTestId("mission-done").click();
   await page.getByTestId("mission-done-confirm").getByRole("button", { name: "Oui, terminée" }).click();
   await expect(page.getByTestId("next-mission-name")).toHaveText("Prochaine mission à choisir");

@@ -19,11 +19,13 @@ import type { BeforeItem } from "@/lib/before";
 import { buildJournal, JOURNAL_FR } from "@/lib/journal";
 import { loadLandmarks } from "@/lib/gtadb";
 import type { Landmark } from "@/lib/gtadb";
-import { computeProgress } from "@/lib/progress";
+import { computeProgress, progDoneKey } from "@/lib/progress";
 import { progressDelta } from "@/lib/ai/progressAnswers";
 import type { ProgressDelta } from "@/lib/ai/progressAnswers";
 import { useRedact } from "@/lib/useRedact";
 import { autopilot } from "@/lib/autopilot";
+import type { Autopilot } from "@/lib/autopilot";
+import { launchRisks } from "@/lib/story/engine";
 import { StoryLaunch } from "@/components/StoryLaunch";
 
 const SHOWN_CRITICAL = 3;
@@ -71,6 +73,19 @@ export function HomeScreen() {
     setJustDone(null);
     notify(inProgress ? "Mission en cours" : "Prochaine mission notée", name, "flag");
   };
+  // V0.18.1 : lancer une mission qui porte un point de non-retour ou des risques critiques documentés demande une
+  // confirmation compacte (jamais un blocage) ; sans risque important, le lancement reste immédiat
+  const [guard, setGuard] = useState<{ name: string; risks: NonNullable<ReturnType<typeof launchRisks>>; planned: boolean } | null>(null);
+  const doLaunch = (name: string, planned: boolean) => {
+    setGuard(null);
+    if (planned) (tick(), setMissionInProgress(true), notify("Mission en cours", name, "flag"));
+    else choose(name, true);
+  };
+  const launch = (name: string, planned: boolean) => {
+    const risks = launchRisks(state, name);
+    if (risks) return (tick(), setGuard({ name, risks, planned }));
+    doLaunch(name, planned);
+  };
 
   return (
     <div className="screen home home14">
@@ -79,7 +94,17 @@ export function HomeScreen() {
       <CollectorAlert hideSnapshot />
 
       {/* V0.18 : sans mission choisie, la proposition de l'Autopilot passe en premier (deux ou trois touchers après « Terminée ») */}
-      {!mission && <NextChoice justDone={justDone} onChoose={choose} choices={plan.mission.choices} />}
+      {guard && (
+        <section className="lguard glass" role="alertdialog" aria-label={`Avant de lancer ${guard.name}`} data-testid="launch-guard">
+          <p className="lguard__head"><Icon name="alert" size={15} /> <span>Avant de lancer <b>{guard.name}</b> : {[guard.risks.pnr ? "point de non-retour" : "", guard.risks.count ? `${guard.risks.count} risque${guard.risks.count > 1 ? "s" : ""} critique${guard.risks.count > 1 ? "s" : ""} documenté${guard.risks.count > 1 ? "s" : ""}` : ""].filter(Boolean).join(" · ")}</span></p>
+          {guard.risks.lines.map((l, i) => <p key={i} className="lguard__line">{l}</p>)}
+          <div className="row gap8">
+            <button className="btn btn--sm btn--ghost press" onClick={() => (tick(), setGuard(null), !guard.planned && choose(guard.name))} data-testid="guard-review">Revoir d&apos;abord</button>
+            <button className="btn btn--sm btn--primary press" onClick={() => doLaunch(guard.name, guard.planned)} data-testid="guard-go">Lancer quand même</button>
+          </div>
+        </section>
+      )}
+      {!mission && <NextChoice justDone={justDone} onChoose={(n, live) => (live ? launch(n, false) : choose(n))} choices={plan.mission.choices} />}
 
       {(mission || view.critical.length > 0) && (
         <section className="before glass" data-testid="before">
@@ -106,8 +131,8 @@ export function HomeScreen() {
       )}
 
       {/* C — action principale */}
-      {mission && !confirmEnd && (
-        <button className={`maincta press${live ? " is-live" : ""}`} onClick={() => (live ? setConfirmEnd(true) : (tick(), setMissionInProgress(true), notify("Mission en cours", mission, "flag")))} data-testid={live ? "mission-done" : "mission-start"}>
+      {mission && !confirmEnd && !guard && (
+        <button className={`maincta press${live ? " is-live" : ""}`} onClick={() => (live ? setConfirmEnd(true) : launch(mission, true))} data-testid={live ? "mission-done" : "mission-start"}>
           {live ? "J'ai terminé" : "Je lance la mission"}
         </button>
       )}
@@ -263,9 +288,61 @@ function MaybeList({ items }: { items: BeforeItem[] }) {
 }
 
 /** C bis — après « J'ai terminé » ou sans mission : ce qui s'ouvre, choix sans progression linéaire inventée. */
+/**
+ * V0.18.1 · Missions antérieures « probablement faites » : confirmation rapide de tout le lot, OU inspection de la liste
+ * avec sélection individuelle. Rien n'est enregistré avant un toucher sur « Confirmer ».
+ */
+function LikelyConfirm({ likely }: { likely: Autopilot["likely"] }) {
+  const { confirmPastMissions, notify } = useStore();
+  const [open, setOpen] = useState(false);
+  const [sel, setSel] = useState<Set<string>>(() => new Set(likely.map((x) => x.realName)));
+  const masked = !likely.every((x) => x.name === x.realName);
+  const n = likely.length;
+  const confirm = (names: string[]) => {
+    if (!names.length) return;
+    tick();
+    confirmPastMissions(names);
+    notify("Missions antérieures confirmées", `${names.length} mission${names.length > 1 ? "s" : ""}`, "check");
+  };
+  return (
+    <div className="nextc__likely" data-testid="autopilot-likely">
+      <div className="nextc__likelyhead">
+        <span>
+          {masked
+            ? <>{n} mission{n > 1 ? "s" : ""} antérieure{n > 1 ? "s" : ""} probablement faite{n > 1 ? "s" : ""}, non déclarée{n > 1 ? "s" : ""} (noms masqués en mode strict)</>
+            : <>Probablement déjà faite{n > 1 ? "s" : ""} (non déclarée{n > 1 ? "s" : ""}) : <b>{n > 3 ? `${likely[0].name} … ${likely.at(-1)!.name} (${n})` : likely.map((x) => x.name).join(", ")}</b></>}
+        </span>
+        <span className="row gap8">
+          {!masked && n > 1 && <button className="btn btn--xs btn--ghost press" onClick={() => (tick(), setOpen((v) => !v))} aria-expanded={open} data-testid="likely-inspect">{open ? "Masquer" : "Voir la liste"}</button>}
+          {!open && <button className="btn btn--xs btn--on press" onClick={() => confirm(likely.map((x) => x.realName))} data-testid="likely-confirm">{n > 1 ? "Tout confirmer" : "Oui, faite"}</button>}
+        </span>
+      </div>
+      {open && (
+        <>
+          <ul className="nextc__likelylist" data-testid="likely-list">
+            {likely.map((x) => (
+              <li key={x.id}>
+                <label>
+                  <input type="checkbox" checked={sel.has(x.realName)} onChange={() => setSel((s) => { const t = new Set(s); if (t.has(x.realName)) t.delete(x.realName); else t.add(x.realName); return t; })} data-testid="likely-item" />
+                  <span>{x.name}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+          <div className="row gap8">
+            <button className="btn btn--xs btn--ghost press" onClick={() => setSel(sel.size === n ? new Set() : new Set(likely.map((x) => x.realName)))} data-testid="likely-toggle-all">{sel.size === n ? "Tout décocher" : "Tout cocher"}</button>
+            <button className="btn btn--xs btn--on press" disabled={!sel.size} onClick={() => confirm(likely.filter((x) => sel.has(x.realName)).map((x) => x.realName))} data-testid="likely-confirm-selected">Confirmer la sélection ({sel.size})</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string; delta: ProgressDelta } | null; onChoose: (n: string, live?: boolean) => void; choices: string[] }) {
-  const { state, setExploring, confirmPastMissions, notify } = useStore();
+  const { state, setExploring, markDone, notify } = useStore();
   const [draft, setDraft] = useState("");
+  const [actOpen, setActOpen] = useState<string | null>(null);
   // V0.18 Mission Autopilot : la suite vient du graphe sourcé (jamais de l'ordre d'un guide), le joueur confirme
   const a = useMemo(() => autopilot(state), [state]);
   const manual = useMemo(() => [...new Set([...a.manual, ...choices])].sort(), [a.manual, choices]);
@@ -311,24 +388,33 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
         </ul>
       ) : null}
       {a.uncertain && <p className="nextc__note" data-testid="autopilot-uncertain"><Icon name="info" size={13} /> {a.uncertain}</p>}
-      {a.likely.length > 0 && (
-        <div className="nextc__likely" data-testid="autopilot-likely">
-          <span>
-            {a.likely.every((x) => x.name === x.realName)
-              ? <>Probablement déjà faite{a.likely.length > 1 ? "s" : ""} (non déclarée{a.likely.length > 1 ? "s" : ""}) : <b>{a.likely.length > 3 ? `${a.likely[0].name} … ${a.likely.at(-1)!.name} (${a.likely.length})` : a.likely.map((x) => x.name).join(", ")}</b></>
-              : <>{a.likely.length} mission{a.likely.length > 1 ? "s" : ""} antérieure{a.likely.length > 1 ? "s" : ""} probablement faite{a.likely.length > 1 ? "s" : ""}, non déclarée{a.likely.length > 1 ? "s" : ""} (noms masqués en mode strict)</>}
-          </span>
-          <button className="btn btn--xs btn--on press" onClick={() => (tick(), confirmPastMissions(a.likely.map((x) => x.realName)), notify("Missions antérieures confirmées", `${a.likely.length} mission${a.likely.length > 1 ? "s" : ""}`, "check"))} data-testid="likely-confirm">
-            Oui, faite{a.likely.length > 1 ? "s" : ""}
-          </button>
-        </div>
-      )}
+      {a.likely.length > 0 && <LikelyConfirm likely={a.likely} />}
       {a.sides.length > 0 && (
         <div className="nextc__sides" data-testid="autopilot-sides">
-          <p className="nextc__line"><b>Activités ouvertes</b>{a.sides.some((x) => x.missable) ? " · certaines disparaissent plus tard" : ""}</p>
+          <p className="nextc__line"><b>Missions secondaires</b>{a.sides.some((x) => x.missable) ? " · ⏳ disparaît plus tard" : ""}</p>
           <ul className="nextc__chips">
             {a.sides.slice(0, 3).map((x) => (
               <li key={x.id}><button className="chip press" onClick={() => onChoose(x.name)} data-testid="choose-side">{x.name}{x.missable ? " ⏳" : ""}</button></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {a.activities.length > 0 && (
+        <div className="nextc__sides" data-testid="autopilot-activities">
+          <p className="nextc__line"><b>Activités libres</b> · à faire quand tu veux, ce ne sont pas des missions</p>
+          <ul className="nextc__chips">
+            {a.activities.map((x) => (
+              <li key={x.id}>
+                {actOpen === x.id ? (
+                  <span className="nextc__act" data-testid="activity-open">
+                    <span>{x.name}</span>
+                    <button className="btn btn--xs btn--on press" onClick={() => (tick(), markDone(progDoneKey(x.id), JOURNAL_FR.activite.done, x.name), setActOpen(null))} data-testid="activity-done">C&apos;est fait</button>
+                    <button className="btn btn--xs btn--ghost press" onClick={() => setActOpen(null)} aria-label="Fermer">×</button>
+                  </span>
+                ) : (
+                  <button className="chip chip--act press" onClick={() => (tick(), setActOpen(x.id))} data-testid="choose-activity">{x.name}{x.missable ? " ⏳" : ""}</button>
+                )}
+              </li>
             ))}
           </ul>
         </div>

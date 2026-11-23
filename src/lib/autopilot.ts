@@ -48,8 +48,10 @@ export interface Autopilot {
   started: { name: string; known: boolean } | null;
   /** Missions principales qu'on peut lancer (graphe). */
   mains: NextOption[];
-  /** Activités / missions facultatives encore ouvertes. */
+  /** Missions SECONDAIRES encore ouvertes (se choisissent comme une mission). */
   sides: NextOption[];
+  /** Activités LIBRES ouvertes (épargne, collecte…) : jamais une mission, se cochent « Fait » (V0.18.1). */
+  activities: NextOption[];
   /** Missions principales antérieures non déclarées mais probablement faites : à confirmer (realName sert à enregistrer). */
   likely: Array<NextOption & { realName: string }>;
   /** Mission unique à proposer quand une seule suite principale est documentée. */
@@ -112,7 +114,9 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   const open = (x: NodeState) => x.status === "accessible" || x.status === "potentiellement accessible";
   const byRank = (a: NextOption, b: NextOption) => Number(b.fresh) - Number(a.fresh) || (a.state === "accessible" ? 0 : 1) - (b.state === "accessible" ? 0 : 1);
   const mains = v.states.filter((x) => x.node.kind === "main" && open(x) && !x.likelyDone && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort(byRank);
-  const sides = v.states.filter((x) => x.node.kind !== "main" && open(x) && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort((a, b) => Number(b.missable) - Number(a.missable) || byRank(a, b));
+  const optional = v.states.filter((x) => x.node.kind !== "main" && open(x) && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort((a, b) => Number(b.missable) - Number(a.missable) || byRank(a, b));
+  const sides = optional.filter((x) => x.kind === "side");
+  const activities = optional.filter((x) => x.kind === "activity");
   // nom réel gardé pour la confirmation ; nom affiché masqué si l'anti-spoiler le cache
   const likely = v.states.filter((x) => x.likelyDone && x.node.chapter === p.chapter).map((x) => ({ ...option(x, v, s, fresh), realName: x.node.name, why: "placée avant une mission que tu as terminée dans le récapitulatif du jeu (indice faible)" }));
   const graphCovers = p.chapter === 1;
@@ -131,7 +135,7 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   // choix manuel : missions du chapitre atteint (graphe + inventaire), jamais celles d'un chapitre non atteint
   const doneNames = new Set([...p.missionsDone, p.lastMission ?? ""].map((m) => nk(m)));
   const manual = [
-    ...v.states.filter((x) => x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
+    ...v.states.filter((x) => x.node.kind !== "activity" && x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
     ...STORY_NODES.filter((n) => n.chapter <= p.chapter && n.kind !== "place").map((n) => n.name),
   ].filter((n, i, a) => a.indexOf(n) === i && !doneNames.has(nk(n)));
   const mode: AutopilotMode = started ? "en mission" : planned ? "envisagée" : p.exploring ? "exploration" : "à choisir";
@@ -142,6 +146,7 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
     started,
     mains,
     sides: sides.slice(0, 6),
+    activities: activities.slice(0, 4),
     likely,
     suggestion: graphCovers && mains.length === 1 ? mains[0] : null,
     uncertain,
@@ -167,7 +172,8 @@ export function autopilotContext(s: Pick<PersistedState, "profile"> & { done?: R
           : "- Aucune mission choisie : propose les suites ci-dessous, il confirme lui-même",
   );
   if (a.mains.length) lines.push(`- Missions principales accessibles : ${names(a.mains)}`);
-  if (a.sides.length) lines.push(`- Activités facultatives encore ouvertes : ${names(a.sides)}`);
+  if (a.sides.length) lines.push(`- Missions secondaires encore ouvertes : ${names(a.sides)}`);
+  if (a.activities.length) lines.push(`- Activités libres ouvertes (PAS des missions : ne les propose jamais comme prochaine mission, elles se cochent « Fait ») : ${names(a.activities)}`);
   if (a.likely.length) lines.push(`- ${a.likely.length} mission(s) antérieure(s) probablement faite(s) mais non déclarée(s) (ne les compte pas comme terminées, propose de confirmer dans l'Accueil) : ${a.likely.filter((x) => x.name === x.realName).map((x) => x.name).join(", ") || "noms masqués par l'anti-spoiler"}`);
   if (a.uncertain) lines.push(`- Incertitude : ${a.uncertain}`);
   if (a.pnr) lines.push(`- Point de non-retour proche ${a.pnr.where}`);

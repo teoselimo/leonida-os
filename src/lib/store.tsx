@@ -13,6 +13,10 @@ import { demoRepository, localProgressStore } from "./repository";
 import { cloudLoad, cloudSave } from "./runtime/cloud";
 import type { Discovery, Gauge, MissionAlertBrief, Objective, PersistedState, Profile, RadarSignal, StoryState, VehicleProgress, VehicleState, ViewId } from "./types";
 import type { ResourceId } from "./story/model";
+import { nodeByName } from "./progress";
+
+/** V0.18.1 : une ACTIVITÉ libre (épargne, collecte…) n'est jamais une mission : elle ne va pas dans nextMission. */
+export const isActivityName = (name: string | null | undefined) => !!name && nodeByName(name)?.kind === "activity";
 
 const STORAGE_KEY = "leonida-os/progress/v1";
 const MAX_PROOFS = 4;
@@ -33,6 +37,8 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   if (profile.lastMission !== null && typeof profile.lastMission !== "string") profile.lastMission = null;
   if (typeof profile.nextMission !== "string") profile.nextMission = null;
   if (!["strict", "relaxed", "off"].includes(profile.spoilerMode as string)) profile.spoilerMode = "strict";
+  // V0.18.1 : une activité enregistrée par erreur comme mission (possible en V0.18) est retirée de nextMission
+  if (isActivityName(profile.nextMission)) profile.nextMission = null;
   profile.missionInProgress = !!profile.nextMission && profile.missionInProgress === true;
   // V0.18 : exploration libre (facultatif) — valeur invalide retirée, jamais inventée
   profile.exploring = typeof profile.exploring === "string" && !profile.nextMission ? profile.exploring : null;
@@ -120,8 +126,14 @@ export function reducer(s: PersistedState, a: Action): PersistedState {
       const { [a.id]: _removed, ...rest } = s.completed;
       return { ...s, completed: rest, freshUnlocks: [] };
     }
-    case "profile":
+    case "profile": {
+      // garde-fou : une activité libre ne devient jamais la mission envisagée ou commencée
+      if (typeof a.patch.nextMission === "string" && isActivityName(a.patch.nextMission)) {
+        const { nextMission: _n, missionInProgress: _m, exploring: _e, ...rest } = a.patch;
+        return { ...s, profile: { ...s.profile, ...rest } };
+      }
       return { ...s, profile: { ...s.profile, ...a.patch } };
+    }
     case "track":
       return {
         ...s,
@@ -483,7 +495,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       addMetric: (m) => dispatch({ type: "metric", m }),
       setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
       confirmPastMissions: (names) => dispatch({ type: "pastDone", names }),
-      setNextMission: (name, inProgress = false) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress, ...(name ? { exploring: null } : {}) } }),
+      setNextMission: (name, inProgress = false) =>
+        isActivityName(name)
+          ? showToast({ title: "C'est une activité, pas une mission", body: `« ${name} » se fait quand tu veux : coche-la « Fait » une fois terminée.`, icon: "info" })
+          : dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress, ...(name ? { exploring: null } : {}) } }),
       setExploring: (on) => dispatch({ type: "profile", patch: on ? { exploring: new Date().toISOString(), nextMission: null, missionInProgress: false } : { exploring: null } }),
       setMissionInProgress: (on) => dispatch({ type: "profile", patch: { missionInProgress: on } }),
       addObjective: (o) =>

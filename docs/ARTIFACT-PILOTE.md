@@ -291,3 +291,12 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Publication en patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié ; déclaration inchangée (`sample: { images: true }`).
 - Sauvegarde : révision 9, champ facultatif `profile.exploring` ; une sauvegarde V0.17 se charge sans perte.
 - Version Artifact `1795466323-28ee`. Tests : suite complète 423 réussis, puis `v071.spec.ts` corrigé et relancé seul 24/24 (4 ignorés). Simulations, pas des essais sur appareil.
+
+## 22. V0.18.1 · Stabilisation Mission Autopilot (23/11/2026)
+
+- Livraison détaillée : `docs/V0.18.1.md` ; démonstration `docs/v0181-demo.jpg`.
+- Bilan des tests, dans l'ordre :
+  1. Rattrapage V0.18 : `v071.spec.ts` corrigé, puis **suite complète relancée** : 438 réussis, **3 échecs** (`v071 › Test 5` sur iPhone, iPad, WebKit : le test lançait Tourist Trap sans le nouveau garde-fou), 4 ignorés.
+  2. Test 5 adapté (clic sur « Lancer quand même ») et vérifié seul : 3/3.
+  3. Un passage complet a été arrêté volontairement après quelques minutes pour corriger le double bouton de lancement sur iPad (aucun résultat retenu).
+  4. **Dernier passage complet, sur le build livré : 441 réussis, 0 échec, 4 ignorés** (20,9 min ; unitaires + iPhone + iPad + iPhone WebKit, simulations).

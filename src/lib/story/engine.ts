@@ -491,3 +491,16 @@ export function storyContext(s: StoryInput): string {
   lines.push(`- ${coverageLine(s.profile.chapter)} Ne dis jamais « rien à manquer » pour une partie non auditée.`);
   return lines.join("\n");
 }
+
+
+/**
+ * V0.18.1 · Garde-fou avant de LANCER une mission : point de non-retour ou risques « Critique » documentés.
+ * null = rien d'important → aucune confirmation (le joueur n'est pas freiné sans raison).
+ */
+export function launchRisks(s: StoryInput, name: string): { pnr: boolean; lines: string[]; count: number } | null {
+  const sim = simulateLaunch(s, name);
+  if (!sim) return null;
+  const crit = [...sim.money, ...sim.disappears].filter((l) => l.tier === "Critique");
+  if (!sim.pointOfNoReturn && !crit.length) return null;
+  return { pnr: sim.pointOfNoReturn, lines: crit.slice(0, 2).map((l) => l.text), count: crit.length };
+}

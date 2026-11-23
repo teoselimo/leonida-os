@@ -24,7 +24,7 @@ async function start(page: Page, profile: Record<string, unknown> = {}) {
 }
 const saved = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem("leonida-os/progress/v1")!));
 
-test("parcours complet : terminée → suite proposée → préparée → lancée, en quatre touchers, rien d'enregistré sans geste", async ({ page }, info) => {
+test("parcours complet : terminée → suite proposée → préparée → lancée, confirmation au point de non-retour, rien d'enregistré sans geste", async ({ page }, info) => {
   await start(page, { missionInProgress: true });
   await page.getByTestId("mission-done").click(); // 1
   await page.getByTestId("mission-done-confirm").getByRole("button", { name: /Oui, terminée/ }).click(); // 2
@@ -40,7 +40,13 @@ test("parcours complet : terminée → suite proposée → préparée → lancé
   await expect(page.getByTestId("before")).toContainText("Family Savings"); // préparation : risques et opportunités documentés
   expect((await saved(page)).profile).toMatchObject({ nextMission: "Tourist Trap", missionInProgress: false });
   await page.screenshot({ path: `captures/${info.project.name}-v018-2-preparation.png` });
-  await page.getByTestId("mission-start").click(); // 4 : commencée
+  await page.getByTestId("mission-start").click(); // 4 : point de non-retour → confirmation compacte (V0.18.1)
+  const guard = page.getByTestId("launch-guard");
+  await expect(guard).toContainText("point de non-retour");
+  await expect(guard).toContainText("Family Savings");
+  expect((await saved(page)).profile.missionInProgress).toBe(false); // rien d'enregistré tant que le joueur n'a pas choisi
+  await page.screenshot({ path: `captures/${info.project.name}-v018-2b-garde-fou.png` });
+  await guard.getByTestId("guard-go").click(); // 5 : « Lancer quand même »
   await expect(page.getByTestId("mission-live")).toBeVisible();
   expect((await saved(page)).profile).toMatchObject({ nextMission: "Tourist Trap", missionInProgress: true });
   await page.screenshot({ path: `captures/${info.project.name}-v018-3-en-mission.png` });
@@ -78,7 +84,7 @@ test("missions probablement faites : proposées à confirmer, enregistrées seul
   const likely = page.getByTestId("autopilot-likely");
   await expect(likely).toContainText("Prologue");
   expect((await saved(page)).profile.missionsDone).toEqual(["Swamped"]);
-  await likely.getByTestId("likely-confirm").click();
+  await likely.getByTestId("likely-confirm").click(); // « Tout confirmer » : parcours rapide conservé
   await expect(page.getByTestId("autopilot-likely")).toHaveCount(0);
   const p = (await saved(page)).profile;
   expect(p.missionsDone).toContain("Coming Home");
@@ -89,4 +95,57 @@ test("la carte tient dans l'écran (aucun débordement horizontal)", async ({ pa
   await start(page, { lastMission: "Talk to Lucia", nextMission: null, missionsDone: ["Swamped", "Don Gone", "Talk to Lucia"] });
   const over = await page.getByTestId("next-choice").evaluate((el) => el.scrollWidth - el.clientWidth);
   expect(over).toBeLessThanOrEqual(1);
+});
+
+test("V0.18.1 · « Je la lance » directement depuis la proposition : garde-fou, puis « Revoir d'abord » la prépare sans la lancer", async ({ page }) => {
+  await start(page, { lastMission: "Talk to Lucia", nextMission: null, missionsDone: ["Swamped", "Don Gone", "Talk to Lucia"] });
+  await page.getByTestId("autopilot-start").click();
+  await expect(page.getByTestId("launch-guard")).toBeVisible();
+  expect((await saved(page)).profile.nextMission).toBeNull();
+  await page.getByTestId("guard-review").click();
+  await expect(page.getByTestId("launch-guard")).toHaveCount(0);
+  await expect(page.getByTestId("mission-upcoming")).toBeVisible();
+  expect((await saved(page)).profile).toMatchObject({ nextMission: "Tourist Trap", missionInProgress: false });
+});
+
+test("V0.18.1 · une mission sans risque important se lance sans confirmation", async ({ page }) => {
+  await start(page);
+  await page.getByTestId("mission-start").click(); // Talk to Lucia
+  await expect(page.getByTestId("mission-live")).toBeVisible();
+  await expect(page.getByTestId("launch-guard")).toHaveCount(0);
+});
+
+test("V0.18.1 · activité libre : cochée « Fait », jamais enregistrée comme mission", async ({ page }) => {
+  await start(page, { lastMission: "Talk to Lucia", nextMission: null, missionsDone: ["Swamped", "Don Gone", "Talk to Lucia"] });
+  const acts = page.getByTestId("autopilot-activities");
+  await expect(acts).toContainText("Family Savings");
+  await expect(page.getByTestId("autopilot-sides")).not.toContainText("Family Savings");
+  await acts.getByTestId("choose-activity").filter({ hasText: "Family Savings" }).click();
+  await acts.getByTestId("activity-done").click();
+  const sv = await saved(page);
+  expect(sv.profile.nextMission).toBeNull();
+  expect(Object.keys(sv.done)).toContain("prog:family-savings");
+  await expect(page.getByTestId("choose-activity").filter({ hasText: "Family Savings" })).toHaveCount(0);
+  // saisie libre du nom de l'activité : refusée avec une explication
+  await page.getByTestId("next-mission-input").fill("Mettre 5 000 $ sur Family Savings");
+  await page.getByTestId("next-mission-save").click();
+  await expect(page.getByTestId("next-mission-name")).toHaveText("Prochaine mission à choisir");
+});
+
+test("V0.18.1 · missions antérieures : liste inspectable, sélection partielle confirmée", async ({ page }, info) => {
+  await start(page, { lastMission: "Swamped", nextMission: null, missionsDone: ["Swamped"] });
+  const likely = page.getByTestId("autopilot-likely");
+  await likely.getByTestId("likely-inspect").click();
+  await expect(likely.getByTestId("likely-item")).toHaveCount(11);
+  await page.screenshot({ path: `captures/${info.project.name}-v0181-liste.png` });
+  await likely.locator("label", { hasText: "Feng Shui" }).getByTestId("likely-item").uncheck();
+  await likely.locator("label", { hasText: "Coming Home" }).getByTestId("likely-item").uncheck();
+  await expect(likely.getByTestId("likely-confirm-selected")).toHaveText("Confirmer la sélection (9)");
+  expect((await saved(page)).profile.missionsDone).toEqual(["Swamped"]);
+  await likely.getByTestId("likely-confirm-selected").click();
+  const p = (await saved(page)).profile;
+  expect(p.missionsDone).toHaveLength(10);
+  expect(p.missionsDone).not.toContain("Feng Shui");
+  expect(p.lastMission).toBe("Swamped");
+  await expect(page.getByTestId("autopilot-likely")).toContainText("Coming Home");
 });

@@ -6,7 +6,7 @@ import { playerContext } from "../src/lib/copilot/context";
 import type { LlmRequest, LlmTransport, WebSearchFn } from "../src/lib/copilot/types";
 import { answer } from "../src/lib/ai/engine";
 import { STORY_RULES } from "../src/data/story";
-import { confidenceOf, confidenceWhy, evidenceQuality, homeStoryAlerts, storyAlerts } from "../src/lib/story/engine";
+import { confidenceOf, confidenceWhy, evidenceQuality, homeStoryAlerts, launchRisks, storyAlerts } from "../src/lib/story/engine";
 import { hiddenMissionNames } from "../src/lib/spoiler";
 import { initialState, migrate, reducer } from "../src/lib/store";
 import type { PersistedState, Profile } from "../src/lib/types";
@@ -147,7 +147,8 @@ test.describe("Cohérence Accueil ↔ LEONIDA AI", () => {
     const ctx = playerContext(s, feed);
     expect(ctx).toContain("Dernière mission terminée : Talk to Lucia");
     expect(ctx).toContain("Mission ENVISAGÉE (pas encore lancée) : Tourist Trap");
-    expect(ctx).toContain("Activités facultatives encore ouvertes");
+    expect(ctx).toContain("Missions secondaires encore ouvertes");
+    expect(ctx).toContain("Activités libres ouvertes (PAS des missions");
     expect(ctx).toContain("Couverture du référentiel, chapitre 1");
   });
   test("« je lance quoi ? » dans le copilote : même suite que l'Accueil, préparer ou lancer, toujours à confirmer", () => {
@@ -195,5 +196,53 @@ test.describe("D · recherche externe toujours possible", () => {
     const c = await askCopilot({ question: "Qu'est-ce qui change avec la dernière mise à jour de GTA 6 ?", ctx: { feed, places: [], state: st(AFTER_TTL) }, topic: null, history: [], transport: mock(), search });
     expect(queries.length).toBeGreaterThan(0);
     expect(c.web?.status).toBe("ok");
+  });
+});
+
+test.describe("V0.18.1 · stabilisation", () => {
+  test("1 · point de non-retour : lancer Tourist Trap signale le non-retour et les risques critiques ; une mission sans risque important, rien", () => {
+    const s = st(AFTER_TTL);
+    const r = launchRisks(s, "Tourist Trap")!;
+    expect(r.pnr).toBe(true);
+    expect(r.count).toBeGreaterThanOrEqual(1);
+    expect(r.lines.join(" ")).toContain("Family Savings");
+    expect(launchRisks(st({ lastMission: "Don Gone", missionsDone: ["Swamped", "Don Gone"] }), "Recalibration")).toBeNull();
+    expect(launchRisks(st(), "Swamped")).toBeNull();
+    // copilote : la confirmation de « Lancer » le dit, le joueur reste libre
+    const a = answer("J'attaque la suivante", { feed, places: [], state: s });
+    const startAct = a.actions.find((x) => x.type === "start_mission") as { confirm: string };
+    expect(startAct.confirm).toMatch(/^Attention : point de non-retour et \d risques? critiques?/);
+  });
+
+  test("2 · une activité libre n'est jamais une mission : séparée dans l'Autopilot, refusée par le store, retirée d'une ancienne sauvegarde", () => {
+    const s = st(AFTER_TTL);
+    const a = autopilot(s);
+    expect(a.activities.map((x) => x.name)).toContain("Mettre 5 000 $ sur Family Savings");
+    expect(a.sides.map((x) => x.name)).not.toContain("Mettre 5 000 $ sur Family Savings");
+    expect(a.sides.every((x) => x.kind === "side")).toBe(true);
+    expect(a.manual).not.toContain("Mettre 5 000 $ sur Family Savings");
+    const refused = run(s, { type: "profile", patch: { nextMission: "Mettre 5 000 $ sur Family Savings", missionInProgress: true, exploring: null } });
+    expect(refused.profile.nextMission).toBeNull();
+    expect(refused.profile.missionInProgress).toBeFalsy();
+    // « C'est fait » : registre des activités, jamais nextMission
+    const done = run(s, { type: "done", id: "prog:family-savings", value: true });
+    expect(done.profile.nextMission).toBeNull();
+    expect(autopilot(done).activities.map((x) => x.id)).not.toContain("family-savings");
+    // sauvegarde V0.18 qui contiendrait l'erreur : nettoyée au chargement, le reste intact
+    const m = migrate(JSON.parse(JSON.stringify({ ...s, rev: 9, profile: { ...s.profile, nextMission: "Mettre 5 000 $ sur Family Savings", missionInProgress: false } })));
+    expect(m.profile).toMatchObject({ nextMission: null, lastMission: "Talk to Lucia", missionsDone: AFTER_TTL.missionsDone });
+    // une mission secondaire reste sélectionnable comme mission
+    expect(run(s, { type: "profile", patch: { nextMission: "Get Shirley's Rum", missionInProgress: false } }).profile.nextMission).toBe("Get Shirley's Rum");
+  });
+
+  test("3 · confirmation des missions antérieures : une sélection partielle n'enregistre que les missions cochées", () => {
+    const s = st({ lastMission: "Swamped", missionsDone: ["Swamped"] });
+    const all = autopilot(s).likely.map((x) => x.realName);
+    expect(all.length).toBe(11);
+    const picked = all.filter((n) => n !== "Feng Shui" && n !== "Coming Home");
+    const c = run(s, { type: "pastDone", names: picked });
+    expect(c.profile.missionsDone).toEqual(["Swamped", ...picked]);
+    expect(autopilot(c).likely.map((x) => x.realName).sort()).toEqual(["Coming Home", "Feng Shui"]);
+    expect(c.profile.lastMission).toBe("Swamped");
   });
 });
