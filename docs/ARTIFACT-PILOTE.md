@@ -301,3 +301,10 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
   3. Un passage complet a été arrêté volontairement après quelques minutes pour corriger le double bouton de lancement sur iPad (aucun résultat retenu).
   4. **Dernier passage complet, sur le build livré : 441 réussis, 0 échec, 4 ignorés** (20,9 min ; unitaires + iPhone + iPad + iPhone WebKit, simulations).
 - Publication en patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié. Version Artifact `1795471529-e4a4`.
+
+## 23. V0.19 · Knowledge Engine & Visual Grounding (24/11/2026)
+
+- Livraison détaillée : `docs/V0.19.md` ; démonstration SIMULÉE `docs/v019-demo.jpg` ; mesure carte `docs/v019-eval-cartes.jpg`.
+- Commit `cbd0034`. Publication en patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié ; déclaration inchangée (`sample: { images: true }`, Exa via `mcp`). Tuiles z3 (extraits de carte) déjà présentes dans l'Artifact (30 fichiers).
+- Dernier passage complet, sur le build livré : **473 réussis, 0 échec, 4 ignorés** (20,6 min ; unitaires + iPhone + iPad + iPhone WebKit ; Claude simulé).
+- Version Artifact `1795476149-42b0`. Aucun essai avec le vrai Claude du runtime : à faire sur iPhone avec les deux captures du test initial.
