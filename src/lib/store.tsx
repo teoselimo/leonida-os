@@ -34,6 +34,8 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   if (typeof profile.nextMission !== "string") profile.nextMission = null;
   if (!["strict", "relaxed", "off"].includes(profile.spoilerMode as string)) profile.spoilerMode = "strict";
   profile.missionInProgress = !!profile.nextMission && profile.missionInProgress === true;
+  // V0.18 : exploration libre (facultatif) — valeur invalide retirée, jamais inventée
+  profile.exploring = typeof profile.exploring === "string" && !profile.nextMission ? profile.exploring : null;
   profile.objectives = Array.isArray(profile.objectives) ? profile.objectives.filter((o) => o && typeof o.text === "string" && typeof o.mission === "string").slice(-80) : [];
   // V0.7 : la démo n'est plus mélangée à la vraie partie (désactivée une fois, réactivable dans Profil)
   const rev = saved.rev ?? 0;
@@ -53,7 +55,7 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   const pins = saved.pins && typeof saved.pins === "object" ? Object.fromEntries(Object.entries(saved.pins).filter(([, v]) => v && Number.isFinite(v.x) && Number.isFinite(v.y) && typeof v.at === "string").map(([k, v]) => [k, { x: v.x, y: v.y, at: v.at, by: "joueur" as const }])) : {};
   const proofs = saved.proofs && typeof saved.proofs === "object" ? Object.fromEntries(Object.entries(saved.proofs).map(([k, arr]) => [k, (Array.isArray(arr) ? arr : []).filter((p) => p && typeof p.id === "string" && (p.kind === "lien" || p.kind === "capture") && typeof p.value === "string" && typeof p.at === "string").slice(-MAX_PROOFS)]).filter(([, a]) => (a as unknown[]).length)) : {};
   const story = sanitizeStory(saved.story);
-  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, story, rev: 8, schema: 1 };
+  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, story, rev: 9, schema: 1 };
 }
 
 /** V0.17 : jauges d'argent et choix déclarés — toute valeur invalide est retirée (jamais un solde inventé). */
@@ -82,7 +84,7 @@ export const initialState = (): PersistedState => ({
   vehicles: {},
   done: {},
   story: { money: {}, choices: {} },
-  rev: 8,
+  rev: 9,
 });
 
 type Action =
@@ -103,11 +105,12 @@ type Action =
   | { type: "proof"; id: string; proof: PlayerProof | null; removeId?: string }
   | { type: "metric"; m: TurnMetrics }
   | { type: "mission"; name: string | null; done: boolean }
+  | { type: "pastDone"; names: string[] }
   | { type: "objectives"; fn: (list: Objective[]) => Objective[] }
   | { type: "brief"; key: string; brief: MissionAlertBrief }
   | { type: "money"; resource: ResourceId; gauge: Gauge | null };
 
-function reducer(s: PersistedState, a: Action): PersistedState {
+export function reducer(s: PersistedState, a: Action): PersistedState {
   switch (a.type) {
     case "hydrate":
       return a.state;
@@ -175,7 +178,16 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       // une mission terminée n'est plus « prochaine »
       const wasNext = a.done && !!s.profile.nextMission && s.profile.nextMission.toLowerCase() === name.toLowerCase();
       const nextMission = wasNext ? null : s.profile.nextMission;
-      return { ...s, profile: { ...s.profile, lastMission: a.done ? name : s.profile.lastMission, missionsDone, nextMission, missionInProgress: wasNext ? false : s.profile.missionInProgress } };
+      // V0.18 : annuler la dernière mission terminée fait revenir la précédente (jamais une « dernière » fantôme)
+      const undoLast = !a.done && !!s.profile.lastMission && s.profile.lastMission.toLowerCase() === name.toLowerCase();
+      const lastMission = a.done ? name : undoLast ? missionsDone.at(-1) ?? null : s.profile.lastMission;
+      return { ...s, profile: { ...s.profile, lastMission, missionsDone, nextMission, missionInProgress: wasNext ? false : s.profile.missionInProgress, exploring: a.done ? null : s.profile.exploring ?? null } };
+    }
+    case "pastDone": {
+      // V0.18 : missions ANTÉRIEURES confirmées par le joueur (« probablement faites ») — la dernière terminée ne change pas
+      const have = new Set(s.profile.missionsDone.map((m) => m.toLowerCase()));
+      const add = a.names.map((n) => n.trim().slice(0, 80)).filter((n) => n && !have.has(n.toLowerCase()));
+      return add.length ? { ...s, profile: { ...s.profile, missionsDone: [...s.profile.missionsDone, ...add] } } : s;
     }
     case "money": {
       const money = { ...(s.story?.money ?? {}) };
@@ -245,8 +257,12 @@ interface Ctx {
   setDone: (id: string, value: boolean) => void;
   /** Mission principale terminée (devient la « dernière mission ») ou retirée. */
   setMission: (name: string | null, done?: boolean) => void;
+  /** V0.18 : confirme des missions antérieures déjà faites, sans changer la dernière mission terminée. */
+  confirmPastMissions: (names: string[]) => void;
   setNextMission: (name: string | null, inProgress?: boolean) => void;
   setMissionInProgress: (on: boolean) => void;
+  /** V0.18 : exploration libre (aucune mission choisie, l'Accueil ne redemande pas). */
+  setExploring: (on: boolean) => void;
   addObjective: (o: Omit<Objective, "id" | "done" | "at"> & { done?: boolean }) => void;
   toggleObjective: (id: string) => void;
   removeObjective: (id: string) => void;
@@ -466,7 +482,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       addProof: (id, proof, removeId) => dispatch({ type: "proof", id, proof, removeId }),
       addMetric: (m) => dispatch({ type: "metric", m }),
       setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
-      setNextMission: (name, inProgress = false) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress } }),
+      confirmPastMissions: (names) => dispatch({ type: "pastDone", names }),
+      setNextMission: (name, inProgress = false) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress, ...(name ? { exploring: null } : {}) } }),
+      setExploring: (on) => dispatch({ type: "profile", patch: on ? { exploring: new Date().toISOString(), nextMission: null, missionInProgress: false } : { exploring: null } }),
       setMissionInProgress: (on) => dispatch({ type: "profile", patch: { missionInProgress: on } }),
       addObjective: (o) =>
         dispatch({

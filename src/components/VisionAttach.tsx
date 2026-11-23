@@ -134,7 +134,7 @@ export function VisionAnswer({ vision, guess }: { vision?: CopilotAnswer["vision
         <div className="vans__map" data-testid="map-guess" data-certainty={guess.certainty}>
           <p>
             <b>Proposition de localisation</b> · {guess.certainty === "lue" ? "nom lu sur la capture" : guess.certainty === "hypothèse" ? "hypothèse" : "incertaine"}
-            {guess.radiusM ? ` · ± ${guess.radiusM.toLocaleString("fr-FR")} m` : ""}
+            {guess.radiusM ? ` · zone estimée d'environ ${guess.radiusM.toLocaleString("fr-FR")} m autour des repères` : ""}
           </p>
           <p className="vans__sub">
             {guess.matched.length ? `Repères retrouvés sur la carte LEONIDA : ${guess.matched.map((m) => m.name).join(", ")}.` : guess.district ? `Quartier retrouvé : ${guess.district} (zone approximative).` : "Aucun repère retrouvé sur notre carte : je ne propose pas de position."}
@@ -145,7 +145,7 @@ export function VisionAnswer({ vision, guess }: { vision?: CopilotAnswer["vision
           ) : guess.center ? (
             confirm ? (
               <span className="confirm" data-testid="map-guess-confirm">
-                <span>Enregistrer un relevé personnel « estimé » à ± {guess.radiusM ?? "?"} m ? Il ne deviendra jamais une position vérifiée.</span>
+                <span>Enregistrer un relevé personnel « estimé » (zone d&apos;environ {guess.radiusM ?? "?"} m, non calibrée) ? Il ne deviendra jamais une position vérifiée.</span>
                 <button
                   className="btn btn--primary btn--xs"
                   onClick={() => {
@@ -159,7 +159,7 @@ export function VisionAnswer({ vision, guess }: { vision?: CopilotAnswer["vision
                         y: Math.round(c.y),
                         category: "secret",
                         regionId: regionAt(c.x, c.y, repo.regions()).id,
-                        summary: `Position ESTIMÉE depuis une capture de carte (± ${guess.radiusM ?? "?"} m, ${guess.certainty}). Repères : ${guess.matched.map((m) => m.name).join(", ") || guess.district || "aucun"}. Non vérifiée en jeu.`,
+                        summary: `Position ESTIMÉE depuis une capture de carte (zone d'environ ${guess.radiusM ?? "?"} m autour des repères, non calibrée, ${guess.certainty}). Repères : ${guess.matched.map((m) => m.name).join(", ") || guess.district || "aucun"}. Non vérifiée en jeu.`,
                         reward: "—",
                       }),
                     );

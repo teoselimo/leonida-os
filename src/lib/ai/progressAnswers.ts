@@ -1,3 +1,4 @@
+import { autopilot } from "../autopilot";
 import type { ProgNode } from "@/data/progression";
 import { ESTABLISHMENTS, establishmentCategoryFromQuery, EST_CATS } from "@/data/establishments";
 import type { EstCat, Establishment } from "@/data/establishments";
@@ -123,14 +124,24 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
     }
     case "next_start": {
       if (v.current) return { intent: "next_start", text: `Tu as terminé ${v.current.node.name} ? Je le note d'abord, puis je te dis ce qui s'ouvre.`, reliability: null, sources: [], actions: [{ type: "set_mission", name: v.current.node.name, label: `Oui, « ${v.current.node.name} » est terminée`, confirm: `Indiquer que « ${v.current.node.name} » est terminée ?` }], topic: base.topic };
-      const mains = v.states.filter((x) => x.node.kind === "main" && (x.status === "accessible" || x.status === "potentiellement accessible"));
-      if (!mains.length) return { intent: "next_start", text: "Je n'ai pas de mission principale documentée comme accessible maintenant : regarde l'icône de mission sur ta carte en jeu et dis-moi son nom.", reliability: null, sources: [], actions: [] };
+      // V0.18 : même calcul que la carte « ensuite » de l'Accueil (Mission Autopilot) — une seule source de vérité
+      const ap = autopilot({ profile: p, done: ctx.state.done });
+      const mains = ap.mains;
+      if (!mains.length) return { intent: "next_start", text: ap.uncertain ?? "Je n'ai pas de mission principale documentée comme accessible maintenant : regarde l'icône de mission sur ta carte en jeu et dis-moi son nom.", reliability: null, sources: [], actions: [] };
+      const node = (id: string) => v.byId.get(id)!.node;
+      const sure = mains.every((x) => x.state === "accessible");
       return {
         intent: "next_start",
-        text: mains.length === 1 ? `D'après les sources, la suite accessible est ${mains[0].node.name}. Je la note en cours ?` : `Plusieurs missions sont accessibles : ${list(mains.map((x) => x.node.name))}. Laquelle tu lances ?`,
-        reliability: "recoupé",
-        sources: src(mains[0].node),
-        actions: mains.slice(0, 3).map((x) => ({ type: "start_mission" as const, name: x.node.name, label: `Lancer ${x.node.name}`, confirm: `Noter « ${x.node.name} » comme mission en cours ?` })),
+        text:
+          mains.length === 1
+            ? `D'après le graphe de progression, la suite ${sure ? "accessible" : "probable (à confirmer en jeu)"} est ${mains[0].name}. Tu la prépares ou tu la lances ?`
+            : `Plusieurs missions sont accessibles : ${list(mains.map((x) => x.name))}. Laquelle tu prends ?`,
+        reliability: sure ? "recoupé" : "signalé",
+        sources: src(node(mains[0].id)),
+        actions: [
+          ...mains.slice(0, mains.length === 1 ? 1 : 3).map((x) => ({ type: "start_mission" as const, name: x.name, label: `Lancer ${x.name}`, confirm: `Noter « ${x.name} » comme mission en cours ?` })),
+          ...(mains.length === 1 ? [{ type: "set_next_mission" as const, name: mains[0].name, label: `Préparer ${mains[0].name}`, confirm: `Noter « ${mains[0].name} » comme prochaine mission (pas encore lancée) ?` }] : []),
+        ],
       };
     }
     case "what_now":

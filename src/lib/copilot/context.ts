@@ -1,3 +1,4 @@
+import { autopilotContext } from "../autopilot";
 import type { RadarFeed } from "../feed";
 import { frHeadline } from "../fr";
 import { missionCatalog } from "../missions";
@@ -41,6 +42,7 @@ export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "
     `Véhicules et garages possédés : ${owned.length ? owned.slice(-10).join(", ") : "aucun renseigné"}`,
     `Anti-spoiler : ${SPOILER_FR[p.spoilerMode] ?? SPOILER_FR.strict}`,
     progressionContext(s),
+    autopilotContext(s),
     storyContext(s),
   ].join("\n");
 }

@@ -5,7 +5,7 @@ import type { ProgressView } from "../progress";
 import { nk } from "../missions";
 import { HIDDEN_LABEL, hiddenMissionNames, redact } from "../spoiler";
 import type { Gauge, PersistedState, StoryState } from "../types";
-import { RESOURCE_FR, TIER_ORDER } from "./model";
+import { RESOURCE_FR, TIER_ORDER, sourceKind } from "./model";
 import type { Cond, Confidence, Coverage, ResourceId, StoryEvidence, StoryRule, Tier } from "./model";
 
 /**
@@ -38,6 +38,10 @@ export interface StoryAlert {
   money: string | null;
   sources: Array<{ name: string; url: string }>;
   contradictions: string[];
+  /** V0.18 : l'alerte dépend d'une mission probablement faite mais non déclarée — à confirmer par le joueur. */
+  uncertain: string | null;
+  /** V0.18 : pourquoi ce niveau de confiance (qualité, indépendance, vérification en jeu). */
+  confidenceWhy: string;
 }
 
 // ───────────────────────── noms et statuts ─────────────────────────
@@ -54,7 +58,8 @@ export function findStoryNode(name: string | null | undefined): { id: string; na
   return n ? { id: n.id, name: n.name, chapter: n.chapter, kind: n.kind } : null;
 }
 
-type NodeSt = "done" | "started" | "lost" | "open" | "near" | "later";
+/** « likely » : indice faible (Story Recap) — jamais assimilé à « done » ; une alerte reste affichée, marquée à confirmer. */
+type NodeSt = "done" | "started" | "lost" | "likely" | "open" | "near" | "later";
 
 function nodeStatus(id: string, v: ProgressView, s: StoryInput): NodeSt {
   const p = s.profile;
@@ -63,8 +68,9 @@ function nodeStatus(id: string, v: ProgressView, s: StoryInput): NodeSt {
     if (g.status === "terminé") return "done";
     if (g.status === "en cours") return "started";
     if (g.status === "plus disponible") return "lost";
-    // mission principale placée avant une mission terminée dans le Story Recap : probablement passée (signal faible)
-    if (g.likelyDone) return "done";
+    // mission principale placée avant une mission terminée dans le Story Recap : probablement passée (signal FAIBLE) —
+    // V0.18 : n'est plus traitée comme terminée ; le joueur confirme
+    if (g.likelyDone) return "likely";
     if (p.chapter > g.node.chapter && g.node.kind === "main") return "done";
     if (v.planned?.node.id === id || g.status === "accessible" || g.status === "potentiellement accessible") return "near";
     // verrouillé, mais tous les prérequis manquants sont la mission en cours / prévue
@@ -166,12 +172,72 @@ export function evalCond(c: Cond | undefined, s: StoryInput, v: ProgressView): b
   }
 }
 
-/** Confiance calculée à partir des preuves (jamais déclarée à la main). */
-export function confidenceOf(r: Pick<StoryRule, "evidence" | "status">): Confidence {
+/**
+ * Confiance calculée à partir des preuves (jamais déclarée à la main) — V0.18, plus exigeante :
+ *   - « Vérifié » : vérifié en jeu par le joueur, OU au moins 2 origines INDÉPENDANTES qui affirment exactement la même
+ *     chose, dont au moins un guide joué (pas seulement des compilations) ;
+ *   - plusieurs compilations (wikis, agrégateurs) ne comptent que pour UNE origine : elles recopient les mêmes sources ;
+ *   - une preuve « partielle » (périmètre plus large ou voisin) soutient, mais ne compte pas pour l'indépendance ;
+ *   - une contradiction ou un statut « contestée » donne « Contesté » ; jamais de « Vérifié » sur un seul domaine.
+ */
+export function confidenceOf(r: Pick<StoryRule, "evidence" | "status"> & { inGame?: StoryRule["inGame"] }): Confidence {
   if (r.status === "contestée" || r.evidence.some((e) => e.stance === "contredit")) return "Contesté";
-  const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
-  const sites = new Set(r.evidence.filter((e: StoryEvidence) => e.stance === "confirme").map((e) => host(e.url))).size;
-  return sites >= 2 ? "Vérifié" : sites === 1 || r.evidence.length ? "Probable" : "Non confirmé";
+  if (r.inGame) return "Vérifié";
+  const q = evidenceQuality(r.evidence);
+  if (q.independent >= 2 && q.played >= 1) return "Vérifié";
+  return q.confirming ? "Probable" : r.evidence.length ? "Non confirmé" : "Non confirmé";
+}
+
+/** Indépendance et qualité des preuves qui CONFIRMENT exactement l'affirmation. */
+export function evidenceQuality(evs: StoryEvidence[]): { independent: number; played: number; compiled: number; confirming: number; partial: number } {
+  const conf = evs.filter((e) => e.stance === "confirme");
+  const exact = conf.filter((e) => (e.scope ?? "exact") === "exact");
+  const origins = new Set(exact.map((e) => e.origin ?? (sourceKind(e) === "compilation" ? "compilations" : hostOf(e.url))));
+  return {
+    independent: origins.size,
+    played: exact.filter((e) => sourceKind(e) === "guide joué" || sourceKind(e) === "officiel").length,
+    compiled: exact.filter((e) => sourceKind(e) === "compilation").length,
+    confirming: conf.length,
+    partial: conf.length - exact.length,
+  };
+}
+
+/** Explication courte du niveau de confiance, pour la fiche et LEONIDA AI. */
+export function confidenceWhy(r: Pick<StoryRule, "evidence" | "status" | "inGame" | "contradictions">): string {
+  const c = confidenceOf(r);
+  if (c === "Contesté") return "des sources se contredisent ou nuancent ce point";
+  if (r.inGame) return `vérifié en jeu le ${r.inGame.at}`;
+  const q = evidenceQuality(r.evidence);
+  if (!q.independent) return "aucune source n'affirme exactement ce point (seulement des nuances ou un périmètre voisin) · pas encore vérifié en jeu";
+  const parts = [q.independent === 1 ? "une seule origine" : `${q.independent} origines indépendantes`];
+  if (q.played) parts.push(`${q.played} guide${q.played > 1 ? "s" : ""} joué${q.played > 1 ? "s" : ""}`);
+  if (q.compiled) parts.push(`${q.compiled} compilation${q.compiled > 1 ? "s" : ""} (comptée${q.compiled > 1 ? "s" : ""} pour une seule origine)`);
+  if (q.partial) parts.push(`${q.partial} preuve${q.partial > 1 ? "s" : ""} au périmètre partiel`);
+  if (c === "Probable" && q.independent >= 2) parts.push("aucun guide joué : non vérifié");
+  parts.push("pas encore vérifié en jeu");
+  return parts.join(" · ");
+}
+
+const hostOf = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
+
+/** Règle qui dépend d'une mission probablement faite (indice faible) : l'alerte reste, à confirmer. */
+function uncertainOf(r: StoryRule, s: StoryInput, v: ProgressView): string | null {
+  const ids: string[] = [];
+  const walk = (c: Cond | undefined) => {
+    if (!c) return;
+    if ("node" in c) ids.push(c.node);
+    if ("of" in c) c.of.forEach(walk);
+    if ("c" in c) walk(c.c);
+  };
+  walk(r.appliesIf);
+  walk(r.resolvedIf);
+  if (r.trigger && "node" in r.trigger) ids.push(r.trigger.node);
+  const likely = ids.map((id) => v.byId.get(id)).find((g) => g?.likelyDone);
+  if (!likely) return null;
+  const shown = shownName(likely, s.profile.spoilerMode) === likely.node.name;
+  return shown
+    ? `Tu as peut-être déjà fait ${likely.node.name} (non déclarée) : confirme-le dans l'Accueil pour mettre cette alerte à jour.`
+    : "Tu as peut-être déjà passé l'étape qui déclenche cette alerte (mission non déclarée, nom masqué) : confirme tes missions faites dans l'Accueil.";
 }
 
 /** Une règle contestée n'est jamais critique. */
@@ -213,7 +279,7 @@ function triggerState(r: StoryRule, s: StoryInput, v: ProgressView): { passed: b
   const st = nodeStatus(t.node, v, s);
   const passed = t.at === "start" ? ["done", "started", "lost"].includes(st) : st === "done" || st === "lost";
   // « fin de X » est imminent quand X est en cours ; « début de X » quand X est la prochaine mission ou accessible
-  const horizon: Horizon = (t.at === "end" && st === "started") || (t.at === "start" && st === "near") ? "imminent" : st === "open" || st === "near" ? "chapitre" : nodeChapter(t.node) <= s.profile.chapter ? "chapitre" : "plus tard";
+  const horizon: Horizon = (t.at === "end" && st === "started") || (t.at === "start" && st === "near") ? "imminent" : st === "open" || st === "near" || st === "likely" ? "chapitre" : nodeChapter(t.node) <= s.profile.chapter ? "chapitre" : "plus tard";
   return { passed, horizon, chapter: nodeChapter(t.node) };
 }
 
@@ -253,6 +319,8 @@ export function storyAlerts(s: StoryInput): StoryAlert[] {
       money: moneyLine(r, s),
       sources: r.evidence.map((e) => ({ name: e.name, url: e.url })),
       contradictions: masked ? [] : (r.contradictions ?? []).map(red),
+      uncertain: uncertainOf(r, s, v),
+      confidenceWhy: confidenceWhy(r),
     });
   }
   const CONF: Confidence[] = ["Vérifié", "Probable", "Non confirmé", "Contesté"];
@@ -292,6 +360,9 @@ export interface SimLine {
   when?: string;
   tier?: Tier;
   money?: string | null;
+  /** V0.18 : pourquoi ce niveau de confiance ; alerte à confirmer (mission probablement faite). */
+  why?: string;
+  uncertain?: string | null;
 }
 
 export interface LaunchSim {
@@ -319,7 +390,11 @@ export interface LaunchSim {
 }
 
 const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
-const srcConf = (srcs: Array<{ url: string }>): Confidence => (new Set(srcs.map((x) => host(x.url))).size >= 2 ? "Vérifié" : srcs.length ? "Probable" : "Non confirmé");
+/** Sources du graphe : « Vérifié » seulement selon la règle commune (qualité + indépendance), jamais au nombre de domaines. */
+export const srcsVerified = (srcs: Array<{ url: string }>): boolean => srcConf(srcs) === "Vérifié";
+
+/** Sources du graphe (sans position déclarée) : même règle de qualité et d'indépendance que les règles (V0.18). */
+const srcConf = (srcs: Array<{ url: string }>): Confidence => confidenceOf({ status: "active", evidence: srcs.map((x) => ({ name: "", url: x.url, says: "", stance: "confirme" as const, checkedAt: "" })) });
 
 /** Pertes qui révèlent un événement narratif (lieu détruit, déménagement) : masquées en mode strict. */
 const NARRATIVE_LOSS = /maison|house|motel|appartement/i;
@@ -351,7 +426,7 @@ export function simulateLaunch(s: StoryInput, name: string): LaunchSim | null {
       sim.ready.push(red(r.advice));
       continue;
     }
-    const line: SimLine = { text: r.advice, confidence: c, sources: r.evidence.map((e) => ({ name: e.name, url: e.url })), when: t.at === "start" ? "au lancement" : "à la fin", tier: effectiveTier(r, c), money: moneyLine(r, s) };
+    const line: SimLine = { text: r.advice, confidence: c, sources: r.evidence.map((e) => ({ name: e.name, url: e.url })), when: t.at === "start" ? "au lancement" : "à la fin", tier: effectiveTier(r, c), money: moneyLine(r, s), why: confidenceWhy(r), uncertain: uncertainOf(r, s, v) };
     const hasMoney = r.effects.some((e) => (e.k === "lose" || e.k === "freeze" || e.k === "threshold") && "resource" in e && !!e.resource);
     if (r.kind === "choix") add(sim.choices, line);
     else if (hasMoney || r.id === "ch1-savings-5k") add(sim.money, line);

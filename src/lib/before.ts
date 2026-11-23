@@ -8,7 +8,7 @@ import type { NodeState } from "./progress";
 import { nk } from "./missions";
 import type { BriefItem, MissionAlertBrief, PersistedState } from "./types";
 import { redactorFor } from "./spoiler";
-import { storyAlerts } from "./story/engine";
+import { srcsVerified, storyAlerts } from "./story/engine";
 import type { StoryAlert } from "./story/engine";
 
 /**
@@ -135,7 +135,7 @@ export function buildBefore(
         key: `mis:${nk(m.text).slice(0, 40)}`,
         text: m.text,
         kind: m.when === "avant" ? "avant" : "pendant",
-        status: sites(m.sources) >= 2 ? "Vérifié" : "Probable",
+        status: srcsVerified(m.sources) ? "Vérifié" : "Probable",
         high: true,
         atPnr: false,
         when: m.when === "pendant" ? "pendant la mission" : m.when === "apres" ? "juste après la mission" : "avant de la lancer",
@@ -231,7 +231,7 @@ function storyItem(a: StoryAlert, live: boolean): BeforeItem {
     atPnr: false,
     when: a.when,
     sources: a.sources,
-    detail: [a.money ?? "", a.explain ?? (a.masked ? "Raison masquée par l'anti-spoiler." : ""), ...a.contradictions.map((c) => `Sources divergentes : ${c}`), `Niveau : ${a.tier}${r.reversible ? "" : " · irréversible"}`].filter(Boolean),
+    detail: [a.uncertain ?? "", a.money ?? "", a.explain ?? (a.masked ? "Raison masquée par l'anti-spoiler." : ""), ...a.contradictions.map((c) => `Sources divergentes : ${c}`), `Niveau : ${a.tier}${r.reversible ? "" : " · irréversible"}`, `Confiance « ${a.confidence} » : ${a.confidenceWhy}`].filter(Boolean),
     cat: money ? "argent" : r.kind === "manquable" ? "unique" : r.kind === "opportunité" ? "argent" : "perte",
     done: { type: "done", key: a.key, kind: money ? "argent" : "activite" },
     map: null,

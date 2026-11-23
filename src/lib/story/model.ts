@@ -41,6 +41,40 @@ export interface StoryEvidence {
   stance: "confirme" | "contredit" | "nuance";
   /** Date de consultation (AAAA-MM-JJ). */
   checkedAt: string;
+  /** V0.18 : nature de la source ; par défaut déduite du site (table SOURCE_KINDS). */
+  kind?: SourceKind;
+  /** V0.18 : « exact » = affirme exactement la règle ; « partiel » = périmètre voisin ou plus large (soutient, ne vérifie pas). */
+  scope?: "exact" | "partiel";
+  /** V0.18 : domaine de la source d'origine quand une source en recopie une autre (ex. « powerpyx.com ») — compte pour une seule. */
+  origin?: string;
+}
+
+/**
+ * Nature d'une source : un « guide joué » montre la mission jouée (captures, vidéo, pas à pas) ; un « guide éditorial »
+ * est rédigé par une rédaction sans preuve visible ; une « compilation » agrège d'autres sources (wiki, liste).
+ */
+export type SourceKind = "guide joué" | "guide éditorial" | "compilation" | "officiel";
+
+/** Classement des sites utilisés, fait à la main d'après leur format (révisable). Inconnu = « guide éditorial ». */
+export const SOURCE_KINDS: Record<string, SourceKind> = {
+  "thegameswiki.com": "compilation",
+  "gameta.gg": "compilation",
+  "leonipedia.com": "compilation",
+  "cutscenewire.com": "compilation",
+  "powerpyx.com": "guide joué",
+  "game8.co": "guide joué",
+  "gtabase.com": "guide éditorial",
+  "gamesradar.com": "guide éditorial",
+  "radiotimes.com": "guide éditorial",
+  "gta.tech4gamers.com": "guide éditorial",
+  "playgta6.co.uk": "guide éditorial",
+  "rockstargames.com": "officiel",
+};
+
+export function sourceKind(e: Pick<StoryEvidence, "url" | "kind">): SourceKind {
+  if (e.kind) return e.kind;
+  const host = e.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0];
+  return SOURCE_KINDS[host] ?? "guide éditorial";
 }
 
 /** Nœud de progression hors graphe du chapitre 1 (chapitres 2 à 5) : inventaire, pas encore un graphe complet. */
@@ -106,6 +140,8 @@ export interface StoryRule {
   contradictions?: string[];
   status: "active" | "contestée" | "obsolète";
   verifiedAt: string;
+  /** V0.18 : vérifié en jeu par le joueur (date, note). Seul moyen d'atteindre « Vérifié » avec une source unique. */
+  inGame?: { at: string; note?: string };
   /** Mots-clés pour éviter les doublons avec les autres listes (graphe, veille, analyses). */
   match?: string[];
 }

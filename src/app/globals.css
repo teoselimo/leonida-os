@@ -1521,3 +1521,24 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .vans__map b { color: var(--cyan); font-weight: 650; }
 .vans__sub { font-size: 12.5px; color: #cfc9de; line-height: 1.4; }
 .vans__map .confirm { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; font-size: 12.5px; }
+
+/* ── V0.18 · Mission Autopilot (carte « ensuite » de l'Accueil) ── */
+.nextc__done b { color: var(--text); font-weight: 650; }
+.nextc__sugg { display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 16px; background: rgba(255, 61, 139, 0.08); box-shadow: inset 0 0 0 1px rgba(255, 61, 139, 0.32); }
+.nextc__sugg > span { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.nextc__sugg b { font-size: 17px; font-weight: 700; }
+.nextc__sugg em, .nextc__list em { font-style: normal; font-size: 12px; color: #a79fbd; line-height: 1.35; }
+.nextc__sugg .row > .btn { flex: 1; min-height: 44px; }
+.nextc__new { align-self: flex-start; font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cyan); padding: 2px 7px; border-radius: 999px; background: rgba(46, 230, 214, 0.1); }
+.nextc__note { display: flex; gap: 6px; align-items: flex-start; line-height: 1.4; }
+.nextc__note svg { flex: none; margin-top: 3px; }
+.nextc__likely { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 10px; border-radius: 13px; font-size: 13px; color: #e0d9ee; background: rgba(255, 181, 71, 0.07); box-shadow: inset 0 0 0 1px rgba(255, 181, 71, 0.24); }
+.nextc__likely .btn { flex: none; }
+.nextc__sides { display: grid; gap: 6px; }
+.nextc__chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.nextc__chips .chip { min-height: 40px; padding: 8px 12px; font-size: 13px; }
+.nextc__explore { align-self: flex-start; color: var(--muted); min-height: 36px; }
+.nextc--explore { flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 12px; }
+.nextc--explore .nextc__done { color: #d4cde4; }
+.slaunch__why { font-size: 11px; color: var(--muted); }
+.bl__uncertain, .slaunch__uncertain { font-size: 12px; color: #ffcf8a; }

@@ -104,6 +104,8 @@ export function computeProgress(s: Pick<PersistedState, "profile"> & { done?: Re
  */
 export function shownName(st: NodeState, mode: SpoilerMode): string {
   if (mode !== "strict" || st.node.kind !== "main") return st.node.name;
+  // V0.18 : une mission « probablement faite » est placée AVANT une mission terminée dans le récapitulatif : passée, pas un spoiler
+  if (st.likelyDone) return st.node.name;
   if (st.status === "verrouillé" || st.status === "inconnu") return "une mission principale à venir";
   return st.node.name;
 }

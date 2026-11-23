@@ -103,6 +103,8 @@ export interface Profile {
   missionInProgress?: boolean;
   /** Objectifs facultatifs identifiés (par le joueur ou proposés par l'analyse « Rien à manquer »). */
   objectives?: Objective[];
+  /** V0.18 : le joueur a choisi d'explorer librement (date ISO) ; effacé dès qu'il choisit ou termine une mission. */
+  exploring?: string | null;
 }
 
 /** Objectif facultatif lié à une mission, avec son niveau de preuve. */

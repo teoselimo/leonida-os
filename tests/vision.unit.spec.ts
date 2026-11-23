@@ -127,3 +127,31 @@ test.describe("Vision · fichiers (formats, tailles, documents)", () => {
     expect(r).toContain("sans rapport avec GTA VI");
   });
 });
+
+test.describe("Vision · V0.18 : taille contrôlée APRÈS conversion, zone non présentée comme une marge mesurée", () => {
+  const lim = { maxCount: 5, maxInputBytes: 1_000_000, mediaTypes: ["image/jpeg", "image/png"] };
+  async function withCanvas(sizes: number[], fn: () => Promise<void>) {
+    const g = globalThis as unknown as Record<string, unknown>;
+    const prev = { c: g.createImageBitmap, d: g.document };
+    let i = 0;
+    g.createImageBitmap = async () => ({ width: 4032, height: 3024, close() {} });
+    g.document = { createElement: () => ({ width: 0, height: 0, getContext: () => ({ drawImage() {} }), toBlob: (cb: (b: Blob) => void) => cb(new Blob([new Uint8Array(sizes[Math.min(i++, sizes.length - 1)])], { type: "image/jpeg" })) }) };
+    try { await fn(); } finally { g.createImageBitmap = prev.c; g.document = prev.d; }
+  }
+  test("HEIC converti : recompressé jusqu'à passer sous la limite ; sinon refus clair, jamais un envoi hors limite", async () => {
+    await withCanvas([3_000_000, 1_500_000, 800_000], async () => {
+      const a = await prepareImage(new File([new Uint8Array(10)], "IMG_0001.heic", { type: "image/heic" }), lim);
+      expect(a).toMatchObject({ converted: true, name: "IMG_0001.jpg" });
+      expect(a.size).toBeLessThanOrEqual(lim.maxInputBytes);
+    });
+    await withCanvas([5_000_000], async () => {
+      await expect(prepareImage(new File([new Uint8Array(10)], "huge.heic", { type: "image/heic" }), lim)).rejects.toThrow(/reste trop lourde/);
+    });
+  });
+  test("le libellé de la proposition parle d'une zone estimée non calibrée, jamais de « ± X m »", () => {
+    const src = readFileSync("src/components/VisionAttach.tsx", "utf8");
+    expect(src).not.toMatch(/± \$\{guess\.radiusM/);
+    expect(src).toContain("zone estimée d'environ");
+    expect(src).toContain("non calibrée");
+  });
+});

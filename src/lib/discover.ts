@@ -5,6 +5,7 @@ import { frHeadline } from "./fr";
 import { missionCatalog, nk } from "./missions";
 import { computeProgress, nodeByName, progDoneKey, shownName } from "./progress";
 import type { NodeState } from "./progress";
+import { srcsVerified } from "./story/engine";
 import type { Src } from "@/data/progression";
 import type { PersistedState } from "./types";
 
@@ -95,7 +96,7 @@ export function discoverNow(
     const cat = nodeCat(st);
     const lostSrc = st.node.lostAt?.sources ?? [];
     const allSrc = [...(st.node.prereq?.sources ?? []), ...lostSrc];
-    const verifiedLoss = !!st.node.lostAt && sites(lostSrc) >= 2;
+    const verifiedLoss = !!st.node.lostAt && srcsVerified(lostSrc);
     const status: DiscoverStatus = st.status === "accessible" && (cat !== "perte" || verifiedLoss) ? "vérifié" : "probable";
     const lostNode = st.node.lostAt ? v.byId.get(st.node.lostAt.node) : null;
     const noReturn = lostNode ? `${st.node.lostAt!.at === "start" ? "disparaît au lancement" : "disparaît à la fin"} ${missionRef(lostNode)}` : null;

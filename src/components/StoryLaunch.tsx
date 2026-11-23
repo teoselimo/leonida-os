@@ -42,11 +42,13 @@ function Lines({ title, lines, testid }: { title: string; lines: SimLine[]; test
           <li key={i}>
             <span>{l.text}</span>
             {l.money && <small className="slaunch__money">{l.money}</small>}
+            {l.uncertain && <small className="slaunch__uncertain" data-testid="sim-uncertain">{l.uncertain}</small>}
             <em>
-              <i className={`trust trust--${l.confidence === "Vérifié" ? "ok" : l.confidence === "Probable" ? "warn" : "low"}`}>{l.confidence}</i>
+              <i className={`trust trust--${l.confidence === "Vérifié" ? "ok" : l.confidence === "Probable" ? "warn" : "low"}`} title={l.why}>{l.confidence}</i>
               {l.when && <span>{l.when}</span>}
               {l.sources.slice(0, 2).map((s, j) => <a key={j} href={s.url} target="_blank" rel="noreferrer">{s.name}</a>)}
             </em>
+            {l.why && <small className="slaunch__why">{l.why}</small>}
           </li>
         ))}
       </ul>

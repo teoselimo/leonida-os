@@ -23,6 +23,7 @@ import { computeProgress } from "@/lib/progress";
 import { progressDelta } from "@/lib/ai/progressAnswers";
 import type { ProgressDelta } from "@/lib/ai/progressAnswers";
 import { useRedact } from "@/lib/useRedact";
+import { autopilot } from "@/lib/autopilot";
 import { StoryLaunch } from "@/components/StoryLaunch";
 
 const SHOWN_CRITICAL = 3;
@@ -77,6 +78,9 @@ export function HomeScreen() {
       <div className="home__main">
       <CollectorAlert hideSnapshot />
 
+      {/* V0.18 : sans mission choisie, la proposition de l'Autopilot passe en premier (deux ou trois touchers après « Terminée ») */}
+      {!mission && <NextChoice justDone={justDone} onChoose={choose} choices={plan.mission.choices} />}
+
       {(mission || view.critical.length > 0) && (
         <section className="before glass" data-testid="before">
           <header className="before__head">
@@ -118,7 +122,6 @@ export function HomeScreen() {
       )}
       {live && <Objectives mission={mission!} />}
 
-      {!mission && <NextChoice justDone={justDone} onChoose={choose} guess={plan.mission.guess} choices={plan.mission.choices} />}
 
       </div>
       <div className="home__side">
@@ -260,40 +263,86 @@ function MaybeList({ items }: { items: BeforeItem[] }) {
 }
 
 /** C bis — après « J'ai terminé » ou sans mission : ce qui s'ouvre, choix sans progression linéaire inventée. */
-function NextChoice({ justDone, onChoose, guess, choices }: { justDone: { name: string; delta: ProgressDelta } | null; onChoose: (n: string, live?: boolean) => void; guess: { name: string; basis: string } | null; choices: string[] }) {
-  const { state } = useStore();
-  const redact = useRedact();
+function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string; delta: ProgressDelta } | null; onChoose: (n: string, live?: boolean) => void; choices: string[] }) {
+  const { state, setExploring, confirmPastMissions, notify } = useStore();
   const [draft, setDraft] = useState("");
-  const v = useMemo(() => computeProgress(state), [state]);
-  const d = justDone?.delta;
-  // sans « terminé » récent : missions principales accessibles selon le graphe, sinon la proposition du catalogue
-  const open = d ? [...d.mains, ...d.potentials] : v.states.filter((x) => x.node.kind === "main" && (x.status === "accessible" || x.status === "potentiellement accessible") && !x.likelyDone);
+  // V0.18 Mission Autopilot : la suite vient du graphe sourcé (jamais de l'ordre d'un guide), le joueur confirme
+  const a = useMemo(() => autopilot(state), [state]);
+  const manual = useMemo(() => [...new Set([...a.manual, ...choices])].sort(), [a.manual, choices]);
+  const lost = justDone?.delta.lost ?? [];
+  if (a.mode === "exploration" && !justDone)
+    return (
+      <section className="nextc nextc--explore glass" data-testid="next-choice" data-mode="exploration">
+        <p className="nextc__done"><Icon name="map" size={14} /> Exploration libre{a.last ? ` · dernière mission terminée : ${a.last.name}` : ""}</p>
+        <button className="btn btn--xs btn--on press" onClick={() => (tick(), setExploring(false))} data-testid="explore-stop">Choisir une mission</button>
+      </section>
+    );
+  const several = a.mains.length > 1;
   return (
-    <section className="nextc glass" data-testid="next-choice">
-      {justDone && <p className="nextc__done"><Icon name="check" size={14} /> « {justDone.name} » terminée.</p>}
-      <h2>{open.length ? (open.length > 1 ? "Plusieurs suites possibles" : "Ça s'ouvre") : "Quelle mission ensuite ?"}</h2>
-      {open.length > 0 ? (
+    <section className="nextc glass" data-testid="next-choice" data-mode={a.mode}>
+      <p className="nextc__done" data-testid="autopilot-last">
+        <Icon name="check" size={14} /> {a.last ? <span>Dernière mission terminée : <b>{a.last.name}</b></span> : "Aucune mission terminée déclarée."}
+      </p>
+      <h2>{a.suggestion ? "Voici ce que tu peux faire ensuite" : several ? "Plusieurs suites possibles" : "Quelle mission ensuite ?"}</h2>
+      {a.suggestion ? (
+        <div className="nextc__sugg" data-testid="autopilot-suggestion">
+          <span>
+            <b>{a.suggestion.name}</b>
+            {a.suggestion.fresh && <i className="nextc__new">débloquée</i>}
+            <em>{a.suggestion.why}{a.suggestion.pnr ? " · point de non-retour" : ""}</em>
+          </span>
+          <div className="row gap8">
+            <button className="btn btn--sm btn--primary press" onClick={() => onChoose(a.suggestion!.name)} data-testid="autopilot-plan">Je la prépare</button>
+            <button className="btn btn--sm btn--ghost press" onClick={() => onChoose(a.suggestion!.name, true)} data-testid="autopilot-start">Je la lance</button>
+          </div>
+        </div>
+      ) : several ? (
         <ul className="nextc__list">
-          {open.map((x) => (
-            <li key={x.node.id}>
-              <span><b>{x.node.name}</b><em>{x.status === "accessible" ? "accessible d'après les sources" : "probablement accessible · à confirmer en jeu"}</em></span>
-              <button className="btn btn--xs btn--on press" onClick={() => onChoose(x.node.name)} data-testid="choose-next">Choisir</button>
+          {a.mains.map((x) => (
+            <li key={x.id}>
+              <span>
+                <b>{x.name}</b>
+                {x.fresh && <i className="nextc__new">débloquée</i>}
+                <em>{x.why}{x.pnr ? " · point de non-retour" : ""}</em>
+              </span>
+              <button className="btn btn--xs btn--on press" onClick={() => onChoose(x.name)} data-testid="choose-next">Choisir</button>
             </li>
           ))}
         </ul>
-      ) : guess ? (
-        <ul className="nextc__list"><li><span><b>{guess.name}</b><em>proposition {guess.basis}</em></span><button className="btn btn--xs btn--on press" onClick={() => onChoose(guess.name)} data-testid="confirm-guess">Choisir</button></li></ul>
-      ) : (
-        <p className="nextc__note">Je ne déduis pas la suite sans source : indique la mission affichée dans ton jeu.</p>
+      ) : null}
+      {a.uncertain && <p className="nextc__note" data-testid="autopilot-uncertain"><Icon name="info" size={13} /> {a.uncertain}</p>}
+      {a.likely.length > 0 && (
+        <div className="nextc__likely" data-testid="autopilot-likely">
+          <span>
+            {a.likely.every((x) => x.name === x.realName)
+              ? <>Probablement déjà faite{a.likely.length > 1 ? "s" : ""} (non déclarée{a.likely.length > 1 ? "s" : ""}) : <b>{a.likely.length > 3 ? `${a.likely[0].name} … ${a.likely.at(-1)!.name} (${a.likely.length})` : a.likely.map((x) => x.name).join(", ")}</b></>
+              : <>{a.likely.length} mission{a.likely.length > 1 ? "s" : ""} antérieure{a.likely.length > 1 ? "s" : ""} probablement faite{a.likely.length > 1 ? "s" : ""}, non déclarée{a.likely.length > 1 ? "s" : ""} (noms masqués en mode strict)</>}
+          </span>
+          <button className="btn btn--xs btn--on press" onClick={() => (tick(), confirmPastMissions(a.likely.map((x) => x.realName)), notify("Missions antérieures confirmées", `${a.likely.length} mission${a.likely.length > 1 ? "s" : ""}`, "check"))} data-testid="likely-confirm">
+            Oui, faite{a.likely.length > 1 ? "s" : ""}
+          </button>
+        </div>
       )}
-      {d && d.sides.length > 0 && <p className="nextc__line"><b>Activités débloquées :</b> {d.sides.map((x) => x.node.name).join(", ")}</p>}
-      {d && d.lost.length > 0 && <p className="nextc__line is-lost"><b>Plus disponible :</b> {d.lost.map((x) => x.node.name).join(", ")}</p>}
-      {d?.pnr && <p className="nextc__line is-pnr"><Icon name="clock" size={12} /> {redact(`Prochain point de non-retour ${d.pnr.where}`)}{d.pnr.lose.length ? ` : ${d.pnr.lose.slice(0, 2).join(", ")}` : ""}.</p>}
+      {a.sides.length > 0 && (
+        <div className="nextc__sides" data-testid="autopilot-sides">
+          <p className="nextc__line"><b>Activités ouvertes</b>{a.sides.some((x) => x.missable) ? " · certaines disparaissent plus tard" : ""}</p>
+          <ul className="nextc__chips">
+            {a.sides.slice(0, 3).map((x) => (
+              <li key={x.id}><button className="chip press" onClick={() => onChoose(x.name)} data-testid="choose-side">{x.name}{x.missable ? " ⏳" : ""}</button></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {lost.length > 0 && <p className="nextc__line is-lost"><b>Plus disponible :</b> {lost.map((x) => x.node.name).join(", ")}</p>}
+      {a.pnr && <p className="nextc__line is-pnr" data-testid="autopilot-pnr"><Icon name="clock" size={12} /> Point de non-retour proche {a.pnr.where} : finis d&apos;abord ce qui compte pour toi.</p>}
       <form className="missionform" onSubmit={(e) => { e.preventDefault(); if (draft.trim()) onChoose(draft.trim()); }}>
         <input list="next-missions" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Autre mission (nom affiché en jeu)" aria-label="Prochaine mission" data-testid="next-mission-input" maxLength={80} />
-        <datalist id="next-missions">{choices.map((c) => <option key={c} value={c} />)}</datalist>
+        <datalist id="next-missions">{manual.map((c) => <option key={c} value={c} />)}</datalist>
         <button className="btn btn--primary btn--sm" disabled={!draft.trim()} data-testid="next-mission-save">Choisir</button>
       </form>
+      <button className="link small press nextc__explore" onClick={() => (tick(), setExploring(true), notify("Exploration libre", "Je ne te propose plus de mission tant que tu n'en choisis pas une.", "map"))} data-testid="explore-free">
+        Je préfère explorer librement
+      </button>
     </section>
   );
 }

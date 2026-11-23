@@ -50,6 +50,8 @@ export function decideWeb(o: { question: string; draft: AiAnswer; ids: string[];
   if (APP_ACTION.has(i)) return { web: false, reason: "app_action" };
   if (WEB_ASK.test(o.question)) return { web: true, reason: "asked" };
   if (PROGRESSION_LOCAL.has(i)) return { web: false, reason: "local_ok" };
+  // V0.18 : nouveauté, mise à jour, découverte récente — le référentiel local est daté, on cherche toujours
+  if (RECENT.test(o.question)) return { web: true, reason: "insufficient" };
   // « montre-moi … sur la carte » : action dans l'app, déjà résolue localement (liste, établissement, repère)
   if (/\b(montre|affiche|sur la carte)\b/i.test(o.question) && o.draft.actions.some((a) => a.type === "show_place")) return { web: false, reason: "local_ok" };
   // établissements confirmés du référentiel (sources citées) : la liste suffit… sauf question d'évaluation
@@ -71,7 +73,9 @@ export function decideWeb(o: { question: string; draft: AiAnswer; ids: string[];
 }
 
 /** Signal de question factuelle (lieu, manière, quantité, condition…). */
-const FACTUAL = /\b(o[uù]|comment|combien|quand|quel(le)?s?|lequel|laquelle|est-ce qu|faut-il|r[eé]compense|manquables?|cach[ée]e?s?|trouver|d[ée]bloquer|obtenir|r[ée]cup[ée]rer|existe)\b/i;
+const FACTUAL = /\b(o[uù]|comment|combien|quand|quel(le)?s?|lequel|laquelle|est-ce qu|qu.est-ce|pourquoi|faut-il|r[eé]compense|manquables?|cach[ée]e?s?|trouver|d[ée]bloquer|obtenir|r[ée]cup[ée]rer|existe)\b/i;
+/** Information récente ou nouvelle : le référentiel local ne peut pas la contenir (V0.18). */
+const RECENT = /\b(mise [aà] jour|maj|patch|update|nouveaut[eé]s?|nouvel(le)?s?|nouveaux?|r[eé]cent(e|es|s)?|d[eé]couverte?s?|vient de sortir|annonc[eé]e?s?|cette semaine|aujourd.hui|qu.est-ce qui change)\b/i;
 /** Demande d'avis ou bavardage. */
 const OPINION = /\b(tu pr[ée]f[eè]res|t.en penses quoi|ton avis|[aà] ta place|tu ferais quoi|[cç]a va|tu aimes|c.est cool|trop bien|haha|mdr|lol)\b/i;
 /** La phrase contient un terme de jeu traduisible ou un nom propre (lieu, mission, véhicule…). */

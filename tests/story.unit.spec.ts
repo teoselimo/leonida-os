@@ -181,7 +181,7 @@ test("cohérence Accueil ↔ copilote : les alertes critiques de l'Accueil figur
 test("sauvegarde V0.16.1 → V0.17 : rien n'est perdu, l'argent invalide est retiré, rien n'est inventé", () => {
   const old = { schema: 1, rev: 7, profile: { ...(profile(THEO) as object) }, done: { "prog:family-savings": "x" }, vehicles: { "v-karin-futo": { state: "stored", at: "x" } }, proofs: {}, briefs: {} };
   const m = migrate(old as never);
-  expect(m.rev).toBe(8);
+  expect(m.rev).toBe(9);
   expect(m.profile.missionsDone).toEqual(["Swamped", "Don Gone"]);
   expect(m.vehicles["v-karin-futo"].state).toBe("stored");
   expect(m.done["prog:family-savings"]).toBe("x");

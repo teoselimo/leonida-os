@@ -52,21 +52,32 @@ export async function prepareImage(file: File, lim: VisionLimits): Promise<Attac
   if (lim.mediaTypes.includes(file.type) && file.size <= lim.maxInputBytes) {
     return { id, kind: "image", name: file.name || "capture", type: file.type, size: file.size, blob: file, preview: URL.createObjectURL(file) };
   }
-  // HEIC (iPhone) ou format non listé : conversion locale si possible
+  // HEIC (iPhone), format non listé ou image trop lourde : conversion JPEG locale, puis CONTRÔLE de la taille obtenue
+  let bmp: ImageBitmap;
   try {
-    const bmp = await createImageBitmap(file);
-    const scale = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
-    const c = document.createElement("canvas");
-    c.width = Math.round(bmp.width * scale);
-    c.height = Math.round(bmp.height * scale);
-    c.getContext("2d")!.drawImage(bmp, 0, 0, c.width, c.height);
-    bmp.close?.();
-    const blob = await new Promise<Blob | null>((r) => c.toBlob(r, "image/jpeg", 0.88));
-    if (!blob) throw new Error("toBlob");
-    return { id, kind: "image", name: (file.name || "capture").replace(/\.\w+$/, ".jpg"), type: file.type || "image/?", size: blob.size, blob, preview: URL.createObjectURL(blob), converted: true };
+    bmp = await createImageBitmap(file);
   } catch {
     throw new AttachError(`Format non pris en charge pour « ${file.name} »${file.type ? ` (${file.type})` : ""}. Envoie une capture en JPEG ou PNG.`);
   }
+  // côté le plus long puis qualité décroissants, jusqu'à passer sous la limite (texte du HUD encore lisible à 1 400 px)
+  for (const [side, q] of [[2400, 0.88], [2000, 0.82], [1600, 0.78], [1400, 0.72]] as const) {
+    const blob = await toJpeg(bmp, side, q);
+    if (blob && blob.size <= lim.maxInputBytes && lim.mediaTypes.includes("image/jpeg")) {
+      bmp.close?.();
+      return { id, kind: "image", name: (file.name || "capture").replace(/\.\w+$/, ".jpg"), type: file.type || "image/?", size: blob.size, blob, preview: URL.createObjectURL(blob), converted: true };
+    }
+  }
+  bmp.close?.();
+  throw new AttachError(`« ${file.name} » reste trop lourde après compression (maximum ${fmtSize(lim.maxInputBytes)}). Envoie une capture plus petite.`);
+}
+
+async function toJpeg(bmp: ImageBitmap, side: number, quality: number): Promise<Blob | null> {
+  const scale = Math.min(1, side / Math.max(bmp.width, bmp.height));
+  const c = document.createElement("canvas");
+  c.width = Math.round(bmp.width * scale);
+  c.height = Math.round(bmp.height * scale);
+  c.getContext("2d")!.drawImage(bmp, 0, 0, c.width, c.height);
+  return new Promise<Blob | null>((r) => c.toBlob(r, "image/jpeg", quality));
 }
 
 /** Document texte : lu localement, tronqué. */
@@ -113,7 +124,10 @@ export interface MapGuess {
   /** Quartier retrouvé dans la carte (zone approximative). */
   district: string | null;
   center: { x: number; y: number } | null;
-  /** Incertitude estimée en mètres. */
+  /**
+   * Taille de la ZONE ESTIMÉE en mètres : dispersion des repères retrouvés + 150 m (ou étendue du quartier).
+   * Ce n'est PAS une marge d'erreur mesurée : aucune calibration ne la valide (V0.18).
+   */
   radiusM: number | null;
   unmatched: string[];
 }

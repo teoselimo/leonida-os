@@ -64,7 +64,7 @@ test("prochaine mission jamais inventée : proposition confirmée par le joueur,
   // V0.14 : proposition dans « Quelle mission ensuite ? », à choisir explicitement
   await expect(page.getByTestId("next-choice")).toContainText("Clear Skies");
   await expect(page.getByTestId("next-mission-name")).toHaveText("Prochaine mission à choisir");
-  await page.getByTestId("next-choice").locator("li", { hasText: "Clear Skies" }).getByRole("button").click();
+  await page.getByTestId("next-choice").locator("li").filter({ has: page.locator("b", { hasText: /^Clear Skies$/ }) }).getByRole("button").click(); // V0.18 : chaque branche cite l'autre dans sa note
   await expect(page.getByTestId("next-mission-name")).toHaveText("Clear Skies");
   await page.reload();
   await page.waitForSelector(".app.is-ready");
