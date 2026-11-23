@@ -277,3 +277,10 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Détail : `docs/RARE-VEHICLE-LOCATOR.md` ; planche : `docs/rvl-v0161-comparaison.jpg`.
 - Sauvegarde : nouvelles clés facultatives `done["order:<id>"]` ; `proofs` sert aussi aux captures-visuels.
 - Version Artifact `1795444205-4351`. Tests : 360/360.
+
+## 20. V0.17 · Story Intelligence (socle), LEONIDA Vision V1, prototype Garage (23/11/2026)
+
+- Livraison détaillée : `docs/V0.17.md` (couverture, lacunes, schéma, audit multimodal, feuille de route) ; démonstration `docs/v017-demo.jpg` ; prototype `docs/v017-garage-prototype.jpg`.
+- Déclaration de l'Artifact : `sample` passe de `{}` à `{ images: true }` (version `1795463065-2c9c`), puis publication du code (patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié).
+- Sauvegarde : révision 8, champ facultatif `story` ; une sauvegarde V0.16.1 se charge sans perte.
+- Version Artifact `1795463072-6a0a`. Tests : 389/389 (4 ignorés). Analyse d'image : testée avec Claude simulé uniquement ; premier essai réel à faire sur iPhone ou iPad.
