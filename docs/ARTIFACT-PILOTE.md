@@ -257,3 +257,9 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Niveau natif ajouté : `public/tiles/5` (217 tuiles de 2048 px, JPEG 84, tuiles de pleine mer omises — la carte réutilise le niveau inférieur, identique ; limite de 512 fichiers par version d'Artifact). Source déclarée en 1024 px pour que l'écran Retina charge le niveau supérieur ; zoom max 8,4. Rendu éclairci (`brightness-max 0,9`, `saturation -0,06`).
 - Pictogrammes maison (`src/components/map/icons.ts`) : vêtements, armurerie, coiffeur, tatoueur, boutique, station, garage, tuning, restaurant, bar, hôtel, loisirs, transport, planque, repère ; anneau blanc = établissement confirmé.
 - Visibilité : commerces dès le zoom 2, restaurants dès 3 ; les ~2 900 bâtiments sans nom ne couvrent plus la carte (recherche inchangée). Filtre actif : résultats visibles à tous les zooms, regroupés (toucher un groupe zoome dessus). Lieu sélectionné toujours affiché. Noms de quartiers calculés depuis les repères. `?carte=v014` rend l'ancien fond pour comparer.
+
+## 17. V0.15.1 « Finitions cartographiques » (23/11/2026) — même Artifact, version `1795433142-0c95`
+
+- Le bandeau de crédits devient un contrôle compact « ⓘ GTADB » (coin bas gauche, suit les fiches glissantes). Au toucher : source et lien map.gtadb.org, licence CC BY 4.0 et lien, modifications apportées au fond, mention « Carte communautaire non officielle ». Se ferme d'un toucher ailleurs ou avec Échap.
+- Commandes de carte réduites à + et − (le bouton « vue d'ensemble » qui appelait `fit()` est retiré). Coordonnées, marqueurs, caméra sauvegardée et Cartographe inchangés.
+- Cadrage du Social Discovery Engine ajouté à `docs/FEUILLE-DE-ROUTE.md` (non implémenté).

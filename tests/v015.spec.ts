@@ -28,7 +28,7 @@ test("fond : niveau natif z5, tuiles déclarées pour l'écran Retina, zoom maxi
   expect(s.src.maxzoom).toBe(5);
   expect(s.src.tileSize).toBe(1024);
   expect(s.max).toBeLessThanOrEqual(8.4);
-  await expect(page.getByText("gtadb.org").first()).toBeVisible(); // crédit conservé
+  await expect(page.getByTestId("map-credits")).toBeVisible(); // crédit conservé (V0.15.1 : contrôle compact)
 });
 
 test("filtre « Commerces » : résultats visibles tout de suite, regroupés en vue d'ensemble, détaillés en zoomant ; position sauvegardée intacte", async ({ page }) => {
@@ -60,4 +60,34 @@ test("lieu ouvert depuis la recherche : sa fiche donne la précision, aucun faux
   await page.getByTestId("est-billies-gift-shop").click();
   await expect(page.getByTestId("est-card")).toHaveAttribute("data-precision", "inconnue");
   await expect(page.getByTestId("zone-tag")).toHaveCount(0);
+});
+
+test("V0.15.1 · crédits compacts : « ⓘ GTADB » visible, détails complets au toucher, aucun chevauchement ; seulement + et −", async ({ page }) => {
+  await start(page);
+  const btn = page.getByTestId("map-credits");
+  await expect(btn).toBeVisible();
+  await expect(btn).toContainText("GTADB");
+  // deux commandes seulement, zoom opérationnel
+  await expect(page.locator(".map__ctrl button")).toHaveCount(2);
+  const z0 = await page.evaluate(() => (window as unknown as { __leonidaMap: { getZoom(): number } }).__leonidaMap.getZoom());
+  await page.locator(".map__ctrl").getByRole("button", { name: "Zoomer", exact: true }).click();
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __leonidaMap: { getZoom(): number } }).__leonidaMap.getZoom())).toBeGreaterThan(z0 + 0.5);
+  await page.locator(".map__ctrl").getByRole("button", { name: "Dézoomer", exact: true }).click();
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __leonidaMap: { getZoom(): number } }).__leonidaMap.getZoom())).toBeLessThan(z0 + 0.5);
+  // aucun chevauchement avec le zoom ni avec le dock
+  const b = (await btn.boundingBox())!;
+  const ctrl = (await page.locator(".map__ctrl").boundingBox())!;
+  expect(b.x + b.width).toBeLessThan(ctrl.x);
+  const nav = await page.locator(".nav").boundingBox();
+  if (nav && nav.width < 760 && nav.y > 200) expect(b.y + b.height).toBeLessThanOrEqual(nav.y);
+  // détails : source, licence, modifications, mention non officielle
+  await btn.click();
+  const card = page.getByTestId("map-credits-card");
+  await expect(card).toContainText("Carte communautaire non officielle");
+  await expect(card).toContainText("Modifications");
+  await expect(card.locator("a").first()).toHaveAttribute("href", /gtadb\.org/);
+  await expect(card.locator("a").nth(1)).toHaveAttribute("href", /creativecommons\.org\/licenses\/by\/4\.0/);
+  // se ferme d'un toucher ailleurs, sans sélectionner de lieu
+  await page.mouse.click(200, 300);
+  await expect(card).toHaveCount(0);
 });

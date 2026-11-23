@@ -153,7 +153,7 @@ test("13 · la sauvegarde réelle est restaurée intacte après la mise à jour 
   await expect(page.getByTestId("journal")).toContainText("Steal the Scooter");
   await page.getByTestId("advanced").locator("summary").click();
   await expect(page.getByTestId("storage-note")).toContainText("uniquement dans ce navigateur"); // hors Artifact : pas de promesse de synchro
-  await expect(page.getByTestId("partie-version")).toContainText("V0.14");
+  await expect(page.getByTestId("partie-version")).toContainText(/V0\.1\d(\.\d)?/); // version centralisée
 });
 
 test("V0.14.1 · iPhone : la zone de saisie n'a plus de fond opaque ; iPad : LEONIDA est une action en bas du rail, pas un onglet", async ({ page }) => {

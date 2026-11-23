@@ -571,7 +571,6 @@ export function LeonidaMap(props: MapViewProps) {
     for (const [id, el] of Object.entries(els)) el.style.display = visible.has(id) ? "" : "none";
   });
 
-  const fit = () => mapRef.current?.fitBounds(landBounds(), { padding: padding(), duration: 700 });
   const showRegionLabels = zoom < 4.3;
 
   if (failed) {
@@ -629,14 +628,50 @@ export function LeonidaMap(props: MapViewProps) {
         );
       })}
 
-      <div className="map__legend" style={{ bottom: occlusion.bottom + 8, left: occlusion.left + 10 }}>
-        Carte communautaire <a href={GTADB_URL} target="_blank" rel="noreferrer">gtadb.org</a> · <a href={CC_BY_URL} target="_blank" rel="noreferrer">CC BY 4.0</a> · non officielle
-      </div>
+      <MapCredits bottom={occlusion.bottom + 10} left={occlusion.left + 10} />
       <div className="map__ctrl" style={{ bottom: occlusion.bottom + 28 }}>
         <button onClick={() => mapRef.current?.zoomIn()} aria-label="Zoomer"><Icon name="plus" /></button>
         <button onClick={() => mapRef.current?.zoomOut()} aria-label="Dézoomer"><Icon name="minus" /></button>
-        <button onClick={fit} aria-label="Vue d'ensemble"><Icon name="locate" /></button>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Attribution CC BY 4.0 compacte (V0.15.1) : un contrôle « ⓘ GTADB » toujours visible ; au toucher, la source,
+ * la licence, les modifications apportées au fond et la mention « non officielle ».
+ */
+function MapCredits({ bottom, left }: { bottom: number; left: number }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const away = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    const esc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("pointerdown", away);
+    window.addEventListener("keydown", esc);
+    return () => {
+      window.removeEventListener("pointerdown", away);
+      window.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+  return (
+    <div className="mapcred" ref={ref} style={{ bottom, left }} onClick={(e) => e.stopPropagation()}>
+      {open && (
+        <div className="mapcred__card" role="dialog" aria-label="Crédits de la carte" data-testid="map-credits-card">
+          <div className="mapcred__head">
+            <strong>Carte communautaire non officielle</strong>
+            <button onClick={() => setOpen(false)} aria-label="Fermer les crédits"><Icon name="close" size={14} /></button>
+          </div>
+          <p>Fond de carte et lieux : <a href={GTADB_URL} target="_blank" rel="noreferrer">GTA VI Map Tiles &amp; Landmarks Data — map.gtadb.org</a> (GTADB et contributeurs).</p>
+          <p>Licence : <a href={CC_BY_URL} target="_blank" rel="noreferrer">Creative Commons Attribution 4.0 (CC BY 4.0)</a>.</p>
+          <p>Modifications par LEONIDA OS : tuiles réassemblées et recompressées, rendu légèrement ajusté (luminosité, couleurs), données de lieux réduites, pictogrammes et noms de quartiers ajoutés.</p>
+          <p className="mapcred__muted">Projet de fans, sans lien avec Rockstar Games ni Take-Two.</p>
+        </div>
+      )}
+      <button className="mapcred__btn" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Crédits de la carte : GTADB, licence CC BY 4.0" data-testid="map-credits">
+        <Icon name="info" size={12} /> GTADB
+      </button>
     </div>
   );
 }
