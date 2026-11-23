@@ -94,7 +94,7 @@ export function afterDone(profile: Profile, name: string): { text: string; actio
   if (d.pnr && mains.some((m) => m.node.id === d.pnr!.node || d.pnr!.prereq.includes(m.node.id))) parts.push(`Attention : le point de non-retour du chapitre approche (${d.pnr.lose.slice(0, 2).join(", ")} perdus). Finis tes activités avant.`);
   return {
     text: parts.join(" "),
-    actions: mains.slice(0, 2).map((x) => ({ type: "start_mission" as const, name: x.node.name, label: `Lancer ${x.node.name}`, confirm: `Noter « ${x.node.name} » comme mission en cours ?` })),
+    actions: mains.slice(0, 2).map((x) => ({ type: "start_mission" as const, name: x.node.name, label: `Lancer ${x.node.name}`, confirm: launchConfirm({ profile }, x.node.name) })),
   };
 }
 

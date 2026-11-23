@@ -89,7 +89,7 @@ export function HomeScreen() {
 
   return (
     <div className="screen home home14">
-      <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} />
+      <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} onStart={() => mission && launch(mission, true)} />
       <div className="home__main">
       <CollectorAlert hideSnapshot />
 
@@ -160,7 +160,7 @@ export function HomeScreen() {
 }
 
 /** A — mission principale : nom, état (menu), bouclier discret. */
-function MissionHeader({ mission, live, onEnd }: { mission: string | null; live: boolean; onEnd: () => void }) {
+function MissionHeader({ mission, live, onEnd, onStart }: { mission: string | null; live: boolean; onEnd: () => void; onStart: () => void }) {
   const { setMissionInProgress, setNextMission } = useStore();
   const [menu, setMenu] = useState(false);
   return (
@@ -176,7 +176,7 @@ function MissionHeader({ mission, live, onEnd }: { mission: string | null; live:
               {menu && (
                 <div className="mstate14__menu" role="menu" data-testid="mission-state">
                   <button role="menuitem" onClick={() => (tick(), setMissionInProgress(false), setMenu(false))} data-testid="mission-stop">À venir</button>
-                  <button role="menuitem" onClick={() => (tick(), setMissionInProgress(true), setMenu(false))}>En cours</button>
+                  <button role="menuitem" onClick={() => (setMenu(false), live ? undefined : onStart())} data-testid="mission-state-live">En cours</button>
                   <button role="menuitem" onClick={() => (setMenu(false), onEnd())}>Terminée…</button>
                   <button role="menuitem" onClick={() => (tick(), setNextMission(null), setMenu(false))} data-testid="mission-change">Changer de mission</button>
                 </div>

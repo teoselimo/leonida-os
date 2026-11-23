@@ -87,6 +87,21 @@ export interface CopilotAnswer {
   vision?: { certain: string[]; hypotheses: string[] };
   /** Capture de carte : proposition de localisation (à confirmer, jamais enregistrée seule). */
   mapGuess?: import("./vision").MapGuess | null;
+  /** V0.19 · Visual Grounding : identification ancrée sur le référentiel Knowledge (jamais un lieu inventé). */
+  grounding?: {
+    kind: "scène" | "carte" | "menu" | "autre";
+    identification: { id: string; name: string; confidence: "élevée" | "moyenne" | "faible"; landmarkId: string | null } | null;
+    why: string[];
+    toCheck: string[];
+    candidates: Array<{ id: string; name: string; score: number; landmarkId: string | null; type?: string }>;
+    vehicle: string | null;
+    reason: string | null;
+    /** Question de suivi : image encore en mémoire (« image ») ou seulement son résumé (« résumé »). */
+    memory: "image" | "résumé" | null;
+    /** Extraits de la carte LEONIDA joints pour comparaison. */
+    refs: number;
+    action: string | null;
+  };
   /** Recherche web effectuée pour cette réponse (null = non tentée). */
   web?: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null;
 }

@@ -125,3 +125,26 @@ export function buildEvidence(feed: RadarFeed, ids: string[], places: PlaceRef[]
   if (s.length > CONTEXT_LIMITS.maxChars) s = s.slice(0, CONTEXT_LIMITS.maxChars);
   return s;
 }
+
+/**
+ * V0.19 · Contexte joueur COMPACT pour une question sur un lieu, un véhicule ou une image : où il en est, sans les
+ * alertes de mission ni l'argent (qu'il retrouve sur l'Accueil). Évite que Claude récite Tourist Trap à chaque capture.
+ */
+export function compactPlayerContext(s: Pick<PersistedState, "profile">): string {
+  const p = s.profile;
+  return [
+    `Chapitre atteint : ${p.chapter} · édition ${EDITION[p.edition]}`,
+    `Dernière mission terminée (déclarée) : ${p.lastMission ?? "non renseignée"}`,
+    p.nextMission ? (p.missionInProgress ? `Mission EN COURS : ${p.nextMission}` : `Prochaine mission envisagée (pas lancée) : ${p.nextMission}`) : "Aucune mission choisie",
+    `Anti-spoiler : ${SPOILER_FR[p.spoilerMode] ?? SPOILER_FR.strict}`,
+    "(Alertes de mission et argent : non pertinents pour cette question, affichés sur l'Accueil — n'en parle pas sauf demande.)",
+  ].join("\n");
+}
+
+const MISSION_TERMS = /\b(mission|lancer|lance|risque|manquer|rater|argent|family savings|point de non-retour|chapitre suivant|terminer|termin[ée]|apr[eè]s|avant de)\b/i;
+const PLACE_TERMS = /\b(o[uù] est|c'est quoi (ce|cette)|c'est o[uù]|quel (lieu|endroit|bâtiment|batiment)|cette maison|ce bâtiment|ce batiment|ce lieu|cet endroit|ressemble|reconna[iî]s|quelle voiture|quel v[ée]hicule|à quoi ressemble)\b/i;
+
+/** La question porte sur un lieu / un véhicule (et pas sur une mission, un risque ou l'argent). */
+export function placeFocus(q: string, namesKnownPlace = false): boolean {
+  return (PLACE_TERMS.test(q) || namesKnownPlace) && !MISSION_TERMS.test(q);
+}

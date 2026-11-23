@@ -187,3 +187,43 @@ export function VisionAnswer({ vision, guess }: { vision?: CopilotAnswer["vision
 }
 
 export const VisionAttach = { Button, Tray, Sent };
+
+/**
+ * V0.19 · Reconnaissance ancrée (Visual Grounding) : identification + confiance, 2–3 indices, alternatives, ce qui reste
+ * à vérifier. Ne répète pas le texte de la réponse ; les actions (carte) sont les boutons de la bulle.
+ */
+export function GroundingCard({ g }: { g: NonNullable<CopilotAnswer["grounding"]> }) {
+  const id = g.identification;
+  // une zone qui CONTIENT le lieu identifié (Key Lento pour la maison) n'est pas une « autre possibilité »
+  const others = g.candidates.filter((c) => c.id !== id?.id && !(id && c.type === "zone")).slice(0, 2);
+  return (
+    <div className="vgr" data-testid="ai-grounding" data-confidence={id?.confidence ?? "aucune"}>
+      <p className="vgr__id">
+        <Icon name={g.kind === "carte" ? "map" : "target"} size={14} />
+        {id ? (
+          <>
+            <b data-testid="grounding-name">{id.name}</b>
+            <i className={`vgr__conf is-${id.confidence}`}>confiance {id.confidence}</i>
+          </>
+        ) : (
+          <b data-testid="grounding-name">{g.kind === "carte" ? "Zone non identifiée" : "Lieu non identifié"}</b>
+        )}
+      </p>
+      {g.why.length > 0 && (
+        <ul className="vgr__why" aria-label="Indices">
+          {g.why.map((w, i) => <li key={i}>{w}</li>)}
+        </ul>
+      )}
+      {!id && g.reason && <p className="vgr__sub">{g.reason}.</p>}
+      {others.length > 0 && <p className="vgr__sub" data-testid="grounding-others">{id ? "Autre possibilité" : "Candidats"} : {others.map((c) => c.name).join(", ")}</p>}
+      {g.toCheck.length > 0 && <p className="vgr__sub">À vérifier : {g.toCheck.join(" ; ")}</p>}
+      {g.action && <p className="vgr__act">→ {g.action}</p>}
+      {(g.memory || g.refs > 0) && (
+        <p className="vgr__meta">
+          {g.memory === "résumé" ? "Image plus disponible : réponse d'après mon résumé (renvoie la capture pour une nouvelle analyse)." : g.memory === "image" ? "D'après ta capture précédente." : ""}
+          {g.refs > 0 ? ` Comparée à ${g.refs} extrait${g.refs > 1 ? "s" : ""} de la carte LEONIDA.` : ""}
+        </p>
+      )}
+    </div>
+  );
+}

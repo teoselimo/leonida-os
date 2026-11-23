@@ -13,10 +13,13 @@ import { demoRepository, localProgressStore } from "./repository";
 import { cloudLoad, cloudSave } from "./runtime/cloud";
 import type { Discovery, Gauge, MissionAlertBrief, Objective, PersistedState, Profile, RadarSignal, StoryState, VehicleProgress, VehicleState, ViewId } from "./types";
 import type { ResourceId } from "./story/model";
-import { nodeByName } from "./progress";
+import { notAMission } from "./missionKind";
 
-/** V0.18.1 : une ACTIVITÉ libre (épargne, collecte…) n'est jamais une mission : elle ne va pas dans nextMission. */
-export const isActivityName = (name: string | null | undefined) => !!name && nodeByName(name)?.kind === "activity";
+/**
+ * V0.18.1 → V0.19 : une ACTIVITÉ libre (épargne, collecte…) ou un LIEU n'est jamais une mission : ils ne vont pas dans
+ * nextMission. Classification unique (graphe du chapitre 1 + inventaire des chapitres 2 à 5) : src/lib/missionKind.ts.
+ */
+export const isActivityName = (name: string | null | undefined) => notAMission(name);
 
 const STORAGE_KEY = "leonida-os/progress/v1";
 const MAX_PROOFS = 4;
@@ -497,7 +500,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       confirmPastMissions: (names) => dispatch({ type: "pastDone", names }),
       setNextMission: (name, inProgress = false) =>
         isActivityName(name)
-          ? showToast({ title: "C'est une activité, pas une mission", body: `« ${name} » se fait quand tu veux : coche-la « Fait » une fois terminée.`, icon: "info" })
+          ? showToast({ title: "Ce n'est pas une mission", body: `« ${name} » est une activité ou un lieu : coche-la « Fait » une fois terminée.`, icon: "info" })
           : dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress, ...(name ? { exploring: null } : {}) } }),
       setExploring: (on) => dispatch({ type: "profile", patch: on ? { exploring: new Date().toISOString(), nextMission: null, missionInProgress: false } : { exploring: null } }),
       setMissionInProgress: (on) => dispatch({ type: "profile", patch: { missionInProgress: on } }),

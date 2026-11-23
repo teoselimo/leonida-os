@@ -11,8 +11,13 @@ import { decideWeb, englishQuery, WEB_ASK } from "./route";
 import { redactorFor } from "../spoiler";
 import type { TurnMetrics, WebReason } from "./route";
 import type { BriefItem, ChecklistItem, CopilotAnswer, LlmMessage, LlmTransport, Trust, WebHit, WebSearchFn, WebStatus } from "./types";
-import { docsBlock, resolveMapGuess, visionRules } from "./vision";
+import { docsBlock, visionRules } from "./vision";
 import type { Attachment, AttachPurpose } from "./vision";
+import { ground, groundingBlock, parseObservation, entitiesForQuestion, knowledgeBlock } from "../knowledge/engine";
+import type { Grounding, Observation } from "../knowledge/engine";
+import { EXTRACT_RULES, MEMORY_TTL_MS, asksVehicle, isVisualFollowUp, keepImages, visionAnswerRules, visualQuery, wantsDetail, wantsMap } from "./grounding";
+import type { VisualMemory } from "./grounding";
+import { compactPlayerContext, placeFocus } from "./context";
 
 /**
  * Moteur conversationnel indépendant du fournisseur :
@@ -95,6 +100,12 @@ export interface AskOptions {
   /** LEONIDA Vision (V0.17) : images et documents texte joints à ce message. */
   attachments?: Attachment[];
   purpose?: AttachPurpose;
+  /** V0.19 · mémoire visuelle de la dernière image (questions de suivi). */
+  memory?: VisualMemory | null;
+  /** V0.19 · rendu d'un extrait de la carte LEONIDA autour d'un repère (navigateur), pour comparer une capture de carte. */
+  renderRef?: (landmarkId: string) => Promise<Blob | null>;
+  /** V0.19 · nouvelle mémoire visuelle après un tour avec image. */
+  onVision?: (m: VisualMemory) => void;
 }
 
 const NOTE: Record<string, string> = {
@@ -248,9 +259,30 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const draft = answer(checklist ? `Je vais lancer ${o.mission}` : o.question, o.ctx, o.topic);
   draft.actions = draft.actions.filter((x) => isValidAction(x, o.ctx.feed)).slice(0, 3);
   const atts = o.attachments ?? [];
-  const images = atts.filter((a) => a.kind === "image" && a.blob).map((a) => a.blob!);
+  const userImages = atts.filter((a) => a.kind === "image" && a.blob).map((a) => a.blob!);
+  let images = userImages;
   const docs = atts.filter((a) => a.kind === "text");
-  const vision = images.length > 0 || docs.length > 0;
+  // V0.19 · question de suivi sur l'image précédente (« et la voiture devant ? », « détaille », « montre-moi »)
+  const followMem = !userImages.length && !docs.length && !checklist && isVisualFollowUp(o.question, o.memory) ? o.memory! : null;
+  const memImages = followMem && Date.now() - followMem.at <= MEMORY_TTL_MS ? followMem.images : [];
+  if (followMem) {
+    const top = followMem.grounding?.candidates[0];
+    // « montre-moi le lieu » : réponse immédiate, sans appel à Claude, depuis la reconnaissance précédente
+    if (wantsMap(o.question) && !asksVehicle(o.question) && top?.landmarkId)
+      return {
+        ...fromDirect(draft),
+        intent: "vision_followup",
+        message: `Voici ${top.name} sur la carte (candidat ${followMem.grounding!.confidence === "élevée" ? "le plus probable" : "à confirmer"}, d'après la capture précédente).`,
+        trust: null,
+        sources: [],
+        actions: [{ type: "show_place", label: `Voir ${top.name} sur la carte`, landmarkId: top.landmarkId }],
+        engine: "direct",
+        grounding: groundingOut(followMem.grounding!, undefined, [], memImages.length ? "image" : "résumé", 0),
+        replies: VISION_REPLIES,
+      };
+    if (memImages.length) images = memImages;
+  }
+  const vision = images.length > 0 || docs.length > 0 || !!followMem;
   if (vision && !o.transport)
     return { ...fromDirect(draft), message: "Je ne peux pas analyser de pièce jointe ici : Claude n'est pas connecté dans cet environnement. Décris-moi ce que tu vois et je t'aide avec les données LEONIDA.", trust: null, actions: [], sources: [], note: "Analyse d'image indisponible." };
   if (!o.transport || !o.ctx.feed) return fromDirect(draft);
@@ -278,7 +310,31 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   let plans: Array<[string, string]> = [];
   let searches = 0;
   let cachedSearches = 0;
-  if (checklist && o.search) {
+  // V0.19 · Visual Grounding : extraction (1re passe) → ancrage local → recherche seulement si l'identification reste incertaine
+  let obs: Observation | null = followMem?.obs ?? null;
+  let grounding: Grounding | null = followMem?.grounding ?? null;
+  const visualTurn = images.length > 0 || !!followMem;
+  if (userImages.length) {
+    o.onStage?.("write");
+    try {
+      const r1 = await o.transport.generate({ messages: [{ role: "user", content: `${EXTRACT_RULES}\n\nQUESTION DU JOUEUR (contexte seulement) : ${o.question}` }], images: userImages, tier: "default", signal: o.signal });
+      claudeCalls++;
+      obs = parseObservation(looseJson(r1.text));
+    } catch (e) {
+      if (e instanceof LlmError && e.code === "cancelled") throw e;
+      obs = null; // extraction en échec : la réponse se fera sans reconnaissance (dit comme tel)
+    }
+    if (obs && o.purpose === "carte") obs.kind = "carte";
+    grounding = obs ? ground(obs, o.ctx.state.profile) : null;
+  }
+  if (visualTurn) {
+    // identifié avec des preuves fiables, ou question de suivi : pas de web ; incertain et indices distinctifs : web
+    const unsure = !!grounding && (grounding.confidence === "faible" || grounding.confidence === "aucune");
+    if (userImages.length && obs && obs.gta !== "non" && unsure && obs.clues.length >= 2 && o.search) {
+      plans = [[visualQuery(obs, grounding!, o.ctx.state.profile.chapter), "GTA VI location matching these visual clues"]];
+      reason = "insufficient";
+    } else reason = "local_ok";
+  } else if (checklist && o.search) {
     plans = [[webQuery(o), webObjective(o)], missablesQuery(o)];
     reason = "checklist";
   } else if (o.planner && o.search && !NO_WEB.has(draft.intent)) {
@@ -326,9 +382,21 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const evidence = buildEvidence(o.ctx.feed, ids, o.ctx.places ?? [], webEv);
   const allIds = [...ids, ...webEv.map((w) => w.id)];
 
-  const actions: AiAction[] = draft.actions;
-  const facts = SMALLTALK.has(draft.intent) || draft.intent === "clarify" ? "" : draft.text;
-  const player = playerContext(o.ctx.state, o.ctx.feed);
+  // extraits de la carte LEONIDA autour des candidats, joints à la seconde passe (capture de carte uniquement)
+  let refs: Blob[] = [];
+  if (userImages.length && obs?.kind === "carte" && grounding?.candidates.length && o.renderRef) {
+    // candidats à égalité (confiance faible) : 3 extraits, pour que la comparaison visuelle départage
+    const n = grounding.confidence === "faible" ? 3 : 2;
+    const out = await Promise.all(grounding.candidates.slice(0, n).map((c) => (c.landmarkId ? o.renderRef!(c.landmarkId).catch(() => null) : Promise.resolve(null))));
+    refs = out.filter((b): b is Blob => !!b);
+  }
+  // un tour visuel ne reprend pas la réponse directe (souvent hors sujet) ; une question sur un lieu reçoit un contexte compact
+  const actions: AiAction[] = visualTurn ? [] : draft.actions;
+  const facts = visualTurn || SMALLTALK.has(draft.intent) || draft.intent === "clarify" ? "" : draft.text;
+  // V0.19 · connaissances LEONIDA (lieux, véhicules) citées par la question, même sans image
+  const kEnts = visualTurn ? [] : entitiesForQuestion(o.question);
+  const kb = knowledgeBlock(kEnts);
+  const player = visualTurn || placeFocus(o.question, kEnts.some((e) => e.type !== "zone")) ? compactPlayerContext(o.ctx.state) : playerContext(o.ctx.state, o.ctx.feed);
   // état exact des sources, pour ne jamais confondre « rien dans notre base », « web indisponible »,
   // « pas de source fiable » et « le contenu n'existe pas »
   const localNote = ids.length ? `${ids.length} élément(s) LEONIDA (fiches RADAR / lieux / progression)` : "aucune fiche LEONIDA RADAR sur ce sujet (cela ne prouve rien sur le jeu)";
@@ -343,11 +411,27 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
         : web?.status === "empty"
           ? `aucun résultat web pertinent après ${web.tries ?? 1} essai(s) — ce n'est pas une preuve d'inexistence`
           : "recherche web en échec (connecteur non branché, refusé ou en erreur) — ne prétends pas avoir cherché sur le web";
-  const history = o.history.slice(-MAX_HISTORY).map((m) => (m.role === "assistant" ? { ...m, content: m.content.slice(0, 1_200) } : m));
+  // un tour visuel garde une histoire courte (le contexte utile est l'image et la reconnaissance, pas toute la conversation)
+  const history = o.history.slice(visualTurn ? -4 : -MAX_HISTORY).map((m) => (m.role === "assistant" ? { ...m, content: m.content.slice(0, 1_200) } : m));
+  const followMode = followMem ? (memImages.length ? "image" : "résumé") : null;
+  const visionBlock = visualTurn
+    ? [
+        visionAnswerRules({ purpose: obs?.kind === "carte" ? "carte" : o.purpose ?? "capture", refs: refs.length, followUp: followMode, detail: wantsDetail(o.question) }),
+        obs ? `INDICES EXTRAITS DE L'IMAGE (1re passe) : type ${obs.kind}, GTA VI : ${obs.gta} ; indices : ${obs.clues.join(", ") || "aucun"} ; textes lus : ${obs.texts.join(" | ") || "aucun"} ; véhicules : ${obs.vehicles.join(" | ") || "aucun"} ; résumé : ${obs.summary || "—"}` : userImages.length ? "INDICES : l'extraction a échoué ; décris prudemment ce que tu vois, sans identifier de lieu." : "",
+        grounding ? groundingBlock(grounding) : "",
+        followMem ? `RÉSUMÉ DE L'IMAGE PRÉCÉDENTE ET DE TA RÉPONSE : ${followMem.obs?.summary ?? "—"} — tu avais répondu : « ${followMem.answer.slice(0, 400)} »` : "",
+        asksVehicle(o.question) && grounding?.vehicle ? `La question porte sur le VÉHICULE : réponds sur ${grounding.vehicle.name} (indices : ${grounding.vehicle.why.join(" ; ")}).` : "",
+        docsBlock(atts),
+      ]
+        .filter(Boolean)
+        .join("\n\n")
+    : docs.length
+      ? [visionRules(0, o.purpose ?? "capture", docs.length), docsBlock(atts)].join("\n\n")
+      : undefined;
   const messages: LlmMessage[] = [
     { role: "user", content: RULES },
     ...history,
-    { role: "user", content: composeTurn({ question: o.question, player, evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}`, vision: vision ? [visionRules(images.length, o.purpose ?? "capture", docs.length), docsBlock(atts)].filter(Boolean).join("\n\n") : undefined }) },
+    { role: "user", content: composeTurn({ question: o.question, player, evidence: kb ? `${evidence}\nCONNAISSANCES LEONIDA (lieux, véhicules — fiches sourcées)\n${kb}` : evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}`, vision: visionBlock }) },
   ];
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
   try {
@@ -359,7 +443,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
       signal: o.signal,
       // une image demande le modèle standard (meilleure lecture) ; le texte seul reste rapide
       tier: checklist || images.length ? "default" : o.tier ?? "quick",
-      ...(images.length ? { images } : {}),
+      ...(images.length || refs.length ? { images: [...images, ...refs] } : {}),
       onText: (t) => {
         const v = visiblePart(t);
         if (firstText === null && v.trim()) firstText = Date.now() - t0;
@@ -373,19 +457,19 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     // Validation : aucun nombre « significatif » absent des preuves, du contexte, de la conversation ou de la question
     // Vision : un nombre que Claude déclare LU sur l'image (champ « lus ») ou présent dans un document joint est admis
     const lus = vision && Array.isArray((meta as { lus?: unknown } | null)?.lus) ? ((meta as { lus: unknown[] }).lus.map(String).slice(0, 20)) : [];
-    const allowed = new Set([...digits(evidence), ...digits(draft.text), ...digits(o.question), ...digits(player), ...history.flatMap((m) => digits(m.content)), ...lus.flatMap(digits), ...docs.flatMap((d) => digits(d.text ?? ""))]);
+    const allowed = new Set([...digits(evidence), ...digits(draft.text), ...digits(o.question), ...digits(player), ...history.flatMap((m) => digits(m.content)), ...lus.flatMap(digits), ...docs.flatMap((d) => digits(d.text ?? "")), ...digits(visionBlock ?? ""), ...digits(kb)]);
     const bad = digits(message).filter((n) => !allowed.has(n) && !(Number(n) <= 20));
     if (bad.length && vision)
       return { ...fromDirect(draft), message: "Je préfère ne pas te donner cette réponse : elle citait un chiffre que je ne retrouve ni sur ta capture ni dans les sources. Renvoie une capture plus nette ou précise ta question.", trust: null, actions: [], sources: [], note: `Réponse de Claude écartée (chiffre non vérifiable : ${bad.slice(0, 2).join(", ")}).`, web };
     if (bad.length) return { ...fromDirect(draft, `Réponse de Claude écartée : elle citait un chiffre absent des sources (${bad.slice(0, 2).join(", ")}). Voici la réponse vérifiée.`), web };
     const idx = Array.isArray(meta?.actions) ? (meta!.actions as unknown[]).filter((i): i is number => Number.isInteger(i) && (i as number) >= 0 && (i as number) < actions.length) : null;
     let chosen = (idx ? idx.map((i) => actions[i]) : actions).slice(0, 2);
-    // Capture de carte : on ne garde que des NOMS du modèle, retrouvés dans la carte LEONIDA (jamais ses coordonnées)
-    const mapGuess = o.purpose === "carte" && images.length ? resolveMapGuess((meta as { lieu?: unknown } | null)?.lieu, o.ctx.places ?? []) : null;
-    if (mapGuess?.matched.length) chosen = [{ type: "show_place" as const, label: "Voir la proposition sur la carte", landmarkId: mapGuess.matched[0].id }, ...chosen].slice(0, 2);
-    else if (mapGuess?.district) chosen = [{ type: "show_place" as const, label: `Voir ${mapGuess.district} sur la carte`, district: mapGuess.district }, ...chosen].slice(0, 2);
-    const vmeta = (meta as { vision?: { certain?: unknown; hypotheses?: unknown } } | null)?.vision;
     const strs = (x: unknown) => (Array.isArray(x) ? x.filter((y): y is string => typeof y === "string").map((y) => y.slice(0, 160)).slice(0, 5) : []);
+    // V0.19 · identification : seulement un candidat du MOTEUR ; confiance jamais au-dessus de celle du moteur
+    const idMeta = (meta as { identification?: { candidat?: unknown; confiance?: unknown } } | null)?.identification;
+    const vg = grounding ? groundingOut(grounding, idMeta, strs((meta as { indices?: unknown } | null)?.indices), followMode, refs.length, typeof (meta as { action?: unknown } | null)?.action === "string" ? String((meta as { action: string }).action).slice(0, 100) : null) : null;
+    if (vg?.identification?.landmarkId) chosen = [{ type: "show_place" as const, label: `Voir ${vg.identification.name} sur la carte`, landmarkId: vg.identification.landmarkId }];
+    else if (vg && !vg.identification && vg.candidates[0]?.landmarkId) chosen = [{ type: "show_place" as const, label: `Voir le 1er candidat (${vg.candidates[0].name})`, landmarkId: vg.candidates[0].landmarkId }];
     // progression : les actions à confirmer (terminer, lancer, cocher) restent toujours proposées
     if (PROGRESS_ACT.has(draft.intent) && actions.length) chosen = actions.slice(0, 3);
     // #15 : le joueur demande à voir sur la carte → le bouton carte reste proposé, même si Claude l'a omis
@@ -396,9 +480,10 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const sources: Source[] = sourcesFor(used.length ? used : allIds, o.ctx, draft.sources, hits);
     // anti-spoiler à la source : un nom de mission future glissé par le modèle est retiré avant stockage
     const red = redactorFor(o.ctx.state, o.ctx.feed);
-    return {
-      intent: checklist ? "checklist" : draft.intent,
-      message: red(message.slice(0, MAX_ANSWER)),
+    const out: CopilotAnswer = {
+      intent: checklist ? "checklist" : visualTurn ? "vision" : draft.intent,
+      // jamais coupée en silence : une réponse trop longue le signale
+      message: red(message.length > MAX_ANSWER ? `${message.slice(0, MAX_ANSWER).replace(/\s+\S*$/, "")} …` : message),
       // un fait issu du seul web ne peut pas être « officiel » ni « recoupé »
       // « Vérifié » exige des sources INDÉPENDANTES : au moins deux sites distincts parmi celles affichées
       // (ou une fiche officielle) ; un fait issu du seul web, ou d'un seul site, reste « Probable »
@@ -410,16 +495,20 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
       sources,
       actions: chosen,
       topic: checklist ? { kind: "mission", name: o.mission!, known: true } : draft.topic ?? o.topic,
-      replies: checklist ? [] : draft.replies,
+      replies: checklist ? [] : visualTurn ? VISION_REPLIES : draft.replies,
       more: draft.more,
       engine: "claude",
       model: r.model,
-      note: r.truncated ? "Réponse coupée par la limite de longueur." : undefined,
+      note: r.truncated || message.length > MAX_ANSWER ? "Réponse raccourcie (limite de longueur) : demande « détaille » pour la suite." : undefined,
       evidence: allIds,
       ...(checklist ? briefOf(meta, o.ctx, allIds, hits) : {}),
-      ...(vision ? { vision: { certain: strs(vmeta?.certain).map(red), hypotheses: strs(vmeta?.hypotheses).map(red) }, mapGuess } : {}),
+      ...(vg ? { grounding: { ...vg, why: vg.why.map(red), action: vg.action ? red(vg.action) : null } } : {}),
       web,
     };
+    // mémoire visuelle : la nouvelle image (ou la même, rafraîchie) pour les questions de suivi
+    if (userImages.length) o.onVision?.({ at: Date.now(), images: keepImages(userImages), purpose: obs?.kind === "carte" ? "carte" : o.purpose ?? "capture", obs, grounding, answer: message.slice(0, 600) });
+    else if (followMem) o.onVision?.({ ...followMem, at: memImages.length ? Date.now() : followMem.at, answer: message.slice(0, 600) });
+    return out;
   } catch (e) {
     const code = e instanceof LlmError ? e.code : "upstream_error";
     if (code === "cancelled") {
@@ -541,4 +630,43 @@ function sourcesFor(ids: string[], ctx: AiContext, fallback: Source[], hits: Web
     }
   }
   return (out.length ? out : fallback).slice(0, 5);
+}
+
+
+/** Premier objet JSON d'un texte (la 1re passe ne doit rendre que du JSON, mais on tolère un préambule). */
+export function looseJson(text: string): unknown {
+  const a = text.indexOf("{");
+  const b = text.lastIndexOf("}");
+  if (a < 0 || b <= a) return null;
+  try {
+    return JSON.parse(text.slice(a, b + 1));
+  } catch {
+    return null;
+  }
+}
+
+const CONF_RANK = ["aucune", "faible", "moyenne", "élevée"] as const;
+/** Suites naturelles d'une réponse sur une image (au lieu des suggestions génériques de progression). */
+const VISION_REPLIES = ["Détaille", "Et le véhicule ?", "Montre-moi le lieu"];
+
+/** Sortie « reconnaissance » d'une réponse : identification validée contre les candidats du moteur. */
+export function groundingOut(g: Grounding, idMeta: { candidat?: unknown; confiance?: unknown } | null | undefined, why: string[], memory: "image" | "résumé" | null, refs: number, action: string | null = null): NonNullable<CopilotAnswer["grounding"]> {
+  const pool = [...g.candidates, ...(g.vehicle ? [g.vehicle] : [])];
+  // sans avis de Claude (réponse locale), le meilleur candidat du moteur ; sinon seulement l'id qu'il a retenu
+  const pick = idMeta === undefined ? g.candidates[0] ?? null : pool.find((c) => c.id === String(idMeta?.candidat ?? "")) ?? null;
+  const asked = CONF_RANK.indexOf((idMeta?.confiance as (typeof CONF_RANK)[number]) ?? g.confidence);
+  const conf = CONF_RANK[Math.min(asked < 0 ? CONF_RANK.indexOf(g.confidence) : asked, CONF_RANK.indexOf(g.confidence))];
+  const identification = pick && conf !== "aucune" ? { id: pick.id, name: pick.name, confidence: conf, landmarkId: pick.landmarkId } : null;
+  return {
+    kind: g.kind,
+    identification,
+    why: why.length ? why.slice(0, 3) : identification ? pick!.why.slice(0, 3) : [],
+    toCheck: pick?.toCheck ?? [],
+    candidates: g.candidates.map((c) => ({ id: c.id, name: c.name, score: c.score, landmarkId: c.landmarkId, type: c.type })),
+    vehicle: g.vehicle ? g.vehicle.name : null,
+    reason: g.reason,
+    memory,
+    refs,
+    action,
+  };
 }

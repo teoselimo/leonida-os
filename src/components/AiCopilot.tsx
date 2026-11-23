@@ -1,5 +1,6 @@
 "use client";
 
+import { launchConfirm } from "@/lib/ai/progressAnswers";
 import { useRedact } from "@/lib/useRedact";
 import { ROUTER_KEY } from "@/lib/copilot/route";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -21,12 +22,15 @@ import type { SpringHandle } from "@/lib/motion";
 import { Sheet } from "./Sheet";
 import { BrandMark, CopilotGlyph } from "./Brand";
 import { Icon } from "./ui/Icon";
-import { VisionAttach, VisionAnswer, attachmentNote } from "./VisionAttach";
+import { VisionAttach, VisionAnswer, GroundingCard, attachmentNote } from "./VisionAttach";
+import { RichText } from "./RichText";
+import { mapRefRenderer } from "@/lib/mapRef";
+import type { VisualMemory } from "@/lib/copilot/grounding";
 import type { AttachmentChip } from "./VisionAttach";
 import type { Attachment, AttachPurpose, VisionLimits } from "@/lib/copilot/vision";
 import { AttachError, MAX_DOCS, prepareImage, prepareText, TEXT_DOC } from "@/lib/copilot/vision";
 
-type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean; stage?: "search" | "write"; checklist?: CopilotAnswer["checklist"]; web?: CopilotAnswer["web"]; mission?: string; vision?: CopilotAnswer["vision"]; mapGuess?: CopilotAnswer["mapGuess"]; attNames?: string[] };
+type AiMsg = { id: number; role: "ai"; a: AiAnswer; llm?: ProxyStatus | "pending"; engine?: "claude" | "direct"; model?: string; note?: string; streaming?: boolean; stage?: "search" | "write"; checklist?: CopilotAnswer["checklist"]; web?: CopilotAnswer["web"]; mission?: string; vision?: CopilotAnswer["vision"]; mapGuess?: CopilotAnswer["mapGuess"]; grounding?: CopilotAnswer["grounding"]; attNames?: string[] };
 type AskOpts = { mode?: "chat" | "checklist"; mission?: string; attachments?: Attachment[]; purpose?: AttachPurpose };
 const WEB_FAIL: Partial<Record<WebStatus, string>> = {
   not_connected: "Recherche web indisponible : le connecteur Exa n'est pas branché sur ton compte Claude.",
@@ -140,6 +144,8 @@ export function AiCopilot() {
     };
   }, [transport]);
   const [atts, setAtts] = useState<Attachment[]>([]);
+  /** V0.19 · dernière image analysée (mémoire vive : jamais localStorage ; effacée avec la conversation). */
+  const visualRef = useRef<VisualMemory | null>(null);
   const [purpose, setPurpose] = useState<AttachPurpose>("capture");
   const [attErr, setAttErr] = useState<string | null>(null);
   const addFiles = async (files: File[], kind: "photo" | "capture" | "carte" | "doc") => {
@@ -328,6 +334,10 @@ export function AiCopilot() {
         const c = await askCopilot({
           attachments: atts,
           purpose: opts.purpose,
+          // V0.19 · mémoire visuelle (mémoire vive seulement) et extraits de carte pour comparer une capture de carte
+          memory: visualRef.current,
+          renderRef: mapRefRenderer(pl),
+          onVision: (vm) => (visualRef.current = vm),
           mode: opts.mode,
           mission: opts.mission,
           search: web === "unavailable" ? null : exaSearch,
@@ -349,7 +359,7 @@ export function AiCopilot() {
         }
         const webNote = c.web && c.web.status !== "ok" ? WEB_FAIL[c.web.status] : undefined;
         if (c.web) reportWeb(c.web.status === "ok" || c.web.status === "empty" ? "ok" : c.web.status);
-        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: [c.note, webNote].filter(Boolean).join(" ") || undefined, checklist: c.checklist, web: c.web, mission: opts.mission, vision: c.vision, mapGuess: c.mapGuess, attNames: chips?.map((x) => x.name) } : x)));
+        setMsgs((m) => m.map((x) => (x.id === id + 1 ? { id: id + 1, role: "ai", a: toAi(c), engine: c.engine, model: c.model, note: [c.note, webNote].filter(Boolean).join(" ") || undefined, checklist: c.checklist, web: c.web, mission: opts.mission, vision: c.vision, mapGuess: c.mapGuess, grounding: c.grounding, attNames: chips?.map((x) => x.name) } : x)));
         return;
       }
       const local = answer(question, ctx, topic);
@@ -473,6 +483,7 @@ export function AiCopilot() {
   };
 
   const clear = () => {
+    visualRef.current = null;
     setMsgs([]);
     setPending(null);
     try {
@@ -540,8 +551,9 @@ export function AiCopilot() {
           ) : (
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
               {m.attNames?.length ? <p className="bubble__about" data-testid="ai-about">Réponse à {m.attNames.length > 1 ? `tes ${m.attNames.length} pièces jointes` : `« ${m.attNames[0]} »`}</p> : null}
-              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.attNames?.length ? "Leonida regarde ta pièce jointe…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <p className="bubble__text">{redact(m.a.text)}</p>}
-              {!m.streaming && (m.vision || m.mapGuess) && <VisionAnswer vision={m.vision} guess={m.mapGuess ?? null} />}
+              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.attNames?.length ? "Leonida regarde ta pièce jointe…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <RichText className="bubble__text" text={redact(m.a.text)} />}
+              {!m.streaming && m.grounding && <GroundingCard g={m.grounding} />}
+              {!m.streaming && !m.grounding && (m.vision || m.mapGuess) && <VisionAnswer vision={m.vision} guess={m.mapGuess ?? null} />}
               {m.checklist && <ChecklistView c={m.checklist} mission={m.mission ?? ""} />}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.actions.length > 0 && (
@@ -551,7 +563,7 @@ export function AiCopilot() {
                     const asking = pending?.key === key && "confirm" in a;
                     return asking ? (
                       <span key={i} className="confirm" data-testid="ai-confirm">
-                        <span>{(a as { confirm: string }).confirm}</span>
+                        <span>{a.type === "start_mission" ? launchConfirm(state, a.name) : (a as { confirm: string }).confirm}</span>
                         <button className="btn btn--primary btn--xs" onClick={() => run(a, true)}>Confirmer</button>
                         <button className="btn btn--ghost btn--xs" onClick={() => setPending(null)}>Annuler</button>
                       </span>

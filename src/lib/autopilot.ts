@@ -136,7 +136,7 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   const doneNames = new Set([...p.missionsDone, p.lastMission ?? ""].map((m) => nk(m)));
   const manual = [
     ...v.states.filter((x) => x.node.kind !== "activity" && x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
-    ...STORY_NODES.filter((n) => n.chapter <= p.chapter && n.kind !== "place").map((n) => n.name),
+    ...STORY_NODES.filter((n) => n.chapter <= p.chapter && (n.kind === "main" || n.kind === "side")).map((n) => n.name),
   ].filter((n, i, a) => a.indexOf(n) === i && !doneNames.has(nk(n)));
   const mode: AutopilotMode = started ? "en mission" : planned ? "envisagée" : p.exploring ? "exploration" : "à choisir";
   return {
