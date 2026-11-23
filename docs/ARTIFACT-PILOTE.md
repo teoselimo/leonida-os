@@ -284,3 +284,10 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Déclaration de l'Artifact : `sample` passe de `{}` à `{ images: true }` (version `1795463065-2c9c`), puis publication du code (patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié).
 - Sauvegarde : révision 8, champ facultatif `story` ; une sauvegarde V0.16.1 se charge sans perte.
 - Version Artifact `1795463072-6a0a`. Tests : 389/389 (4 ignorés). Analyse d'image : testée avec Claude simulé uniquement ; premier essai réel à faire sur iPhone ou iPad.
+
+## 21. V0.18 · Mission Autopilot (23/11/2026)
+
+- Livraison détaillée : `docs/V0.18.md` ; démonstration `docs/v018-demo.jpg`.
+- Publication en patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié ; déclaration inchangée (`sample: { images: true }`).
+- Sauvegarde : révision 9, champ facultatif `profile.exploring` ; une sauvegarde V0.17 se charge sans perte.
+- Version Artifact `1795466323-28ee`. Tests : suite complète 423 réussis, puis `v071.spec.ts` corrigé et relancé seul 24/24 (4 ignorés). Simulations, pas des essais sur appareil.
