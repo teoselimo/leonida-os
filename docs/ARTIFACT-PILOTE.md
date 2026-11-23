@@ -269,3 +269,11 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Référentiel vérifié de 5 véhicules et modèle de preuve réutilisable : voir `docs/RARE-VEHICLE-LOCATOR.md`.
 - Sauvegarde : nouveau champ facultatif `proofs`, conservé par la remise à zéro de la démo et assaini à la migration ; les états `vehicles[id]` existants sont repris tels quels.
 - Version Artifact `1795437638-5c3b` (patch : 6 fichiers, 2 anciens retirés, `data/radar.json` non republié). Tests : 353/353.
+
+## 19. V0.16.1 · Rare Vehicle Locator : localisations précises (23/11/2026)
+
+- Les cinq véhicules sont localisés au bâtiment ou au parcours, avec une marge de 15 à 40 m. Positions calibrées depuis des captures de la carte du jeu, non testées en jeu.
+- Trois fiabilités distinctes, ordre des commandes de Moses, visuel avec la règle des droits.
+- Détail : `docs/RARE-VEHICLE-LOCATOR.md` ; planche : `docs/rvl-v0161-comparaison.jpg`.
+- Sauvegarde : nouvelles clés facultatives `done["order:<id>"]` ; `proofs` sert aussi aux captures-visuels.
+- Version Artifact `1795444205-4351`. Tests : 360/360.

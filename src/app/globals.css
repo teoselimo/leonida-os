@@ -1442,3 +1442,27 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .rvl__mine img { width: 96px; height: auto; border-radius: 8px; }
 .rvl__add { display: grid; gap: 8px; margin-top: 8px; }
 .rvl__add .input { width: 100%; min-height: 40px; padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.25); color: inherit; font-size: 16px; }
+
+/* ── Rare Vehicle Locator V0.16.1 : visuel, trois fiabilités, commande ─── */
+.rvlhero { position: relative; border-radius: 18px; overflow: hidden; min-height: 168px; background: #0c0a14; display: flex; flex-direction: column; }
+.rvlhero.has-shot { aspect-ratio: 16 / 9; }
+.rvlhero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rvlhero__ph { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 18px 56px 8px 18px; }
+.rvlhero__ph strong { font-size: 17px; line-height: 1.25; max-width: 26ch; }
+.rvlhero__ph span { font-size: 13px; color: var(--muted, #a9a9b8); max-width: 34ch; }
+.rvlhero__swatch { width: 46px; height: 10px; border-radius: 6px; background: var(--c); box-shadow: 0 0 18px color-mix(in srgb, var(--c) 70%, transparent); }
+.rvlhero__bar { position: relative; z-index: 1; margin: 0 10px 10px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
+.rvlhero.has-shot .rvlhero__bar { position: absolute; left: 0; right: 0; bottom: 0; }
+.rvlhero:not(.has-shot) { background: radial-gradient(110% 80% at 85% 100%, color-mix(in srgb, var(--c) 42%, transparent), transparent 62%), linear-gradient(160deg, #1a1426, #0b0a12); }
+.rvlhero__video, .rvlhero__add, .rvlhero__credit { display: inline-flex; align-items: center; gap: 5px; min-height: 36px; padding: 6px 11px; border-radius: 11px; background: rgba(0, 0, 0, 0.58); color: #fff; font-size: 12.5px; font-weight: 600; border: 0; text-decoration: none; }
+.rvlhero__credit { font-weight: 500; font-size: 11px; min-height: 28px; }
+.rvl__trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.rvl__trust > div { display: grid; gap: 1px; padding: 8px 9px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); }
+.rvl__trust span { font-size: 11px; color: var(--muted, #a9a9b8); }
+.rvl__trust strong { font-size: 13.5px; }
+.rvl__trust em { font-style: normal; font-size: 11px; color: var(--muted, #a9a9b8); }
+.rvl__place { font-size: 12.5px; }
+.rvl__access--order-pending strong { color: #ffd23f; }
+.rvl__access .btn { margin-top: 4px; }
+.rvl__chip--point { background: rgba(61, 220, 107, 0.14); color: #3ddc6b; }
+.rvl__chip--parcours { background: rgba(255, 138, 61, 0.16); color: #ffb07a; }

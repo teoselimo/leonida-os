@@ -133,7 +133,7 @@ test("Parcours continu : Accueil → Préparer ma mission → voiture sympa → 
   await expect(page).toHaveURL(/#carte$/);
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet).toBeVisible();
-  await expect(page.getByTestId("zone-tag")).toContainText(/Zone (estimée|documentée|large)/);
+  await expect(page.getByTestId("zone-tag")).toContainText(/Zone|Calibré|Parcours/);
   await page.waitForFunction(() => (window as unknown as { __leonidaMapCount?: number }).__leonidaMapCount === 1);
   await sheet.locator('[data-testid="v-found"], [data-testid="rvl-found"]').first().click(); // repéré
   // régression V0.7 : sur la carte iPhone, la notification était étirée entre deux ancrages et masquait la fiche

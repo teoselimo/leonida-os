@@ -57,6 +57,9 @@ export function buildJournal(s: Pick<PersistedState, "profile" | "done" | "vehic
     if (key.startsWith("prog:")) {
       const n = PROG_BY_ID.get(key.slice(5));
       out.push({ id: key, kind: n?.id === "family-savings" ? "argent" : "activite", name: n?.name ?? key.slice(5), at, undo: { type: "done", key } });
+    } else if (key.startsWith("order:")) {
+      const v = feed?.vehicles?.find((x) => x.id === key.slice(6));
+      out.push({ id: key, kind: "activite", name: `Commande reçue : ${v?.name ?? key.slice(6)}`, at, undo: { type: "done", key } });
     } else if (key.startsWith("veh:")) {
       const v = feed?.vehicles?.find((x) => x.id === key.slice(4));
       out.push({ id: key, kind: "vehicule", name: v?.name ?? key.slice(4), at, undo: { type: "done", key } });

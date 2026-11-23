@@ -174,13 +174,19 @@ export function LeonidaMap(props: MapViewProps) {
               // Noms de quartiers (calculés depuis les repères) entre la vue d'île et la vue de rue
               { id: "dist", type: "symbol", source: "districts", minzoom: 3.2, maxzoom: 6.6, layout: { "icon-image": ["concat", "dist:", ["get", "name"]], "icon-allow-overlap": false, "symbol-sort-key": ["-", 0, ["get", "n"]] } },
               // Zones de recherche approximatives (Garage des légendes) : remplissage léger + contour pointillé
-              { id: "zones-fill", type: "fill", source: "zones", paint: { "fill-color": ["get", "color"], "fill-opacity": ["case", ["==", ["get", "sel"], 1], 0.28, 0.14] } },
+              { id: "zones-fill", type: "fill", source: "zones", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": ["get", "color"], "fill-opacity": ["case", ["==", ["get", "sel"], 1], 0.28, 0.14] } },
               {
                 id: "zones-line",
                 type: "line",
                 source: "zones",
+                filter: ["==", ["geometry-type"], "Polygon"],
                 paint: { "line-color": ["get", "color"], "line-width": ["case", ["==", ["get", "sel"], 1], 2.6, 1.4], "line-dasharray": [2, 1.5], "line-opacity": 0.9 },
               },
+              // Parcours d'un véhicule mobile (référentiel vérifié) : trait plein, halo sombre
+              { id: "zones-route-halo", type: "line", source: "zones", filter: ["==", ["geometry-type"], "LineString"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#071019", "line-width": ["interpolate", ["linear"], ["zoom"], 3, 4, 7, 9], "line-opacity": 0.6 } },
+              { id: "zones-route", type: "line", source: "zones", filter: ["==", ["geometry-type"], "LineString"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": ["get", "color"], "line-width": ["interpolate", ["linear"], ["zoom"], 3, 2, 7, 5] } },
+              // Position calibrée : pastille au centre du cercle d'incertitude (jamais une épingle « validée »)
+              { id: "zones-dot", type: "circle", source: "zones", filter: ["==", ["geometry-type"], "Point"], paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 3, 4, 7, 8], "circle-color": ["get", "color"], "circle-stroke-color": "#fff", "circle-stroke-width": 2 } },
               // Noms des lieux à partir d'un zoom de quartier (une image par nom, créée à la demande)
               {
                 id: "lm-label",
@@ -505,7 +511,7 @@ export function LeonidaMap(props: MapViewProps) {
   }, [ready, showLandmarks, selectedLandmarkId, poiKey, landmarks]);
 
   // Zones de recherche : cercles calculés en coordonnées de jeu puis projetés
-  const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}:${z.kind ?? ""}`).join("|") + `#${selectedZoneId ?? ""}`;
+  const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}:${z.kind ?? ""}:${z.path?.length ?? 0}`).join("|") + `#${selectedZoneId ?? ""}`;
   useEffect(() => {
     const map = mapRef.current;
     if (!ready || !map) return;
@@ -519,7 +525,13 @@ export function LeonidaMap(props: MapViewProps) {
     };
     (map.getSource("zones") as GeoJSONSource | undefined)?.setData({
       type: "FeatureCollection",
-      features: zones.map((z) => ({ type: "Feature", properties: { id: z.id, color: z.color, sel: z.id === selectedZoneId ? 1 : z.kind === "point" ? 1 : 0, r: z.radius }, geometry: { type: "Polygon", coordinates: [circle(z)] } })),
+      features: zones.flatMap((z) => {
+        const props = { id: z.id, color: z.color, sel: z.id === selectedZoneId ? 1 : z.kind === "point" ? 1 : 0, r: z.radius };
+        const out: GeoJSON.Feature[] = [{ type: "Feature", properties: props, geometry: { type: "Polygon", coordinates: [circle(z)] } }];
+        for (const line of z.path ?? []) out.push({ type: "Feature", properties: props, geometry: { type: "LineString", coordinates: line.map(([x, y]) => gameToLngLat(x, y)) } });
+        if (z.kind === "calibre") out.push({ type: "Feature", properties: props, geometry: { type: "Point", coordinates: gameToLngLat(z.x, z.y) } });
+        return out;
+      }),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, zoneKey]);
@@ -530,8 +542,8 @@ export function LeonidaMap(props: MapViewProps) {
     if (!map || !ready || !selectedZoneId) return;
     const z = zones.find((x) => x.id === selectedZoneId);
     if (!z) return;
-        const r = Math.max(z.radius, z.kind === "point" ? 260 : 0);
-    map.fitBounds([gameToLngLat(z.x - r, z.y - r), gameToLngLat(z.x + r, z.y + r)], { padding: padding(), duration: 850, maxZoom: 6.2 });
+        const r = Math.max(z.radius, z.kind === "point" ? 260 : z.kind === "calibre" ? 120 : 0);
+    map.fitBounds([gameToLngLat(z.x - r, z.y - r), gameToLngLat(z.x + r, z.y + r)], { padding: padding(), duration: 850, maxZoom: z.kind === "calibre" || z.path ? 7 : 6.2 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, focusNonce, selectedZoneId, occlusion.bottom, occlusion.left]);
 

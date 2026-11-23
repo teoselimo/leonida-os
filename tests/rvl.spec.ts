@@ -32,9 +32,15 @@ test("Penumbra FF : zone Vespucci, présence garantie, trouvé → récupéré �
   await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet.getByTestId("rvl-access")).toContainText("Accessible maintenant");
-  await expect(sheet.getByTestId("rvl-precision")).toContainText("zone documentée");
-  await expect(sheet.getByTestId("rvl-presence")).toContainText("Toujours au même endroit");
-  await expect(sheet.getByTestId("rvl-trust")).toContainText("Vérifié");
+  await expect(sheet.getByTestId("rvl-hero")).toBeVisible();
+  await expect(sheet.getByTestId("rvl-video")).toHaveAttribute("href", /youtube\.com\/watch/);
+  await expect(sheet.getByTestId("rvl-precision")).toContainText("Calibré à ±35 m, non testé en jeu");
+  await expect(sheet.getByTestId("rvl-presence")).toContainText("Garantie");
+  await expect(sheet.getByTestId("rvl-loc-trust")).toContainText("Calibré ±35 m");
+  await expect(sheet.getByTestId("rvl-v016")).toContainText("contenait bien");
+  // la capture du joueur devient l'image de la fiche
+  await sheet.getByTestId("rvl-hero-file").setInputFiles({ name: "penumbra.png", mimeType: "image/png", buffer: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGNgYGD4z8DAwMDAwMDAAAAJAAH3mN0SAAAAAElFTkSuQmCC", "base64") });
+  await expect(sheet.getByTestId("rvl-hero-img")).toBeVisible();
   await page.screenshot({ path: `captures/${info.project.name}-rvl-penumbra.png` });
   await sheet.getByTestId("rvl-found").click();
   await sheet.getByTestId("rvl-got").click();
@@ -47,22 +53,24 @@ test("Penumbra FF : zone Vespucci, présence garantie, trouvé → récupéré �
   await sheet.getByTestId("rvl-add-proof").click();
   await sheet.getByTestId("rvl-link").fill("https://youtu.be/exemple");
   await sheet.getByTestId("rvl-link-ok").click();
-  await expect(sheet.getByTestId("rvl-mine")).toHaveCount(1);
+  await expect(sheet.getByTestId("rvl-mine")).toHaveCount(2);
   await page.reload();
   await page.waitForSelector(".app.is-ready");
   const s = await saved(page);
   expect(s.vehicles["v-maibatsu-penumbra-ff"].state).toBe("registered");
-  expect(s.proofs["v-maibatsu-penumbra-ff"]).toHaveLength(1);
+  expect(s.proofs["v-maibatsu-penumbra-ff"]).toHaveLength(2); // capture-visuel + lien
   expect(s.done["real:keep"]).toBe("2026-11-20T10:00:00Z"); // l'existant n'est pas écrasé
   expect(s.profile.chapter).toBe(2);
 });
 
-test("Voir sur la carte : la zone est cadrée, pas d'épingle exacte", async ({ page }) => {
+test("Voir sur la carte : point calibré avec son incertitude, jamais une épingle « validée »", async ({ page }, info) => {
   await start(page, { chapter: 1 });
   await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
   await page.getByTestId("vehicle-sheet").getByTestId("rvl-map").click();
   await expect(page.locator('[data-testid="marker-veh:v-maibatsu-penumbra-ff"]')).toHaveCount(0);
-  await expect(page.getByTestId("zone-tag")).toBeVisible();
+  await expect(page.getByTestId("zone-tag")).toContainText("Calibré, non testé ±35 m");
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: `captures/${info.project.name}-rvl-carte-penumbra.png` });
 });
 
 test("anti-spoiler chapitre 1 : les cibles de la série restent masquées, sans nom de mission ni de donneur", async ({ page }) => {
@@ -73,17 +81,32 @@ test("anti-spoiler chapitre 1 : les cibles de la série restent masquées, sans 
   await expect(page.locator("body")).not.toContainText("Moses");
 });
 
-test("chapitre 2 avant la mission : visible, « Après une mission », Bandito en mouvement, Vamos sans carte", async ({ page }, info) => {
+test("chapitre 2 : « Après une mission », puis commande à recevoir, puis disponible ; Bandito sur son parcours", async ({ page }, info) => {
   await start(page, { chapter: 2, spoilerMode: "relaxed" });
   await page.getByTestId("vehicle-v-bf-bandito").first().click();
   let sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet.getByTestId("rvl-access")).toContainText("Après une mission");
-  await expect(sheet.getByTestId("rvl-presence")).toContainText("pas garanti");
+  await expect(sheet.getByTestId("rvl-presence")).toContainText("Non garantie");
+  await expect(sheet.getByTestId("rvl-precision")).toContainText("Parcours tracé");
+  await sheet.getByTestId("rvl-map").click();
+  await expect(page.getByTestId("zone-tag")).toContainText("Parcours");
+  await page.waitForTimeout(1200);
   await page.screenshot({ path: `captures/${info.project.name}-rvl-bandito.png` });
-  await sheet.locator(".vmedia__close").click();
+});
+
+test("commande de Moses : reçue confirmée par le joueur, sauvegardée, visible au journal ; Vamos localisé à Grayson", async ({ page }) => {
+  await start(page, { chapter: 2, spoilerMode: "relaxed", missionsDone: ["Daily Driver"] });
   await page.getByTestId("vehicle-v-declasse-vamos").first().click();
-  sheet = page.getByTestId("vehicle-sheet");
-  await expect(sheet.getByTestId("rvl-precision")).toContainText("Position inconnue");
-  await expect(sheet.getByTestId("rvl-map")).toBeDisabled();
+  const sheet = page.getByTestId("vehicle-sheet");
+  await expect(sheet.getByTestId("rvl-access")).toContainText("Commande à recevoir");
+  await expect(sheet.getByTestId("rvl-place")).toContainText("Lieu accessible");
+  await expect(sheet.getByTestId("rvl-condition")).toContainText("Declasse Yosemite 1500 et Karin Futo");
+  await sheet.getByTestId("rvl-order").click();
+  await expect(sheet.getByTestId("rvl-access")).toContainText("Accessible maintenant");
+  await expect(sheet.getByTestId("rvl-precision")).toContainText("Calibré à ±30 m");
+  await expect(sheet.getByTestId("rvl-map")).toBeEnabled();
   await expect(sheet.getByTestId("rvl-howto")).toContainText("2727");
+  const s = await saved(page);
+  expect(s.done["order:v-declasse-vamos"]).toBeTruthy();
+  expect(s.done["real:keep"]).toBe("2026-11-20T10:00:00Z");
 });

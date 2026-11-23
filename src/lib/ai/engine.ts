@@ -10,7 +10,7 @@ import type { Landmark } from "../gtadb";
 import { categoryFromQuery, districtFromQuery, findPoi, POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus, searchPois } from "../poi";
 import { afterDone, progressAnswer, progressIntent } from "./progressAnswers";
 import { ESTABLISHMENTS } from "@/data/establishments";
-import { findRare, PRESENCE_FR, RVL_BY_ID, rvlView, ZONEKIND_FR } from "../rvl";
+import { findRare, PRESENCE_FR, RVL_BY_ID, rvlView } from "../rvl";
 import { redactorFor } from "../spoiler";
 
 /**
@@ -245,8 +245,9 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
   const red = redactorFor(ctx.state, ctx.feed ?? null);
   const rl = rv?.locations[0];
   const rvArea = rl ? rl.area.split(", ").filter((part) => !rl.label.toLowerCase().includes(part.split(/[ (]/)[0].toLowerCase())).join(", ") : "";
-  const rvWhere = rv && rl
-    ? `${rl.label}${rvArea ? ` (${rvArea})` : ""} : ${rl.precision === "inconnue" ? "endroit non repéré sur notre carte, donc pas d'épingle (la mission affiche sa zone en jeu)" : `${ZONEKIND_FR[rl.zoneKind ?? "estimee"]} sur la carte, pas un point exact`}, ${PRESENCE_FR[rl.presence].toLowerCase()}.`
+  const rvx0 = rv ? rvlView(rv, ctx.state) : null;
+  const rvWhere = rv && rl && rvx0
+    ? `${rl.label}${rvArea ? ` (${rvArea})` : ""} : ${rl.precision === "inconnue" ? "endroit non repéré sur notre carte, donc pas d'épingle" : rvx0.location.label.charAt(0).toLowerCase() + rvx0.location.label.slice(1)}, ${PRESENCE_FR[rl.presence].toLowerCase()}.`
     : null;
   const where = rvWhere ??
     (v.location.precision === "exact"
@@ -256,9 +257,9 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
         : v.location.text
           ? `Les guides citent un lieu que je n'ai pas encore pu placer sur la carte.`
           : "Son emplacement n'est pas encore établi par les sources.");
-  const rvx = rv ? rvlView(rv, ctx.state) : null;
+  const rvx = rvx0;
   const access = rvx && !x.hidden
-    ? rvx.access === "now" ? `accessible maintenant pour toi, ${lc(red(rvx.condition))}.` : `pas encore pour toi : ${lc(red(rvx.condition))}.`
+    ? rvx.access === "now" ? `accessible maintenant pour toi, ${lc(red(rvx.condition))}.` : rvx.access === "order-pending" ? `lieu accessible, mais la commande de Moses n'est pas encore confirmée : ${lc(red(rvx.condition))}.` : `pas encore pour toi : ${lc(red(rvx.condition))}.`
     : x.now
     ? "Tu peux la récupérer dès maintenant."
     : x.access === "confirm"

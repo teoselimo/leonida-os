@@ -21,7 +21,14 @@ import { Icon } from "@/components/ui/Icon";
 import { Sheet } from "@/components/Sheet";
 import { VehicleSheet } from "@/components/VehicleSheet";
 import { RVL_BY_ID } from "@/lib/rvl";
-const ZONE_TAG: Record<string, string> = { documentee: "Zone documentée", estimee: "Zone estimée", large: "Zone large" };
+/** Référentiel vérifié : point calibré (pastille + cercle d'incertitude) ou parcours (tracé), étiquette honnête. */
+const rvlZone = (id: string): Partial<MapZone> => {
+  const l = RVL_BY_ID.get(id)?.locations[0];
+  if (!l) return {};
+  if (l.precision === "parcours" && l.route) return { path: l.route.lines, tag: `Parcours ±${l.route.errorM} m · non garanti à un point` };
+  if (l.precision === "point" && l.point) return { kind: "calibre" as const, tag: `${l.point.status === "teste-en-jeu" ? "Testé en jeu" : "Calibré, non testé"} ±${l.point.errorM} m` };
+  return {};
+};
 import { useLiveRadar } from "@/lib/live";
 import { ACCESS_FR, FILTERS, matches, viewOf } from "@/lib/garage";
 import type { GarageFilter, VehicleView } from "@/lib/garage";
@@ -217,7 +224,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const hiddenVehicles = vehicleViews.filter((x) => x.hidden).length;
   const VCOLOR = (x: VehicleView) => (x.v.type === "garage" ? "#5AB8FF" : x.v.edition.exclusive === "ultimate" ? "#FFB547" : x.now ? "#2EE6D6" : x.v.reliability === "reported" ? "#B98CFF" : "#FF3D8B");
   const vehicleZones: MapZone[] = garage
-    ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened, tag: ZONE_TAG[RVL_BY_ID.get(x.v.id)?.locations[0].zoneKind ?? ""] }))
+    ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened, ...rvlZone(x.v.id) }))
     : [];
   // positions observées par le joueur : toujours visibles (hors mode Voitures cachées)
   const pinZones: MapZone[] = garage

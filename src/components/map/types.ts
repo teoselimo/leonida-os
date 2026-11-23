@@ -26,7 +26,9 @@ export interface MapZone {
   /** Zone élargie (« à l'est de… ») : trait pointillé plus marqué. */
   widened?: boolean;
   /** « point » : position vérifiée (dessinée comme un petit cercle plein, sans mention « approximative »). */
-  kind?: "zone" | "point";
+  kind?: "zone" | "point" | "calibre";
+  /** Parcours (véhicule mobile) : lignes en coordonnées de jeu, dessinées par-dessus le cercle. */
+  path?: Array<Array<[number, number]>>;
   /** Libellé de provenance d'un point (« Placée par toi », « Repère communautaire »). */
   tag?: string;
 }

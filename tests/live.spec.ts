@@ -227,11 +227,11 @@ test("V0.6 : filtre Voitures cachées — zone approximative, point exact valid�
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet.getByTestId("vehicle-name")).toHaveText("'97 Maibatsu Penumbra FF");
   // V0.16 (Rare Vehicle Locator) : fiche issue du référentiel vérifié
-  await expect(sheet.getByTestId("rvl-precision")).toContainText("Zone de recherche");
+  await expect(sheet.getByTestId("rvl-precision")).toContainText("Calibré à ±35 m, non testé en jeu");
   await expect(sheet.getByTestId("rvl-location")).toContainText("Vespucci");
   await expect(sheet.getByTestId("compat")).toContainText("Compatible");
   await expect(sheet.getByTestId("rvl-keep")).toContainText("chapitre 2");
-  await expect(page.getByTestId("zone-tag")).toContainText(/Zone (estimée|documentée|large)/);
+  await expect(page.getByTestId("zone-tag")).toContainText(/Zone|Calibré|Parcours/);
   await page.waitForTimeout(900);
   await page.screenshot({ path: `captures/${info.project.name}-31-fiche-auto.png` });
   // exclusivité Ultimate vue par un joueur Standard : consultable, indicateur explicite, jamais « récupérable »

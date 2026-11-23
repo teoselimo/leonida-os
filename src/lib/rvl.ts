@@ -1,5 +1,6 @@
 import { RARE_VEHICLES, RVL_BY_ID, type RvlLocation, type RvlVehicle } from "@/data/rareVehicles";
 import { independentTotal, trustFor, type Trust3 } from "./evidence";
+export { v016Check } from "@/data/rareVehicles";
 import type { PersistedState } from "./types";
 
 export { RARE_VEHICLES, RVL_BY_ID };
@@ -10,21 +11,26 @@ export type { RvlVehicle, RvlLocation };
  * Accessibilité = chapitre atteint + mission préalable faite (déclarée dans Partie) + édition.
  * Jamais « accessible » par défaut : si la progression ne le permet pas, on le dit.
  */
-export type RvlAccess = "now" | "after-mission" | "later";
+export type RvlAccess = "now" | "order-pending" | "after-mission" | "later";
 
 export const PRESENCE_FR: Record<RvlLocation["presence"], string> = {
   fixe: "Toujours au même endroit",
   mobile: "En mouvement : pas garanti à un point",
   aleatoire: "Apparition aléatoire : pas garantie",
 };
+export const PRESENCE_SHORT: Record<RvlLocation["presence"], string> = { fixe: "Garé à un endroit fixe", mobile: "En mouvement", aleatoire: "Apparition aléatoire" };
 
 export const PRECISION_RVL_FR: Record<RvlLocation["precision"], string> = {
-  point: "Point exact vérifié",
+  point: "Bâtiment identifié",
+  parcours: "Parcours tracé",
   zone: "Zone de recherche",
   inconnue: "Position inconnue sur notre carte",
 };
 
 export const ZONEKIND_FR = { documentee: "zone documentée", estimee: "zone estimée", large: "zone large" } as const;
+
+/** Clé de sauvegarde (done) : le joueur confirme avoir reçu la commande de Moses. */
+export const orderKey = (id: string) => `order:${id}`;
 
 const missionDone = (s: Pick<PersistedState, "profile">, name: string) =>
   s.profile.missionsDone.some((m) => m.toLowerCase() === name.toLowerCase()) || s.profile.lastMission?.toLowerCase() === name.toLowerCase();
@@ -34,31 +40,81 @@ export interface RvlView {
   access: RvlAccess;
   /** Anti-spoiler strict : chapitre pas encore atteint → nom de mission et donneur masqués. */
   masked: boolean;
-  trust: Trust3;
-  sources: number;
+  /** Trois fiabilités distinctes. */
+  existence: { trust: Trust3; sources: number };
+  location: { label: string; short: string; tested: boolean; sources: number; errorM: number | null };
+  presence: { label: string; guaranteed: boolean };
+  /** Disponibilité du lieu (on peut y aller) ≠ disponibilité de la commande (la voiture y est). */
+  place: string;
+  mission: string | null;
+  orderReceived: boolean;
   /** Texte de la condition, déjà adapté à l'anti-spoiler. */
   condition: string;
+  sources: number;
+  trust: Trust3;
 }
 
-export function rvlView(r: RvlVehicle, s: Pick<PersistedState, "profile">): RvlView {
+type St = Pick<PersistedState, "profile"> & { done?: Record<string, string> };
+
+export function rvlView(r: RvlVehicle, s: St): RvlView {
   const c = r.condition;
   const ch = s.profile.chapter;
-  const mDone = c.afterMission ? missionDone(s, c.afterMission.name) || ch > c.afterMission.chapter : true;
-  const access: RvlAccess = ch < c.chapterMin ? "later" : !mDone ? "after-mission" : "now";
   const masked = s.profile.spoilerMode === "strict" && ch < c.chapterMin;
+  const preDone = c.afterMission ? missionDone(s, c.afterMission.name) || ch > c.afterMission.chapter : true;
+  const orderReceived = !!s.done?.[orderKey(r.id)];
+  const access: RvlAccess = ch < c.chapterMin ? "later" : !preDone ? "after-mission" : c.series && !orderReceived ? "order-pending" : "now";
   const mission = c.afterMission ? (masked ? "une mission à venir" : `« ${c.afterMission.name} »`) : null;
   const giver = c.giver ? (masked ? "un contact de l'histoire" : c.giver.name) : null;
   const parts: string[] = [];
   if (c.chapterMin <= 1 && !mission) parts.push("Dès l'exploration libre (chapitre 1)");
   else parts.push(`Chapitre ${c.chapterMin}${mission ? `, après ${mission}` : ""}`);
-  if (giver) parts.push(`commande de ${giver}${c.order ? ` (cible ${c.order.rank} sur ${c.order.of}, dans l'ordre)` : ""}`);
+  if (giver && c.series) {
+    const lot = c.series.after.length ? `arrive après la livraison de ${masked ? "deux premières commandes" : c.series.after.join(" et ")}` : "fait partie des premières commandes";
+    parts.push(`commande de ${giver} : ${lot}`);
+  }
   const loc = r.locations[0];
-  const t = trustFor(r.evidence, loc.claims.location);
-  return { r, access, masked, trust: t.trust, sources: independentTotal(r.evidence), condition: parts.join(" · ") };
+  const ex = trustFor(r.evidence, "existe");
+  const lt = trustFor(r.evidence, loc.claims.location);
+  const tested = loc.point?.status === "teste-en-jeu";
+  const err = loc.precision === "parcours" ? loc.route?.errorM ?? null : loc.point?.errorM ?? null;
+  const locLabel =
+    loc.precision === "inconnue"
+      ? "Inconnu : pas d'épingle"
+      : loc.precision === "parcours"
+        ? `Parcours tracé à ±${err} m (calibré, non testé en jeu)`
+        : loc.precision === "point"
+          ? tested
+            ? `Testé en jeu (±${err} m)`
+            : `Calibré à ±${err} m, non testé en jeu`
+          : "Zone de recherche";
+  const locShort = loc.precision === "point" ? (tested ? `Testé ±${err} m` : `Calibré ±${err} m`) : loc.precision === "parcours" ? `Parcours ±${err} m` : loc.precision === "inconnue" ? "Inconnu" : "Zone";
+  const place = c.chapterMin <= 1 ? "Lieu accessible dès l'exploration libre." : `Lieu accessible sur la carte ; ${c.series ? "la voiture n'y est garantie qu'une fois la commande reçue" : "conditions ci-dessous"}.`;
+  const missionTxt = c.series
+    ? access === "now"
+      ? "Commande reçue : la voiture t'attend."
+      : access === "order-pending"
+        ? `${masked ? "Commande" : "Commande de Moses"} pas encore reçue (ou pas encore confirmée ici).`
+        : null
+    : null;
+  return {
+    r,
+    access,
+    masked,
+    existence: { trust: ex.trust, sources: ex.independent },
+    location: { label: locLabel, short: locShort, tested, sources: lt.independent, errorM: err },
+    presence: { label: PRESENCE_FR[loc.presence], guaranteed: loc.presence === "fixe" },
+    place,
+    mission: missionTxt,
+    orderReceived,
+    trust: ex.trust,
+    sources: independentTotal(r.evidence),
+    condition: parts.join(" · "),
+  };
 }
 
 export const ACCESS_RVL_FR: Record<RvlAccess, string> = {
   now: "Accessible maintenant",
+  "order-pending": "Commande à recevoir",
   "after-mission": "Après une mission",
   later: "Plus tard dans l'histoire",
 };
@@ -91,12 +147,12 @@ export function withRvl<T extends { vehicles?: Array<import("./garage").VehicleR
     if (!r) return v;
     touched = true;
     const loc = r.locations[0];
-    const zone = loc.zone ? { ...loc.zone, widened: loc.zoneKind === "large" } : null;
-    const others = r.locations.slice(1).map((l) => ({ district: l.area, text: l.label, sourceName: "LEONIDA (référentiel vérifié)", url: "" }));
+    const zone = loc.zone ? { ...loc.zone, widened: false } : null;
     return {
       ...v,
       kind: loc.presence === "fixe" ? ("hidden" as const) : ("dynamic" as const),
-      location: { ...v.location, district: loc.area, precision: loc.precision === "point" ? ("exact" as const) : loc.precision === "zone" ? ("zone" as const) : ("text" as const), zone, point: null, alternatives: [...others] },
+      // le point validé du flux (s'il existe) est conservé ; la position calibrée reste distincte (jamais une « épingle validée »)
+      location: { ...v.location, district: loc.area, precision: loc.precision === "inconnue" ? ("text" as const) : ("zone" as const), zone, point: v.location.point, alternatives: [] },
       keep: r.keep.possible === "inconnu" ? { ...v.keep, mode: "unknown" as const, rule: null } : v.keep,
     };
   });

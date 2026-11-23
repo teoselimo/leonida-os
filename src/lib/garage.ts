@@ -1,6 +1,7 @@
 import type { VehicleRecord } from "../../collector/src/types";
 import type { EditionId, PersistedState, VehicleState } from "./types";
 import { RVL_BY_ID } from "@/data/rareVehicles";
+import { rvlView } from "./rvl";
 
 export type { VehicleRecord };
 
@@ -57,12 +58,13 @@ export interface VehicleView {
   hidden: boolean;
 }
 
-export function viewOf(v: VehicleRecord, s: Pick<PersistedState, "profile" | "vehicles">): VehicleView {
+export function viewOf(v: VehicleRecord, s: Pick<PersistedState, "profile" | "vehicles"> & { done?: Record<string, string> }): VehicleView {
   const compat = compatibility(v, s.profile.edition, s.profile.preorder);
   const rv = RVL_BY_ID.get(v.id);
   const need = rv ? rv.condition.chapterMin : chapterNeeded(v);
-  // référentiel vérifié : une mission préalable non faite rend l'accès « plus tard », jamais « maintenant »
-  const rvMissionPending = !!rv?.condition.afterMission && s.profile.chapter <= rv.condition.afterMission.chapter && !s.profile.missionsDone.some((m) => m.toLowerCase() === rv.condition.afterMission!.name.toLowerCase());
+  // référentiel vérifié : mission préalable ou commande pas encore reçue → jamais « maintenant »
+  const rvAccess = rv ? rvlView(rv, s as never).access : null;
+  const rvMissionPending = rvAccess === "after-mission" || rvAccess === "order-pending";
   // le chapitre d'accès n'est « établi » que s'il est cité, déduit d'une règle sourcée, ou si la source dit « accessible tôt »
   const accessKnown = !!rv || v.access.chapterMin != null || v.access.inferredChapter != null || v.access.early;
   const later = need > s.profile.chapter || rvMissionPending;

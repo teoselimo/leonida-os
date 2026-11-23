@@ -64,12 +64,12 @@ test("« voiture Fast & Furious » : zone + fiche Penumbra + conseil pour la gar
   await expect(page.getByTestId("filter-landmarks")).toHaveAttribute("aria-pressed", "false");
   const a = await ask(page, "Où trouver la voiture de Fast & Furious ?");
   await expect(a).toContainText("Penumbra FF");
-  await expect(a).toContainText("pas un point exact");
+  await expect(a).toContainText("non testé en jeu");
   await a.getByTestId("ai-action-focus_vehicle").click();
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet.getByTestId("vehicle-name")).toHaveText("'97 Maibatsu Penumbra FF");
   await expect(sheet.getByTestId("rvl-keep")).toContainText("chapitre 2"); // V0.16 : référentiel vérifié
-  await expect(page.getByTestId("zone-tag")).toContainText(/Zone (estimée|documentée|large)/);
+  await expect(page.getByTestId("zone-tag")).toContainText(/Zone|Calibré|Parcours/);
   expect(await mapCount(page)).toBe(1);
   await page.waitForTimeout(700);
   await page.screenshot({ path: `captures/${info.project.name}-41-ia-fast-furious.png` });
