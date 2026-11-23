@@ -35,18 +35,18 @@ export default defineConfig({
     { name: "unit", testMatch: /unit\.spec\.ts/ },
     {
       name: "iphone",
-      testMatch: /(e2e|live|v07|v071|pilote|enpartie|preventif|contexte|v013|v014|v015)\.spec\.ts/,
+      testMatch: /(e2e|live|v07|v071|pilote|enpartie|preventif|contexte|v013|v014|v015|rvl)\.spec\.ts/,
       use: { viewport: { width: 393, height: 852 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, userAgent: devices["iPhone 15 Pro"].userAgent },
     },
     {
       name: "ipad",
-      testMatch: /(e2e|live|v07|v071|pilote|enpartie|preventif|contexte|v013|v014|v015)\.spec\.ts/,
+      testMatch: /(e2e|live|v07|v071|pilote|enpartie|preventif|contexte|v013|v014|v015|rvl)\.spec\.ts/,
       use: { viewport: { width: 1194, height: 834 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, userAgent: devices["iPad Pro 11"].userAgent },
     },
     // Moteur de Safari (WebKit) : parcours V0.7.1 au format iPhone. Ce n'est pas un iPhone réel (voir docs/V0.7.1.md).
     {
       name: "iphone-webkit",
-      testMatch: /(v071|pilote|enpartie|preventif|contexte|v013|v014|v015)\.spec\.ts/,
+      testMatch: /(v071|pilote|enpartie|preventif|contexte|v013|v014|v015|rvl)\.spec\.ts/,
       use: { browserName: "webkit", viewport: { width: 393, height: 852 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, userAgent: devices["iPhone 15 Pro"].userAgent, launchOptions: {} },
     },
   ],

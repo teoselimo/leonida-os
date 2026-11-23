@@ -20,6 +20,8 @@ import { CategoryGlyph } from "@/components/ui/primitives";
 import { Icon } from "@/components/ui/Icon";
 import { Sheet } from "@/components/Sheet";
 import { VehicleSheet } from "@/components/VehicleSheet";
+import { RVL_BY_ID } from "@/lib/rvl";
+const ZONE_TAG: Record<string, string> = { documentee: "Zone documentée", estimee: "Zone estimée", large: "Zone large" };
 import { useLiveRadar } from "@/lib/live";
 import { ACCESS_FR, FILTERS, matches, viewOf } from "@/lib/garage";
 import type { GarageFilter, VehicleView } from "@/lib/garage";
@@ -215,7 +217,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const hiddenVehicles = vehicleViews.filter((x) => x.hidden).length;
   const VCOLOR = (x: VehicleView) => (x.v.type === "garage" ? "#5AB8FF" : x.v.edition.exclusive === "ultimate" ? "#FFB547" : x.now ? "#2EE6D6" : x.v.reliability === "reported" ? "#B98CFF" : "#FF3D8B");
   const vehicleZones: MapZone[] = garage
-    ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened }))
+    ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened, tag: ZONE_TAG[RVL_BY_ID.get(x.v.id)?.locations[0].zoneKind ?? ""] }))
     : [];
   // positions observées par le joueur : toujours visibles (hors mode Voitures cachées)
   const pinZones: MapZone[] = garage

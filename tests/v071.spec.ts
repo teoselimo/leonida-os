@@ -133,13 +133,13 @@ test("Parcours continu : Accueil → Préparer ma mission → voiture sympa → 
   await expect(page).toHaveURL(/#carte$/);
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet).toBeVisible();
-  await expect(page.getByTestId("zone-tag")).toContainText("Zone estimée");
+  await expect(page.getByTestId("zone-tag")).toContainText(/Zone (estimée|documentée|large)/);
   await page.waitForFunction(() => (window as unknown as { __leonidaMapCount?: number }).__leonidaMapCount === 1);
-  await sheet.getByTestId("v-found").click(); // repéré
+  await sheet.locator('[data-testid="v-found"], [data-testid="rvl-found"]').first().click(); // repéré
   // régression V0.7 : sur la carte iPhone, la notification était étirée entre deux ancrages et masquait la fiche
   const toast = page.locator(".toast");
   if (await toast.count()) expect((await toast.boundingBox())!.height).toBeLessThan(140);
-  await sheet.getByTestId("v-found").click(); // volé
+  await sheet.locator('[data-testid="v-found"]:not([disabled]), [data-testid="rvl-got"]').first().click(); // volé / récupéré
   await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Volé");
   await page.screenshot({ path: `captures/${info.project.name}-53-parcours-carte.png` });
   await sheet.locator(".vmedia__close").click();

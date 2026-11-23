@@ -141,6 +141,8 @@ export interface PersistedState {
   briefs?: Record<string, MissionAlertBrief>;
   /** Positions d'établissements observées en jeu par le joueur (id d'établissement → point). V0.13. */
   pins?: Record<string, { x: number; y: number; at: string; by: "joueur" }>;
+  /** Preuves ajoutées par le joueur (lien ou capture réduite), par véhicule ou découverte. Jamais comptées comme sources indépendantes. */
+  proofs?: Record<string, import("./evidence").PlayerProof[]>;
   /** Mesures des dernières réponses du copilote (latence, appels, recherches) — comparaison avant / après V0.13. */
   metrics?: import("./copilot/route").TurnMetrics[];
 }

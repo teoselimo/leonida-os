@@ -10,6 +10,8 @@ import type { Landmark } from "../gtadb";
 import { categoryFromQuery, districtFromQuery, findPoi, POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus, searchPois } from "../poi";
 import { afterDone, progressAnswer, progressIntent } from "./progressAnswers";
 import { ESTABLISHMENTS } from "@/data/establishments";
+import { findRare, PRESENCE_FR, RVL_BY_ID, rvlView, ZONEKIND_FR } from "../rvl";
+import { redactorFor } from "../spoiler";
 
 /**
  * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
@@ -160,7 +162,10 @@ export function findVehicle(q: string, list: VehicleRecord[]): VehicleRecord | n
     if (/fast|furious|paul walker/.test(n) && /fast|furious|paul walker/.test(blob)) s += 4;
     if (s > (best?.s ?? 2)) best = { v, s };
   }
-  return best?.v ?? null;
+  if (best) return best.v;
+  // référentiel vérifié (Rare Vehicle Locator) : surnoms courants (« la voiture de Paul Walker », « le buggy »…)
+  const rare = findRare(q);
+  return rare ? list.find((v) => v.id === rare.id) ?? null : null;
 }
 
 // ── Intentions ────────────────────────────────────────────────────────────────
@@ -229,20 +234,32 @@ function urgentNow(ctx: AiContext) {
 }
 
 // ── Réponses ──────────────────────────────────────────────────────────────────
+const lc = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+
 function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep" | "all" = "all"): AiAnswer {
   const x = viewOf(v, ctx.state);
   const topic: Topic = { kind: "vehicle", id: v.id };
   if (x.hidden)
     return { intent: "vehicle", text: "Ce véhicule est lié à un chapitre plus avancé que le tien : je préfère ne rien te dévoiler pour l'instant.", reliability: null, sources: [], actions: [], topic };
-  const where =
-    v.location.precision === "exact"
+  const rv = RVL_BY_ID.get(v.id);
+  const red = redactorFor(ctx.state, ctx.feed ?? null);
+  const rl = rv?.locations[0];
+  const rvArea = rl ? rl.area.split(", ").filter((part) => !rl.label.toLowerCase().includes(part.split(/[ (]/)[0].toLowerCase())).join(", ") : "";
+  const rvWhere = rv && rl
+    ? `${rl.label}${rvArea ? ` (${rvArea})` : ""} : ${rl.precision === "inconnue" ? "endroit non repéré sur notre carte, donc pas d'épingle (la mission affiche sa zone en jeu)" : `${ZONEKIND_FR[rl.zoneKind ?? "estimee"]} sur la carte, pas un point exact`}, ${PRESENCE_FR[rl.presence].toLowerCase()}.`
+    : null;
+  const where = rvWhere ??
+    (v.location.precision === "exact"
       ? `Son emplacement est vérifié sur la carte${v.location.district ? ` (${v.location.district})` : ""}.`
       : v.location.precision === "zone"
         ? `Elle se trouve dans la zone de ${v.location.district}${v.location.zone?.widened ? " (zone élargie)" : ""} : c'est une zone de recherche, pas un point exact.`
         : v.location.text
           ? `Les guides citent un lieu que je n'ai pas encore pu placer sur la carte.`
-          : "Son emplacement n'est pas encore établi par les sources.";
-  const access = x.now
+          : "Son emplacement n'est pas encore établi par les sources.");
+  const rvx = rv ? rvlView(rv, ctx.state) : null;
+  const access = rvx && !x.hidden
+    ? rvx.access === "now" ? `accessible maintenant pour toi, ${lc(red(rvx.condition))}.` : `pas encore pour toi : ${lc(red(rvx.condition))}.`
+    : x.now
     ? "Tu peux la récupérer dès maintenant."
     : x.access === "confirm"
       ? "Les conditions pour y accéder ne sont pas encore établies : à vérifier en jeu."
@@ -255,8 +272,9 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
             : x.compat === "preorder" || x.compat === "preorder-no"
               ? "C'est un bonus de précommande : indique dans Profil si tu y as droit."
               : "Sa compatibilité avec ton édition reste à vérifier.";
-  const keep =
-    v.keep.mode === "yes"
+  const keep = rv
+    ? rv.keep.possible === "oui" ? `Pour la garder : ${lc(rv.keep.how.split(". ")[0].replace(/\.$/, ""))}${rv.keep.chapterMin ? `, dès le chapitre ${rv.keep.chapterMin}${ctx.state.profile.chapter < rv.keep.chapterMin ? " (avant, tu peux la perdre)" : ""}` : ""}.` : `Les sources ne disent pas si on peut la garder.`
+    : v.keep.mode === "yes"
       ? "Elle t'est remise d'office : rien à faire pour la garder."
       : v.keep.rule
         ? `Pour la garder, il faudra l'immatriculer${v.keep.rule.where ? ` (${v.keep.rule.where})` : ""}, possible dès le chapitre ${v.keep.rule.chapter}${ctx.state.profile.chapter < v.keep.rule.chapter ? " : avant cela, une voiture volée peut être perdue" : ""}.`
@@ -269,7 +287,8 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
         ? `${where}${v.location.text ? " Les guides la décrivent précisément : le détail est dans « Sources et preuves »." : ""}`
         : `${v.name} : ${access.charAt(0).toLowerCase()}${access.slice(1)} ${where} ${keep}`;
   const actions: AiAction[] = [];
-  if (v.location.precision === "zone" || v.location.precision === "exact") actions.push({ type: "focus_vehicle", id: v.id, label: v.location.precision === "zone" ? "Voir la zone sur la carte" : "Voir sur la carte" });
+  if (rl?.precision === "inconnue") actions.push({ type: "focus_vehicle", id: v.id, label: `Ouvrir la fiche ${v.model || v.name}` });
+  else if (v.location.precision === "zone" || v.location.precision === "exact") actions.push({ type: "focus_vehicle", id: v.id, label: v.location.precision === "zone" ? "Voir la zone sur la carte" : "Voir sur la carte" });
   else actions.push({ type: "focus_vehicle", id: v.id, label: `Ouvrir la fiche ${v.model || v.name}` });
   const owned = ctx.state.vehicles[v.id]?.state;
   if (!owned && x.access !== "excluded" && focus !== "keep") actions.push({ type: "vehicle_state", id: v.id, state: "spotted", label: "Je l'ai trouvée", confirm: `Marquer « ${v.name} » comme repérée ?` });
@@ -277,10 +296,10 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
   return {
     intent: focus === "keep" ? "keep" : focus === "where" ? "where" : "vehicle",
     text: text.replace(/\s+/g, " ").trim(),
-    reliability: R[v.reliability],
-    sources: vehSources(v),
+    reliability: rvx ? (rvx.trust === "Vérifié" ? R.confirmed : rvx.trust === "Probable" ? R.reported : R.rumor) : R[v.reliability],
+    sources: rv ? rv.evidence.filter((e, i, a) => e.url && a.findIndex((o) => o.url === e.url) === i).slice(0, 4).map((e) => ({ name: e.creator, url: e.url!, when: e.publishedAt })) : vehSources(v),
     actions: actions.slice(0, 2),
-    more: [...extras, focus !== "all" ? access : "", v.location.text ? `Description du lieu (en anglais) : « ${v.location.text.value} »` : ""].filter(Boolean),
+    more: [...extras, focus !== "all" ? access.charAt(0).toUpperCase() + access.slice(1) : "", ...(rl ? rl.steps.slice(0, 2).map(red) : []), v.location.text ? `Description du lieu (en anglais) : « ${v.location.text.value} »` : ""].filter(Boolean),
     replies: focus === "all" ? ["Et comment je la garde ?", "Et où exactement ?"] : focus === "where" ? ["Et comment je la garde ?"] : ["Et où exactement ?"],
     topic,
     evidence: [v.id],

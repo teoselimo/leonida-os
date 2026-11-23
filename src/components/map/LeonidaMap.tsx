@@ -600,7 +600,7 @@ export function LeonidaMap(props: MapViewProps) {
 
       {zones.filter((z) => z.id === selectedZoneId).map((z) => (
         <div key={z.id} className="zonetag" style={{ top: occlusion.top + 10, left: occlusion.left + 12 }} data-testid="zone-tag">
-          <Icon name="target" size={13} /> {z.kind === "point" ? (z.tag ?? "Position") : "Zone estimée"} · {z.label}
+          <Icon name="target" size={13} /> {z.kind === "point" ? (z.tag ?? "Position") : (z.tag ?? "Zone estimée")} · {z.label}
         </div>
       ))}
       {markers.map(({ discovery: d, status, fresh, tracked }) => {

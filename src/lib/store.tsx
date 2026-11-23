@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import type { PlayerProof } from "./evidence";
 import { MAX_METRICS } from "./copilot/route";
 import type { TurnMetrics } from "./copilot/route";
 import type { ReactNode } from "react";
@@ -13,6 +14,7 @@ import { cloudLoad, cloudSave } from "./runtime/cloud";
 import type { Discovery, MissionAlertBrief, Objective, PersistedState, Profile, RadarSignal, VehicleProgress, VehicleState, ViewId } from "./types";
 
 const STORAGE_KEY = "leonida-os/progress/v1";
+const MAX_PROOFS = 4;
 const SAVED_AT_KEY = "leonida-os/progress-saved-at/v1";
 const persistence = localProgressStore<PersistedState>(STORAGE_KEY);
 export const repo = demoRepository;
@@ -48,7 +50,8 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   const briefs = saved.briefs && typeof saved.briefs === "object" ? Object.fromEntries(Object.entries(saved.briefs).filter(([, b]) => b && typeof b.mission === "string" && Array.isArray(b.items))) : {};
   const metrics = Array.isArray(saved.metrics) ? saved.metrics.filter((m) => m && typeof m.totalMs === "number").slice(-MAX_METRICS) : [];
   const pins = saved.pins && typeof saved.pins === "object" ? Object.fromEntries(Object.entries(saved.pins).filter(([, v]) => v && Number.isFinite(v.x) && Number.isFinite(v.y) && typeof v.at === "string").map(([k, v]) => [k, { x: v.x, y: v.y, at: v.at, by: "joueur" as const }])) : {};
-  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, metrics, showDemo, rev: 7, schema: 1 };
+  const proofs = saved.proofs && typeof saved.proofs === "object" ? Object.fromEntries(Object.entries(saved.proofs).map(([k, arr]) => [k, (Array.isArray(arr) ? arr : []).filter((p) => p && typeof p.id === "string" && (p.kind === "lien" || p.kind === "capture") && typeof p.value === "string" && typeof p.at === "string").slice(-MAX_PROOFS)]).filter(([, a]) => (a as unknown[]).length)) : {};
+  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, rev: 7, schema: 1 };
 }
 
 export const initialState = (): PersistedState => ({
@@ -80,6 +83,7 @@ type Action =
   | { type: "vehicle"; id: string; progress: VehicleProgress | null }
   | { type: "done"; id: string; value: boolean }
   | { type: "pin"; id: string; pin: { x: number; y: number } | null }
+  | { type: "proof"; id: string; proof: PlayerProof | null; removeId?: string }
   | { type: "metric"; m: TurnMetrics }
   | { type: "mission"; name: string | null; done: boolean }
   | { type: "objectives"; fn: (list: Objective[]) => Objective[] }
@@ -106,7 +110,7 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       return { ...s, seenSignals: Array.from(new Set([...s.seenSignals, ...a.ids])) };
     case "reset":
       // ne remet à zéro que le contenu de démonstration : la vraie partie (profil, coches, garage, positions, analyses, mesures) est conservée
-      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile, pins: s.pins, briefs: s.briefs, metrics: s.metrics };
+      return { ...initialState(), custom: s.custom, vehicles: s.vehicles, done: s.done, profile: s.profile, pins: s.pins, proofs: s.proofs, briefs: s.briefs, metrics: s.metrics };
     case "upsertCustom": {
       const exists = s.custom.some((c) => c.id === a.d.id);
       return { ...s, custom: exists ? s.custom.map((c) => (c.id === a.d.id ? a.d : c)) : [...s.custom, a.d] };
@@ -131,6 +135,12 @@ function reducer(s: PersistedState, a: Action): PersistedState {
       return { ...s, showDemo: a.value, freshUnlocks: [] };
     case "metric":
       return { ...s, metrics: [...(s.metrics ?? []), a.m].slice(-MAX_METRICS) };
+    case "proof": {
+      const cur = (s.proofs ?? {})[a.id] ?? [];
+      const next = a.proof ? [...cur, a.proof].slice(-MAX_PROOFS) : cur.filter((p) => p.id !== a.removeId);
+      const { [a.id]: _o, ...rest } = s.proofs ?? {};
+      return { ...s, proofs: next.length ? { ...rest, [a.id]: next } : rest };
+    }
     case "pin": {
       const { [a.id]: _old, ...rest } = s.pins ?? {};
       return { ...s, pins: a.pin ? { ...rest, [a.id]: { x: Math.round(a.pin.x), y: Math.round(a.pin.y), at: new Date().toISOString(), by: "joueur" } } : rest };
@@ -243,6 +253,8 @@ interface Ctx {
   showPlace: (p: PlaceFocus) => void;
   /** Position d'un établissement observée en jeu (null = retirer). */
   setPin: (estId: string, pin: { x: number; y: number } | null) => void;
+  /** Ajoute (ou retire, avec removeId) une preuve du joueur. */
+  addProof: (id: string, proof: PlayerProof | null, removeId?: string) => void;
   addMetric: (m: TurnMetrics) => void;
 }
 
@@ -425,6 +437,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       dismissToast: () => setToast(null),
       setDone: (id, value) => dispatch({ type: "done", id, value }),
       setPin: (id, pin) => dispatch({ type: "pin", id, pin }),
+      addProof: (id, proof, removeId) => dispatch({ type: "proof", id, proof, removeId }),
       addMetric: (m) => dispatch({ type: "metric", m }),
       setMission: (name, done = true) => dispatch({ type: "mission", name, done }),
       setNextMission: (name, inProgress = false) => dispatch({ type: "profile", patch: { nextMission: name ? name.trim().slice(0, 80) : null, missionInProgress: !!name && inProgress } }),

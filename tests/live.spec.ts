@@ -226,10 +226,12 @@ test("V0.6 : filtre Voitures cachées — zone approximative, point exact valid�
   await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet.getByTestId("vehicle-name")).toHaveText("'97 Maibatsu Penumbra FF");
-  await expect(sheet.getByTestId("v-location")).toContainText("Zone de recherche : Rialto Islands");
+  // V0.16 (Rare Vehicle Locator) : fiche issue du référentiel vérifié
+  await expect(sheet.getByTestId("rvl-precision")).toContainText("Zone de recherche");
+  await expect(sheet.getByTestId("rvl-location")).toContainText("Vespucci");
   await expect(sheet.getByTestId("compat")).toContainText("Compatible");
-  await expect(sheet.getByTestId("v-keep-text")).toContainText("chapitre 2");
-  await expect(page.getByTestId("zone-tag")).toContainText("Zone estimée");
+  await expect(sheet.getByTestId("rvl-keep")).toContainText("chapitre 2");
+  await expect(page.getByTestId("zone-tag")).toContainText(/Zone (estimée|documentée|large)/);
   await page.waitForTimeout(900);
   await page.screenshot({ path: `captures/${info.project.name}-31-fiche-auto.png` });
   // exclusivité Ultimate vue par un joueur Standard : consultable, indicateur explicite, jamais « récupérable »
@@ -248,11 +250,11 @@ test("V0.6 : repéré → volé → conservé → rangé, persistant après rech
   await openGarage(page);
   await page.getByTestId("vehicle-v-maibatsu-penumbra-ff").first().click();
   const sheet = page.getByTestId("vehicle-sheet");
-  await sheet.getByTestId("v-found").click();
+  await sheet.getByTestId("rvl-found").click();
   await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Repéré");
-  await sheet.getByTestId("v-found").click(); // « Je l'ai volé »
+  await sheet.getByTestId("rvl-got").click(); // « Je l'ai récupéré »
   await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Volé");
-  await sheet.getByTestId("v-keep").click(); // « Je l'ai conservé »
+  await sheet.getByTestId("rvl-kept").click(); // « Je l'ai conservé »
   await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Véhicule personnel");
   await sheet.getByTestId("v-keep").click(); // « Ranger au garage »
   await sheet.getByTestId("v-store").getByRole("button", { name: "Planque" }).click();

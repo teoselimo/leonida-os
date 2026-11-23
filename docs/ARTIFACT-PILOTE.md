@@ -263,3 +263,9 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Le bandeau de crédits devient un contrôle compact « ⓘ GTADB » (coin bas gauche, suit les fiches glissantes). Au toucher : source et lien map.gtadb.org, licence CC BY 4.0 et lien, modifications apportées au fond, mention « Carte communautaire non officielle ». Se ferme d'un toucher ailleurs ou avec Échap.
 - Commandes de carte réduites à + et − (le bouton « vue d'ensemble » qui appelait `fit()` est retiré). Coordonnées, marqueurs, caméra sauvegardée et Cartographe inchangés.
 - Cadrage du Social Discovery Engine ajouté à `docs/FEUILLE-DE-ROUTE.md` (non implémenté).
+
+## 18. V0.16 · Rare Vehicle Locator V1, sprint 1 (23/11/2026)
+
+- Référentiel vérifié de 5 véhicules et modèle de preuve réutilisable : voir `docs/RARE-VEHICLE-LOCATOR.md`.
+- Sauvegarde : nouveau champ facultatif `proofs`, conservé par la remise à zéro de la démo et assaini à la migration ; les états `vehicles[id]` existants sont repris tels quels.
+- Version Artifact `1795437638-5c3b` (patch : 6 fichiers, 2 anciens retirés, `data/radar.json` non republié). Tests : 353/353.

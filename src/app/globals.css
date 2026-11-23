@@ -1423,3 +1423,22 @@ html[data-glass="off"] .glass { background: #17112a; -webkit-backdrop-filter: no
 .mapcred__head strong { font-size: 13px; }
 .mapcred__head button { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; color: var(--muted); }
 .mapcred__muted { color: var(--muted); }
+
+/* ── Rare Vehicle Locator V1 ─────────────────────────────────────────── */
+.rvl { display: grid; gap: 10px; }
+.rvl__access { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.06); font-size: 14px; }
+.rvl__access span { flex-basis: 100%; color: var(--muted, #a9a9b8); font-size: 13px; }
+.rvl__access--now { background: rgba(61,220,107,.12); }
+.rvl__access--now strong { color: #3ddc6b; }
+.rvl__access--later strong, .rvl__access--after-mission strong { color: #ffd23f; }
+.rvl .vactions .btn.is-on { opacity: 1; background: rgba(61,220,107,.16); color: #3ddc6b; border-color: rgba(61,220,107,.35); }
+.rvl__loc { display: grid; gap: 6px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); }
+.rvl__loc:first-of-type { border-top: 0; padding-top: 0; }
+.rvl__chip { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(255,255,255,.08); }
+.rvl__chip--point, .rvl__chip--fixe { background: rgba(61,220,107,.14); color: #3ddc6b; }
+.rvl__chip--zone { background: rgba(77,141,255,.16); color: #8fb4ff; }
+.rvl__chip--inconnue, .rvl__chip--mobile, .rvl__chip--aleatoire { background: rgba(255,138,61,.16); color: #ffb07a; }
+.rvl__mine { display: flex; align-items: center; gap: 10px; margin: 6px 0; word-break: break-all; font-size: 13px; }
+.rvl__mine img { width: 96px; height: auto; border-radius: 8px; }
+.rvl__add { display: grid; gap: 8px; margin-top: 8px; }
+.rvl__add .input { width: 100%; min-height: 40px; padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.25); color: inherit; font-size: 16px; }
