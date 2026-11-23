@@ -300,3 +300,4 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
   2. Test 5 adapté (clic sur « Lancer quand même ») et vérifié seul : 3/3.
   3. Un passage complet a été arrêté volontairement après quelques minutes pour corriger le double bouton de lancement sur iPad (aucun résultat retenu).
   4. **Dernier passage complet, sur le build livré : 441 réussis, 0 échec, 4 ignorés** (20,9 min ; unitaires + iPhone + iPad + iPhone WebKit, simulations).
+- Publication en patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié. Version Artifact `1795471529-e4a4`.
