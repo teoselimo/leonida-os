@@ -1373,28 +1373,78 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Sweetbay Inn, East Buckley Drive; berichtete über eine spätnächtliche Sichtung."
+     },
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+      "quote": "Sunrise Premium Autos is in Southside, southeast of Vice City International Airport."
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
   "access": {
-   "chapterMin": null,
+   "chapterMin": {
+    "value": 3,
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+      "quote": "Bring the Key Cloner from Chapter 3 for this run."
+     }
+    ],
+    "conflicts": []
+   },
    "inferredChapter": null,
    "until": null,
    "mission": null,
-   "early": false,
-   "keyCloner": null,
+   "early": true,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+      "quote": "Bring the Key Cloner from Chapter 3 for this run."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
-   "alarm": null
+   "alarm": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+      "quote": "Its lock, alarm and tracker have to meet the conditions of the service you’ve unlocked."
+     }
+    ],
+    "conflicts": []
+   }
   },
   "keep": {
-   "text": null,
+   "text": {
+    "value": "To register a car of your own, you’ll need a workshop.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+      "quote": "To register a car of your own, you’ll need a workshop."
+     }
+    ],
+    "conflicts": []
+   },
    "rule": {
     "chapter": 2,
     "where": "garage de Moses",
@@ -1412,9 +1462,35 @@
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+    "quote": "Use the customer entrance at the front."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+    "quote": "Bring the Key Cloner from Chapter 3 for this run."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+    "quote": "Scan the car with WAiNK, check its security details and use the tool at the prompt."
    }
   ],
-  "risks": [],
+  "risks": [
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+    "quote": "Once you take the Banshee out through the glass, you’ll have a wanted level and a tracker to deal with."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+    "quote": "Its lock, alarm and tracker have to meet the conditions of the service you’ve unlocked."
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
@@ -1431,18 +1507,24 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
+    "title": "GTA 6 car dealership locations",
+    "official": false,
+    "readAt": "2026-11-23T03:06:06.814Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "chapitre"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-23T03:06:06.814Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -1450,6 +1532,14 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-23T03:06:06.814Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3",
+     "localisation : text → zone"
     ]
    }
   ]
