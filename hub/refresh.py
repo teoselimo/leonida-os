@@ -13,7 +13,8 @@ Sorties :
   public/data/hub/*.json             bundles chargés à la demande par l'app (Garage, catalogue, lieux)
   src/data/hub/*.json                bundles embarqués (missions pour Story/Autopilot, méta)
 Rien n'est jamais inventé : une page non lue est signalée, ses anciennes données restent marquées « non revérifiées »."""
-import argparse, collections, json, os, re, subprocess, sys, time, unicodedata
+import argparse, collections, json, os, re, subprocess, sys, tempfile, time, unicodedata
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -281,21 +282,9 @@ new = diff.snapshot(places + gb)
 added, removed, changed = diff.compare(prev, new)
 first_run = not prev
 report["changes"] = {"firstRun": first_run, "added": len(added), "removed": len(removed), "changed": len(changed), "examplesChanged": changed[:15], "examplesRemoved": removed[:15]}
-os.makedirs(os.path.join(HERE, "history"), exist_ok=True)
-with open(os.path.join(HERE, "history", "changes.jsonl"), "a") as fh:
-    fh.write(json.dumps({"at": NOW, "firstRun": first_run, "added": added if not first_run else len(added), "removed": removed, "changed": changed}, ensure_ascii=False) + "\n")
-
-# ── 6. Écriture du référentiel ──────────────────────────────────────────
-dump(os.path.join(REC, "gtadb-place.json"), places, compact=True)
 groups = collections.defaultdict(list)
 for r in gb:
     groups[r["type"]].append(r)
-for f in os.listdir(REC):
-    if f.startswith("gtabase-") and f != "gtabase-mission-index.json":
-        os.remove(os.path.join(REC, f))
-for typ, rs in groups.items():
-    dump(os.path.join(REC, f"gtabase-{typ}.json"), sorted(rs, key=lambda r: r["id"]), compact=True)
-dump(os.path.join(REC, "gtabase-mission-index.json"), mission_index)
 report["counts"] = {"gtadb": {"place": len(places), "placeAvecPosition": sum(1 for p in places if p["fields"].get("position")), "placeSansPosition": sum(1 for p in places if not p["fields"].get("position")), "photosEnJeuDisponibles": sum(1 for p in places if p["fields"].get("photos", {}).get("inGame"))},
                     "gtabase": {t: len(rs) for t, rs in sorted(groups.items(), key=lambda kv: -len(kv[1]))}, "gtabaseMissionIndex": len(mission_index)}
 for typ, rs in groups.items():
@@ -308,10 +297,32 @@ for r in gb:
 
 # ── 7. Bundles pour l'app ───────────────────────────────────────────────
 import snapshot
-snapshot.build(import_report=report)
-bstats = report["bundles"]
 import report_md
-open(os.path.join(HERE, "reports", "latest.md"), "w").write(report_md.render(report))
+
+# Valider la nouvelle collection et construire tous les fichiers avant de remplacer
+# le dernier import accepté. Le manifeste est installé en dernier.
+with tempfile.TemporaryDirectory(dir=HERE) as directory:
+    stage = Path(directory)
+    staged_records = stage / "hub/records"
+    dump(str(staged_records / "gtadb-place.json"), places, compact=True)
+    for typ, rs in groups.items():
+        dump(str(staged_records / f"gtabase-{typ}.json"), sorted(rs, key=lambda row: row["id"]), compact=True)
+    dump(str(staged_records / "gtabase-mission-index.json"), mission_index)
+    snapshot.build(root=stage, import_report=report)
+    (stage / "hub/reports/latest.md").write_text(report_md.render(report), encoding="utf-8")
+    obsolete = {p.name for p in Path(REC).glob("gtabase-*.json")} - {p.name for p in staged_records.iterdir()}
+    for path in sorted(stage.rglob("*")):
+        if path.is_file() and path != stage / snapshot.MANIFEST:
+            target = Path(ROOT) / path.relative_to(stage)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            path.replace(target)
+    for name in obsolete:
+        (Path(REC) / name).unlink()
+    (stage / snapshot.MANIFEST).replace(Path(ROOT) / snapshot.MANIFEST)
+bstats = report["bundles"]
+os.makedirs(os.path.join(HERE, "history"), exist_ok=True)
+with open(os.path.join(HERE, "history", "changes.jsonl"), "a") as fh:
+    fh.write(json.dumps({"at": NOW, "firstRun": first_run, "added": added if not first_run else len(added), "removed": removed, "changed": changed}, ensure_ascii=False) + "\n")
 print(json.dumps({"counts": report["counts"], "changes": report["changes"], "links": report["links"], "bundles": bstats}, ensure_ascii=False, indent=1))
 
 attempt = os.path.join(HERE, "reports", "last-attempt.json")
