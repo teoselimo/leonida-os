@@ -13,6 +13,10 @@
 | Dernier passage complet des tests | 538 réussis, 0 échec, 4 ignorés (21,7 min, Claude simulé) ; pipeline Python 21 / 21 |
 | Mis à jour le | 24/11/2026, par Claude |
 
+## Branche Data Engine V0.21 en revue
+
+Base `9822856`, branche `codex/data-engine-v1`. Le contrat, les commandes et les mesures avant/après figurent dans [DATA-ENGINE.md](DATA-ENGINE.md). Le rejeu depuis les données versionnées produit cinq bundles, le manifeste et le rapport de qualité. La collecte GTADB réelle a aussi été rejouée en copie isolée. La Caddy ’82 a son propre identifiant et sa relation de variante corrigée. L'échantillon Vice City documente cinq fiches de la démo gratuite. MapGenie a renvoyé HTTP 403. Publication en attente de revue et d'intégration.
+
 ## Terminé
 
 - Carte GTADB (tuiles z0–z5, 3 663 repères), anti-spoiler à la source, navigation Accueil | Carte | LEONIDA | Guide | Partie.

@@ -71,3 +71,23 @@ Crédit et conditions de l'API : [Vice City API](https://vice-city.app/develope
 ## Lecture du rapport de qualité
 
 Le rejeu écrit aussi `hub/reports/snapshot-v1.json` sous la racine de destination. Ce rapport donne les effectifs par type, les empreintes des modules, les contradictions d'import et les anomalies de relations. L'instantané livré contient zéro cible absente et une anomalie de type : la relation de variante du Maverick vise News Maverick, que l'extracteur a classé comme article. Le lien brut est conservé pour réexamen de la fiche GTABase.
+
+## Performances mesurées le 24 novembre 2026
+
+Comparaison de deux exports Artifact locaux réalisés avec le même instantané RADAR et les mêmes dépendances. Base `9822856`, données v1 `de18a22`. Les changements suivants du moteur et de la documentation conservent les octets des bundles. Le manifeste de publication du build compte **471 → 472 fichiers** et **62 002 656 → 62 006 452 octets**. Il exclut sa propre liste locale des fichiers à publier. Le manifeste de données ajoute 3 825 octets. Les cinq bundles passent de 581 729 à 581 698 octets. Les missions synchrones occupent toujours 145 065 octets.
+
+Chromium, fenêtre mobile 393 × 852, facteur de pixels 3, serveur local sans compression, nouveau contexte par parcours. Médianes de trois essais. Délai depuis le début de la navigation jusqu'à la première carte véhicule visible, au canevas MapLibre visible, ou au champ de saisie IA visible. Cela exclut toute réponse de modèle. Les mesures réseau portent sur les entrées Resource Timing à l'inactivité réseau, hors document HTML. La mémoire est le tas JavaScript utilisé à cet instant.
+
+| Module | Ouverture ms avant → après | Requêtes avant → après | Octets avant → après | Tas JS Mo avant → après |
+| --- | ---: | ---: | ---: | ---: |
+| Garage | 3 233 → 2 623 | 17 → 26 | 3 473 136 → 5 087 697 | 17,5 → 13,3 |
+| Carte | 5 588 → 5 357 | 17 → 17 | 4 334 382 → 4 334 384 | 13,5 → 13,4 |
+| IA | 3 851 → 2 538 | 14 → 15 | 3 139 737 → 3 152 879 | 12,2 → 12,3 |
+
+Les trois essais incluent la variabilité du chargement différé des planches du Garage et de la charge du poste partagé. Le nombre médian de ressources Hub sur le parcours Garage varie de 2 à 11. Pour la Carte et l'IA, il reste à zéro dans les deux builds. Ces essais ne permettent pas d'attribuer une accélération au moteur ni de conclure sur le confort d'un iPhone physique. Le découpage par chapitre ou par zone demanderait une modification du consommateur et un gain mesuré. La v1 livre cinq projections compatibles.
+
+Pour reproduire la comparaison, servir les deux répertoires avec `node scripts/serve.mjs /chemin/out-artifact PORT` sur deux ports distincts, puis lancer :
+
+```sh
+CHROME_PATH=/usr/bin/chromium node hub/measure.mjs http://localhost:4481 http://localhost:4482
+```
