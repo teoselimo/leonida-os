@@ -91,3 +91,11 @@ Pour reproduire la comparaison, servir les deux répertoires avec `node scripts/
 ```sh
 CHROME_PATH=/usr/bin/chromium node hub/measure.mjs http://localhost:4481 http://localhost:4482
 ```
+
+## Vérifications de livraison
+
+- Python : 28 tests réussis. Rejeu sans cache brut, concordance octet pour octet avec les sorties Git, intégrité, identifiants, ambiguïtés et échec de collecte couverts.
+- Dans une copie isolée : collecte GTADB en ligne, puis reconstruction depuis les fiches obtenues avec manifeste identique. Un second import GTADB en mode cache a validé la mise en attente des sorties avant remplacement. Le lot GTABase provient du référentiel versionné.
+- TypeScript et builds standard et Artifact réussis. Les empreintes des trois bundles publics ont été vérifiées dans les deux exports. Les neuf tests V0.20.1 sur le build Artifact passent en simulation iPhone.
+- Playwright sur le build standard : **538 tests distincts réussis après relances, 4 ignorés**. Unitaires, Chromium iPhone et iPad : 461 réussis, 3 ignorés. WebKit : 77 réussis, 1 ignoré sur plusieurs passages. Trois contrôles WebKit ont échoué avec Chromium exécuté en parallèle : stabilisation de la fiche IA, ouverture du Garage en moins de quatre secondes, et parcours continu V0.7.1 (délai de clic). Les deux premiers ont également échoué sur la base. Les trois ont réussi ensemble lors de la relance WebKit seule, avec les seuils du dépôt.
+- L'émulation et le modèle Claude simulé couvrent les comportements applicatifs. La latence sur iPhone physique et la qualité du modèle réel restent à mesurer.

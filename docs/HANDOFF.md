@@ -17,6 +17,8 @@
 
 Base `9822856`, branche `codex/data-engine-v1`. Le contrat, les commandes et les mesures avant/après figurent dans [DATA-ENGINE.md](DATA-ENGINE.md). Le rejeu depuis les données versionnées produit cinq bundles, le manifeste et le rapport de qualité. La collecte GTADB réelle a aussi été rejouée en copie isolée. La Caddy ’82 a son propre identifiant et sa relation de variante corrigée. L'échantillon Vice City documente cinq fiches de la démo gratuite. MapGenie a renvoyé HTTP 403. Publication en attente de revue et d'intégration.
 
+Code Data Engine vérifié : `72f1a50`. Python 28/28, typecheck et deux builds réussis. Sur le build standard, 538 tests Playwright distincts réussis après relances, 4 ignorés. Trois tests WebKit ont nécessité une relance isolée. Contrôle du build Artifact local : 9/9. Le rapport détaille les échecs intermédiaires, les mesures et les limites de la simulation.
+
 ## Terminé
 
 - Carte GTADB (tuiles z0–z5, 3 663 repères), anti-spoiler à la source, navigation Accueil | Carte | LEONIDA | Guide | Partie.
