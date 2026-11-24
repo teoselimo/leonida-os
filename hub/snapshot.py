@@ -27,17 +27,11 @@ def fingerprint(data):
     return {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
 
 
-def build(root=ROOT, output=None, import_report=None):
-    root = Path(root)
-    output = Path(output or root)
-    report_path = root / "hub/reports/latest.json"
-    report = import_report if import_report is not None else read(report_path)
-    records = root / "hub/records"
+def load_records(records, counts):
     groups = {}
     collected = {}
     files = {}
     ids = set()
-    targets = set()
     for path in sorted(records.glob("*.json")):
         source, kind = path.stem.split("-", 1)
         data = path.read_bytes()
@@ -54,29 +48,46 @@ def build(root=ROOT, output=None, import_report=None):
                     raise ValueError(f"Provenance incohérente : {row['id']}")
                 if provenance.get("collectedAt"):
                     collected[source] = max(collected.get(source, ""), provenance["collectedAt"])
-            for relation in row["rel"]:
-                target = relation.get("to")
-                if target:
-                    targets.update(target if isinstance(target, list) else [target])
         groups[kind] = rows
-    expected = {"place": report["counts"]["gtadb"]["place"], **report["counts"]["gtabase"]}
+    expected = {"place": counts["gtadb"]["place"], **counts["gtabase"]}
     if {kind: len(rows) for kind, rows in groups.items()} != expected:
         raise ValueError("Le référentiel et les comptes du dernier import divergent")
+    return groups, collected, files
+
+
+def audit_relations(groups):
     types = {row["id"]: kind for kind, rows in groups.items() for row in rows}
     issues = []
+    missing = set()
     for rows in groups.values():
         for row in rows:
             for rel in row["rel"]:
                 expected_types = RELATION_TYPES.get(rel["kind"])
                 dest = rel.get("to")
-                if not dest or not expected_types:
+                if not dest:
                     continue
                 for target in dest if isinstance(dest, list) else [dest]:
-                    if target in types and types[target] not in expected_types:
+                    if target not in types:
+                        missing.add(target)
+                    elif expected_types and types[target] not in expected_types:
                         issues.append({"from": row["id"], "kind": rel["kind"], "to": target,
                                        "actualType": types[target]})
+    return sorted(missing), issues
+
+
+def build(root=ROOT, output=None, import_report=None):
+    root = Path(root)
+    output = Path(output or root)
+    report_path = root / "hub/reports/latest.json"
+    report = import_report if import_report is not None else read(report_path)
+    records = root / "hub/records"
+    groups, collected, files = load_records(records, report["counts"])
+    missing, issues = audit_relations(groups)
+    counts = {kind: len(rows) for kind, rows in groups.items()}
     places = groups.pop("place")
     index = read(records / "gtabase-mission-index.json")
+    if len(index) != report["counts"]["gtabaseMissionIndex"]:
+        raise ValueError("Index de missions incomplet")
     sources = {}
     for name, state in report["sources"].items():
         sources[name] = {key: state[key] for key in
@@ -97,11 +108,11 @@ def build(root=ROOT, output=None, import_report=None):
             report_path = staged_report
         manifest = {"schemaVersion": 1, "snapshotAt": report["runAt"], "sources": sources,
                     "importReport": fingerprint(report_path.read_bytes()),
-                    "records": files, "missingRelationTargets": sorted(targets - ids),
+                    "records": files, "missingRelationTargets": missing,
                     "bundles": {key: {"format": "json", **fingerprint((stage / key).read_bytes())}
                                 for key in sorted(paths)}}
-        audit = {"schemaVersion": 1, "snapshotAt": report["runAt"], "counts": expected,
-                 "missingRelationTargets": sorted(targets - ids), "relationTypeIssues": issues,
+        audit = {"schemaVersion": 1, "snapshotAt": report["runAt"], "counts": counts,
+                 "missingRelationTargets": missing, "relationTypeIssues": issues,
                  "conflicts": report["conflicts"], "sources": sources, "bundles": manifest["bundles"]}
         (stage / AUDIT).parent.mkdir(parents=True, exist_ok=True)
         (stage / AUDIT).write_text(json.dumps(audit, ensure_ascii=False, sort_keys=True, indent=2) + "\n",

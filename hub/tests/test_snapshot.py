@@ -66,3 +66,13 @@ class SnapshotTest(unittest.TestCase):
             for prov in row["prov"]:
                 self.assertEqual(prov["aggregator"], "vice-city.app")
                 self.assertEqual(prov["upstreamOrigin"], "powerpyx.com")
+
+    def test_ambiguous_relations(self):
+        rows = {"property": [{"id": "property-A", "rel": [
+            {"kind": "located_candidates", "to": ["place-A", "absent"]},
+            {"kind": "located_at", "to": "property-A"}]}],
+            "place": [{"id": "place-A", "rel": []}]}
+        missing, issues = snapshot.audit_relations(rows)
+        self.assertEqual(missing, ["absent"])
+        self.assertEqual(issues, [{"from": "property-A", "kind": "located_at",
+                                   "to": "property-A", "actualType": "property"}])
