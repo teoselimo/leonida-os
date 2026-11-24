@@ -4,7 +4,8 @@ import json, os, re
 def _w(p, obj):
     os.makedirs(os.path.dirname(p), exist_ok=True)
     s = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
-    open(p, "w").write(s)
+    with open(p, "w", encoding="utf-8") as stream:
+        stream.write(s)
     return len(s.encode())
 
 def slug(r):

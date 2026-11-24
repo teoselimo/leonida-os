@@ -64,11 +64,6 @@ if a.source in ("all", "gtadb"):
         places = A_GTADB.records(a.gtadb_clone, rev, revdate)
         st["status"] = "ok" if not err else "partiel"
         st["upToDate"] = rev == cur.get("revision")
-        if not st["upToDate"]:
-            # repères bruts : régénérés au même format (les tuiles demandent une reconstruction complète, signalée)
-            r = subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "build_gtadb_assets.py"), a.gtadb_clone, "--data-only"], capture_output=True, text=True)
-            st["rawLandmarks"] = "régénérés" if r.returncode == 0 else ("échec : " + r.stderr[-200:])
-            st["tiles"] = "à reconstruire manuellement (scripts/build_gtadb_assets.py sur un clone complet des tuiles)"
     else:
         st["status"] = "échec"
     if err:
@@ -98,11 +93,28 @@ if a.source in ("all", "gtabase"):
         if fst.get(url, {}).get("lastError"):
             rec["stale"] = True  # dernière lecture en échec : données de la lecture précédente
         out.append(rec)
+    previous_urls = {p["url"] for row in gb for p in row["prov"]}
+    read_urls = {p["url"] for row in out for p in row["prov"]}
     gb = out
-    report["sources"]["gtabase"] = {"name": "GTABase (www.gtabase.com, sitemap public)", "license": A_GTABASE.LIC, "status": "ok" if not failed else "partiel",
+    report["sources"]["gtabase"] = {"name": "GTABase (www.gtabase.com, sitemap public)", "license": A_GTABASE.LIC, "status": "partiel" if failed or notcached else "ok",
                                     "sitemapUrls": len(index["urls"]), "discoveredAt": index.get("discoveredAt"), "sitemapFailures": index.get("sitemapFailures", []),
                                     "read": len(out), "failed": failed, "notFetchedYet": len(notcached), "crawler": tail,
                                     "notes": ["Endpoint /media/com_jamegafilter/en_gb/1.json (403) non utilisé.", "Aucune API supposée : lecture du HTML public et du sitemap."]}
+
+# Une collecte incomplète ne doit pas remplacer les fiches et leurs relations.
+incomplete = []
+if a.source in ("all", "gtadb") and (not places or st["status"] != "ok"):
+    incomplete.append("gtadb")
+if a.source in ("all", "gtabase") and (
+    r.returncode or not out or previous_urls - read_urls or index.get("sitemapFailures")
+    or any(row.get("stale") for row in out)
+):
+    incomplete.append("gtabase")
+if incomplete:
+    dump(os.path.join(HERE, "reports", "last-attempt.json"),
+         {"attemptAt": NOW, "staleSources": incomplete, "sources": report["sources"],
+          "retainedSnapshotAt": _prev_report.get("runAt")})
+    sys.exit("Collecte incomplète, instantané précédent conservé : " + ", ".join(incomplete))
 
 # ── 3. Déduplication et variantes ───────────────────────────────────────
 import dedup
@@ -294,10 +306,13 @@ for r in gb:
         report["conflicts"].append({"entity": r["id"], **c, "applied": False})
 
 # ── 7. Bundles pour l'app ───────────────────────────────────────────────
-import bundles
-bstats = bundles.build(ROOT, places, groups, mission_index, report)
-report["bundles"] = bstats
-dump(os.path.join(HERE, "reports", "latest.json"), report)
+import snapshot
+snapshot.build(import_report=report)
+bstats = report["bundles"]
 import report_md
 open(os.path.join(HERE, "reports", "latest.md"), "w").write(report_md.render(report))
 print(json.dumps({"counts": report["counts"], "changes": report["changes"], "links": report["links"], "bundles": bstats}, ensure_ascii=False, indent=1))
+
+attempt = os.path.join(HERE, "reports", "last-attempt.json")
+if os.path.exists(attempt) and a.source == "all":
+    os.remove(attempt)
