@@ -4488,7 +4488,7 @@
   "model": "Thrax",
   "year": null,
   "aliases": null,
-  "kind": "news",
+  "kind": "dynamic",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -4496,21 +4496,54 @@
    "support": []
   },
   "location": {
-   "text": null,
-   "district": null,
-   "regionId": null,
-   "precision": "none",
-   "zone": null,
+   "text": {
+    "value": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+      "quote": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Dalton Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1738,
+    "y": -1355,
+    "radius": 390,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+      "quote": "Unlock the Key Cloner: High-end cars like these need it."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
    "alarm": null
   },
@@ -4524,7 +4557,13 @@
       "quote": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+      "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+     }
+    ]
    },
    "rule": {
     "chapter": 2,
@@ -4538,8 +4577,30 @@
    },
    "mode": "register"
   },
-  "steps": [],
-  "risks": [],
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Scan with WAiNK: Check the car’s tracker before you take it."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Scan with WAiNK: Check the car’s tracker before you take it."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
@@ -4549,24 +4610,39 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "title": "GTA 6 fastest car",
+    "official": false,
+    "readAt": "2026-11-24T10:15:15.246Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu."
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Dalton Island (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "emplacement",
-   "chapitre"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-24T10:15:15.246Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-24T10:15:15.246Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2",
+     "localisation : none → zone"
     ]
    }
   ]
