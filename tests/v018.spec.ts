@@ -175,6 +175,24 @@ test("motel : les courses de Jason dans le chat ne terminent aucune mission", as
   await page.getByTestId("ai-open").click();
   await page.getByTestId("ai-input").fill("J’ai ramassé les provisions pour Jason");
   await page.getByTestId("ai-send").click();
-  await expect(page.getByText(/As-tu rapporté les provisions/).first()).toBeVisible();
+  const reply = page.getByTestId("ai-answer").last();
+  await expect(reply).toContainText("Just Moved In");
+  await expect(reply).toContainText("As-tu rapporté les provisions");
+  await reply.getByTestId("ai-action-start_mission").click();
+  await reply.getByRole("button", { name: "Annuler" }).click();
   expect((await saved(page)).profile).toMatchObject({ lastMission: "Ambulance Chaser", nextMission: null });
+});
+
+test("motel : manquables avec une mission choisie, repère sourcé et chapitre suivant masqué", async ({ page }) => {
+  await start(page, { chapter: 2, lastMission: "Ambulance Chaser", missionsDone: ["Ambulance Chaser"], nextMission: "Just Moved In" });
+  await page.getByTestId("ai-open").click();
+  await page.getByTestId("ai-input").fill("Quelque chose à manquer au motel avant de continuer ?");
+  await page.getByTestId("ai-send").click();
+  const reply = page.getByTestId("ai-answer").last();
+  await expect(reply).toContainText("réfrigérateur");
+  await expect(reply).toContainText("double ailleurs");
+  await expect(reply).not.toContainText(/Checking Out|Welcome to Vice City/);
+  await reply.getByTestId("ai-action-show_place").click();
+  await expect(page).toHaveURL(/#carte/);
+  expect((await saved(page)).profile).toMatchObject({ nextMission: "Just Moved In", missionInProgress: false });
 });

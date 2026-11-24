@@ -1,4 +1,5 @@
 import { MOTEL_REPORTS, MOTEL_POSTERS, MOTEL_CARDS, POSTER_SOURCE } from "@/data/chapter2";
+import { KNOWLEDGE_BY_ID } from "@/data/knowledge";
 import { PROG_BY_ID } from "@/data/progression";
 import type { RadarFeed, RadarRecord } from "../feed";
 import { liveAdvice, spoilerVisibility } from "../feed";
@@ -483,8 +484,12 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
       });
       return { intent: "motel_report", text: lines.join(" "), actions, sources: [], reliability: "signalé" };
     }
-    if (/manqu|avant de continuer|debut.{0,12}chapitre 2|commenc.{0,20}chapitre 2|dois faire|aller maintenant/.test(nk(q)) && !p.nextMission) {
-      return { intent: "motel_advice", text: `Si tu es au Starlet Motel, regarde les objectifs actifs sur la carte. ${MOTEL_CARDS} ${MOTEL_POSTERS}`, reliability: "signalé", actions: [], sources: [{ name: "The Games Wiki", url: "https://thegameswiki.com/gta6/wiki/missable-content-and-points-of-no-return", when: null }, { name: "Windows Central", url: POSTER_SOURCE, when: null }] };
+    const atMotel = /motel|reception|gerante/.test(nk(q));
+    const practical = /manqu|rater|avant de continuer|debut.{0,12}chapitre 2|commenc.{0,20}chapitre 2|dois faire|aller maintenant/.test(nk(q));
+    if (practical && (atMotel || (!p.nextMission && !topic))) {
+      const landmarkId = KNOWLEDGE_BY_ID.get("starlet-motel")?.location.landmarkId;
+      const actions: AiAction[] = landmarkId ? [{ type: "show_place", landmarkId, label: "Voir le motel sur la carte" }] : [];
+      return { intent: "motel_advice", text: `Si tu es au Starlet Motel, regarde les objectifs actifs sur la carte. ${MOTEL_CARDS} ${MOTEL_POSTERS}`, reliability: "signalé", actions, sources: [{ name: "The Games Wiki", url: "https://thegameswiki.com/gta6/wiki/missable-content-and-points-of-no-return", when: null }, { name: "Windows Central", url: POSTER_SOURCE, when: null }] };
     }
   }
   const vehicles = ctx.feed?.vehicles ?? [];

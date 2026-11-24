@@ -363,11 +363,11 @@ export function AiCopilot() {
         return;
       }
       const local = answer(question, ctx, topic);
-      const a = { ...local, actions: local.actions.filter((x) => isValidAction(x, feed)).slice(0, 2) };
+      const a = { ...local, actions: local.actions.filter((x) => isValidAction(x, feed)).slice(0, local.intent === "motel_report" ? 3 : 2) };
       const id = Date.now();
       // la réponse locale s'affiche tout de suite ; la synthèse serveur (si déployée) l'affine ensuite
       const remote = proxyEnabled() && !!(a.evidence ?? []).length;
-      setMsgs((m) => [...m, { id, role: "user", text: question, atts: chips }, { id: id + 1, role: "ai", a, llm: remote ? "pending" : undefined }]);
+      setMsgs((m) => [...m, { id, role: "user", text: question, atts: chips }, { id: id + 1, role: "ai", a, engine: remote ? undefined : "direct", llm: remote ? "pending" : undefined }]);
       if (!remote) return;
       const r = await askProxy(question, state.profile, topic);
       setMsgs((m) =>
@@ -496,6 +496,10 @@ export function AiCopilot() {
   const lastAi = [...msgs].reverse().find((m): m is AiMsg => m.role === "ai");
   const [menu, setMenu] = useState(false);
   const [askClear, setAskClear] = useState(false);
+  // Les descriptions résolues localement ne contiennent que les noms des tâches décrites.
+  // Toute réponse du modèle ou issue d’une pièce jointe passe par le rédacteur général.
+  const displayText = (m: AiMsg, text: string) =>
+    m.a.intent === "motel_report" && m.engine === "direct" && !m.attNames?.length && state.profile.chapter === 2 ? text : redact(text);
   const ctxLine = state.profile.nextMission ? `${state.profile.missionInProgress ? "En mission" : "Prochaine mission"} · ${redact(state.profile.nextMission)}` : view === "carte" ? "Depuis la carte" : "Ton copilote de partie";
 
   const body = (
@@ -551,14 +555,14 @@ export function AiCopilot() {
           ) : (
             <article key={m.id} className={`bubble bubble--ai${m.llm === "pending" ? " is-refining" : ""}`} data-testid="ai-answer" data-intent={m.a.intent} data-llm={m.llm ?? "off"}>
               {m.attNames?.length ? <p className="bubble__about" data-testid="ai-about">Réponse à {m.attNames.length > 1 ? `tes ${m.attNames.length} pièces jointes` : `« ${m.attNames[0]} »`}</p> : null}
-              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.attNames?.length ? "Leonida regarde ta pièce jointe…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <RichText className="bubble__text" text={redact(m.a.text)} />}
+              {m.streaming && !m.a.text ? <span className="bubble__refine" data-testid="ai-thinking">{m.stage === "search" ? "Recherche sur le web…" : m.attNames?.length ? "Leonida regarde ta pièce jointe…" : m.mission ? `Leonida passe ${m.mission} au crible…` : "Leonida réfléchit…"}</span> : <RichText className="bubble__text" text={displayText(m, m.a.text)} />}
               {!m.streaming && m.grounding && <GroundingCard g={m.grounding} />}
               {!m.streaming && !m.grounding && (m.vision || m.mapGuess) && <VisionAnswer vision={m.vision} guess={m.mapGuess ?? null} />}
               {m.checklist && <ChecklistView c={m.checklist} mission={m.mission ?? ""} />}
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.actions.length > 0 && (
                 <div className="bubble__actions">
-                  {m.a.actions.slice(0, 2).map((a, i) => {
+                  {m.a.actions.slice(0, m.a.intent === "motel_report" ? 3 : 2).map((a, i) => {
                     const key = `${m.id}:${JSON.stringify(a)}`;
                     const asking = pending?.key === key && "confirm" in a;
                     return asking ? (
@@ -569,7 +573,7 @@ export function AiCopilot() {
                       </span>
                     ) : (
                       <button key={i} className={`btn btn--xs press ${i === 0 ? "btn--on" : "btn--ghost"}`} onClick={() => run(a, false, key)} data-testid={`ai-action-${a.type}`}>
-                        {redact(a.label)}
+                        {displayText(m, a.label)}
                       </button>
                     );
                   })}
@@ -584,7 +588,7 @@ export function AiCopilot() {
                   {m.a.actions.length > 2 && (
                     <div className="bubble__actions">
                       {m.a.actions.slice(2).map((a, i) => (
-                        <button key={i} className="btn btn--xs btn--ghost press" onClick={() => run(a, false, `${m.id}:${JSON.stringify(a)}`)} data-testid={`ai-action-${a.type}`}>{redact(a.label)}</button>
+                        <button key={i} className="btn btn--xs btn--ghost press" onClick={() => run(a, false, `${m.id}:${JSON.stringify(a)}`)} data-testid={`ai-action-${a.type}`}>{displayText(m, a.label)}</button>
                       ))}
                     </div>
                   )}
