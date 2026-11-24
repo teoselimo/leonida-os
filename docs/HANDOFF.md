@@ -8,9 +8,9 @@
 | --- | --- |
 | Version en cours | **V0.20.1** (`src/lib/version.ts`) — détail `docs/V0.20.1.md` |
 | Branche d'intégration | `experiment/claude-artifact` (PR brouillon #11 ; ne jamais fusionner vers `main` sans Théo) |
-| Dernier commit vérifié | `__COMMIT__` (V0.20.1, suite complète au vert sur ce code) |
-| Artifact publié | version `__ARTIFACT__` — https://claude.ai/artifact/AdLjrvTSQdxHGewPtWa8YS (publication : Claude seulement) |
-| Dernier passage complet des tests | __TESTS__ |
+| Dernier commit vérifié | `a256c6d` (V0.20.1 ; suite complète au vert sur ce code) |
+| Artifact publié | version `1795534745-d773` (vérifiée : 472 fichiers, empreintes identiques au build) — https://claude.ai/artifact/AdLjrvTSQdxHGewPtWa8YS (publication : Claude seulement) |
+| Dernier passage complet des tests | 538 réussis, 0 échec, 4 ignorés (21,7 min, Claude simulé) ; pipeline Python 21 / 21 |
 | Mis à jour le | 24/11/2026, par Claude |
 
 ## Terminé
