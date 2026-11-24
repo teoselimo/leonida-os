@@ -121,8 +121,8 @@ import dedup
 gb = dedup.dedup(gb, report, nk)
 
 # ── 4. Liaison aux entités déjà intégrées (relier, jamais reconstruire) ─
-subprocess.run(["node", os.path.join(HERE, "export-leonida.mjs")], capture_output=True)
-L = load(os.path.join(STATE, "leonida-entities.json"), {})
+with open(os.path.join(STATE, "leonida-entities.json"), encoding="utf-8") as stream:
+    L = json.load(stream)
 def name_index(items, extra=lambda e: []):
     ix = {}
     for e in items:
@@ -148,7 +148,7 @@ for r in gb:
             r["fields"].update({k2: v for k2, v in (("order", mi["order"]), ("optional", mi["optional"]), ("missable", mi["missable"]), ("pointOfNoReturn", mi["pointOfNoReturn"])) if v})
             if mi.get("chapter") is not None and "chapter" not in r["fields"]:
                 r["fields"]["chapter"] = mi["chapter"]
-            if nk(mi["name"]) != k:
+            if nk(mi["name"]) != k and mi["name"] not in r.get("aliases", []):
                 r.setdefault("aliases", []).append(mi["name"])
         names = [r["name"]] + r.get("aliases", [])
         node = next((prog_ix.get(nk(n)) for n in names if prog_ix.get(nk(n))), None)
@@ -174,6 +174,7 @@ for r in gb:
         if kv:
             r["leonida"] = {"knowledge": kv["id"]}; link_stats[f"{r['type']}→Knowledge"] += 1
         if r["type"] == "property":
+            r["rel"] = [rel for rel in r["rel"] if rel["kind"] not in ("located_at", "located_candidates")]
             cand = place_ix.get(k) or place_ix.get(nk(re.sub(r"\s+(safehouse|garage)$", "", r["name"], flags=re.I)))
             if cand and len(cand) == 1:
                 r["rel"].append({"kind": "located_at", "to": cand[0]["id"], "basis": "nom identique au repère GTADB"}); link_stats["propriété→repère GTADB"] += 1

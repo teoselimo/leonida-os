@@ -10,6 +10,13 @@ import bundles
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = Path("public/data/hub/manifest.json")
+AUDIT = Path("hub/reports/snapshot-v1.json")
+RELATION_TYPES = {
+    "variant_of": {"vehicle"}, "has_variant": {"vehicle"}, "parked_vehicle": {"vehicle"},
+    "features_vehicle": {"vehicle"}, "vehicle": {"vehicle"}, "located_at": {"place"},
+    "located_candidates": {"place"}, "unlocked_by": {"mission", "stranger", "activity"},
+    "lost_at_start": {"mission", "stranger", "activity"},
+}
 
 
 def read(path):
@@ -47,11 +54,27 @@ def build(root=ROOT, output=None, import_report=None):
                     raise ValueError(f"Provenance incohérente : {row['id']}")
                 if provenance.get("collectedAt"):
                     collected[source] = max(collected.get(source, ""), provenance["collectedAt"])
-            targets.update(rel["to"] for rel in row["rel"] if rel.get("to"))
+            for relation in row["rel"]:
+                target = relation.get("to")
+                if target:
+                    targets.update(target if isinstance(target, list) else [target])
         groups[kind] = rows
     expected = {"place": report["counts"]["gtadb"]["place"], **report["counts"]["gtabase"]}
     if {kind: len(rows) for kind, rows in groups.items()} != expected:
         raise ValueError("Le référentiel et les comptes du dernier import divergent")
+    types = {row["id"]: kind for kind, rows in groups.items() for row in rows}
+    issues = []
+    for rows in groups.values():
+        for row in rows:
+            for rel in row["rel"]:
+                expected_types = RELATION_TYPES.get(rel["kind"])
+                dest = rel.get("to")
+                if not dest or not expected_types:
+                    continue
+                for target in dest if isinstance(dest, list) else [dest]:
+                    if target in types and types[target] not in expected_types:
+                        issues.append({"from": row["id"], "kind": rel["kind"], "to": target,
+                                       "actualType": types[target]})
     places = groups.pop("place")
     index = read(records / "gtabase-mission-index.json")
     sources = {}
@@ -77,10 +100,16 @@ def build(root=ROOT, output=None, import_report=None):
                     "records": files, "missingRelationTargets": sorted(targets - ids),
                     "bundles": {key: {"format": "json", **fingerprint((stage / key).read_bytes())}
                                 for key in sorted(paths)}}
+        audit = {"schemaVersion": 1, "snapshotAt": report["runAt"], "counts": expected,
+                 "missingRelationTargets": sorted(targets - ids), "relationTypeIssues": issues,
+                 "conflicts": report["conflicts"], "sources": sources, "bundles": manifest["bundles"]}
+        (stage / AUDIT).parent.mkdir(parents=True, exist_ok=True)
+        (stage / AUDIT).write_text(json.dumps(audit, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+                                  encoding="utf-8")
         (stage / MANIFEST).write_text(json.dumps(manifest, ensure_ascii=False, sort_keys=True,
                                                  separators=(",", ":")), encoding="utf-8")
         report_files = ["hub/reports/latest.json"] if import_report is not None else []
-        for key in [*paths, *report_files, MANIFEST]:
+        for key in [*paths, *report_files, AUDIT, MANIFEST]:
             target = output / key
             target.parent.mkdir(parents=True, exist_ok=True)
             os.replace(stage / key, target)

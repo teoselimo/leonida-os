@@ -20,6 +20,8 @@ class SnapshotTest(unittest.TestCase):
             self.assertEqual(manifest["missingRelationTargets"], [])
             self.assertEqual((output / snapshot.MANIFEST).read_bytes(),
                              (snapshot.ROOT / snapshot.MANIFEST).read_bytes())
+            self.assertEqual((output / snapshot.AUDIT).read_bytes(),
+                             (snapshot.ROOT / snapshot.AUDIT).read_bytes())
             for path, spec in manifest["bundles"].items():
                 data = (output / path).read_bytes()
                 self.assertEqual(data, (snapshot.ROOT / path).read_bytes())
@@ -48,3 +50,19 @@ class SnapshotTest(unittest.TestCase):
         variant = "gtabase:vehicles/celebration-caddy"
         self.assertEqual(rows[variant]["base"], "gtabase:vehicles/caddy-82")
         self.assertIn(variant, rows[rows[variant]["base"]]["vars"])
+
+    def test_unplaced_and_coordinates(self):
+        places = snapshot.read(snapshot.ROOT / "hub/records/gtadb-place.json")
+        bundle = snapshot.read(snapshot.ROOT / "public/data/hub/places.json")
+        self.assertEqual({item["id"] for item in bundle["unplaced"]},
+                         {r["prov"][0]["ref"] for r in places if not r["fields"].get("position")})
+        for item in bundle["unplaced"]:
+            self.assertFalse({"position", "x", "y"} & item.keys())
+
+    def test_aggregator(self):
+        sample = snapshot.read(snapshot.ROOT / "hub/samples/vice-city-collectibles.json")
+        for row in sample["records"]:
+            self.assertTrue(row["prov"])
+            for prov in row["prov"]:
+                self.assertEqual(prov["aggregator"], "vice-city.app")
+                self.assertEqual(prov["upstreamOrigin"], "powerpyx.com")
