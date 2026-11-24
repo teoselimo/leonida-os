@@ -263,6 +263,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const draft = answer(checklist ? `Je vais lancer ${o.mission}` : o.question, o.ctx, o.topic);
   draft.actions = draft.actions.filter((x) => isValidAction(x, o.ctx.feed)).slice(0, 3);
   const atts = o.attachments ?? [];
+  if (!atts.length && (draft.intent === "motel_report" || draft.intent === "motel_advice")) return fromDirect(draft);
   const userImages = atts.filter((a) => a.kind === "image" && a.blob).map((a) => a.blob!);
   let images = userImages;
   const docs = atts.filter((a) => a.kind === "text");

@@ -27,6 +27,7 @@ export interface NodeState {
 }
 
 export interface ProgressView {
+  chapter: number;
   states: NodeState[];
   byId: Map<string, NodeState>;
   current: NodeState | null;
@@ -89,20 +90,21 @@ export function computeProgress(s: Pick<PersistedState, "profile"> & { done?: Re
     if (cur?.id === node.id) return { node, status: "en cours" };
     if (node.lostAt && (node.lostAt.at === "start" ? started(node.lostAt.node) : done.has(node.lostAt.node))) return { node, status: "plus disponible" };
     if (likely(node.id)) return { node, status: "inconnu", likelyDone: true };
-    if (!node.prereq) return { node, status: "inconnu" };
+    if (node.chapter > p.chapter || !node.prereq) return { node, status: "inconnu" };
     const missing = node.prereq.all.filter((d) => !done.has(d) && !likely(d)).map((d) => PROG_BY_ID.get(d)!).filter(Boolean);
     if (missing.length) return { node, status: "verrouillé", missing };
     const viaLikely = node.prereq.all.some((d) => likely(d));
-    return { node, status: !viaLikely && node.prereq.basis === "explicite" && distinctSites(node.prereq.sources) >= 2 ? "accessible" : "potentiellement accessible" };
+    return { node, status: !viaLikely && !(node.chapter === 2 && node.prereq.condition) && node.prereq.basis === "explicite" && distinctSites(node.prereq.sources) >= 2 ? "accessible" : "potentiellement accessible" };
   });
   const byId = new Map(states.map((x) => [x.node.id, x]));
-  return { states, byId, current: cur ? byId.get(cur.id) ?? null : null, planned: planned ? byId.get(planned.id) ?? null : null };
+  return { chapter: p.chapter, states, byId, current: cur ? byId.get(cur.id) ?? null : null, planned: planned ? byId.get(planned.id) ?? null : null };
 }
 
 /**
  * Nom affichable sans spoiler : en mode complet, une mission PRINCIPALE pas encore accessible n'est pas nommée.
  */
 export function shownName(st: NodeState, mode: SpoilerMode): string {
+  if (mode === "strict" && st.node.chapter === 2 && st.node.kind === "main" && st.status !== "terminé" && st.status !== "en cours") return "une mission principale à venir";
   if (mode !== "strict" || st.node.kind !== "main") return st.node.name;
   // V0.18 : une mission « probablement faite » est placée AVANT une mission terminée dans le récapitulatif : passée, pas un spoiler
   if (st.likelyDone) return st.node.name;
@@ -120,7 +122,7 @@ export function pendingMissables(v: ProgressView, collected: string[] = []): Arr
 
 /** Point de non-retour le plus proche (mission pas encore lancée qui en porte un). */
 export function nextPointOfNoReturn(v: ProgressView): NodeState | null {
-  return v.states.find((x) => x.node.pointOfNoReturn && x.status !== "terminé" && x.status !== "en cours") ?? null;
+  return v.states.find((x) => x.node.chapter === v.chapter && x.node.pointOfNoReturn && x.status !== "terminé" && x.status !== "en cours") ?? null;
 }
 
 /**
@@ -136,7 +138,7 @@ export function progressionContext(s: Pick<PersistedState, "profile"> & { done?:
   const label = (x: NodeState) => `${shownName(x, mode)}${x.node.kind !== "main" ? " (facultative)" : ""}`;
   const doneDeclared = by("terminé").filter((x) => x.how === "déclaré").map((x) => x.node.name);
   const doneInferred = by("terminé").filter((x) => x.how === "déduit").length;
-  const lines: string[] = ["PROGRESSION (modèle LEONIDA : chapitre 1 audité, autres chapitres lus sur GTABase — une source ; l'ordre d'un guide n'est pas un prérequis) :"];
+  const lines: string[] = ["PROGRESSION (modèle LEONIDA : chapitre 1 audité, chapitre 2 partiellement recoupé, autres chapitres issus de GTABase ; l'ordre d'un guide n'est pas un prérequis) :"];
   lines.push(`- Terminées : ${doneDeclared.length ? doneDeclared.join(", ") : "aucune déclarée"}${doneInferred ? ` + ${doneInferred} déduite(s) de leurs suites` : ""}`);
   if (v.current) {
     const miss = pendingMissables(v, (s.profile.objectives ?? []).filter((o) => o.done).map((o) => o.text));
@@ -167,7 +169,7 @@ export function progressionContext(s: Pick<PersistedState, "profile"> & { done?:
     const at = shownName(pnr, mode);
     // la note cite des noms de missions : seulement si ces noms sont affichables
     const note = at === pnr.node.name ? pnr.node.pointOfNoReturn.note ?? "" : "Les guides divergent sur la mission exacte qui ferme la porte.";
-    const soon = (pnr.missing ?? []).every((m) => m.id === v.current?.node.id || m.id === v.planned?.node.id);
+    const soon = (v.current || v.planned) && pnr.missing?.length && pnr.missing.every((m) => m.id === v.current?.node.id || m.id === v.planned?.node.id);
     const where = at === pnr.node.name ? `début de ${at}` : soon ? `juste après ${(v.current ?? v.planned)!.node.name}` : "plus loin dans le chapitre";
     lines.push(`- Point de non-retour à venir (${where}) : on perd ${pnr.node.pointOfNoReturn.lose.join(", ")} ; on garde ${pnr.node.pointOfNoReturn.keep.join(", ")}. ${note}`.trim());
   }

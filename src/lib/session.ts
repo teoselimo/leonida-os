@@ -107,7 +107,7 @@ export function sessionPlan(feed: RadarFeed | null, s: Pick<PersistedState, "pro
   const next = p.nextMission && !doneM.has(nk(p.nextMission)) ? p.nextMission : null;
   const info = next ? cat.get(nk(next).replace(/'/g, "")) ?? null : null;
   const brief = next ? missionBrief(feed, next, { chapter: p.chapter, spoilerMode: p.spoilerMode, done: s.done }) : null;
-  const guess = !next && p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
+  const guess = p.chapter !== 2 && !next && p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
   const choices = [...cat.values()].filter((m) => missionVisible(m, p.chapter, p.spoilerMode) && !doneM.has(nk(m.name))).map((m) => m.name).sort();
 
   const during = brief?.during.length

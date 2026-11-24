@@ -59,7 +59,7 @@ export function redact(text: string, names: string[]): string {
   if (!text || !names.length) return text;
   let out = text;
   for (const n of names) {
-    const re = new RegExp(`(«\\s*|"|“)?\\b${esc(n)}\\b(\\s*»|"|”)?`, "gi");
+    const re = new RegExp(`(«\\s*|"|“)?\\b${esc(n)}(?!\\w)(\\s*»|"|”)?`, "gi");
     out = out.replace(re, HIDDEN_LABEL);
   }
   // « la mission une mission à venir » → « une mission à venir »

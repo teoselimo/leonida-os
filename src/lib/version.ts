@@ -1,3 +1,3 @@
 /** Version de l'app affichée partout (barre latérale iPad, Partie › À propos). Source unique. */
-export const APP_VERSION = "V0.20.1";
+export const APP_VERSION = "V0.20.2";
 export const APP_CHANNEL = "Artifact Claude";

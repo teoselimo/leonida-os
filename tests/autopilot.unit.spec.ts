@@ -76,8 +76,8 @@ test.describe("Parcours : mission terminée → suite proposée → confirmation
     expect(a.mains).toHaveLength(0);
     // V0.20 : la phrase dit d'où vient le graphe partiel (GTABase, une source) au lieu de « pas de graphe »
     expect(a.uncertain).toContain("Graphe partiel pour le chapitre 2");
-    expect(a.uncertain).toContain("une seule source");
-    expect(a.manual).toContain("Checking Out");
+    expect(a.uncertain).toContain("prérequis incomplètement documentés");
+    expect(a.manual).not.toContain("Checking Out");
     expect(a.manual).not.toContain("Bad Driver!"); // chapitre 4 : jamais proposé au chapitre 2
     expect(a.coverage).toEqual({ chapter: 2, level: "partielle" });
   });
@@ -247,4 +247,20 @@ test.describe("V0.18.1 · stabilisation", () => {
     expect(autopilot(c).likely.map((x) => x.realName).sort()).toEqual(["Coming Home", "Feng Shui"]);
     expect(c.profile.lastMission).toBe("Swamped");
   });
+});
+
+test("motel : les objectifs parallèles et la double condition ne dépendent pas du numéro de mission", () => {
+  const state = st({ chapter: 2, spoilerMode: "off", missionsDone: ["Ambulance Chaser"], lastMission: "Ambulance Chaser" });
+  const ids = autopilot(state).mains.map((x) => x.id);
+  expect(ids).toEqual(expect.arrayContaining(["just-moved-in", "overnight-charges"]));
+  expect(ids).not.toContain("girls-trip");
+  expect(autopilot(st({ chapter: 2, spoilerMode: "off", missionsDone: ["Overnight Charges", "Just Moved In"] })).mains.map((x) => x.id)).toContain("girls-trip");
+});
+
+test("motel : trois descriptions, trois propositions, aucune écriture", () => {
+  const state = st({ chapter: 2, lastMission: null, missionsDone: [] });
+  const a = answer("Faire disparaître l’ambulance, ramasser les groceries pour Jason et parler avec la proprio", { state, feed });
+  expect(a.actions.map((x) => x.type)).toEqual(["set_mission", "start_mission", "start_mission"]);
+  expect(a.text).toContain("rapporté les provisions");
+  expect(state.profile.missionsDone).toEqual([]);
 });

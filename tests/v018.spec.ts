@@ -149,3 +149,32 @@ test("V0.18.1 · missions antérieures : liste inspectable, sélection partielle
   expect(p.lastMission).toBe("Swamped");
   await expect(page.getByTestId("autopilot-likely")).toContainText("Coming Home");
 });
+
+test("motel : le joueur confirme le chapitre, qui persiste après rechargement", async ({ page }) => {
+  await start(page, { lastMission: "Discharge Time", missionsDone: ["Discharge Time"], nextMission: null });
+  await page.goto("/#profil");
+  const confirm = page.getByTestId("confirm-chapter-two");
+  await expect(confirm).toBeVisible();
+  expect((await saved(page)).profile.chapter).toBe(1);
+  await confirm.click();
+  await expect(confirm).toHaveCount(0);
+  await page.reload();
+  expect((await saved(page)).profile.chapter).toBe(2);
+});
+
+test("motel : l’ambulance seule est déclarée, aucune prochaine principale révélée", async ({ page }) => {
+  await start(page, { chapter: 2, lastMission: "Ambulance Chaser", missionsDone: ["Ambulance Chaser"], nextMission: null });
+  const card = page.getByTestId("next-choice");
+  await expect(card).toContainText("Ambulance Chaser");
+  await expect(card).not.toContainText(/Checking Out|Girls' Trip|Just Moved In/);
+  expect((await saved(page)).profile.missionsDone).toEqual(["Ambulance Chaser"]);
+});
+
+test("motel : les courses de Jason dans le chat ne terminent aucune mission", async ({ page }) => {
+  await start(page, { chapter: 2, lastMission: "Ambulance Chaser", missionsDone: ["Ambulance Chaser"], nextMission: null });
+  await page.getByTestId("ai-open").click();
+  await page.getByTestId("ai-input").fill("J’ai ramassé les provisions pour Jason");
+  await page.getByTestId("ai-send").click();
+  await expect(page.getByText(/As-tu rapporté les provisions/).first()).toBeVisible();
+  expect((await saved(page)).profile).toMatchObject({ lastMission: "Ambulance Chaser", nextMission: null });
+});

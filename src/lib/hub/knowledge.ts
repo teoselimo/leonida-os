@@ -1,3 +1,4 @@
+import { MOTEL_REPORTS, MOTEL_CARDS, MOTEL_POSTERS, POSTER_SOURCE } from "@/data/chapter2";
 import { HUB_MISSIONS, HUB_GRAPH_IDS, entsText, flagText } from "./missions";
 import { loadHubCatalog, loadHubPlaces, loadHubVehicles } from "./data";
 import { loadLandmarks } from "@/lib/gtadb";
@@ -101,6 +102,17 @@ export async function hubMentions(question: string, s: Pick<PersistedState, "pro
   const names = new Map(HUB_MISSIONS.map((m) => [m.id, m.name]));
   for (const m of HUB_MISSIONS) {
     if ([m.name, ...(m.aliases ?? [])].some((n) => hit(q, n))) out.push({ kind: "mission", name: m.name, line: missionLine(m, s, names, question), url: m.url });
+  }
+  if (s.profile.chapter === 2) {
+    for (const report of MOTEL_REPORTS) {
+      if (!report.pattern.test(nk(question))) continue;
+      const m = HUB_MISSIONS.find((x) => x.id === `gtabase:missions/${report.id}`);
+      if (m && !out.some((x) => x.name === m.name)) out.push({ kind: "mission", name: m.name, line: `Description compatible avec « ${m.name} ». ${report.advice}`, url: m.url });
+    }
+    if (/motel|manqu|rater|avant de continuer|commenc.{0,20}chapitre 2|dois faire|aller maintenant/.test(q)) {
+      out.push({ kind: "place", name: "Starlet Motel", line: MOTEL_CARDS, url: "https://thegameswiki.com/gta6/wiki/missable-content-and-points-of-no-return" });
+      out.push({ kind: "place", name: "Hall du motel", line: MOTEL_POSTERS, url: POSTER_SOURCE });
+    }
   }
   // aucune mission nommée mais la question porte sur « la mission » : celle que le joueur a choisie ou commencée
   const cur = s.profile.nextMission ?? null;

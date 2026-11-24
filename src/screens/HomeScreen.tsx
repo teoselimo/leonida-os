@@ -1,5 +1,6 @@
 "use client";
 
+import { ChapterTransition } from "@/components/ChapterTransition";
 import { useEffect, useMemo, useState } from "react";
 import { alerts, progress, recommend } from "@/lib/engine";
 import { CATEGORIES } from "@/lib/meta";
@@ -92,6 +93,7 @@ export function HomeScreen() {
       <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} onStart={() => mission && launch(mission, true)} />
       <div className="home__main">
       <CollectorAlert hideSnapshot />
+      <ChapterTransition />
 
       {/* V0.18 : sans mission choisie, la proposition de l'Autopilot passe en premier (deux ou trois touchers après « Terminée ») */}
       {guard && (
@@ -345,7 +347,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
   const [actOpen, setActOpen] = useState<string | null>(null);
   // V0.18 Mission Autopilot : la suite vient du graphe sourcé (jamais de l'ordre d'un guide), le joueur confirme
   const a = useMemo(() => autopilot(state), [state]);
-  const manual = useMemo(() => [...new Set([...a.manual, ...choices])].sort(), [a.manual, choices]);
+  const manual = useMemo(() => [...new Set([...a.manual, ...(state.profile.chapter === 2 && state.profile.spoilerMode === "strict" ? [] : choices)])].sort(), [a.manual, choices, state.profile.chapter, state.profile.spoilerMode]);
   const lost = justDone?.delta.lost ?? [];
   if (a.mode === "exploration" && !justDone)
     return (
