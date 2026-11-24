@@ -50,7 +50,7 @@ function MissionRow({ m, status, names, hideDetails }: { m: HubMission; status: 
         <span className="gl__ico encm__n">{m.number ?? "·"}</span>
         <span className="gl__body">
           <strong>{m.name}</strong>
-          <em>{[node?.kind === "activity" ? "Activité" : KIND_FR[m.kind], m.jason && m.lucia ? "Jason et Lucia" : m.jason ? "Jason" : m.lucia ? "Lucia" : null, !hideDetails && m.money ? `${m.money.toLocaleString("fr-FR")} $` : null].filter(Boolean).join(" · ")}</em>
+          <em>{[node?.journalTask ? "Objectif du journal" : node?.kind === "activity" ? "Activité" : KIND_FR[m.kind], m.jason && m.lucia ? "Jason et Lucia" : m.jason ? "Jason" : m.lucia ? "Lucia" : null, !hideDetails && m.money ? `${m.money.toLocaleString("fr-FR")} $` : null].filter(Boolean).join(" · ")}</em>
         </span>
         <span className="encm__badges">
           {m.pnr && <span className="trust trust--low">Non-retour</span>}
@@ -61,6 +61,7 @@ function MissionRow({ m, status, names, hideDetails }: { m: HubMission; status: 
       {open && hideDetails && <p className="fineprint">Étapes et conséquences masquées pendant cette mission.</p>}
       {open && !hideDetails && (
         <div className="encm__body">
+          {node?.journalTask && <p>{node.journalTask}</p>}
           {audited && <p><strong>Déblocage documenté</strong> · {[...audited.all.map((id) => PROG_BY_ID.get(id)?.name), audited.condition].filter(Boolean).join(" · ")} · {audited.sources.map((src, i) => <span key={src.url}>{i ? " / " : ""}<a href={src.url} target="_blank" rel="noreferrer">{src.name}</a></span>)}</p>}
           {!audited && after.length > 0 && <p><strong>Après :</strong> {after.join(", ")}{m.weak ? " (lien habituel, à confirmer)" : ""}{m.afterAllMains ? ` et les autres missions principales du chapitre ${m.afterAllMains}` : ""}</p>}
           {m.cond?.length ? <p><strong>Conditions :</strong> {m.cond.join(", ")}</p> : null}

@@ -264,3 +264,10 @@ test("motel : trois descriptions, trois propositions, aucune écriture", () => {
   expect(a.text).toContain("rapporté les provisions");
   expect(state.profile.missionsDone).toEqual([]);
 });
+
+test("les objectifs narratifs persistants restent dans le journal et hors des missions à lancer", () => {
+  const a = autopilot(st({ chapter: 2, spoilerMode: "off", lastMission: "Overnight Charges", missionsDone: ["Overnight Charges"] }));
+  expect(a.mains.map((x) => x.id)).not.toContain("take-care-of-jason");
+  expect(a.manual).not.toEqual(expect.arrayContaining(["Play Nurse"]));
+  expect(a.manual).not.toContain("Behind on Payments");
+});

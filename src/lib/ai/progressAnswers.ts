@@ -67,7 +67,7 @@ export function progressDelta(profile: Profile, name: string, done: Record<strin
     missionInProgress: profile.nextMission && nk(profile.nextMission) === nk(name) ? false : profile.missionInProgress,
   };
   const after = computeProgress({ profile: nextProfile, done });
-  const opened = after.states.filter((x) => x.node.chapter <= profile.chapter && shownName(x, profile.spoilerMode) === x.node.name && (x.status === "accessible" || x.status === "potentiellement accessible") && before.byId.get(x.node.id)?.status === "verrouillé");
+  const opened = after.states.filter((x) => !x.node.journalTask && x.node.chapter <= profile.chapter && shownName(x, profile.spoilerMode) === x.node.name && (x.status === "accessible" || x.status === "potentiellement accessible") && before.byId.get(x.node.id)?.status === "verrouillé");
   const pnrNode = nextPointOfNoReturn(after);
   const mode = profile.spoilerMode;
   const pnr = pnrNode?.node.pointOfNoReturn
@@ -103,8 +103,8 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
   const mode = p.spoilerMode;
   const v = computeProgress({ profile: p, done: ctx.state.done });
   const cur = curOf(v);
-  const acc = v.states.filter((x) => x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "accessible" && x.node.id !== cur?.node.id);
-  const pot = v.states.filter((x) => x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "potentiellement accessible");
+  const acc = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "accessible" && x.node.id !== cur?.node.id);
+  const pot = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "potentiellement accessible");
   const pnr = nextPointOfNoReturn(v);
   const miss = pendingMissables(v, collected(p));
   const base = { reliability: "recoupé" as const, topic: cur ? { kind: "mission" as const, name: cur.node.name, known: true } : null };

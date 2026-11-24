@@ -347,7 +347,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
   const [actOpen, setActOpen] = useState<string | null>(null);
   // V0.18 Mission Autopilot : la suite vient du graphe sourcé (jamais de l'ordre d'un guide), le joueur confirme
   const a = useMemo(() => autopilot(state), [state]);
-  const manual = useMemo(() => [...new Set([...a.manual, ...(state.profile.chapter === 2 && state.profile.spoilerMode === "strict" ? [] : choices)])].sort(), [a.manual, choices, state.profile.chapter, state.profile.spoilerMode]);
+  const manual = useMemo(() => [...new Set([...a.manual, ...(state.profile.chapter === 2 ? [] : choices)])].sort(), [a.manual, choices, state.profile.chapter]);
   const lost = justDone?.delta.lost ?? [];
   if (a.mode === "exploration" && !justDone)
     return (

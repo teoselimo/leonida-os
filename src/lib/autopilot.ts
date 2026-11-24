@@ -113,7 +113,7 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   }
   const open = (x: NodeState) => x.status === "accessible" || x.status === "potentiellement accessible";
   const byRank = (a: NextOption, b: NextOption) => Number(b.fresh) - Number(a.fresh) || (a.state === "accessible" ? 0 : 1) - (b.state === "accessible" ? 0 : 1);
-  const mains = v.states.filter((x) => x.node.kind === "main" && open(x) && shownName(x, p.spoilerMode) === x.node.name && !x.likelyDone && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort(byRank);
+  const mains = v.states.filter((x) => x.node.kind === "main" && !x.node.journalTask && open(x) && shownName(x, p.spoilerMode) === x.node.name && !x.likelyDone && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort(byRank);
   const optional = v.states.filter((x) => x.node.kind !== "main" && open(x) && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort((a, b) => Number(b.missable) - Number(a.missable) || byRank(a, b));
   const sides = optional.filter((x) => x.kind === "side");
   const activities = optional.filter((x) => x.kind === "activity");
@@ -141,7 +141,7 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   // choix manuel : missions du chapitre atteint (graphe + inventaire), jamais celles d'un chapitre non atteint
   const doneNames = new Set([...p.missionsDone, p.lastMission ?? ""].map((m) => nk(m)));
   const manual = [
-    ...v.states.filter((x) => x.node.kind !== "activity" && x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
+    ...v.states.filter((x) => !x.node.journalTask && x.node.kind !== "activity" && x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
     ...STORY_NODES.filter((n) => p.spoilerMode !== "strict" && n.chapter <= p.chapter && (n.kind === "main" || n.kind === "side")).map((n) => n.name),
   ].filter((n, i, a) => a.indexOf(n) === i && !doneNames.has(nk(n)));
   const mode: AutopilotMode = started ? "en mission" : planned ? "envisagée" : p.exploring ? "exploration" : "à choisir";

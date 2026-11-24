@@ -38,6 +38,14 @@ export const MOTEL_UNLOCKS: Record<string, Prereq | undefined> = {
   "afternoon-delight": guide("afternoon-delight-rob-vickis-boss", [coffee], "finir les principales en attente et attendre l’appel de Vicki"),
 };
 
+// Objectifs narratifs du journal. Ils peuvent être déclarés, mais le joueur
+// ne peut pas les lancer comme une nouvelle mission depuis la carte.
+export const MOTEL_JOURNAL_TASKS: Record<string, string | undefined> = {
+  "take-care-of-jason": "Revenir voir Jason au fil du chapitre.",
+  "painkiller-supplier": "Poursuivre les tâches actives en attendant l’appel.",
+  "behind-on-payments": "Réunir 900 $ puis régler la chambre à la réception.",
+};
+
 export const MOTEL_CARDS = "Cherche Vicki dans les toilettes du bureau de réception et Victor Maravilla sur le réfrigérateur de la cuisine. Chaque carte a un double ailleurs.";
 export const MOTEL_POSTERS = "Les affiches de personnes disparues dans le hall donnent une piste annexe.";
 export const POSTER_SOURCE = "https://www.windowscentral.com/gaming/how-to-start-and-complete-the-creepy-photos-missing-persons-side-mission-in-gta-6-chapter-2";

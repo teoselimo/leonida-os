@@ -1,4 +1,4 @@
-import { MOTEL_UNLOCKS } from "@/data/chapter2";
+import { MOTEL_UNLOCKS, MOTEL_JOURNAL_TASKS } from "@/data/chapter2";
 import raw from "@/data/hub/missions.json";
 import meta from "@/data/hub/meta.json";
 import type { ProgNode, Src } from "@/data/progression";
@@ -86,6 +86,7 @@ export function buildHubGraph(manual: ProgNode[], storyIds: Map<string, { kind: 
       aliases: m.aliases,
       kind,
       chapter: m.chapter,
+      journalTask: m.chapter === 2 ? MOTEL_JOURNAL_TASKS[id] : undefined,
       character: m.jason && !m.lucia ? "Jason" : m.lucia && !m.jason ? "Lucia" : undefined,
       where: m.location,
       prereq: after.length ? { all: after, basis: m.weak ? "déduit" : "explicite", sources: [gb(m)], condition: cond.length ? cond.join(", ") : undefined, note: notes.length ? notes.join(" ; ") : undefined } : null,

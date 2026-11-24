@@ -47,6 +47,7 @@ export interface ProgNode {
   aliases?: string[];
   kind: "main" | "side" | "activity";
   chapter: number;
+  journalTask?: string;
   /** Rang dans le « Story Recap » du jeu (affichage seulement — jamais une preuve de prérequis). */
   recap?: number;
   character?: "Jason" | "Lucia";
