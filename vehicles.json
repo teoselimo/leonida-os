@@ -136,7 +136,7 @@
   "model": "Dominator",
   "year": "67",
   "aliases": null,
-  "kind": "delivery",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": "ultimate",
@@ -169,25 +169,30 @@
       "sourceName": "PC Gamer",
       "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
       "quote": "The second wrecked Transgressor is further north in the garage of the house opposite the Kolt & Associate's Stash House robbery (there's a metal sunflower standing in the garden, which makes it easier to recognise.) I…"
+     },
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+      "quote": "Your realistic shortlist is the older muscle cars, sedans and pickups parked around Port Gellhorn and Kelly County."
      }
     ]
    },
-   "district": "Watson Bay",
-   "regionId": "grassrivers",
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
    "precision": "zone",
    "zone": {
-    "x": -4987,
-    "y": -3272,
-    "radius": 380,
-    "widened": false
+    "x": -6579,
+    "y": 3734,
+    "radius": 1627,
+    "widened": true
    },
    "point": null,
    "alternatives": [
     {
-     "district": "Port Gellhorn",
-     "text": "The second wrecked Transgressor is further north in the garage of the house opposite the Kolt & Associate's Stash House robbery (there's a metal sunflower standing in the garden, which makes it easier to recognise.) I…",
-     "sourceName": "PC Gamer",
-     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations"
+     "district": "Watson Bay",
+     "text": "The Paradise garage is in Watson Bay, Mariana County .",
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses"
     }
    ]
   },
@@ -208,7 +213,15 @@
     ],
     "conflicts": []
    },
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": {
     "value": "Thrillbillies",
@@ -219,11 +232,37 @@
       "quote": "You'll be able to start looking for GTA 6 Transgressor locations after you complete the Thrillbillies mission in Chapter 2 and collect the Vapid Dominator from Wyman (if you have the Ultimate Edition , that is)."
      }
     ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+      "quote": "Vapid Montagne XL: Parked behind the workshop during the Slim Jim lesson."
+     }
+    ]
+   },
+   "early": true,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+      "quote": "Moses only takes cars without a tracker , and the Key Cloner for keyless high-end cars doesn’t arrive until Chapter 3."
+     }
+    ],
     "conflicts": []
    },
-   "early": false,
-   "keyCloner": null,
-   "tracker": null,
+   "tracker": {
+    "value": "none",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+      "quote": "For pure pace, the best pick is a Vapid Dominator without a tracker."
+     }
+    ],
+    "conflicts": []
+   },
    "alarm": null
   },
   "keep": {
@@ -236,7 +275,13 @@
       "quote": "Get inside the '67 Dominator Buggy to register it."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+      "quote": "Moses gives Lucia one free registration in Port Gellhorn, and the car you pick has to carry you until Chapter 3."
+     }
+    ]
    },
    "rule": null,
    "mode": "yes"
@@ -256,6 +301,16 @@
     "sourceName": "PC Gamer",
     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-transgressor-locations",
     "quote": "Open the app, select the payment requests option, and then pay him the $1,500 for the car."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+    "quote": "Drive in through the big door: Use the large garage door at Watkins Auto Parts with the car, not on foot."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+    "quote": "Respray, then register: Choose one of the basic colours, then select Register while the price reads Free."
    }
   ],
   "risks": [
@@ -263,9 +318,34 @@
     "sourceName": "Push Square",
     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
     "quote": "Here's its location on your map just in case you get lost:"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+    "quote": "For pure pace, the best pick is a Vapid Dominator without a tracker."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+    "quote": "Moses only takes cars without a tracker , and the Key Cloner for keyless high-end cars doesn’t arrive until Chapter 3."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+    "quote": "Lose the police: Arrive without a wanted level."
    }
   ],
-  "price": null,
+  "price": {
+   "value": 9900,
+   "support": [
+    {
+     "sourceName": "GTA Xtreme",
+     "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+     "quote": "An untracked one reportedly costs $9,900 to register, which makes it one of the biggest savings for your free slot."
+    }
+   ],
+   "conflicts": []
+  },
   "media": null,
   "evidence": [
    {
@@ -281,17 +361,25 @@
     "title": "GTA 6 Transgressor locations: How to restore the first car for Wyman",
     "official": false,
     "readAt": "2026-11-22T17:05:49.250Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
+    "title": "GTA 6 best car chapter 2",
+    "official": false,
+    "readAt": "2026-11-24T20:43:30.622Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Exclusivité Ultimate signalée : compatibilité à vérifier.",
-   "Zone de recherche autour de Watson Bay (repères de la carte communautaire), pas un point exact."
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche élargie autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-21T16:16:05.114Z",
+  "updatedAt": "2026-11-24T20:43:30.622Z",
   "revisions": [
    {
     "at": "2026-11-21T09:57:39.890Z",
@@ -306,6 +394,13 @@
     "changes": [
      "preuves : 1 → 2",
      "édition : ultimate (reported) → ultimate (confirmed)"
+    ]
+   },
+   {
+    "at": "2026-11-24T20:43:30.622Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
     ]
    }
   ]
@@ -491,24 +586,19 @@
   },
   "kind": "hidden",
   "variant": {
-   "value": "bright green",
+   "value": "green",
    "support": [
-    {
-     "sourceName": "GTA Xtreme (sitemap)",
-     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-     "quote": "On Vespucci Island the bright green Fast & Furious tribute is inside a villa garage just north of the road."
-    },
-    {
-     "sourceName": "GamesRadar+",
-     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
-     "quote": "Finding, buying, and stealing your dream car or bike is a peak part of Grand Theft Auto, and mine is the Fast and Furious Mitsubishi Eclipse in GTA 6, based on the bright green car driven by Paul Walker as Brian O'Con…"
-    }
-   ],
-   "conflicts": [
     {
      "sourceName": "AlcastHQ",
      "url": "https://alcasthq.com/gta-6-paul-walker-car",
      "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
+    }
+   ],
+   "conflicts": [
+    {
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+     "quote": "On Vespucci Island the bright green Fast & Furious tribute is inside a villa garage just north of the road."
     }
    ]
   },
@@ -542,16 +632,6 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Fahre westlich von Vice Beach über den Damm durch die Rialto Islands."
-     },
-     {
-      "sourceName": "GamesRadar+",
-      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
-      "quote": "The car is locked in a garage on Vespucci Island, one of the Rialto Islands to the west of Vice Beach."
-     },
-     {
-      "sourceName": "GamesRadar+",
-      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-is-a-movie-and-tv-goldmine-as-players-discover-everything-from-fast-and-furious-cars-to-dexters-apartment",
-      "quote": "Head to Vespucci Island and break into a garage for a chance to claim that across all GTA 6 versions , no upgrade necessary."
      }
     ]
    },
@@ -582,11 +662,6 @@
       "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-paul-walker-car",
       "quote": "The side door sets off an alarm, and that brings people running before you are even in the car."
-     },
-     {
-      "sourceName": "GamesRadar+",
-      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
-      "quote": "This triggers an alarm, but you can switch that off pretty quickly on the wall to your left as you head in."
      }
     ],
     "conflicts": []
@@ -612,11 +687,6 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "Location evidence · In-game map capture · How to register the car"
-     },
-     {
-      "sourceName": "GamesRadar+",
-      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
-      "quote": "This gorgeous motor can be found locked in a garage in Vice City in GTA 6 , but it can be stolen, and, if you play your cards right, you can even register it as your own for free."
      }
     ]
    },
@@ -711,20 +781,6 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
-   },
-   {
-    "sourceName": "GamesRadar+",
-    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-paul-walker-fast-and-furious-car",
-    "title": "How to get Paul Walker's Fast and Furious car in GTA 6",
-    "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
-   },
-   {
-    "sourceName": "GamesRadar+",
-    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-is-a-movie-and-tv-goldmine-as-players-discover-everything-from-fast-and-furious-cars-to-dexters-apartment",
-    "title": "GTA 6 is a movie and TV goldmine, as players discover Fast and Furious cars and Dexter's apartment",
-    "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
    }
   ],
   "reliability": "confirmed",
@@ -737,7 +793,7 @@
    "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-22T17:05:49.250Z",
+  "updatedAt": "2026-11-24T20:43:30.622Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -771,6 +827,13 @@
     "changes": [
      "fiabilité : reported → confirmed",
      "preuves : 5 → 6"
+    ]
+   },
+   {
+    "at": "2026-11-24T20:43:30.622Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 6 → 4"
     ]
    }
   ]
@@ -1232,6 +1295,11 @@
       "sourceName": "PC Gamer",
       "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bf-bandito-location",
       "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-bf-bandito",
+      "quote": "While you're out stealing cars for Moses, the GTA 6 BF Bandito will appear on your list, taking you out to the very rural roads of South Leonard County and the Buckskin Swamp."
      }
     ]
    },
@@ -1258,7 +1326,17 @@
    "alarm": null
   },
   "keep": {
-   "text": null,
+   "text": {
+    "value": "How to respray cars in GTA 6 and shift your vehicle heat level",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-bf-bandito",
+      "quote": "How to respray cars in GTA 6 and shift your vehicle heat level"
+     }
+    ],
+    "conflicts": []
+   },
    "rule": {
     "chapter": 2,
     "where": "garage de Moses",
@@ -1312,11 +1390,18 @@
     "title": "How to steal the BF Bandito in GTA 6",
     "official": false,
     "readAt": "2026-11-21T21:44:06.017Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-bf-bandito",
+    "title": "How to get the GTA 6 BF Bandito",
+    "official": false,
+    "readAt": "2026-11-24T20:43:30.622Z"
    }
   ],
   "reliability": "confirmed",
   "reasons": [
-   "3 sources indépendantes concordantes sur l'emplacement.",
+   "4 sources indépendantes concordantes sur l'emplacement.",
    "Zone de recherche autour de Buckskin (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -1324,7 +1409,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T21:44:06.017Z",
+  "updatedAt": "2026-11-24T20:43:30.622Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -1339,6 +1424,13 @@
     "changes": [
      "fiabilité : reported → confirmed",
      "preuves : 1 → 3"
+    ]
+   },
+   {
+    "at": "2026-11-24T20:43:30.622Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 4"
     ]
    }
   ]
@@ -2001,7 +2093,19 @@
   "make": "Declasse",
   "model": "Vamos",
   "year": null,
-  "aliases": null,
+  "aliases": {
+   "value": [
+    "mitsubishi-eclipse"
+   ],
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+     "quote": "For help on getting hold of some other GTA 6 cars , check out my guides on the GTA 6 Fast and Furious car , inspired by Paul Walker's (Brian O'Conner's) Mitsubishi Eclipse, the BF Bandito , which is another of Moses'…"
+    }
+   ],
+   "conflicts": []
+  },
   "kind": "hidden",
   "variant": {
    "value": "black",
@@ -2012,7 +2116,13 @@
      "quote": "Sneak back towards the centre of the chop shop and turn left to find the Declasse Vamos, a black unassuming car."
     }
    ],
-   "conflicts": []
+   "conflicts": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+     "quote": "The GTA 6 Declasse Vamos is a stunning pillarbox red muscle car that Moses wants you to pick up for him as one of the many side quests available in GTA 6 ."
+    }
+   ]
   },
   "edition": {
    "exclusive": null,
@@ -2044,6 +2154,11 @@
       "sourceName": "GTA BOOM",
       "url": "https://www.gtaboom.com/gta-6-moses-vehicle-theft-guide-2d3f",
       "quote": "Open the main garage door with the switch beside it, use the Slim Jim on the red Vamos and drive it back to Port Gellhorn."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+      "quote": "While some of Moses' targets are easy in-and-out type situations, others are a little trickier, and the Declasse Vamos heist, located just north of Grayson in South West Lummox County, is one of them."
      }
     ]
    },
@@ -2070,7 +2185,17 @@
    "alarm": null
   },
   "keep": {
-   "text": null,
+   "text": {
+    "value": "How to respray cars in GTA 6 and shift your vehicle heat level",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+      "quote": "How to respray cars in GTA 6 and shift your vehicle heat level"
+     }
+    ],
+    "conflicts": []
+   },
    "rule": {
     "chapter": 2,
     "where": "garage de Moses",
@@ -2141,11 +2266,18 @@
     "title": "How to steal the Schafter V12 in GTA 6",
     "official": false,
     "readAt": "2026-11-24T00:22:02.389Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
+    "title": "GTA 6 Declasse Vamos garage door code",
+    "official": false,
+    "readAt": "2026-11-24T20:43:30.622Z"
    }
   ],
   "reliability": "confirmed",
   "reasons": [
-   "3 sources indépendantes concordantes sur l'emplacement.",
+   "4 sources indépendantes concordantes sur l'emplacement.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
@@ -2154,7 +2286,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-24T00:22:02.389Z",
+  "updatedAt": "2026-11-24T20:43:30.622Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -2183,6 +2315,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-24T20:43:30.622Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 5"
     ]
    }
   ]
@@ -2809,6 +2948,125 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 1 → 2"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ocelot-bloodless-jugular",
+  "type": "vehicle",
+  "name": "Ocelot Bloodless Jugular",
+  "make": "Ocelot",
+  "model": "Bloodless Jugular",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?",
+    "support": [
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-ocelot-bloodless-jugular-location",
+      "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-ocelot-bloodless-jugular-location",
+      "quote": "You'll need the key cloner to get in, which I assume you already have since you're doing jobs for Randy."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-ocelot-bloodless-jugular-location",
+    "quote": "Head to Belville : It's a town in Leonard County, in the central eastern part of the map, a bit south of Lake Leonida and north of La Perle."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-ocelot-bloodless-jugular-location",
+    "quote": "No need to worry about the tracker , it's a standard one so it won't transmit your location to the cops."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-ocelot-bloodless-jugular-location",
+    "title": "How to steal the Ocelot Bloodless Jugular in GTA 6",
+    "official": false,
+    "readAt": "2026-11-24T20:43:30.622Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-24T20:43:30.622Z",
+  "updatedAt": "2026-11-24T20:43:30.622Z",
+  "revisions": [
+   {
+    "at": "2026-11-24T20:43:30.622Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PC Gamer"
     ]
    }
   ]
