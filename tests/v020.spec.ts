@@ -114,3 +114,14 @@ test("Story : la fiche GTABase s'ajoute à la simulation de lancement, objectifs
   await expect(f).toContainText("graphe audité");
   await expect(f.getByTestId("hub-objectives").locator("p")).toBeHidden();
 });
+
+test("encyclopédie du motel : seules les missions déclarées sont nommées en strict", async ({ page }) => {
+  await start(page, { chapter: 2, lastMission: "Ambulance Chaser", missionsDone: ["Ambulance Chaser"], nextMission: "Just Moved In" });
+  await page.getByTestId("guide-view-encyclo").click();
+  const chapter = page.getByTestId("enc-ch-2");
+  await expect(chapter).toContainText("Ambulance Chaser");
+  await expect(chapter).not.toContainText(/Checking Out|Girls' Trip/);
+  await chapter.getByTestId("enc-m-just-moved-in").getByRole("button").click();
+  await expect(chapter).toContainText("Étapes et conséquences masquées");
+  await expect(chapter.getByTestId("enc-guide")).toHaveCount(0);
+});

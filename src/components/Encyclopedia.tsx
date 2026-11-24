@@ -37,10 +37,12 @@ function val(v: unknown): string {
   return String(v);
 }
 
-function MissionRow({ m, status, names, onlyCount }: { m: HubMission; status: string | null; names: Map<string, string>; onlyCount?: boolean }) {
+function MissionRow({ m, status, names, hideDetails }: { m: HubMission; status: string | null; names: Map<string, string>; hideDetails: boolean }) {
   const [open, setOpen] = useState(false);
   const inGraph = !!m.leonida?.progression;
-  if (onlyCount) return null;
+  const graphId = HUB_GRAPH_IDS.get(m.id);
+  const node = graphId ? PROG_BY_ID.get(graphId) : null;
+  const audited = m.chapter === 2 ? node?.prereq : null;
   const after = (m.after ?? []).map((a) => names.get(a)).filter(Boolean);
   return (
     <li className="gl encm" data-testid={`enc-m-${m.id.split("/").pop()}`}>
@@ -48,7 +50,7 @@ function MissionRow({ m, status, names, onlyCount }: { m: HubMission; status: st
         <span className="gl__ico encm__n">{m.number ?? "·"}</span>
         <span className="gl__body">
           <strong>{m.name}</strong>
-          <em>{[KIND_FR[m.kind], m.jason && m.lucia ? "Jason et Lucia" : m.jason ? "Jason" : m.lucia ? "Lucia" : null, m.money ? `${m.money.toLocaleString("fr-FR")} $` : null].filter(Boolean).join(" · ")}</em>
+          <em>{[node?.kind === "activity" ? "Activité" : KIND_FR[m.kind], m.jason && m.lucia ? "Jason et Lucia" : m.jason ? "Jason" : m.lucia ? "Lucia" : null, !hideDetails && m.money ? `${m.money.toLocaleString("fr-FR")} $` : null].filter(Boolean).join(" · ")}</em>
         </span>
         <span className="encm__badges">
           {m.pnr && <span className="trust trust--low">Non-retour</span>}
@@ -56,9 +58,11 @@ function MissionRow({ m, status, names, onlyCount }: { m: HubMission; status: st
           {status && <span className={`trust trust--${status === "terminé" ? "ok" : status === "accessible" || status === "potentiellement accessible" ? "warn" : "low"}`}>{STATUS_FR[status] ?? status}</span>}
         </span>
       </button>
-      {open && (
+      {open && hideDetails && <p className="fineprint">Étapes et conséquences masquées pendant cette mission.</p>}
+      {open && !hideDetails && (
         <div className="encm__body">
-          {after.length > 0 && <p><strong>Après :</strong> {after.join(", ")}{m.weak ? " (lien habituel, à confirmer)" : ""}{m.afterAllMains ? ` et les autres missions principales du chapitre ${m.afterAllMains}` : ""}</p>}
+          {audited && <p><strong>Déblocage documenté</strong> · {[...audited.all.map((id) => PROG_BY_ID.get(id)?.name), audited.condition].filter(Boolean).join(" · ")} · {audited.sources.map((src, i) => <span key={src.url}>{i ? " / " : ""}<a href={src.url} target="_blank" rel="noreferrer">{src.name}</a></span>)}</p>}
+          {!audited && after.length > 0 && <p><strong>Après :</strong> {after.join(", ")}{m.weak ? " (lien habituel, à confirmer)" : ""}{m.afterAllMains ? ` et les autres missions principales du chapitre ${m.afterAllMains}` : ""}</p>}
           {m.cond?.length ? <p><strong>Conditions :</strong> {m.cond.join(", ")}</p> : null}
           {m.giver?.length ? <p><strong>Donneur :</strong> {m.giver.join(", ")}</p> : null}
           {m.rewards?.length ? <p><strong>Récompenses :</strong> {m.rewards.map((r) => `${r.v} (${r.l})`).join(" ; ")}</p> : null}
@@ -74,7 +78,7 @@ function MissionRow({ m, status, names, onlyCount }: { m: HubMission; status: st
           ) : m.objectives?.length ? <p><strong>Objectifs :</strong> {m.objectives.join(" → ")}</p> : null}
           {m.req100 != null && <p><strong>Requise pour 100 % :</strong> {m.req100 ? "oui" : "non"}</p>}
           <p className="fineprint">
-            {inGraph ? "Prérequis audités par LEONIDA (prioritaires) · " : "Prérequis lus sur GTABase (une source) · "}
+            {audited ? "Fiche et objectifs · " : inGraph ? "Prérequis audités par LEONIDA (prioritaires) · " : "Prérequis lus sur GTABase (une source) · "}
             <a href={m.url} target="_blank" rel="noreferrer">GTABase</a>{m.mod ? `, fiche du ${new Date(m.mod).toLocaleDateString("fr-FR")}` : ""}
           </p>
         </div>
@@ -140,10 +144,12 @@ export function Encyclopedia() {
       {tab === "missions" && (
         <>
           <p className="fineprint" data-testid="enc-coverage">
-            {total.missions} missions et {total.strangers} missions « étrangers et fous » connues · chapitre 1 audité par LEONIDA, chapitres suivants lus sur GTABase (une source, jamais « Vérifié »).
+            {total.missions} missions et {total.strangers} missions « étrangers et fous » connues · chapitre 1 audité par LEONIDA, chapitre 2 audité par fiche, autres chapitres issus de GTABase.
           </p>
           {chapters.map((c) => {
-            const ms = missions.filter((m) => (m.chapter ?? 0) === c);
+            const strictMotel = p.spoilerMode === "strict" && c === 2 && p.chapter === 2;
+            const declared = new Set([...p.missionsDone, p.lastMission, p.nextMission].filter((x): x is string => !!x).map(nk));
+            const ms = missions.filter((m) => (m.chapter ?? 0) === c && (!strictMotel || [m.name, ...(m.aliases ?? [])].some((name) => declared.has(nk(name)))));
             const st = hubChapterStats(c);
             if (!visibleChapter(c))
               return (
@@ -155,7 +161,7 @@ export function Encyclopedia() {
             return (
               <section key={c} className="enc__ch" data-testid={`enc-ch-${c}`}>
                 <h3>{c === 0 ? "Hors chapitre" : `Chapitre ${c}`} <em>{st.total} missions · {st.withPrereq} avec prérequis GTABase{st.pnr ? ` · ${st.pnr} non-retour` : ""}</em></h3>
-                <ul className="glist">{ms.map((m) => <MissionRow key={m.id} m={m} status={statusOf(m)} names={names} />)}</ul>
+                <ul className="glist">{ms.map((m) => <MissionRow key={m.id} m={m} status={statusOf(m)} names={names} hideDetails={strictMotel && statusOf(m) !== "terminé"} />)}</ul>
               </section>
             );
           })}
