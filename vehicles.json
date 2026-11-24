@@ -2003,7 +2003,17 @@
   "year": null,
   "aliases": null,
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "black",
+   "support": [
+    {
+     "sourceName": "PC Gamer",
+     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-schafter-v12",
+     "quote": "Sneak back towards the centre of the chop shop and turn left to find the Declasse Vamos, a black unassuming car."
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
    "exclusive": null,
    "status": "none",
@@ -2011,24 +2021,29 @@
   },
   "location": {
    "text": {
-    "value": "The car is located in the shed to the east of the house, but you need a code to enter the door on the side, you can't break it or pick it open.",
+    "value": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?",
     "support": [
-     {
-      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
-      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
-      "quote": "The car is located in the shed to the east of the house, but you need a code to enter the door on the side, you can't break it or pick it open."
-     }
-    ],
-    "conflicts": [
-     {
-      "sourceName": "GTA BOOM",
-      "url": "https://www.gtaboom.com/gta-6-moses-vehicle-theft-guide-2d3f",
-      "quote": "Open the main garage door with the switch beside it, use the Slim Jim on the red Vamos and drive it back to Port Gellhorn."
-     },
      {
       "sourceName": "PC Gamer",
       "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-declasse-vamos-code",
       "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-schafter-v12",
+      "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+      "url": "https://www.powerpyx.com/gta-6-steal-vehicles-for-moses-walkthrough",
+      "quote": "The car is located in the shed to the east of the house, but you need a code to enter the door on the side, you can't break it or pick it open."
+     },
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-moses-vehicle-theft-guide-2d3f",
+      "quote": "Open the main garage door with the switch beside it, use the Slim Jim on the red Vamos and drive it back to Port Gellhorn."
      }
     ]
    },
@@ -2119,11 +2134,19 @@
     "title": "How to steal the Declasse Vamos in GTA 6",
     "official": false,
     "readAt": "2026-11-22T22:28:08.190Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-schafter-v12",
+    "title": "How to steal the Schafter V12 in GTA 6",
+    "official": false,
+    "readAt": "2026-11-24T00:22:02.389Z"
    }
   ],
   "reliability": "confirmed",
   "reasons": [
    "3 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -2131,7 +2154,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-22T22:28:08.190Z",
+  "updatedAt": "2026-11-24T00:22:02.389Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -2153,6 +2176,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 2 → 3"
+    ]
+   },
+   {
+    "at": "2026-11-24T00:22:02.389Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 4"
     ]
    }
   ]
