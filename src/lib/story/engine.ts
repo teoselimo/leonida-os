@@ -1,3 +1,4 @@
+import { hubChapterStats } from "@/lib/hub/missions";
 import { PROGRESSION, PROG_BY_ID } from "@/data/progression";
 import { CHAPTER_COVERAGE, NODE_COVERAGE, STORY_NODES, STORY_NODE_BY_ID, STORY_RULES } from "@/data/story";
 import { computeProgress, nodeByName, shownName } from "../progress";
@@ -336,7 +337,8 @@ export function homeStoryAlerts(s: StoryInput): StoryAlert[] {
 // ───────────────────────── couverture ─────────────────────────
 
 export function nodeCoverage(id: string): Coverage {
-  return STORY_NODE_BY_ID.get(id)?.coverage ?? NODE_COVERAGE[id] ?? (PROG_BY_ID.get(id) ? "partielle" : "non auditée");
+  // V0.20 : un nœud venu du Data Hub (GTABase) n'est pas audité par LEONIDA, même si ses prérequis sont connus
+  return STORY_NODE_BY_ID.get(id)?.coverage ?? NODE_COVERAGE[id] ?? (PROG_BY_ID.get(id) && PROG_BY_ID.get(id)!.origin !== "hub" ? "partielle" : "non auditée");
 }
 
 export function coverageOf(chapter: number): { chapter: number; level: Coverage; audited: string[]; missing: string[] } {
@@ -348,7 +350,9 @@ export function coverageOf(chapter: number): { chapter: number; level: Coverage;
 export function coverageLine(chapter: number): string {
   const c = coverageOf(chapter);
   if (c.level === "auditée") return `Chapitre ${chapter} : audité.`;
-  return `Chapitre ${chapter} : couverture ${c.level}. Pas encore vérifié : ${c.missing.join(" ; ")}.`;
+  const h = hubChapterStats(chapter);
+  const known = h.total ? ` ${h.total} missions connues via GTABase (${h.withPrereq} avec prérequis).` : "";
+  return `Chapitre ${chapter} : couverture ${c.level}.${known} Pas encore vérifié : ${c.missing.join(" ; ")}.`;
 }
 
 // ───────────────────────── simulation « si je lance X » ─────────────────────────
@@ -470,6 +474,8 @@ export function simulateLaunch(s: StoryInput, name: string): LaunchSim | null {
   // 7. inconnues — l'absence d'alerte n'est jamais l'absence de risque
   const sn = STORY_NODE_BY_ID.get(node.id);
   sim.unknowns.push(...(sn?.unknowns ?? []));
+  if (g?.origin === "hub") sim.unknowns.push(g.prereq ? "Prérequis lus sur GTABase (une seule source, non recoupée)." : "Prérequis non documentés : GTABase ne dit pas ce qui débloque cette mission.");
+  if (g?.hub?.differs?.length) sim.unknowns.push("GTABase cite d'autres missions préalables que le graphe validé : le graphe validé reste appliqué.");
   if (sim.coverage === "non auditée") sim.unknowns.unshift("Cette mission n'a pas encore été auditée : aucune alerte ne veut pas dire aucun risque.");
   else if (sim.coverage === "partielle") sim.unknowns.unshift("Audit partiel : prérequis et pertes majeures vérifiés, pas chaque détail de la mission.");
   else if (sim.coverage === "à revérifier") sim.unknowns.unshift("Données à revérifier (mise à jour du jeu ou sources nouvelles).");

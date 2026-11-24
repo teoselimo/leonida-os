@@ -7,6 +7,8 @@ import { repo, useStore } from "@/lib/store";
 import { timeAgo } from "@/lib/useMedia";
 import { ShieldChip } from "@/components/ShieldChip";
 import { Guide } from "@/components/Guide";
+import { Garage } from "@/components/Garage";
+import { Encyclopedia } from "@/components/Encyclopedia";
 import { LiveRadar } from "@/components/LiveRadar";
 import { useLiveRadar } from "@/lib/live";
 import { Icon } from "@/components/ui/Icon";
@@ -20,6 +22,8 @@ export function RadarScreen() {
   const [filter, setFilter] = useState<Filter>("all");
   // Toutes les fiches de la veille (actualités, statuts, preuves) : vue détaillée, hors du Guide pratique
   const [full, setFull] = useState(false);
+  // V0.20 : Garage et Encyclopédie vivent DANS le Guide (pas de sixième onglet)
+  const { guideView: gview, setGuideView: setGview } = useStore();
   const regions = repo.regions();
 
   // « Nouveau » = non vu à l'ouverture de l'écran ; marqué comme vu ensuite.
@@ -50,6 +54,12 @@ export function RadarScreen() {
         </div>
         <ShieldChip />
       </header>
+      <div className="gswitch" role="tablist" aria-label="Vue du Guide">
+        {([["infos", "Infos utiles", "info"], ["garage", "Garage", "car"], ["encyclo", "Encyclopédie", "layers"]] as const).map(([id, l, ic]) => (
+          <button key={id} role="tab" aria-selected={gview === id} className={gview === id ? "is-on" : ""} onClick={() => setGview(id)} data-testid={`guide-view-${id}`}><Icon name={ic} size={15} /> {l}</button>
+        ))}
+      </div>
+      {gview === "garage" ? <Garage /> : gview === "encyclo" ? <Encyclopedia /> : (<>
 
       {live.feed ? (
         full ? (
@@ -152,6 +162,7 @@ export function RadarScreen() {
       </div>
         </>
       )}
+      </>)}
     </div>
   );
 }

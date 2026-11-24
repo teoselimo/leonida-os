@@ -135,6 +135,8 @@ export interface PersistedState {
   showDemo: boolean;
   /** Garage des légendes : état de chaque véhicule pour ce joueur (repéré → rangé au garage). */
   vehicles: Record<string, VehicleProgress>;
+  /** V0.20 · Garage : véhicules que le joueur recherche (ids Hub ou Rare Vehicle Locator). */
+  wanted?: string[];
   /** Activités de la veille déclarées faites (id de fiche → date). */
   done: Record<string, string>;
   /** Version de migration appliquée. */

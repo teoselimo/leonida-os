@@ -64,7 +64,9 @@ export function migrate(saved: Partial<PersistedState>): PersistedState {
   const pins = saved.pins && typeof saved.pins === "object" ? Object.fromEntries(Object.entries(saved.pins).filter(([, v]) => v && Number.isFinite(v.x) && Number.isFinite(v.y) && typeof v.at === "string").map(([k, v]) => [k, { x: v.x, y: v.y, at: v.at, by: "joueur" as const }])) : {};
   const proofs = saved.proofs && typeof saved.proofs === "object" ? Object.fromEntries(Object.entries(saved.proofs).map(([k, arr]) => [k, (Array.isArray(arr) ? arr : []).filter((p) => p && typeof p.id === "string" && (p.kind === "lien" || p.kind === "capture") && typeof p.value === "string" && typeof p.at === "string").slice(-MAX_PROOFS)]).filter(([, a]) => (a as unknown[]).length)) : {};
   const story = sanitizeStory(saved.story);
-  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, story, rev: 9, schema: 1 };
+  // V0.20 : liste « Recherchés » du Garage (champ facultatif, absent des sauvegardes antérieures)
+  const wanted = Array.isArray(saved.wanted) ? saved.wanted.filter((x): x is string => typeof x === "string").slice(-200) : [];
+  return { ...base, ...saved, profile, custom, vehicles, done, briefs, pins, proofs, metrics, showDemo, story, wanted, rev: 9, schema: 1 };
 }
 
 /** V0.17 : jauges d'argent et choix déclarés — toute valeur invalide est retirée (jamais un solde inventé). */
@@ -109,6 +111,7 @@ type Action =
   | { type: "importCustom"; items: Discovery[] }
   | { type: "showDemo"; value: boolean }
   | { type: "vehicle"; id: string; progress: VehicleProgress | null }
+  | { type: "wanted"; id: string }
   | { type: "done"; id: string; value: boolean }
   | { type: "pin"; id: string; pin: { x: number; y: number } | null }
   | { type: "proof"; id: string; proof: PlayerProof | null; removeId?: string }
@@ -222,6 +225,11 @@ export function reducer(s: PersistedState, a: Action): PersistedState {
       const { [a.id]: _old, ...rest } = s.vehicles;
       return { ...s, vehicles: a.progress ? { ...rest, [a.id]: a.progress } : rest };
     }
+    case "wanted": {
+      // V0.20 · Garage : liste « Recherchés » (ids de véhicules, aucune autre donnée)
+      const cur = s.wanted ?? [];
+      return { ...s, wanted: cur.includes(a.id) ? cur.filter((x) => x !== a.id) : [...cur, a.id].slice(-200) };
+    }
   }
 }
 
@@ -288,10 +296,14 @@ interface Ctx {
   setMoney: (resource: ResourceId, gauge: Gauge | null) => void;
   /** Garage des légendes : fait avancer (ou annule) l'état d'un véhicule. */
   setVehicle: (id: string, state: VehicleState | null, storage?: string) => void;
+  toggleWanted: (id: string) => void;
   /** Véhicule sélectionné sur la carte (mode Voitures cachées). */
   vehicleId: string | null;
   /** Mode « Voitures cachées » de la carte et son sous-filtre (conservés entre les onglets et depuis LEONIDA AI). */
   garage: { on: boolean; filter: string | null };
+  /** V0.20 : vue du Guide (Infos utiles, Garage, Encyclopédie). */
+  guideView: "infos" | "garage" | "encyclo";
+  setGuideView: (v: "infos" | "garage" | "encyclo") => void;
   setGarage: (g: { on: boolean; filter?: string | null }) => void;
   /** Radar : fiche à ouvrir et catégorie à filtrer (actions de LEONIDA AI). */
   radarFocus: { id: string | null; category: string | null; nonce: number };
@@ -342,6 +354,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<Toast | null>(null);
   const [vehicleId, setVehicleId] = useState<string | null>(null);
   const [garage, setGarageState] = useState<{ on: boolean; filter: string | null }>({ on: false, filter: null });
+  const [guideView, setGuideView] = useState<"infos" | "garage" | "encyclo">("infos");
   const [radarFocus, setRadarFocus] = useState<{ id: string | null; category: string | null; nonce: number }>({ id: null, category: null, nonce: 0 });
   const [aiOpen, setAiOpen] = useState(false);
   const [placeFocus, setPlaceFocus] = useState<PlaceFocus & { nonce: number }>({ nonce: 0 });
@@ -522,15 +535,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const prev = state.vehicles[id];
         dispatch({ type: "vehicle", id, progress: st ? { state: st, at: new Date().toISOString(), storage: storage ?? prev?.storage } : null });
       },
+      toggleWanted: (id) => dispatch({ type: "wanted", id }),
+      guideView,
+      setGuideView,
       vehicleId,
       garage,
       setGarage: (g) => setGarageState((cur) => ({ on: g.on, filter: g.filter === undefined ? cur.filter : g.filter })),
       radarFocus,
       openRecord: (id) => {
+        setGuideView("infos");
         setRadarFocus((r) => ({ id, category: null, nonce: r.nonce + 1 }));
         setView("radar");
       },
       filterRadar: (category) => {
+        setGuideView("infos");
         setRadarFocus((r) => ({ id: null, category, nonce: r.nonce + 1 }));
         setView("radar");
       },
@@ -559,7 +577,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setView("carte");
       },
     }),
-    [state, all, signals, hydrated, view, setView, selectedId, focusNonce, complete, toast, showToast, vehicleId, garage, radarFocus, aiOpen, celebration, placeFocus],
+    [state, all, signals, hydrated, view, setView, selectedId, focusNonce, complete, toast, showToast, vehicleId, garage, radarFocus, aiOpen, celebration, placeFocus, guideView],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

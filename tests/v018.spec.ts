@@ -71,9 +71,9 @@ test("plusieurs branches : chacune se choisit, aucune n'est imposée", async ({ 
   await expect(page.getByTestId("next-mission-name")).toHaveText("Day Release");
 });
 
-test("chapitre 2 sans graphe : incertitude explicite et choix manuel", async ({ page }) => {
+test("chapitre 2, graphe partiel (Data Hub) : incertitude explicite et choix manuel", async ({ page }) => {
   await start(page, { chapter: 2, lastMission: "Discharge Time", nextMission: null, missionsDone: ["Discharge Time"] });
-  await expect(page.getByTestId("autopilot-uncertain")).toContainText("pas encore de graphe");
+  await expect(page.getByTestId("autopilot-uncertain")).toContainText("Graphe partiel pour le chapitre 2");
   await page.getByTestId("next-mission-input").fill("Checking Out");
   await page.getByTestId("next-mission-save").click();
   await expect(page.getByTestId("next-mission-name")).toHaveText("Checking Out");

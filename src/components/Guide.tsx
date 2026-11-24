@@ -52,7 +52,7 @@ interface Row {
 
 export function Guide() {
   const { feed, fetchedAt } = useLiveRadar();
-  const { state, radarFocus, filterRadar, focusVehicle, showPlace } = useStore();
+  const { state, radarFocus, filterRadar, focusVehicle, showPlace, setGuideView } = useStore();
   const redact = useRedact();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<Cat>("tout");
@@ -103,8 +103,10 @@ export function Guide() {
     const v = computeProgress(state);
     for (const st of v.states) {
       if (st.node.kind === "main") continue;
+      // V0.20 : missions du Data Hub des chapitres non atteints → masquées sauf anti-spoiler désactivé
+      if (st.node.chapter > p.chapter && p.spoilerMode !== "off" && st.status !== "terminé") continue;
       const status = st.status === "terminé" ? "Faite" : st.status === "plus disponible" ? "Plus disponible" : st.status === "accessible" ? "Accessible" : st.status === "potentiellement accessible" ? "Probablement accessible" : st.status === "verrouillé" ? `Après ${st.missing?.map((m) => shownName(v.byId.get(m.id)!, p.spoilerMode)).join(", ")}` : "Disponibilité inconnue";
-      out.push({ id: `prog:${st.node.id}`, cat: "annexes", icon: "flag", color: "#FF3D8B", title: st.node.name, sub: redact(`${status}${st.node.where ? ` · ${st.node.where}` : ""}`), trust: (st.node.prereq?.sources.length ?? 0) >= 2 ? "Vérifié" : "Probable", done: st.status === "terminé", open: () => setOpenId((x) => (x === `prog:${st.node.id}` ? null : `prog:${st.node.id}`)) });
+      out.push({ id: `prog:${st.node.id}`, cat: "annexes", icon: "flag", color: "#FF3D8B", title: st.node.name, sub: redact(`${status}${st.node.where ? ` · ${st.node.where}` : ""}`), trust: st.node.origin === "hub" ? "Probable" : (st.node.prereq?.sources.length ?? 0) >= 2 ? "Vérifié" : "Probable", done: st.status === "terminé", open: () => setOpenId((x) => (x === `prog:${st.node.id}` ? null : `prog:${st.node.id}`)) });
     }
     for (const veh of feed?.vehicles ?? []) {
       const x = viewOf(veh, state);
@@ -142,6 +144,7 @@ export function Guide() {
           <button key={c.id} role="tab" aria-selected={cat === c.id} className={`fchip${cat === c.id ? " is-on" : ""}`} onClick={() => setCat(c.id)} data-testid={`guide-cat-${c.id}`}>{c.label}</button>
         ))}
       </div>
+      {cat === "vehicules" && <button className="btn btn--sm guide__garage" onClick={() => setGuideView("garage")} data-testid="guide-open-garage"><Icon name="car" size={15} /> Ouvrir le Garage : tout le catalogue, filtres et fiches</button>}
       <ul className="glist" data-testid="live-list">
         {shown.length === 0 && <li className="card empty">Rien ici pour l&apos;instant.</li>}
         {shown.map((r) => (

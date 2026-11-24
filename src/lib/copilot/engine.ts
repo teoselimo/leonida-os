@@ -18,6 +18,7 @@ import type { Grounding, Observation } from "../knowledge/engine";
 import { EXTRACT_RULES, MEMORY_TTL_MS, asksVehicle, isVisualFollowUp, keepImages, visionAnswerRules, visualQuery, wantsDetail, wantsMap } from "./grounding";
 import type { VisualMemory } from "./grounding";
 import { compactPlayerContext, placeFocus } from "./context";
+import { hubBlock, hubMentions, landmarkMentions } from "../hub/knowledge";
 
 /**
  * Moteur conversationnel indépendant du fournisseur :
@@ -395,7 +396,13 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const facts = visualTurn || SMALLTALK.has(draft.intent) || draft.intent === "clarify" ? "" : draft.text;
   // V0.19 · connaissances LEONIDA (lieux, véhicules) citées par la question, même sans image
   const kEnts = visualTurn ? [] : entitiesForQuestion(o.question);
-  const kb = knowledgeBlock(kEnts);
+  const kb0 = knowledgeBlock(kEnts);
+  // V0.20 · Data Hub : missions, véhicules, personnages, propriétés et armes cités par la question
+  const hubMs = visualTurn ? [] : await hubMentions(o.question, o.ctx.state).catch(() => []);
+  // lieu absent de Knowledge : les repères GTADB dont le nom est cité (ou lu sur l'image) sont joints
+  const lmText = visualTurn ? (obs?.texts ?? []).join(" | ") : kEnts.length ? "" : o.question;
+  if (lmText) hubMs.push(...(await landmarkMentions(lmText).catch(() => [])));
+  const kb = [kb0, hubBlock(hubMs)].filter(Boolean).join("\n");
   const player = visualTurn || placeFocus(o.question, kEnts.some((e) => e.type !== "zone")) ? compactPlayerContext(o.ctx.state) : playerContext(o.ctx.state, o.ctx.feed);
   // état exact des sources, pour ne jamais confondre « rien dans notre base », « web indisponible »,
   // « pas de source fiable » et « le contenu n'existe pas »
@@ -431,7 +438,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const messages: LlmMessage[] = [
     { role: "user", content: RULES },
     ...history,
-    { role: "user", content: composeTurn({ question: o.question, player, evidence: kb ? `${evidence}\nCONNAISSANCES LEONIDA (lieux, véhicules — fiches sourcées)\n${kb}` : evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}`, vision: visionBlock }) },
+    { role: "user", content: composeTurn({ question: o.question, player, evidence: kb ? `${evidence}\nCONNAISSANCES LEONIDA (lieux, véhicules, Data Hub — fiches sourcées)\n${kb}` : evidence, facts, actions, checklist, web: `connaissances locales : ${localNote} ; web : ${webNote}`, vision: visionBlock }) },
   ];
   // les tours consécutifs de même rôle sont acceptés ; la liste doit finir par « user »
   try {

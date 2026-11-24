@@ -91,7 +91,7 @@ function option(x: NodeState, v: ProgressView, s: Pick<PersistedState, "profile"
     state: v.planned?.node.id === x.node.id ? "envisagée" : STATE_OF[x.status],
     why: whyOf(x),
     fresh: fresh.has(x.node.id),
-    missable: !!x.node.lostAt,
+    missable: !!x.node.lostAt || !!x.node.hub?.missable,
     pnr: !!x.node.pointOfNoReturn,
   };
 }
@@ -119,9 +119,13 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   const activities = optional.filter((x) => x.kind === "activity");
   // nom réel gardé pour la confirmation ; nom affiché masqué si l'anti-spoiler le cache
   const likely = v.states.filter((x) => x.likelyDone && x.node.chapter === p.chapter).map((x) => ({ ...option(x, v, s, fresh), realName: x.node.name, why: "placée avant une mission que tu as terminée dans le récapitulatif du jeu (indice faible)" }));
-  const graphCovers = p.chapter === 1;
+  // V0.20 : chapitre 1 audité ; chapitres suivants = graphe partiel lu sur GTABase (une source, prérequis cités)
+  const hubLinks = v.states.filter((x) => x.node.chapter === p.chapter && x.node.origin === "hub" && x.node.prereq).length;
+  const graphCovers = p.chapter === 1 || hubLinks >= 3;
   let uncertain: string | null = null;
-  if (!graphCovers) uncertain = `Le chapitre ${p.chapter} n'a pas encore de graphe de missions complet : je ne peux pas calculer la suite. Indique la mission affichée dans ton jeu.`;
+  if (!graphCovers) uncertain = `Le chapitre ${p.chapter} n'a pas encore de graphe de missions suffisant : je ne peux pas calculer la suite. Indique la mission affichée dans ton jeu.`;
+  else if (p.chapter > 1 && !mains.length)
+    uncertain = `Graphe partiel pour le chapitre ${p.chapter} (prérequis lus sur GTABase, une seule source) : aucune suite calculable depuis ta progression déclarée. Indique la mission affichée dans ton jeu.`;
   else if (last && !last.known) uncertain = `« ${last.name} » n'est pas dans mon graphe : je ne sais pas ce qu'elle débloque. Choisis la suite toi-même.`;
   else if (!mains.length)
     uncertain = last

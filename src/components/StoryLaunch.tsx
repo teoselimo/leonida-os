@@ -1,5 +1,6 @@
 "use client";
 
+import { PROG_BY_ID } from "@/data/progression";
 import { useMemo, useState } from "react";
 import { useStore } from "@/lib/store";
 import { coverageOf, gaugeLabel, simulateLaunch } from "@/lib/story/engine";
@@ -90,6 +91,28 @@ function MoneyRow({ res }: { res: ResourceId }) {
   );
 }
 
+/** V0.20 · Fiche mission du Data Hub (GTABase) : faits affichés, jamais substitués aux prérequis validés. */
+export function HubFactsBlock({ id }: { id: string }) {
+  const n = PROG_BY_ID.get(id);
+  const h = n?.hub;
+  if (!h) return null;
+  const line = [h.number ? `mission n° ${h.number}` : null, h.protagonist ? `jouée avec ${h.protagonist}` : null, h.giver?.length ? `donnée par ${h.giver.join(", ")}` : null].filter(Boolean).join(" · ");
+  return (
+    <div className="mhub" data-testid="hub-facts">
+      <p><strong>Fiche GTABase</strong>{line ? ` — ${line}` : ""}</p>
+      {h.money ? <p>Récompense : {h.money.toLocaleString("fr-FR")} $</p> : null}
+      {h.cond?.length ? <p>Conditions : {h.cond.join(", ")}</p> : null}
+      {h.missable && <p>Signalée manquable par GTABase.</p>}
+      {h.req100 != null && <p>Requise pour 100 % : {h.req100 ? "oui" : "non"}</p>}
+      {h.objectives?.length ? (
+        <details data-testid="hub-objectives"><summary>Voir les {h.objectives.length} objectifs (révèle le déroulé)</summary><p>{h.objectives.join(" → ")}</p></details>
+      ) : null}
+      {h.differs?.length ? <p data-testid="hub-differs">GTABase cite d&apos;autres préalables ({h.differs.map((d) => PROG_BY_ID.get(d)?.name ?? d).join(", ")}) : non appliqué, le graphe validé prime.</p> : null}
+      <p className="fineprint">{n?.origin === "hub" ? "Mission ajoutée par le Data Hub (non auditée)." : "Mission du graphe audité ; faits complémentaires GTABase."} <a href={h.url} target="_blank" rel="noreferrer">Source</a>{h.mod ? ` · ${new Date(h.mod).toLocaleDateString("fr-FR")}` : ""}</p>
+    </div>
+  );
+}
+
 export function StoryLaunch({ mission }: { mission: string }) {
   const { state } = useStore();
   const [open, setOpen] = useState(false);
@@ -134,6 +157,7 @@ export function StoryLaunch({ mission }: { mission: string }) {
             </div>
           )}
           <Lines title="Plus tard" lines={sim.later} testid="sim-later" />
+          <HubFactsBlock id={sim.id} />
           <div className="slaunch__group slaunch__unknown" data-testid="sim-unknowns">
             <h4>Ce qui n&apos;est pas vérifié</h4>
             <ul>

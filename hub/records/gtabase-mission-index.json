@@ -1,0 +1,1542 @@
+[
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Gone Fishing",
+"number": 2,
+"optional": false,
+"order": 1,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/gone-fishing"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Gear Up",
+"number": 3,
+"optional": false,
+"order": 2,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/gear-up"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Unwanted Attention",
+"number": 4,
+"optional": false,
+"order": 3,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/unwanted-attention"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Lab Fees",
+"number": 5,
+"optional": false,
+"order": 4,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/lab-fees"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Pipework",
+"number": 6,
+"optional": false,
+"order": 5,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/pipework"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Just a Scratch",
+"number": 7,
+"optional": false,
+"order": 6,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/just-a-scratch"
+},
+{
+"badges": [
+"OPTIONAL",
+"MISSABLE"
+],
+"chapter": 1,
+"missable": true,
+"name": "Get Shirley's Rum",
+"number": null,
+"optional": true,
+"order": 7,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/get-shirleys-rum"
+},
+{
+"badges": [
+"OPTIONAL",
+"MISSABLE"
+],
+"chapter": 1,
+"missable": true,
+"name": "Steal the Scooter",
+"number": null,
+"optional": true,
+"order": 8,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/steal-the-scooter"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Hey Arnold!",
+"number": 8,
+"optional": false,
+"order": 9,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/hey-arnold"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Island Dreams",
+"number": 9,
+"optional": false,
+"order": 10,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/island-dreams"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Feng Shui",
+"number": 10,
+"optional": false,
+"order": 11,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/feng-shui"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Pick Up Groceries",
+"number": null,
+"optional": true,
+"order": 12,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/pick-up-groceries"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Buy Flowers",
+"number": null,
+"optional": true,
+"order": 13,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/buy-flowers"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Buy Lucia a Necklace",
+"number": null,
+"optional": true,
+"order": 14,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/buy-lucia-a-necklace"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Get The Chop",
+"number": null,
+"optional": true,
+"order": 15,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/get-the-chop"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Get Lucia's Clothes",
+"number": null,
+"optional": true,
+"order": 16,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/get-lucias-clothes"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Catch a Bigger Fish",
+"number": null,
+"optional": true,
+"order": 17,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/catch-a-bigger-fish"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Coming Home",
+"number": 11,
+"optional": false,
+"order": 18,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/coming-home"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Clean Up After Donnie",
+"number": 12,
+"optional": false,
+"order": 19,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/clean-up-after-donnie"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Buck Me",
+"number": 13,
+"optional": false,
+"order": 20,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/buck-me"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Down to Earth",
+"number": 14,
+"optional": false,
+"order": 21,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/down-to-earth"
+},
+{
+"badges": [
+"OPTIONAL",
+"MISSABLE"
+],
+"chapter": 1,
+"missable": true,
+"name": "Meditate with Lucia",
+"number": null,
+"optional": true,
+"order": 22,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/meditate-with-lucia"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Find the Lost Drugs",
+"number": null,
+"optional": true,
+"order": 23,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/find-the-lost-drugs"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Deposit Cash Into BuckMe",
+"number": 15,
+"optional": false,
+"order": 24,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/deposit-cash-into-buckme"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Save for the Future",
+"number": 16,
+"optional": false,
+"order": 25,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/save-for-the-future"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Day Release",
+"number": 17,
+"optional": false,
+"order": 26,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/day-release"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Clock Out",
+"number": null,
+"optional": true,
+"order": 27,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/clock-out"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Clear Skies",
+"number": 18,
+"optional": false,
+"order": 28,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/clear-skies"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Building a Life",
+"number": 19,
+"optional": false,
+"order": 29,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/building-a-life"
+},
+{
+"badges": [
+"OPTIONAL",
+"MISSABLE"
+],
+"chapter": 1,
+"missable": true,
+"name": "Ring the Bell!",
+"number": null,
+"optional": true,
+"order": 30,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/ring-the-bell"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Swamped",
+"number": 20,
+"optional": false,
+"order": 31,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/swamped"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Don Gone",
+"number": 21,
+"optional": false,
+"order": 32,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/don-gone"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 1,
+"missable": false,
+"name": "Donnie's Lost Drugs",
+"number": null,
+"optional": true,
+"order": 33,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/donnies-lost-drugs"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Recalibration",
+"number": 22,
+"optional": false,
+"order": 34,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/recalibration"
+},
+{
+"badges": [
+"CHAPTER 1 POINT OF NO RETURN"
+],
+"chapter": 1,
+"missable": false,
+"name": "Tourist Trap",
+"number": 23,
+"optional": false,
+"order": 35,
+"pointOfNoReturn": true,
+"url": "https://www.gtabase.com/gta-6/missions/tourist-trap"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Home Sweet Home",
+"number": 24,
+"optional": false,
+"order": 36,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/home-sweet-home"
+},
+{
+"badges": [],
+"chapter": 1,
+"missable": false,
+"name": "Discharge Time",
+"number": 25,
+"optional": false,
+"order": 37,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/discharge-time"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "What's in the Bag?",
+"number": 26,
+"optional": false,
+"order": 38,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/whats-in-the-bag"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Ambulance Chaser",
+"number": 27,
+"optional": false,
+"order": 39,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/ambulance-chaser"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Play Nurse",
+"number": 28,
+"optional": false,
+"order": 40,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/take-care-of-jason"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Overnight Charges",
+"number": 29,
+"optional": false,
+"order": 41,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/overnight-charges"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Just Moved In",
+"number": 30,
+"optional": false,
+"order": 42,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/just-moved-in"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Girls' Trip",
+"number": 31,
+"optional": false,
+"order": 43,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/girls-trip"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 2,
+"missable": false,
+"name": "Pick Up a Gun",
+"number": null,
+"optional": true,
+"order": 44,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/pick-up-a-gun"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Moses",
+"number": 32,
+"optional": false,
+"order": 45,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/moses"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "New Look",
+"number": 33,
+"optional": false,
+"order": 46,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/new-look"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "How Do I Look?",
+"number": 34,
+"optional": false,
+"order": 47,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/how-do-i-look"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Got Pills?",
+"number": 35,
+"optional": false,
+"order": 48,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/painkiller-supplier"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Daily Driver",
+"number": 36,
+"optional": false,
+"order": 49,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/daily-driver"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Behind on Payments",
+"number": 37,
+"optional": false,
+"order": 50,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/behind-on-payments"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Slam Dunk",
+"number": 38,
+"optional": false,
+"order": 51,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/slam-dunk"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Breakfast Run",
+"number": 39,
+"optional": false,
+"order": 52,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/breakfast-run"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Coffee Break",
+"number": 40,
+"optional": false,
+"order": 53,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/coffee-break"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 2,
+"missable": false,
+"name": "Thrillbillies",
+"number": null,
+"optional": true,
+"order": 54,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/thrillbillies"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 2,
+"missable": false,
+"name": "Twist Wrist, Smash, Grab",
+"number": null,
+"optional": true,
+"order": 55,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/twist-wrist-smash-grab"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 2,
+"missable": false,
+"name": "Hit Avery Pawn",
+"number": null,
+"optional": true,
+"order": 56,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/hit-avery-pawn"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 2,
+"missable": false,
+"name": "Hit Kingpin Bowling",
+"number": null,
+"optional": true,
+"order": 57,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/hit-kingpin-bowling"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 2,
+"missable": false,
+"name": "Impounded Vehicle",
+"number": null,
+"optional": true,
+"order": 58,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/impounded-vehicle"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Prepare for Vice City",
+"number": 41,
+"optional": false,
+"order": 59,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/prepare-for-vice-city"
+},
+{
+"badges": [],
+"chapter": 2,
+"missable": false,
+"name": "Afternoon Delight",
+"number": 42,
+"optional": false,
+"order": 60,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/afternoon-delight"
+},
+{
+"badges": [
+"CHAPTER 2 POINT OF NO RETURN"
+],
+"chapter": 2,
+"missable": false,
+"name": "Checking Out",
+"number": 43,
+"optional": false,
+"order": 61,
+"pointOfNoReturn": true,
+"url": "https://www.gtabase.com/gta-6/missions/checking-out"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Welcome to Vice City",
+"number": 44,
+"optional": false,
+"order": 62,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/welcome-to-vice-city"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Dealer's Choice",
+"number": 45,
+"optional": false,
+"order": 63,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/dealers-choice"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Meet the Heders",
+"number": 46,
+"optional": false,
+"order": 64,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/meet-the-heders"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Dubious Provenance",
+"number": 47,
+"optional": false,
+"order": 65,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/dubious-provenance"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Mami Knows Best",
+"number": 48,
+"optional": false,
+"order": 66,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/mami-knows-best"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 3,
+"missable": false,
+"name": "Get Your Wheels",
+"number": null,
+"optional": true,
+"order": 67,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/get-your-wheels"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Tyrone",
+"number": 49,
+"optional": false,
+"order": 68,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/tyrone"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Here, Kitty Kitty",
+"number": 50,
+"optional": false,
+"order": 69,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/here-kitty-kitty"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Send Money to Lorena",
+"number": 51,
+"optional": false,
+"order": 70,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/send-money-to-lorena"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Car Service",
+"number": 52,
+"optional": false,
+"order": 71,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/car-service"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Send More Money to Lorena",
+"number": 53,
+"optional": false,
+"order": 72,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/send-more-money-to-lorena"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Top Billing",
+"number": 54,
+"optional": false,
+"order": 73,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/top-billing"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Boobie Time",
+"number": 55,
+"optional": false,
+"order": 74,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/boobie-time"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Yasmani's Jewelry Jobs",
+"number": 56,
+"optional": false,
+"order": 75,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/yasmanis-jewelry-jobs"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "First Impressions",
+"number": 57,
+"optional": false,
+"order": 76,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/first-impressions"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Caught Slipping",
+"number": 58,
+"optional": false,
+"order": 77,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/caught-slipping"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Crosstown Traffic",
+"number": 59,
+"optional": false,
+"order": 78,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/crosstown-traffic"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Credit Check",
+"number": 60,
+"optional": false,
+"order": 79,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/credit-check"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Clonin' Keys, Makin' Gs",
+"number": 61,
+"optional": false,
+"order": 80,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/steal-the-zorrusso-for-randy"
+},
+{
+"badges": [
+"OPTIONAL",
+"MISSABLE"
+],
+"chapter": 3,
+"missable": true,
+"name": "Race Against Yago",
+"number": null,
+"optional": true,
+"order": 81,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/race-against-yago"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Sinfrontera National Bank",
+"number": 62,
+"optional": false,
+"order": 82,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/sinfrontera-national-bank"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Security Expert",
+"number": 63,
+"optional": false,
+"order": 83,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/security-expert"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Heist Planning",
+"number": 64,
+"optional": false,
+"order": 84,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/heist-planning"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Ride or Die",
+"number": 65,
+"optional": false,
+"order": 85,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/ride-or-die"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Company Property",
+"number": 66,
+"optional": false,
+"order": 86,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/company-property"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "The Missing Link",
+"number": 67,
+"optional": false,
+"order": 87,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/the-missing-link"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Safe Word",
+"number": 68,
+"optional": false,
+"order": 88,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/safe-word"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Cooties",
+"number": 69,
+"optional": false,
+"order": 89,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/cooties"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "South Leonida Real Estate",
+"number": 70,
+"optional": false,
+"order": 90,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/south-leonida-real-estate"
+},
+{
+"badges": [
+"OPTIONAL",
+"MISSABLE"
+],
+"chapter": 3,
+"missable": true,
+"name": "Pick Up Shayna",
+"number": null,
+"optional": true,
+"order": 91,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/this-is-a-free-call-from"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Hidden Charges",
+"number": 71,
+"optional": false,
+"order": 92,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/hidden-charges"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "Bricked Up",
+"number": 72,
+"optional": false,
+"order": 93,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/bricked-up"
+},
+{
+"badges": [],
+"chapter": 3,
+"missable": false,
+"name": "The Cartel Heist",
+"number": 73,
+"optional": false,
+"order": 94,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/the-cartel-heist"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Ocean Beach",
+"number": 74,
+"optional": false,
+"order": 95,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/ocean-beach"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Another Life",
+"number": 75,
+"optional": false,
+"order": 96,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/another-life"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Pool Day",
+"number": 76,
+"optional": false,
+"order": 97,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/pool-day"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 4,
+"missable": false,
+"name": "Attend Eddie Acosta's Party",
+"number": null,
+"optional": true,
+"order": 98,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/attend-eddie-acostas-party"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Company Cars",
+"number": 77,
+"optional": false,
+"order": 99,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/company-cars"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Lawyer Up",
+"number": 78,
+"optional": false,
+"order": 100,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/lawyer-up"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Party Hard",
+"number": 79,
+"optional": false,
+"order": 101,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/party-hard"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Heavy Lifting",
+"number": 80,
+"optional": false,
+"order": 102,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/heavy-lifting"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 4,
+"missable": false,
+"name": "It's a Date!",
+"number": null,
+"optional": true,
+"order": 103,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/its-a-date"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Photo/Shoot",
+"number": 81,
+"optional": false,
+"order": 104,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/photo-shoot"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 4,
+"missable": false,
+"name": "Bad Driver!",
+"number": null,
+"optional": true,
+"order": 105,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/bad-driver"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Making Gainz",
+"number": 82,
+"optional": false,
+"order": 106,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/making-gainz"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Too Much Baggage",
+"number": 83,
+"optional": false,
+"order": 107,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/too-much-baggage"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Watch It",
+"number": 84,
+"optional": false,
+"order": 108,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/watch-it"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Cash Injections",
+"number": 85,
+"optional": false,
+"order": 109,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/cash-injections"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Amateur Hour",
+"number": 86,
+"optional": false,
+"order": 110,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/amateur-hour"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Dirty Work",
+"number": 87,
+"optional": false,
+"order": 111,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/dirty-work"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Adventures in Babysitting",
+"number": 88,
+"optional": false,
+"order": 112,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/adventures-in-babysitting"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Fresh Evidence",
+"number": 89,
+"optional": false,
+"order": 113,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/fresh-evidence"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Power Play",
+"number": 90,
+"optional": false,
+"order": 114,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/power-play"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Child's Play",
+"number": 91,
+"optional": false,
+"order": 115,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/childs-play"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Headliners",
+"number": 92,
+"optional": false,
+"order": 116,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/headliners"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Close Surveillance",
+"number": 93,
+"optional": false,
+"order": 117,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/close-surveillance"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Delivery Method",
+"number": 94,
+"optional": false,
+"order": 118,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/delivery-method"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Team Building",
+"number": 95,
+"optional": false,
+"order": 119,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/team-building"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Fully Catered",
+"number": 96,
+"optional": false,
+"order": 120,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/fully-catered"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "VCIA Takedown",
+"number": 97,
+"optional": false,
+"order": 121,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/vcia-takedown"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Tie Up Loose Ends",
+"number": 98,
+"optional": false,
+"order": 122,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/tie-up-loose-ends"
+},
+{
+"badges": [
+"OPTIONAL"
+],
+"chapter": 4,
+"missable": false,
+"name": "That's Where the Money Is…",
+"number": null,
+"optional": true,
+"order": 123,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/thats-where-the-money-is"
+},
+{
+"badges": [
+"CHAPTER 4 POINT OF NO RETURN"
+],
+"chapter": 4,
+"missable": false,
+"name": "Sunset",
+"number": 99,
+"optional": false,
+"order": 124,
+"pointOfNoReturn": true,
+"url": "https://www.gtabase.com/gta-6/missions/sunset"
+},
+{
+"badges": [],
+"chapter": 4,
+"missable": false,
+"name": "Starting From Zero",
+"number": 100,
+"optional": false,
+"order": 125,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/starting-from-zero"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "Bird in the Hand",
+"number": 101,
+"optional": false,
+"order": 126,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/bird-in-the-hand"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "Taking Liberties",
+"number": 102,
+"optional": false,
+"order": 127,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/taking-liberties"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "Doggie Bag",
+"number": 103,
+"optional": false,
+"order": 128,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/doggie-bag"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "VC Baby",
+"number": 104,
+"optional": false,
+"order": 129,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/vc-baby"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "Operation Savage Glory",
+"number": 105,
+"optional": false,
+"order": 130,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/operation-savage-glory"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "Honest Abe",
+"number": 106,
+"optional": false,
+"order": 131,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/honest-abe"
+},
+{
+"badges": [
+"CHAPTER 5 POINT OF NO RETURN"
+],
+"chapter": 5,
+"missable": false,
+"name": "Unfinished Business",
+"number": 107,
+"optional": false,
+"order": 132,
+"pointOfNoReturn": true,
+"url": "https://www.gtabase.com/gta-6/missions/unfinished-business"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "Protective Custody",
+"number": 108,
+"optional": false,
+"order": 133,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/protective-custody"
+},
+{
+"badges": [],
+"chapter": 5,
+"missable": false,
+"name": "The End of the Road",
+"number": 109,
+"optional": false,
+"order": 134,
+"pointOfNoReturn": false,
+"url": "https://www.gtabase.com/gta-6/missions/the-end-of-the-road"
+}
+]

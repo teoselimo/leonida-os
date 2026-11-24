@@ -13,6 +13,10 @@
  * Key Lento). Les chapitres suivants viendront par incréments sourcés.
  */
 
+import { buildHubGraph, HUB_GRAPH_IDS } from "@/lib/hub/missions";
+import type { HubFacts } from "@/lib/hub/model";
+import { STORY_NODES } from "./story";
+
 export interface Src {
   name: string;
   url: string;
@@ -58,6 +62,10 @@ export interface ProgNode {
   unlocks?: Array<{ text: string; sources: Src[] }>;
   pointOfNoReturn?: { text: string; lose: string[]; keep: string[]; sources: Src[]; note?: string };
   choices?: Array<{ text: string; sources: Src[] }>;
+  /** V0.20 : nœud ajouté par le Data Hub (GTABase), pas par l'audit manuel. */
+  origin?: "hub";
+  /** V0.20 : faits GTABase rattachés (n°, donneur, récompenses, objectifs…), affichés sans remplacer les prérequis. */
+  hub?: HubFacts;
 }
 
 const S = {
@@ -92,7 +100,7 @@ const S = {
 
 const KEY_JOBS = ["gear-up", "lab-fees", "just-a-scratch", "unwanted-attention"];
 
-export const PROGRESSION: ProgNode[] = [
+const MANUAL_PROGRESSION: ProgNode[] = [
   // ── Missions principales (ordre du Story Recap : affichage uniquement) ──
   { id: "prologue", name: "Prologue", kind: "main", chapter: 1, recap: 1, prereq: null },
   { id: "gone-fishing", name: "Gone Fishing", kind: "main", chapter: 1, recap: 2, prereq: null },
@@ -230,5 +238,22 @@ export const PROGRESSION: ProgNode[] = [
     lostAt: { node: "tourist-trap", at: "start", sources: [S.game8Missables, S.wikiMissables] },
   },
 ];
+
+/**
+ * V0.20 · Graphe complet = graphe validé à la main (prioritaire, jamais modifié par l'import)
+ *         + missions du Data Hub (GTABase) absentes du graphe, avec leurs prérequis lus et leur source.
+ */
+export const HUB_GRAPH = buildHubGraph(MANUAL_PROGRESSION, new Map(STORY_NODES.map((n) => [n.id, { kind: n.kind }])));
+export const PROGRESSION: ProgNode[] = [
+  ...MANUAL_PROGRESSION.map((n) => {
+    const hub = HUB_GRAPH.facts.get(n.id);
+    const al = HUB_GRAPH.aliases.get(n.id);
+    return hub || al ? { ...n, hub, aliases: [...(n.aliases ?? []), ...(al ?? [])] } : n;
+  }),
+  ...HUB_GRAPH.nodes,
+];
+for (const [k, v] of HUB_GRAPH.nodeIdOf) HUB_GRAPH_IDS.set(k, v);
+/** Nombre de nœuds audités à la main (le reste vient du Data Hub). */
+export const MANUAL_NODE_COUNT = MANUAL_PROGRESSION.length;
 
 export const PROG_BY_ID = new Map(PROGRESSION.map((n) => [n.id, n]));

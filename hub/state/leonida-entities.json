@@ -1,0 +1,831 @@
+{
+ "progression": [
+  {
+   "id": "prologue",
+   "name": "Prologue",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "gone-fishing",
+   "name": "Gone Fishing",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "gear-up",
+   "name": "Gear Up",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "gone-fishing"
+   ]
+  },
+  {
+   "id": "just-a-scratch",
+   "name": "Just a Scratch",
+   "aliases": [
+    "Fix Your Car"
+   ],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "gone-fishing"
+   ]
+  },
+  {
+   "id": "lab-fees",
+   "name": "Lab Fees",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "gone-fishing"
+   ]
+  },
+  {
+   "id": "unwanted-attention",
+   "name": "Unwanted Attention",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "gone-fishing"
+   ]
+  },
+  {
+   "id": "pipework",
+   "name": "Pipework",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "gear-up",
+    "lab-fees",
+    "just-a-scratch",
+    "unwanted-attention"
+   ]
+  },
+  {
+   "id": "hey-arnold",
+   "name": "Hey Arnold!",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "pipework"
+   ]
+  },
+  {
+   "id": "island-dreams",
+   "name": "Island Dreams",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "hey-arnold"
+   ]
+  },
+  {
+   "id": "feng-shui",
+   "name": "Feng Shui",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "coming-home",
+   "name": "Coming Home",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "buck-me",
+   "name": "Buck Me",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "clean-up-after-donnie",
+   "name": "Clean Up After Donnie",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "down-to-earth",
+   "name": "Down to Earth",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "clean-up-after-donnie",
+    "buck-me"
+   ]
+  },
+  {
+   "id": "clear-skies",
+   "name": "Clear Skies",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "down-to-earth"
+   ]
+  },
+  {
+   "id": "day-release",
+   "name": "Day Release",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "down-to-earth"
+   ]
+  },
+  {
+   "id": "building-a-life",
+   "name": "Building a Life",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "clear-skies"
+   ]
+  },
+  {
+   "id": "swamped",
+   "name": "Swamped",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "day-release",
+    "clear-skies",
+    "building-a-life"
+   ]
+  },
+  {
+   "id": "don-gone",
+   "name": "Don Gone",
+   "aliases": [
+    "Head to Donnie's Trailer"
+   ],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "swamped"
+   ]
+  },
+  {
+   "id": "recalibration",
+   "name": "Recalibration",
+   "aliases": [
+    "Talk to Lucia"
+   ],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "don-gone"
+   ]
+  },
+  {
+   "id": "tourist-trap",
+   "name": "Tourist Trap",
+   "aliases": [
+    "Take Up Mattia's Offer"
+   ],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "recalibration"
+   ]
+  },
+  {
+   "id": "home-sweet-home",
+   "name": "Home Sweet Home",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "tourist-trap"
+   ]
+  },
+  {
+   "id": "discharge-time",
+   "name": "Discharge Time",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 1,
+   "prereq": [
+    "home-sweet-home"
+   ]
+  },
+  {
+   "id": "get-shirleys-rum",
+   "name": "Get Shirley's Rum",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "gear-up",
+    "lab-fees",
+    "just-a-scratch",
+    "unwanted-attention"
+   ]
+  },
+  {
+   "id": "steal-the-scooter",
+   "name": "Steal the Scooter",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "get-shirleys-rum"
+   ]
+  },
+  {
+   "id": "catch-a-bigger-fish",
+   "name": "Catch a Bigger Fish",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "feng-shui"
+   ]
+  },
+  {
+   "id": "skunk-apeology",
+   "name": "Skunk Apeology 101 (Kirk)",
+   "aliases": [
+    "Search for the Skunk Ape",
+    "Skunk Apeology 101"
+   ],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": []
+  },
+  {
+   "id": "find-the-lost-drugs",
+   "name": "Find the Lost Drugs",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "down-to-earth"
+   ]
+  },
+  {
+   "id": "clock-out",
+   "name": "Clock Out",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "day-release"
+   ]
+  },
+  {
+   "id": "ring-the-bell",
+   "name": "Ring the Bell!",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "day-release"
+   ]
+  },
+  {
+   "id": "donnies-lost-drugs",
+   "name": "Donnie's Lost Drugs",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 1,
+   "prereq": [
+    "swamped"
+   ]
+  },
+  {
+   "id": "donnie-drop-off",
+   "name": "Revente au point de dépôt de Donnie",
+   "aliases": [],
+   "kind": "activity",
+   "chapter": 1,
+   "prereq": null
+  },
+  {
+   "id": "family-savings",
+   "name": "Mettre 5 000 $ sur Family Savings",
+   "aliases": [],
+   "kind": "activity",
+   "chapter": 1,
+   "prereq": []
+  }
+ ],
+ "story": [
+  {
+   "id": "prepare-for-vice-city",
+   "name": "Prepare for Vice City",
+   "aliases": [],
+   "kind": "activity",
+   "chapter": 2
+  },
+  {
+   "id": "checking-out",
+   "name": "Checking Out",
+   "aliases": [
+    "Move to Vice City"
+   ],
+   "kind": "main",
+   "chapter": 2
+  },
+  {
+   "id": "starlet-motel",
+   "name": "Starlet Motel",
+   "aliases": [],
+   "kind": "place",
+   "chapter": 2
+  },
+  {
+   "id": "welcome-to-vice-city",
+   "name": "Welcome to Vice City",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 3
+  },
+  {
+   "id": "race-against-yago",
+   "name": "Race Against Yago",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 3
+  },
+  {
+   "id": "party-hard",
+   "name": "Party Hard",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 4
+  },
+  {
+   "id": "bad-driver",
+   "name": "Bad Driver!",
+   "aliases": [
+    "Bad Driver",
+    "Find Felipe"
+   ],
+   "kind": "side",
+   "chapter": 4
+  },
+  {
+   "id": "collect-felipes-gift",
+   "name": "Collect Felipe's Gift",
+   "aliases": [],
+   "kind": "side",
+   "chapter": 4
+  },
+  {
+   "id": "power-play",
+   "name": "Power Play",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 4
+  },
+  {
+   "id": "free-call",
+   "name": "This Is a Free Call From...",
+   "aliases": [
+    "This Is a Free Call From"
+   ],
+   "kind": "side",
+   "chapter": 4
+  },
+  {
+   "id": "after-sunset",
+   "name": "After Sunset",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 4
+  },
+  {
+   "id": "operation-savage-glory",
+   "name": "Operation Savage Glory",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 5
+  },
+  {
+   "id": "abe-signing",
+   "name": "Signature chez Abe",
+   "aliases": [
+    "Abe's office"
+   ],
+   "kind": "main",
+   "chapter": 5
+  },
+  {
+   "id": "protective-custody",
+   "name": "Protective Custody",
+   "aliases": [],
+   "kind": "main",
+   "chapter": 5
+  }
+ ],
+ "knowledge": [
+  {
+   "id": "jasons-house",
+   "name": "Jason's House",
+   "aliases": [
+    "Leonida Keys Safehouse",
+    "maison de Jason",
+    "planque de Jason",
+    "Jason's Safehouse",
+    "maison sur pilotis"
+   ],
+   "type": "planque",
+   "chapters": [
+    1
+   ],
+   "landmark": "L266",
+   "district": "Key Lento"
+  },
+  {
+   "id": "key-lento",
+   "name": "Key Lento",
+   "aliases": [
+    "Key Largo (inspiration)",
+    "Leonida Keys"
+   ],
+   "type": "zone",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "brians-boat-works",
+   "name": "Brian's Boat Works & Marina",
+   "aliases": [
+    "Brian's Marina",
+    "marina de Brian",
+    "chantier naval de Brian",
+    "Brian's Boat Works"
+   ],
+   "type": "port",
+   "chapters": [
+    1
+   ],
+   "landmark": "L326",
+   "district": "Key Lento"
+  },
+  {
+   "id": "key-lento-marina-club",
+   "name": "Key Lento Marina Club",
+   "aliases": [
+    "Marina Club",
+    "club nautique de Key Lento"
+   ],
+   "type": "port",
+   "chapters": [
+    1
+   ],
+   "landmark": "L328",
+   "district": "Key Lento"
+  },
+  {
+   "id": "the-rusty-anchor",
+   "name": "The Rusty Anchor",
+   "aliases": [
+    "Rusty Anchor",
+    "bar de Key Lento"
+   ],
+   "type": "établissement",
+   "chapters": [
+    1
+   ],
+   "landmark": "L325",
+   "district": "Key Lento"
+  },
+  {
+   "id": "three-sheets-liquor",
+   "name": "Three Sheets Liquor",
+   "aliases": [
+    "Three Sheets",
+    "magasin d'alcool de Key Lento",
+    "liquor store"
+   ],
+   "type": "établissement",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "shirleys-house",
+   "name": "Maison de Shirley",
+   "aliases": [
+    "Shirley's house",
+    "voisine de Jason",
+    "Shirley"
+   ],
+   "type": "lieu",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "wonder-whale",
+   "name": "The Wonder Whale",
+   "aliases": [
+    "Wonder Whale"
+   ],
+   "type": "établissement",
+   "chapters": [
+    1
+   ],
+   "landmark": "L332",
+   "district": "Key Lento"
+  },
+  {
+   "id": "coastal-auto-care",
+   "name": "Coastal Auto Care",
+   "aliases": [
+    "Coastal Auto",
+    "atelier de Joey"
+   ],
+   "type": "établissement",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "arrow-gas-key-lento",
+   "name": "Arrow Gas Station (Key Lento)",
+   "aliases": [
+    "Arrow",
+    "station-service de Key Lento",
+    "24/7 Key Lento"
+   ],
+   "type": "établissement",
+   "chapters": [],
+   "landmark": "L1536",
+   "district": "Key Lento"
+  },
+  {
+   "id": "southpoint-airfield",
+   "name": "Southpoint Airfield",
+   "aliases": [
+    "aérodrome de Mariana County",
+    "Southpoint"
+   ],
+   "type": "aérodrome",
+   "chapters": [],
+   "landmark": "L1562",
+   "district": "Mariana County"
+  },
+  {
+   "id": "mile-zero-air-station",
+   "name": "Mile Zero Air Station",
+   "aliases": [
+    "base militaire",
+    "Goose Key",
+    "military base",
+    "Mile Zero"
+   ],
+   "type": "aérodrome",
+   "chapters": [],
+   "landmark": "L354",
+   "district": "Goose Key"
+  },
+  {
+   "id": "henry-j-edwards-airport",
+   "name": "Henry J Edwards Airport",
+   "aliases": [
+    "Watson Bay Airport",
+    "aéroport de Watson Bay"
+   ],
+   "type": "aérodrome",
+   "chapters": [],
+   "landmark": "L1561",
+   "district": "Watson Bay"
+  },
+  {
+   "id": "vcia",
+   "name": "Vice City International Airport",
+   "aliases": [
+    "VCIA",
+    "aéroport international",
+    "aéroport de Vice City"
+   ],
+   "type": "aérodrome",
+   "chapters": [],
+   "landmark": "L345",
+   "district": "Vice City International Airport"
+  },
+  {
+   "id": "port-gellhorn-airfield",
+   "name": "Airfield (Port Gellhorn)",
+   "aliases": [
+    "aérodrome de Port Gellhorn",
+    "Port Gellhorn"
+   ],
+   "type": "aérodrome",
+   "chapters": [],
+   "landmark": "L1554",
+   "district": "Port Gellhorn"
+  },
+  {
+   "id": "port-vice-city",
+   "name": "Port Vice City",
+   "aliases": [
+    "port de Vice City",
+    "Vice City Port"
+   ],
+   "type": "port",
+   "chapters": [],
+   "landmark": "L132",
+   "district": "Port Vice City"
+  },
+  {
+   "id": "starlet-motel",
+   "name": "Starlet Motel",
+   "aliases": [
+    "motel",
+    "Starlet"
+   ],
+   "type": "planque",
+   "chapters": [
+    2
+   ],
+   "landmark": "L304",
+   "district": "Kelly County"
+  },
+  {
+   "id": "vapid-ganado",
+   "name": "Vapid Ganado",
+   "aliases": [
+    "Ganado",
+    "pick-up de Jason",
+    "Creado",
+    "Ganado Retro Build"
+   ],
+   "type": "véhicule",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "vapid-caracara",
+   "name": "Caracara de Brian",
+   "aliases": [
+    "Caracara",
+    "4x4 de Brian"
+   ],
+   "type": "véhicule",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "brian-heder",
+   "name": "Brian Heder",
+   "aliases": [
+    "Brian"
+   ],
+   "type": "personnage",
+   "chapters": [
+    1
+   ],
+   "landmark": null,
+   "district": "Key Lento"
+  }
+ ],
+ "rareVehicles": [
+  {
+   "id": "v-maibatsu-penumbra-ff",
+   "name": "'97 Maibatsu Penumbra FF",
+   "aliases": []
+  },
+  {
+   "id": "v-karin-futo",
+   "name": "Karin '85 Futo",
+   "aliases": []
+  },
+  {
+   "id": "v-annis-hellion",
+   "name": "Annis '95 Hellion",
+   "aliases": []
+  },
+  {
+   "id": "v-bf-bandito",
+   "name": "BF '77 Bandito",
+   "aliases": []
+  },
+  {
+   "id": "v-declasse-vamos",
+   "name": "Declasse '74 Vamos",
+   "aliases": []
+  }
+ ],
+ "establishments": [
+  {
+   "id": "chucks-tackle-shot",
+   "name": "Chuck's Tackle & Shot (Ammu-Nation)",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "billies-gift-shop",
+   "name": "Billie's Key Lento Gift Shop",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "wonder-whale",
+   "name": "The Wonder Whale",
+   "landmark": "L332",
+   "district": "Key Lento"
+  },
+  {
+   "id": "key-lento-kahuna",
+   "name": "Key Lento Kahuna",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "leroys",
+   "name": "Leroy's",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "nifty-threads",
+   "name": "Nifty Threads Island Wear",
+   "landmark": null,
+   "district": "Mariana County"
+  },
+  {
+   "id": "lost-mines-souvenirs",
+   "name": "Lost Mines Souvenirs",
+   "landmark": null,
+   "district": "Mariana County"
+  },
+  {
+   "id": "barnacle-beauties",
+   "name": "Barnacle Beauties",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "inked-mermaid",
+   "name": "The Inked Mermaid",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "sirens-chest",
+   "name": "The Siren's Chest",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "three-sheets",
+   "name": "Three Sheets Liquor",
+   "landmark": null,
+   "district": "Key Lento"
+  },
+  {
+   "id": "rusty-anchor",
+   "name": "The Rusty Anchor",
+   "landmark": "L325",
+   "district": "Key Lento"
+  },
+  {
+   "id": "coastal-auto-care",
+   "name": "Coastal Auto Care",
+   "landmark": null,
+   "district": "Key Lento"
+  }
+ ]
+}

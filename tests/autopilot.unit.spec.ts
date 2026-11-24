@@ -71,10 +71,12 @@ test.describe("Parcours : mission terminée → suite proposée → confirmation
     expect(unk.manual.length).toBeGreaterThan(5);
   });
 
-  test("chapitre 2 à 5 sans graphe complet : la suite n'est pas calculée, l'inventaire du chapitre sert au choix manuel", () => {
+  test("chapitre 2 à 5 : graphe PARTIEL du Data Hub — aucune suite inventée quand GTABase ne cite pas de prérequis, l'inventaire du chapitre sert au choix manuel", () => {
     const a = autopilot(st({ chapter: 2, lastMission: "Discharge Time", missionsDone: ["Discharge Time"] }));
     expect(a.mains).toHaveLength(0);
-    expect(a.uncertain).toContain("chapitre 2 n'a pas encore de graphe");
+    // V0.20 : la phrase dit d'où vient le graphe partiel (GTABase, une source) au lieu de « pas de graphe »
+    expect(a.uncertain).toContain("Graphe partiel pour le chapitre 2");
+    expect(a.uncertain).toContain("une seule source");
     expect(a.manual).toContain("Checking Out");
     expect(a.manual).not.toContain("Bad Driver!"); // chapitre 4 : jamais proposé au chapitre 2
     expect(a.coverage).toEqual({ chapter: 2, level: "partielle" });

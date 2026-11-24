@@ -130,11 +130,13 @@ export function nextPointOfNoReturn(v: ProgressView): NodeState | null {
 export function progressionContext(s: Pick<PersistedState, "profile"> & { done?: Record<string, string> }): string {
   const v = computeProgress(s);
   const mode = s.profile.spoilerMode;
-  const by = (st: ProgStatus) => v.states.filter((x) => x.status === st);
+  // V0.20 : le graphe couvre tous les chapitres (Data Hub) ; le contexte ne cite que le chapitre atteint et les précédents
+  const reach = (x: NodeState) => x.node.chapter <= s.profile.chapter || x.status === "terminé" || x.status === "en cours";
+  const by = (st: ProgStatus) => v.states.filter((x) => x.status === st && reach(x));
   const label = (x: NodeState) => `${shownName(x, mode)}${x.node.kind !== "main" ? " (facultative)" : ""}`;
   const doneDeclared = by("terminé").filter((x) => x.how === "déclaré").map((x) => x.node.name);
   const doneInferred = by("terminé").filter((x) => x.how === "déduit").length;
-  const lines: string[] = ["PROGRESSION (modèle LEONIDA, chapitre 1, prérequis sourcés ; l'ordre d'un guide n'est pas un prérequis) :"];
+  const lines: string[] = ["PROGRESSION (modèle LEONIDA : chapitre 1 audité, autres chapitres lus sur GTABase — une source ; l'ordre d'un guide n'est pas un prérequis) :"];
   lines.push(`- Terminées : ${doneDeclared.length ? doneDeclared.join(", ") : "aucune déclarée"}${doneInferred ? ` + ${doneInferred} déduite(s) de leurs suites` : ""}`);
   if (v.current) {
     const miss = pendingMissables(v, (s.profile.objectives ?? []).filter((o) => o.done).map((o) => o.text));
@@ -161,7 +163,7 @@ export function progressionContext(s: Pick<PersistedState, "profile"> & { done?:
   const lost = by("plus disponible");
   if (lost.length) lines.push(`- Plus disponibles : ${lost.map((x) => x.node.name).join(", ")}`);
   const pnr = nextPointOfNoReturn(v);
-  if (pnr?.node.pointOfNoReturn) {
+  if (pnr?.node.pointOfNoReturn && reach(pnr)) {
     const at = shownName(pnr, mode);
     // la note cite des noms de missions : seulement si ces noms sont affichables
     const note = at === pnr.node.name ? pnr.node.pointOfNoReturn.note ?? "" : "Les guides divergent sur la mission exacte qui ferme la porte.";
@@ -171,7 +173,7 @@ export function progressionContext(s: Pick<PersistedState, "profile"> & { done?:
   }
   const got = (s.profile.objectives ?? []).filter((o) => o.done).map((o) => o.text);
   if (got.length) lines.push(`- Déjà récupéré / fait : ${got.slice(-8).join(" ; ")}`);
-  const likelyDone = v.states.filter((x) => x.likelyDone).length;
+  const likelyDone = v.states.filter((x) => x.likelyDone && reach(x)).length;
   if (likelyDone) lines.push(`- ${likelyDone} mission(s) principale(s) antérieure(s) non déclarée(s) : probablement faites (non confirmé) ; les facultatives qui en dépendent sont « potentiellement accessibles ».`);
   lines.push("- Missions non listées : prérequis non documentés (disponibilité inconnue).");
   return lines.join("\n");

@@ -308,3 +308,12 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Commit `cbd0034`. Publication en patch : 5 fichiers, 2 anciens retirés, `data/radar.json` non republié ; déclaration inchangée (`sample: { images: true }`, Exa via `mcp`). Tuiles z3 (extraits de carte) déjà présentes dans l'Artifact (30 fichiers).
 - Dernier passage complet, sur le build livré : **473 réussis, 0 échec, 4 ignorés** (20,6 min ; unitaires + iPhone + iPad + iPhone WebKit ; Claude simulé).
 - Version Artifact `1795476149-42b0`. Aucun essai avec le vrai Claude du runtime : à faire sur iPhone avec les deux captures du test initial.
+
+## 24. V0.20 · Data Hub & Garage A+ (24/11/2026)
+
+- Livraison détaillée : `docs/V0.20.md` ; procédure d'actualisation : `hub/README.md` (`python3 hub/refresh.py`) ; captures `docs/v020-captures.jpg`.
+- Sources : GTADB à jour (révision `d406fea`, identique à notre copie) ; GTABase 1 610 pages lues (sitemap + liens internes), 1 échec (404).
+- Graphe 33 → 173 nœuds ; Garage (Guide › Garage) 590 fiches ; Encyclopédie (Guide › Encyclopédie).
+- Tests : passage complet **502 réussis, 0 échec, 4 ignorés** (19,9 min, Claude simulé) ; pipeline Python 18 / 18.
+- Publication en patch : 9 fichiers, 2 retirés, `data/radar.json` non republié, déclaration inchangée. Version Artifact `1795521584-ef58`.
+
