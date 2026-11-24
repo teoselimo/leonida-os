@@ -79,8 +79,12 @@ function whyOf(x: NodeState): string {
   const p = x.node.prereq;
   if (!p) return "prérequis non documentés";
   const n = p.sources.length;
+  if (x.node.chapter === 2) {
+    const evidence = n === 1 ? `lien documenté par ${p.sources[0].name}` : `lien recoupé par ${n} sources`;
+    return [evidence, x.status === "accessible" ? "accessible" : "disponibilité à confirmer en jeu", p.condition, p.note].filter(Boolean).join(" · ");
+  }
   const base = x.status === "accessible" ? `prérequis faits · ${n} sources` : p.basis === "déduit" ? "prérequis déduits par les guides · à confirmer en jeu" : `prérequis faits · ${n === 1 ? "une seule source" : `${n} sources`} · à confirmer en jeu`;
-  return [base, x.node.chapter === 2 ? p.condition : null, p.note].filter(Boolean).join(" · ");
+  return [base, p.note].filter(Boolean).join(" · ");
 }
 
 function option(x: NodeState, v: ProgressView, s: Pick<PersistedState, "profile">, fresh: Set<string>): NextOption {

@@ -367,7 +367,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
         <div className="nextc__sugg" data-testid="autopilot-suggestion">
           <span>
             <b>{a.suggestion.name}</b>
-            {a.suggestion.fresh && <i className="nextc__new">débloquée</i>}
+            {a.suggestion.fresh && <i className="nextc__new">{a.suggestion.state === "accessible" ? "débloquée" : "à vérifier"}</i>}
             <em>{a.suggestion.why}{a.suggestion.pnr ? " · point de non-retour" : ""}</em>
           </span>
           <div className="row gap8">
@@ -381,7 +381,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
             <li key={x.id}>
               <span>
                 <b>{x.name}</b>
-                {x.fresh && <i className="nextc__new">débloquée</i>}
+                {x.fresh && <i className="nextc__new">{x.state === "accessible" ? "débloquée" : "à vérifier"}</i>}
                 <em>{x.why}{x.pnr ? " · point de non-retour" : ""}</em>
               </span>
               <button className="btn btn--xs btn--on press" onClick={() => onChoose(x.name)} data-testid="choose-next">Choisir</button>

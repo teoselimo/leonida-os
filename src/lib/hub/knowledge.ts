@@ -4,6 +4,7 @@ import { loadHubCatalog, loadHubPlaces, loadHubVehicles } from "./data";
 import { loadLandmarks } from "@/lib/gtadb";
 import type { HubCatalogItem, HubMission, HubVehicle } from "./model";
 import { nk } from "@/lib/missions";
+import { PROG_BY_ID } from "@/data/progression";
 import { nodeByName } from "@/lib/progress";
 import type { PersistedState } from "@/lib/types";
 
@@ -29,6 +30,11 @@ export interface HubMention {
 function missionLine(m: HubMission, s: Pick<PersistedState, "profile">, names: Map<string, string>, q = ""): string {
   const p = s.profile;
   if (m.chapter != null && m.chapter > p.chapter && p.spoilerMode === "strict") return `Mission « ${m.name} » : chapitre non atteint par le joueur (détails masqués par l'anti-spoiler strict).`;
+  const graphId = HUB_GRAPH_IDS.get(m.id);
+  const node = m.chapter === 2 && graphId ? PROG_BY_ID.get(graphId) : undefined;
+  const prereq = node?.prereq;
+  const hideSteps = m.chapter === 2 && p.spoilerMode === "strict" && ![...p.missionsDone, p.lastMission].some((name) => name && nk(name) === nk(m.name));
+  if (hideSteps) return `Mission « ${m.name} » : objectif du chapitre courant. Demander le libellé affiché en jeu avant de détailler une étape.`;
   const bits = [
     m.chapter != null ? `chapitre ${m.chapter}` : null,
     m.number ? `n° ${m.number} dans l'ordre GTABase (pas un prérequis)` : null,
@@ -36,7 +42,7 @@ function missionLine(m: HubMission, s: Pick<PersistedState, "profile">, names: M
     m.jason && m.lucia ? "Jason et Lucia" : m.jason ? "Jason" : m.lucia ? "Lucia" : null,
     m.giver?.length ? `donneur : ${m.giver.join(", ")}` : null,
     m.money ? `récompense ${m.money} $` : null,
-    m.after?.length ? `après : ${m.after.map((a) => names.get(a) ?? a).join(", ")}${m.weak ? " (lien habituel)" : ""}` : m.unlockKnown ? null : "déblocage non documenté",
+    prereq ? `déblocage : ${[...prereq.all.map((id) => PROG_BY_ID.get(id)?.name), prereq.condition].filter(Boolean).join(" · ")} (sources : ${prereq.sources.map((src) => src.name + " " + src.url).join(", ")})` : m.after?.length ? `après : ${m.after.map((a) => names.get(a) ?? a).join(", ")}${m.weak ? " (lien habituel)" : ""}` : m.unlockKnown ? null : "déblocage non documenté",
     m.cond?.length ? `conditions : ${m.cond.join(", ")}` : null,
     m.missable ? "manquable" : null,
     m.pnr ? "POINT DE NON-RETOUR" : null,
@@ -145,7 +151,7 @@ export async function hubMentions(question: string, s: Pick<PersistedState, "pro
 /** Bloc de contexte (vide si rien n'est cité). */
 export function hubBlock(ms: HubMention[]): string {
   if (!ms.length) return "";
-  return ["DATA HUB (fiches GTABase / GTADB, une seule source chacune — à citer comme « GTABase », jamais comme vérifié) :", ...ms.map((m) => `- ${m.line} Source : ${m.url}`)].join("\n");
+  return ["DATA HUB (citer chaque fait avec son origine indiquée, une source seule reste à confirmer) :", ...ms.map((m) => `- ${m.line} Source : ${m.url}`)].join("\n");
 }
 
 /**

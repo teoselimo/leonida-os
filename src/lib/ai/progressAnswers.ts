@@ -136,7 +136,7 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
         text:
           mains.length === 1
             ? `D'après le graphe de progression, la suite ${sure ? "accessible" : "probable (à confirmer en jeu)"} est ${mains[0].name}. Tu la prépares ou tu la lances ?`
-            : `Plusieurs missions sont accessibles : ${list(mains.map((x) => x.name))}. Laquelle tu prends ?`,
+            : `Plusieurs missions sont ${sure ? "accessibles" : "possibles, à confirmer en jeu"} : ${list(mains.map((x) => x.name))}. Laquelle tu prends ?`,
         reliability: sure ? "recoupé" : "signalé",
         sources: src(node(mains[0].id)),
         actions: [
