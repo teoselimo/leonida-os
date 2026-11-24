@@ -605,7 +605,7 @@ export function AiCopilot() {
               )}
               {m === lastAi && !m.streaming && ((m.a.replies?.length ?? 0) > 0 || m.engine === "claude") && (
                 <div className="bubble__replies">
-                  {m.engine === "claude" && m.a.intent !== "checklist" && (
+                  {m.engine === "claude" && m.a.intent !== "checklist" && !(m.a.replies ?? []).some((r) => /^d[ée]taille/i.test(r)) && (
                     <button className="chip chip--reply press" onClick={() => ask("Détaille ta dernière réponse.")} data-testid="ai-detail">Détaille</button>
                   )}
                   {(m.a.replies ?? []).map((r) => (

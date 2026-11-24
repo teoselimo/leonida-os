@@ -55,6 +55,7 @@ def build(root, places, groups, mission_index, report):
                 "req100": f.get("required100"), "objectives": (f.get("objectives") or [])[:8] or None,
                 "url": r["prov"][0]["url"], "mod": mod_of(r), "leonida": r.get("leonida"), "aliases": r.get("aliases"),
                 "location": f.get("location"),
+                "g": f.get("guide"),
             }
             ms.append({k: v for k, v in m.items() if v not in (None, [], False) or k in ("jason", "lucia") and v})
     ms.sort(key=lambda m: (m.get("chapter") or 99, m.get("order") or 999, m.get("number") or 999, m["name"]))

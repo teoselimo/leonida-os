@@ -10,6 +10,14 @@
 
 export type HubType = "mission" | "stranger" | "activity" | "vehicle" | "weapon" | "character" | "property" | "place" | "map-feature" | "animal" | "radio" | "gang" | "random-event" | "cheat" | "guide";
 
+/** V0.20.1 · Soluce GTABase réduite à des FAITS : titres d'étapes (objectifs du jeu), entités citées, montants, drapeaux. */
+export type GuideEnts = Partial<Record<"place" | "char" | "veh" | "weapon" | "mission", string[]>>;
+export interface HubGuide {
+  steps: Array<{ t: string; e?: GuideEnts; $?: number[] }>;
+  flags: Array<{ k: "manquable" | "choix" | "conseil" | "non-retour"; step: string | null; e?: GuideEnts; $?: number[] }>;
+  trophies?: string[];
+}
+
 export interface HubMission {
   id: string;
   name: string;
@@ -42,6 +50,7 @@ export interface HubMission {
   mod?: string;
   leonida?: { progression?: string; story?: string; basis?: string };
   aliases?: string[];
+  g?: HubGuide;
 }
 
 /** Faits GTABase rattachés à un nœud du graphe (affichés, jamais substitués aux prérequis validés). */
@@ -60,6 +69,8 @@ export interface HubFacts {
   protagonist?: "Jason" | "Lucia" | "les deux";
   /** Préalables selon GTABase quand ils diffèrent du graphe validé (contradiction conservée, non appliquée). */
   differs?: string[];
+  /** V0.20.1 · faits tirés de la soluce GTABase (une source). */
+  guide?: HubGuide;
 }
 
 /** Véhicule GTABase (clés courtes : le fichier est chargé sur iPhone). */

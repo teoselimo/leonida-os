@@ -172,3 +172,34 @@ class TestGtadbAdapter(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+from adapters import guides as GU
+
+WALK = """<h2 class="module" id="walkthrough">Mission Walkthrough</h2><div class="mission-walkthrough">
+<h3 class="indexed"><span class="heading_text">Collect the Bag</span></h3><p><a href="/gta-6/characters/donnie">Donnie</a> left it. You earn $1,500.</p>
+<h3 class="indexed"><span class="heading_text">Leave Town</span></h3><p>Drive out of Key Lento.</p>
+<div class="tip-box"><p><strong>Tip:</strong> Open the trunk to collect Donnie's H&amp;L .38. If you skip it, it's gone for good.</p></div>
+<h3 class="indexed"><span class="heading_text">Deal with Felipe</span></h3><p>You can choose to kill or spare him.</p></div>
+<h2 class="checklist-item">Mission Completed</h2>"""
+
+class TestGuides(unittest.TestCase):
+    def setUp(self):
+        recs = [{"type": "weapon", "name": "Hawk & Little Donnie's H&L .38", "fields": {"manufacturer": "Hawk & Little"}},
+                {"type": "character", "name": "Donnie", "fields": {}}]
+        places = [{"name": "Key Lento", "unnamed": False, "fields": {"position": {"x": 0, "y": 0}}}]
+        self.names = GU.name_dicts(recs, places, [])
+        self.g = GU.extract(WALK, self.names, {"/gta-6/characters/donnie": "Donnie"}, "Don Gone")
+    def test_steps_entities_money(self):
+        self.assertEqual([s["t"] for s in self.g["steps"]], ["Collect the Bag", "Leave Town", "Deal with Felipe"])
+        self.assertEqual(self.g["steps"][0]["e"]["char"], ["Donnie"])
+        self.assertEqual(self.g["steps"][0]["$"], [1500])
+        self.assertEqual(self.g["steps"][1]["e"]["place"], ["Key Lento"])
+    def test_flags_without_prose(self):
+        kinds = {(f["k"], f["step"]) for f in self.g["flags"]}
+        self.assertIn(("manquable", "Leave Town"), kinds)
+        self.assertIn(("choix", "Deal with Felipe"), kinds)
+        miss = next(f for f in self.g["flags"] if f["k"] == "manquable")
+        self.assertEqual(miss["e"]["weapon"], ["Hawk & Little Donnie's H&L .38"])  # nom court de la soluce → fiche complète
+        self.assertNotIn("gone for good", json.dumps(self.g))                   # aucun texte rédigé conservé
+    def test_no_walkthrough(self):
+        self.assertIsNone(GU.extract("<h1>x</h1>", self.names, {}, "x"))

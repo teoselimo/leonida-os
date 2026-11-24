@@ -1,6 +1,7 @@
 "use client";
 
 import { PROG_BY_ID } from "@/data/progression";
+import { flagText } from "@/lib/hub/missions";
 import { useMemo, useState } from "react";
 import { useStore } from "@/lib/store";
 import { coverageOf, gaugeLabel, simulateLaunch } from "@/lib/story/engine";
@@ -104,6 +105,7 @@ export function HubFactsBlock({ id }: { id: string }) {
       {h.cond?.length ? <p>Conditions : {h.cond.join(", ")}</p> : null}
       {h.missable && <p>Signalée manquable par GTABase.</p>}
       {h.req100 != null && <p>Requise pour 100 % : {h.req100 ? "oui" : "non"}</p>}
+      {h.guide?.flags.filter((f) => f.k === "manquable" || f.k === "choix").map((f, i) => <p key={i} data-testid="hub-flag">{flagText(f, false)} — d&apos;après la soluce GTABase (une source).</p>)}
       {h.objectives?.length ? (
         <details data-testid="hub-objectives"><summary>Voir les {h.objectives.length} objectifs (révèle le déroulé)</summary><p>{h.objectives.join(" → ")}</p></details>
       ) : null}

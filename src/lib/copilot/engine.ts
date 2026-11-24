@@ -19,6 +19,9 @@ import { EXTRACT_RULES, MEMORY_TTL_MS, asksVehicle, isVisualFollowUp, keepImages
 import type { VisualMemory } from "./grounding";
 import { compactPlayerContext, placeFocus } from "./context";
 import { hubBlock, hubMentions, landmarkMentions } from "../hub/knowledge";
+import { loadRefBlob, loadRefIndex, refLabel, selectRefs } from "../hub/visionRefs";
+import type { RefPick } from "../hub/visionRefs";
+import type { Candidate } from "../knowledge/engine";
 
 /**
  * Moteur conversationnel indépendant du fournisseur :
@@ -267,20 +270,32 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const followMem = !userImages.length && !docs.length && !checklist && isVisualFollowUp(o.question, o.memory) ? o.memory! : null;
   const memImages = followMem && Date.now() - followMem.at <= MEMORY_TTL_MS ? followMem.images : [];
   if (followMem) {
-    const top = followMem.grounding?.candidates[0];
-    // « montre-moi le lieu » : réponse immédiate, sans appel à Claude, depuis la reconnaissance précédente
-    if (wantsMap(o.question) && !asksVehicle(o.question) && top?.landmarkId)
-      return {
-        ...fromDirect(draft),
-        intent: "vision_followup",
-        message: `Voici ${top.name} sur la carte (candidat ${followMem.grounding!.confidence === "élevée" ? "le plus probable" : "à confirmer"}, d'après la capture précédente).`,
-        trust: null,
-        sources: [],
-        actions: [{ type: "show_place", label: `Voir ${top.name} sur la carte`, landmarkId: top.landmarkId }],
-        engine: "direct",
-        grounding: groundingOut(followMem.grounding!, undefined, [], memImages.length ? "image" : "résumé", 0),
-        replies: VISION_REPLIES,
-      };
+    // V0.20.1 : « montre-moi le lieu » = le lieu RETENU à la réponse précédente (pas le 1er du classement du moteur)
+    const kept = followMem.chosen ?? null;
+    if (wantsMap(o.question) && !asksVehicle(o.question) && followMem.grounding)
+      return kept?.landmarkId
+        ? {
+            ...fromDirect(draft),
+            intent: "vision_followup",
+            message: `Voici ${kept.name} sur la carte (lieu retenu à ma réponse précédente, confiance ${kept.confidence}).`,
+            trust: null,
+            sources: [],
+            actions: [{ type: "show_place", label: `Voir ${kept.name} sur la carte`, landmarkId: kept.landmarkId }],
+            engine: "direct",
+            grounding: { ...groundingOut(followMem.grounding, { candidat: kept.id, confiance: kept.confidence }, [], memImages.length ? "image" : "résumé", 0, null, followMem.photoIds ?? []), photos: followMem.photos ?? [] },
+            replies: VISION_REPLIES,
+          }
+        : {
+            ...fromDirect(draft),
+            intent: "vision_followup",
+            message: "Je n'ai retenu aucun lieu sur ta capture précédente : je ne peux pas le montrer sur la carte sans risquer de te tromper. Renvoie une capture avec un panneau ou un bâtiment caractéristique.",
+            trust: null,
+            sources: [],
+            actions: [],
+            engine: "direct",
+            grounding: { ...groundingOut(followMem.grounding, { candidat: "aucun", confiance: "aucune" }, [], memImages.length ? "image" : "résumé", 0, null, followMem.photoIds ?? []), photos: followMem.photos ?? [] },
+            replies: VISION_REPLIES.filter((r) => r !== "Montre-moi le lieu"),
+          };
     if (memImages.length) images = memImages;
   }
   const vision = images.length > 0 || docs.length > 0 || !!followMem;
@@ -391,6 +406,26 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const out = await Promise.all(grounding.candidates.slice(0, n).map((c) => (c.landmarkId ? o.renderRef!(c.landmarkId).catch(() => null) : Promise.resolve(null))));
     refs = out.filter((b): b is Blob => !!b);
   }
+  // V0.20.1 · photos de référence GTADB : sélectionnées AVANT comparaison (candidats, puis progression), chargées à la demande
+  let photoPicks: RefPick[] = [];
+  let photoBlobs: Blob[] = [];
+  if (images.length && grounding && obs && obs.kind !== "carte") {
+    const index = await loadRefIndex().catch(() => null);
+    if (index) {
+      const memIds = followMem?.photoIds ?? [];
+      photoPicks = followMem && memIds.length ? memIds.map((id) => index.refs.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => !!r).map((ref) => ({ ref, reason: "candidat" as const })) : followMem ? [] : selectRefs(index, grounding, obs, o.ctx.state.profile);
+      const loaded = await Promise.all(photoPicks.map((p) => loadRefBlob(p.ref)));
+      photoPicks = photoPicks.filter((_, i) => !!loaded[i]);
+      photoBlobs = loaded.filter((b): b is Blob => !!b);
+    }
+  }
+  // un lieu proposé par une photo de référence (et absent des candidats du moteur) devient un candidat comparable
+  if (grounding && photoPicks.length) {
+    const extra: Candidate[] = photoPicks
+      .filter((p) => !grounding!.candidates.some((c) => c.landmarkId === p.ref.id))
+      .map((p) => ({ id: p.ref.knowledge ?? `gtadb:${p.ref.id}`, name: refLabel(p.ref), type: "lieu", score: 0, why: ["comparé à une photo de référence GTADB"], toCheck: [], landmarkId: p.ref.id, district: p.ref.district ?? "" }));
+    grounding = { ...grounding, candidates: [...grounding.candidates, ...extra] };
+  }
   // un tour visuel ne reprend pas la réponse directe (souvent hors sujet) ; une question sur un lieu reçoit un contexte compact
   const actions: AiAction[] = visualTurn ? [] : draft.actions;
   const facts = visualTurn || SMALLTALK.has(draft.intent) || draft.intent === "clarify" ? "" : draft.text;
@@ -423,7 +458,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const followMode = followMem ? (memImages.length ? "image" : "résumé") : null;
   const visionBlock = visualTurn
     ? [
-        visionAnswerRules({ purpose: obs?.kind === "carte" ? "carte" : o.purpose ?? "capture", refs: refs.length, followUp: followMode, detail: wantsDetail(o.question) }),
+        visionAnswerRules({ purpose: obs?.kind === "carte" ? "carte" : o.purpose ?? "capture", refs: refs.length, followUp: followMode, detail: wantsDetail(o.question), photos: photoPicks.map((p, i) => `photo ${i + 1} = candidat « ${grounding?.candidates.find((c) => c.landmarkId === p.ref.id)?.id ?? p.ref.id} » (${refLabel(p.ref)}${p.ref.district && p.ref.name ? `, ${p.ref.district}` : ""})`) }),
         obs ? `INDICES EXTRAITS DE L'IMAGE (1re passe) : type ${obs.kind}, GTA VI : ${obs.gta} ; indices : ${obs.clues.join(", ") || "aucun"} ; textes lus : ${obs.texts.join(" | ") || "aucun"} ; véhicules : ${obs.vehicles.join(" | ") || "aucun"} ; résumé : ${obs.summary || "—"}` : userImages.length ? "INDICES : l'extraction a échoué ; décris prudemment ce que tu vois, sans identifier de lieu." : "",
         grounding ? groundingBlock(grounding) : "",
         followMem ? `RÉSUMÉ DE L'IMAGE PRÉCÉDENTE ET DE TA RÉPONSE : ${followMem.obs?.summary ?? "—"} — tu avais répondu : « ${followMem.answer.slice(0, 400)} »` : "",
@@ -450,7 +485,8 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
       signal: o.signal,
       // une image demande le modèle standard (meilleure lecture) ; le texte seul reste rapide
       tier: checklist || images.length ? "default" : o.tier ?? "quick",
-      ...(images.length || refs.length ? { images: [...images, ...refs] } : {}),
+      // ordre : capture(s) du joueur, photos de référence GTADB, extraits de carte
+      ...(images.length || refs.length || photoBlobs.length ? { images: [...images, ...photoBlobs, ...refs] } : {}),
       onText: (t) => {
         const v = visiblePart(t);
         if (firstText === null && v.trim()) firstText = Date.now() - t0;
@@ -474,9 +510,12 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
     const strs = (x: unknown) => (Array.isArray(x) ? x.filter((y): y is string => typeof y === "string").map((y) => y.slice(0, 160)).slice(0, 5) : []);
     // V0.19 · identification : seulement un candidat du MOTEUR ; confiance jamais au-dessus de celle du moteur
     const idMeta = (meta as { identification?: { candidat?: unknown; confiance?: unknown } } | null)?.identification;
-    const vg = grounding ? groundingOut(grounding, idMeta, strs((meta as { indices?: unknown } | null)?.indices), followMode, refs.length, typeof (meta as { action?: unknown } | null)?.action === "string" ? String((meta as { action: string }).action).slice(0, 100) : null) : null;
+    const vg0 = grounding ? groundingOut(grounding, idMeta, strs((meta as { indices?: unknown } | null)?.indices), followMode, refs.length, typeof (meta as { action?: unknown } | null)?.action === "string" ? String((meta as { action: string }).action).slice(0, 100) : null, photoPicks.map((p) => p.ref.id)) : null;
+    const photos = photoPicks.map((p) => ({ landmarkId: p.ref.id, name: refLabel(p.ref), file: p.ref.file, chosen: vg0?.identification?.landmarkId === p.ref.id }));
+    const vg = vg0 ? { ...vg0, photos } : null;
+    // V0.20.1 : « Voir sur la carte » = le lieu RETENU par la comparaison ; aucun lieu retenu → aucun bouton carte
     if (vg?.identification?.landmarkId) chosen = [{ type: "show_place" as const, label: `Voir ${vg.identification.name} sur la carte`, landmarkId: vg.identification.landmarkId }];
-    else if (vg && !vg.identification && vg.candidates[0]?.landmarkId) chosen = [{ type: "show_place" as const, label: `Voir le 1er candidat (${vg.candidates[0].name})`, landmarkId: vg.candidates[0].landmarkId }];
+    else if (vg) chosen = chosen.filter((a) => a.type !== "show_place");
     // progression : les actions à confirmer (terminer, lancer, cocher) restent toujours proposées
     if (PROGRESS_ACT.has(draft.intent) && actions.length) chosen = actions.slice(0, 3);
     // #15 : le joueur demande à voir sur la carte → le bouton carte reste proposé, même si Claude l'a omis
@@ -513,8 +552,9 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
       web,
     };
     // mémoire visuelle : la nouvelle image (ou la même, rafraîchie) pour les questions de suivi
-    if (userImages.length) o.onVision?.({ at: Date.now(), images: keepImages(userImages), purpose: obs?.kind === "carte" ? "carte" : o.purpose ?? "capture", obs, grounding, answer: message.slice(0, 600) });
-    else if (followMem) o.onVision?.({ ...followMem, at: memImages.length ? Date.now() : followMem.at, answer: message.slice(0, 600) });
+    const chosenMem = vg?.identification ? { id: vg.identification.id, name: vg.identification.name, landmarkId: vg.identification.landmarkId, confidence: vg.identification.confidence } : null;
+    if (userImages.length) o.onVision?.({ at: Date.now(), images: keepImages(userImages), purpose: obs?.kind === "carte" ? "carte" : o.purpose ?? "capture", obs, grounding, answer: message.slice(0, 600), chosen: chosenMem, photoIds: photoPicks.map((p) => p.ref.id), photos });
+    else if (followMem) o.onVision?.({ ...followMem, at: memImages.length ? Date.now() : followMem.at, answer: message.slice(0, 600), chosen: chosenMem ?? followMem.chosen ?? null });
     return out;
   } catch (e) {
     const code = e instanceof LlmError ? e.code : "upstream_error";
@@ -657,12 +697,17 @@ const CONF_RANK = ["aucune", "faible", "moyenne", "élevée"] as const;
 const VISION_REPLIES = ["Détaille", "Et le véhicule ?", "Montre-moi le lieu"];
 
 /** Sortie « reconnaissance » d'une réponse : identification validée contre les candidats du moteur. */
-export function groundingOut(g: Grounding, idMeta: { candidat?: unknown; confiance?: unknown } | null | undefined, why: string[], memory: "image" | "résumé" | null, refs: number, action: string | null = null): NonNullable<CopilotAnswer["grounding"]> {
+export function groundingOut(g: Grounding, idMeta: { candidat?: unknown; confiance?: unknown } | null | undefined, why: string[], memory: "image" | "résumé" | null, refs: number, action: string | null = null, photoIds: string[] = []): NonNullable<CopilotAnswer["grounding"]> {
   const pool = [...g.candidates, ...(g.vehicle ? [g.vehicle] : [])];
   // sans avis de Claude (réponse locale), le meilleur candidat du moteur ; sinon seulement l'id qu'il a retenu
-  const pick = idMeta === undefined ? g.candidates[0] ?? null : pool.find((c) => c.id === String(idMeta?.candidat ?? "")) ?? null;
+  const want = String(idMeta?.candidat ?? "");
+  const pick = idMeta === undefined ? g.candidates[0] ?? null : pool.find((c) => c.id === want || (!!c.landmarkId && c.landmarkId === want)) ?? null;
   const asked = CONF_RANK.indexOf((idMeta?.confiance as (typeof CONF_RANK)[number]) ?? g.confidence);
-  const conf = CONF_RANK[Math.min(asked < 0 ? CONF_RANK.indexOf(g.confidence) : asked, CONF_RANK.indexOf(g.confidence))];
+  // plafond : la confiance du moteur ; une ressemblance avec une photo de référence comparée peut la porter à « moyenne »,
+  // jamais à « élevée » (seuls un nom lu ou des indices forts du moteur y mènent)
+  const eng = CONF_RANK.indexOf(g.confidence);
+  const ceilRank = pick?.landmarkId && photoIds.includes(pick.landmarkId) ? Math.max(eng, CONF_RANK.indexOf("moyenne")) : eng;
+  const conf = CONF_RANK[Math.min(asked < 0 ? eng : asked, ceilRank)];
   const identification = pick && conf !== "aucune" ? { id: pick.id, name: pick.name, confidence: conf, landmarkId: pick.landmarkId } : null;
   return {
     kind: g.kind,
@@ -675,5 +720,6 @@ export function groundingOut(g: Grounding, idMeta: { candidat?: unknown; confian
     memory,
     refs,
     action,
+    photoCount: photoIds.length,
   };
 }

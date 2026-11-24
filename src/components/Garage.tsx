@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useStore } from "@/lib/store";
 import { useLiveRadar } from "@/lib/live";
 import { loadHubVehicles } from "@/lib/hub/data";
+import { loadVehicleMedia, mediaOf, shrinkPhoto } from "@/lib/hub/media";
+import type { VehicleMediaManifest } from "@/lib/hub/media";
 import { buildGarage, family, filterGarage, STAT_FR, TIER_FR } from "@/lib/hub/garage";
 import type { GarageItem, GarageQuery } from "@/lib/hub/garage";
 import type { HubVehicle } from "@/lib/hub/model";
@@ -35,11 +37,32 @@ function Silhouette({ fam }: { fam: ReturnType<typeof family> }) {
   );
 }
 
-function Plate({ it, big }: { it: GarageItem; big?: boolean }) {
+/** Case d'une planche d'images : fond CSS positionné ; une planche absente retombe sur la silhouette. */
+function SpriteImg({ sprite, onError }: { sprite: import("@/lib/hub/media").Sprite; onError: () => void }) {
+  useEffect(() => {
+    // détection d'échec (un fond CSS n'a pas d'événement « error ») ; la planche est en cache navigateur ensuite
+    const i = new Image();
+    i.onerror = onError;
+    i.src = sprite.src;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sprite.src]);
+  return <i className="gv__sprite" role="img" aria-hidden="true" data-atlas={sprite.src.split("/").pop()} style={{ backgroundImage: `url("${sprite.src}")`, backgroundPosition: sprite.pos, backgroundSize: sprite.size }} />;
+}
+
+function Plate({ it, big, media }: { it: GarageItem; big?: boolean; media?: ReturnType<typeof mediaOf> }) {
   const fam = family(it.cls);
+  const [broken, setBroken] = useState(false);
+  const photo = media && media.kind !== "none" && !broken ? media : null;
   return (
-    <div className={`gv__plate${big ? " gv__plate--big" : ""}`} style={{ ["--h" as string]: HUE[fam] }}>
-      <Silhouette fam={fam} />
+    <div className={`gv__plate${big ? " gv__plate--big" : ""}${photo ? " has-photo" : ""}`} style={{ ["--h" as string]: HUE[fam] }} data-media={photo ? photo.kind : "none"}>
+      {photo?.kind === "capture" ? (
+        <img src={photo.src} alt="" decoding="async" onError={() => setBroken(true)} />
+      ) : photo?.kind === "reference" ? (
+        <SpriteImg sprite={photo.sprite} onError={() => setBroken(true)} />
+      ) : (
+        <Silhouette fam={fam} />
+      )}
+      {photo?.kind === "capture" && <span className="gv__mine">Ta photo</span>}
       {it.manufacturer && !big && <span className="gv__mk">{it.manufacturer}</span>}
     </div>
   );
@@ -51,8 +74,20 @@ const CLS_FR: Record<string, string> = { Motorcycles: "Motos", Muscle: "Muscle",
 export const clsFr = (c?: string | null) => (c ? c.split(/\s*,\s*/).map((x) => CLS_FR[x] ?? x).join(", ") : null);
 const fmt$ = (n?: number) => (n == null ? null : `${n.toLocaleString("fr-FR")} $`);
 
-function HubSheet({ it, all, onPick, onClose }: { it: GarageItem; all: Map<string, GarageItem>; onPick: (k: string) => void; onClose: () => void }) {
-  const { state, setVehicle, toggleWanted, focusVehicle } = useStore();
+function HubSheet({ it, all, onPick, onClose, manifest }: { it: GarageItem; all: Map<string, GarageItem>; onPick: (k: string) => void; onClose: () => void; manifest: VehicleMediaManifest | null }) {
+  const { state, setVehicle, toggleWanted, focusVehicle, addProof } = useStore();
+  const media = mediaOf(it.key, it.hub?.id, state, manifest);
+  const panel = useRef<HTMLDivElement>(null);
+  // une nouvelle fiche s'ouvre en haut (image visible), y compris en passant d'un modèle à sa variante
+  useEffect(() => {
+    panel.current?.scrollTo({ top: 0 });
+  }, [it.key]);
+  const mine = (state.proofs?.[it.key] ?? []).filter((p) => p.kind === "capture");
+  const addPhoto = async (f: File | undefined) => {
+    if (!f) return;
+    const value = await shrinkPhoto(f).catch(() => null);
+    if (value) addProof(it.key, { id: Math.random().toString(36).slice(2, 9), kind: "capture", value, note: "visuel", at: new Date().toISOString() });
+  };
   const h = it.hub;
   const owned = state.vehicles[it.key] && state.vehicles[it.key].state !== "spotted";
   const wanted = (state.wanted ?? []).includes(it.key);
@@ -66,10 +101,16 @@ function HubSheet({ it, all, onPick, onClose }: { it: GarageItem; all: Map<strin
   const money: Array<[string, string | null]> = h ? [["Prix (mode histoire)", fmt$(h.p)], ["Immatriculation", fmt$(h.reg)], ["Revente (volé)", fmt$(h.sell)]] : [];
   // portail : la fiche couvre tout l'écran (y compris la barre d'onglets), quel que soit le conteneur animé du Guide
   return createPortal(
-    <div className="gvpanel" role="dialog" aria-modal="true" aria-label={it.name} data-testid="garage-sheet" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div ref={panel} className="gvpanel" role="dialog" aria-modal="true" aria-label={it.name} data-testid="garage-sheet" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="gvs" data-testid={`garage-sheet-${it.key}`}>
         <button className="gvs__close" onClick={onClose} aria-label="Fermer la fiche" data-testid="garage-close"><Icon name="close" size={18} /></button>
-        <Plate it={it} big />
+        <Plate it={it} big media={media} />
+        <p className="gvs__credit" data-testid="garage-media">
+          {media.kind === "capture" ? "Ta photo (enregistrée sur cet appareil)" : media.kind === "reference" ? <>Image : <a href={media.source} target="_blank" rel="noreferrer">{media.credit}</a> (même fiche)</> : "Pas d'image exacte pour cette fiche : visuel de remplacement."}
+          {" · "}
+          <label className="gvs__add">{mine.length ? "Remplacer ma photo" : "Ajouter ma photo"}<input type="file" accept="image/*" onChange={(e) => addPhoto(e.target.files?.[0])} data-testid="garage-photo-input" hidden /></label>
+          {mine.length > 0 && <> · <button className="link small" onClick={() => mine.forEach((p) => addProof(it.key, null, p.id))} data-testid="garage-photo-remove">Retirer ma photo</button></>}
+        </p>
         <h2 className="gvs__name">{it.manufacturer ? <small>{it.manufacturer}</small> : null}{shortName(it)}</h2>
         <p className="gvs__tags">
           <span className={`gvchip gvchip--${it.tier}`}>{TIER_FR[it.tier]}</span>
@@ -110,11 +151,11 @@ function HubSheet({ it, all, onPick, onClose }: { it: GarageItem; all: Map<strin
         )}
         <section className="gvs__src" data-testid="garage-sources">
           <h3>Sources</h3>
-          {h && <p><a href={h.u} target="_blank" rel="noreferrer">GTABase</a>{h.mod ? ` · fiche modifiée le ${new Date(h.mod).toLocaleDateString("fr-FR")}` : ""} · <a href={h.u} target="_blank" rel="noreferrer">Photos sur GTABase</a></p>}
+          {h && <p><a href={h.u} target="_blank" rel="noreferrer">GTABase</a>{h.mod ? ` · fiche modifiée le ${new Date(h.mod).toLocaleDateString("fr-FR")}` : ""}</p>}
           {it.rvl && <p>Rare Vehicle Locator (position calibrée LEONIDA)</p>}
           {it.radar && !it.rvl && <p>Veille LEONIDA ({it.radar.evidence.length} preuve{it.radar.evidence.length > 1 ? "s" : ""})</p>}
           {!h && <p className="muted small">Absent du catalogue GTABase importé : fiche issue du suivi LEONIDA.</p>}
-          <p className="fineprint">Données GTABase : faits et liens uniquement ; aucune image ni texte rédigé n&apos;est repris.</p>
+          <p className="fineprint">Données GTABase : faits, liens et image principale de la fiche (réduite, créditée) ; aucun texte rédigé n&apos;est repris.</p>
         </section>
       </div>
     </div>,
@@ -130,6 +171,10 @@ export function Garage() {
   const [f, setF] = useState<GarageQuery>({ q: "", maker: null, cls: null, tier: "all", only: "all" });
   const [open, setOpen] = useState<string | null>(null);
   const [limit, setLimit] = useState(48);
+  const [manifest, setManifest] = useState<VehicleMediaManifest | null>(null);
+  useEffect(() => {
+    loadVehicleMedia().then(setManifest);
+  }, []);
   useEffect(() => {
     let alive = true;
     loadHubVehicles().then((r) => {
@@ -201,7 +246,7 @@ export function Garage() {
               return (
                 <li key={it.key + (it.hub?.id ?? "")}>
                   <button className="gv" onClick={() => setOpen(it.key)} data-testid={`garage-card-${it.key}`}>
-                    <Plate it={it} />
+                    <Plate it={it} media={mediaOf(it.key, it.hub?.id, state, manifest)} />
                     <span className="gv__n">{shortName(it)}</span>
                     <span className="gv__s">{[clsFr(it.cls), it.tier !== "model" ? TIER_FR[it.tier] : null].filter(Boolean).join(" · ")}</span>
                     <span className="gv__marks">
@@ -216,10 +261,10 @@ export function Garage() {
             })}
           </ul>
           {list.length > limit && <button className="btn btn--ghost btn--sm garagev__more" onClick={() => setLimit((l) => l + 96)} data-testid="garage-more">Afficher {Math.min(96, list.length - limit)} de plus</button>}
-          <p className="fineprint">Catalogue : GTABase (faits et liens) · positions : Rare Vehicle Locator et veille LEONIDA uniquement.</p>
+          <p className="fineprint" data-testid="garage-coverage">Catalogue : GTABase (faits, liens, images exactes{manifest ? ` : ${Object.keys(manifest.refs).length} fiches illustrées` : ""}) · tes photos priment · positions : Rare Vehicle Locator et veille LEONIDA uniquement.</p>
         </>
       )}
-      {cur && <HubSheet it={cur} all={byKey} onPick={setOpen} onClose={() => setOpen(null)} />}
+      {cur && <HubSheet it={cur} all={byKey} onPick={setOpen} onClose={() => setOpen(null)} manifest={manifest} />}
     </div>
   );
 }

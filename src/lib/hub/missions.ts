@@ -24,7 +24,7 @@ export function protagonistOf(m: HubMission): HubFacts["protagonist"] | undefine
 }
 
 function factsOf(m: HubMission): HubFacts {
-  return { url: m.url, mod: m.mod, number: m.number, giver: m.giver, money: m.money, rewards: m.rewards, objectives: m.objectives, req100: m.req100, missable: m.missable, pnr: m.pnr, cond: m.cond, protagonist: protagonistOf(m) };
+  return { url: m.url, mod: m.mod, number: m.number, giver: m.giver, money: m.money, rewards: m.rewards, objectives: m.objectives, req100: m.req100, missable: m.missable, pnr: m.pnr, cond: m.cond, protagonist: protagonistOf(m), guide: m.g };
 }
 
 const COND_SHOWN = new Set(["de nuit", "en jouant Lucia", "en jouant Jason", "édition Ultimate", "durée limitée"]);
@@ -110,3 +110,18 @@ export function hubChapterStats(chapter: number) {
 
 /** Id Hub → id de nœud du graphe (rempli par progression.ts au chargement). */
 export const HUB_GRAPH_IDS = new Map<string, string>();
+
+const ENT_FR: Record<string, string> = { place: "lieu", char: "personnage", veh: "véhicule", weapon: "arme", mission: "mission" };
+const FLAG_FR: Record<string, string> = { manquable: "Manquable", choix: "Choix", conseil: "Conseil de la soluce", "non-retour": "Point de non-retour" };
+/** Entités en clair : « arme Hawk & Little Donnie's H&L .38 ; lieu Key Lento ». */
+export function entsText(e?: Partial<Record<string, string[]>>, kinds?: string[]): string {
+  return Object.entries(e ?? {})
+    .filter(([k, v]) => v?.length && (!kinds || kinds.includes(k)))
+    .map(([k, v]) => `${ENT_FR[k] ?? k} ${v!.join(", ")}`)
+    .join(" ; ");
+}
+/** Ligne d'un drapeau de soluce, sans texte rédigé : type, étape, entités, montants. */
+export function flagText(f: NonNullable<HubMission["g"]>["flags"][number], withStep = true): string {
+  const ents = entsText(f.e, ["weapon", "veh", "place", "char"]);
+  return `${FLAG_FR[f.k] ?? f.k}${withStep ? (f.step ? ` (étape « ${f.step} »)` : " (avant la mission)") : ""}${ents ? ` : ${ents}` : ""}${f.$?.length ? ` · montants cités : ${f.$.map((x) => `${x.toLocaleString("fr-FR")} $`).join(", ")}` : ""}`;
+}

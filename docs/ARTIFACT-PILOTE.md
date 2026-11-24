@@ -317,3 +317,10 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Tests : passage complet **502 réussis, 0 échec, 4 ignorés** (19,9 min, Claude simulé) ; pipeline Python 18 / 18.
 - Publication en patch : 9 fichiers, 2 retirés, `data/radar.json` non republié, déclaration inchangée. Version Artifact `1795521584-ef58`.
 
+## 25. V0.20.1 · Références visuelles, soluces structurées, Garage visuel, relais Codex (24/11/2026)
+
+- Livraison : `docs/V0.20.1.md` ; captures `docs/v0201-captures.jpg` (Claude simulé) ; relais : `AGENTS.md`, `docs/HANDOFF.md`.
+- **Plafond constaté : 512 fichiers par Artifact** → images du Garage en 16 planches (sprites CSS). Fichiers servis : 472.
+- Tests : passage complet **538 réussis, 0 échec, 4 ignorés** (21,7 min, Claude simulé) ; pipeline Python 21 / 21.
+- Publication en patch : 66 fichiers, 2 retirés, `data/radar.json` non republié, déclaration inchangée. Version Artifact `1795534745-d773`.
+

@@ -1,8 +1,9 @@
-import { HUB_MISSIONS } from "./missions";
+import { HUB_MISSIONS, HUB_GRAPH_IDS, entsText, flagText } from "./missions";
 import { loadHubCatalog, loadHubPlaces, loadHubVehicles } from "./data";
 import { loadLandmarks } from "@/lib/gtadb";
 import type { HubCatalogItem, HubMission, HubVehicle } from "./model";
 import { nk } from "@/lib/missions";
+import { nodeByName } from "@/lib/progress";
 import type { PersistedState } from "@/lib/types";
 
 /**
@@ -24,7 +25,7 @@ export interface HubMention {
   url: string;
 }
 
-function missionLine(m: HubMission, s: Pick<PersistedState, "profile">, names: Map<string, string>): string {
+function missionLine(m: HubMission, s: Pick<PersistedState, "profile">, names: Map<string, string>, q = ""): string {
   const p = s.profile;
   if (m.chapter != null && m.chapter > p.chapter && p.spoilerMode === "strict") return `Mission « ${m.name} » : chapitre non atteint par le joueur (détails masqués par l'anti-spoiler strict).`;
   const bits = [
@@ -39,7 +40,39 @@ function missionLine(m: HubMission, s: Pick<PersistedState, "profile">, names: M
     m.missable ? "manquable" : null,
     m.pnr ? "POINT DE NON-RETOUR" : null,
   ].filter(Boolean);
-  return `Mission « ${m.name} » (GTABase) : ${bits.join(" ; ")}.`;
+  return `Mission « ${m.name} » (GTABase) : ${bits.join(" ; ")}.${guideFacts(m, q)}`;
+}
+
+/**
+ * V0.20.1 · faits de la soluce PERTINENTS pour la question (pas toute la soluce) : manquables, choix, récompenses,
+ * étapes, lieux, véhicules ou armes cités. Une seule source : à présenter comme « d'après GTABase ».
+ */
+export function guideFacts(m: HubMission, q: string): string {
+  const g = m.g;
+  if (!g) return "";
+  const has = (rx: RegExp) => rx.test(q);
+  const out: string[] = [];
+  const flags = (ks: string[]) => g.flags.filter((f) => ks.includes(f.k)).map((f) => flagText(f));
+  if (has(/manqu|rater|perd|unique|avant de|ne pas oublier|r[ée]cup[ée]r/i)) out.push(...flags(["manquable", "non-retour"]));
+  if (has(/choix|choisir|tuer|[ée]pargner|d[ée]cid/i)) out.push(...flags(["choix"]));
+  if (has(/r[ée]compense|argent|gagn|\$|combien/i)) {
+    const money = [...new Set(g.steps.flatMap((s) => s.$ ?? []))];
+    if (money.length) out.push(`montants cités par la soluce : ${money.map((x) => `${x} $`).join(", ")}`);
+  }
+  if (has(/comment|[ée]tape|objectif|d[ée]roul|faire|r[ée]ussir|conseil|astuce|bloqu/i)) {
+    out.push(`étapes (titres GTABase) : ${g.steps.map((s) => s.t).join(" → ")}`);
+    out.push(...flags(["conseil"]).slice(0, 3));
+  }
+  const kinds = [has(/\bo[uù]\b|lieu|endroit|aller/i) ? "place" : null, has(/v[ée]hicule|voiture|caisse|moto|bateau/i) ? "veh" : null, has(/arme|flingue|pistolet|fusil/i) ? "weapon" : null, has(/qui |personnage/i) ? "char" : null].filter((x): x is string => !!x);
+  if (kinds.length) {
+    const t = g.steps.map((s) => (entsText(s.e, kinds) ? `${s.t} : ${entsText(s.e, kinds)}` : "")).filter(Boolean);
+    if (t.length) out.push(`cités par étape : ${t.join(" | ")}`);
+  }
+  if (!out.length) {
+    const miss = flags(["manquable", "non-retour"]);
+    out.push(`${g.steps.length} étapes dans la soluce${miss.length ? ` ; ${miss.join(" ; ")}` : ""}`);
+  }
+  return ` Soluce GTABase (faits, une source) : ${[...new Set(out)].join(" ; ")}.`;
 }
 
 function vehicleLine(v: HubVehicle, all: Map<string, HubVehicle>): string {
@@ -67,7 +100,15 @@ export async function hubMentions(question: string, s: Pick<PersistedState, "pro
   const out: HubMention[] = [];
   const names = new Map(HUB_MISSIONS.map((m) => [m.id, m.name]));
   for (const m of HUB_MISSIONS) {
-    if ([m.name, ...(m.aliases ?? [])].some((n) => hit(q, n))) out.push({ kind: "mission", name: m.name, line: missionLine(m, s, names), url: m.url });
+    if ([m.name, ...(m.aliases ?? [])].some((n) => hit(q, n))) out.push({ kind: "mission", name: m.name, line: missionLine(m, s, names, question), url: m.url });
+  }
+  // aucune mission nommée mais la question porte sur « la mission » : celle que le joueur a choisie ou commencée
+  const cur = s.profile.nextMission ?? null;
+  if (!out.length && cur && /\b(cette|la|ma) mission\b|manqu|rater|r[ée]compense|[ée]tape|objectif|comment (je )?(fais|r[ée]ussi|passe)|astuce|conseil|bloqu/i.test(question)) {
+    const nid = nodeByName(cur)?.id;
+    const node = nid ? [...HUB_GRAPH_IDS.entries()].find(([, v]) => v === nid)?.[0] : undefined;
+    const m = HUB_MISSIONS.find((x) => x.id === node || words(x.name) === words(cur) || (x.aliases ?? []).some((a) => words(a) === words(cur)));
+    if (m) out.push({ kind: "mission", name: m.name, line: `(mission ${s.profile.missionInProgress ? "en cours" : "choisie"} par le joueur) ${missionLine(m, s, names, question)}`, url: m.url });
   }
   const [{ data: vs }, { data: cat }] = await Promise.all([loadHubVehicles(), loadHubCatalog()]);
   const byId = new Map(vs.map((v) => [v.id, v]));

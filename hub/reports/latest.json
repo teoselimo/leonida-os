@@ -4,12 +4,28 @@
 "public/data/hub/places.json": 52526,
 "public/data/hub/vehicles.json": 226100,
 "src/data/hub/meta.json": 591,
-"src/data/hub/missions.json": 86800
+"src/data/hub/missions.json": 145065
 },
 "changes": {
 "added": 0,
-"changed": 0,
-"examplesChanged": [],
+"changed": 37,
+"examplesChanged": [
+"gtabase:strangers/get-shirleys-rum",
+"gtabase:strangers/hit-kingpin-bowling",
+"gtabase:strangers/mall-rats",
+"gtabase:strangers/search-for-the-skunk-ape",
+"gtabase:strangers/thats-where-the-money-is",
+"gtabase:strangers/join-a-street-race",
+"gtabase:strangers/dodo-rise",
+"gtabase:strangers/hometown-heroes",
+"gtabase:strangers/sisters-of-the-sea",
+"gtabase:missions/bird-in-the-hand",
+"gtabase:missions/breakfast-run",
+"gtabase:missions/buck-me",
+"gtabase:missions/buy-flowers",
+"gtabase:missions/clean-up-after-donnie",
+"gtabase:missions/clock-out"
+],
 "examplesRemoved": [],
 "firstRun": false,
 "removed": 0
@@ -179,6 +195,12 @@
 "stats": 38
 }
 },
+"guides": {
+"entités citées": 714,
+"faits (manquable, choix, conseil, non-retour)": 196,
+"missions avec soluce structurée": 164,
+"étapes": 775
+},
 "links": {
 "Knowledge→repère GTADB": 13,
 "character→Knowledge": 2,
@@ -194,7 +216,7 @@
 "établissement→repère GTADB": 2
 },
 "mode": "hors ligne",
-"runAt": "2026-11-24T12:12:37+0100",
+"runAt": "2026-11-24T15:16:33+0100",
 "sources": {
 "gtabase": {
 "crawler": "FIN {'cached': 1610, 'fetched': 0, 'failed': 0, 'offline-miss': 1, 'cached-stale': 0} index 1611",

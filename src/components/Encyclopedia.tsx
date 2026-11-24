@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useStore } from "@/lib/store";
-import { HUB_MISSIONS, HUB_META, hubChapterStats, HUB_GRAPH_IDS } from "@/lib/hub/missions";
+import { HUB_MISSIONS, HUB_META, hubChapterStats, HUB_GRAPH_IDS, entsText, flagText } from "@/lib/hub/missions";
 import { loadHubCatalog, loadHubPlaces } from "@/lib/hub/data";
 import type { HubCatalogItem, HubMission, HubPlaces } from "@/lib/hub/model";
 import { computeProgress } from "@/lib/progress";
@@ -62,7 +62,16 @@ function MissionRow({ m, status, names, onlyCount }: { m: HubMission; status: st
           {m.cond?.length ? <p><strong>Conditions :</strong> {m.cond.join(", ")}</p> : null}
           {m.giver?.length ? <p><strong>Donneur :</strong> {m.giver.join(", ")}</p> : null}
           {m.rewards?.length ? <p><strong>Récompenses :</strong> {m.rewards.map((r) => `${r.v} (${r.l})`).join(" ; ")}</p> : null}
-          {m.objectives?.length ? <p><strong>Objectifs :</strong> {m.objectives.join(" → ")}</p> : null}
+          {m.g?.flags.some((f) => f.k === "manquable" || f.k === "choix" || f.k === "non-retour") ? (
+            <ul className="encm__flags" data-testid="enc-flags">{m.g.flags.filter((f) => f.k !== "conseil").map((f, i) => <li key={i}>{flagText(f, false)}</li>)}</ul>
+          ) : null}
+          {m.g?.steps.length ? (
+            <details className="encm__guide" data-testid="enc-guide">
+              <summary>Déroulé en {m.g.steps.length} étapes (révèle la mission)</summary>
+              <ol>{m.g.steps.map((st, i) => <li key={i}><b>{st.t}</b>{st.e ? <em> — {entsText(st.e)}</em> : null}{st.$?.length ? <em> · {st.$.map((x) => `${x.toLocaleString("fr-FR")} $`).join(", ")}</em> : null}{m.g!.flags.filter((f) => f.step === st.t).map((f, j) => <span key={j} className={`encm__flag encm__flag--${f.k}`}>{f.k}</span>)}</li>)}</ol>
+              <p className="fineprint">Faits tirés de la soluce GTABase (titres d&apos;étapes, noms cités, montants) — le texte de la soluce n&apos;est pas repris.</p>
+            </details>
+          ) : m.objectives?.length ? <p><strong>Objectifs :</strong> {m.objectives.join(" → ")}</p> : null}
           {m.req100 != null && <p><strong>Requise pour 100 % :</strong> {m.req100 ? "oui" : "non"}</p>}
           <p className="fineprint">
             {inGraph ? "Prérequis audités par LEONIDA (prioritaires) · " : "Prérequis lus sur GTABase (une source) · "}

@@ -136,3 +136,39 @@ test.describe("Sauvegardes", () => {
     expect(migrate({ ...old, wanted: ["x", 3, null] as unknown as string[] }).wanted).toEqual(["x"]);
   });
 });
+
+test.describe("V0.20.1 · soluces GTABase → faits structurés", () => {
+  const M = (n: string) => HUB_MISSIONS.find((m) => m.name === n)!;
+  test("gain mesurable : étapes, entités et drapeaux sur des missions du chapitre 1 et des chapitres suivants", () => {
+    for (const n of ["Don Gone", "Recalibration", "Swamped", "Gear Up", "Car Service", "Power Play", "Bad Driver!"]) {
+      const g = M(n).g!;
+      expect(g, n).toBeTruthy();
+      expect(g.steps.length, n).toBeGreaterThanOrEqual(3);
+    }
+    // Don Gone : l'arme manquable est nommée (fiche du catalogue), rattachée à son étape, sans texte de la soluce
+    const dg = M("Don Gone").g!.flags.find((f) => f.k === "manquable")!;
+    expect(dg.e?.weapon?.[0]).toContain("Donnie's H&L .38");
+    expect(dg.step).toBe("Leave Key Lento in Donnie's Car");
+    expect(JSON.stringify(M("Don Gone").g)).not.toMatch(/gone for good|trunk/i);
+    // Recalibration : le point de non-retour et le montant de 5 000 $ sont relevés
+    expect(M("Recalibration").g!.flags.map((f) => f.k)).toContain("non-retour");
+    expect(M("Bad Driver!").g!.steps.flatMap((s) => s.$ ?? [])).toContain(20000);
+  });
+  test("faits rattachés au graphe audité (Story) sans changer ses prérequis", () => {
+    const dg = PROG_BY_ID.get("don-gone")!;
+    expect(dg.hub?.guide?.steps.length).toBe(4);
+    expect(dg.prereq!.all).toEqual(["swamped"]);
+  });
+  test("LEONIDA AI : la question décide des faits joints ; mission en cours retrouvée sans être nommée", async () => {
+    const s = st({ lastMission: "Swamped", missionsDone: ["Swamped"], nextMission: "Don Gone", missionInProgress: true, spoilerMode: "off" });
+    const miss = await hubMentions("Qu'est-ce que je ne dois pas rater dans cette mission ?", s);
+    expect(miss[0].line).toContain("mission en cours");
+    expect(miss[0].line).toContain("Donnie's H&L .38");
+    expect(miss[0].line).not.toContain("étapes (titres GTABase)");
+    const how = await hubMentions("Comment je fais Don Gone ?", s);
+    expect(how[0].line).toContain("Collect Donnie's Bag → Pack Donnie's Belongings");
+    // anti-spoiler : mission d'un chapitre non atteint, mode strict → rien de la soluce
+    const far = await hubMentions("Comment je fais Power Play ?", st({ chapter: 1 }));
+    expect(far[0].line).not.toContain("Meet Kordell");
+  });
+});

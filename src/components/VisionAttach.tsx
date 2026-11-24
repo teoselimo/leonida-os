@@ -1,5 +1,6 @@
 "use client";
 
+import { assetUrl } from "@/lib/gtadb";
 import { useEffect, useRef, useState } from "react";
 import { repo, useStore } from "@/lib/store";
 import { regionAt } from "@/lib/geo";
@@ -218,10 +219,21 @@ export function GroundingCard({ g }: { g: NonNullable<CopilotAnswer["grounding"]
       {others.length > 0 && <p className="vgr__sub" data-testid="grounding-others">{id ? "Autre possibilité" : "Candidats"} : {others.map((c) => c.name).join(", ")}</p>}
       {g.toCheck.length > 0 && <p className="vgr__sub">À vérifier : {g.toCheck.join(" ; ")}</p>}
       {g.action && <p className="vgr__act">→ {g.action}</p>}
-      {(g.memory || g.refs > 0) && (
-        <p className="vgr__meta">
+      {(g.photos?.length ?? 0) > 0 && (
+        <div className="vgr__refs" data-testid="grounding-refs">
+          {g.photos!.map((p) => (
+            <figure key={p.landmarkId} className={p.chosen ? "is-chosen" : ""} data-testid={`grounding-ref-${p.landmarkId}`}>
+              <img src={assetUrl(p.file)} alt={`Référence GTADB : ${p.name}`} loading="lazy" decoding="async" width={96} height={54} />
+              <figcaption>{p.chosen ? "✓ " : ""}{p.name}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+      {(g.memory || g.refs > 0 || (g.photoCount ?? 0) > 0) && (
+        <p className="vgr__meta" data-testid="grounding-meta">
           {g.memory === "résumé" ? "Image plus disponible : réponse d'après mon résumé (renvoie la capture pour une nouvelle analyse)." : g.memory === "image" ? "D'après ta capture précédente." : ""}
           {g.refs > 0 ? ` Comparée à ${g.refs} extrait${g.refs > 1 ? "s" : ""} de la carte LEONIDA.` : ""}
+          {(g.photoCount ?? 0) > 0 ? ` Comparée à ${g.photoCount} photo${(g.photoCount ?? 0) > 1 ? "s" : ""} de référence GTADB (CC BY 4.0).` : ""}
         </p>
       )}
     </div>

@@ -59,7 +59,9 @@ test("capture → reconnaissance ancrée (Jason's House, confiance, indices), Ma
   await expect(page.getByTestId("ai-answer").last().locator(".rt li")).toHaveCount(2);
   const calls2 = await page.evaluate(() => (window as unknown as { __calls: Array<{ images: number }> }).__calls);
   expect(calls2).toHaveLength(3);
-  expect(calls2[2].images).toBe(1);
+  // V0.20.1 : le suivi renvoie la capture ET les mêmes photos de référence GTADB que la 1re réponse
+  expect(calls2[2].images).toBe(calls2[1].images);
+  expect(calls2[2].images).toBeGreaterThanOrEqual(1);
   // « montre-moi le lieu » : local, bouton carte
   await page.getByTestId("ai-input").fill("Montre-moi le lieu.");
   await page.getByTestId("ai-send").click();

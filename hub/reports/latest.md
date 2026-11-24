@@ -1,4 +1,4 @@
-# Rapport d'import du Data Hub — 2026-11-24T12:12:37+0100
+# Rapport d'import du Data Hub — 2026-11-24T15:16:33+0100
 
 Mode : hors ligne.
 
@@ -31,7 +31,7 @@ Mode : hors ligne.
 
 ## Changements depuis la dernière exécution
 
-{'firstRun': False, 'added': 0, 'removed': 0, 'changed': 0, 'examplesChanged': [], 'examplesRemoved': []}
+{'firstRun': False, 'added': 0, 'removed': 0, 'changed': 37, 'examplesChanged': ['gtabase:strangers/get-shirleys-rum', 'gtabase:strangers/hit-kingpin-bowling', 'gtabase:strangers/mall-rats', 'gtabase:strangers/search-for-the-skunk-ape', 'gtabase:strangers/thats-where-the-money-is', 'gtabase:strangers/join-a-street-race', 'gtabase:strangers/dodo-rise', 'gtabase:strangers/hometown-heroes', 'gtabase:strangers/sisters-of-the-sea', 'gtabase:missions/bird-in-the-hand', 'gtabase:missions/breakfast-run', 'gtabase:missions/buck-me', 'gtabase:missions/buy-flowers', 'gtabase:missions/clean-up-after-donnie', 'gtabase:missions/clock-out'], 'examplesRemoved': []}
 
 ## Liaisons aux entités LEONIDA
 
@@ -80,7 +80,7 @@ Mode : hors ligne.
 
 ## Bundles
 
-- src/data/hub/missions.json : 85 Ko
+- src/data/hub/missions.json : 142 Ko
 - public/data/hub/vehicles.json : 221 Ko
 - public/data/hub/catalog.json : 154 Ko
 - public/data/hub/places.json : 51 Ko

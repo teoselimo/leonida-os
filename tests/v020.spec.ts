@@ -32,8 +32,11 @@ test("Garage dans le Guide (pas de sixième onglet) : catalogue, recherche, filt
   const loadMs = Date.now() - t0;
   expect(loadMs).toBeLessThan(4000);
   await expect(page.getByTestId("garage-count")).toContainText(/\d{3} véhicules/);
-  // aucune image GTABase : vignettes générées, jamais de balise <img> vers un site tiers
-  await expect(page.getByTestId("garage-grid").locator("img")).toHaveCount(0);
+  // V0.20.1 : images exactes servies par l'Artifact lui-même en planches (jamais un lien vers un site tiers)
+  expect(await page.getByTestId("garage-grid").locator(".gv__sprite").evaluateAll((els) => els.every((e) => (e as HTMLElement).style.backgroundImage.includes("/data/hub/vatlas/")))).toBeTruthy();
+  const srcs = await page.getByTestId("garage-grid").locator("img").evaluateAll((els) => els.map((e) => (e as HTMLImageElement).src));
+  expect(srcs.every((u) => u.startsWith("data:image/"))).toBeTruthy(); // seules les photos du joueur sont des <img>
+  expect(srcs.every((u) => !u.includes("gtabase.com"))).toBeTruthy();
   await page.getByTestId("garage-search").fill("sultan");
   await expect(page.getByTestId("garage-grid").locator(".gv__n").filter({ hasText: /^Sultan$/ })).toHaveCount(1);
   await page.getByTestId("garage-maker").selectOption("Emperor");

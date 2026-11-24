@@ -233,6 +233,31 @@ for r in gb:
                 unresolved += 1
 report["links"]["relations non résolues (page absente du sitemap)"] = unresolved
 
+# ── 4c. Soluces GTABase → faits structurés par mission (V0.20.1) ─────────
+from adapters import guides as A_GUIDES
+gnames = A_GUIDES.name_dicts(gb, places, L.get("knowledge", []))
+url_to_name = {}
+for r in gb:
+    for p in r["prov"]:
+        url_to_name[p["url"].replace("https://www.gtabase.com", "").rstrip("/")] = r["name"]
+gstat = collections.Counter()
+for r in gb:
+    if r["type"] not in ("mission", "stranger", "activity"):
+        continue
+    for p in r["prov"]:
+        cp = cache_path("gtabase", p["url"])
+        if not os.path.exists(cp):
+            continue
+        g = A_GUIDES.extract(open(cp, encoding="utf-8").read(), gnames, url_to_name, r["name"])
+        if g and (g["steps"] or g["flags"]):
+            r["fields"]["guide"] = g
+            gstat["missions avec soluce structurée"] += 1
+            gstat["étapes"] += len(g["steps"])
+            gstat["faits (manquable, choix, conseil, non-retour)"] += len(g["flags"])
+            gstat["entités citées"] += sum(len(v) for st in g["steps"] for v in st.get("e", {}).values())
+            break
+report["guides"] = dict(gstat)
+
 # ── 5. Changements depuis la dernière exécution ─────────────────────────
 import diff
 prev = {}

@@ -101,6 +101,9 @@ export interface CopilotAnswer {
     /** Extraits de la carte LEONIDA joints pour comparaison. */
     refs: number;
     action: string | null;
+    /** V0.20.1 · photos de référence GTADB réellement envoyées au modèle avec la capture. */
+    photoCount?: number;
+    photos?: Array<{ landmarkId: string; name: string; file: string; chosen: boolean }>;
   };
   /** Recherche web effectuée pour cette réponse (null = non tentée). */
   web?: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null;
