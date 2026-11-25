@@ -13,6 +13,18 @@
 | Tests sur le code final | Hub Python 39/39. Playwright standard 559 réussis, 4 ignorés, 0 échec, dont 242 unitaires. Artifact ciblé 90/90. |
 | Mis à jour le | 25/11/2026, par Claude (publication V0.21) |
 
+## Branche en revue — issue #19 (26/11/2026, Claude)
+
+**`claude/chapter2-home-situation`**, base `experiment/claude-artifact@2e1577a` (V0.21 publiée), code `749ef42`. **Non fusionnée, non publiée.** Les lignes ci-dessus décrivent toujours l'intégration et l'Artifact en service.
+
+- Accueil du chapitre 2 sans mission choisie : en-tête « Ta situation · Chapitre 2 · Starlet Motel » et carte en cinq niveaux (confirmé par le joueur · raconté au copilote, à confirmer · accessible selon les sources · condition à remplir dans le jeu · objectif du chapitre plus tard), boutons « Mettre ma progression à jour » / « Que faire maintenant ? ». Les tâches racontées sont relues dans l'historique du chat (`leonida-os/ai-history/v2`, déjà existant) : rien n'est écrit dans `leonida-os/progress/v1`.
+- 15 000 $ : objectif du chapitre tant que Checking Out n'est pas la prochaine mission ; McKittrick Farm (affiche de Kyle) n'est plus « disponible ». Conditions limitées au chapitre 2 (au chapitre 1, une condition nomme une mission future).
+- Continuité : après « Ambulance Chaser terminée », rappel des provisions et de la gérante racontées, sans écriture ; propositions à confirmer. Le vrai Claude reçoit la ligne « tâches racontées, non confirmées ».
+- Nouveau module `src/lib/motel.ts` ; aucun changement de schéma, du graphe, de `progress.ts`, du Hub ou des données (`git diff` vide sur `hub/`, `src/data/`, `public/data/`, `types.ts`, `store.tsx`).
+- Tests : suite complète **581 réussis, 0 échec, 4 ignorés** (25,9 min, `749ef42`, Claude simulé) dont `tests/v0211.unit.spec.ts` (7) et `tests/v0211.spec.ts` (5 × iPhone, iPad, WebKit) ; Python 39 / 39 ; `verify_manifest.py` OK. `tests/v018.spec.ts` adapté (dernière étape lue dans la carte de situation).
+- Captures avant/après (Claude simulé) : `docs/v0211-iphone-avant-apres.jpg`, `docs/v0211-ipad-avant-apres.jpg`.
+- Avant publication : revue, intégration par fusion, version affichée à fixer (le code affiche encore V0.21), build Artifact + parcours ciblés, puis essai iPhone réel par Théo.
+
 ## Publication V0.21 (25/11/2026, Claude)
 
 - HEAD vérifié avant publication : `ead6aa8` (seule la documentation diffère de `7f12e5a`). Build reconstruit depuis `7f12e5a` dans un arbre de travail propre : `node scripts/artifact-build.mjs` → 472 fichiers publiables, 62 119 737 octets ; `python3 hub/verify_manifest.py` et `--export out-artifact` : contrat v1 vérifié ; `data/hub/manifest.json` = `17fbee0d…d7ab` (identique à l'attendu).
