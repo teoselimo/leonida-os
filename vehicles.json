@@ -406,6 +406,97 @@
   ]
  },
  {
+  "id": "v-bravado-gauntlet-custom-declasse",
+  "type": "vehicle",
+  "name": "'69 Bravado Gauntlet Custom Declasse",
+  "make": "Bravado",
+  "model": "Gauntlet Custom Declasse",
+  "year": "69",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "To add the vehicles to the Progress Menu you need to scan them with the Waink App (hold ) or simply drive them one time.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-all-muscle-cars",
+      "quote": "To add the vehicles to the Progress Menu you need to scan them with the Waink App (hold ) or simply drive them one time."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-all-muscle-cars",
+    "title": "GTA 6 all muscle cars",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-declasse-tulip",
   "type": "vehicle",
   "name": "'72 Declasse Tulip",
@@ -1350,7 +1441,7 @@
   "model": "Paragon",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -1359,15 +1450,25 @@
   },
   "location": {
    "text": {
-    "value": "The Banana Hole Main Bar, Shore Drive; reported evening sighting.",
+    "value": "A Paragon can be found inside the car dealership located in Bayside west of Dynamix Fitness.",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Paragon can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Paragon can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "The Banana Hole Main Bar, Shore Drive; reported evening sighting."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -1375,10 +1476,15 @@
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -1424,18 +1530,34 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -1443,6 +1565,125 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 4",
+     "localisation : text → zone"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-benefactor-dubsta",
+  "type": "vehicle",
+  "name": "Benefactor Dubsta",
+  "make": "Benefactor",
+  "model": "Dubsta",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Dubstas can be found outside the car dealership located in Bayside west of Dynamix Fitness.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Dubstas can be found outside the car dealership located in Bayside west of Dynamix Fitness."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Dubstas can be found outside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx"
     ]
    }
   ]
@@ -1640,7 +1881,7 @@
   "model": "Banshee",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -1649,15 +1890,25 @@
   },
   "location": {
    "text": {
-    "value": "Sweetbay Inn, East Buckley Drive; reported late-night sighting.",
+    "value": "A Banshee can be found inside the center of the three hexagonal showroom buildings in the northeast corner of Southside.",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Banshee can be found inside the center of the three hexagonal showroom buildings in the northeast corner of Southside."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Banshee can be found inside the center of the three hexagonal showroom buildings in the northeast corner of Southside."
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "Sweetbay Inn, East Buckley Drive; reported late-night sighting."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -1803,17 +2054,31 @@
     "title": "GTA 6 car dealership locations",
     "official": false,
     "readAt": "2026-11-23T03:06:06.814Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-23T03:06:06.814Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -1829,6 +2094,14 @@
     "changes": [
      "preuves : 2 → 3",
      "localisation : text → zone"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 3 → 5"
     ]
    }
   ]
@@ -1976,15 +2249,25 @@
   },
   "location": {
    "text": {
-    "value": "M7 junkyard off Galerina Street, east of Boone Speedway.",
+    "value": "Location: Mariana County > Capri Reward: $9,200",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Mariana County > Capri Reward: $9,200"
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Mariana County > Capri Reward: $9,200"
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "M7 junkyard off Galerina Street, east of Boone Speedway."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -1997,10 +2280,15 @@
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -2069,19 +2357,34 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -2090,6 +2393,236 @@
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 5",
+     "localisation : text → zone"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-jubilee",
+  "type": "vehicle",
+  "name": "Buckingham Jubilee",
+  "make": "Buckingham",
+  "model": "Jubilee",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "A Jubilee can be found inside the car dealership located in Bayside west of Dynamix Fitness.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Jubilee can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Jubilee can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-windsor-drop",
+  "type": "vehicle",
+  "name": "Buckingham Windsor Drop",
+  "make": "Buckingham",
+  "model": "Windsor Drop",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx"
     ]
    }
   ]
@@ -2558,6 +3091,210 @@
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-mamba-gt",
+  "type": "vehicle",
+  "name": "Declasse Mamba GT",
+  "make": "Declasse",
+  "model": "Mamba GT",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Then you can register them at Moses' garage in Port Gellhorn.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "Then you can register them at Moses' garage in Port Gellhorn."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "Then you can register them at Moses' garage in Port Gellhorn."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
+     }
+    ]
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 2,
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": {
+    "value": "Main Mission Moses",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Later in Chapter 2, during Main Mission Moses (Take A Vehicle to Moses) , you unlock the ability to register new vehicles."
+     }
+    ],
+    "conflicts": []
+   },
+   "early": true,
+   "keyCloner": null,
+   "tracker": {
+    "value": "advanced",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "After you meet Moses in Chapter 2 (automatic from story), you can bring him any car that doesn't have a tracker and click \"Register\" in his garage."
+     }
+    ]
+   },
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Later in Chapter 2, during Main Mission Moses (Take A Vehicle to Moses) , you unlock the ability to register new vehicles."
+     }
+    ]
+   },
+   "rule": null,
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+    "quote": "Register Advanced Tracker Cars"
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "quote": "No Tracker Cars = Finish Chapter 2 – Main Mission: Moses (Take A Vehicle to Moses) ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "quote": "Standard Tracker Cars = Automatically unlocked early in Chapter 3, after the first few main missions in the Chapter you can register Standard Tracker Cars at any Pay 'n' Spray ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "quote": "Advanced Tracker Cars = Finish Randy's Missions (the first one is a Chapter 3 Main Mission): Clonin’ Keys, Makin’ GS (Steal the Zorrusso for Randy) > Randy's Wish List (steal cars for Randy) > Dale Mamba (Steal the De…"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+    "quote": "Chapter 1 – You can't change your personal car yet"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "title": "GTA 6 How to Register Advanced Tracker Cars",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "title": "GTA 6 how to register advanced tracker cars",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+    "title": "GTA 6 how to get new personal car",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "méthode de conservation"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx",
+     "source : PowerPyx"
     ]
    }
   ]
@@ -3334,14 +4071,14 @@
   ]
  },
  {
-  "id": "v-grotti-itali-rsx",
+  "id": "v-gallivanter-baller-st-d",
   "type": "vehicle",
-  "name": "Grotti Itali RSX",
-  "make": "Grotti",
-  "model": "Itali RSX",
+  "name": "Gallivanter Baller ST-D",
+  "make": "Gallivanter",
+  "model": "Baller ST-D",
   "year": null,
   "aliases": null,
-  "kind": "news",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -3349,11 +4086,142 @@
    "support": []
   },
   "location": {
+   "text": {
+    "value": "Location: Vice Beach > Rialto Islands (Casanova Island) Reward: $20,200",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice Beach > Rialto Islands (Casanova Island) Reward: $20,200"
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice Beach > Rialto Islands (Casanova Island) Reward: $20,200"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
    "text": null,
-   "district": null,
-   "regionId": null,
-   "precision": "none",
-   "zone": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-itali-rsx",
+  "type": "vehicle",
+  "name": "Grotti Itali RSX",
+  "make": "Grotti",
+  "model": "Itali RSX",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "An Itali RSX can be found inside the car dealership located in Bayside west of Dynamix Fitness.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "An Itali RSX can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "An Itali RSX can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -3392,24 +4260,48 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "emplacement",
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 3",
+     "localisation : none → zone"
     ]
    }
   ]
@@ -3684,7 +4576,7 @@
   "variant": null,
   "edition": {
    "exclusive": "ultimate",
-   "status": "reported",
+   "status": "confirmed",
    "support": [
     {
      "sourceName": "GamesRadar+",
@@ -3695,15 +4587,26 @@
   },
   "location": {
    "text": {
-    "value": "The Ocelot Jugular can be found around Vice City, particularly at lively hotspots after dark, but there's a guaranteed spawn in Belville, parked in a garage in a cul-de-sac as marked on the map above.",
+    "value": "A Jugular can be found in a locked garage beside a house in Belville, north of Peewees – Belville.",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Jugular can be found in a locked garage beside a house in Belville, north of Peewees – Belville."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Jugular can be found in a locked garage beside a house in Belville, north of Peewees – Belville."
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
       "quote": "The Ocelot Jugular can be found around Vice City, particularly at lively hotspots after dark, but there's a guaranteed spawn in Belville, parked in a garage in a cul-de-sac as marked on the map above."
      }
-    ],
-    "conflicts": []
+    ]
    },
    "district": "Belville",
    "regionId": "ambrosia",
@@ -3764,12 +4667,27 @@
     "title": "How to get the GTA 6 Ocelot Jugular",
     "official": false,
     "readAt": "2026-11-25T13:47:47.494Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Exclusivité Ultimate recoupée.",
    "Zone de recherche autour de Belville (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -3777,13 +4695,22 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GamesRadar+"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 3",
+     "édition : ultimate (reported) → ultimate (confirmed)"
     ]
    }
   ]
@@ -3905,66 +4832,126 @@
   "year": null,
   "aliases": null,
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "purple",
+   "support": [
+    {
+     "sourceName": "PC Gamer",
+     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+     "quote": "Turn right, then left, and make your way up to the seventh level of the multi-story car park—the purple Pegassi Infernus is easy to recognise since it's the only sports car in there."
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
-   "exclusive": null,
-   "status": "none",
-   "support": []
+   "exclusive": "ultimate",
+   "status": "confirmed",
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+     "quote": "How to unlock GTA 6 Ultimate Edition Content and when you can use each item"
+    }
+   ]
   },
   "location": {
    "text": {
-    "value": "Police-station parking structure, NW 9th Street, level seven.",
+    "value": "Location: Vice City > Crosstown Reward: $15,600",
     "support": [
      {
-      "sourceName": "GTA Xtreme (sitemap)",
-      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-      "quote": "Police-station parking structure, NW 9th Street, level seven."
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice City > Crosstown Reward: $15,600"
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice City > Crosstown Reward: $15,600"
      }
     ],
     "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Police-station parking structure, NW 9th Street, level seven."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Parkhaus der Polizeistation, NW 9th Street, Ebene sieben."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+      "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+      "quote": "There's a Pegassi Infernus located on the 8th level of the police parking lot in Crosstown, Vice City."
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Crosstown",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -636,
+    "y": 1157,
+    "radius": 487,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+      "quote": "There should be no one around, so just hack into the car with the GTA 6 key cloner and drive it to the bottom level."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
    "alarm": null
   },
   "keep": {
    "text": null,
-   "rule": {
-    "chapter": 2,
-    "where": "garage de Moses",
-    "tracker": null,
-    "source": {
-     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
-     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
-     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
-    }
-   },
-   "mode": "register"
+   "rule": null,
+   "mode": "yes"
   },
   "steps": [
    {
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Use the elevator to get inside."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Bring it back in pristine condition and you'll net 15k for the trouble."
    }
   ],
   "risks": [
@@ -3972,6 +4959,21 @@
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
     "quote": "Police-station parking structure, NW 9th Street, level seven."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Stealing the Pegassi Infernus in GTA 6 can be quite tricky, considering it's being held in the police department lockup, the building to the west of the police station in southwest Crosstown."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Now you just need to drive down a few levels to exit via the police station parking lot—which I'd recommend—or keep going all the way down to exit at the bottom of the car park."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Remember, you need to drive fast to stop the tracker going off, and if you hear it beeping, you should speed up to prevent it pinging the cops."
    }
   ],
   "price": null,
@@ -3990,19 +4992,47 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "title": "How to steal the Pegassi Infernus in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+    "title": "GTA 6 Pegassi Infernus location",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "3 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Exclusivité Ultimate recoupée.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Crosstown (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4010,6 +5040,16 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 2 → 6",
+     "localisation : text → zone",
+     "édition : aucune (none) → ultimate (confirmed)"
     ]
    }
   ]
@@ -4093,7 +5133,7 @@
   "model": "Tempesta",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -4102,15 +5142,25 @@
   },
   "location": {
    "text": {
-    "value": "NE 3rd Street; random repossession encounter.",
+    "value": "Location: Vice City > Rialto Islands (Vespucci Island) Reward: $16,300",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice City > Rialto Islands (Vespucci Island) Reward: $16,300"
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice City > Rialto Islands (Vespucci Island) Reward: $16,300"
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "NE 3rd Street; random repossession encounter."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -4123,10 +5173,15 @@
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -4179,18 +5234,34 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4199,6 +5270,14 @@
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 5",
+     "localisation : text → zone"
     ]
    }
   ]
@@ -4211,7 +5290,7 @@
   "model": "Toros",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -4220,15 +5299,25 @@
   },
   "location": {
    "text": {
-    "value": "Outside Pegassi Residences, Bayside Drive; reported evening sighting.",
+    "value": "A Toros can be found inside the center of the three hexagonal showroom buildings in the northeast corner of Southside.",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Toros can be found inside the center of the three hexagonal showroom buildings in the northeast corner of Southside."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "A Toros can be found inside the center of the three hexagonal showroom buildings in the northeast corner of Southside."
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "Outside Pegassi Residences, Bayside Drive; reported evening sighting."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -4236,17 +5325,30 @@
      }
     ]
    },
-   "district": "Bayside",
-   "regionId": "vicecity",
+   "district": "Southside",
+   "regionId": "grassrivers",
    "precision": "zone",
    "zone": {
-    "x": -349,
-    "y": 1041,
-    "radius": 456,
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Bayside",
+     "text": "Outside Pegassi Residences, Bayside Drive; reported evening sighting.",
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars"
+    },
+    {
+     "district": "Bayside",
+     "text": "Außerhalb der Pegassi Residences, Bayside Drive; berichtete über eine abendliche Sichtung.",
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -4297,19 +5399,34 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4318,6 +5435,13 @@
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 5"
     ]
    }
   ]
@@ -4339,15 +5463,25 @@
   },
   "location": {
    "text": {
-    "value": "Villa garage on Flamingo Parkway, east of Belville.",
+    "value": "It is located at a mansion on the southeastern tip of Waning Sands.",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "It is located at a mansion on the southeastern tip of Waning Sands."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "It is located at a mansion on the southeastern tip of Waning Sands."
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "Villa garage on Flamingo Parkway, east of Belville."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -4370,7 +5504,20 @@
     "widened": true
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Waning Sands",
+     "text": "It is located at a mansion on the southeastern tip of Waning Sands.",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
+    },
+    {
+     "district": "Waning Sands",
+     "text": "It is located at a mansion on the southeastern tip of Waning Sands.",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -4396,7 +5543,13 @@
    },
    "mode": "register"
   },
-  "steps": [],
+  "steps": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "quote": "Drive it out the front gate and over to Randy to deliver it."
+   }
+  ],
   "risks": [],
   "price": null,
   "media": null,
@@ -4421,11 +5574,25 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche élargie autour de Belville (repères de la carte communautaire), pas un point exact."
   ],
@@ -4434,7 +5601,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4443,6 +5610,13 @@
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 5"
     ]
    }
   ]
@@ -4580,7 +5754,7 @@
   "model": "Growler",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -4589,15 +5763,25 @@
   },
   "location": {
    "text": {
-    "value": "Multistorey parking structure on Fig Street; reported afternoon sighting.",
+    "value": "Growlers can be found inside and around the north of the three hexagonal showroom buildings in the northeast corner of Southside.",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Growlers can be found inside and around the north of the three hexagonal showroom buildings in the northeast corner of Southside."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Growlers can be found inside and around the north of the three hexagonal showroom buildings in the northeast corner of Southside."
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "Multistorey parking structure on Fig Street; reported afternoon sighting."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -4605,10 +5789,15 @@
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -4660,18 +5849,34 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4679,6 +5884,14 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 4",
+     "localisation : text → zone"
     ]
    }
   ]
@@ -4900,15 +6113,25 @@
   },
   "location": {
    "text": {
-    "value": "Mansion garage on Palladia Lane, Peacock Estates.",
+    "value": "Location: Vice Beach > Rialto Islands (Vespucci Island) Reward: $20,200",
     "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice Beach > Rialto Islands (Vespucci Island) Reward: $20,200"
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice Beach > Rialto Islands (Vespucci Island) Reward: $20,200"
+     }
+    ],
+    "conflicts": [
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
       "quote": "Mansion garage on Palladia Lane, Peacock Estates."
-     }
-    ],
-    "conflicts": [
+     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
@@ -4916,10 +6139,15 @@
      }
     ]
    },
-   "district": null,
-   "regionId": null,
-   "precision": "text",
-   "zone": null,
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -4971,19 +6199,34 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois."
+   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4991,6 +6234,14 @@
     "changes": [
      "source : GTA Xtreme (sitemap)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 4",
+     "localisation : text → zone"
     ]
    }
   ]
@@ -6438,6 +7689,140 @@
     "changes": [
      "fiabilité : reported → confirmed",
      "preuves : 1 → 2"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-western-searing-zombie-bobber",
+  "type": "vehicle",
+  "name": "Western Searing Zombie Bobber",
+  "make": "Western",
+  "model": "Searing Zombie Bobber",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "I found it at the Farm Fix Meth Lab, a Final Chapter hideout north of Belville.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-throttler-verro",
+      "quote": "I found it at the Farm Fix Meth Lab, a Final Chapter hideout north of Belville."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Belville",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -1375,
+    "y": 2897,
+    "radius": 653,
+    "widened": true
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": true,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Other Guides : GTA 6 LCC Monarch Avarus – GTA 6 Ride Free H&L .38 – GTA 6 Darknite Drifter – GTA 6 Final Chapter KVGA-12 – GTA 6 Gutterball Moreland 850 – GTA 6 Firebug Dominator – GTA 6 Scrapper VF5C – How to Make Money in GTA 6 Chapter 2 – GTA 6 Missing Persons Quest – GTA 6 Teddy Bear Factory – Free SM-69 Sniper Rifle – Kingfishers W-22 Silent Rifle – How to Make Money Early in GTA 6 – How to Register Cars in GTA 6 – GTA 6 Paul Walker Car – GTA 6 Plane Crash – 69 GTA 6 Beginner Tips – GTA 6 Unwanted Attention Walkthrough – GTA 6 Strangers and Freaks – GTA 6 Robberies Guide – GTA 6 100% Completion Checklist – GTA 6 Trophy List – All 80 GTA 6 Challenges – How to Make Money in GTA 6 – All GTA 6 Cheat Codes – GTA 6 Police Wanted Level Explained",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-throttler-verro",
+      "quote": "Other Guides : GTA 6 LCC Monarch Avarus – GTA 6 Ride Free H&L .38 – GTA 6 Darknite Drifter – GTA 6 Final Chapter KVGA-12 – GTA 6 Gutterball Moreland 850 – GTA 6 Firebug Dominator – GTA 6 Scrapper VF5C – How to Make Mo…"
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-throttler-verro",
+    "quote": "Drive to the Farm Fix Meth Lab, north of Belville."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-throttler-verro",
+    "quote": "Go upstairs to the lounge and take out the bikers there."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-throttler-verro",
+    "quote": "Open the weapon case on the counter under the American flag."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-throttler-verro",
+    "quote": "Open the safe in the office with 2121."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-throttler-verro",
+    "quote": "GTA 6 Police Wanted Level Explained"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-throttler-verro",
+    "title": "GTA 6 Throttler Verro: Unique Shotgun Location and Stats",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche élargie autour de Belville (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
