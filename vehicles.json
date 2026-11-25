@@ -406,6 +406,184 @@
   ]
  },
  {
+  "id": "v-declasse-tulip",
+  "type": "vehicle",
+  "name": "'72 Declasse Tulip",
+  "make": "Declasse",
+  "model": "Tulip",
+  "year": "72",
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+    "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-annis-elegy",
+  "type": "vehicle",
+  "name": "'90 Annis Elegy",
+  "make": "Annis",
+  "model": "Elegy",
+  "year": "90",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Brian's Nissan Skyline GT-R GTA 6 car: Annis '90 Elegy Where to find it: Drifter Elegy at Gellhorn International Raceway, Chameleon Elegy in Ocean Beach Standout?: Regular car, plus 5 standout versions",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "Brian's Nissan Skyline GT-R GTA 6 car: Annis '90 Elegy Where to find it: Drifter Elegy at Gellhorn International Raceway, Chameleon Elegy in Ocean Beach Standout?: Regular car, plus 5 standout versions"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+    "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-grotti-cheetah",
   "type": "vehicle",
   "name": "'95 Grotti Cheetah",
@@ -632,6 +810,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Fahre westlich von Vice Beach über den Damm durch die Rialto Islands."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "Brian's 1995 Mitsubishi Eclipse GTA 6 car: Maibatsu '97 Penumbra FF Where to find it: Villa garage on Vespucci Island, Vice City Standout?: No"
      }
     ]
    },
@@ -781,6 +964,13 @@
     "title": "GTA 6 — Hidden cars",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+    "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
    }
   ],
   "reliability": "confirmed",
@@ -793,7 +983,7 @@
    "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-24T20:43:30.622Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -834,6 +1024,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 6 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 5"
     ]
    }
   ]
@@ -1637,6 +1834,132 @@
   ]
  },
  {
+  "id": "v-bravado-driveshaft-gauntlet",
+  "type": "vehicle",
+  "name": "Bravado DriveShaft Gauntlet",
+  "make": "Bravado",
+  "model": "DriveShaft Gauntlet",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "black",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+     "quote": "Repair it and respray it black at the Pay 'n' Spray in Grayson, and it looks just like Dom's car."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Dom's 1970 Dodge Charger R/T GTA 6 car: Bravado DriveShaft Gauntlet Where to find it: Behind Sid Thompson's house in Grayson Standout?: Yes, DriveShaft Famous set",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "Dom's 1970 Dodge Charger R/T GTA 6 car: Bravado DriveShaft Gauntlet Where to find it: Behind Sid Thompson's house in Grayson Standout?: Yes, DriveShaft Famous set"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": {
+    "value": false,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "It has no alarm and no immobilizer, so you just get in and drive."
+     }
+    ],
+    "conflicts": []
+   }
+  },
+  "keep": {
+   "text": {
+    "value": "Repair it and respray it black at the Pay 'n' Spray in Grayson, and it looks just like Dom's car.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "Repair it and respray it black at the Pay 'n' Spray in Grayson, and it looks just like Dom's car."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+    "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-bravado-gauntlet-hellfire",
   "type": "vehicle",
   "name": "Bravado Gauntlet Hellfire",
@@ -1887,6 +2210,159 @@
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-gin-tulip",
+  "type": "vehicle",
+  "name": "Declasse Gin Tulip",
+  "make": "Declasse",
+  "model": "Gin Tulip",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "pink",
+   "support": [
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+     "quote": "The pink car is to the left as you come in."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Look for the yellow Janjak's Garage robbery marker on the southwest edge of La Perle.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+      "quote": "Look for the yellow Janjak's Garage robbery marker on the southwest edge of La Perle."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "La Perle",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -968,
+    "y": 1430,
+    "radius": 361,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": {
+    "value": "Afternoon Delight",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+      "quote": "For another robbery with a safe and a getaway vehicle, try the Biker Hideout after Afternoon Delight."
+     }
+    ],
+    "conflicts": []
+   },
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+    "quote": "Enter through the south alley"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+    "quote": "Go around to the south side and look for the narrow alley entrance."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+    "quote": "Take the San4San KZ-59 from the open case next to the TV."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+    "quote": "Open a gate before taking the pink car"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+    "quote": "Use the east exit."
+   }
+  ],
+  "risks": [],
+  "price": {
+   "value": 11300,
+   "support": [
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+     "quote": "The map showed a Take Value of GTA$11,300 to GTA$16,800 in our run."
+    }
+   ],
+   "conflicts": []
+  },
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-janjaks-garage-robbery-guide-f2fb",
+    "title": "GTA 6 Janjak's Garage Robbery Guide to the Safe Code, Rifle and Car",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de La Perle (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA BOOM"
     ]
    }
   ]
@@ -2647,6 +3123,119 @@
   ]
  },
  {
+  "id": "v-emperor-sultan",
+  "type": "vehicle",
+  "name": "Emperor Sultan",
+  "make": "Emperor",
+  "model": "Sultan",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Brian's Mitsubishi Lancer Evolution GTA 6 car: Emperor Sultan Where to find it: Moses' Sultan, a gift from Moses in Port Gellhorn Standout?: Regular car, plus the Moses' Sultan standout",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "Brian's Mitsubishi Lancer Evolution GTA 6 car: Emperor Sultan Where to find it: Moses' Sultan, a gift from Moses in Port Gellhorn Standout?: Regular car, plus the Moses' Sultan standout"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "You can sell it right there or register it and keep it.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+      "quote": "You can sell it right there or register it and keep it."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+    "quote": "Open the smaller garage next to his main one."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fast-and-furious-cars",
+    "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-garage-find-shore-court",
   "type": "garage",
   "name": "Find Shore Court Garage",
@@ -3067,6 +3656,134 @@
     "reason": "Détection automatique",
     "changes": [
      "source : PC Gamer"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ocelot-jugular",
+  "type": "vehicle",
+  "name": "Ocelot Jugular",
+  "make": "Ocelot",
+  "model": "Jugular",
+  "year": null,
+  "aliases": {
+   "value": [
+    "mitsubishi-eclipse"
+   ],
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+     "quote": "While we're on the topic of GTA 6 cars , make sure you also go take a look at Paul Walker's GTA 6 car , inspired by his (or Brian O'Conner's) Mitsubishi Eclipse in the original 1995 Fast and Furious movie."
+    }
+   ],
+   "conflicts": []
+  },
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+     "quote": "How to unlock GTA 6 Ultimate Edition Content and when you can use each item"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "The Ocelot Jugular can be found around Vice City, particularly at lively hotspots after dark, but there's a guaranteed spawn in Belville, parked in a garage in a cul-de-sac as marked on the map above.",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+      "quote": "The Ocelot Jugular can be found around Vice City, particularly at lively hotspots after dark, but there's a guaranteed spawn in Belville, parked in a garage in a cul-de-sac as marked on the map above."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Belville",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -1375,
+    "y": 2897,
+    "radius": 408,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Even better, it respawns the every morning, meaning you can go and take one for yourself, too, provided you've got the cash to pay for registration.",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+      "quote": "Even better, it respawns the every morning, meaning you can go and take one for yourself, too, provided you've got the cash to pay for registration."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+    "quote": "GTA 6 Wanted Levels and Heat system explained"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+    "quote": "How to get a Six-Star Wanted Level in GTA 6"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
+    "title": "How to get the GTA 6 Ocelot Jugular",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Belville (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GamesRadar+"
     ]
    }
   ]
@@ -4350,6 +5067,107 @@
   ]
  },
  {
+  "id": "v-progen-black-widow-emerus",
+  "type": "vehicle",
+  "name": "Progen Black Widow Emerus",
+  "make": "Progen",
+  "model": "Black Widow Emerus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "This one is found inside a shipping container at the location in the Vice City County Dockyard.",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "This one is found inside a shipping container at the location in the Vice City County Dockyard."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": {
+   "value": 29900,
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+     "quote": "This car is actually unlocked and deactivated – though registering it will cost you $29,900."
+    }
+   ],
+   "conflicts": []
+  },
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "title": "How to get the fastest cars in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GamesRadar+"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-progen-emerus",
   "type": "vehicle",
   "name": "Progen Emerus",
@@ -4418,24 +5236,242 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "title": "How to get the fastest cars in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu."
+   "2 sources, mais sans accord vérifiable sur l'emplacement."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-progen-honeycomb-emerus",
+  "type": "vehicle",
+  "name": "Progen Honeycomb Emerus",
+  "make": "Progen",
+  "model": "Honeycomb Emerus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "You can find the Honeycomb Emerus in Vice City, in a parking lot outside a dealership and car rental spot across from the Hospital.",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "You can find the Honeycomb Emerus in Vice City, in a parking lot outside a dealership and car rental spot across from the Hospital."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "This one is very easy to access – it's basically just outside – but it does require a Key Cloner, and it has Advanced Security and Trackers."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "title": "How to get the fastest cars in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GamesRadar+"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-progen-seaspray-emerus",
+  "type": "vehicle",
+  "name": "Progen Seaspray Emerus",
+  "make": "Progen",
+  "model": "Seaspray Emerus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "You can find the Seaspray inside a garage in Northwest Capri.",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "You can find the Seaspray inside a garage in Northwest Capri."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "title": "How to get the fastest cars in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GamesRadar+"
     ]
    }
   ]
@@ -4734,6 +5770,87 @@
     "reason": "Détection automatique",
     "changes": [
      "source : PowerPyx (sitemap, guides GTA 6 véhicules)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-truffade-keep",
+  "type": "vehicle",
+  "name": "Truffade Keep",
+  "make": "Truffade",
+  "model": "Keep",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "title": "How to get the fastest cars in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T13:47:47.494Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GamesRadar+"
     ]
    }
   ]
