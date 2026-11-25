@@ -6,12 +6,20 @@
 
 | | |
 | --- | --- |
-| Version en cours | **V0.20.2** (`src/lib/version.ts`) — détail `docs/V0.20.2.md` (audit chapitre 2 + section « Intégration ») |
+| Version en intégration | **V0.20.2** (`src/lib/version.ts`) — détail `docs/V0.20.2.md` (audit chapitre 2 + section « Intégration ») |
 | Branche d'intégration | `experiment/claude-artifact` (PR brouillon #11 ; ne jamais fusionner vers `main` sans Théo) |
 | Dernier commit vérifié | `2a76974` (code final V0.20.2 : fusion `e743e5a` de `codex/chapter2-story@7595d77` + correctif `2a76974`) |
 | Artifact publié | version `1795608546-b457` (vérifiée : 472 fichiers, empreintes identiques au build, `tiles/3` = 30) — https://claude.ai/artifact/AdLjrvTSQdxHGewPtWa8YS (publication : Claude seulement) |
 | Dernier passage complet des tests | **559 réussis, 0 échec, 4 ignorés** (24,9 min, sur `2a76974`, Claude simulé) ; unitaires 242 / 242 ; pipeline Python 21 / 21 |
 | Mis à jour le | 25/11/2026, par Claude |
+
+## Issue #17 — Data Engine V0.21 prêt pour revue
+
+**Publication en attente** sur `codex/data-engine-v1-fix`. Base publiée `7eed616`, portage sélectif depuis `2bb83a8`, commit fonctionnel `43a0903`. La version en service est celle du tableau. [Mesures et validation](DATA-ENGINE.md) · [Note V0.21](V0.21.md)
+
+Validation du portage : 39 tests Python, TypeScript strict, builds standard et Artifact, 242 tests unitaires de l’app et 42 parcours ciblés réussis. Le package local contient 472 fichiers publiables sur 512. Le référentiel des missions et ses 30 fiches du chapitre 2 sont identiques à la V0.20.2 à l’octet près. MapGenie a renvoyé HTTP 403. Les mesures de performance sont des médianes locales sur trois essais par configuration.
+
+Claude peut reprendre sur cette branche, relancer `python3 -m unittest discover -s hub/tests` et vérifier une génération isolée avec `python3 hub/snapshot.py --output /tmp/leonida-revue`. Le build standard et le conditionnement local de l’Artifact vérifient le contrat v1. Le rapport signale la relation Maverick rejetée avec sa provenance. La collecte intégrale GTABase en ligne reste à effectuer sur un cache brut lors d’une actualisation distincte. Les chiffres de l’import accepté et de la tentative limitée sont détaillés séparément.
 
 ## V0.20.2 intégrée — issue #18 (25/11/2026, Claude)
 
@@ -70,7 +78,7 @@
 ## Prochaines tâches prioritaires
 
 1. Essai réel V0.20.2 au motel par Théo (liste ci-dessus).
-2. Revue puis intégration de `codex/data-engine-v1` (après ses corrections P0/P1), en conservant les identifiants du chapitre 2.
+2. Revue de `codex/data-engine-v1-fix` pour le Data Engine V0.21, en conservant les identifiants du chapitre 2.
 3. Essai réel de Vision par Théo (voir ci-dessus) puis réglage des seuils et du lot de références selon les résultats.
 2. Étendre les références visuelles (planques et lieux des chapitres 2 à 4) : `python3 hub/vision_refs.py --max 50`
    (adapter la sélection dans le script).
