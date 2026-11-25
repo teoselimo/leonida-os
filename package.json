@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-assets.mjs",
-    "build": "next build && node scripts/fix-export.mjs",
+    "prebuild": "node scripts/check-assets.mjs && python3 hub/verify_manifest.py",
+    "build": "next build && node scripts/fix-export.mjs && python3 hub/verify_manifest.py --export out",
     "build:artifact": "npm run build && node scripts/artifact-package.mjs",
     "build:pilote": "node scripts/artifact-build.mjs",
     "serve": "node scripts/serve.mjs out 4321",

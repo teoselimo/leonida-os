@@ -1,0 +1,101 @@
+{
+  "bundles": {
+    "public/data/hub/catalog.json": {
+      "bytes": 157447,
+      "format": "json",
+      "schemaVersion": 1,
+      "sha256": "f0131832b5b8531c7e8c5d50a09d30401a652967d9b3b7bcfaa170f52464cb6b"
+    },
+    "public/data/hub/places.json": {
+      "bytes": 52526,
+      "format": "json",
+      "schemaVersion": 1,
+      "sha256": "b15fe1a480f4e25d994c377fecaffef483ca831d2deb0bd222d7ffcce2d04d9f"
+    },
+    "public/data/hub/vehicles.json": {
+      "bytes": 226036,
+      "format": "json",
+      "schemaVersion": 1,
+      "sha256": "04a9a9efb2d9e74cdc33303281388e4b8a47ef6ad9dbe30716392f76ce5e1548"
+    },
+    "src/data/hub/meta.json": {
+      "bytes": 591,
+      "format": "json",
+      "schemaVersion": 1,
+      "sha256": "3ed93711447fef1b34c2d32bcb1385c9091be006fb097afe3011c7db5c7a3854"
+    },
+    "src/data/hub/missions.json": {
+      "bytes": 145065,
+      "format": "json",
+      "schemaVersion": 1,
+      "sha256": "f93e07189fff9c5909349adc78bdb171a11d967de569366dcb010240f4f76343"
+    }
+  },
+  "conflicts": [],
+  "counts": {
+    "activity": 16,
+    "animal": 245,
+    "article": 189,
+    "character": 71,
+    "cheat": 3,
+    "gang": 4,
+    "guide": 1,
+    "list-page": 10,
+    "map-feature": 29,
+    "mission": 120,
+    "other": 12,
+    "place": 3754,
+    "property": 22,
+    "radio": 21,
+    "random-event": 1,
+    "stranger": 51,
+    "vehicle": 589,
+    "weapon": 212
+  },
+  "gtabaseCollection": {
+    "crawler": "FIN {'cached': 1610, 'fetched': 0, 'failed': 0, 'offline-miss': 1, 'cached-stale': 0} index 1611",
+    "failed": [
+      {
+        "error": "HTTP 404",
+        "url": "https://www.gtabase.com/gta-6/vehicles/speeder"
+      }
+    ],
+    "notFetchedYet": 0,
+    "read": 1610,
+    "sitemapFailures": [],
+    "sitemapUrls": 1611
+  },
+  "missingRelationTargets": [],
+  "rejectedRelations": [
+    {
+      "actualType": "article",
+      "from": "gtabase:vehicles/maverick",
+      "kind": "has_variant",
+      "name": "News Maverick",
+      "to": "gtabase:vehicles/news-maverick",
+      "url": "https://www.gtabase.com/gta-6/vehicles/news-maverick"
+    }
+  ],
+  "relationTypeIssues": [],
+  "schemaVersion": 1,
+  "snapshotAt": "2026-11-24T15:16:33+0100",
+  "sources": {
+    "gtabase": {
+      "aggregator": null,
+      "discoveredAt": "2026-11-24T11:55:52+0100",
+      "lastCollectedAt": "2026-11-24T11:58:00+0100",
+      "license": "GTABase.com — tous droits réservés : faits et liens uniquement, pas de texte ni d'image repris",
+      "status": "partiel",
+      "upstreamOrigin": "gtabase.com"
+    },
+    "gtadb": {
+      "aggregator": null,
+      "lastCollectedAt": "2026-11-24T15:16:34+0100",
+      "license": "CC BY 4.0",
+      "revision": "d406fea099e1df2bce42fd6b87eed04bce646629",
+      "revisionDate": "2026-11-19T17:51:06+01:00",
+      "status": "ok",
+      "upstreamOrigin": "gtadb.org"
+    }
+  }
+}

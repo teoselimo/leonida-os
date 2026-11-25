@@ -70,6 +70,14 @@ def _is_index_page(r, url):
     bc = r.get("breadcrumb") or []
     return url.rstrip("/").endswith(("/missions", "/vehicles", "/weapons", "/characters", "/properties", "/strangers", "/animals", "/radio-stations", "/side-missions")) or (len(bc) >= 4 and "News" in (bc[3] or ""))
 
+def record_id(section, url):
+    # Deux fiches distinctes partagent le slug caddy. L'identifiant historique
+    # reste associé au modèle dont la photo figure dans le Garage.
+    if url.rstrip("/") == "https://www.gtabase.com/vehicles/gta-6/caddy":
+        return "gtabase:vehicles/caddy-82"
+    return f"gtabase:{section}/{slug_of(url)}"
+
+
 def normalize(section, url, html, meta, fetched):
     r = parse_page(html, url)
     typ = TYPE_OF.get(section, "other")
@@ -199,7 +207,7 @@ def normalize(section, url, html, meta, fetched):
     exp = EXPECTED.get(typ, [])
     present = sorted(f)
     rec = {
-        "id": f"gtabase:{section}/{slug_of(url)}",
+        "id": record_id(section, url),
         "type": typ,
         "name": name,
         "fields": f,
@@ -237,3 +245,18 @@ def parse_mission_index(html):
                     "optional": "--opt" in m.group(3) or "OPTIONAL" in badges, "missable": any("MISSABLE" in b for b in badges),
                     "pointOfNoReturn": any("NO RETURN" in b for b in badges), "badges": badges})
     return out
+
+
+def validate_variants(records):
+    """Conserve la preuve source hors du graphe si la cible résolue n'est pas un véhicule."""
+    kinds = {row["id"]: row["type"] for row in records}
+    for row in records:
+        kept = []
+        for rel in row["rel"]:
+            if rel["kind"] == "has_variant" and kinds.get(rel.get("to")) != "vehicle":
+                row.setdefault("rejectedRelations", []).append({
+                    **rel, "actualType": kinds.get(rel.get("to")),
+                })
+            else:
+                kept.append(rel)
+        row["rel"] = kept

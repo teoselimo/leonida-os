@@ -7,6 +7,7 @@ import { cpSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeF
 import { join } from "node:path";
 
 const run = (cmd, env = {}) => execSync(cmd, { stdio: "inherit", env: { ...process.env, ...env } });
+run("python3 hub/verify_manifest.py");
 // 1. Instantané du flux : branche data (source de vérité de la veille)
 run("git fetch -q origin data");
 const feed = execSync("git show origin/data:radar.json", { maxBuffer: 64 << 20 }).toString();
@@ -50,6 +51,8 @@ const walk = (d) => {
   }
 };
 walk("out-artifact");
+run("python3 hub/verify_manifest.py --export out-artifact");
+if (files.length > 512) throw new Error("Limite Artifact de 512 fichiers dépassée");
 const total = files.reduce((a, f) => a + f.size, 0);
 writeFileSync("out-artifact/manifest.json", JSON.stringify({ generatedAt, builtAt: new Date().toISOString(), count: files.length, totalBytes: total, files }, null, 1));
 console.log(`Artifact : ${files.length} fichiers, ${(total / 1048576).toFixed(1)} Mio, instantané du ${generatedAt}`);

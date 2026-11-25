@@ -4,9 +4,12 @@ Couche de données GTA VI commune à tous les modules (Story / Autopilot, Knowle
 Exécutée **hors de l'app** (Python 3, `curl`, `git`, Node pour lire les entités LEONIDA) ; l'app ne lit que des bundles
 statiques : aucune connexion à GTABase ou GTADB pendant une partie.
 
+Le contrat v1, la commande de rejeu sans cache et les mesures figurent dans [le guide du Data Engine](../docs/DATA-ENGINE.md).
+
 ## Actualiser
 
 ```bash
+python3 hub/snapshot.py             # reconstruire depuis les fiches versionnées, sans réseau
 python3 hub/refresh.py              # GTADB (git) + GTABase (sitemap → cache → extraction) + liaison + rapport + bundles
 python3 hub/refresh.py --offline    # aucune requête : rejoue l'extraction sur le cache local (hub/cache, non versionné)
 python3 hub/refresh.py --source gtadb | --source gtabase
