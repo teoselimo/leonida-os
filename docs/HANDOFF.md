@@ -2,7 +2,7 @@
 
 > À tenir à jour à la fin de CHAQUE intervention (Claude ou Codex). Règles complètes : `AGENTS.md`.
 
-**Intégration en cours :** personne
+**Intégration en cours :** Codex — issue #17, V0.21
 
 | | |
 | --- | --- |
