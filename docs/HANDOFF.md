@@ -2,24 +2,30 @@
 
 > À tenir à jour à la fin de CHAQUE intervention (Claude ou Codex). Règles complètes : `AGENTS.md`.
 
-**Intégration en cours :** Codex — issue #17, V0.21
+**Intégration en cours :** personne
 
 | | |
 | --- | --- |
-| Version en intégration | **V0.20.2** (`src/lib/version.ts`) — détail `docs/V0.20.2.md` (audit chapitre 2 + section « Intégration ») |
-| Branche d'intégration | `experiment/claude-artifact` (PR brouillon #11 ; ne jamais fusionner vers `main` sans Théo) |
-| Dernier commit vérifié | `2a76974` (code final V0.20.2 : fusion `e743e5a` de `codex/chapter2-story@7595d77` + correctif `2a76974`) |
-| Artifact publié | version `1795608546-b457` (vérifiée : 472 fichiers, empreintes identiques au build, `tiles/3` = 30) — https://claude.ai/artifact/AdLjrvTSQdxHGewPtWa8YS (publication : Claude seulement) |
-| Dernier passage complet des tests | **559 réussis, 0 échec, 4 ignorés** (24,9 min, sur `2a76974`, Claude simulé) ; unitaires 242 / 242 ; pipeline Python 21 / 21 |
-| Mis à jour le | 25/11/2026, par Claude |
+| Version en intégration | **V0.21** — [note de version](V0.21.md) |
+| Branche d’intégration | `experiment/claude-artifact` |
+| SHA de fusion et du code final | `7f12e5aa1ddb0222be5a871de8e8932f5bc24d0d` |
+| Artifact en service | Dernière publication vérifiée V0.20.2, version `1795608546-b457`. **Publication V0.21 en attente.** |
+| Tests sur le code final | Hub Python 39/39. Playwright standard 559 réussis, 4 ignorés, 0 échec, dont 242 unitaires. Artifact ciblé 90/90. |
+| Mis à jour le | 25/11/2026, par Codex |
 
-## Issue #17 — Data Engine V0.21 prêt pour revue
+## Issue #17 — Data Engine V0.21 intégré
 
-**Publication en attente** sur `codex/data-engine-v1-fix`. Base publiée `7eed616`, portage sélectif depuis `2bb83a8`, commit fonctionnel `43a0903`. La version en service est celle du tableau. [Mesures et validation](DATA-ENGINE.md) · [Note V0.21](V0.21.md)
+Fusion de `codex/data-engine-v1-fix@5dc287c29a58cc7a5f6ca22b6637e9fb77e50c3f` sur la V0.20.2 publiée (`7eed616`, verrou `90e05d8`). Le moteur sépare la collecte et la production des cinq projections. Le rejeu hors ligne du dernier snapshot accepté a reproduit les sept fichiers attendus. La collecte exhaustive GTABase fera l’objet d’un chantier séparé. [Données et mesures](DATA-ENGINE.md)
 
-Validation du portage : 39 tests Python, TypeScript strict, builds standard et Artifact, 242 tests unitaires de l’app et 42 parcours ciblés réussis. Le package local contient 472 fichiers publiables sur 512. Le référentiel des missions et ses 30 fiches du chapitre 2 sont identiques à la V0.20.2 à l’octet près. MapGenie a renvoyé HTTP 403. Les mesures de performance sont des médianes locales sur trois essais par configuration.
+L’export contient **472 fichiers publiables sur 512**, pour **62 119 769 octets**, dont les 30 tuiles de `tiles/3/`. SHA-256 du manifeste de données `data/hub/manifest.json` : `17fbee0d362905a8d4e1d8b9974c86b0b3dcbab3797083c9e324f0c3037ad7ab`. Le manifeste de conditionnement à la racine est un fichier local supplémentaire.
 
-Claude peut reprendre sur cette branche, relancer `python3 -m unittest discover -s hub/tests` et vérifier une génération isolée avec `python3 hub/snapshot.py --output /tmp/leonida-revue`. Le build standard et le conditionnement local de l’Artifact vérifient le contrat v1. Le rapport signale la relation Maverick rejetée avec sa provenance. La collecte intégrale GTABase en ligne reste à effectuer sur un cache brut lors d’une actualisation distincte. Les chiffres de l’import accepté et de la tentative limitée sont détaillés séparément.
+### Reprise de publication par Claude
+
+1. Prendre le verrou et utiliser le package validé de `7f12e5a` ou reconstruire ce code avec `node scripts/artifact-build.mjs`. En cas de reconstruction, comparer les empreintes du nouveau build et vérifier ses parcours sur `SERVE_DIR=out-artifact` avant l’envoi.
+2. Dans l’Artifact LEONIDA OS existant, suivre `AGENTS.md` §10. Comparer `list_files` au build, appliquer le patch, retirer les anciens chunks et conserver le flux RADAR distant. Les 30 tuiles de niveau 3 doivent rester présentes.
+3. Revérifier les empreintes distantes par chemin, consigner tout écart de RADAR séparément, puis noter la version distante dans ce fichier et `docs/ARTIFACT-PILOTE.md`. Libérer le verrou.
+
+Le contrôle automatique a refusé l’accès navigateur à l’Artifact privé depuis Codex. La publication et la comparaison distante des SHA-256 nécessitent les outils Artifact de Claude.
 
 ## V0.20.2 intégrée — issue #18 (25/11/2026, Claude)
 
@@ -78,7 +84,7 @@ Claude peut reprendre sur cette branche, relancer `python3 -m unittest discover 
 ## Prochaines tâches prioritaires
 
 1. Essai réel V0.20.2 au motel par Théo (liste ci-dessus).
-2. Revue de `codex/data-engine-v1-fix` pour le Data Engine V0.21, en conservant les identifiants du chapitre 2.
+2. Publication V0.21 dans le même Artifact par Claude et vérification des empreintes distantes (procédure ci-dessus).
 3. Essai réel de Vision par Théo (voir ci-dessus) puis réglage des seuils et du lot de références selon les résultats.
 2. Étendre les références visuelles (planques et lieux des chapitres 2 à 4) : `python3 hub/vision_refs.py --max 50`
    (adapter la sélection dans le script).

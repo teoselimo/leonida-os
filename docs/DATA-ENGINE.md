@@ -145,3 +145,13 @@ node scripts/artifact-build.mjs
 ```
 
 Le dernier script produit les fichiers locaux pour inspection. **Publication en attente.**
+
+### Intégration sur la base publiée
+
+La fusion `7f12e5aa1ddb0222be5a871de8e8932f5bc24d0d` reprend le portage audité `5dc287c`. Le rejeu isolé de `hub/snapshot.py --output` a reproduit les cinq projections, le manifeste et le rapport à l’octet près. Les 581 665 octets des projections proviennent du dernier snapshot accepté. Aucun crawl intégral GTABase n’a été lancé pendant l’intégration.
+
+Par rapport à `7eed616`, seul le numéro de version change sous `src/`. Les 30 fiches du chapitre 2, leurs alias, le graphe, Mission Autopilot, Story Intelligence, Vision et la logique de sauvegarde sont préservés. Les deux projections publiques modifiées sont le catalogue et le Garage. Le Garage contient 589 fiches. Les différences de données sont détaillées plus haut.
+
+Sur le code fusionné, les 39 tests Python, TypeScript strict et les deux builds ont réussi. Playwright sur l’export standard a terminé en 43,9 minutes avec 559 réussites (242 unitaires, 118 iPhone Chromium, 117 iPad Chromium et 82 iPhone WebKit), 4 tests ignorés selon la configuration et 0 échec. Sur l’export Artifact, les suites v018, v020 et v0201 ont réussi 90/90 en 9,3 minutes, soit 30 par configuration. Elles couvrent le chapitre 2, les confirmations et la persistance, l’anti-spoiler, le Hub, l’Encyclopédie, le Garage, les positions calibrées et Vision. Les appareils sont émulés, Claude est simulé.
+
+Les commandes `python3 hub/verify_manifest.py` et `python3 hub/verify_manifest.py --export out-artifact` ont toutes deux réussi. Le package contient 472 fichiers publiables pour 62 119 769 octets (473 fichiers et 62 177 712 octets en incluant l’inventaire de conditionnement local). Les tailles et SHA-256 des 472 fichiers ont été vérifiés sur disque puis dans l’archive de transfert. L’inventaire SHA-256 trié par chemin a pour empreinte `85d2fb462ea0994a93275ee8cb812419cf4763a817e33a615e7d25680b5f74a0`. La comparaison à l’Artifact distant attend la publication par Claude.
