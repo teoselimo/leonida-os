@@ -52,6 +52,19 @@
     "vehicle": 589,
     "weapon": 212
   },
+  "gtabaseCollection": {
+    "crawler": "FIN {'cached': 1610, 'fetched': 0, 'failed': 0, 'offline-miss': 1, 'cached-stale': 0} index 1611",
+    "failed": [
+      {
+        "error": "HTTP 404",
+        "url": "https://www.gtabase.com/gta-6/vehicles/speeder"
+      }
+    ],
+    "notFetchedYet": 0,
+    "read": 1610,
+    "sitemapFailures": [],
+    "sitemapUrls": 1611
+  },
   "missingRelationTargets": [],
   "rejectedRelations": [
     {

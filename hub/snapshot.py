@@ -116,7 +116,10 @@ def build(root=ROOT, output=None, import_report=None):
                     "records": files, "missingRelationTargets": missing,
                     "bundles": {key: {"format": "json", "schemaVersion": 1, **fingerprint((stage / key).read_bytes())}
                                 for key in sorted(paths)}}
-        audit = {"schemaVersion": 1, "snapshotAt": report["runAt"], "counts": counts, "rejectedRelations": rejected,
+        gb = report["sources"].get("gtabase", {})
+        collection = {key: gb[key] for key in ("read", "sitemapUrls", "failed", "notFetchedYet",
+                                                "sitemapFailures", "crawler", "metrics") if key in gb}
+        audit = {"schemaVersion": 1, "gtabaseCollection": collection, "snapshotAt": report["runAt"], "counts": counts, "rejectedRelations": rejected,
                  "missingRelationTargets": missing, "relationTypeIssues": issues,
                  "conflicts": report["conflicts"], "sources": sources, "bundles": manifest["bundles"]}
         (stage / AUDIT).parent.mkdir(parents=True, exist_ok=True)
