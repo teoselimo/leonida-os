@@ -332,7 +332,8 @@ export function storyAlerts(s: StoryInput): StoryAlert[] {
 
 /** Les alertes qui méritent une place dans la liste de l'Accueil (au plus 3 affichées par l'Accueil). */
 export function homeStoryAlerts(s: StoryInput): StoryAlert[] {
-  return storyAlerts(s).filter((a) => (a.horizon === "imminent" || a.horizon === "chapitre") && (a.tier === "Critique" || a.tier === "Fortement recommandé"));
+  // V0.21.1 : un seuil de fonds non imminent est un objectif du chapitre, pas une alerte de l'Accueil
+  return storyAlerts(s).filter((a) => (a.horizon === "imminent" || a.horizon === "chapitre") && (a.tier === "Critique" || a.tier === "Fortement recommandé") && !(a.horizon !== "imminent" && a.rule.effects.some((e) => e.k === "threshold")));
 }
 
 // ───────────────────────── couverture ─────────────────────────

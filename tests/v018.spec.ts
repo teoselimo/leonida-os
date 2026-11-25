@@ -164,9 +164,10 @@ test("motel : le joueur confirme le chapitre, qui persiste après rechargement",
 
 test("motel : l’ambulance seule est déclarée, aucune prochaine principale révélée", async ({ page }) => {
   await start(page, { chapter: 2, lastMission: "Ambulance Chaser", missionsDone: ["Ambulance Chaser"], nextMission: null });
-  const card = page.getByTestId("next-choice");
-  await expect(card).toContainText("Ambulance Chaser");
-  await expect(card).not.toContainText(/Checking Out|Girls' Trip|Just Moved In/);
+  // V0.21.1 (issue #19) : la dernière étape confirmée est portée par la carte de situation du chapitre 2
+  await expect(page.getByTestId("situation-confirmed")).toContainText("Ambulance Chaser terminée");
+  await expect(page.getByTestId("next-choice")).not.toContainText(/Checking Out|Girls' Trip|Just Moved In/);
+  await expect(page.getByTestId("situation-card")).not.toContainText(/Checking Out|Girls' Trip|Just Moved In/);
   expect((await saved(page)).profile.missionsDone).toEqual(["Ambulance Chaser"]);
 });
 

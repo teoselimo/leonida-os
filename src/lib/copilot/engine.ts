@@ -263,7 +263,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const draft = answer(checklist ? `Je vais lancer ${o.mission}` : o.question, o.ctx, o.topic);
   draft.actions = draft.actions.filter((x) => isValidAction(x, o.ctx.feed)).slice(0, 3);
   const atts = o.attachments ?? [];
-  if (!atts.length && (draft.intent === "motel_report" || draft.intent === "motel_advice")) return fromDirect(draft);
+  if (!atts.length && (draft.intent === "motel_report" || draft.intent === "motel_advice" || draft.intent === "motel_status")) return fromDirect(draft);
   const userImages = atts.filter((a) => a.kind === "image" && a.blob).map((a) => a.blob!);
   let images = userImages;
   const docs = atts.filter((a) => a.kind === "text");
@@ -439,7 +439,7 @@ export async function askCopilot(o: AskOptions): Promise<CopilotAnswer> {
   const lmText = visualTurn ? (obs?.texts ?? []).join(" | ") : kEnts.length ? "" : o.question;
   if (lmText) hubMs.push(...(await landmarkMentions(lmText).catch(() => [])));
   const kb = [kb0, hubBlock(hubMs)].filter(Boolean).join("\n");
-  const player = visualTurn || placeFocus(o.question, kEnts.some((e) => e.type !== "zone")) ? compactPlayerContext(o.ctx.state) : playerContext(o.ctx.state, o.ctx.feed);
+  const player = visualTurn || placeFocus(o.question, kEnts.some((e) => e.type !== "zone")) ? compactPlayerContext(o.ctx.state) : playerContext(o.ctx.state, o.ctx.feed, o.ctx.chatTexts);
   // état exact des sources, pour ne jamais confondre « rien dans notre base », « web indisponible »,
   // « pas de source fiable » et « le contenu n'existe pas »
   const localNote = ids.length ? `${ids.length} élément(s) LEONIDA (fiches RADAR / lieux / progression)` : "aucune fiche LEONIDA RADAR sur ce sujet (cela ne prouve rien sur le jeu)";

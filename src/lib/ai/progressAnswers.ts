@@ -1,4 +1,6 @@
 import { autopilot } from "../autopilot";
+import { externalCondition, reportedReminder } from "../motel";
+import type { ReportedTask } from "../motel";
 import { launchRisks } from "../story/engine";
 import type { ProgNode } from "@/data/progression";
 import { ESTABLISHMENTS, establishmentCategoryFromQuery, EST_CATS } from "@/data/establishments";
@@ -83,18 +85,24 @@ export function progressDelta(profile: Profile, name: string, done: Record<strin
 }
 
 /** Après « terminée » : ce qui s'ouvre réellement (statuts recalculés), sans ordre linéaire inventé. */
-export function afterDone(profile: Profile, name: string): { text: string; actions: AiAnswer["actions"] } {
+export function afterDone(profile: Profile, name: string, reported: ReportedTask[] = []): { text: string; actions: AiAnswer["actions"] } {
   const d = progressDelta(profile, name);
   const opened = [...d.mains, ...d.potentials, ...d.sides];
   const mains = [...d.mains, ...d.potentials];
+  // V0.21.1 (issue #19) : ce que le joueur a RACONTÉ reste distinct de ce que le graphe débloque ; rien n'est enregistré
+  const told = reported.filter((r) => nk(r.name) !== nk(name));
   const parts: string[] = [];
   if (opened.length) parts.push(`Débloqué d'après les sources : ${list(opened.map((x) => `${x.node.name}${x.node.kind !== "main" ? " (facultative)" : ""}${x.status === "potentiellement accessible" ? " — à confirmer en jeu" : ""}`))}.`);
-  else parts.push("Je n'ai pas de nouvelle mission documentée comme débloquée par celle-ci : regarde ta carte en jeu, je ne devine pas la suite.");
+  else if (!told.length) parts.push("Je n'ai pas de nouvelle mission documentée comme débloquée par celle-ci : regarde ta carte en jeu, je ne devine pas la suite.");
+  if (told.length) parts.push(reportedReminder(told));
   if (d.lost.length) parts.push(`Plus disponible désormais : ${list(d.lost.map((x) => x.node.name))}.`);
   if (d.pnr && mains.some((m) => m.node.id === d.pnr!.node || d.pnr!.prereq.includes(m.node.id))) parts.push(`Attention : le point de non-retour du chapitre approche (${d.pnr.lose.slice(0, 2).join(", ")} perdus). Finis tes activités avant.`);
   return {
     text: parts.join(" "),
-    actions: mains.slice(0, 2).map((x) => ({ type: "start_mission" as const, name: x.node.name, label: `Lancer ${x.node.name}`, confirm: launchConfirm({ profile }, x.node.name) })),
+    // les tâches racontées passent avant les suites du graphe : le joueur confirme ce que son journal affiche
+    actions: told.length
+      ? told.slice(0, 2).map((r) => ({ type: "start_mission" as const, name: r.name, label: `Mon objectif actuel : « ${r.name} »`, confirm: `Confirmer que « ${r.name} » est en cours ?` }))
+      : mains.slice(0, 2).map((x) => ({ type: "start_mission" as const, name: x.node.name, label: `Lancer ${x.node.name}`, confirm: launchConfirm({ profile }, x.node.name) })),
   };
 }
 
@@ -103,8 +111,11 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
   const mode = p.spoilerMode;
   const v = computeProgress({ profile: p, done: ctx.state.done });
   const cur = curOf(v);
-  const acc = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "accessible" && x.node.id !== cur?.node.id);
-  const pot = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "potentiellement accessible");
+  // V0.21.1 : une tâche qui attend une condition dans le monde (affiche, appel…) n'est pas « accessible maintenant »
+  const waits = (x: NodeState) => !!externalCondition(x.node) && x.node.id !== cur?.node.id;
+  const acc = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "accessible" && x.node.id !== cur?.node.id && !waits(x));
+  const pot = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "potentiellement accessible" && !waits(x));
+  const cond = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && (x.status === "accessible" || x.status === "potentiellement accessible") && waits(x));
   const pnr = nextPointOfNoReturn(v);
   const miss = pendingMissables(v, collected(p));
   const base = { reliability: "recoupé" as const, topic: cur ? { kind: "mission" as const, name: cur.node.name, known: true } : null };
@@ -151,6 +162,7 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
       if (cur && kind === "what_now") parts.push(`${v.current ? "Tu es sur" : "Ta prochaine mission est"} ${cur.node.name}${miss.length ? ` — ne rate pas : ${list(miss.slice(0, 2).map((m) => short(m.text)))}` : ""}.`);
       if (acc.length) parts.push(`Accessible maintenant : ${list(acc.slice(0, 4).map((x) => x.node.name + (x.node.kind !== "main" ? " (facultative)" : "")))}.`);
       if (pot.length) parts.push(`Probablement accessible aussi (à confirmer en jeu) : ${list(pot.slice(0, 3).map((x) => x.node.name))}.`);
+      if (cond.length) parts.push(`Selon une condition dans le jeu, pas encore disponible : ${list(cond.slice(0, 3).map((x) => `${x.node.name} (${externalCondition(x.node)})`))}.`);
       if (!acc.length && !pot.length) parts.push("Je n'ai pas d'autre activité documentée comme accessible pour ta progression.");
       if (pnr?.node.pointOfNoReturn) parts.push(`Garde en tête le point de non-retour ${shownName(pnr, mode) === pnr.node.name ? `de ${pnr.node.name}` : "qui arrive plus loin dans le chapitre"} : vérifie les activités que tu souhaites terminer avant.`);
       return { intent: kind, text: parts.join(" "), ...base, sources: acc.length ? src(acc[0].node) : [], actions: [], replies: ["Je risque de manquer quoi ?", "Quelles missions secondaires ?"] };
@@ -161,7 +173,8 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
       const locked = sides.filter((x) => x.status === "verrouillé");
       const gone = sides.filter((x) => x.status === "plus disponible");
       const parts = [
-        open.length ? `Missions secondaires ouvertes : ${list(open.map((x) => `${x.node.name}${x.status === "potentiellement accessible" ? " (probable)" : ""}${x.node.prereq?.condition ? ` — ${x.node.prereq.condition}` : ""}`))}.` : "Aucune mission secondaire documentée comme ouverte.",
+        open.filter((x) => !waits(x)).length ? `Missions secondaires ouvertes : ${list(open.filter((x) => !waits(x)).map((x) => `${x.node.name}${x.status === "potentiellement accessible" ? " (probable)" : ""}${x.node.prereq?.condition ? ` — ${x.node.prereq.condition}` : ""}`))}.` : "Aucune mission secondaire documentée comme ouverte.",
+        open.some(waits) ? `Selon une condition dans le jeu, pas encore disponibles : ${list(open.filter(waits).map((x) => `${x.node.name} (${externalCondition(x.node)})`))}.` : "",
         locked.length ? `Verrouillées : ${list(locked.map((x) => `${x.node.name} (${describeLock(x, v, mode)})`))}.` : "",
         gone.length ? `Plus disponibles : ${list(gone.map((x) => x.node.name))}.` : "",
       ].filter(Boolean);
