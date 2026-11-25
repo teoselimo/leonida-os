@@ -2,16 +2,25 @@
 
 > À tenir à jour à la fin de CHAQUE intervention (Claude ou Codex). Règles complètes : `AGENTS.md`.
 
-**Intégration en cours :** Claude depuis le 25/11/2026 23:10 (publication Artifact V0.21, code 7f12e5a)
+**Intégration en cours :** personne
 
 | | |
 | --- | --- |
-| Version en intégration | **V0.21** — [note de version](V0.21.md) |
+| Version en service | **V0.21** — [note de version](V0.21.md) |
 | Branche d’intégration | `experiment/claude-artifact` |
 | SHA de fusion et du code final | `7f12e5aa1ddb0222be5a871de8e8932f5bc24d0d` |
-| Artifact en service | Dernière publication vérifiée V0.20.2, version `1795608546-b457`. **Publication V0.21 en attente.** |
+| Artifact en service | **V0.21, version `1795644634-44cf`**, publiée le 25/11/2026 depuis `7f12e5a` — 472 fichiers distants, 61 743 736 octets ; 471 / 471 fichiers applicatifs identiques au build ; `data/radar.json` distant conservé (voir ci-dessous). Précédente : V0.20.2 `1795608546-b457`. |
 | Tests sur le code final | Hub Python 39/39. Playwright standard 559 réussis, 4 ignorés, 0 échec, dont 242 unitaires. Artifact ciblé 90/90. |
-| Mis à jour le | 25/11/2026, par Codex |
+| Mis à jour le | 25/11/2026, par Claude (publication V0.21) |
+
+## Publication V0.21 (25/11/2026, Claude)
+
+- HEAD vérifié avant publication : `ead6aa8` (seule la documentation diffère de `7f12e5a`). Build reconstruit depuis `7f12e5a` dans un arbre de travail propre : `node scripts/artifact-build.mjs` → 472 fichiers publiables, 62 119 737 octets ; `python3 hub/verify_manifest.py` et `--export out-artifact` : contrat v1 vérifié ; `data/hub/manifest.json` = `17fbee0d…d7ab` (identique à l'attendu).
+- Patch sur `1795608546-b457` → **`1795644634-44cf`** : 15 fichiers envoyés (dont 10 nouveaux chemins : `data/hub/manifest.json` + 9 chunks), 10 retirés (9 anciens chunks + `manifest.json` racine, liste de conditionnement locale publiée par erreur depuis les versions précédentes, non utilisée par l'app). Déclaration de capacités inchangée.
+- Contrôle distant par chemin : **472 fichiers, 61 743 736 octets ; 471 / 471 fichiers applicatifs aux empreintes identiques au build ; 0 fichier en trop ; `tiles/3/` = 30.**
+- **Écart RADAR (volontaire)** : `data/radar.json` non republié. Distant : 1 148 843 octets, SHA-256 `be277561…4361` (flux antérieur déjà en service). Build : instantané `origin/data` du 25/11/2026 13:48:12 UTC, 1 524 844 octets, `3d6a1d35…dce2`. Le distant reste le flux d'origine de l'Artifact ; le mettre à jour est une décision à part (Théo).
+- Chapitre 2 et progression : `git diff 7eed616 7f12e5a -- src` ne touche que `src/lib/version.ts` ; sauvegarde, graphe, Autopilot, Story Intelligence, chapitre 2 et Rare Vehicle Locator inchangés. Parcours chapitre 2 sur le build publié : **27 / 27** (iPhone, iPad, WebKit, Claude simulé).
+- Reste à faire par Théo sur iPhone : ouvrir l'Artifact, vérifier « V0.21 » dans Partie › À propos, que sa partie (chapitre 2, Ambulance Chaser) est intacte, et ouvrir Guide › Garage.
 
 ## Issue #17 — Data Engine V0.21 intégré
 
@@ -19,7 +28,7 @@ Fusion de `codex/data-engine-v1-fix@5dc287c29a58cc7a5f6ca22b6637e9fb77e50c3f` su
 
 L’export contient **472 fichiers publiables sur 512**, pour **62 119 769 octets**, dont les 30 tuiles de `tiles/3/`. SHA-256 du manifeste de données `data/hub/manifest.json` : `17fbee0d362905a8d4e1d8b9974c86b0b3dcbab3797083c9e324f0c3037ad7ab`. Le manifeste de conditionnement à la racine est un fichier local supplémentaire.
 
-### Reprise de publication par Claude
+### Reprise de publication par Claude (faite le 25/11/2026, voir ci-dessus)
 
 1. Prendre le verrou et utiliser le package validé de `7f12e5a` ou reconstruire ce code avec `node scripts/artifact-build.mjs`. En cas de reconstruction, comparer les empreintes du nouveau build et vérifier ses parcours sur `SERVE_DIR=out-artifact` avant l’envoi.
 2. Dans l’Artifact LEONIDA OS existant, suivre `AGENTS.md` §10. Comparer `list_files` au build, appliquer le patch, retirer les anciens chunks et conserver le flux RADAR distant. Les 30 tuiles de niveau 3 doivent rester présentes.

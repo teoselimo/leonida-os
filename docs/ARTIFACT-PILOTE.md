@@ -330,3 +330,9 @@ Suite de l'audit UX V0.13 (note 5/10). Aucune donnée de la veille supprimée, s
 - Travail Codex `codex/chapter2-story@7595d77` (issue #18), intégré par Claude : fusion `e743e5a`, correctif `2a76974`.
 - Tests : passage complet **559 réussis, 0 échec, 4 ignorés** (24,9 min, Claude simulé) ; build Artifact 90 / 90 ciblés ; Python 21 / 21.
 - Publication en patch : 5 fichiers, 1 retiré, `data/radar.json` non republié, déclaration inchangée. Version Artifact `1795608546-b457`.
+
+## 27. V0.21 · Data Engine (25/11/2026)
+
+- Code `7f12e5a` (fusion Codex `codex/data-engine-v1-fix@5dc287c`), publié par Claude ; détail `docs/V0.21.md` et `docs/DATA-ENGINE.md`.
+- Tests sur le code final (Codex) : Playwright standard 559 réussis, 4 ignorés, 0 échec ; Python 39 / 39 ; Artifact ciblé 90 / 90. Contrôle Claude sur le build publié : chapitre 2 27 / 27.
+- Publication en patch : 15 fichiers, 10 retirés (9 chunks + `manifest.json` racine), `data/radar.json` non republié (écart consigné dans HANDOFF), déclaration inchangée. Version Artifact `1795644634-44cf` ; 472 fichiers distants, empreintes applicatives identiques au build.
