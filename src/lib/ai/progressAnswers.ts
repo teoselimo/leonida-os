@@ -67,7 +67,7 @@ export function progressDelta(profile: Profile, name: string, done: Record<strin
     missionInProgress: profile.nextMission && nk(profile.nextMission) === nk(name) ? false : profile.missionInProgress,
   };
   const after = computeProgress({ profile: nextProfile, done });
-  const opened = after.states.filter((x) => (x.status === "accessible" || x.status === "potentiellement accessible") && before.byId.get(x.node.id)?.status === "verrouillé");
+  const opened = after.states.filter((x) => !x.node.journalTask && x.node.chapter <= profile.chapter && shownName(x, profile.spoilerMode) === x.node.name && (x.status === "accessible" || x.status === "potentiellement accessible") && before.byId.get(x.node.id)?.status === "verrouillé");
   const pnrNode = nextPointOfNoReturn(after);
   const mode = profile.spoilerMode;
   const pnr = pnrNode?.node.pointOfNoReturn
@@ -103,8 +103,8 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
   const mode = p.spoilerMode;
   const v = computeProgress({ profile: p, done: ctx.state.done });
   const cur = curOf(v);
-  const acc = v.states.filter((x) => x.status === "accessible" && x.node.id !== cur?.node.id);
-  const pot = v.states.filter((x) => x.status === "potentiellement accessible");
+  const acc = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "accessible" && x.node.id !== cur?.node.id);
+  const pot = v.states.filter((x) => !x.node.journalTask && x.node.chapter === p.chapter && shownName(x, mode) === x.node.name && x.status === "potentiellement accessible");
   const pnr = nextPointOfNoReturn(v);
   const miss = pendingMissables(v, collected(p));
   const base = { reliability: "recoupé" as const, topic: cur ? { kind: "mission" as const, name: cur.node.name, known: true } : null };
@@ -136,7 +136,7 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
         text:
           mains.length === 1
             ? `D'après le graphe de progression, la suite ${sure ? "accessible" : "probable (à confirmer en jeu)"} est ${mains[0].name}. Tu la prépares ou tu la lances ?`
-            : `Plusieurs missions sont accessibles : ${list(mains.map((x) => x.name))}. Laquelle tu prends ?`,
+            : `Plusieurs missions sont ${sure ? "accessibles" : "possibles, à confirmer en jeu"} : ${list(mains.map((x) => x.name))}. Laquelle tu prends ?`,
         reliability: sure ? "recoupé" : "signalé",
         sources: src(node(mains[0].id)),
         actions: [
@@ -152,7 +152,7 @@ export function progressAnswer(kind: ProgIntent, q: string, ctx: AiContext): AiA
       if (acc.length) parts.push(`Accessible maintenant : ${list(acc.slice(0, 4).map((x) => x.node.name + (x.node.kind !== "main" ? " (facultative)" : "")))}.`);
       if (pot.length) parts.push(`Probablement accessible aussi (à confirmer en jeu) : ${list(pot.slice(0, 3).map((x) => x.node.name))}.`);
       if (!acc.length && !pot.length) parts.push("Je n'ai pas d'autre activité documentée comme accessible pour ta progression.");
-      if (pnr?.node.pointOfNoReturn) parts.push(`Garde en tête le point de non-retour ${shownName(pnr, mode) === pnr.node.name ? `de ${pnr.node.name}` : "qui arrive plus loin dans le chapitre"} : finis tes activités de Key Lento avant.`);
+      if (pnr?.node.pointOfNoReturn) parts.push(`Garde en tête le point de non-retour ${shownName(pnr, mode) === pnr.node.name ? `de ${pnr.node.name}` : "qui arrive plus loin dans le chapitre"} : vérifie les activités que tu souhaites terminer avant.`);
       return { intent: kind, text: parts.join(" "), ...base, sources: acc.length ? src(acc[0].node) : [], actions: [], replies: ["Je risque de manquer quoi ?", "Quelles missions secondaires ?"] };
     }
     case "side_list": {

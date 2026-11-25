@@ -1,3 +1,6 @@
+import { MOTEL_REPORTS, MOTEL_POSTERS, MOTEL_CARDS, POSTER_SOURCE } from "@/data/chapter2";
+import { KNOWLEDGE_BY_ID } from "@/data/knowledge";
+import { PROG_BY_ID } from "@/data/progression";
 import type { RadarFeed, RadarRecord } from "../feed";
 import { liveAdvice, spoilerVisibility } from "../feed";
 import type { VehicleRecord } from "../garage";
@@ -445,7 +448,7 @@ function reminder(r: RadarRecord, g: { missions: string[]; proper: string[] }): 
 function askMission(ctx: AiContext, then: "before" | "done", candidates: MissionInfo[] = []): AiAnswer {
   const { cat } = glossary(ctx.feed);
   const p = ctx.state.profile;
-  const guess = p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
+  const guess = p.chapter !== 2 && p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
   const options = candidates.length ? candidates.map((c) => c.name) : [p.nextMission, guess?.mission.name].filter((x): x is string => !!x);
   return {
     intent: then === "before" ? "ask_mission" : "ask_mission_done",
@@ -465,6 +468,30 @@ function askMission(ctx: AiContext, then: "before" | "done", candidates: Mission
 export function answer(question: string, ctx: AiContext, topic: Topic | null = null): AiAnswer {
   const q = question.trim().slice(0, 2000);
   const p = ctx.state.profile;
+  if (p.chapter === 2) {
+    const reports = MOTEL_REPORTS.filter((r) => r.pattern.test(nk(q)));
+    if (reports.length) {
+      const actions: AiAction[] = [];
+      const lines = reports.map((r) => {
+        const name = PROG_BY_ID.get(r.id)!.name;
+        if (![...p.missionsDone, p.lastMission].includes(name)) {
+          if (r.id === "ambulance-chaser") actions.push({ type: "set_mission", name, label: `Confirmer « ${name} » terminée`, confirm: `Enregistrer « ${name} » comme terminée ?` });
+          else actions.push({ type: "start_mission", name, label: `Mon objectif actuel est « ${name} »`, confirm: `Confirmer que « ${name} » est en cours ?` });
+        }
+        if (r.id === "just-moved-in") return `Cela correspond à « ${name} ». As-tu rapporté les provisions dans la chambre ? Confirme la fin seulement si ton jeu l’indique.`;
+        if (r.id === "overnight-charges") return `La conversation pourrait correspondre à « ${name} ». Quel objectif vois-tu à l’écran ?`;
+        return `La tâche de l’ambulance correspond à « ${name} ».`;
+      });
+      return { intent: "motel_report", text: lines.join(" "), actions, sources: [], reliability: "signalé" };
+    }
+    const atMotel = /motel|reception|gerante/.test(nk(q));
+    const practical = /manqu|rater|avant de continuer|debut.{0,12}chapitre 2|commenc.{0,20}chapitre 2|dois faire|aller maintenant/.test(nk(q));
+    if (practical && (atMotel || (!p.nextMission && !topic))) {
+      const landmarkId = KNOWLEDGE_BY_ID.get("starlet-motel")?.location.landmarkId;
+      const actions: AiAction[] = landmarkId ? [{ type: "show_place", landmarkId, label: "Voir le motel sur la carte" }] : [];
+      return { intent: "motel_advice", text: `Si tu es au Starlet Motel, regarde les objectifs actifs sur la carte. ${MOTEL_CARDS} ${MOTEL_POSTERS}`, reliability: "signalé", actions, sources: [{ name: "The Games Wiki", url: "https://thegameswiki.com/gta6/wiki/missable-content-and-points-of-no-return", when: null }, { name: "Windows Central", url: POSTER_SOURCE, when: null }] };
+    }
+  }
   const vehicles = ctx.feed?.vehicles ?? [];
   if (!ctx.feed)
     return { intent: "offline", text: "Je n'ai pas encore les données de la veille. Reconnecte-toi : je ne réponds qu'à partir des fiches vérifiées, jamais de mémoire.", reliability: null, sources: [], actions: [] };
@@ -573,6 +600,7 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
     }
     case "next": {
       if (topic?.kind === "mission") {
+        if (p.chapter === 2) return progressAnswer("next_start", q, ctx)!;
         const guess = nextMissionGuess(cat, topic.name);
         return guess && missionVisible(guess.mission, p.chapter, p.spoilerMode)
           ? { intent, text: `Ensuite, ce serait probablement « ${guess.mission.name} », ${guess.basis} : à confirmer dans le jeu.`, reliability: "signalé", sources: [], actions: [{ type: "set_next_mission", name: guess.mission.name, label: `Enregistrer ${guess.mission.name}`, confirm: `Enregistrer « ${guess.mission.name} » comme prochaine mission ?` }], replies: [`Je vais lancer ${guess.mission.name}`], topic }

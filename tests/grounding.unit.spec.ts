@@ -238,7 +238,7 @@ test.describe("Correctifs résiduels V0.18.1", () => {
     const a = autopilot(st({ chapter: 2, lastMission: "Discharge Time", missionsDone: ["Discharge Time"] }));
     expect(a.manual).not.toContain("Prepare for Vice City");
     expect(a.manual).not.toContain("Starlet Motel");
-    expect(a.manual).toContain("Checking Out");
+    expect(a.manual).not.toContain("Checking Out");
   });
 });
 

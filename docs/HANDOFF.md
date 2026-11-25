@@ -13,6 +13,17 @@
 | Dernier passage complet des tests | 538 réussis, 0 échec, 4 ignorés (21,7 min, Claude simulé) ; pipeline Python 21 / 21 |
 | Mis à jour le | 24/11/2026, par Claude |
 
+## Branche en revue — issue #18
+
+**Reprise Claude** · `codex/chapter2-story`, base `experiment/claude-artifact@9822856`, code `2216a95` (V0.20.2). Les versions du tableau ci-dessus décrivent toujours l’intégration et l’Artifact en service. [Rapport par mission et références](V0.20.2.md).
+
+Validation sur le code final `2216a95` : build standard et TypeScript réussis, 239 tests unitaires et 24 parcours ciblés réussis (8 iPhone, 8 iPad, 8 WebKit). Pipeline Python : 21 réussis. Passage général sur l’export antérieur `46abfa2` : 550 réussis, 4 ignorés, 2 échecs iPad. Les deux scénarios ont réussi en relance individuelle sur le code final. Le détail et les limites figurent dans le rapport.
+
+1. Lire le rapport avant de rapprocher les données de cette branche du Data Engine en revue. Les relations sourcées sont dans `src/data/chapter2.ts` et les fiches GTABase générées sont conservées. Les mises à jour du Hub doivent conserver les identifiants ou expliciter leur correspondance.
+2. Pour reprendre dans un checkout propre, utiliser `git fetch origin codex/chapter2-story` puis `git switch --track origin/codex/chapter2-story` (ou `git switch codex/chapter2-story` si elle existe). Installer avec `npm ci`, produire `out/` avec `npm run build`, puis lancer `npx playwright test`.
+3. Sur un iPhone réel, vérifier avec Théo le journal affiché au motel, l’annulation d’une proposition et le repère du motel. L’ambulance est déclarée terminée. La fin des courses pour Jason et l’identité de la gérante restent à confirmer. Aucun profil de démonstration n’est injecté dans la partie.
+4. Publication en attente de revue. L’issue reste ouverte et la branche d’intégration conserve sa version actuelle.
+
 ## Terminé
 
 - Carte GTADB (tuiles z0–z5, 3 663 repères), anti-spoiler à la source, navigation Accueil | Carte | LEONIDA | Guide | Partie.

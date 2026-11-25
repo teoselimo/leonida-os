@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { ChapterTransition } from "@/components/ChapterTransition";
 import { DATASET_INFO } from "@/data/demo";
 import { CC_BY_URL, GTADB_URL, loadMeta } from "@/lib/gtadb";
 import type { GtadbMeta } from "@/lib/gtadb";
@@ -130,6 +131,7 @@ export function ProfileScreen() {
               <div><dt>Missions annexes et activités</dt><dd data-testid="p-sides">{sidesDone}</dd></div>
             </dl>
             <p className="muted small">Uniquement ce que tu as déclaré : LEONIDA OS ne lit pas ta sauvegarde PS5 / Xbox.</p>
+            <ChapterTransition />
             <h4>Chapitre atteint</h4>
             <div className="stepper stepper--7" role="radiogroup" aria-label="Progression narrative">
               {CHAPTER_LIST.map((c: Chapter) => (

@@ -1,5 +1,6 @@
 "use client";
 
+import { ChapterTransition } from "@/components/ChapterTransition";
 import { useEffect, useMemo, useState } from "react";
 import { alerts, progress, recommend } from "@/lib/engine";
 import { CATEGORIES } from "@/lib/meta";
@@ -92,6 +93,7 @@ export function HomeScreen() {
       <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} onStart={() => mission && launch(mission, true)} />
       <div className="home__main">
       <CollectorAlert hideSnapshot />
+      <ChapterTransition />
 
       {/* V0.18 : sans mission choisie, la proposition de l'Autopilot passe en premier (deux ou trois touchers après « Terminée ») */}
       {guard && (
@@ -345,7 +347,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
   const [actOpen, setActOpen] = useState<string | null>(null);
   // V0.18 Mission Autopilot : la suite vient du graphe sourcé (jamais de l'ordre d'un guide), le joueur confirme
   const a = useMemo(() => autopilot(state), [state]);
-  const manual = useMemo(() => [...new Set([...a.manual, ...choices])].sort(), [a.manual, choices]);
+  const manual = useMemo(() => [...new Set([...a.manual, ...(state.profile.chapter === 2 ? [] : choices)])].sort(), [a.manual, choices, state.profile.chapter]);
   const lost = justDone?.delta.lost ?? [];
   if (a.mode === "exploration" && !justDone)
     return (
@@ -365,7 +367,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
         <div className="nextc__sugg" data-testid="autopilot-suggestion">
           <span>
             <b>{a.suggestion.name}</b>
-            {a.suggestion.fresh && <i className="nextc__new">débloquée</i>}
+            {a.suggestion.fresh && <i className="nextc__new">{a.suggestion.state === "accessible" ? "débloquée" : "à vérifier"}</i>}
             <em>{a.suggestion.why}{a.suggestion.pnr ? " · point de non-retour" : ""}</em>
           </span>
           <div className="row gap8">
@@ -379,7 +381,7 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
             <li key={x.id}>
               <span>
                 <b>{x.name}</b>
-                {x.fresh && <i className="nextc__new">débloquée</i>}
+                {x.fresh && <i className="nextc__new">{x.state === "accessible" ? "débloquée" : "à vérifier"}</i>}
                 <em>{x.why}{x.pnr ? " · point de non-retour" : ""}</em>
               </span>
               <button className="btn btn--xs btn--on press" onClick={() => onChoose(x.name)} data-testid="choose-next">Choisir</button>

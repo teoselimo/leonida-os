@@ -1,3 +1,4 @@
+import { MOTEL_UNLOCKS, MOTEL_JOURNAL_TASKS } from "@/data/chapter2";
 import raw from "@/data/hub/missions.json";
 import meta from "@/data/hub/meta.json";
 import type { ProgNode, Src } from "@/data/progression";
@@ -28,6 +29,13 @@ function factsOf(m: HubMission): HubFacts {
 }
 
 const COND_SHOWN = new Set(["de nuit", "en jouant Lucia", "en jouant Jason", "édition Ultimate", "durée limitée"]);
+
+const corroboration: Record<string, string> = {
+  "twist-wrist-smash-grab": "twist-wrist-smash-grab-join-billy-on-a-job",
+  "thrillbillies": "thrillbillies-check-out-the-mud-club",
+  "collect-chemicals-for-kyle": "collect-chemicals-for-kyle",
+  "veteran-hunted": "veteran-hunted-meet-bret",
+};
 
 export interface HubGraph {
   nodes: ProgNode[];
@@ -70,7 +78,7 @@ export function buildHubGraph(manual: ProgNode[], storyIds: Map<string, { kind: 
     const storyKind = storyIds.get(id)?.kind;
     if (storyKind === "place") continue;
     const kind: ProgNode["kind"] = storyKind === "activity" ? "activity" : m.kind === "main" ? "main" : "side";
-    const cond = (m.cond ?? []).filter((c) => COND_SHOWN.has(c));
+    const cond = (m.cond ?? []).filter((c) => m.chapter === 2 || COND_SHOWN.has(c));
     const notes = [m.weak ? "lien donné comme habituel (« usually ») par GTABase" : null, m.afterAllMains ? `et les autres missions principales du chapitre ${m.afterAllMains}` : null].filter(Boolean);
     const node: ProgNode = {
       id,
@@ -78,6 +86,7 @@ export function buildHubGraph(manual: ProgNode[], storyIds: Map<string, { kind: 
       aliases: m.aliases,
       kind,
       chapter: m.chapter,
+      journalTask: m.chapter === 2 ? MOTEL_JOURNAL_TASKS[id] : undefined,
       character: m.jason && !m.lucia ? "Jason" : m.lucia && !m.jason ? "Lucia" : undefined,
       where: m.location,
       prereq: after.length ? { all: after, basis: m.weak ? "déduit" : "explicite", sources: [gb(m)], condition: cond.length ? cond.join(", ") : undefined, note: notes.length ? notes.join(" ; ") : undefined } : null,
@@ -85,6 +94,11 @@ export function buildHubGraph(manual: ProgNode[], storyIds: Map<string, { kind: 
       origin: "hub",
       hub: f,
     };
+    if (m.chapter === 2 && MOTEL_UNLOCKS[id]) node.prereq = MOTEL_UNLOCKS[id]!;
+    if (node.prereq && corroboration[id]) {
+      node.prereq.sources.push({ name: "PowerPyx", url: `https://www.powerpyx.com/gta-6-${corroboration[id]}-walkthrough/` });
+    }
+    if (id === "brets-hunting-decks") node.kind = "activity";
     if (m.lostAt && nodeIdOf.get(m.lostAt)) node.lostAt = { node: nodeIdOf.get(m.lostAt)!, at: "start", sources: [gb(m)] };
     if (m.pnr)
       node.pointOfNoReturn = {

@@ -1,3 +1,4 @@
+import { MOTEL_CARDS, MOTEL_POSTERS, POSTER_SOURCE } from "./chapter2";
 import type { Coverage, StoryEvidence, StoryNode, StoryRule } from "@/lib/story/model";
 
 /**
@@ -60,7 +61,7 @@ export const CHAPTER_COVERAGE: Record<number, { level: Coverage; audited: string
     audited: ["missions principales de Gear Up à Discharge Time (prérequis sourcés)", "point de non-retour et pertes d'argent", "manquables de Don Gone et des missions de Key Lento", "fences Donnie et Brian"],
     missing: ["contenu détaillé de Lab Fees, Unwanted Attention et Hey Arnold!", "récompenses exactes de plusieurs activités facultatives"],
   },
-  2: { level: "partielle", audited: ["point de non-retour (Checking Out, 15 000 $)", "perte du motel", "cartes à collectionner du motel"], missing: ["liste des missions du chapitre", "conséquences de chaque mission du chapitre"] },
+  2: { level: "partielle", audited: ["point de non-retour (Checking Out, 15 000 $)", "perte du motel", "cartes et affiches du motel", "conditions documentées du graphe du chapitre 2"], missing: ["séquence exacte des appels et conditions de certaines activités", "conséquences de chaque mission du chapitre"] },
   3: { level: "non auditée", audited: ["mission limitée Race Against Yago"], missing: ["missions, choix et récompenses du chapitre"] },
   4: { level: "non auditée", audited: ["choix de Bad Driver!", "gel du compte courant", "mission limitée This Is a Free Call From..."], missing: ["missions, choix et récompenses du reste du chapitre"] },
   5: { level: "non auditée", audited: ["signature sans retour", "rôle de Family Savings dans la fin"], missing: ["missions et choix du chapitre"] },
@@ -299,26 +300,35 @@ export const STORY_RULES: StoryRule[] = [
     kind: "seuil",
     chapter: 2,
     trigger: { node: "checking-out", at: "start" },
-    advice: "Pour quitter le motel, il faut avoir terminé les autres missions principales du chapitre et réuni au moins 15 000 $ en banque.",
+    advice: "Pour quitter le motel, il faut avoir terminé les autres missions principales du chapitre et réuni au moins 15 000 $. Vérifie le journal et attends l’appel.",
     explain: "Checking Out clôt le chapitre 2 et retire définitivement le Starlet Motel comme domicile.",
     effects: [
-      { k: "threshold", what: "argent requis en banque", resource: "checking", min: 15000 },
+      { k: "threshold", what: "objectif de fonds du chapitre", resource: "checking", min: 15000 },
       { k: "close", what: "Starlet Motel comme domicile", node: "starlet-motel" },
     ],
     timing: "au début de Checking Out",
     reversible: false,
     tier: "Critique",
-    evidence: [ev("The Games Wiki", U.wiki, "Checking Out exige les autres missions principales du chapitre 2 et au moins 15 000 $."), ev("GameTa", U.gameta, "Prepare for Vice City demande de gagner et déposer au moins 15 000 $ ; Checking Out met fin au motel.")],
+    evidence: [ev("PowerPyx", "https://www.powerpyx.com/gta-6-checking-out-move-to-vice-city-walkthrough/", "Journal principal terminé, 15 000 $ et appel."), ev("The Games Wiki", U.wiki, "Checking Out exige les autres missions principales du chapitre 2 et au moins 15 000 $."), ev("GameTa", U.gameta, "Prepare for Vice City demande de gagner et déposer au moins 15 000 $ ; Checking Out met fin au motel.")],
     status: "active",
     verifiedAt: D,
     match: ["checking out"],
+  },
+  {
+    id: "ch2-motel-posters", chapter: 2, kind: "opportunité",
+    trigger: { node: "overnight-charges", at: "start" },
+    advice: MOTEL_POSTERS, timing: "lors du passage à la réception",
+    explain: "Examine les affiches près du bureau de la gérante. D’autres exemplaires existent à Port Gellhorn.",
+    effects: [{ k: "unlock", what: "piste des personnes disparues" }], tier: "À explorer", reversible: true, status: "active", verifiedAt: "2026-11-24",
+    evidence: [ev("Windows Central", POSTER_SOURCE, "Piste des personnes disparues."), ev("PowerPyx", "https://www.powerpyx.com/gta-6-gellhorns-missing-tourists-walkthrough/", "Affiches au motel et ailleurs à Port Gellhorn.")],
+    match: ["affiches", "personnes disparues"],
   },
   {
     id: "ch2-motel-cards",
     kind: "manquable",
     chapter: 2,
     trigger: { chapterEnd: 2 },
-    advice: "Ramasse les cartes Vicki et Victor Maravilla au motel ; si tu les rates, un second exemplaire existe ailleurs.",
+    advice: MOTEL_CARDS,
     explain: "Les deux cartes du motel disparaissent avec lui, mais chacune a un double ailleurs dans le monde ; aucune collection n'est bloquée.",
     effects: [{ k: "close", what: "deux cartes à collectionner du motel (doublons ailleurs)" }],
     timing: "fin du chapitre 2",

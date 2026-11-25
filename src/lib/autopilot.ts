@@ -79,8 +79,12 @@ function whyOf(x: NodeState): string {
   const p = x.node.prereq;
   if (!p) return "prérequis non documentés";
   const n = p.sources.length;
+  if (x.node.chapter === 2) {
+    const evidence = n === 1 ? `lien documenté par ${p.sources[0].name}` : `lien recoupé par ${n} sources`;
+    return [evidence, x.status === "accessible" ? "accessible" : "disponibilité à confirmer en jeu", p.condition, p.note].filter(Boolean).join(" · ");
+  }
   const base = x.status === "accessible" ? `prérequis faits · ${n} sources` : p.basis === "déduit" ? "prérequis déduits par les guides · à confirmer en jeu" : `prérequis faits · ${n === 1 ? "une seule source" : `${n} sources`} · à confirmer en jeu`;
-  return p.note ? `${base} (${p.note})` : base;
+  return [base, p.note].filter(Boolean).join(" · ");
 }
 
 function option(x: NodeState, v: ProgressView, s: Pick<PersistedState, "profile">, fresh: Set<string>): NextOption {
@@ -113,34 +117,36 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
   }
   const open = (x: NodeState) => x.status === "accessible" || x.status === "potentiellement accessible";
   const byRank = (a: NextOption, b: NextOption) => Number(b.fresh) - Number(a.fresh) || (a.state === "accessible" ? 0 : 1) - (b.state === "accessible" ? 0 : 1);
-  const mains = v.states.filter((x) => x.node.kind === "main" && open(x) && !x.likelyDone && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort(byRank);
+  const mains = v.states.filter((x) => x.node.kind === "main" && !x.node.journalTask && open(x) && shownName(x, p.spoilerMode) === x.node.name && !x.likelyDone && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort(byRank);
   const optional = v.states.filter((x) => x.node.kind !== "main" && open(x) && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort((a, b) => Number(b.missable) - Number(a.missable) || byRank(a, b));
   const sides = optional.filter((x) => x.kind === "side");
   const activities = optional.filter((x) => x.kind === "activity");
   // nom réel gardé pour la confirmation ; nom affiché masqué si l'anti-spoiler le cache
   const likely = v.states.filter((x) => x.likelyDone && x.node.chapter === p.chapter).map((x) => ({ ...option(x, v, s, fresh), realName: x.node.name, why: "placée avant une mission que tu as terminée dans le récapitulatif du jeu (indice faible)" }));
   // V0.20 : chapitre 1 audité ; chapitres suivants = graphe partiel lu sur GTABase (une source, prérequis cités)
-  const hubLinks = v.states.filter((x) => x.node.chapter === p.chapter && x.node.origin === "hub" && x.node.prereq).length;
+  const hubLinks = v.states.filter((x) => x.node.chapter === p.chapter && x.node.kind === "main" && x.node.origin === "hub" && x.node.prereq).length;
   const graphCovers = p.chapter === 1 || hubLinks >= 3;
   let uncertain: string | null = null;
   if (!graphCovers) uncertain = `Le chapitre ${p.chapter} n'a pas encore de graphe de missions suffisant : je ne peux pas calculer la suite. Indique la mission affichée dans ton jeu.`;
   else if (p.chapter > 1 && !mains.length)
-    uncertain = `Graphe partiel pour le chapitre ${p.chapter} (prérequis lus sur GTABase, une seule source) : aucune suite calculable depuis ta progression déclarée. Indique la mission affichée dans ton jeu.`;
+    uncertain = `Graphe partiel pour le chapitre ${p.chapter} (prérequis incomplètement documentés) : vérifie les repères sur ta carte en jeu. Indique l’objectif affiché pour préparer la suite.`;
   else if (last && !last.known) uncertain = `« ${last.name} » n'est pas dans mon graphe : je ne sais pas ce qu'elle débloque. Choisis la suite toi-même.`;
   else if (!mains.length)
     uncertain = last
       ? `Les sources ne documentent pas ce que « ${last.name} » débloque (prérequis des missions suivantes inconnus). Regarde ta carte en jeu et indique la mission.`
       : "Indique ta dernière mission terminée ou la mission affichée dans ton jeu : je calcule la suite à partir de là.";
+  if (p.chapter === 2 && p.spoilerMode === "strict" && nodeByName(p.lastMission)?.id === "ambulance-chaser")
+    uncertain = "Après l’ambulance, plusieurs tâches du motel peuvent rester ouvertes. Vérifie le journal des courses pour Jason et l’objectif à la réception. Tu peux décrire ce que tu as fait au copilote.";
   const pnrNode = nextPointOfNoReturn(v);
-  const pnrSoon = pnrNode && mains.some((m) => m.id === pnrNode.node.id || (pnrNode.missing ?? []).every((x) => x.id === m.id || x.id === v.planned?.node.id || x.id === v.current?.node.id));
+  const pnrSoon = pnrNode && mains.some((m) => m.id === pnrNode.node.id || (!!pnrNode.missing?.length && pnrNode.missing.every((x) => x.id === m.id || x.id === v.planned?.node.id || x.id === v.current?.node.id)));
   const pnr = pnrSoon && pnrNode?.node.pointOfNoReturn
     ? { where: shownName(pnrNode, p.spoilerMode) === pnrNode.node.name ? `au début de ${pnrNode.node.name}` : "au début d'une mission principale à venir", lose: pnrNode.node.pointOfNoReturn.lose }
     : null;
   // choix manuel : missions du chapitre atteint (graphe + inventaire), jamais celles d'un chapitre non atteint
   const doneNames = new Set([...p.missionsDone, p.lastMission ?? ""].map((m) => nk(m)));
   const manual = [
-    ...v.states.filter((x) => x.node.kind !== "activity" && x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
-    ...STORY_NODES.filter((n) => n.chapter <= p.chapter && (n.kind === "main" || n.kind === "side")).map((n) => n.name),
+    ...v.states.filter((x) => !x.node.journalTask && x.node.kind !== "activity" && x.node.chapter <= p.chapter && x.status !== "terminé" && x.status !== "plus disponible" && shownName(x, p.spoilerMode) === x.node.name).map((x) => x.node.name),
+    ...STORY_NODES.filter((n) => p.spoilerMode !== "strict" && n.chapter <= p.chapter && (n.kind === "main" || n.kind === "side")).map((n) => n.name),
   ].filter((n, i, a) => a.indexOf(n) === i && !doneNames.has(nk(n)));
   const mode: AutopilotMode = started ? "en mission" : planned ? "envisagée" : p.exploring ? "exploration" : "à choisir";
   return {
