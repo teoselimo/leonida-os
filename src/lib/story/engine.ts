@@ -71,8 +71,9 @@ function nodeStatus(id: string, v: ProgressView, s: StoryInput): NodeSt {
     if (g.status === "plus disponible") return "lost";
     // mission principale placée avant une mission terminée dans le Story Recap : probablement passée (signal FAIBLE) —
     // V0.18 : n'est plus traitée comme terminée ; le joueur confirme
-    if (g.likelyDone) return "likely";
+    // V0.20.2 : une mission principale d'un chapitre déjà quitté est passée, même si elle n'a jamais été déclarée
     if (p.chapter > g.node.chapter && g.node.kind === "main") return "done";
+    if (g.likelyDone) return "likely";
     if (v.planned?.node.id === id || g.status === "accessible" || g.status === "potentiellement accessible") return "near";
     // verrouillé, mais tous les prérequis manquants sont la mission en cours / prévue
     if (g.status === "verrouillé" && (g.missing ?? []).every((m) => m.id === v.current?.node.id || m.id === v.planned?.node.id)) return "near";

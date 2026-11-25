@@ -79,6 +79,9 @@ export function computeProgress(s: Pick<PersistedState, "profile"> & { done?: Re
     if (n && n.kind !== "main" && !done.has(n.id)) (done.add(n.id), ticked.add(n.id));
   }
   const started = (id: string) => done.has(id) || cur?.id === id;
+  // V0.20.2 : une mission PRINCIPALE d'un chapitre déjà quitté est forcément passée (même règle que Story Intelligence) ;
+  // sert uniquement à fermer les pertes datées (lostAt), sans rien déclarer comme fait dans la sauvegarde
+  const passed = (id: string) => started(id) || (PROG_BY_ID.get(id)?.kind === "main" && (PROG_BY_ID.get(id)?.chapter ?? 99) < p.chapter);
   // Story Recap : une mission principale listée AVANT une mission faite est « probablement faite » (signal faible, affiché comme tel)
   const maxRecap = Math.max(0, ...[...done, ...(cur ? [cur.id] : [])].map((id) => PROG_BY_ID.get(id)?.recap ?? 0));
   const likely = (id: string) => {
@@ -88,7 +91,7 @@ export function computeProgress(s: Pick<PersistedState, "profile"> & { done?: Re
   const states = PROGRESSION.map((node): NodeState => {
     if (done.has(node.id)) return { node, status: "terminé", how: declared.has(node.id) || ticked.has(node.id) ? "déclaré" : "déduit" };
     if (cur?.id === node.id) return { node, status: "en cours" };
-    if (node.lostAt && (node.lostAt.at === "start" ? started(node.lostAt.node) : done.has(node.lostAt.node))) return { node, status: "plus disponible" };
+    if (node.lostAt && (node.lostAt.at === "start" ? passed(node.lostAt.node) : done.has(node.lostAt.node) || passed(node.lostAt.node))) return { node, status: "plus disponible" };
     if (likely(node.id)) return { node, status: "inconnu", likelyDone: true };
     if (node.chapter > p.chapter || !node.prereq) return { node, status: "inconnu" };
     const missing = node.prereq.all.filter((d) => !done.has(d) && !likely(d)).map((d) => PROG_BY_ID.get(d)!).filter(Boolean);

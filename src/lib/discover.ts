@@ -133,6 +133,9 @@ export function discoverNow(
     const title = frHeadline(r, gl);
     if (curMissables.has(nk(title).slice(0, 24)) || objectiveTexts.some((o) => o && nk(title).includes(o))) continue;
     const until = r.details?.contextMissable?.value.until ?? null;
+    // V0.20.2 : élément perdu au lancement d'une mission principale d'un chapitre déjà quitté → plus récupérable
+    const untilNode = until ? nodeByName(until) : null;
+    if (untilNode && (untilNode.kind === "main" && untilNode.chapter < p.chapter || ["terminé", "en cours"].includes(v.byId.get(untilNode.id)?.status ?? ""))) continue;
     const missable = r.details?.missable?.value === true || !!until;
     const status = recStatus(r);
     const place = r.details?.place?.value ?? null;
