@@ -2,7 +2,7 @@
 
 > À tenir à jour à la fin de CHAQUE intervention (Claude ou Codex). Règles complètes : `AGENTS.md`.
 
-**Intégration en cours :** personne
+**Intégration en cours :** Claude depuis le 25/11/2026 23:10 (publication Artifact V0.21, code 7f12e5a)
 
 | | |
 | --- | --- |
