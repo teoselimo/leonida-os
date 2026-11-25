@@ -1,5 +1,7 @@
 """Accès réseau du Data Hub : cache disque, reprise, politesse (1 requête/1,2 s), journal des échecs.
 Aucune page n'est jamais « reconstituée » : une page non lue reste signalée en échec."""
+from pathlib import Path
+from datetime import datetime, timezone
 import hashlib, json, os, subprocess, time
 
 UA = "Mozilla/5.0 (compatible; LEONIDA-OS-DataHub/0.20; usage personnel, cache local)"
@@ -49,25 +51,48 @@ def get(url, delay=0.6, timeout=45, retries=2):
         time.sleep(3 * (attempt + 1))
     return 0, None, err
 
+NO_LASTMOD_TTL = 7 * 24 * 3600
+
+
+def cache_state(path, prev, lastmod):
+    if not os.path.isfile(path):
+        return "missing"
+    if prev.get("lastError"):
+        return "expired"
+    if lastmod:
+        return "fresh" if prev.get("lastmod") == lastmod else "expired"
+    try:
+        stamp = datetime.fromisoformat(prev["fetchedAt"])
+        if stamp.tzinfo is not None:
+            age = (datetime.now(timezone.utc) - stamp).total_seconds()
+            if 0 <= age < NO_LASTMOD_TTL:
+                return "fresh"
+    except (KeyError, TypeError, ValueError):
+        pass
+    return "expired"
+
+
 def fetch_cached(source, url, lastmod=None, force=False, offline=False, st=None):
     """Lit le cache si la page n'a pas changé (lastmod du sitemap identique), sinon télécharge.
     Retourne (html|None, info). info.status ∈ cached | fetched | failed | offline-miss."""
     st = st if st is not None else load_state(source)
     p = cache_path(source, url)
     prev = st.get(url, {})
-    fresh = os.path.exists(p) and (lastmod is None or prev.get("lastmod") == lastmod)
-    if fresh and not force:
-        return open(p, encoding="utf-8").read(), {"status": "cached", **prev}
+    state = cache_state(p, prev, lastmod)
+    if state == "fresh" and (offline or not force):
+        return Path(p).read_text(encoding="utf-8"), {**prev, "status": "cached", "cacheState": state}
     if offline:
         if os.path.exists(p):
-            return open(p, encoding="utf-8").read(), {"status": "cached-stale", **prev}
-        return None, {"status": "offline-miss"}
+            return Path(p).read_text(encoding="utf-8"), {**prev, "status": "cached-stale", "cacheState": state}
+        return None, {"status": "offline-miss", "cacheState": state}
     code, body, err = get(url)
     now = time.strftime("%Y-%m-%dT%H:%M:%S%z")
     if body is None:
         st[url] = {**prev, "lastError": err, "lastTry": now, "code": code}
-        return (open(p, encoding="utf-8").read() if os.path.exists(p) else None), {"status": "failed", "error": err, "code": code}
+        return (Path(p).read_text(encoding="utf-8") if os.path.exists(p) else None), {"status": "failed", "cacheState": state, "error": err, "code": code}
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    open(p, "w", encoding="utf-8").write(body)
+    with open(p + ".tmp", "w", encoding="utf-8") as stream:
+        stream.write(body)
+    os.replace(p + ".tmp", p)
     st[url] = {"lastmod": lastmod, "fetchedAt": now, "code": code, "sha": hashlib.sha1(body.encode()).hexdigest()[:12]}
-    return body, {"status": "fetched", **st[url]}
+    return body, {"status": "fetched", "cacheState": state, **st[url]}

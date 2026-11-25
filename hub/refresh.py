@@ -13,7 +13,8 @@ Sorties :
   public/data/hub/*.json             bundles chargés à la demande par l'app (Garage, catalogue, lieux)
   src/data/hub/*.json                bundles embarqués (missions pour Story/Autopilot, méta)
 Rien n'est jamais inventé : une page non lue est signalée, ses anciennes données restent marquées « non revérifiées »."""
-import argparse, collections, json, os, re, subprocess, sys, time, unicodedata
+import argparse, collections, json, os, re, subprocess, sys, tempfile, time, unicodedata
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -22,6 +23,7 @@ from fetchlib import cache_path, load_state, STATE
 from adapters import gtadb as A_GTADB, gtabase as A_GTABASE
 
 ap = argparse.ArgumentParser()
+ap.add_argument("--force", action="store_true", help="recharger aussi les pages GTABase fraîches")
 ap.add_argument("--offline", action="store_true")
 ap.add_argument("--source", default="all", choices=["all", "gtadb", "gtabase"])
 ap.add_argument("--max", type=int, default=None)
@@ -64,11 +66,6 @@ if a.source in ("all", "gtadb"):
         places = A_GTADB.records(a.gtadb_clone, rev, revdate)
         st["status"] = "ok" if not err else "partiel"
         st["upToDate"] = rev == cur.get("revision")
-        if not st["upToDate"]:
-            # repères bruts : régénérés au même format (les tuiles demandent une reconstruction complète, signalée)
-            r = subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "build_gtadb_assets.py"), a.gtadb_clone, "--data-only"], capture_output=True, text=True)
-            st["rawLandmarks"] = "régénérés" if r.returncode == 0 else ("échec : " + r.stderr[-200:])
-            st["tiles"] = "à reconstruire manuellement (scripts/build_gtadb_assets.py sur un clone complet des tuiles)"
     else:
         st["status"] = "échec"
     if err:
@@ -80,9 +77,10 @@ if a.source in ("all", "gtadb"):
 gb = [r for f in sorted(os.listdir(REC)) if f.startswith("gtabase-") and f != "gtabase-mission-index.json" for r in (load(os.path.join(REC, f), []) or [])]
 mission_index = load(os.path.join(REC, "gtabase-mission-index.json"), [])
 if a.source in ("all", "gtabase"):
-    args = [sys.executable, os.path.join(HERE, "crawl_gtabase.py")] + (["--offline"] if a.offline else []) + ([f"--max={a.max}"] if a.max else [])
+    args = [sys.executable, os.path.join(HERE, "crawl_gtabase.py")] + (["--offline"] if a.offline else []) + ([f"--max={a.max}"] if a.max is not None else []) + (["--force"] if a.force else [])
     r = subprocess.run(args, capture_output=True, text=True)
     tail = (r.stdout.strip().splitlines() or ["?"])[-1]
+    metrics = json.loads(tail) if not r.returncode else {"error": r.stderr.strip()[-500:]}
     index = load(os.path.join(STATE, "gtabase-index.json"), {"urls": {}})
     fst = load_state("gtabase")
     out, failed, notcached = [], [], []
@@ -98,19 +96,36 @@ if a.source in ("all", "gtabase"):
         if fst.get(url, {}).get("lastError"):
             rec["stale"] = True  # dernière lecture en échec : données de la lecture précédente
         out.append(rec)
+    previous_urls = {p["url"] for row in gb for p in row["prov"]}
+    read_urls = {p["url"] for row in out for p in row["prov"]}
     gb = out
-    report["sources"]["gtabase"] = {"name": "GTABase (www.gtabase.com, sitemap public)", "license": A_GTABASE.LIC, "status": "ok" if not failed else "partiel",
+    report["sources"]["gtabase"] = {"name": "GTABase (www.gtabase.com, sitemap public)", "license": A_GTABASE.LIC, "status": "partiel" if failed or notcached else "ok",
                                     "sitemapUrls": len(index["urls"]), "discoveredAt": index.get("discoveredAt"), "sitemapFailures": index.get("sitemapFailures", []),
-                                    "read": len(out), "failed": failed, "notFetchedYet": len(notcached), "crawler": tail,
+                                    "read": len(out), "failed": failed, "notFetchedYet": len(notcached), "crawler": tail, "metrics": metrics,
                                     "notes": ["Endpoint /media/com_jamegafilter/en_gb/1.json (403) non utilisé.", "Aucune API supposée : lecture du HTML public et du sitemap."]}
+
+# Une collecte incomplète ne doit pas remplacer les fiches et leurs relations.
+incomplete = []
+if a.source in ("all", "gtadb") and (not places or st["status"] != "ok"):
+    incomplete.append("gtadb")
+if a.source in ("all", "gtabase") and (
+    r.returncode or failed or notcached or metrics.get("unchecked") or metrics.get("pages", {}).get("cached-stale") or not out or previous_urls - read_urls or index.get("sitemapFailures")
+    or any(row.get("stale") for row in out)
+):
+    incomplete.append("gtabase")
+if incomplete:
+    dump(os.path.join(HERE, "reports", "last-attempt.json"),
+         {"attemptAt": NOW, "staleSources": incomplete, "sources": report["sources"],
+          "retainedSnapshotAt": _prev_report.get("runAt")})
+    sys.exit("Collecte incomplète, instantané précédent conservé : " + ", ".join(incomplete))
 
 # ── 3. Déduplication et variantes ───────────────────────────────────────
 import dedup
 gb = dedup.dedup(gb, report, nk)
 
 # ── 4. Liaison aux entités déjà intégrées (relier, jamais reconstruire) ─
-subprocess.run(["node", os.path.join(HERE, "export-leonida.mjs")], capture_output=True)
-L = load(os.path.join(STATE, "leonida-entities.json"), {})
+with open(os.path.join(STATE, "leonida-entities.json"), encoding="utf-8") as stream:
+    L = json.load(stream)
 def name_index(items, extra=lambda e: []):
     ix = {}
     for e in items:
@@ -136,7 +151,7 @@ for r in gb:
             r["fields"].update({k2: v for k2, v in (("order", mi["order"]), ("optional", mi["optional"]), ("missable", mi["missable"]), ("pointOfNoReturn", mi["pointOfNoReturn"])) if v})
             if mi.get("chapter") is not None and "chapter" not in r["fields"]:
                 r["fields"]["chapter"] = mi["chapter"]
-            if nk(mi["name"]) != k:
+            if nk(mi["name"]) != k and mi["name"] not in r.get("aliases", []):
                 r.setdefault("aliases", []).append(mi["name"])
         names = [r["name"]] + r.get("aliases", [])
         node = next((prog_ix.get(nk(n)) for n in names if prog_ix.get(nk(n))), None)
@@ -162,6 +177,7 @@ for r in gb:
         if kv:
             r["leonida"] = {"knowledge": kv["id"]}; link_stats[f"{r['type']}→Knowledge"] += 1
         if r["type"] == "property":
+            r["rel"] = [rel for rel in r["rel"] if rel["kind"] not in ("located_at", "located_candidates")]
             cand = place_ix.get(k) or place_ix.get(nk(re.sub(r"\s+(safehouse|garage)$", "", r["name"], flags=re.I)))
             if cand and len(cand) == 1:
                 r["rel"].append({"kind": "located_at", "to": cand[0]["id"], "basis": "nom identique au repère GTADB"}); link_stats["propriété→repère GTADB"] += 1
@@ -231,6 +247,7 @@ for r in gb:
             rl["to"] = url_to_id.get(rl["url"].rstrip("/"))
             if not rl["to"]:
                 unresolved += 1
+A_GTABASE.validate_variants(gb)
 report["links"]["relations non résolues (page absente du sitemap)"] = unresolved
 
 # ── 4c. Soluces GTABase → faits structurés par mission (V0.20.1) ─────────
@@ -268,21 +285,9 @@ new = diff.snapshot(places + gb)
 added, removed, changed = diff.compare(prev, new)
 first_run = not prev
 report["changes"] = {"firstRun": first_run, "added": len(added), "removed": len(removed), "changed": len(changed), "examplesChanged": changed[:15], "examplesRemoved": removed[:15]}
-os.makedirs(os.path.join(HERE, "history"), exist_ok=True)
-with open(os.path.join(HERE, "history", "changes.jsonl"), "a") as fh:
-    fh.write(json.dumps({"at": NOW, "firstRun": first_run, "added": added if not first_run else len(added), "removed": removed, "changed": changed}, ensure_ascii=False) + "\n")
-
-# ── 6. Écriture du référentiel ──────────────────────────────────────────
-dump(os.path.join(REC, "gtadb-place.json"), places, compact=True)
 groups = collections.defaultdict(list)
 for r in gb:
     groups[r["type"]].append(r)
-for f in os.listdir(REC):
-    if f.startswith("gtabase-") and f != "gtabase-mission-index.json":
-        os.remove(os.path.join(REC, f))
-for typ, rs in groups.items():
-    dump(os.path.join(REC, f"gtabase-{typ}.json"), sorted(rs, key=lambda r: r["id"]), compact=True)
-dump(os.path.join(REC, "gtabase-mission-index.json"), mission_index)
 report["counts"] = {"gtadb": {"place": len(places), "placeAvecPosition": sum(1 for p in places if p["fields"].get("position")), "placeSansPosition": sum(1 for p in places if not p["fields"].get("position")), "photosEnJeuDisponibles": sum(1 for p in places if p["fields"].get("photos", {}).get("inGame"))},
                     "gtabase": {t: len(rs) for t, rs in sorted(groups.items(), key=lambda kv: -len(kv[1]))}, "gtabaseMissionIndex": len(mission_index)}
 for typ, rs in groups.items():
@@ -294,10 +299,35 @@ for r in gb:
         report["conflicts"].append({"entity": r["id"], **c, "applied": False})
 
 # ── 7. Bundles pour l'app ───────────────────────────────────────────────
-import bundles
-bstats = bundles.build(ROOT, places, groups, mission_index, report)
-report["bundles"] = bstats
-dump(os.path.join(HERE, "reports", "latest.json"), report)
+import snapshot
 import report_md
-open(os.path.join(HERE, "reports", "latest.md"), "w").write(report_md.render(report))
+
+# Valider la nouvelle collection et construire tous les fichiers avant de remplacer
+# le dernier import accepté. Le manifeste est installé en dernier.
+with tempfile.TemporaryDirectory(dir=HERE) as directory:
+    stage = Path(directory)
+    staged_records = stage / "hub/records"
+    dump(str(staged_records / "gtadb-place.json"), places, compact=True)
+    for typ, rs in groups.items():
+        dump(str(staged_records / f"gtabase-{typ}.json"), sorted(rs, key=lambda row: row["id"]), compact=True)
+    dump(str(staged_records / "gtabase-mission-index.json"), mission_index)
+    snapshot.build(root=stage, import_report=report)
+    (stage / "hub/reports/latest.md").write_text(report_md.render(report), encoding="utf-8")
+    obsolete = {p.name for p in Path(REC).glob("gtabase-*.json")} - {p.name for p in staged_records.iterdir()}
+    for path in sorted(stage.rglob("*")):
+        if path.is_file() and path != stage / snapshot.MANIFEST:
+            target = Path(ROOT) / path.relative_to(stage)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            path.replace(target)
+    for name in obsolete:
+        (Path(REC) / name).unlink()
+    (stage / snapshot.MANIFEST).replace(Path(ROOT) / snapshot.MANIFEST)
+bstats = report["bundles"]
+os.makedirs(os.path.join(HERE, "history"), exist_ok=True)
+with open(os.path.join(HERE, "history", "changes.jsonl"), "a") as fh:
+    fh.write(json.dumps({"at": NOW, "firstRun": first_run, "added": added if not first_run else len(added), "removed": removed, "changed": changed}, ensure_ascii=False) + "\n")
 print(json.dumps({"counts": report["counts"], "changes": report["changes"], "links": report["links"], "bundles": bstats}, ensure_ascii=False, indent=1))
+
+attempt = os.path.join(HERE, "reports", "last-attempt.json")
+if os.path.exists(attempt) and a.source == "all":
+    os.remove(attempt)

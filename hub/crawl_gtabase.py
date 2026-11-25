@@ -74,13 +74,19 @@ if __name__ == "__main__":
     PRIO = {s: i for i, s in enumerate(["missions", "side-missions", "strangers", "properties", "characters", "vehicles", "map", "weapons", "gangs", "random-events", "map-locations", "guides", "strangers-missions", "radio-stations", "animals", "soundtrack", "cheats", "articles", "other"])}
     st = load_state("gtabase")
     n = {"cached": 0, "fetched": 0, "failed": 0, "offline-miss": 0, "cached-stale": 0}
+    checked = set()
+    freshness = {"missing": 0, "fresh": 0, "expired": 0}
     budget = [limit]
     def run(items):
         for i, (u, m) in enumerate(items):
             if budget[0] <= 0:
                 return
-            _, info = fetch_cached("gtabase", u, m.get("lastmod"), offline=offline, st=st)
-            if info["status"] == "fetched":
+            if u in checked:
+                continue
+            checked.add(u)
+            _, info = fetch_cached("gtabase", u, m.get("lastmod"), offline=offline, force="--force" in sys.argv, st=st)
+            freshness[info["cacheState"]] += 1
+            if info["status"] in ("fetched", "failed"):
                 budget[0] -= 1
             n[info["status"]] = n.get(info["status"], 0) + 1
             if info["status"] == "failed":
@@ -98,4 +104,4 @@ if __name__ == "__main__":
             run([(u, m) for u, m in index["urls"].items() if m.get("discoveredBy") and not os.path.exists(__import__("fetchlib").cache_path("gtabase", u))])
     json.dump(index, open(ip, "w"), ensure_ascii=False, indent=0)
     save_state("gtabase", st)
-    print("FIN", n, "index", len(index["urls"]), flush=True)
+    print(json.dumps({"pages": n, "freshness": freshness, "unchecked": len(index["urls"]) - len(checked)}), flush=True)
