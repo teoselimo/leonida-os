@@ -780,19 +780,32 @@
       "quote": "Brian's Nissan Skyline GT-R GTA 6 car: Annis '90 Elegy Where to find it: Drifter Elegy at Gellhorn International Raceway, Chameleon Elegy in Ocean Beach Standout?: Regular car, plus 5 standout versions"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
+      "quote": "Vice Auto Customs in Salton applies anime liveries to a handful of tuners, the Dinka Sugoi carries two of them and the Annis '90 Elegy you earn off Yago's races comes with an anime style of its own."
+     }
+    ]
    },
-   "district": "Ocean Beach",
+   "district": "Salton",
    "regionId": "vicecity",
    "precision": "zone",
    "zone": {
-    "x": 1743,
-    "y": 702,
-    "radius": 758,
+    "x": -1481,
+    "y": -510,
+    "radius": 677,
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "Brian's Nissan Skyline GT-R GTA 6 car: Annis '90 Elegy Where to find it: Drifter Elegy at Gellhorn International Raceway, Chameleon Elegy in Ocean Beach Standout?: Regular car, plus 5 standout versions",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fast-and-furious-cars"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -829,25 +842,39 @@
     "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
     "official": false,
     "readAt": "2026-11-25T13:47:47.494Z"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
+    "title": "How to Get the Free Anime Car in GTA 6",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Zone de recherche autour de Salton (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2"
     ]
    }
   ]
@@ -1305,6 +1332,103 @@
   ]
  },
  {
+  "id": "v-annis-chameleon-elegy",
+  "type": "vehicle",
+  "name": "Annis Chameleon Elegy",
+  "make": "Annis",
+  "model": "Chameleon Elegy",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Annis Chameleon Elegy Type: Car Area: Vice Beach Where to find it: Behind some condos in Ocean Beach",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Annis Chameleon Elegy Type: Car Area: Vice Beach Where to find it: Behind some condos in Ocean Beach"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-annis-drifter-elegy",
   "type": "vehicle",
   "name": "Annis Drifter Elegy",
@@ -1339,7 +1463,13 @@
       "quote": "A black drift coupe with sponsor decals and blue racing wheels is waiting behind a yellow garage shutter at Gellhorn International Raceway."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Annis Drifter Elegy Type: Car Area: Port Gellhorn Where to find it: In a garage at Gellhorn International Raceway"
+     }
+    ]
    },
    "district": "Gellhorn International Raceway",
    "regionId": "gellhorn",
@@ -1460,24 +1590,39 @@
     "title": "GTA 6 drift car location",
     "official": false,
     "readAt": "2026-11-22T17:05:49.250Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
    "Zone de recherche autour de Gellhorn International Raceway (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre"
   ],
   "firstSeenAt": "2026-11-22T17:05:49.250Z",
-  "updatedAt": "2026-11-22T17:05:49.250Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
     "at": "2026-11-22T17:05:49.250Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2"
     ]
    }
   ]
@@ -1607,6 +1752,295 @@
     "changes": [
      "fiabilité : reported → confirmed",
      "preuves : 1 → 2"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-annis-pixel-elegy",
+  "type": "vehicle",
+  "name": "Annis Pixel Elegy",
+  "make": "Annis",
+  "model": "Pixel Elegy",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "yellow",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Annis Pixel Elegy Type: Car Area: Capri Where to find it: Yellow container at the back of a Capri construction site."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Annis Pixel Elegy Type: Car Area: Capri Where to find it: Yellow container at the back of a Capri construction site.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Annis Pixel Elegy Type: Car Area: Capri Where to find it: Yellow container at the back of a Capri construction site."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-annis-venturas-blvd-elegy",
+  "type": "vehicle",
+  "name": "Annis Venturas BLVD Elegy",
+  "make": "Annis",
+  "model": "Venturas BLVD Elegy",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Annis Venturas BLVD Elegy Type: Car Area: Vice City Where to find it: GTA+ reward",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Annis Venturas BLVD Elegy Type: Car Area: Vice City Where to find it: GTA+ reward"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-annis-yago",
+  "type": "vehicle",
+  "name": "Annis Yago",
+  "make": "Annis",
+  "model": "Yago",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Annis Yago's Elegy Type: Car Area: Vice City Where to find it: Reward for Yago's street race missions in Chapter 3 (Jason only)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Annis Yago's Elegy Type: Car Area: Vice City Where to find it: Reward for Yago's street race missions in Chapter 3 (Jason only)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -1862,6 +2296,295 @@
     "changes": [
      "source : PowerPyx",
      "source : PowerPyx"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-benefactor-fatstaks-dubsta",
+  "type": "vehicle",
+  "name": "Benefactor Fatstaks Dubsta",
+  "make": "Benefactor",
+  "model": "Fatstaks Dubsta",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Benefactor Fatstaks Dubsta Type: Car Area: Vice Beach Where to find it: At a luxury residence on Starfish Island",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Benefactor Fatstaks Dubsta Type: Car Area: Vice Beach Where to find it: At a luxury residence on Starfish Island"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Starfish Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 777,
+    "y": 470,
+    "radius": 220,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-benefactor-lagoon-schafter",
+  "type": "vehicle",
+  "name": "Benefactor Lagoon Schafter",
+  "make": "Benefactor",
+  "model": "Lagoon Schafter",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Benefactor Lagoon Schafter Type: Car Area: Vice Beach Where to find it: Shipping container in Ocean Beach",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Benefactor Lagoon Schafter Type: Car Area: Vice Beach Where to find it: Shipping container in Ocean Beach"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-benefactor-nightlight-schafter",
+  "type": "vehicle",
+  "name": "Benefactor Nightlight Schafter",
+  "make": "Benefactor",
+  "model": "Nightlight Schafter",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Benefactor Nightlight Schafter Type: Car Area: Vice City Where to find it: At an old building in Little Cuba by the Guardia Brothers",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Benefactor Nightlight Schafter Type: Car Area: Vice City Where to find it: At an old building in Little Cuba by the Guardia Brothers"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Little Cuba",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -1200,
+    "y": 75,
+    "radius": 266,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Little Cuba (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -2584,6 +3307,380 @@
   ]
  },
  {
+  "id": "v-buckingham-atlantic-volatus",
+  "type": "vehicle",
+  "name": "Buckingham Atlantic Volatus",
+  "make": "Buckingham",
+  "model": "Atlantic Volatus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Buckingham Atlantic Volatus Type: Aircraft Area: Vice City Where to find it: In a VCIA hangar",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Buckingham Atlantic Volatus Type: Aircraft Area: Vice City Where to find it: In a VCIA hangar"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-cellerica-shamal",
+  "type": "vehicle",
+  "name": "Buckingham Cellerica Shamal",
+  "make": "Buckingham",
+  "model": "Cellerica Shamal",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Buckingham Cellerica Shamal Type: Aircraft Area: Waning Sands Where to find it: Owned by Cecilia of Cellerica",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Buckingham Cellerica Shamal Type: Aircraft Area: Waning Sands Where to find it: Owned by Cecilia of Cellerica"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Waning Sands",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -23,
+    "y": 3987,
+    "radius": 546,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Waning Sands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-diamond-jubilee",
+  "type": "vehicle",
+  "name": "Buckingham Diamond Jubilee",
+  "make": "Buckingham",
+  "model": "Diamond Jubilee",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Buckingham Diamond Jubilee Type: Car Area: Waning Sands Where to find it: By a megamansion in Leaf Links",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Buckingham Diamond Jubilee Type: Car Area: Waning Sands Where to find it: By a megamansion in Leaf Links"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Leaf Links",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 457,
+    "y": 2422,
+    "radius": 351,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Leaf Links (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-dragonfly-volatus",
+  "type": "vehicle",
+  "name": "Buckingham Dragonfly Volatus",
+  "make": "Buckingham",
+  "model": "Dragonfly Volatus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Buckingham Dragonfly Volatus Type: Aircraft Area: Vice City Where to find it: Atop New Quay Plaza in Downtown",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Buckingham Dragonfly Volatus Type: Aircraft Area: Vice City Where to find it: Atop New Quay Plaza in Downtown"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Downtown",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -662,
+    "y": -102,
+    "radius": 558,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Downtown (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-buckingham-jubilee",
   "type": "vehicle",
   "name": "Buckingham Jubilee",
@@ -2921,6 +4018,200 @@
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-akane",
+  "type": "vehicle",
+  "name": "Declasse Akane",
+  "make": "Declasse",
+  "model": "Akane",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Check inside for the anime-wrapped Declasse Akane.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
+      "quote": "Check inside for the anime-wrapped Declasse Akane."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Key Lento",
+   "regionId": "keys",
+   "precision": "zone",
+   "zone": {
+    "x": -2510,
+    "y": -5919,
+    "radius": 804,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
+    "title": "How to Get the Free Anime Car in GTA 6",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Key Lento (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA BOOM"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-battler-picador",
+  "type": "vehicle",
+  "name": "Declasse Battler Picador",
+  "make": "Declasse",
+  "model": "Battler Picador",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Declasse Battler Picador Type: Car Area: Capri Where to find it: In a barn in South Kelly County",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Declasse Battler Picador Type: Car Area: Capri Where to find it: In a barn in South Kelly County"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -3519,6 +4810,103 @@
   ]
  },
  {
+  "id": "v-declasse-twinstripe-vigero",
+  "type": "vehicle",
+  "name": "Declasse Twinstripe Vigero",
+  "make": "Declasse",
+  "model": "Twinstripe Vigero",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Declasse Twinstripe Vigero Type: Car Area: Key Lento Where to find it: Outside a private club in Key Lento",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Declasse Twinstripe Vigero Type: Car Area: Key Lento Where to find it: Outside a private club in Key Lento"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Key Lento",
+   "regionId": "keys",
+   "precision": "zone",
+   "zone": {
+    "x": -2510,
+    "y": -5919,
+    "radius": 804,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Key Lento (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-declasse-vamos",
   "type": "vehicle",
   "name": "Declasse Vamos",
@@ -4079,6 +5467,200 @@
   ]
  },
  {
+  "id": "v-dinka-sugoi",
+  "type": "vehicle",
+  "name": "Dinka Sugoi",
+  "make": "Dinka",
+  "model": "Sugoi",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Vice Auto Customs in Salton applies anime liveries to a handful of tuners, the Dinka Sugoi carries two of them and the Annis '90 Elegy you earn off Yago's races comes with an anime style of its own.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
+      "quote": "Vice Auto Customs in Salton applies anime liveries to a handful of tuners, the Dinka Sugoi carries two of them and the Annis '90 Elegy you earn off Yago's races comes with an anime style of its own."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Salton",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -1481,
+    "y": -510,
+    "radius": 677,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
+    "title": "How to Get the Free Anime Car in GTA 6",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Salton (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA BOOM"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-emperor-moses",
+  "type": "vehicle",
+  "name": "Emperor Moses",
+  "make": "Emperor",
+  "model": "Moses",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Emperor Moses' Sultan Type: Car Area: Port Gellhorn Where to find it: Gift from Moses after his car jobs",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Emperor Moses' Sultan Type: Car Area: Port Gellhorn Where to find it: Gift from Moses after his car jobs"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-emperor-sultan",
   "type": "vehicle",
   "name": "Emperor Sultan",
@@ -4401,6 +5983,196 @@
   ]
  },
  {
+  "id": "v-grotti-1010-cheetah",
+  "type": "vehicle",
+  "name": "Grotti 1010 Cheetah",
+  "make": "Grotti",
+  "model": "1010 Cheetah",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Grotti 1010 Cheetah Type: Car Area: Gloriana Key Where to find it: Reward for finding all 5 murals, in the garage where it appears",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Grotti 1010 Cheetah Type: Car Area: Gloriana Key Where to find it: Reward for finding all 5 murals, in the garage where it appears"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Gloriana Key",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 618,
+    "y": -1629,
+    "radius": 492,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Gloriana Key (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-dolce-vita-rsx",
+  "type": "vehicle",
+  "name": "Grotti Dolce Vita RSX",
+  "make": "Grotti",
+  "model": "Dolce Vita RSX",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Grotti Dolce Vita RSX Type: Car Area: Vice City Where to find it: At a luxury villa on Rialto Islands",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Grotti Dolce Vita RSX Type: Car Area: Vice City Where to find it: At a luxury villa on Rialto Islands"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-grotti-itali-rsx",
   "type": "vehicle",
   "name": "Grotti Itali RSX",
@@ -4521,6 +6293,198 @@
     "changes": [
      "preuves : 1 → 3",
      "localisation : none → zone"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-preziosa-cheetah",
+  "type": "vehicle",
+  "name": "Grotti Preziosa Cheetah",
+  "make": "Grotti",
+  "model": "Preziosa Cheetah",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Gloriana Key",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 618,
+    "y": -1629,
+    "radius": 492,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Gloriana Key (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-status-rsx",
+  "type": "vehicle",
+  "name": "Grotti Status RSX",
+  "make": "Grotti",
+  "model": "Status RSX",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Grotti Status RSX Type: Car Area: Port Gellhorn Where to find it: It on the back of a recovery truck here",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Grotti Status RSX Type: Car Area: Port Gellhorn Where to find it: It on the back of a recovery truck here"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -4653,6 +6617,113 @@
   ]
  },
  {
+  "id": "v-maibatsu-blue-drake-penumbra",
+  "type": "vehicle",
+  "name": "Maibatsu Blue Drake Penumbra",
+  "make": "Maibatsu",
+  "model": "Blue Drake Penumbra",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "blue",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Maibatsu Blue Drake Penumbra Type: Car Area: Ambrosia Where to find it: At Ambrosia Raceway"
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Maibatsu Blue Drake Penumbra Type: Car Area: Ambrosia Where to find it: At Ambrosia Raceway",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Maibatsu Blue Drake Penumbra Type: Car Area: Ambrosia Where to find it: At Ambrosia Raceway"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ambrosia",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -2796,
+    "y": 3954,
+    "radius": 778,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ambrosia (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-ocelot-bloodless-jugular",
   "type": "vehicle",
   "name": "Ocelot Bloodless Jugular",
@@ -4677,12 +6748,23 @@
       "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Ocelot Bloodless Jugular Type: Car Area: Waning Sands Where to find it: At a wealthy residence in Belville"
+     }
+    ]
    },
-   "district": "Vice City",
-   "regionId": "vicecity",
-   "precision": "text",
-   "zone": null,
+   "district": "Belville",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -1375,
+    "y": 2897,
+    "radius": 408,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -4751,22 +6833,39 @@
     "title": "How to steal the Ocelot Bloodless Jugular in GTA 6",
     "official": false,
     "readAt": "2026-11-24T20:43:30.622Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Belville (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-24T20:43:30.622Z",
-  "updatedAt": "2026-11-24T20:43:30.622Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
     "at": "2026-11-24T20:43:30.622Z",
     "reason": "Détection automatique",
     "changes": [
      "source : PC Gamer"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2",
+     "localisation : text → zone"
     ]
    }
   ]
@@ -5043,6 +7142,101 @@
   ]
  },
  {
+  "id": "v-pegassi-dante",
+  "type": "vehicle",
+  "name": "Pegassi Dante",
+  "make": "Pegassi",
+  "model": "Dante",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi Dante's Vitello Type: Car Area: Vice City Where to find it: At Dante Fresh's mansion on Starfish Island",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Pegassi Dante's Vitello Type: Car Area: Vice City Where to find it: At Dante Fresh's mansion on Starfish Island"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Starfish Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 777,
+    "y": 470,
+    "radius": 220,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-pegassi-infernus",
   "type": "vehicle",
   "name": "Pegassi Infernus",
@@ -5269,6 +7463,192 @@
      "preuves : 2 → 6",
      "localisation : text → zone",
      "édition : aucune (none) → ultimate (confirmed)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-mojito-tempesta",
+  "type": "vehicle",
+  "name": "Pegassi Mojito Tempesta",
+  "make": "Pegassi",
+  "model": "Mojito Tempesta",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi Mojito Tempesta Type: Car Area: Gloriana Key Where to find it: Outside a hotel in Tequesta Retreat",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Pegassi Mojito Tempesta Type: Car Area: Gloriana Key Where to find it: Outside a hotel in Tequesta Retreat"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Tequesta Retreat",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -208,
+    "y": -1076,
+    "radius": 254,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Tequesta Retreat (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-raul",
+  "type": "vehicle",
+  "name": "Pegassi Raul",
+  "make": "Pegassi",
+  "model": "Raul",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi Raul's Tempesta Type: Car Area: Vice City Where to find it: Story car you steal for Raul",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Pegassi Raul's Tempesta Type: Car Area: Vice City Where to find it: Story car you steal for Raul"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -5966,6 +8346,101 @@
   ]
  },
  {
+  "id": "v-pfister-gentrifier-comet",
+  "type": "vehicle",
+  "name": "Pfister Gentrifier Comet",
+  "make": "Pfister",
+  "model": "Gentrifier Comet",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Pfister Gentrifier Comet Type: Car Area: Gloriana Key Where to find it: Outside a motel in Salton",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Pfister Gentrifier Comet Type: Car Area: Gloriana Key Where to find it: Outside a motel in Salton"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Gloriana Key",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 618,
+    "y": -1629,
+    "radius": 492,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Gloriana Key (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-pfister-growler",
   "type": "vehicle",
   "name": "Pfister Growler",
@@ -6111,6 +8586,103 @@
     "changes": [
      "preuves : 2 → 4",
      "localisation : text → zone"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pfister-hornet-growler",
+  "type": "vehicle",
+  "name": "Pfister Hornet Growler",
+  "make": "Pfister",
+  "model": "Hornet Growler",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pfister Hornet Growler Type: Car Area: Vice Beach Where to find it: In a parking garage in Ocean Beach",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Pfister Hornet Growler Type: Car Area: Vice Beach Where to find it: In a parking garage in Ocean Beach"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -6311,6 +8883,101 @@
     "reason": "Détection automatique",
     "changes": [
      "source : GTA BOOM"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-piccia-dragon-gate-furia",
+  "type": "vehicle",
+  "name": "Piccia Dragon Gate Furia",
+  "make": "Piccia",
+  "model": "Dragon Gate Furia",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Piccia Dragon Gate Furia Type: Car Area: Vice Beach Where to find it: At the Y Hotel",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Piccia Dragon Gate Furia Type: Car Area: Vice Beach Where to find it: At the Y Hotel"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1636,
+    "y": 1096,
+    "radius": 1198,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Vice Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -6545,7 +9212,17 @@
   "year": null,
   "aliases": null,
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "black",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Progen Black Widow Emerus Type: Car Area: Vice City Where to find it: Shipping container at Port Vice City"
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
    "exclusive": null,
    "status": "none",
@@ -6561,12 +9238,23 @@
       "quote": "This one is found inside a shipping container at the location in the Vice City County Dockyard."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Progen Black Widow Emerus Type: Car Area: Vice City Where to find it: Shipping container at Port Vice City"
+     }
+    ]
    },
-   "district": "Vice City",
+   "district": "Port Vice City",
    "regionId": "vicecity",
-   "precision": "text",
-   "zone": null,
+   "precision": "zone",
+   "zone": {
+    "x": 722,
+    "y": -522,
+    "radius": 617,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
@@ -6614,25 +9302,42 @@
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
     "title": "How to get the fastest cars in GTA 6",
     "official": false,
-    "readAt": "2026-11-25T13:47:47.494Z"
+    "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu."
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Zone de recherche autour de Port Vice City (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GamesRadar+"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2",
+     "localisation : text → zone"
     ]
    }
   ]
@@ -6712,7 +9417,7 @@
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
     "title": "How to get the fastest cars in GTA 6",
     "official": false,
-    "readAt": "2026-11-25T13:47:47.494Z"
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
   "reliability": "reported",
@@ -6753,9 +9458,15 @@
   "kind": "hidden",
   "variant": null,
   "edition": {
-   "exclusive": null,
-   "status": "none",
-   "support": []
+   "exclusive": "ultimate",
+   "status": "confirmed",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
   },
   "location": {
    "text": {
@@ -6767,7 +9478,13 @@
       "quote": "You can find the Honeycomb Emerus in Vice City, in a parking lot outside a dealership and car rental spot across from the Hospital."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Progen Honeycomb Emerus Type: Car Area: Vice City Where to find it: At Dolos Exotic Car Rental"
+     }
+    ]
    },
    "district": "Vice City",
    "regionId": "vicecity",
@@ -6806,17 +9523,8 @@
   },
   "keep": {
    "text": null,
-   "rule": {
-    "chapter": 2,
-    "where": "garage de Moses",
-    "tracker": null,
-    "source": {
-     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
-     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
-     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
-    }
-   },
-   "mode": "register"
+   "rule": null,
+   "mode": "yes"
   },
   "steps": [],
   "risks": [],
@@ -6828,23 +9536,234 @@
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
     "title": "How to get the fastest cars in GTA 6",
     "official": false,
-    "readAt": "2026-11-25T13:47:47.494Z"
+    "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Exclusivité Ultimate recoupée.",
    "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GamesRadar+"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2",
+     "édition : aucune (none) → ultimate (confirmed)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-progen-purple-drank-emerus",
+  "type": "vehicle",
+  "name": "Progen Purple Drank Emerus",
+  "make": "Progen",
+  "model": "Purple Drank Emerus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "purple",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Progen Purple Drank Emerus Type: Car Area: Vice City Where to find it: On Waxman Island by some car thieves"
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Progen Purple Drank Emerus Type: Car Area: Vice City Where to find it: On Waxman Island by some car thieves",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Progen Purple Drank Emerus Type: Car Area: Vice City Where to find it: On Waxman Island by some car thieves"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-progen-royal-ruby-emerus",
+  "type": "vehicle",
+  "name": "Progen Royal Ruby Emerus",
+  "make": "Progen",
+  "model": "Royal Ruby Emerus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Progen Royal Ruby Emerus Type: Car Area: Vice City Where to find it: Parked at the home of a drug lord on Rialto Islands",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Progen Royal Ruby Emerus Type: Car Area: Vice City Where to find it: Parked at the home of a drug lord on Rialto Islands"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -6874,7 +9793,13 @@
       "quote": "You can find the Seaspray inside a garage in Northwest Capri."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Progen Seaspray Emerus Type: Car Area: Capri Where to find it: In a garage in Capri"
+     }
+    ]
    },
    "district": "Capri",
    "regionId": "gellhorn",
@@ -6922,12 +9847,19 @@
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
     "title": "How to get the fastest cars in GTA 6",
     "official": false,
-    "readAt": "2026-11-25T13:47:47.494Z"
+    "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
    "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -6935,13 +9867,21 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GamesRadar+"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2"
     ]
    }
   ]
@@ -7044,6 +9984,101 @@
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-shitzu-typhoon-squalo",
+  "type": "vehicle",
+  "name": "Shitzu Typhoon Squalo",
+  "make": "Shitzu",
+  "model": "Typhoon Squalo",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Shitzu Typhoon Squalo Type: Boat Area: Vice Beach Where to find it: Ultimate Edition reward",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Shitzu Typhoon Squalo Type: Boat Area: Vice Beach Where to find it: Ultimate Edition reward"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1636,
+    "y": 1096,
+    "radius": 1198,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Vice Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -7245,11 +10280,361 @@
   ]
  },
  {
-  "id": "v-truffade-keep",
+  "id": "v-truffade-andrew-node",
   "type": "vehicle",
-  "name": "Truffade Keep",
+  "name": "Truffade Andrew Node",
   "make": "Truffade",
-  "model": "Keep",
+  "model": "Andrew Node",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles",
+     "quote": "Grotti Preziosa Cheetah Type: Car Area: Gloriana Key Where to find it: In the parking garage beneath Giorgio's penthouse (Ultimate Edition only)"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Truffade Andrew Node's Thrax Type: Car Area: Vice Beach Where to find it: At his luxury residence on Starfish Island",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Truffade Andrew Node's Thrax Type: Car Area: Vice Beach Where to find it: At his luxury residence on Starfish Island"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Starfish Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 777,
+    "y": 470,
+    "radius": 220,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-truffade-thrax",
+  "type": "vehicle",
+  "name": "Truffade Thrax",
+  "make": "Truffade",
+  "model": "Thrax",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+      "quote": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "To get it, go to the building on Starfish Island laid out above."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+      "quote": "Starting Location: Vice Beach > Dalton Island"
+     }
+    ]
+   },
+   "district": "Dalton Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1738,
+    "y": -1355,
+    "radius": 390,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": [
+    {
+     "district": "Starfish Island",
+     "text": "To get it, go to the building on Starfish Island laid out above.",
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars"
+    }
+   ]
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+      "quote": "Unlock the Key Cloner: High-end cars like these need it."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "You can get this one for free at any point in the game by doing a certain glitch , though keep in mind that it's much easier after you've obtained the Key Cloner in GTA 6 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you.",
+    "support": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+      "quote": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+      "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+      "quote": "Though it will cost you $70,000 to do so, so make sure you've either built up your personal wealth, or have a garage to keep it in until that point."
+     }
+    ]
+   },
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Scan with WAiNK: Check the car’s tracker before you take it."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "quote": "Open the garage doors from the inside panel , get in the car, and drive away before security moves in to stop you!"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "quote": "Head there either using the ferry , or with a boat or helicopter to start the mission."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Scan with WAiNK: Check the car’s tracker before you take it."
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "quote": "The men in black suits are the owner's security, if they spot you they'll report you, and you will have security and police trying to attack you."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "quote": "If you were spotted by security on the way out there will be police waiting for you at the ferry dock, and you will need to lose the cops before you can deliver the car."
+   }
+  ],
+  "price": {
+   "value": 70000,
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+     "quote": "Though it will cost you $70,000 to do so, so make sure you've either built up your personal wealth, or have a garage to keep it in until that point."
+    }
+   ],
+   "conflicts": []
+  },
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
+    "title": "GTA 6 best cars evidence guide",
+    "official": false,
+    "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
+    "title": "GTA 6 fastest car",
+    "official": false,
+    "readAt": "2026-11-24T10:15:15.246Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
+    "title": "How to get the fastest cars in GTA 6",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "title": "GTA 6 Mansion Thrax (Steal the Truffade Thrax) Walkthrough",
+    "official": false,
+    "readAt": "2026-11-26T04:41:53.730Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Dalton Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-24T10:15:15.246Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2",
+     "localisation : none → zone"
+    ]
+   },
+   {
+    "at": "2026-11-26T04:41:53.730Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 2 → 3"
+    ]
+   },
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : confirmed → reported",
+     "preuves : 3 → 4"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-truffade-thrax-keep",
+  "type": "vehicle",
+  "name": "Truffade Thrax Keep",
+  "make": "Truffade",
+  "model": "Thrax Keep",
   "year": null,
   "aliases": null,
   "kind": "news",
@@ -7302,7 +10687,7 @@
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
     "title": "How to get the fastest cars in GTA 6",
     "official": false,
-    "readAt": "2026-11-25T13:47:47.494Z"
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
   "reliability": "reported",
@@ -7313,11 +10698,11 @@
    "emplacement",
    "chapitre"
   ],
-  "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
-    "at": "2026-11-25T13:47:47.494Z",
+    "at": "2026-11-26T14:33:11.590Z",
     "reason": "Détection automatique",
     "changes": [
      "source : GamesRadar+"
@@ -7326,14 +10711,14 @@
   ]
  },
  {
-  "id": "v-truffade-thrax",
+  "id": "v-vapid-darkling-dominator",
   "type": "vehicle",
-  "name": "Truffade Thrax",
-  "make": "Truffade",
-  "model": "Thrax",
+  "name": "Vapid Darkling Dominator",
+  "make": "Vapid",
+  "model": "Darkling Dominator",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -7342,29 +10727,23 @@
   },
   "location": {
    "text": {
-    "value": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island.",
+    "value": "Vapid Darkling Dominator Type: Car Area: Port Gellhorn Where to find it: At Gellhorn International Raceway",
     "support": [
      {
-      "sourceName": "GTA Xtreme",
-      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-      "quote": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island."
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Vapid Darkling Dominator Type: Car Area: Port Gellhorn Where to find it: At Gellhorn International Raceway"
      }
     ],
-    "conflicts": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
-      "quote": "Starting Location: Vice Beach > Dalton Island"
-     }
-    ]
+    "conflicts": []
    },
-   "district": "Dalton Island",
-   "regionId": "vicecity",
+   "district": "Gellhorn International Raceway",
+   "regionId": "gellhorn",
    "precision": "zone",
    "zone": {
-    "x": 1738,
-    "y": -1355,
-    "radius": 390,
+    "x": -6472,
+    "y": 1968,
+    "radius": 872,
     "widened": false
    },
    "point": null,
@@ -7372,50 +10751,16 @@
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": {
-    "value": 3,
-    "why": "cloneur de clé nécessaire",
-    "source": {
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
-     "quote": "In Chapter 3, unlock the Key Cloner."
-    }
-   },
+   "inferredChapter": null,
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": {
-    "value": true,
-    "support": [
-     {
-      "sourceName": "GTA Xtreme",
-      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-      "quote": "Unlock the Key Cloner: High-end cars like these need it."
-     }
-    ],
-    "conflicts": []
-   },
+   "keyCloner": null,
    "tracker": null,
    "alarm": null
   },
   "keep": {
-   "text": {
-    "value": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you.",
-    "support": [
-     {
-      "sourceName": "GTA Xtreme (sitemap)",
-      "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
-      "quote": "Keep it in the comparison if neither the Emerus nor the Tempesta is doing it for you."
-     }
-    ],
-    "conflicts": [
-     {
-      "sourceName": "GTA Xtreme",
-      "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-      "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
-     }
-    ]
-   },
+   "text": null,
    "rule": {
     "chapter": 2,
     "where": "garage de Moses",
@@ -7428,102 +10773,36 @@
    },
    "mode": "register"
   },
-  "steps": [
-   {
-    "sourceName": "GTA Xtreme",
-    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-    "quote": "Scan with WAiNK: Check the car’s tracker before you take it."
-   },
-   {
-    "sourceName": "GTA Xtreme",
-    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-    "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
-    "quote": "Head there either using the ferry , or with a boat or helicopter to start the mission."
-   }
-  ],
-  "risks": [
-   {
-    "sourceName": "GTA Xtreme",
-    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-    "quote": "Scan with WAiNK: Check the car’s tracker before you take it."
-   },
-   {
-    "sourceName": "GTA Xtreme",
-    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-    "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
-    "quote": "The men in black suits are the owner's security, if they spot you they'll report you, and you will have security and police trying to attack you."
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
-    "quote": "If you were spotted by security on the way out there will be police waiting for you at the ferry dock, and you will need to lose the cops before you can deliver the car."
-   }
-  ],
+  "steps": [],
+  "risks": [],
   "price": null,
   "media": null,
   "evidence": [
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
-    "title": "GTA 6 best cars evidence guide",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
     "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
-   },
-   {
-    "sourceName": "GTA Xtreme",
-    "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
-    "title": "GTA 6 fastest car",
-    "official": false,
-    "readAt": "2026-11-24T10:15:15.246Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
-    "title": "GTA 6 Mansion Thrax (Steal the Truffade Thrax) Walkthrough",
-    "official": false,
-    "readAt": "2026-11-26T04:41:53.730Z"
+    "readAt": "2026-11-26T14:33:11.590Z"
    }
   ],
-  "reliability": "confirmed",
+  "reliability": "reported",
   "reasons": [
-   "2 sources indépendantes concordantes sur l'emplacement.",
-   "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
-   "Zone de recherche autour de Dalton Island (repères de la carte communautaire), pas un point exact."
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Gellhorn International Raceway (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [],
-  "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-26T04:41:53.730Z",
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
   "revisions": [
    {
-    "at": "2026-11-21T09:44:56.655Z",
+    "at": "2026-11-26T14:33:11.590Z",
     "reason": "Détection automatique",
     "changes": [
-     "source : GTA Xtreme (sitemap)"
-    ]
-   },
-   {
-    "at": "2026-11-24T10:15:15.246Z",
-    "reason": "Réévaluation",
-    "changes": [
-     "preuves : 1 → 2",
-     "localisation : none → zone"
-    ]
-   },
-   {
-    "at": "2026-11-26T04:41:53.730Z",
-    "reason": "Réévaluation",
-    "changes": [
-     "fiabilité : reported → confirmed",
-     "preuves : 2 → 3"
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -7709,6 +10988,103 @@
   "revisions": [
    {
     "at": "2026-11-22T17:05:49.250Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-vapid-kinetic-dominator",
+  "type": "vehicle",
+  "name": "Vapid Kinetic Dominator",
+  "make": "Vapid",
+  "model": "Kinetic Dominator",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Vapid Kinetic Dominator Type: Car Area: Vice City Where to find it: In a parking garage in Rockridge",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-standout-vehicles",
+      "quote": "Vapid Kinetic Dominator Type: Car Area: Vice City Where to find it: In a parking garage in Rockridge"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Rockridge",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -1264,
+    "y": 860,
+    "radius": 277,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Rockridge (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
