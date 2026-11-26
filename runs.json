@@ -3778,5 +3778,143 @@
   "updatedItems": 0,
   "errors": [],
   "attempts": 1
+ },
+ {
+  "id": "rockstar-youtube-1795668113730",
+  "sourceId": "rockstar-youtube",
+  "startedAt": "2026-11-26T04:41:53.730Z",
+  "finishedAt": "2026-11-26T04:41:53.819Z",
+  "ok": true,
+  "fetched": 15,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "youtube-search-1795668113819",
+  "sourceId": "youtube-search",
+  "startedAt": "2026-11-26T04:41:53.819Z",
+  "finishedAt": "2026-11-26T04:41:53.819Z",
+  "ok": false,
+  "fetched": 0,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [
+   "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
+  ],
+  "attempts": 0,
+  "skipped": "missing-credentials"
+ },
+ {
+  "id": "gtaseries-youtube-1795668113819",
+  "sourceId": "gtaseries-youtube",
+  "startedAt": "2026-11-26T04:41:53.819Z",
+  "finishedAt": "2026-11-26T04:41:53.842Z",
+  "ok": true,
+  "fetched": 15,
+  "newItems": 0,
+  "updatedItems": 9,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "rockstarintel-1795668113842",
+  "sourceId": "rockstarintel",
+  "startedAt": "2026-11-26T04:41:53.842Z",
+  "finishedAt": "2026-11-26T04:42:00.726Z",
+  "ok": true,
+  "fetched": 10,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "gtaboom-1795668120726",
+  "sourceId": "gtaboom",
+  "startedAt": "2026-11-26T04:42:00.726Z",
+  "finishedAt": "2026-11-26T04:42:00.879Z",
+  "ok": true,
+  "fetched": 30,
+  "newItems": 6,
+  "updatedItems": 5,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "pcgamer-1795668120879",
+  "sourceId": "pcgamer",
+  "startedAt": "2026-11-26T04:42:00.879Z",
+  "finishedAt": "2026-11-26T04:42:01.035Z",
+  "ok": true,
+  "fetched": 50,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "gamesradar-1795668121035",
+  "sourceId": "gamesradar",
+  "startedAt": "2026-11-26T04:42:01.035Z",
+  "finishedAt": "2026-11-26T04:42:01.164Z",
+  "ok": true,
+  "fetched": 50,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "reddit-gta6-1795668121164",
+  "sourceId": "reddit-gta6",
+  "startedAt": "2026-11-26T04:42:01.164Z",
+  "finishedAt": "2026-11-26T04:42:01.164Z",
+  "ok": false,
+  "fetched": 0,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [
+   "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif."
+  ],
+  "attempts": 0,
+  "skipped": "missing-credentials"
+ },
+ {
+  "id": "powerpyx-1795668121164",
+  "sourceId": "powerpyx",
+  "startedAt": "2026-11-26T04:42:01.164Z",
+  "finishedAt": "2026-11-26T04:42:01.826Z",
+  "ok": true,
+  "fetched": 10,
+  "newItems": 10,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "pushsquare-1795668121827",
+  "sourceId": "pushsquare",
+  "startedAt": "2026-11-26T04:42:01.827Z",
+  "finishedAt": "2026-11-26T04:42:02.195Z",
+  "ok": true,
+  "fetched": 25,
+  "newItems": 1,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
+ },
+ {
+  "id": "alcasthq-1795668122195",
+  "sourceId": "alcasthq",
+  "startedAt": "2026-11-26T04:42:02.195Z",
+  "finishedAt": "2026-11-26T04:42:02.289Z",
+  "ok": true,
+  "fetched": 0,
+  "newItems": 0,
+  "updatedItems": 0,
+  "errors": [],
+  "attempts": 1
  }
 ]

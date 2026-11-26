@@ -497,6 +497,184 @@
   ]
  },
  {
+  "id": "v-vapid-ganado",
+  "type": "vehicle",
+  "name": "'70 Vapid Ganado",
+  "make": "Vapid",
+  "model": "Ganado",
+  "year": "70",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "livrée Retro",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "You can also equip a custom Retro livery to Jason's Vapid Ganado by taking it to any Mod Shop , like Coastal Auto Care ."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "confirmed",
+   "support": [
+    {
+     "sourceName": "Push Square",
+     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+     "quote": "Here's what the Retro livery looks like; you'll find it under Pro Builds > Full Kits > Retro Build - Ultimate Edition :"
+    },
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+     "quote": "Do you need Ultimate Edition for the Ganado?"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "We found another one in a gravel driveway near Capri, on the north side of the Nehrling River.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+      "quote": "We found another one in a gravel driveway near Capri, on the north side of the Nehrling River."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 971,
+    "widened": true
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "Available from Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": {
+    "value": 1,
+    "support": [
+     {
+      "sourceName": "Push Square",
+      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+      "quote": "These items are only available in Chapter 1 ."
+     }
+    ],
+    "conflicts": []
+   },
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "Check the registration price before customizing it",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+      "quote": "Check the registration price before customizing it"
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+    "quote": "Use the river bend on the map to pick out the driveway, then decide whether the pickup is worth a slot in your garage."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+    "quote": "Open the map and find Capri, then look east of the town and its oval track."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+    "quote": "Open Services and select Register."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "quote": "These items are only available in Chapter 1 ."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "Push Square",
+    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
+    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
+    "official": false,
+    "readAt": "2026-11-21T10:16:04.154Z"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/where-to-find-jasons-vapid-ganado-in-gta-6-778a",
+    "title": "Where to Find Jason's '70 Vapid Ganado (Again) in GTA 6",
+    "official": false,
+    "readAt": "2026-11-26T04:41:53.730Z"
+   }
+  ],
+  "reliability": "confirmed",
+  "reasons": [
+   "2 sources indépendantes concordantes sur l'exclusivité d'édition.",
+   "Exclusivité Ultimate recoupée.",
+   "Zone de recherche élargie autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-21T09:57:39.890Z",
+  "updatedAt": "2026-11-26T04:41:53.730Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:57:39.890Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : Push Square"
+    ]
+   },
+   {
+    "at": "2026-11-26T04:41:53.730Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 2",
+     "localisation : none → zone",
+     "édition : ultimate (reported) → ultimate (confirmed)"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-declasse-tulip",
   "type": "vehicle",
   "name": "'72 Declasse Tulip",
@@ -3128,6 +3306,11 @@
     "conflicts": [
      {
       "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+      "quote": "Starting Location: Vice Beach > Leaf Links"
+     },
+     {
+      "sourceName": "PowerPyx",
       "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
       "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
      }
@@ -3143,7 +3326,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Leaf Links",
+     "text": "Starting Location: Vice Beach > Leaf Links",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough"
+    }
+   ]
   },
   "access": {
    "chapterMin": {
@@ -3184,6 +3374,11 @@
       "sourceName": "PowerPyx",
       "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
       "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+      "quote": "Reward: $12,110 + vehicle condition bonus + Advanced Tracker cars can now be registered and sold"
      }
     ],
     "conflicts": [
@@ -3225,6 +3420,16 @@
   "steps": [
    {
     "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "quote": "Head there to start the mission."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "quote": "Steal the Mamba GT"
+   },
+   {
+    "sourceName": "PowerPyx",
     "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
     "quote": "Register Advanced Tracker Cars"
    }
@@ -3247,8 +3452,8 @@
    },
    {
     "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-    "quote": "Chapter 1 – You can't change your personal car yet"
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "quote": "Reward: $12,110 + vehicle condition bonus + Advanced Tracker cars can now be registered and sold"
    }
   ],
   "price": null,
@@ -3270,6 +3475,13 @@
    },
    {
     "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "title": "GTA 6 Dale Mamba (Steal the Declasse Mamba GT) Walkthrough",
+    "official": false,
+    "readAt": "2026-11-26T04:41:53.730Z"
+   },
+   {
+    "sourceName": "PowerPyx",
     "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
     "title": "GTA 6 how to get new personal car",
     "official": false,
@@ -3278,7 +3490,7 @@
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
@@ -3286,7 +3498,7 @@
    "méthode de conservation"
   ],
   "firstSeenAt": "2026-11-25T22:51:16.706Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-26T04:41:53.730Z",
   "revisions": [
    {
     "at": "2026-11-25T22:51:16.706Z",
@@ -3295,6 +3507,13 @@
      "source : PowerPyx",
      "source : PowerPyx",
      "source : PowerPyx"
+    ]
+   },
+   {
+    "at": "2026-11-26T04:41:53.730Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 4"
     ]
    }
   ]
@@ -7131,7 +7350,13 @@
       "quote": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+      "quote": "Starting Location: Vice Beach > Dalton Island"
+     }
+    ]
    },
    "district": "Dalton Island",
    "regionId": "vicecity",
@@ -7213,6 +7438,11 @@
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
     "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "quote": "Head there either using the ferry , or with a boat or helicopter to start the mission."
    }
   ],
   "risks": [
@@ -7225,6 +7455,16 @@
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car",
     "quote": "Register it to keep it: Only a shop that accepts the car’s tracker can register the car ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "quote": "The men in black suits are the owner's security, if they spot you they'll report you, and you will have security and police trying to attack you."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "quote": "If you were spotted by security on the way out there will be police waiting for you at the ferry dock, and you will need to lose the cops before you can deliver the car."
    }
   ],
   "price": null,
@@ -7243,18 +7483,25 @@
     "title": "GTA 6 fastest car",
     "official": false,
     "readAt": "2026-11-24T10:15:15.246Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
+    "title": "GTA 6 Mansion Thrax (Steal the Truffade Thrax) Walkthrough",
+    "official": false,
+    "readAt": "2026-11-26T04:41:53.730Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
    "Zone de recherche autour de Dalton Island (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-24T10:15:15.246Z",
+  "updatedAt": "2026-11-26T04:41:53.730Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -7269,6 +7516,14 @@
     "changes": [
      "preuves : 1 → 2",
      "localisation : none → zone"
+    ]
+   },
+   {
+    "at": "2026-11-26T04:41:53.730Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 2 → 3"
     ]
    }
   ]
@@ -7457,120 +7712,6 @@
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
-    ]
-   }
-  ]
- },
- {
-  "id": "v-vapid-ganado",
-  "type": "vehicle",
-  "name": "Vapid Ganado",
-  "make": "Vapid",
-  "model": "Ganado",
-  "year": null,
-  "aliases": null,
-  "kind": "news",
-  "variant": {
-   "value": "livrée Retro",
-   "support": [
-    {
-     "sourceName": "Push Square",
-     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
-     "quote": "You can also equip a custom Retro livery to Jason's Vapid Ganado by taking it to any Mod Shop , like Coastal Auto Care ."
-    }
-   ],
-   "conflicts": []
-  },
-  "edition": {
-   "exclusive": "ultimate",
-   "status": "reported",
-   "support": [
-    {
-     "sourceName": "Push Square",
-     "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
-     "quote": "Here's what the Retro livery looks like; you'll find it under Pro Builds > Full Kits > Retro Build - Ultimate Edition :"
-    }
-   ]
-  },
-  "location": {
-   "text": null,
-   "district": null,
-   "regionId": null,
-   "precision": "none",
-   "zone": null,
-   "point": null,
-   "alternatives": []
-  },
-  "access": {
-   "chapterMin": {
-    "value": 1,
-    "support": [
-     {
-      "sourceName": "Push Square",
-      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
-      "quote": "Available from Chapter 1 ."
-     }
-    ],
-    "conflicts": []
-   },
-   "inferredChapter": null,
-   "until": {
-    "value": 1,
-    "support": [
-     {
-      "sourceName": "Push Square",
-      "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
-      "quote": "These items are only available in Chapter 1 ."
-     }
-    ],
-    "conflicts": []
-   },
-   "mission": null,
-   "early": false,
-   "keyCloner": null,
-   "tracker": null,
-   "alarm": null
-  },
-  "keep": {
-   "text": null,
-   "rule": null,
-   "mode": "yes"
-  },
-  "steps": [],
-  "risks": [
-   {
-    "sourceName": "Push Square",
-    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
-    "quote": "These items are only available in Chapter 1 ."
-   }
-  ],
-  "price": null,
-  "media": null,
-  "evidence": [
-   {
-    "sourceName": "Push Square",
-    "url": "https://www.pushsquare.com/guides/gta-6-how-to-get-ultimate-edition-items-and-pre-order-bonuses",
-    "title": "Guide: GTA 6: How to Get Ultimate Edition Items & Pre-Order Bonuses",
-    "official": false,
-    "readAt": "2026-11-21T10:16:04.154Z"
-   }
-  ],
-  "reliability": "reported",
-  "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Exclusivité Ultimate signalée : compatibilité à vérifier."
-  ],
-  "missing": [
-   "emplacement"
-  ],
-  "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-21T09:57:39.890Z",
-  "revisions": [
-   {
-    "at": "2026-11-21T09:57:39.890Z",
-    "reason": "Détection automatique",
-    "changes": [
-     "source : Push Square"
     ]
    }
   ]
