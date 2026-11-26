@@ -368,6 +368,13 @@
     "title": "GTA 6 best car chapter 2",
     "official": false,
     "readAt": "2026-11-24T20:43:30.622Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
    }
   ],
   "reliability": "reported",
@@ -379,7 +386,7 @@
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-24T20:43:30.622Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
   "revisions": [
    {
     "at": "2026-11-21T09:57:39.890Z",
@@ -401,6 +408,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 2 → 3"
+    ]
+   },
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 4"
     ]
    }
   ]
@@ -1037,14 +1051,9 @@
   "year": "97",
   "aliases": {
    "value": [
-    "mitsubishi-eclipse"
+    "eclipse"
    ],
    "support": [
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
-    },
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -1060,21 +1069,15 @@
   },
   "kind": "hidden",
   "variant": {
-   "value": "green",
+   "value": "bright green",
    "support": [
-    {
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-paul-walker-car",
-     "quote": "Rockstar hid a tribute to Paul Walker in Vice City: the green 1995 Mitsubishi Eclipse he drove in The Fast and the Furious."
-    }
-   ],
-   "conflicts": [
     {
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
      "quote": "On Vespucci Island the bright green Fast & Furious tribute is inside a villa garage just north of the road."
     }
-   ]
+   ],
+   "conflicts": []
   },
   "edition": {
    "exclusive": null,
@@ -1092,11 +1095,6 @@
      }
     ],
     "conflicts": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Paul Walker's green Eclipse sits in a villa garage on Vespucci Island in Vice City."
-     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -1131,20 +1129,10 @@
    "inferredChapter": null,
    "until": null,
    "mission": null,
-   "early": true,
+   "early": false,
    "keyCloner": null,
    "tracker": null,
-   "alarm": {
-    "value": true,
-    "support": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "The side door sets off an alarm, and that brings people running before you are even in the car."
-     }
-    ],
-    "conflicts": []
-   }
+   "alarm": null
   },
   "keep": {
    "text": {
@@ -1157,11 +1145,6 @@
      }
     ],
     "conflicts": [
-     {
-      "sourceName": "AlcastHQ",
-      "url": "https://alcasthq.com/gta-6-paul-walker-car",
-      "quote": "Below I show you where it is, how to get it out of the garage and how to keep it."
-     },
      {
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
@@ -1193,19 +1176,9 @@
     "quote": "Use the main garage door to open it from inside, then drive the bright green Penumbra FF out."
    },
    {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Drive west from Vice Beach to Vespucci Island."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Go through the small green door on your left into the garage area."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Open the garage from the main garage door, not the side door."
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Take the causeway through the Rialto Islands west of Vice Beach."
    }
   ],
   "risks": [
@@ -1213,21 +1186,6 @@
     "sourceName": "GTA Xtreme (sitemap)",
     "url": "https://www.gta-xtreme.com/en/gta-6-paul-walker-car-location",
     "quote": "After taking the car, deal with any wanted level and register it at a workshop."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "If you take it in Chapter 1, you lose it again once you die, get busted or leave it behind."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "Check whether the car has a tracker before you drive off with it."
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "quote": "GTA 6 Police Wanted Level Explained"
    }
   ],
   "price": null,
@@ -1239,13 +1197,6 @@
     "title": "GTA 6 paul walker car location",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
-   },
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-paul-walker-car",
-    "title": "GTA 6 Paul Walker Car Location: Fast and Furious Eclipse",
-    "official": false,
-    "readAt": "2026-11-22T17:05:49.250Z"
    },
    {
     "sourceName": "GTA Xtreme (sitemap)",
@@ -1276,10 +1227,11 @@
    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -1327,6 +1279,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 4 → 5"
+    ]
+   },
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 4"
     ]
    }
   ]
@@ -2783,7 +2742,17 @@
   "year": null,
   "aliases": null,
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "white",
+   "support": [
+    {
+     "sourceName": "PC Gamer",
+     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+     "quote": "Head inside to find the car—if you've played previous GTAs, you'll recognise it as a convertible with a white stripe down the middle."
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
    "exclusive": null,
    "status": "none",
@@ -2819,6 +2788,11 @@
       "sourceName": "GTA Xtreme",
       "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
       "quote": "Sunrise Premium Autos is in Southside, southeast of Vice City International Airport."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+      "quote": "You can find this car inside the Sunrise Premium Autos showroom at the north tip of Southside, southwest of Pay 'N' Spray - Salton or east across the road from Ron Gas - Southside."
      }
     ]
    },
@@ -2857,6 +2831,11 @@
       "sourceName": "GTA Xtreme",
       "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
       "quote": "Bring the Key Cloner from Chapter 3 for this run."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+      "quote": "Hop inside, use the key cloner, and drive it through the glass."
      }
     ],
     "conflicts": []
@@ -2918,6 +2897,11 @@
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
     "quote": "Scan the car with WAiNK, check its security details and use the tool at the prompt."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+    "quote": "Head inside to find the car—if you've played previous GTAs, you'll recognise it as a convertible with a white stripe down the middle."
    }
   ],
   "risks": [
@@ -2930,6 +2914,16 @@
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-car-dealership-locations",
     "quote": "Its lock, alarm and tracker have to meet the conditions of the service you’ve unlocked."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+    "quote": "The Bravado Banshee is another one of the cars you'll need to track down for Randy in GTA 6 , but unlike the Pegassi Infernus , this one doesn't involve anything as dodgy as robbing a police lockup."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+    "quote": "Just remember to drive fast, and if the tracker starts to beep, speed up to stop it pinging your location to the cops."
    }
   ],
   "price": null,
@@ -2969,17 +2963,31 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
+    "title": "How to steal the Bravado Banshee in GTA 6",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
    }
   ],
   "reliability": "confirmed",
   "reasons": [
-   "2 sources indépendantes concordantes sur l'emplacement.",
+   "3 sources indépendantes concordantes sur l'emplacement.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -3003,6 +3011,13 @@
     "changes": [
      "fiabilité : reported → confirmed",
      "preuves : 3 → 5"
+    ]
+   },
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 7"
     ]
    }
   ]
@@ -6724,6 +6739,330 @@
   ]
  },
  {
+  "id": "v-maibatsu-boomazoom",
+  "type": "vehicle",
+  "name": "Maibatsu Boomazoom",
+  "make": "Maibatsu",
+  "model": "Boomazoom",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-maibatsu-sanchez",
+  "type": "vehicle",
+  "name": "Maibatsu Sanchez",
+  "make": "Maibatsu",
+  "model": "Sanchez",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-nagasaki-carbon-rs",
+  "type": "vehicle",
+  "name": "Nagasaki Carbon RS",
+  "make": "Nagasaki",
+  "model": "Carbon RS",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-nagasaki-sea-sparrow",
+  "type": "vehicle",
+  "name": "Nagasaki Sea Sparrow",
+  "make": "Nagasaki",
+  "model": "Sea Sparrow",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-ocelot-bloodless-jugular",
   "type": "vehicle",
   "name": "Ocelot Bloodless Jugular",
@@ -8056,9 +8395,15 @@
   "kind": "hidden",
   "variant": null,
   "edition": {
-   "exclusive": null,
-   "status": "none",
-   "support": []
+   "exclusive": "ultimate",
+   "status": "reported",
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+     "quote": "How to unlock GTA 6 Ultimate Edition Content and when you can use each item"
+    }
+   ]
   },
   "location": {
    "text": {
@@ -8090,6 +8435,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
       "quote": "That saves a lot of chasing the wrong label."
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+      "quote": "Dante's Vitello variant is found in a garage on the west of Starfish Island."
      }
     ]
    },
@@ -8115,6 +8465,12 @@
      "text": "It is located at a mansion on the southeastern tip of Waning Sands.",
      "sourceName": "PowerPyx",
      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
+    },
+    {
+     "district": "Starfish Island",
+     "text": "Dante's Vitello variant is found in a garage on the west of Starfish Island.",
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello"
     }
    ]
   },
@@ -8129,18 +8485,19 @@
    "alarm": null
   },
   "keep": {
-   "text": null,
-   "rule": {
-    "chapter": 2,
-    "where": "garage de Moses",
-    "tracker": null,
-    "source": {
-     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
-     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
-     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
-    }
+   "text": {
+    "value": "Luckily, Randy only needs one, so it's well worth taking the base model to him, then returning to grab one of the other GTA 6 Pegassi Vitello variants for yourself when you can afford the registration fee.",
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+      "quote": "Luckily, Randy only needs one, so it's well worth taking the base model to him, then returning to grab one of the other GTA 6 Pegassi Vitello variants for yourself when you can afford the registration fee."
+     }
+    ],
+    "conflicts": []
    },
-   "mode": "register"
+   "rule": null,
+   "mode": "yes"
   },
   "steps": [
    {
@@ -8149,7 +8506,23 @@
     "quote": "Drive it out the front gate and over to Randy to deliver it."
    }
   ],
-  "risks": [],
+  "risks": [
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+    "quote": "This area is well-protected by security guards and police, but it's nothing you can't fend off."
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+    "quote": "GTA 6 Wanted Levels and Heat system explained"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+    "quote": "How to get a Six-Star Wanted Level in GTA 6"
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
@@ -8187,12 +8560,20 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
+    "title": "Where to steal a GTA 6 Pegassi Vitello",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
    "Zone de recherche élargie autour de Belville (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -8200,7 +8581,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -8216,6 +8597,14 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 5"
+    ]
+   },
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 6",
+     "édition : aucune (none) → ultimate (reported)"
     ]
    }
   ]
@@ -9418,18 +9807,25 @@
     "title": "How to get the fastest cars in GTA 6",
     "official": false,
     "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement."
+   "3 sources, mais sans accord vérifiable sur l'emplacement."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -9443,6 +9839,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 1 → 2"
+    ]
+   },
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
     ]
    }
   ]
@@ -10381,9 +10784,31 @@
   "make": "Truffade",
   "model": "Thrax",
   "year": null,
-  "aliases": null,
+  "aliases": {
+   "value": [
+    "bugatti-divo"
+   ],
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-thrax",
+     "quote": "Based on Andrew Node's Thrax: Bugatti Divo"
+    }
+   ],
+   "conflicts": []
+  },
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "blue",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-thrax",
+     "quote": "The car itself is a blue custom Thrax from the Ultra-Luxe standout set."
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
    "exclusive": null,
    "status": "none",
@@ -10409,25 +10834,41 @@
       "sourceName": "PowerPyx",
       "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
       "quote": "Starting Location: Vice Beach > Dalton Island"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-thrax",
+      "quote": "The GTA 6 Thrax sits in a mansion garage on Starfish Island, and the trail to it starts with a hidden side quest about a conspiracy group with a strange thing about toilets."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-truffade-thrax-andrew-node-no-flusher",
+      "quote": "The first step is scanning ten No Flusher toilet graffiti stamps around Vice Beach, the east portion of Vice City, with your WAiNK It app."
      }
     ]
    },
-   "district": "Dalton Island",
+   "district": "Starfish Island",
    "regionId": "vicecity",
    "precision": "zone",
    "zone": {
-    "x": 1738,
-    "y": -1355,
-    "radius": 390,
+    "x": 777,
+    "y": 470,
+    "radius": 220,
     "widened": false
    },
    "point": null,
    "alternatives": [
     {
-     "district": "Starfish Island",
-     "text": "To get it, go to the building on Starfish Island laid out above.",
-     "sourceName": "GamesRadar+",
-     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars"
+     "district": "Dalton Island",
+     "text": "Randy asks for it as the last car on his Wish List, and it’s parked on Dalton Island.",
+     "sourceName": "GTA Xtreme",
+     "url": "https://www.gta-xtreme.com/en/gta-6-fastest-car"
+    },
+    {
+     "district": "Dalton Island",
+     "text": "Starting Location: Vice Beach > Dalton Island",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough"
     }
    ]
   },
@@ -10443,7 +10884,17 @@
     }
    },
    "until": null,
-   "mission": null,
+   "mission": {
+    "value": "No Flusher",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-thrax",
+      "quote": "Take Andrew Node's Thrax from his garage on Starfish Island after the No Flusher quest, then register it with Moses as your first car."
+     }
+    ],
+    "conflicts": []
+   },
    "early": false,
    "keyCloner": {
     "value": true,
@@ -10459,9 +10910,25 @@
       "quote": "You can get this one for free at any point in the game by doing a certain glitch , though keep in mind that it's much easier after you've obtained the Key Cloner in GTA 6 ."
      }
     ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-thrax",
+      "quote": "The car has no tracker and you don't need a Key Cloner for it."
+     }
+    ]
+   },
+   "tracker": {
+    "value": "none",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-thrax",
+      "quote": "The car has no tracker and you don't need a Key Cloner for it."
+     }
+    ],
     "conflicts": []
    },
-   "tracker": null,
    "alarm": null
   },
   "keep": {
@@ -10484,6 +10951,16 @@
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
       "quote": "Though it will cost you $70,000 to do so, so make sure you've either built up your personal wealth, or have a garage to keep it in until that point."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-thrax",
+      "quote": "Below I show you how to unlock it, where the garage is, how to keep the car and where to find the other Thraxes."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-truffade-thrax-andrew-node-no-flusher",
+      "quote": "Before you start, it's worth noting that this special Truffade Thrax costs 70k to register when you steal it, though you can also sell it to Randy for 20k (not that I would recommend this as it's a unique car)."
      }
     ]
    },
@@ -10519,6 +10996,11 @@
     "sourceName": "PowerPyx",
     "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough",
     "quote": "Head there either using the ferry , or with a boat or helicopter to start the mission."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-thrax",
+    "quote": "Scan 10 No Flusher tags in Vice Beach to find him, then take it for free."
    }
   ],
   "risks": [
@@ -10550,6 +11032,11 @@
      "sourceName": "GamesRadar+",
      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-fastest-cars",
      "quote": "Though it will cost you $70,000 to do so, so make sure you've either built up your personal wealth, or have a garage to keep it in until that point."
+    },
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-thrax",
+     "quote": "Important : Registering the Thrax costs $70,000 ."
     }
    ],
    "conflicts": []
@@ -10583,6 +11070,27 @@
     "title": "GTA 6 Mansion Thrax (Steal the Truffade Thrax) Walkthrough",
     "official": false,
     "readAt": "2026-11-26T04:41:53.730Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-thrax",
+    "title": "GTA 6 Thrax: How to Get Andrew Node's Thrax, the Fastest Car",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-truffade-thrax-andrew-node-no-flusher",
+    "title": "GTA 6 Truffade Thrax: How to get Andrew Node's supercharged version",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
    }
   ],
   "reliability": "reported",
@@ -10590,11 +11098,11 @@
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
-   "Zone de recherche autour de Dalton Island (repères de la carte communautaire), pas un point exact."
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -10625,6 +11133,13 @@
     "changes": [
      "fiabilité : confirmed → reported",
      "preuves : 3 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 7"
     ]
    }
   ]
@@ -11093,6 +11608,87 @@
   ]
  },
  {
+  "id": "v-vapid-stanier-g2-taxi",
+  "type": "vehicle",
+  "name": "Vapid Stanier G2 Taxi",
+  "make": "Vapid",
+  "model": "Stanier G2 Taxi",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-western-nightblade",
   "type": "vehicle",
   "name": "Western Nightblade",
@@ -11337,6 +11933,87 @@
   "revisions": [
    {
     "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-western-zombie-bobber",
+  "type": "vehicle",
+  "name": "Western Zombie Bobber",
+  "make": "Western",
+  "model": "Zombie Bobber",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-cheats",
+    "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
+    "official": false,
+    "readAt": "2026-11-26T23:16:56.503Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T23:16:56.503Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
