@@ -35,6 +35,34 @@ test("tâches racontées : provisions et réception gardées, l’ambulance conf
   expect(reportedTasks(told, theo({ chapter: 1 }))).toEqual([]);
 });
 
+test("mémoire du motel : seules les actions racontées par le joueur sont retenues", () => {
+  const s = freeze(theo({ lastMission: null, missionsDone: [] }));
+  const ids = (text: string) => reportedTasks([text], s).map((r) => r.id);
+  for (const text of [
+    "Je dois récupérer les provisions pour Jason ?", "Où sont les provisions pour Jason ?",
+    "Comment parler à la proprio ?", "Comment faire disparaître l’ambulance ?",
+    "Je n’ai pas récupéré les provisions", "Je n’ai pas récupéré les provisions pour Jason",
+    "Est-ce que je dois parler à Linda ?", "Je peux aller chercher les courses maintenant ?",
+    "Faut-il parler à Linda", "Que faire après les courses pour Jason", "Je dois parler à Linda",
+    "Est-ce que j’ai parlé à Linda", "Comment savoir si j’ai récupéré les provisions pour Jason",
+    "J’ai pas parlé à Linda", "Je ne parle plus avec la proprio", "Les provisions pour Jason",
+    "J’ai récupéré mon sac et les provisions pour Jason sont où", "Si j’ai parlé à Linda",
+    "J’ai parlé à Jason de la gérante", "J’ai vu comment faire disparaître l’ambulance",
+  ]) expect(ids(text), text).toEqual([]);
+  for (const [text, id] of [
+    ["J’ai récupéré les provisions pour Jason", "just-moved-in"],
+    ["Je viens de récupérer les courses pour Jason", "just-moved-in"],
+    ["Là je parle avec la proprio du motel", "overnight-charges"],
+    ["J’ai parlé à Linda", "overnight-charges"],
+    ["J’ai fait disparaître l’ambulance", "ambulance-chaser"],
+  ]) expect(ids(text), text).toEqual([id]);
+});
+
+test("une question ancienne suivie de deux déclarations produit une seule tâche racontée", () => {
+  const messages = ["Je dois récupérer les provisions pour Jason ?", told[1], told[1]];
+  expect(reportedTasks(messages, theo()).map((r) => r.id)).toEqual(["just-moved-in"]);
+});
+
 test("situation de l’Accueil : cinq niveaux distincts, aucun nom de principale future en strict", () => {
   const s = theo();
   const sit = motelSituation(s, told)!;

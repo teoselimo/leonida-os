@@ -51,6 +51,22 @@ export function readChatTexts(): string[] {
   }
 }
 
+// Grammaire de la mémoire : chaque action est liée à son propre objet.
+// Les intentions conversationnelles de MOTEL_REPORTS restent plus larges.
+const REPORT_ACTION: Record<string, RegExp> = {
+  "just-moved-in": /^(?:j'ai (?:recupere|ramasse|achete|pris|rapporte|fait)|je viens de (?:recuperer|ramasser|prendre|rapporter|faire)|je viens d'acheter|je (?:recupere|ramasse|prends|rapporte)) (?:les |des |ses )?(?:provisions|courses|groceries)\b/,
+  "overnight-charges": /^(?:j'ai (?:parle|discute)|je (?:parle|discute)|je viens de (?:parler|discuter)) (?:avec |a )(?:la )?(?:proprio|proprietaire|gerante|linda)\b/,
+  "ambulance-chaser": /^(?:j'ai (?:fait disparaitre|brule|detruit|deplace)|je viens de (?:faire disparaitre|bruler|detruire|deplacer)|je (?:fais disparaitre|brule|detruis|deplace)) (?:l'|une |cette )ambulance\b/,
+};
+
+function affirmativeActions(text: string): string[] {
+  // nk efface la ponctuation : reconnaître les questions avant la normalisation.
+  if (/[?？]/.test(text)) return [];
+  const normalized = nk(text);
+  if (/\b(?:comment|ou|est ce que|faut il|je dois|je peux|que faire|pourquoi|quand|si|pas|jamais|rien|aucun|sans)\b|\b(?:ne |n')/.test(normalized)) return [];
+  return text.split(/[.!;\n]+|\bet\b/i).map((part) => nk(part).replace(/^(?:la |maintenant |puis )+/, ""));
+}
+
 /**
  * Tâches du motel que le joueur a RACONTÉES au copilote et qui ne sont pas confirmées dans sa progression.
  * Une tâche déclarée terminée, ou choisie comme mission (en cours / prévue), n'est plus « racontée » : elle est confirmée.
@@ -60,9 +76,8 @@ export function reportedTasks(texts: string[], s: ProgInput, except: string[] = 
   if (p.chapter !== 2) return [];
   const v = computeProgress(s);
   const confirmed = new Set([...p.missionsDone, p.lastMission ?? "", p.nextMission ?? "", ...except].map((m) => nk(m)));
-  const seen = new Set<string>();
-  for (const t of texts) for (const r of MOTEL_REPORTS) if (r.pattern.test(nk(t))) seen.add(r.id);
-  return MOTEL_REPORTS.filter((r) => seen.has(r.id))
+  const actions = texts.slice(-40).flatMap(affirmativeActions);
+  return MOTEL_REPORTS.filter((r) => actions.some((action) => REPORT_ACTION[r.id]?.test(action) && r.pattern.test(action)))
     .map((r) => PROG_BY_ID.get(r.id))
     .filter((n): n is ProgNode => !!n && !confirmed.has(nk(n.name)) && v.byId.get(n.id)?.status !== "terminé")
     .map((n) => ({ id: n.id, name: n.name, ...REPORT_WORDS[n.id] }));

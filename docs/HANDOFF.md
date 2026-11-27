@@ -13,6 +13,12 @@
 | Tests sur le code final | Hub Python 39/39. Playwright standard 559 réussis, 4 ignorés, 0 échec, dont 242 unitaires. Artifact ciblé 90/90. |
 | Mis à jour le | 25/11/2026, par Claude (publication V0.21) |
 
+## Correctif en revue — issue #19 (27/11/2026, Codex)
+
+Branche `codex/chapter2-home-affirmative-fix`, basée sur `claude/chapter2-home-situation@851b843`. La lecture des 40 derniers messages utilisateur retient une tâche du motel uniquement si une action du joueur correspond à son objet. Les questions, négations et simples mentions sont écartées. Plusieurs déclarations de la même tâche donnent un seul rappel à confirmer.
+
+TypeScript strict et build standard réussis. Les 251 tests unitaires ont réussi, dont les 9 de V0.21.1. Les 57 parcours de `v018.spec.ts` et `v0211.spec.ts` ont réussi (19 par configuration : iPhone Chromium, iPad Chromium et iPhone WebKit, Claude simulé). Le parcours question puis déclaration compare la chaîne complète de sauvegarde avant et après rechargement. Le manifeste des cinq projections a été vérifié dans les sources et dans l’export standard. Revue avant fusion ; publication en attente.
+
 ## Branche en revue — issue #19 (26/11/2026, Claude)
 
 **`claude/chapter2-home-situation`**, base `experiment/claude-artifact@2e1577a` (V0.21 publiée), code `749ef42`. **Non fusionnée, non publiée.** Les lignes ci-dessus décrivent toujours l'intégration et l'Artifact en service.

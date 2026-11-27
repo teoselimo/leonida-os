@@ -62,7 +62,9 @@ test("Accueil : carte « Chapitre 2 · Starlet Motel » en cinq niveaux, sans pr
 });
 
 test("Accueil : ce qui est raconté au copilote apparaît « à confirmer » et persiste au rechargement, sans écriture", async ({ page }) => {
-  await start(page);
+  await start(page, {}, [{ id: 1, role: "user", text: "Je dois récupérer les provisions pour Jason ?" }]);
+  const progressKey = "leonida-os/progress/v1";
+  const before = await page.evaluate((key) => localStorage.getItem(key), progressKey);
   const card = page.getByTestId("situation-card");
   await expect(card.getByTestId("situation-confirmed")).toContainText("Ambulance Chaser terminée");
   await expect(card.getByTestId("situation-reported")).toHaveCount(0);
@@ -71,7 +73,7 @@ test("Accueil : ce qui est raconté au copilote apparaît « à confirmer » et 
   await page.reload();
   await page.waitForSelector(".app.is-ready");
   await expect(page.getByTestId("situation-reported")).toContainText("provisions pour Jason");
-  expect((await saved(page)).profile).toMatchObject({ lastMission: "Ambulance Chaser", missionsDone: ["Ambulance Chaser"], nextMission: null });
+  expect(await page.evaluate((key) => localStorage.getItem(key), progressKey)).toBe(before);
 });
 
 test("continuité : la confirmation d’Ambulance Chaser rappelle les provisions et la gérante, sans les enregistrer", async ({ page }) => {
