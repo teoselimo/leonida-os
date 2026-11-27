@@ -7,3 +7,5 @@ test-report
 captures
 data-branch
 *.tsbuildinfo
+hub/cache
+__pycache__/

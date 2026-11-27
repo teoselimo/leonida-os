@@ -6,6 +6,9 @@ import { CATEGORIES, CHAPTERS, isReliable } from "@/lib/meta";
 import { repo, useStore } from "@/lib/store";
 import { timeAgo } from "@/lib/useMedia";
 import { ShieldChip } from "@/components/ShieldChip";
+import { Guide } from "@/components/Guide";
+import { Garage } from "@/components/Garage";
+import { Encyclopedia } from "@/components/Encyclopedia";
 import { LiveRadar } from "@/components/LiveRadar";
 import { useLiveRadar } from "@/lib/live";
 import { Icon } from "@/components/ui/Icon";
@@ -17,6 +20,10 @@ export function RadarScreen() {
   const { state, track, markSeen, focusOnMap, signals, discoveries: all } = useStore();
   const live = useLiveRadar();
   const [filter, setFilter] = useState<Filter>("all");
+  // Toutes les fiches de la veille (actualités, statuts, preuves) : vue détaillée, hors du Guide pratique
+  const [full, setFull] = useState(false);
+  // V0.20 : Garage et Encyclopédie vivent DANS le Guide (pas de sixième onglet)
+  const { guideView: gview, setGuideView: setGview } = useStore();
   const regions = repo.regions();
 
   // « Nouveau » = non vu à l'ouverture de l'écran ; marqué comme vu ensuite.
@@ -42,14 +49,30 @@ export function RadarScreen() {
     <div className="screen radar">
       <header className="topbar">
         <div>
-          <p className="eyebrow"><span className="live" /> Veille GTA VI</p>
-          <h1 className="h1">Radar</h1>
+          <p className="eyebrow">Infos utiles</p>
+          <h1 className="h1">Guide</h1>
         </div>
         <ShieldChip />
       </header>
+      <div className="gswitch" role="tablist" aria-label="Vue du Guide">
+        {([["infos", "Infos utiles", "info"], ["garage", "Garage", "car"], ["encyclo", "Encyclopédie", "layers"]] as const).map(([id, l, ic]) => (
+          <button key={id} role="tab" aria-selected={gview === id} className={gview === id ? "is-on" : ""} onClick={() => setGview(id)} data-testid={`guide-view-${id}`}><Icon name={ic} size={15} /> {l}</button>
+        ))}
+      </div>
+      {gview === "garage" ? <Garage /> : gview === "encyclo" ? <Encyclopedia /> : (<>
 
       {live.feed ? (
-        <LiveRadar />
+        full ? (
+          <>
+            <button className="back" onClick={() => setFull(false)} data-testid="guide-back"><Icon name="chevronLeft" size={16} /> Retour au Guide</button>
+            <LiveRadar />
+          </>
+        ) : (
+          <>
+            <Guide />
+            <button className="btn btn--ghost btn--sm guide__full" onClick={() => setFull(true)} data-testid="guide-full">Toutes les fiches de la veille (actualités, statuts, preuves)</button>
+          </>
+        )
       ) : (
         <>
           <div className="note" data-testid="demo-banner">
@@ -139,6 +162,7 @@ export function RadarScreen() {
       </div>
         </>
       )}
+      </>)}
     </div>
   );
 }

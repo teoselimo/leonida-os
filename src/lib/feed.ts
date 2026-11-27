@@ -27,9 +27,9 @@ export function tabOf(r: RadarRecord, now = Date.now()): LiveTab[] {
  * Filtre anti-spoiler du flux : strict = retiré, modéré = flouté (géré à l'affichage).
  * Une fiche rattachée à un chapitre plus avancé que celui du joueur est traitée comme un spoiler.
  */
-export function spoilerVisibility(r: RadarRecord, mode: "strict" | "relaxed", playerChapter?: number): "visible" | "blurred" | "hidden" {
+export function spoilerVisibility(r: RadarRecord, mode: "strict" | "relaxed" | "off", playerChapter?: number): "visible" | "blurred" | "hidden" {
   const ahead = playerChapter != null && (r.details?.chapter?.value ?? 0) > playerChapter;
-  if (r.spoiler !== "high" && !ahead) return "visible";
+  if (mode === "off" || (r.spoiler !== "high" && !ahead)) return "visible";
   return mode === "strict" ? "hidden" : "blurred";
 }
 
@@ -73,7 +73,7 @@ export interface AdviceItem {
  */
 export function liveAdvice(
   feed: RadarFeed | null,
-  profile: { chapter: number; spoilerMode: "strict" | "relaxed"; missionsDone?: string[] },
+  profile: { chapter: number; spoilerMode: "strict" | "relaxed" | "off"; missionsDone?: string[] },
   done: Record<string, string> | string[] = {},
 ) {
   if (!feed) return { now: [] as AdviceItem[], later: 0 };

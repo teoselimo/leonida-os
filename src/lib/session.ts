@@ -7,6 +7,7 @@ import type { MissionBrief, MissionInfo } from "./missions";
 import { missionBrief, missionCatalog, missionVisible, nextMissionGuess, nk } from "./missions";
 import type { MediaRef } from "../../collector/src/types";
 import type { PersistedState } from "./types";
+import { hiddenMissionNames, redactorFor } from "./spoiler";
 
 /**
  * Briefing de session : répond en un coup d'œil à
@@ -106,7 +107,7 @@ export function sessionPlan(feed: RadarFeed | null, s: Pick<PersistedState, "pro
   const next = p.nextMission && !doneM.has(nk(p.nextMission)) ? p.nextMission : null;
   const info = next ? cat.get(nk(next).replace(/'/g, "")) ?? null : null;
   const brief = next ? missionBrief(feed, next, { chapter: p.chapter, spoilerMode: p.spoilerMode, done: s.done }) : null;
-  const guess = !next && p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
+  const guess = p.chapter !== 2 && !next && p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
   const choices = [...cat.values()].filter((m) => missionVisible(m, p.chapter, p.spoilerMode) && !doneM.has(nk(m.name))).map((m) => m.name).sort();
 
   const during = brief?.during.length
@@ -163,10 +164,14 @@ export function sessionPlan(feed: RadarFeed | null, s: Pick<PersistedState, "pro
   // un véhicule puis, si possible, une autre envie (secret) pour varier
   const funTop = [fun.find((x) => x.kind === "vehicle"), fun.find((x) => x.kind === "record") ?? fun.filter((x) => x.kind === "vehicle")[1]].filter((x): x is SessionItem => !!x).slice(0, 2);
 
+  // anti-spoiler à la source : aucun nom de mission future dans les textes de l'accueil
+  const red = redactorFor(s, feed);
+  const clean = (it: SessionItem): SessionItem => ({ ...it, title: red(it.title), sub: red(it.sub), where: it.where ? red(it.where) : it.where });
+  const hidden = new Set(hiddenMissionNames(s, feed).map((n) => n.toLowerCase()));
   return {
-    mission: { name: next, info, brief, guess: guess && missionVisible(guess.mission, p.chapter, p.spoilerMode) ? { name: guess.mission.name, basis: guess.basis } : null, choices, during, risk },
-    before: beforeTop,
-    fun: funTop,
+    mission: { name: next, info, brief, guess: guess && missionVisible(guess.mission, p.chapter, p.spoilerMode) && !hidden.has(guess.mission.name.toLowerCase()) ? { name: guess.mission.name, basis: guess.basis } : null, choices: choices.filter((c) => !hidden.has(c.toLowerCase())), during: during ? red(during) : during, risk },
+    before: beforeTop.map(clean),
+    fun: funTop.map(clean),
     stats: { missions: p.missionsDone.length, vehicles: Object.values(s.vehicles).filter((v) => v.state !== "spotted").length, done: Object.keys(s.done).length },
   };
 }

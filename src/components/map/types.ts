@@ -1,5 +1,6 @@
 import type { Discovery, DiscoveryStatus, Region } from "@/lib/types";
 import type { Landmark } from "@/lib/gtadb";
+import type { PoiCat } from "@/lib/poi";
 
 /**
  * Contrat de la carte. Implémentation actuelle : `LeonidaMap` (MapLibre GL + tuiles gtadb).
@@ -24,6 +25,12 @@ export interface MapZone {
   label: string;
   /** Zone élargie (« à l'est de… ») : trait pointillé plus marqué. */
   widened?: boolean;
+  /** « point » : position vérifiée (dessinée comme un petit cercle plein, sans mention « approximative »). */
+  kind?: "zone" | "point" | "calibre";
+  /** Parcours (véhicule mobile) : lignes en coordonnées de jeu, dessinées par-dessus le cercle. */
+  path?: Array<Array<[number, number]>>;
+  /** Libellé de provenance d'un point (« Placée par toi », « Repère communautaire »). */
+  tag?: string;
 }
 
 export interface MapViewProps {
@@ -37,6 +44,8 @@ export interface MapViewProps {
   occlusion: { top: number; bottom: number; left: number };
   landmarks: Landmark[];
   showLandmarks: boolean;
+  /** Catégories de repères affichées (vide ou absent : toutes). */
+  poiCats?: PoiCat[];
   selectedLandmarkId: string | null;
   onSelectLandmark: (id: string | null) => void;
   /** L'onglet Carte est affiché (la carte reste montée en arrière-plan sinon). */
@@ -53,4 +62,6 @@ export interface MapViewProps {
   zones?: MapZone[];
   selectedZoneId?: string | null;
   onSelectZone?: (id: string) => void;
+  /** Cadrage demandé (liste de lieux) : la caméra montre ce cercle, RIEN n'est dessiné. */
+  view?: { x: number; y: number; radius: number; nonce: number } | null;
 }

@@ -1,3 +1,7 @@
+import { MOTEL_REPORTS, MOTEL_POSTERS, MOTEL_CARDS, POSTER_SOURCE } from "@/data/chapter2";
+import { KNOWLEDGE_BY_ID } from "@/data/knowledge";
+import { PROG_BY_ID } from "@/data/progression";
+import { motelSituation } from "../motel";
 import type { RadarFeed, RadarRecord } from "../feed";
 import { liveAdvice, spoilerVisibility } from "../feed";
 import type { VehicleRecord } from "../garage";
@@ -6,6 +10,13 @@ import { frHeadline } from "../fr";
 import type { MissionInfo } from "../missions";
 import { missionBrief, missionCatalog, missionVisible, nextMissionGuess, nk, resolveMission } from "../missions";
 import type { PersistedState } from "../types";
+import type { Landmark } from "../gtadb";
+import { categoryFromQuery, districtFromQuery, findPoi, POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus, searchPois } from "../poi";
+import { afterDone, progressAnswer, progressIntent } from "./progressAnswers";
+import { ESTABLISHMENTS } from "@/data/establishments";
+import { findRare, PRESENCE_FR, RVL_BY_ID, rvlView } from "../rvl";
+import { redactorFor } from "../spoiler";
+import { simulateLaunch } from "../story/engine";
 
 /**
  * LEONIDA AI — compréhension conversationnelle (sans clé d'IA).
@@ -33,16 +44,20 @@ export type AiAction =
   | { type: "vehicle_state"; id: string; state: "spotted" | "stolen" | "registered"; label: string; confirm: string }
   | { type: "set_mission"; name: string; label: string; confirm: string }
   | { type: "set_next_mission"; name: string; label: string; confirm: string }
+  /** Progression (V0.12) : lancer une mission (en cours), cocher un objet récupéré. Toujours confirmées. */
+  | { type: "start_mission"; name: string; label: string; confirm: string }
+  | { type: "objective_done"; mission: string; text: string; label: string; confirm: string }
   | { type: "ask"; question: string; label: string }
   /** Lieu de la carte communautaire : repère gtadb (point) ou quartier (zone approximative). Jamais de coordonnées inventées. */
-  | { type: "show_place"; label: string; landmarkId?: string; district?: string };
+  | { type: "show_place"; label: string; landmarkId?: string; district?: string; poiCat?: string; estId?: string; query?: string };
 
 /** Sujet de la conversation, pour comprendre « et comment je la garde ? », « et où exactement ? », « et après ? ». */
 export type Topic =
   | { kind: "vehicle"; id: string }
   | { kind: "record"; id: string }
   | { kind: "mission"; name: string; known: boolean }
-  | { kind: "ask_mission"; then: "before" | "done" };
+  | { kind: "ask_mission"; then: "before" | "done" }
+  | { kind: "place"; id: string };
 
 export interface Source {
   name: string;
@@ -74,15 +89,23 @@ export interface PlaceRef {
   id: string;
   name: string;
   district: string;
+  /** Champs gtadb complets quand disponibles (catégories de lieux). */
+  tags?: string[];
+  x?: number;
+  y?: number;
+  real?: string;
 }
+const asLm = (p: PlaceRef): Landmark => ({ id: p.id, name: p.name, district: p.district, tags: p.tags ?? [], x: p.x ?? 0, y: p.y ?? 0, real: p.real ?? "" });
 
 export interface AiContext {
   feed: RadarFeed | null;
-  state: Pick<PersistedState, "profile" | "vehicles" | "done">;
+  state: Pick<PersistedState, "profile" | "vehicles" | "done" | "pins"> & { story?: PersistedState["story"] };
   /** Centre de carte courant (coordonnées de jeu), pour « près de moi ». */
   position?: { x: number; y: number } | null;
   /** Repères gtadb chargés par la carte : permettent « voir sur la carte » sans inventer de position. */
   places?: PlaceRef[];
+  /** V0.21.1 : messages précédents du joueur dans le chat (lecture seule) — tâches racontées mais non confirmées. */
+  chatTexts?: string[];
 }
 
 export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, " ");
@@ -119,7 +142,8 @@ export function placeAction(r: RadarRecord, ctx: AiContext): AiAction | null {
   }
   for (const c of cited) {
     const d = places.find((l) => norm(l.district.split(",")[0] ?? "") === norm(c));
-    if (d) return { type: "show_place", district: d.district.split(",")[0].trim(), label: `Voir la zone ${d.district.split(",")[0].trim()}` };
+    // V0.13 : plus de zone couvrant tout un quartier — la carte ouvre la liste des lieux du quartier
+    if (d) return { type: "show_place", query: d.district.split(",")[0].trim(), label: `Voir les lieux de ${d.district.split(",")[0].trim()}` };
   }
   return null;
 }
@@ -145,7 +169,10 @@ export function findVehicle(q: string, list: VehicleRecord[]): VehicleRecord | n
     if (/fast|furious|paul walker/.test(n) && /fast|furious|paul walker/.test(blob)) s += 4;
     if (s > (best?.s ?? 2)) best = { v, s };
   }
-  return best?.v ?? null;
+  if (best) return best.v;
+  // référentiel vérifié (Rare Vehicle Locator) : surnoms courants (« la voiture de Paul Walker », « le buggy »…)
+  const rare = findRare(q);
+  return rare ? list.find((v) => v.id === rare.id) ?? null : null;
 }
 
 // ── Intentions ────────────────────────────────────────────────────────────────
@@ -214,20 +241,33 @@ function urgentNow(ctx: AiContext) {
 }
 
 // ── Réponses ──────────────────────────────────────────────────────────────────
+const lc = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+
 function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep" | "all" = "all"): AiAnswer {
   const x = viewOf(v, ctx.state);
   const topic: Topic = { kind: "vehicle", id: v.id };
   if (x.hidden)
     return { intent: "vehicle", text: "Ce véhicule est lié à un chapitre plus avancé que le tien : je préfère ne rien te dévoiler pour l'instant.", reliability: null, sources: [], actions: [], topic };
-  const where =
-    v.location.precision === "exact"
+  const rv = RVL_BY_ID.get(v.id);
+  const red = redactorFor(ctx.state, ctx.feed ?? null);
+  const rl = rv?.locations[0];
+  const rvArea = rl ? rl.area.split(", ").filter((part) => !rl.label.toLowerCase().includes(part.split(/[ (]/)[0].toLowerCase())).join(", ") : "";
+  const rvx0 = rv ? rvlView(rv, ctx.state) : null;
+  const rvWhere = rv && rl && rvx0
+    ? `${rl.label}${rvArea ? ` (${rvArea})` : ""} : ${rl.precision === "inconnue" ? "endroit non repéré sur notre carte, donc pas d'épingle" : rvx0.location.label.charAt(0).toLowerCase() + rvx0.location.label.slice(1)}, ${PRESENCE_FR[rl.presence].toLowerCase()}.`
+    : null;
+  const where = rvWhere ??
+    (v.location.precision === "exact"
       ? `Son emplacement est vérifié sur la carte${v.location.district ? ` (${v.location.district})` : ""}.`
       : v.location.precision === "zone"
         ? `Elle se trouve dans la zone de ${v.location.district}${v.location.zone?.widened ? " (zone élargie)" : ""} : c'est une zone de recherche, pas un point exact.`
         : v.location.text
           ? `Les guides citent un lieu que je n'ai pas encore pu placer sur la carte.`
-          : "Son emplacement n'est pas encore établi par les sources.";
-  const access = x.now
+          : "Son emplacement n'est pas encore établi par les sources.");
+  const rvx = rvx0;
+  const access = rvx && !x.hidden
+    ? rvx.access === "now" ? `accessible maintenant pour toi, ${lc(red(rvx.condition))}.` : rvx.access === "order-pending" ? `lieu accessible, mais la commande de Moses n'est pas encore confirmée : ${lc(red(rvx.condition))}.` : `pas encore pour toi : ${lc(red(rvx.condition))}.`
+    : x.now
     ? "Tu peux la récupérer dès maintenant."
     : x.access === "confirm"
       ? "Les conditions pour y accéder ne sont pas encore établies : à vérifier en jeu."
@@ -240,8 +280,9 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
             : x.compat === "preorder" || x.compat === "preorder-no"
               ? "C'est un bonus de précommande : indique dans Profil si tu y as droit."
               : "Sa compatibilité avec ton édition reste à vérifier.";
-  const keep =
-    v.keep.mode === "yes"
+  const keep = rv
+    ? rv.keep.possible === "oui" ? `Pour la garder : ${lc(rv.keep.how.split(". ")[0].replace(/\.$/, ""))}${rv.keep.chapterMin ? `, dès le chapitre ${rv.keep.chapterMin}${ctx.state.profile.chapter < rv.keep.chapterMin ? " (avant, tu peux la perdre)" : ""}` : ""}.` : `Les sources ne disent pas si on peut la garder.`
+    : v.keep.mode === "yes"
       ? "Elle t'est remise d'office : rien à faire pour la garder."
       : v.keep.rule
         ? `Pour la garder, il faudra l'immatriculer${v.keep.rule.where ? ` (${v.keep.rule.where})` : ""}, possible dès le chapitre ${v.keep.rule.chapter}${ctx.state.profile.chapter < v.keep.rule.chapter ? " : avant cela, une voiture volée peut être perdue" : ""}.`
@@ -254,7 +295,8 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
         ? `${where}${v.location.text ? " Les guides la décrivent précisément : le détail est dans « Sources et preuves »." : ""}`
         : `${v.name} : ${access.charAt(0).toLowerCase()}${access.slice(1)} ${where} ${keep}`;
   const actions: AiAction[] = [];
-  if (v.location.precision === "zone" || v.location.precision === "exact") actions.push({ type: "focus_vehicle", id: v.id, label: v.location.precision === "zone" ? "Voir la zone sur la carte" : "Voir sur la carte" });
+  if (rl?.precision === "inconnue") actions.push({ type: "focus_vehicle", id: v.id, label: `Ouvrir la fiche ${v.model || v.name}` });
+  else if (v.location.precision === "zone" || v.location.precision === "exact") actions.push({ type: "focus_vehicle", id: v.id, label: v.location.precision === "zone" ? "Voir la zone sur la carte" : "Voir sur la carte" });
   else actions.push({ type: "focus_vehicle", id: v.id, label: `Ouvrir la fiche ${v.model || v.name}` });
   const owned = ctx.state.vehicles[v.id]?.state;
   if (!owned && x.access !== "excluded" && focus !== "keep") actions.push({ type: "vehicle_state", id: v.id, state: "spotted", label: "Je l'ai trouvée", confirm: `Marquer « ${v.name} » comme repérée ?` });
@@ -262,10 +304,10 @@ function vehicleAnswer(v: VehicleRecord, ctx: AiContext, focus: "where" | "keep"
   return {
     intent: focus === "keep" ? "keep" : focus === "where" ? "where" : "vehicle",
     text: text.replace(/\s+/g, " ").trim(),
-    reliability: R[v.reliability],
-    sources: vehSources(v),
+    reliability: rvx ? (rvx.trust === "Vérifié" ? R.confirmed : rvx.trust === "Probable" ? R.reported : R.rumor) : R[v.reliability],
+    sources: rv ? rv.evidence.filter((e, i, a) => e.url && a.findIndex((o) => o.url === e.url) === i).slice(0, 4).map((e) => ({ name: e.creator, url: e.url!, when: e.publishedAt })) : vehSources(v),
     actions: actions.slice(0, 2),
-    more: [...extras, focus !== "all" ? access : "", v.location.text ? `Description du lieu (en anglais) : « ${v.location.text.value} »` : ""].filter(Boolean),
+    more: [...extras, focus !== "all" ? access.charAt(0).toUpperCase() + access.slice(1) : "", ...(rl ? rl.steps.slice(0, 2).map(red) : []), v.location.text ? `Description du lieu (en anglais) : « ${v.location.text.value} »` : ""].filter(Boolean),
     replies: focus === "all" ? ["Et comment je la garde ?", "Et où exactement ?"] : focus === "where" ? ["Et comment je la garde ?"] : ["Et où exactement ?"],
     topic,
     evidence: [v.id],
@@ -286,6 +328,21 @@ function missionTopicAnswer(ctx: AiContext, mission: MissionInfo | null, rawName
   const sources = [...brief.before, ...brief.during].slice(0, 3).flatMap(recSources).slice(0, 3);
   const evidence = [...brief.before, ...brief.during].map((r) => r.id);
 
+  // V0.17 : le référentiel Story Intelligence répond d'abord (mêmes règles que l'Accueil)
+  const story = storyBefore(ctx, rawName, { short: !!brief.before[0] });
+  if (story) {
+    // les fiches de la veille sur cette mission restent citées (preuves transmises à la synthèse)
+    const feedFirst = brief.before[0] ?? brief.during[0];
+    const feedAct = feedFirst ? placeAction(feedFirst, ctx) ?? { type: "open_record" as const, id: feedFirst.id, label: `Voir : ${frHeadline(feedFirst, g)}`.slice(0, 48) } : null;
+    return {
+      ...story,
+      text: [story.text, brief.before[0] ? beforeSentence(brief.before[0], name) : ""].filter(Boolean).join(" "),
+      sources: [...sources, ...story.sources].filter((x, i, a) => a.findIndex((y) => y.url === x.url) === i).slice(0, 5),
+      actions: [...(feedAct ? [feedAct] : []), ...setNext].slice(0, 2),
+      topic,
+      evidence: [...evidence, ...(brief.guide ? [brief.guide.id] : [])],
+    };
+  }
   if (!mission) {
     const other = urgent.adv[0];
     return {
@@ -341,6 +398,38 @@ function missionTopicAnswer(ctx: AiContext, mission: MissionInfo | null, rawName
   };
 }
 
+/** « Je vais lancer X » à partir de la simulation Story Intelligence (anti-spoiler et couverture inclus). */
+function storyBefore(ctx: AiContext, name: string, opts: { short?: boolean } = {}): AiAnswer | null {
+  const sim = simulateLaunch(ctx.state, name);
+  if (!sim) return null;
+  const crit = [...sim.money, ...sim.disappears].filter((l) => l.tier === "Critique" || l.tier === "Fortement recommandé" || !l.tier);
+  const during = sim.during[0];
+  if (!crit.length && !during && !sim.choices.length) return null;
+  const parts: string[] = [];
+  const first = crit[0];
+  const lead = first ? `${first.text}${first.confidence === "Contesté" ? " (sources divergentes)" : ""}` : "";
+  if (sim.pointOfNoReturn) parts.push(lead ? `« ${sim.name} » est un point de non-retour : ${lead.charAt(0).toLowerCase()}${lead.slice(1)}` : `« ${sim.name} » est un point de non-retour.`);
+  else if (lead) parts.push(lead);
+  // montant : dans le texte seulement s'il est calculé à partir de ce que le joueur a indiqué
+  if (first?.money && !/inconnu/.test(first.money)) parts.push(first.money);
+  const gone = sim.disappears.filter((l) => / ne sera plus disponible$/.test(l.text)).map((l) => l.text.replace(/ \(facultative\) ne sera plus disponible$| ne sera plus disponible$/, ""));
+  if (gone.length && !opts.short) parts.push(`Disparaît au lancement : ${gone.join(", ")}.`);
+  if (during) parts.push(`Pendant la mission : ${during.text.charAt(0).toLowerCase()}${during.text.slice(1)}.`);
+  if (sim.choices[0]) parts.push(sim.choices[0].text);
+  if (sim.coverage !== "auditée") parts.push("Audit partiel : je ne garantis pas que tout soit recensé.");
+  const srcs = [...crit, during, ...sim.choices].filter(Boolean).flatMap((l) => l!.sources).filter((x, i, a) => a.findIndex((y) => y.url === x.url) === i).slice(0, 4);
+  const conf = first?.confidence ?? during?.confidence;
+  return {
+    intent: "before",
+    text: parts.join(" "),
+    reliability: conf === "Vérifié" ? "recoupé" : conf === "Probable" ? "signalé" : "non établi",
+    sources: srcs.map((x) => ({ name: x.name, url: x.url, when: null })),
+    actions: [],
+    more: [...(first?.money && /inconnu/.test(first.money) ? [first.money] : []), ...(opts.short && gone.length ? [`Disparaît au lancement : ${gone.join(", ")}.`] : []), ...crit.slice(1).map((l) => l.text), ...sim.during.slice(1).map((l) => l.text)].slice(0, 8),
+    replies: ["Et après ?", "Qu'est-ce qui n'est pas vérifié ?"],
+  };
+}
+
 const lowerFirst = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 const nSrc = (n: number) => (n > 1 ? `${n} sources` : "une source");
 
@@ -362,7 +451,7 @@ function reminder(r: RadarRecord, g: { missions: string[]; proper: string[] }): 
 function askMission(ctx: AiContext, then: "before" | "done", candidates: MissionInfo[] = []): AiAnswer {
   const { cat } = glossary(ctx.feed);
   const p = ctx.state.profile;
-  const guess = p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
+  const guess = p.chapter !== 2 && p.lastMission ? nextMissionGuess(cat, p.lastMission) : null;
   const options = candidates.length ? candidates.map((c) => c.name) : [p.nextMission, guess?.mission.name].filter((x): x is string => !!x);
   return {
     intent: then === "before" ? "ask_mission" : "ask_mission_done",
@@ -380,8 +469,50 @@ function askMission(ctx: AiContext, then: "before" | "done", candidates: Mission
 }
 
 export function answer(question: string, ctx: AiContext, topic: Topic | null = null): AiAnswer {
-  const q = question.trim().slice(0, 300);
+  const q = question.trim().slice(0, 2000);
   const p = ctx.state.profile;
+  if (p.chapter === 2) {
+    const reports = MOTEL_REPORTS.filter((r) => r.pattern.test(nk(q)));
+    if (reports.length) {
+      const actions: AiAction[] = [];
+      const lines = reports.map((r) => {
+        const name = PROG_BY_ID.get(r.id)!.name;
+        if (![...p.missionsDone, p.lastMission].includes(name)) {
+          if (r.id === "ambulance-chaser") actions.push({ type: "set_mission", name, label: `Confirmer « ${name} » terminée`, confirm: `Enregistrer « ${name} » comme terminée ?` });
+          else actions.push({ type: "start_mission", name, label: `Mon objectif actuel est « ${name} »`, confirm: `Confirmer que « ${name} » est en cours ?` });
+        }
+        if (r.id === "just-moved-in") return `Cela correspond à « ${name} ». As-tu rapporté les provisions dans la chambre ? Confirme la fin seulement si ton jeu l’indique.`;
+        if (r.id === "overnight-charges") return `La conversation pourrait correspondre à « ${name} ». Quel objectif vois-tu à l’écran ?`;
+        return `La tâche de l’ambulance correspond à « ${name} ».`;
+      });
+      return { intent: "motel_report", text: lines.join(" "), actions, sources: [], reliability: "signalé" };
+    }
+    // V0.21.1 (issue #19) : « mettre ma progression à jour » / « que faire maintenant ? » sans mission choisie —
+    // cinq niveaux distincts, aucune écriture sans confirmation, aucun nom de principale future en mode strict
+    const sit = /mettre.{0,12}progression.{0,8}jour|(que|quoi) faire maintenant|ou en est ma (partie|progression)|ma situation/.test(nk(q)) ? motelSituation(ctx.state, ctx.chatTexts ?? []) : null;
+    if (sit) {
+      const parts: string[] = [];
+      parts.push(sit.confirmed ? `Confirmé par toi : ${sit.confirmed}.` : "Aucune étape du chapitre 2 n’est encore confirmée dans ta progression.");
+      if (sit.reported.length) parts.push(`D’après ce que tu m’as raconté, probablement en cours (non confirmé) : ${sit.reported.map((r) => r.label).join(", ")}. Je ne marque rien sans ta confirmation : vérifie ce que ton journal affiche.`);
+      else parts.push("Décris-moi ce que tu as fait au motel ou l’objectif affiché dans ton journal : je te propose la mise à jour, tu confirmes.");
+      if (sit.accessible.length) parts.push(`Accessible selon les sources : ${sit.accessible.join(", ")}.`);
+      if (sit.conditional.length) parts.push(`Condition à remplir dans le jeu d’abord : ${sit.conditional.map((c) => `${c.name} (${c.condition})`).join(", ")}.`);
+      if (sit.goals.length) parts.push(`Objectif du chapitre, plus tard : ${sit.goals[0]}`);
+      const actions: AiAction[] = sit.reported.slice(0, 3).map((r) =>
+        r.id === "ambulance-chaser"
+          ? { type: "set_mission" as const, name: r.name, label: `Confirmer « ${r.name} » terminée`, confirm: `Enregistrer « ${r.name} » comme terminée ?` }
+          : { type: "start_mission" as const, name: r.name, label: `Mon objectif actuel est « ${r.name} »`, confirm: `Confirmer que « ${r.name} » est en cours ?` },
+      );
+      return { intent: "motel_status", text: parts.join(" "), actions, sources: [], reliability: "signalé" };
+    }
+    const atMotel = /motel|reception|gerante/.test(nk(q));
+    const practical = /manqu|rater|avant de continuer|debut.{0,12}chapitre 2|commenc.{0,20}chapitre 2|dois faire|aller maintenant/.test(nk(q));
+    if (practical && (atMotel || (!p.nextMission && !topic))) {
+      const landmarkId = KNOWLEDGE_BY_ID.get("starlet-motel")?.location.landmarkId;
+      const actions: AiAction[] = landmarkId ? [{ type: "show_place", landmarkId, label: "Voir le motel sur la carte" }] : [];
+      return { intent: "motel_advice", text: `Si tu es au Starlet Motel, regarde les objectifs actifs sur la carte. ${MOTEL_CARDS} ${MOTEL_POSTERS}`, reliability: "signalé", actions, sources: [{ name: "The Games Wiki", url: "https://thegameswiki.com/gta6/wiki/missable-content-and-points-of-no-return", when: null }, { name: "Windows Central", url: POSTER_SOURCE, when: null }] };
+    }
+  }
   const vehicles = ctx.feed?.vehicles ?? [];
   if (!ctx.feed)
     return { intent: "offline", text: "Je n'ai pas encore les données de la veille. Reconnecte-toi : je ne réponds qu'à partir des fiches vérifiées, jamais de mémoire.", reliability: null, sources: [], actions: [] };
@@ -396,18 +527,50 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
   }
 
   const intent = intentOf(q, topic);
+  // Progression (V0.12) : « je fais quoi maintenant ? », « je l'ai », « la suivante », boutiques… (avant les intentions génériques)
+  const pi = progressIntent(q);
+  if (pi && intent !== "mission_done" && !(pi === "shops" && findPoi(q, (ctx.places ?? []).map(asLm), null))) {
+    const pa = progressAnswer(pi, q, ctx);
+    if (pa) return pa;
+  }
   const vMentioned = findVehicle(q, vehicles);
+  // Lieux de la carte (repères gtadb) : nom cité, ou catégorie + quartier (« les commerces de Key Lento »)
+  if (ctx.places?.length && !["weapon", "money", "mission_done", "keep", "ultimate"].includes(intent) && !vMentioned) {
+    const lms = ctx.places.map(asLm);
+    const district = districtFromQuery(q, lms);
+    const cat = categoryFromQuery(q);
+    const named = findPoi(q, lms, district);
+    if (named && (intent === "unknown" || intent === "where" || /\b(ou|où|trouver|montre|aller|c est ou)\b/i.test(q))) return poiAnswer(named, district);
+    if (cat && (district || /\b(ou|où|montre|trouver|voir|y a)\b/i.test(q)) && intent !== "before") {
+      const list = searchPois(`${POI_CATS[cat].plural} ${district ?? ""}`, lms, 6).filter((l) => poiCategory(l) === cat && l.name !== "Lieu non identifié");
+      if (list.length)
+        return {
+          intent: "poi",
+          text: `${list.length > 1 ? `Sur la carte communautaire, je vois ${list.length} ${POI_CATS[cat].plural.toLowerCase()}` : `Sur la carte communautaire, je vois un lieu de ce type`}${district ? ` à ${district}` : ""} : ${list.slice(0, 3).map((l) => poiName(l)).join(", ")}${list.length > 3 ? "…" : ""}. Ce sont des repères communautaires : rien ne garantit encore qu'ils soient ouverts ou utilisables en jeu.`,
+          reliability: "non établi",
+          sources: [{ name: "gtadb.org (carte communautaire)", url: "https://map.gtadb.org", when: null }],
+          actions: [district ? { type: "show_place", query: `${POI_CATS[cat].plural} ${district}`, poiCat: cat, label: `Voir les ${POI_CATS[cat].plural.toLowerCase()} sur la carte` } : { type: "show_place", landmarkId: list[0].id, label: `Voir ${poiName(list[0])} sur la carte` }],
+          topic: { kind: "place", id: list[0].id },
+          evidence: list.slice(0, 5).map((l) => `poi:${l.id}`),
+        };
+    }
+  }
   const topicVehicle = topic?.kind === "vehicle" ? vehicles.find((v) => v.id === topic.id) ?? null : null;
 
   switch (intent) {
-    case "hello":
-      return { intent, text: `Salut ${p.pseudo && p.pseudo !== "Joueur" ? p.pseudo : ""} ! Dis-moi quelle mission tu vas lancer, ou ce que tu cherches : une voiture, une arme, de l'argent…`.replace(" !", "!").replace("Salut!", "Salut !"), reliability: null, sources: [], actions: [], replies: starters(ctx).slice(0, 2) };
+    case "hello": {
+      const who = p.pseudo && p.pseudo !== "Joueur" ? ` ${p.pseudo}` : "";
+      const next = p.nextMission ? (p.missionInProgress ? ` Toujours dans « ${p.nextMission} » ?` : ` Prochaine étape : « ${p.nextMission} ».`) : "";
+      return { intent, text: `Salut${who} !${next} Dis-moi ce que tu cherches : une voiture, une arme, de l'argent, un magasin…`, reliability: null, sources: [], actions: [], replies: starters(ctx).slice(0, 2) };
+    }
     case "thanks":
       return { intent, text: "Avec plaisir ! Bonne session à Leonida 🌴", reliability: null, sources: [], actions: [] };
     case "mission_done": {
       const m = resolveMission(q, cat, opts);
       if (m.mission || m.raw) return doneAnswer(ctx, m.mission?.name ?? m.raw!);
       if (topic?.kind === "mission") return doneAnswer(ctx, topic.name);
+      // « J'ai terminé » sans nom : la mission en cours (ou prévue) du joueur, toujours à confirmer
+      if (p.nextMission && !m.candidates?.length) return doneAnswer(ctx, p.nextMission);
       return askMission(ctx, "done", m.candidates);
     }
     case "before": {
@@ -449,11 +612,16 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
           return { intent, text: r.details?.place ? `Le lieu cité est ${r.details.place.value.name}${r.details.place.value.district ? `, dans le quartier ${r.details.place.value.district}` : ""}. ${pa ? "Je peux te le montrer sur la carte communautaire (repère approximatif)." : "Je n'ai pas de point vérifié sur la carte pour ce lieu."}` : "Les sources ne précisent pas d'emplacement exact pour celle-ci.", reliability: R[r.reliability], sources: recSources(r), actions: pa ? [pa] : [], topic, evidence: [r.id] };
         }
       }
+      if (topic?.kind === "place" && ctx.places?.length) {
+        const l = ctx.places.find((x) => x.id === topic.id);
+        if (l) return poiAnswer(asLm(l), null);
+      }
       if (topic?.kind === "mission") return { intent, text: `Je n'ai pas d'emplacement documenté pour le départ de « ${topic.name} ». Dans le jeu, la carte de l'histoire indique son point de départ.`, reliability: null, sources: [], actions: [], topic };
       break;
     }
     case "next": {
       if (topic?.kind === "mission") {
+        if (p.chapter === 2) return progressAnswer("next_start", q, ctx)!;
         const guess = nextMissionGuess(cat, topic.name);
         return guess && missionVisible(guess.mission, p.chapter, p.spoilerMode)
           ? { intent, text: `Ensuite, ce serait probablement « ${guess.mission.name} », ${guess.basis} : à confirmer dans le jeu.`, reliability: "signalé", sources: [], actions: [{ type: "set_next_mission", name: guess.mission.name, label: `Enregistrer ${guess.mission.name}`, confirm: `Enregistrer « ${guess.mission.name} » comme prochaine mission ?` }], replies: [`Je vais lancer ${guess.mission.name}`], topic }
@@ -582,13 +750,29 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
   };
 }
 
+function poiAnswer(l: Landmark, district: string | null): AiAnswer {
+  const cat = POI_CATS[poiCategory(l)];
+  const status = poiStatus(l);
+  return {
+    intent: "poi",
+    text: `${poiName(l)} est un ${cat.label.toLowerCase()} repéré${l.district ? ` à ${l.district}` : district ? ` à ${district}` : ""} sur la carte communautaire. ${status === "uncertain" ? "Sa position ou son identité n'est pas confirmée par gtadb." : "C'est un repère communautaire : rien ne confirme encore qu'il soit ouvert ou utilisable en jeu."}`,
+    reliability: "non établi",
+    sources: [{ name: "gtadb.org (carte communautaire)", url: "https://map.gtadb.org", when: null, quote: l.real ? `Équivalent réel : ${l.real}` : undefined }],
+    actions: [{ type: "show_place", landmarkId: l.id, label: `Voir ${poiName(l)} sur la carte` }],
+    more: [POI_STATUS_FR[status]],
+    topic: { kind: "place", id: l.id },
+    evidence: [`poi:${l.id}`],
+  };
+}
+
 function doneAnswer(ctx: AiContext, name: string): AiAnswer {
   const p = ctx.state.profile;
   const already = p.missionsDone.some((m) => nk(m) === nk(name));
   if (already) return { intent: "mission_done", text: `« ${name} » est déjà notée comme terminée. Tu veux préparer la suivante ?`, reliability: "déclaré par toi", sources: [], actions: [], replies: ["Et après ?"], topic: { kind: "mission", name, known: true } };
+  const next = afterDone(p, name);
   return {
     intent: "mission_done",
-    text: `Bravo ! Je note « ${name} » comme terminée ? Les conseils liés à cette mission disparaîtront de tes recommandations.`,
+    text: `Bravo ! Je note « ${name} » comme terminée ? ${next.text}`,
     reliability: "déclaré par toi",
     sources: [],
     actions: [{ type: "set_mission", name, label: `Oui, « ${name} » est terminée`, confirm: `Indiquer que « ${name} » est terminée ?` }],
@@ -620,11 +804,21 @@ export function isValidAction(a: AiAction, feed: RadarFeed | null): boolean {
       return /^https:\/\//.test(a.url) && (feed.items.some((r) => r.evidence.some((e) => e.url === a.url) || r.media?.url === a.url) || !!feed.vehicles?.some((v) => v.media?.url === a.url || v.evidence.some((e) => e.url === a.url)));
     case "set_mission":
     case "set_next_mission":
+    case "start_mission":
       return a.name.length > 1 && a.name.length < 80 && !/[<>{}]/.test(a.name);
+    case "objective_done":
+      return a.mission.length > 1 && a.mission.length < 80 && a.text.length > 2 && a.text.length <= 220;
     case "ask":
       return a.question.length > 1 && a.question.length < 200;
     case "show_place":
-      return (!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) || (!!a.district && a.district.length > 1 && a.district.length < 60);
+      return (
+        ((!!a.landmarkId && /^[A-Za-z0-9_-]{1,24}$/.test(a.landmarkId)) ||
+          (!!a.estId && ESTABLISHMENTS.some((e) => e.id === a.estId)) ||
+          (!!a.query && a.query.length > 1 && a.query.length < 80 && !/[<>{}]/.test(a.query)) ||
+          (!!a.district && a.district.length > 1 && a.district.length < 60) ||
+          (!!a.poiCat && a.poiCat in POI_CATS)) &&
+        (!a.poiCat || a.poiCat in POI_CATS)
+      );
     default:
       return true;
   }

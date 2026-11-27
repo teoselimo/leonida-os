@@ -1,0 +1,252 @@
+{
+"bundles": {
+"public/data/hub/catalog.json": 157447,
+"public/data/hub/places.json": 52526,
+"public/data/hub/vehicles.json": 226100,
+"src/data/hub/meta.json": 591,
+"src/data/hub/missions.json": 145065
+},
+"changes": {
+"added": 0,
+"changed": 37,
+"examplesChanged": [
+"gtabase:strangers/get-shirleys-rum",
+"gtabase:strangers/hit-kingpin-bowling",
+"gtabase:strangers/mall-rats",
+"gtabase:strangers/search-for-the-skunk-ape",
+"gtabase:strangers/thats-where-the-money-is",
+"gtabase:strangers/join-a-street-race",
+"gtabase:strangers/dodo-rise",
+"gtabase:strangers/hometown-heroes",
+"gtabase:strangers/sisters-of-the-sea",
+"gtabase:missions/bird-in-the-hand",
+"gtabase:missions/breakfast-run",
+"gtabase:missions/buck-me",
+"gtabase:missions/buy-flowers",
+"gtabase:missions/clean-up-after-donnie",
+"gtabase:missions/clock-out"
+],
+"examplesRemoved": [],
+"firstRun": false,
+"removed": 0
+},
+"conflicts": [],
+"counts": {
+"gtabase": {
+"activity": 16,
+"animal": 245,
+"article": 189,
+"character": 71,
+"cheat": 3,
+"gang": 4,
+"guide": 1,
+"list-page": 10,
+"map-feature": 29,
+"mission": 120,
+"other": 12,
+"property": 22,
+"radio": 21,
+"random-event": 1,
+"stranger": 51,
+"vehicle": 589,
+"weapon": 212
+},
+"gtabaseMissionIndex": 134,
+"gtadb": {
+"photosEnJeuDisponibles": 2487,
+"place": 3754,
+"placeAvecPosition": 3663,
+"placeSansPosition": 91
+}
+},
+"duplicates": [
+{
+"kept": "gtabase:strangers/thrillbillies",
+"merged": "gtabase:missions/thrillbillies",
+"name": "Thrillbillies",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/yasmanis-jewelry-jobs",
+"merged": "gtabase:missions/yasmanis-jewelry-jobs",
+"name": "Yasmani's Jewelry Jobs",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/thats-where-the-money-is",
+"merged": "gtabase:missions/thats-where-the-money-is",
+"name": "That's Where the Money Is…",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/get-shirleys-rum",
+"merged": "gtabase:missions/get-shirleys-rum",
+"name": "Get Shirley's Rum",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/steal-the-scooter",
+"merged": "gtabase:missions/steal-the-scooter",
+"name": "Steal the Scooter",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/pick-up-a-gun",
+"merged": "gtabase:missions/pick-up-a-gun",
+"name": "Pick Up a Gun",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/twist-wrist-smash-grab",
+"merged": "gtabase:missions/twist-wrist-smash-grab",
+"name": "Twist Wrist, Smash, Grab",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/hit-avery-pawn",
+"merged": "gtabase:missions/hit-avery-pawn",
+"name": "Hit Avery Pawn",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/hit-kingpin-bowling",
+"merged": "gtabase:missions/hit-kingpin-bowling",
+"name": "Hit Kingpin Bowling",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/impounded-vehicle",
+"merged": "gtabase:missions/impounded-vehicle",
+"name": "Impounded Vehicle",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/get-your-wheels",
+"merged": "gtabase:missions/get-your-wheels",
+"name": "Get Your Wheels",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/race-against-yago",
+"merged": "gtabase:missions/race-against-yago",
+"name": "Race Against Yago",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/this-is-a-free-call-from",
+"merged": "gtabase:missions/this-is-a-free-call-from",
+"name": "Pick Up Shayna",
+"type": "mission"
+},
+{
+"kept": "gtabase:strangers/bad-driver",
+"merged": "gtabase:missions/bad-driver",
+"name": "Bad Driver!",
+"type": "mission"
+}
+],
+"gaps": {
+"activity": {
+"location": 11,
+"rewards": 16,
+"unlockedBy": 15
+},
+"character": {
+"location": 34,
+"occupation": 21,
+"role": 0
+},
+"mission": {
+"chapter": 0,
+"giver": 9,
+"missionType": 0,
+"number": 0,
+"objectives": 0,
+"protagonist": 3,
+"rewards": 44,
+"unlockedBy": 85
+},
+"property": {
+"capacity": 7,
+"howToUnlock": 2,
+"location": 0,
+"price": 14,
+"propertyType": 0
+},
+"stranger": {
+"chapter": 0,
+"giver": 1,
+"protagonist": 10,
+"rewards": 14,
+"unlockedBy": 12
+},
+"vehicle": {
+"class": 0,
+"drivetrain": 154,
+"howToGet": 575,
+"manufacturer": 29,
+"price": 587,
+"seats": 89,
+"stats": 148
+},
+"weapon": {
+"category": 1,
+"price": 130,
+"stats": 38
+}
+},
+"guides": {
+"entités citées": 714,
+"faits (manquable, choix, conseil, non-retour)": 196,
+"missions avec soluce structurée": 164,
+"étapes": 775
+},
+"links": {
+"Knowledge→repère GTADB": 13,
+"character→Knowledge": 2,
+"fenêtres de perte lues": 1,
+"mission nouvelle": 146,
+"mission→LEONIDA (alias manuel)": 2,
+"mission→Story": 9,
+"mission→graphe": 30,
+"property→Knowledge": 2,
+"propriété→repère GTADB": 4,
+"prérequis lus dans « How To Unlock »": 67,
+"relations non résolues (page absente du sitemap)": 0,
+"établissement→repère GTADB": 2
+},
+"mode": "hors ligne",
+"runAt": "2026-11-24T15:16:33+0100",
+"sources": {
+"gtabase": {
+"crawler": "FIN {'cached': 1610, 'fetched': 0, 'failed': 0, 'offline-miss': 1, 'cached-stale': 0} index 1611",
+"discoveredAt": "2026-11-24T11:55:52+0100",
+"failed": [
+{
+"error": "HTTP 404",
+"url": "https://www.gtabase.com/gta-6/vehicles/speeder"
+}
+],
+"license": "GTABase.com — tous droits réservés : faits et liens uniquement, pas de texte ni d'image repris",
+"name": "GTABase (www.gtabase.com, sitemap public)",
+"notFetchedYet": 0,
+"notes": [
+"Endpoint /media/com_jamegafilter/en_gb/1.json (403) non utilisé.",
+"Aucune API supposée : lecture du HTML public et du sitemap."
+],
+"read": 1610,
+"sitemapFailures": [],
+"sitemapUrls": 1611,
+"status": "partiel"
+},
+"gtadb": {
+"license": "CC BY 4.0",
+"name": "GTADB (github.com/rolux/gtadb.org)",
+"ourRevision": "d406fea099e1df2bce42fd6b87eed04bce646629",
+"revision": "d406fea099e1df2bce42fd6b87eed04bce646629",
+"revisionDate": "2026-11-19T17:51:06+01:00",
+"status": "ok",
+"upToDate": true
+}
+}
+}

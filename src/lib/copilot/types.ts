@@ -1,0 +1,127 @@
+/**
+ * LEONIDA AI — couche copilote portable.
+ *
+ * Séparation (issue #10) :
+ *   1. interface (React, design system)            → src/components/AiCopilot.tsx
+ *   2. profil et historique du joueur              → src/lib/store.tsx (+ synchronisation privée, src/lib/runtime/)
+ *   3. recherche dans les connaissances GTA VI     → src/lib/ai/engine.ts (retrieval-first), missions.ts, poi.ts, fr.ts
+ *   4. logique conversationnelle et actions        → src/lib/copilot/engine.ts, prompt.ts, context.ts
+ *   5. fournisseur LLM (transport)                 → src/lib/copilot/transports/*
+ *
+ * Rien dans 1 à 4 ne dépend de l'environnement Artifact : seul `transports/claudeArtifact.ts` connaît `window.claude`.
+ * Migrer vers l'API Claude = activer `transports/claudeApi.ts` + le backend sécurisé, sans toucher au reste.
+ */
+import type { AiAction, Reliab, Source, Topic } from "../ai/engine";
+import type { BriefItem } from "../types";
+
+export type { AiAction, Source, Topic };
+export type Trust = Reliab;
+
+export interface LlmMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export interface LlmRequest {
+  /** Conversation complète, commençant et finissant par un tour « user » (les consignes sont le premier tour). */
+  messages: LlmMessage[];
+  /** Texte complet reçu jusqu'ici (streaming). */
+  onText?: (text: string) => void;
+  signal?: AbortSignal;
+  /** « quick » : réponse quasi immédiate ; « default » : plus réfléchie, plus lente. */
+  tier?: "quick" | "default";
+  /** LEONIDA Vision : images jointes au dernier tour (jamais renvoyées dans l'historique). */
+  images?: Blob[];
+}
+
+export interface LlmResult {
+  text: string;
+  /** Modèle ou gamme qui a réellement répondu (preuve que la réponse vient de Claude). */
+  model?: string;
+  truncated?: boolean;
+}
+
+/** Erreur de transport normalisée (codes du fournisseur conservés). */
+export class LlmError extends Error {
+  constructor(
+    public code: string,
+    message = code,
+    public partial?: string,
+  ) {
+    super(message);
+  }
+}
+
+export interface LlmTransport {
+  id: "claude-artifact" | "claude-api";
+  /** Libellé montré au joueur (« Claude · via ton compte »). */
+  label: string;
+  /** Vrai seulement si un appel peut réellement aboutir dans cet environnement. */
+  available(): Promise<boolean>;
+  generate(req: LlmRequest): Promise<LlmResult>;
+  /** Limites d'images de cet environnement, ou null s'il ne peut pas en envoyer (jamais supposé). */
+  visionLimits?(): Promise<import("./vision").VisionLimits | null>;
+}
+
+/** Réponse du copilote, identique quel que soit le moteur. */
+export interface CopilotAnswer {
+  intent: string;
+  message: string;
+  trust: Trust | null;
+  sources: Source[];
+  actions: AiAction[];
+  topic: Topic | null;
+  replies?: string[];
+  more?: string[];
+  /** « claude » : rédigé par Claude ; « direct » : moteur déterministe (sans IA générative). */
+  engine: "claude" | "direct";
+  model?: string;
+  /** Remarque d'honnêteté (repli, limite atteinte, réponse écartée). */
+  note?: string;
+  evidence?: string[];
+  /** Mode « Rien à manquer » : éléments validés (chaque élément cite une preuve existante). */
+  checklist?: { verified: ChecklistItem[]; uncertain: ChecklistItem[] };
+  /** Mode « Rien à manquer » : éléments typés (quand, type, priorité) avec statut de recoupement calculé. */
+  brief?: BriefItem[];
+  /** LEONIDA Vision : ce que Claude dit voir (certain) et ce qu'il suppose (hypothèses). */
+  vision?: { certain: string[]; hypotheses: string[] };
+  /** Capture de carte : proposition de localisation (à confirmer, jamais enregistrée seule). */
+  mapGuess?: import("./vision").MapGuess | null;
+  /** V0.19 · Visual Grounding : identification ancrée sur le référentiel Knowledge (jamais un lieu inventé). */
+  grounding?: {
+    kind: "scène" | "carte" | "menu" | "autre";
+    identification: { id: string; name: string; confidence: "élevée" | "moyenne" | "faible"; landmarkId: string | null } | null;
+    why: string[];
+    toCheck: string[];
+    candidates: Array<{ id: string; name: string; score: number; landmarkId: string | null; type?: string }>;
+    vehicle: string | null;
+    reason: string | null;
+    /** Question de suivi : image encore en mémoire (« image ») ou seulement son résumé (« résumé »). */
+    memory: "image" | "résumé" | null;
+    /** Extraits de la carte LEONIDA joints pour comparaison. */
+    refs: number;
+    action: string | null;
+    /** V0.20.1 · photos de référence GTADB réellement envoyées au modèle avec la capture. */
+    photoCount?: number;
+    photos?: Array<{ landmarkId: string; name: string; file: string; chosen: boolean }>;
+  };
+  /** Recherche web effectuée pour cette réponse (null = non tentée). */
+  web?: { status: WebStatus; count: number; cached?: boolean; tries?: number } | null;
+}
+
+export type { BriefItem };
+export interface ChecklistItem {
+  text: string;
+  source: Source | null;
+}
+
+export type WebStatus = "ok" | "empty" | "unavailable" | "not_connected" | "needs_reauth" | "denied" | "error";
+export interface WebHit {
+  title: string;
+  url: string;
+  text: string;
+  date: string | null;
+}
+/** Recherche web injectée par l'environnement (connecteur de l'Artifact, ou futur backend) : le moteur n'en dépend pas. */
+/** `objective` : ce que la recherche doit privilégier ou exclure (champ requis par Exa). */
+export type WebSearchFn = (query: string, signal?: AbortSignal, objective?: string) => Promise<{ status: WebStatus; hits: WebHit[]; rawChars?: number; cached?: boolean }>;

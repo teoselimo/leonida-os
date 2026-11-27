@@ -8,6 +8,7 @@ import type { CategoryId, Discovery } from "./types";
 export type { RadarFeed, RadarRecord };
 export * from "./feed";
 import { isFeed } from "./feed";
+import { withRvl } from "./rvl";
 
 /**
  * Flux Radar alimenté automatiquement par le moteur de veille (GitHub Actions → branche `data`).
@@ -104,7 +105,8 @@ export function LiveRadarProvider({ children }: { children: ReactNode }) {
     };
   }, [refresh]);
 
-  const value = useMemo(() => ({ feed, state, fetchedAt, error, refresh, url }), [feed, state, fetchedAt, error, refresh, url]);
+  const merged = useMemo(() => withRvl(feed), [feed]);
+  const value = useMemo(() => ({ feed: merged, state, fetchedAt, error, refresh, url }), [merged, state, fetchedAt, error, refresh, url]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 

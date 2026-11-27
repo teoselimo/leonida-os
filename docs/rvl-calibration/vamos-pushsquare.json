@@ -1,0 +1,7 @@
+{"kind":"a","pairs":[
+ ["bâtiment nord de la boucle", [308,148], [-5223,7145]],
+ ["bâtiment ouest de la boucle", [281,180], [-5255,7105]],
+ ["bâtiment centre de la boucle", [337,190], [-5185,7095]],
+ ["sommet de la boucle", [330,125], [-5220,7178]],
+ ["virage de l'autoroute", [345,265], [-5170,7010]]
+],"queries":{"marqueur Vamos":[427,203],"centre du cercle":[427,215]}}

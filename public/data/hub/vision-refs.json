@@ -1,0 +1,703 @@
+{
+"revision": "d406fea099e1df2bce42fd6b87eed04bce646629",
+"revisionDate": "2026-11-19T17:51:06+01:00",
+"license": "CC BY 4.0 — GTA VI Landmarks Data (CC BY 4.0) — https://map.gtadb.org (photos en jeu ; images du jeu © Rockstar Games)",
+"modified": "réduites à 640 px, JPEG ≤ 70 Ko",
+"available": 2487,
+"count": 42,
+"bytes": 1136883,
+"refs": [
+{
+"id": "L266",
+"name": "Jason's House",
+"district": "Key Lento",
+"file": "data/hub/refs/L266.jpg",
+"w": 640,
+"h": 288,
+"bytes": 37448,
+"knowledge": "jasons-house",
+"tags": [
+"#safehouse",
+"enterable",
+"residential"
+],
+"why": "lieu Knowledge « Jason's House »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L266,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L326",
+"name": "Brian's Boat Works & Marina",
+"district": "Key Lento",
+"file": "data/hub/refs/L326.jpg",
+"w": 640,
+"h": 365,
+"bytes": 23558,
+"knowledge": "brians-boat-works",
+"tags": [
+"#marina",
+"@brian",
+"enterable",
+"transportation"
+],
+"why": "lieu Knowledge « Brian's Boat Works & Marina »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L326,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L328",
+"name": "Key Lento Marina Club",
+"district": "Key Lento",
+"file": "data/hub/refs/L328.jpg",
+"w": 640,
+"h": 190,
+"bytes": 18400,
+"knowledge": "key-lento-marina-club",
+"tags": [
+"leisure"
+],
+"why": "lieu Knowledge « Key Lento Marina Club »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L328,ig.jpg",
+"gtadbUpdated": "2026-09-30"
+},
+{
+"id": "L325",
+"name": "The Rusty Anchor",
+"district": "Key Lento",
+"file": "data/hub/refs/L325.jpg",
+"w": 640,
+"h": 360,
+"bytes": 58127,
+"knowledge": "the-rusty-anchor",
+"tags": [
+"#bar",
+"enterable",
+"leisure"
+],
+"why": "lieu Knowledge « The Rusty Anchor »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L325,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L332",
+"name": "Wonder Whale",
+"district": "Key Lento",
+"file": "data/hub/refs/L332.jpg",
+"w": 640,
+"h": 270,
+"bytes": 36531,
+"knowledge": "wonder-whale",
+"tags": [
+"retail"
+],
+"why": "lieu Knowledge « The Wonder Whale »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L332,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L1536",
+"name": "Arrow Gas Station",
+"district": "Key Lento",
+"file": "data/hub/refs/L1536.jpg",
+"w": 640,
+"h": 351,
+"bytes": 17686,
+"knowledge": "arrow-gas-key-lento",
+"tags": [
+"#supermarket",
+"enterable"
+],
+"why": "lieu Knowledge « Arrow Gas Station (Key Lento) »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1536,ig.jpg",
+"gtadbUpdated": "2026-08-18"
+},
+{
+"id": "L345",
+"name": "VCIA Control Tower",
+"district": "Vice City International Airport",
+"file": "data/hub/refs/L345.jpg",
+"w": 610,
+"h": 640,
+"bytes": 22093,
+"knowledge": "vcia",
+"tags": [
+"#airport",
+"transportation"
+],
+"why": "lieu Knowledge « Vice City International Airport »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L345,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L132",
+"name": null,
+"district": "Port Vice City",
+"file": "data/hub/refs/L132.jpg",
+"w": 640,
+"h": 421,
+"bytes": 17039,
+"knowledge": "port-vice-city",
+"tags": [],
+"why": "lieu Knowledge « Port Vice City »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L132,ig.jpg",
+"gtadbUpdated": "2026-11-06"
+},
+{
+"id": "L304",
+"name": "Starlet Motel",
+"district": "Kelly County",
+"file": "data/hub/refs/L304.jpg",
+"w": 640,
+"h": 360,
+"bytes": 48752,
+"knowledge": "starlet-motel",
+"tags": [
+"#safehouse",
+"demolished",
+"enterable",
+"hotel"
+],
+"why": "lieu Knowledge « Starlet Motel »",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L304,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L16",
+"name": "Y Vice City",
+"district": "Vice Beach",
+"file": "data/hub/refs/L16.jpg",
+"w": 431,
+"h": 267,
+"bytes": 13217,
+"knowledge": null,
+"tags": [
+"#safehouse",
+"enterable",
+"hotel"
+],
+"why": "planque",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L16,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L475",
+"name": "Lucia's Apartment",
+"district": "Vice City",
+"file": "data/hub/refs/L475.jpg",
+"w": 640,
+"h": 360,
+"bytes": 36438,
+"knowledge": null,
+"tags": [
+"#safehouse",
+"demolished",
+"enterable",
+"residential"
+],
+"why": "planque",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L475,ig.jpg",
+"gtadbUpdated": "2026-08-27"
+},
+{
+"id": "L120",
+"name": "Vice Beach Marina",
+"district": "Vice Beach",
+"file": "data/hub/refs/L120.jpg",
+"w": 640,
+"h": 158,
+"bytes": 21938,
+"knowledge": null,
+"tags": [
+"#marina",
+"transportation"
+],
+"why": "marina",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L120,ig.jpg",
+"gtadbUpdated": "2026-06-24"
+},
+{
+"id": "L333",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L333.jpg",
+"w": 451,
+"h": 291,
+"bytes": 18428,
+"knowledge": null,
+"tags": [
+"#marina",
+"transportation"
+],
+"why": "marina",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L333,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L619",
+"name": "Marina",
+"district": "Watson Bay",
+"file": "data/hub/refs/L619.jpg",
+"w": 640,
+"h": 113,
+"bytes": 15876,
+"knowledge": null,
+"tags": [
+"#marina",
+"demolished",
+"transportation"
+],
+"why": "marina",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L619,ig.jpg",
+"gtadbUpdated": "2025-09-12"
+},
+{
+"id": "L2525",
+"name": "Marina",
+"district": "Vice City",
+"file": "data/hub/refs/L2525.jpg",
+"w": 640,
+"h": 216,
+"bytes": 13779,
+"knowledge": null,
+"tags": [
+"#marina"
+],
+"why": "marina",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L2525,ig.jpg",
+"gtadbUpdated": "2026-09-10"
+},
+{
+"id": "L341",
+"name": "24/7 Supermarket",
+"district": "Key Lento",
+"file": "data/hub/refs/L341.jpg",
+"w": 640,
+"h": 245,
+"bytes": 26677,
+"knowledge": null,
+"tags": [
+"enterable",
+"retail",
+"supermarket"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L341,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L504",
+"name": "\"House B\"",
+"district": "Key Lento",
+"file": "data/hub/refs/L504.jpg",
+"w": 640,
+"h": 375,
+"bytes": 25071,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L504,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L505",
+"name": "\"House C\"",
+"district": "Key Lento",
+"file": "data/hub/refs/L505.jpg",
+"w": 640,
+"h": 268,
+"bytes": 20884,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L505,ig.jpg",
+"gtadbUpdated": "2026-08-18"
+},
+{
+"id": "L761",
+"name": "Donovan Roeder Jr. Community Center",
+"district": "Key Lento",
+"file": "data/hub/refs/L761.jpg",
+"w": 640,
+"h": 255,
+"bytes": 26709,
+"knowledge": null,
+"tags": [
+"reused"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L761,ig.jpg",
+"gtadbUpdated": "2026-09-12"
+},
+{
+"id": "L875",
+"name": "Hamilton Private Health Clinic",
+"district": "Key Lento",
+"file": "data/hub/refs/L875.jpg",
+"w": 640,
+"h": 416,
+"bytes": 25051,
+"knowledge": null,
+"tags": [],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L875,ig.jpg",
+"gtadbUpdated": "2026-08-18"
+},
+{
+"id": "L1017",
+"name": "\"Yellow House\"",
+"district": "Key Lento",
+"file": "data/hub/refs/L1017.jpg",
+"w": 640,
+"h": 301,
+"bytes": 17654,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1017,ig.jpg",
+"gtadbUpdated": "2025-08-22"
+},
+{
+"id": "L1018",
+"name": "\"Blue House\"",
+"district": "Key Lento",
+"file": "data/hub/refs/L1018.jpg",
+"w": 640,
+"h": 285,
+"bytes": 20907,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1018,ig.jpg",
+"gtadbUpdated": "2025-08-22"
+},
+{
+"id": "L1019",
+"name": "\"White House\"",
+"district": "Key Lento",
+"file": "data/hub/refs/L1019.jpg",
+"w": 640,
+"h": 596,
+"bytes": 34877,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1019,ig.jpg",
+"gtadbUpdated": "2025-08-22"
+},
+{
+"id": "L1039",
+"name": "Wonder Whale?",
+"district": "Key Lento",
+"file": "data/hub/refs/L1039.jpg",
+"w": 640,
+"h": 485,
+"bytes": 44551,
+"knowledge": null,
+"tags": [
+"landmark"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1039,ig.jpg",
+"gtadbUpdated": "2025-08-23"
+},
+{
+"id": "L1381",
+"name": "Chip's Body Shop",
+"district": "Key Lento",
+"file": "data/hub/refs/L1381.jpg",
+"w": 640,
+"h": 360,
+"bytes": 29880,
+"knowledge": null,
+"tags": [],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1381,ig.jpg",
+"gtadbUpdated": "2026-03-27"
+},
+{
+"id": "L1421",
+"name": "Brian's Marina Workshop",
+"district": "Key Lento",
+"file": "data/hub/refs/L1421.jpg",
+"w": 640,
+"h": 516,
+"bytes": 27387,
+"knowledge": null,
+"tags": [],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1421,ig.jpg",
+"gtadbUpdated": "2026-10-15"
+},
+{
+"id": "L2742",
+"name": "\"Welcome to The Keys\" Sign",
+"district": "Key Lento",
+"file": "data/hub/refs/L2742.jpg",
+"w": 640,
+"h": 397,
+"bytes": 26351,
+"knowledge": null,
+"tags": [
+"demolished",
+"landmark"
+],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L2742,ig.jpg",
+"gtadbUpdated": "2026-10-17"
+},
+{
+"id": "L2905",
+"name": "The Captain's Cabins",
+"district": "Key Lento",
+"file": "data/hub/refs/L2905.jpg",
+"w": 640,
+"h": 169,
+"bytes": 7756,
+"knowledge": null,
+"tags": [],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L2905,ig.jpg",
+"gtadbUpdated": "2026-09-27"
+},
+{
+"id": "L3269",
+"name": "Brian's Marina Boat Racks",
+"district": "Key Lento",
+"file": "data/hub/refs/L3269.jpg",
+"w": 640,
+"h": 412,
+"bytes": 36860,
+"knowledge": null,
+"tags": [],
+"why": "lieu nommé de Key Lento (chapitre 1)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L3269,ig.jpg",
+"gtadbUpdated": "2026-10-15"
+},
+{
+"id": "L260",
+"name": "LTD Gas Station",
+"district": "Hamlet",
+"file": "data/hub/refs/L260.jpg",
+"w": 640,
+"h": 265,
+"bytes": 23087,
+"knowledge": null,
+"tags": [
+"#gas",
+"retail"
+],
+"why": "aérodrome ou station du sud de Leonida",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L260,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L283",
+"name": "Gas Stop",
+"district": "Port Gellhorn",
+"file": "data/hub/refs/L283.jpg",
+"w": 640,
+"h": 315,
+"bytes": 25937,
+"knowledge": null,
+"tags": [
+"#gas",
+"demolished",
+"enterable",
+"retail"
+],
+"why": "aérodrome ou station du sud de Leonida",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L283,ig.jpg",
+"gtadbUpdated": "2025-07-31"
+},
+{
+"id": "L1188",
+"name": "Gas Station",
+"district": "Mariana County",
+"file": "data/hub/refs/L1188.jpg",
+"w": 640,
+"h": 206,
+"bytes": 23689,
+"knowledge": null,
+"tags": [
+"#gas",
+"retail",
+"unconfirmed"
+],
+"why": "aérodrome ou station du sud de Leonida",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1188,ig.jpg",
+"gtadbUpdated": "2026-08-06"
+},
+{
+"id": "L1568",
+"name": "Airfield",
+"district": "Mariana County",
+"file": "data/hub/refs/L1568.jpg",
+"w": 640,
+"h": 367,
+"bytes": 12666,
+"knowledge": null,
+"tags": [
+"#airport",
+"transportation"
+],
+"why": "aérodrome ou station du sud de Leonida",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L1568,ig.jpg",
+"gtadbUpdated": "2026-08-25"
+},
+{
+"id": "L331",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L331.jpg",
+"w": 640,
+"h": 288,
+"bytes": 25992,
+"knowledge": null,
+"tags": [
+"enterable",
+"leisure"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L331,ig.jpg",
+"gtadbUpdated": "2025-09-09"
+},
+{
+"id": "L337",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L337.jpg",
+"w": 640,
+"h": 339,
+"bytes": 23317,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L337,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L340",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L340.jpg",
+"w": 640,
+"h": 482,
+"bytes": 65847,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L340,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L344",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L344.jpg",
+"w": 640,
+"h": 195,
+"bytes": 22247,
+"knowledge": null,
+"tags": [
+"retail"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L344,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L503",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L503.jpg",
+"w": 640,
+"h": 384,
+"bytes": 39634,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L503,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L542",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L542.jpg",
+"w": 640,
+"h": 305,
+"bytes": 31405,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L542,ig.jpg",
+"gtadbUpdated": "2025-07-30"
+},
+{
+"id": "L592",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L592.jpg",
+"w": 640,
+"h": 275,
+"bytes": 15977,
+"knowledge": null,
+"tags": [],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L592,ig.jpg",
+"gtadbUpdated": "2025-09-09"
+},
+{
+"id": "L762",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L762.jpg",
+"w": 640,
+"h": 373,
+"bytes": 27008,
+"knowledge": null,
+"tags": [
+"#supermarket",
+"enterable",
+"retail"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L762,ig.jpg",
+"gtadbUpdated": "2025-09-09"
+},
+{
+"id": "L859",
+"name": null,
+"district": "Key Lento",
+"file": "data/hub/refs/L859.jpg",
+"w": 640,
+"h": 371,
+"bytes": 30152,
+"knowledge": null,
+"tags": [
+"residential"
+],
+"why": "vue large de Key Lento (lieu non nommé)",
+"source": "https://github.com/rolux/gtadb.org/blob/main/map/photos/6/L859,ig.jpg",
+"gtadbUpdated": "2026-10-06"
+}
+]
+}

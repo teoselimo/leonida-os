@@ -1,0 +1,421 @@
+{
+"generatedFrom": "GTADB landmarks + tuiles z5 (CC BY 4.0)",
+"radius": {
+"features": 1800,
+"water": 1000,
+"island": 2500
+},
+"zones": [
+{
+"id": "zone-L345",
+"landmarkId": "L345",
+"name": "Vice City International Airport",
+"district": "Vice City International Airport",
+"kind": "aerodrome",
+"x": -2373,
+"y": -774,
+"features": [
+"aerodrome",
+"marina",
+"pont",
+"quais"
+],
+"water": 0.03,
+"waterWide": 0.19,
+"coastal": false,
+"island": false
+},
+{
+"id": "zone-L354",
+"landmarkId": "L354",
+"name": "Mile Zero Air Station",
+"district": "Goose Key",
+"kind": "aerodrome",
+"x": -6956,
+"y": -6403,
+"features": [
+"aerodrome",
+"marina",
+"militaire"
+],
+"water": 0.54,
+"waterWide": 0.82,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L1391",
+"landmarkId": "L1391",
+"name": "Airfield",
+"district": "Ambrosia",
+"kind": "aerodrome",
+"x": -4238,
+"y": 4071,
+"features": [
+"aerodrome",
+"pont"
+],
+"water": 0.05,
+"waterWide": 0.12,
+"coastal": false,
+"island": false
+},
+{
+"id": "zone-L1542",
+"landmarkId": "L1542",
+"name": "Airfield",
+"district": "Kelly County",
+"kind": "aerodrome",
+"x": -4256,
+"y": 5553,
+"features": [
+"aerodrome",
+"pont"
+],
+"water": 0.02,
+"waterWide": 0.19,
+"coastal": false,
+"island": false
+},
+{
+"id": "zone-L1554",
+"landmarkId": "L1554",
+"name": "Airfield",
+"district": "Port Gellhorn",
+"kind": "aerodrome",
+"x": -7335,
+"y": 3252,
+"features": [
+"aerodrome",
+"pont",
+"quais"
+],
+"water": 0.59,
+"waterWide": 0.51,
+"coastal": true,
+"island": false
+},
+{
+"id": "zone-L1560",
+"landmarkId": "L1560",
+"name": "Airfield",
+"district": "Lummox County",
+"kind": "aerodrome",
+"x": -3607,
+"y": 7823,
+"features": [
+"aerodrome",
+"pont"
+],
+"water": 0.25,
+"waterWide": 0.41,
+"coastal": true,
+"island": false
+},
+{
+"id": "zone-L1561",
+"landmarkId": "L1561",
+"name": "Henry J Edwards Airport",
+"district": "Watson Bay",
+"kind": "aerodrome",
+"x": -5911,
+"y": -2472,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.61,
+"waterWide": 0.63,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L1562",
+"landmarkId": "L1562",
+"name": "Southpoint Airfield",
+"district": "Mariana County",
+"kind": "aerodrome",
+"x": -2776,
+"y": -4421,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.55,
+"waterWide": 0.64,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L1565",
+"landmarkId": "L1565",
+"name": "Airfield",
+"district": "Leonard County",
+"kind": "aerodrome",
+"x": -1573,
+"y": 3339,
+"features": [
+"aerodrome",
+"pont"
+],
+"water": 0.1,
+"waterWide": 0.23,
+"coastal": false,
+"island": false
+},
+{
+"id": "zone-L1566",
+"landmarkId": "L1566",
+"name": "Sundown Private Airfield",
+"district": "Sundown, Waning Sands",
+"kind": "aerodrome",
+"x": -817,
+"y": 4360,
+"features": [
+"aerodrome",
+"pont"
+],
+"water": 0.17,
+"waterWide": 0.34,
+"coastal": true,
+"island": false
+},
+{
+"id": "zone-L1568",
+"landmarkId": "L1568",
+"name": "Airfield",
+"district": "Mariana County",
+"kind": "aerodrome",
+"x": -4106,
+"y": -2917,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.32,
+"waterWide": 0.43,
+"coastal": true,
+"island": false
+},
+{
+"id": "zone-L120",
+"landmarkId": "L120",
+"name": "Vice Beach Marina",
+"district": "Ocean Beach, Vice Beach",
+"kind": "marina",
+"x": 1357,
+"y": -112,
+"features": [
+"marina",
+"pont",
+"quais"
+],
+"water": 0.45,
+"waterWide": 0.59,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L322",
+"landmarkId": "L322",
+"name": "Port · Port Gellhorn",
+"district": "Port Gellhorn",
+"kind": "port",
+"x": -7751,
+"y": 4659,
+"features": [
+"aerodrome",
+"pont",
+"quais"
+],
+"water": 0.67,
+"waterWide": 0.62,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L326",
+"landmarkId": "L326",
+"name": "Brian's Boat Works & Marina",
+"district": "Key Lento",
+"kind": "marina",
+"x": -2555,
+"y": -5860,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.74,
+"waterWide": 0.8,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L438",
+"landmarkId": "L438",
+"name": "Port · Shoreline, Vice City",
+"district": "Shoreline, Vice City",
+"kind": "port",
+"x": 33,
+"y": 136,
+"features": [
+"marina",
+"pont",
+"quais"
+],
+"water": 0.4,
+"waterWide": 0.35,
+"coastal": true,
+"island": false
+},
+{
+"id": "zone-L619",
+"landmarkId": "L619",
+"name": "Marina",
+"district": "Watson Bay",
+"kind": "marina",
+"x": -5152,
+"y": -3397,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.67,
+"waterWide": 0.64,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L689",
+"landmarkId": "L689",
+"name": "Port · Port Vice City",
+"district": "Port Vice City",
+"kind": "port",
+"x": 1049,
+"y": -240,
+"features": [
+"marina",
+"pont",
+"quais"
+],
+"water": 0.44,
+"waterWide": 0.56,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L1472",
+"landmarkId": "L1472",
+"name": "Port · Vice-Dale County",
+"district": "Vice-Dale County",
+"kind": "port",
+"x": 1095,
+"y": -24,
+"features": [
+"marina",
+"pont",
+"quais"
+],
+"water": 0.44,
+"waterWide": 0.55,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L1728",
+"landmarkId": "L1728",
+"name": "Port · Capri",
+"district": "Capri",
+"kind": "port",
+"x": -7184,
+"y": -157,
+"features": [
+"pont",
+"quais"
+],
+"water": 0.58,
+"waterWide": 0.57,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L2352",
+"landmarkId": "L2352",
+"name": "Perfecto Boatyard & Marina",
+"district": "Little Cuba, Vice City",
+"kind": "marina",
+"x": -1408,
+"y": 225,
+"features": [
+"aerodrome",
+"marina",
+"pont",
+"quais"
+],
+"water": 0.06,
+"waterWide": 0.22,
+"coastal": false,
+"island": false
+},
+{
+"id": "zone-L2525",
+"landmarkId": "L2525",
+"name": "Marina",
+"district": "Peacock Bay, Vice City",
+"kind": "marina",
+"x": -924,
+"y": -2357,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.41,
+"waterWide": 0.47,
+"coastal": true,
+"island": false
+},
+{
+"id": "zone-L2891",
+"landmarkId": "L2891",
+"name": "Marina",
+"district": "Mariana County",
+"kind": "marina",
+"x": -2568,
+"y": -4666,
+"features": [
+"aerodrome",
+"marina",
+"pont"
+],
+"water": 0.6,
+"waterWide": 0.68,
+"coastal": true,
+"island": true
+},
+{
+"id": "zone-L3245",
+"landmarkId": "L3245",
+"name": "Port · Balsero, Vice City",
+"district": "Balsero, Vice City",
+"kind": "port",
+"x": -1923,
+"y": 730,
+"features": [
+"aerodrome",
+"marina",
+"pont",
+"quais"
+],
+"water": 0.08,
+"waterWide": 0.18,
+"coastal": false,
+"island": false
+}
+]
+}

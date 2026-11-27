@@ -13,6 +13,8 @@ import { variantFr } from "@/lib/fr";
 import { Icon } from "./ui/Icon";
 import { ReliabilityBadge, SpoilerText } from "./ui/primitives";
 import { Visual } from "./ui/Visual";
+import { RareLocator, RvlHero } from "./RareLocator";
+import { PRESENCE_SHORT, RVL_BY_ID } from "@/lib/rvl";
 
 const COLORS: Record<string, string> = { green: "#3ddc6b", blue: "#4d8dff", red: "#ff4d5e", yellow: "#ffd23f", orange: "#ff8a3d", purple: "#a96bff", pink: "#ff5fb0", white: "#f2f2f7", black: "#222", silver: "#c0c4cc", gold: "#d8b14a", teal: "#2ee6d6" };
 const swatch = (variant: string | undefined) => COLORS[Object.keys(COLORS).find((c) => variant?.includes(c)) ?? ""] ?? null;
@@ -65,6 +67,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
   const [proofs, setProofs] = useState(false);
   const [storing, setStoring] = useState(false);
   const v = feed?.vehicles?.find((x) => x.id === id);
+  const rv = RVL_BY_ID.get(id);
   if (!v) return null;
   const x = viewOf(v, state);
   const prog = state.vehicles[v.id];
@@ -92,6 +95,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
 
   return (
     <div className="vsheet" data-testid="vehicle-sheet">
+      {rv ? <RvlHero r={rv} onClose={onClose} /> : (
       <div className="vmedia">
         {capture ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -114,14 +118,15 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
         )}
         <button className="iconbtn vmedia__close" onClick={onClose} aria-label="Fermer"><Icon name="close" /></button>
       </div>
+      )}
 
       <div className="vhead">
         <div className="row gap8 wrap">
-          <ReliabilityBadge r={v.reliability} />
+          {!rv && <ReliabilityBadge r={v.reliability} />}
           {v.edition.exclusive === "ultimate" && <span className={`edtag${v.edition.status === "confirmed" ? "" : " is-check"}`} data-testid="ultimate-tag">ULTIMATE{v.edition.status === "confirmed" ? "" : " ?"}</span>}
           {v.edition.exclusive === "preorder" && <span className="edtag edtag--pre">PRÉCOMMANDE</span>}
           <span className={`accesschip accesschip--${x.access}`} data-testid="v-access">{ACCESS_FR[x.access]}</span>
-          <span className="small muted">{v.type === "garage" ? "Garage" : KIND_FR[v.kind]}</span>
+          <span className="small muted">{v.type === "garage" ? "Garage" : rv ? PRESENCE_SHORT[rv.locations[0].presence] : KIND_FR[v.kind]}</span>
         </div>
         <h3 className="detail__title" data-testid="vehicle-name">{v.name}</h3>
         <p className="muted small">
@@ -146,6 +151,9 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
         })}
       </div>
 
+      {rv ? (
+        <RareLocator r={rv} onMap={() => onGuide(v.id)} onStore={() => setStoring(true)} />
+      ) : (<>
       <div className="vactions">
         <button className="btn btn--primary btn--sm" onClick={() => onGuide(v.id)} disabled={v.location.precision === "none" || v.location.precision === "text"} data-testid="v-guide">
           <Icon name="locate" size={16} /> Me guider
@@ -168,6 +176,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
       </div>
       {v.location.precision === "zone" && <p className="fineprint"><Icon name="target" size={12} /> « Me guider » mène à une zone de recherche de ~{Math.round((v.location.zone!.radius * 2) / 10) * 10} m, pas à un point exact.</p>}
 
+      </>)}
       {storing && (
         <div className="vstore" data-testid="v-store">
           <strong>Où l&apos;as-tu rangé ?</strong>
@@ -180,6 +189,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
       )}
       {prog?.storage && <p className="small muted"><Icon name="bookmark" size={12} /> Rangé : {prog.storage}</p>}
 
+      {!rv && <>
       <section className="vsec">
         <h4><Icon name="map" size={14} /> Emplacement</h4>
         <p data-testid="v-location">
@@ -238,6 +248,7 @@ export function VehicleSheet({ id, onClose, onGuide }: { id: string; onClose: ()
           </div>
         )}
       </section>
+      </>}
     </div>
   );
 }

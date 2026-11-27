@@ -193,7 +193,7 @@ test.describe("V0.7.1 — LEONIDA AI conversationnel", () => {
     expect(b.topic).toEqual({ kind: "vehicle", id: "v-maibatsu-penumbra-ff" });
     expect(c.intent).toBe("where");
     expect(c.text).toMatch(/Rialto Islands/);
-    expect(c.text).toMatch(/pas un point exact/);
+    expect(c.text).toMatch(/non testé en jeu/);
   });
   test("« la mission de Donnie » ⇒ question de précision ; puis « des objets cachés ? » reste sur la mission", () => {
     const [a, b, c] = chat(["je vais commencer la mission de Donnie", "Clean Up After Donnie", "des objets cachés ?"]);

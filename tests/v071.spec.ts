@@ -25,13 +25,13 @@ async function start(page: Page, profile: Record<string, unknown> = {}, extra: R
   );
   await page.goto("/#accueil");
   await page.waitForSelector(".app.is-ready");
-  await expect(page.getByTestId("live-advice")).toBeVisible();
+  await expect(page.getByTestId("next-mission")).toBeVisible(); // V0.14 : accueil refondu
 }
 
 async function ask(page: Page, q: string) {
   if (!(await page.getByTestId("ai-panel").isVisible().catch(() => false))) await page.getByTestId("ai-open").click();
   await page.getByTestId("ai-input").fill(q);
-  await page.getByTestId("ai-input").press("Enter");
+  await page.getByTestId("ai-send").click();
   const a = page.getByTestId("ai-answer").last();
   await expect(a).toBeVisible();
   return a;
@@ -40,14 +40,17 @@ async function ask(page: Page, q: string) {
 test("Test 4 — Accueil : prochaine mission, récupérable (ou incertitude honnête), avant, 2 envies, sans anglais", async ({ page }, info) => {
   await start(page, { nextMission: "Clean Up After Donnie" });
   await expect(page.getByTestId("next-mission-name")).toHaveText("Clean Up After Donnie");
-  await expect(page.getByTestId("mission-during")).toContainText("aucune récompense particulière confirmée");
-  await expect(page.getByTestId("prepare-mission")).toBeVisible();
-  const before = page.getByTestId("live-advice").locator("article");
+  // V0.10 : état de la mission + « Rien à manquer » ; la conversation passe par le bouton LEONIDA (seule entrée)
+  await expect(page.getByTestId("mission-upcoming")).toBeVisible(); // V0.14 : pastille d'état
+  await expect(page.getByTestId("before")).toBeVisible();
+  await expect(page.getByTestId("ai-open")).toBeVisible();
+  // V0.14 : « Avant de continuer » (3 visibles au plus) puis « Si tu as le temps » (2 visibles)
+  const before = page.getByTestId("before-item");
   expect(await before.count()).toBeGreaterThan(0);
   expect(await before.count()).toBeLessThanOrEqual(3);
-  const fun = page.getByTestId("fun-picks").locator("button.funcard");
+  const fun = page.getByTestId("discover-now").locator("li.ml");
   expect(await fun.count()).toBeLessThanOrEqual(2);
-  for (const t of await page.locator(".brow__body strong, .funcard__body strong, .missioncard__name").allInnerTexts()) expect(t).not.toMatch(ENGLISH_HEADLINE);
+  for (const t of await page.locator(".bl__body strong, .ml__body strong").allInnerTexts()) expect(t).not.toMatch(ENGLISH_HEADLINE);
   // un seul écran de décision sur iPhone : mission + première action visibles sans défiler
   if (isPhone(page)) {
     const first = (await before.first().boundingBox())!;
@@ -58,9 +61,10 @@ test("Test 4 — Accueil : prochaine mission, récupérable (ou incertitude honn
 
 test("prochaine mission jamais inventée : proposition confirmée par le joueur, conservée au rechargement", async ({ page }) => {
   await start(page);
-  await expect(page.getByTestId("next-mission")).toContainText("Clear Skies");
-  await expect(page.getByTestId("next-mission")).toContainText("Confirme-la");
-  await page.getByTestId("confirm-guess").click();
+  // V0.14 : proposition dans « Quelle mission ensuite ? », à choisir explicitement
+  await expect(page.getByTestId("next-choice")).toContainText("Clear Skies");
+  await expect(page.getByTestId("next-mission-name")).toHaveText("Prochaine mission à choisir");
+  await page.getByTestId("next-choice").locator("li").filter({ has: page.locator("b", { hasText: /^Clear Skies$/ }) }).getByRole("button").click(); // V0.18 : chaque branche cite l'autre dans sa note
   await expect(page.getByTestId("next-mission-name")).toHaveText("Clear Skies");
   await page.reload();
   await page.waitForSelector(".app.is-ready");
@@ -69,18 +73,21 @@ test("prochaine mission jamais inventée : proposition confirmée par le joueur,
 
 test("Test 5 — « C'est fait » retire la recommandation, statut conservé après rechargement", async ({ page }) => {
   await start(page, { nextMission: "Tourist Trap" });
-  const first = page.getByTestId("live-advice").locator("article").first();
-  const id = await first.getAttribute("data-testid");
-  await first.getByTestId("advice-done").click();
-  await expect(page.getByTestId(id!)).toHaveCount(0);
+  const first = page.getByTestId("before-item").first();
+  const name = (await first.locator("strong").first().textContent())!;
+  await first.getByTestId("done-btn").click();
+  const gone = page.getByTestId("before-item").filter({ hasText: name });
+  await expect(gone).toHaveCount(0);
   await page.reload();
   await page.waitForSelector(".app.is-ready");
-  await expect(page.getByTestId("live-advice")).toBeVisible();
-  await expect(page.getByTestId(id!)).toHaveCount(0);
+  await expect(page.getByTestId("before")).toBeVisible();
+  await expect(gone).toHaveCount(0);
   // mission terminée ⇒ elle n'est plus « prochaine »
+  await page.getByTestId("mission-start").click();
+  await page.getByTestId("launch-guard").getByTestId("guard-go").click(); // V0.18.1 : point de non-retour → confirmation
   await page.getByTestId("mission-done").click();
-  await page.getByTestId("mission-done-confirm").getByRole("button", { name: "Oui" }).click();
-  await expect(page.getByTestId("next-mission-name")).toHaveCount(0);
+  await page.getByTestId("mission-done-confirm").getByRole("button", { name: "Oui, terminée" }).click();
+  await expect(page.getByTestId("next-mission-name")).toHaveText("Prochaine mission à choisir");
 });
 
 test("Test 1 — « Je suis sur le point de lancer Find Donnie's Package » : réponse utile, aucun article hors sujet", async ({ page }, info) => {
@@ -110,9 +117,13 @@ test("Test 2 — conversation suivie : Penumbra FF puis « Et comment je la cons
 
 test("Parcours continu : Accueil → Préparer ma mission → voiture sympa → carte → c'est fait → Accueil et garage à jour, conversation conservée", async ({ page }, info) => {
   await start(page, { nextMission: "Clean Up After Donnie" });
-  const funBefore = await page.getByTestId("fun-picks").locator("button.funcard").allInnerTexts();
-  await page.getByTestId("prepare-mission").click();
-  const a = page.getByTestId("ai-answer").last();
+  const funRows = async () => {
+    const all = page.getByTestId("discover-all");
+    if ((await all.count()) && /Tout voir/.test((await all.textContent()) ?? "")) await all.click();
+    return page.getByTestId("discover-now").locator("li.ml").allInnerTexts().catch(() => [] as string[]);
+  };
+  const funBefore = await funRows();
+  const a = await ask(page, "Je vais lancer Clean Up After Donnie");
   await expect(a).toHaveAttribute("data-intent", "before");
   await expect(a).toContainText("Clean Up After Donnie");
   await a.getByTestId("ai-reply").filter({ hasText: "voiture sympa" }).click();
@@ -123,24 +134,24 @@ test("Parcours continu : Accueil → Préparer ma mission → voiture sympa → 
   await expect(page).toHaveURL(/#carte$/);
   const sheet = page.getByTestId("vehicle-sheet");
   await expect(sheet).toBeVisible();
-  await expect(page.getByTestId("zone-tag")).toContainText("Zone approximative");
+  await expect(page.getByTestId("zone-tag")).toContainText(/Zone|Calibré|Parcours/);
   await page.waitForFunction(() => (window as unknown as { __leonidaMapCount?: number }).__leonidaMapCount === 1);
-  await sheet.getByTestId("v-found").click(); // repéré
+  await sheet.locator('[data-testid="v-found"], [data-testid="rvl-found"]').first().click(); // repéré
   // régression V0.7 : sur la carte iPhone, la notification était étirée entre deux ancrages et masquait la fiche
   const toast = page.locator(".toast");
   if (await toast.count()) expect((await toast.boundingBox())!.height).toBeLessThan(140);
-  await sheet.getByTestId("v-found").click(); // volé
+  await sheet.locator('[data-testid="v-found"]:not([disabled]), [data-testid="rvl-got"]').first().click(); // volé / récupéré
   await expect(sheet.getByTestId("vehicle-state").locator(".is-cur")).toContainText("Volé");
   await page.screenshot({ path: `captures/${info.project.name}-53-parcours-carte.png` });
   await sheet.locator(".vmedia__close").click();
   await page.getByTestId("nav-accueil").click();
-  await expect(page.getByTestId("my-game")).toBeVisible();
-  const funAfter = await page.getByTestId("fun-picks").locator("button.funcard").allInnerTexts().catch(() => [] as string[]);
+  await expect(page.getByTestId("next-mission")).toBeVisible();
+  const funAfter = await funRows();
   const name = label.split(" ").slice(-1)[0];
   expect(funBefore.join(" ")).toContain(name);
   expect(funAfter.join(" ")).not.toContain(name); // le véhicule récupéré n'est plus proposé
   // la conversation est conservée au retour (iPad : le panneau latéral est resté ouvert à côté de la carte)
-  if (isPhone(page)) await page.getByTestId("ai-open").click();
+  if (!(await page.getByTestId("ai-panel").isVisible().catch(() => false))) await page.getByTestId("ai-open").click();
   expect(await page.getByTestId("ai-answer").count()).toBeGreaterThanOrEqual(2);
 });
 

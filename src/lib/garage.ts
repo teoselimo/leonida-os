@@ -1,5 +1,7 @@
 import type { VehicleRecord } from "../../collector/src/types";
 import type { EditionId, PersistedState, VehicleState } from "./types";
+import { RVL_BY_ID } from "@/data/rareVehicles";
+import { rvlView } from "./rvl";
 
 export type { VehicleRecord };
 
@@ -56,22 +58,26 @@ export interface VehicleView {
   hidden: boolean;
 }
 
-export function viewOf(v: VehicleRecord, s: Pick<PersistedState, "profile" | "vehicles">): VehicleView {
+export function viewOf(v: VehicleRecord, s: Pick<PersistedState, "profile" | "vehicles"> & { done?: Record<string, string> }): VehicleView {
   const compat = compatibility(v, s.profile.edition, s.profile.preorder);
-  const need = chapterNeeded(v);
+  const rv = RVL_BY_ID.get(v.id);
+  const need = rv ? rv.condition.chapterMin : chapterNeeded(v);
+  // référentiel vérifié : mission préalable ou commande pas encore reçue → jamais « maintenant »
+  const rvAccess = rv ? rvlView(rv, s as never).access : null;
+  const rvMissionPending = rvAccess === "after-mission" || rvAccess === "order-pending";
   // le chapitre d'accès n'est « établi » que s'il est cité, déduit d'une règle sourcée, ou si la source dit « accessible tôt »
-  const accessKnown = v.access.chapterMin != null || v.access.inferredChapter != null || v.access.early;
-  const later = need > s.profile.chapter;
+  const accessKnown = !!rv || v.access.chapterMin != null || v.access.inferredChapter != null || v.access.early;
+  const later = need > s.profile.chapter || rvMissionPending;
   const until = v.access.until?.value ?? null;
   const expired = until != null && s.profile.chapter > until;
   const owned = s.vehicles[v.id]?.state ?? null;
   const locatable = v.type === "vehicle" && v.location.precision !== "none" && v.kind !== "news";
   const compatible = compat === "ok";
-  const now = locatable && accessKnown && !later && !expired && compatible && v.reliability !== "rumor" && (!owned || owned === "spotted");
+  const now = (locatable || !!rv) && accessKnown && !later && !expired && compatible && v.reliability !== "rumor" && (!owned || owned === "spotted");
   const access: Access = compat === "ultimate-only" || compat === "preorder-no" ? "excluded" : expired ? "expired" : later ? "later" : now ? "now" : "confirm";
   // « À ne pas manquer » : seulement une fenêtre limitée explicite, encore ouverte, pour un contenu auquel le joueur a droit
   const urgent = until != null && !expired && !later && compatible && (!owned || owned === "spotted");
-  const hidden = later && s.profile.spoilerMode === "strict";
+  const hidden = need > s.profile.chapter && s.profile.spoilerMode === "strict";
   return { v, compat, access, need, later, expired, owned, now, urgent, hidden };
 }
 

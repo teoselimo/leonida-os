@@ -1,0 +1,13 @@
+{
+  "_doc": "Correspondances validées à la main entre un nom GTABase et une entité LEONIDA déjà intégrée (évite les doublons quand les noms diffèrent). Source de chaque décision dans 'why'.",
+  "missions": {
+    "Save for the Future": {
+      "progression": "family-savings",
+      "why": "story.ts cite leonipedia /missions/save-for-the-future/ pour l'épargne Family Savings (5 000 $)"
+    },
+    "Pick Up Shayna": {
+      "story": "free-call",
+      "why": "même page GTABase (/strangers/this-is-a-free-call-from) que la mission « This Is a Free Call From... » de l'inventaire Story"
+    }
+  }
+}

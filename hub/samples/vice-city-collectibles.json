@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "source": "https://vice-city.app/api/v1/collectibles?lang=fr&limit=5",
+  "revision": "4bfe64b8877f",
+  "totalAvailable": 22,
+  "attribution": [
+    {
+      "name": "vice-city.app",
+      "url": "https://vice-city.app",
+      "license": "Vice City API terms: free with a visible credit and link, commercial use with a Developer key"
+    }
+  ],
+  "records": [
+    {
+      "id": "vice-city:collectible.binoculars",
+      "type": "collectible",
+      "name": "Binoculars",
+      "fields": {
+        "category": "Équipement"
+      },
+      "prov": [
+        {
+          "aggregator": "vice-city.app",
+          "upstreamOrigin": "powerpyx.com",
+          "url": "https://www.powerpyx.com/gta-6-all-equipment/",
+          "via": "https://vice-city.app/api/v1/collectibles/binoculars",
+          "license": "vice-city.app"
+        }
+      ],
+      "modified": "2026-11-21",
+      "rel": []
+    },
+    {
+      "id": "vice-city:collectible.bret-vogel",
+      "type": "collectible",
+      "name": "Bret Vogel",
+      "fields": {
+        "category": "Contact"
+      },
+      "prov": [
+        {
+          "aggregator": "vice-city.app",
+          "upstreamOrigin": "powerpyx.com",
+          "url": "https://www.powerpyx.com/gta-6-all-contacts/",
+          "via": "https://vice-city.app/api/v1/collectibles/bret-vogel",
+          "license": "vice-city.app"
+        }
+      ],
+      "modified": "2026-11-21",
+      "rel": []
+    },
+    {
+      "id": "vice-city:collectible.brian-heder",
+      "type": "collectible",
+      "name": "Brian Heder",
+      "fields": {
+        "category": "Contact"
+      },
+      "prov": [
+        {
+          "aggregator": "vice-city.app",
+          "upstreamOrigin": "powerpyx.com",
+          "url": "https://www.powerpyx.com/gta-6-all-contacts/",
+          "via": "https://vice-city.app/api/v1/collectibles/brian-heder",
+          "license": "vice-city.app"
+        }
+      ],
+      "modified": "2026-11-21",
+      "rel": []
+    },
+    {
+      "id": "vice-city:collectible.cut-off-tool",
+      "type": "collectible",
+      "name": "Cut-Off Tool",
+      "fields": {
+        "category": "Équipement"
+      },
+      "prov": [
+        {
+          "aggregator": "vice-city.app",
+          "upstreamOrigin": "powerpyx.com",
+          "url": "https://www.powerpyx.com/gta-6-all-equipment/",
+          "via": "https://vice-city.app/api/v1/collectibles/cut-off-tool",
+          "license": "vice-city.app"
+        }
+      ],
+      "modified": "2026-11-21",
+      "rel": []
+    },
+    {
+      "id": "vice-city:collectible.donnie-carter",
+      "type": "collectible",
+      "name": "Donnie Carter",
+      "fields": {
+        "category": "Contact"
+      },
+      "prov": [
+        {
+          "aggregator": "vice-city.app",
+          "upstreamOrigin": "powerpyx.com",
+          "url": "https://www.powerpyx.com/gta-6-all-contacts/",
+          "via": "https://vice-city.app/api/v1/collectibles/donnie-carter",
+          "license": "vice-city.app"
+        }
+      ],
+      "modified": "2026-11-21",
+      "rel": []
+    }
+  ]
+}

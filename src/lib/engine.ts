@@ -153,6 +153,6 @@ export function alerts(all: Discovery[], signals: RadarSignal[], s: PersistedSta
 }
 
 export function visibleSignal(g: RadarSignal, s: PersistedState): "visible" | "blurred" | "hidden" {
-  if (g.spoilerChapter <= s.profile.chapter) return "visible";
+  if (g.spoilerChapter <= s.profile.chapter || s.profile.spoilerMode === "off") return "visible";
   return s.profile.spoilerMode === "strict" ? "hidden" : "blurred";
 }
