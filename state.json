@@ -1,7 +1,7 @@
 {
  "rockstar-youtube": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -17,7 +17,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "youtube-search": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
@@ -25,8 +25,8 @@
   "statusDetail": "YOUTUBE_API_KEY non configurée : recherches YouTube désactivées (les flux publics de chaînes restent actifs)."
  },
  "gtaseries-youtube": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -34,17 +34,17 @@
   "etag": null
  },
  "rockstarintel": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
   "statusDetail": "10 éléments lus",
-  "etag": "\"99f7d295ac18c2abeaf0e13bebd80431\""
+  "etag": "\"6ba8aa335bfa1739c182cfd17af2c8cd\""
  },
  "gtaboom": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -52,8 +52,8 @@
   "etag": null
  },
  "pcgamer": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -61,8 +61,8 @@
   "etag": null
  },
  "gamesradar": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -78,7 +78,7 @@
   "statusDetail": "Désactivée dans sources.json"
  },
  "reddit-gta6": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
   "lastSuccessAt": null,
   "consecutiveFailures": 0,
   "lastError": null,
@@ -86,26 +86,26 @@
   "statusDetail": "Accès API Reddit non autorisé/configuré (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET) : connecteur inactif."
  },
  "powerpyx": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
   "lastSuccessAt": "2026-11-27T15:23:12.412Z",
-  "consecutiveFailures": 0,
-  "lastError": null,
-  "status": "ok",
-  "statusDetail": "Inchangé depuis la dernière collecte (304)",
+  "consecutiveFailures": 1,
+  "lastError": "HTTP 403 sur https://www.powerpyx.com/feed/",
+  "status": "degraded",
+  "statusDetail": "Échec : HTTP 403 sur https://www.powerpyx.com/feed/",
   "etag": "\"9369e291fb5ea9d3209182b12132fc96\""
  },
  "powerpyx-sitemap": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
   "lastSuccessAt": "2026-11-27T15:23:12.412Z",
-  "consecutiveFailures": 0,
-  "lastError": null,
-  "status": "ok",
-  "statusDetail": "25 éléments lus",
+  "consecutiveFailures": 1,
+  "lastError": "HTTP 403 sur https://www.powerpyx.com/sitemap_index.xml",
+  "status": "degraded",
+  "statusDetail": "Échec : HTTP 403 sur https://www.powerpyx.com/sitemap_index.xml",
   "etag": null
  },
  "gtaxtreme-sitemap": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -113,8 +113,8 @@
   "etag": null
  },
  "pushsquare": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
@@ -122,13 +122,13 @@
   "etag": null
  },
  "alcasthq": {
-  "lastAttemptAt": "2026-11-27T15:23:12.412Z",
-  "lastSuccessAt": "2026-11-27T15:23:12.412Z",
+  "lastAttemptAt": "2026-11-27T23:43:22.437Z",
+  "lastSuccessAt": "2026-11-27T23:43:22.437Z",
   "consecutiveFailures": 0,
   "lastError": null,
   "status": "ok",
   "statusDetail": "10 éléments lus",
-  "etag": "W/\"dc6edd5cef2171a96e768e1ce23ae9d5\""
+  "etag": "W/\"513e0db057f8ff3b69a57e8d5cc51742\""
  },
  "keengamer": {
   "lastAttemptAt": null,
