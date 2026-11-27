@@ -3411,6 +3411,139 @@
   ]
  },
  {
+  "id": "v-buckingham-bourbon-windsor",
+  "type": "vehicle",
+  "name": "Buckingham Bourbon Windsor",
+  "make": "Buckingham",
+  "model": "Bourbon Windsor",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "orange",
+   "support": [
+    {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+     "quote": "Enter through the rear yard and leave the orange car on the green-screen set until you've taken the pistol, cash and stock."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The Sound4Sound Studio robbery in Vice City gets you a San4San K17 pistol and a Buckingham Bourbon Windsor.",
+    "support": [
+     {
+      "sourceName": "GTA BOOM",
+      "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+      "quote": "The Sound4Sound Studio robbery in Vice City gets you a San4San K17 pistol and a Buckingham Bourbon Windsor."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "quote": "Enter through the rear yard and leave the orange car on the green-screen set until you've taken the pistol, cash and stock."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "quote": "Cross the yard to the white-framed doors under the shutter."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "quote": "Take the inner door into the workroom."
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "quote": "Use the set to get around the front guards"
+   },
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "quote": "Take the side door out of the set, come around through the alley and use the parked vehicles for cover before approaching the front doors."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "quote": "Look for Key Valuables Found and Map Updated as you get in, then drive out and lose the police."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA BOOM",
+    "url": "https://www.gtaboom.com/gta-6-sound4sound-studio-robbery-guide-edef",
+    "title": "GTA 6 Sound4Sound Studio Robbery Guide for the K17 and Bourbon Windsor",
+    "official": false,
+    "readAt": "2026-11-27T05:11:55.595Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T05:11:55.595Z",
+  "updatedAt": "2026-11-27T05:11:55.595Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T05:11:55.595Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA BOOM"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-buckingham-cellerica-shamal",
   "type": "vehicle",
   "name": "Buckingham Cellerica Shamal",

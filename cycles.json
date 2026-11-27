@@ -318,5 +318,17 @@
   "deepReads": 12,
   "merged": 0,
   "vehicles": 95
+ },
+ {
+  "at": "2026-11-27T05:11:55.595Z",
+  "trigger": "schedule",
+  "runId": "45944328219",
+  "sourcesAttempted": 9,
+  "sourcesOk": 9,
+  "newItems": 15,
+  "updatedItems": 3,
+  "deepReads": 12,
+  "merged": 0,
+  "vehicles": 96
  }
 ]
