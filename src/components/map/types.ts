@@ -1,6 +1,6 @@
 import type { Discovery, DiscoveryStatus, Region } from "@/lib/types";
 import type { Landmark } from "@/lib/gtadb";
-import type { PoiCat } from "@/lib/poi";
+import type { MapLayer, PoiCat } from "@/lib/poi";
 
 /**
  * Contrat de la carte. Implémentation actuelle : `LeonidaMap` (MapLibre GL + tuiles gtadb).
@@ -43,6 +43,7 @@ export interface MapViewProps {
   /** Zone masquée par l'UI (barre du haut, fiche mobile en bas, panneau tablette à gauche). */
   occlusion: { top: number; bottom: number; left: number };
   landmarks: Landmark[];
+  layer: MapLayer;
   showLandmarks: boolean;
   /** Catégories de repères affichées (vide ou absent : toutes). */
   poiCats?: PoiCat[];

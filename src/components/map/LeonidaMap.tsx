@@ -1,14 +1,14 @@
 "use client";
 
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Map as MLMap, Marker, GeoJSONSource, FilterSpecification } from "maplibre-gl";
 import { CATEGORIES } from "@/lib/meta";
 import { assetUrl, CC_BY_URL, gameToLngLat, GTADB_URL, LAND, lngLatToGame } from "@/lib/gtadb";
 import { Icon } from "@/components/ui/Icon";
 import type { MapViewProps } from "./types";
-import { POI_CATS, poiCategory, poiKind, poiName, poiStatus } from "@/lib/poi";
+import { matchesMapLayer, POI_CATS, poiCategory, poiKind, poiName, poiStatus } from "@/lib/poi";
 import { drawCluster, drawDistrict, drawKind } from "./icons";
 import type { PoiKind } from "./icons";
 import { ESTABLISHMENTS } from "@/data/establishments";
@@ -79,7 +79,7 @@ const CAMERA_KEY = "leonida-os/map-camera/v1";
 /** Comparaison V0.15 : « ?carte=v014 » rend l'ancien fond (z4, 2048 px, sombre) et les anciens symboles. */
 const LEGACY = typeof window !== "undefined" && /[?&]carte=v014\b/.test(window.location.search);
 /** Repères gtadb qui sont la position d'un établissement confirmé (anneau blanc sur le pictogramme). */
-const EST_LM = new Set(ESTABLISHMENTS.map((e) => e.position?.landmarkId).filter((x): x is string => !!x));
+const EST_LM = new Set(ESTABLISHMENTS.filter((e) => e.verification === "confirmé").map((e) => e.position?.landmarkId).filter((x): x is string => !!x));
 
 type Camera = { center: [number, number]; zoom: number };
 function loadCamera(): Camera | null {
@@ -116,7 +116,8 @@ export function LeonidaMap(props: MapViewProps) {
   const { poiCats = [] } = props;
   const poiKey = poiCats.join(",");
   const lmIndex = useRef(new Map<string, Landmark>());
-  lmIndex.current = new Map(props.landmarks.map((l) => [l.id, l]));
+  const indexed = useMemo(() => new Map(props.landmarks.map((l) => [l.id, l])), [props.landmarks]);
+  lmIndex.current = indexed;
   const { regions, markers, selectedId, onSelect, focusNonce, occlusion, landmarks, showLandmarks, selectedLandmarkId, onSelectLandmark, pickMode, onPick, pickCenterNonce, draft, onDraftMove, active, zones = [], selectedZoneId = null, onSelectZone, view = null } = props;
   const [tileError, setTileError] = useState(false);
   const box = useRef<HTMLDivElement>(null);
@@ -145,6 +146,8 @@ export function LeonidaMap(props: MapViewProps) {
         const ml = (await import("maplibre-gl")).default;
         mlRef.current = ml;
         if (cancelled || !box.current) return;
+        const initialCamera = loadCamera();
+        let cameraRestored = false;
         map = new ml.Map({
           container: box.current,
           attributionControl: false,
@@ -172,7 +175,7 @@ export function LeonidaMap(props: MapViewProps) {
               { id: "bg", type: "background", paint: { "background-color": "#071019" } },
               { id: "base", type: "raster", source: "leonida", paint: LEGACY ? { "raster-brightness-max": 0.72, "raster-saturation": -0.25, "raster-contrast": 0.12, "raster-fade-duration": 120 } : { "raster-brightness-max": 0.9, "raster-saturation": -0.06, "raster-contrast": 0.05, "raster-fade-duration": 120, "raster-resampling": "linear" } },
               // Noms de quartiers (calculés depuis les repères) entre la vue d'île et la vue de rue
-              { id: "dist", type: "symbol", source: "districts", minzoom: 3.2, maxzoom: 6.6, layout: { "icon-image": ["concat", "dist:", ["get", "name"]], "icon-allow-overlap": false, "symbol-sort-key": ["-", 0, ["get", "n"]] } },
+              { id: "dist", type: "symbol", source: "districts", minzoom: 1.5, maxzoom: 6.6, layout: { "icon-image": ["concat", "dist:", ["get", "name"]], "icon-allow-overlap": false, "symbol-sort-key": ["-", 0, ["get", "n"]] } },
               // Zones de recherche approximatives (Garage des légendes) : remplissage léger + contour pointillé
               { id: "zones-fill", type: "fill", source: "zones", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": ["get", "color"], "fill-opacity": ["case", ["==", ["get", "sel"], 1], 0.28, 0.14] } },
               {
@@ -209,6 +212,7 @@ export function LeonidaMap(props: MapViewProps) {
                 type: "symbol",
                 source: "landmarks",
                 filter: lmFilter(null),
+                paint: { "icon-opacity": ["case", ["==", ["get", "uncertain"], 1], 0.55, 1] },
                 layout: {
                   "icon-image": LEGACY ? ["concat", "cat:", ["get", "cat"]] : ["concat", "k:", ["get", "kind"], ":", ["get", "est"]],
                   "icon-size": ["interpolate", ["linear"], ["zoom"], 2, 0.72, 5, 0.9, 7, 1.05],
@@ -225,7 +229,7 @@ export function LeonidaMap(props: MapViewProps) {
               },
               // Filtre actif : ses résultats visibles tout de suite, regroupés quand ils sont trop proches
               { id: "lmf-cl", type: "symbol", source: "lmf", filter: ["has", "point_count"], layout: { "icon-image": ["concat", "cl:", ["to-string", ["get", "point_count"]]], "icon-allow-overlap": true, visibility: "none" } },
-              { id: "lmf-pt", type: "symbol", source: "lmf", filter: ["!", ["has", "point_count"]], layout: { "icon-image": ["concat", "k:", ["get", "kind"], ":", ["get", "est"]], "icon-size": 0.95, "icon-allow-overlap": false, "symbol-sort-key": ["get", "rank"], visibility: "none" } },
+              { id: "lmf-pt", type: "symbol", source: "lmf", paint: { "icon-opacity": ["case", ["==", ["get", "uncertain"], 1], 0.55, 1] }, filter: ["!", ["has", "point_count"]], layout: { "icon-image": ["concat", "k:", ["get", "kind"], ":", ["get", "est"]], "icon-size": 0.95, "icon-allow-overlap": false, "symbol-sort-key": ["get", "rank"], visibility: "none" } },
               // Le lieu sélectionné reste affiché même si ses voisins le chevauchent
               { id: "lm-sel-icon", type: "symbol", source: "landmarks", filter: ["==", ["get", "id"], ""], layout: { "icon-image": ["concat", "k:", ["get", "kind"], ":", ["get", "est"]], "icon-size": 1.25, "icon-allow-overlap": true, "icon-ignore-placement": true } },
             ],
@@ -238,6 +242,7 @@ export function LeonidaMap(props: MapViewProps) {
         map.touchZoomRotate.disableRotation();
         map.keyboard.disableRotation();
         map.on("moveend", () => {
+          if (!cameraRestored) return;
           const c = map!.getCenter();
           saveCamera({ center: [c.lng, c.lat], zoom: map!.getZoom() });
         });
@@ -251,7 +256,7 @@ export function LeonidaMap(props: MapViewProps) {
         tilesReachable().then((ok) => {
           if (!cancelled && !ok && !tileOk) setTileError(true);
         });
-        map.on("zoom", () => setZoom(map!.getZoom()));
+        map.on("zoomend", () => setZoom(map!.getZoom()));
         map.on("click", (e) => {
           // Les clics sur les marqueurs HTML sont gérés par les marqueurs eux-mêmes.
           if ((e.originalEvent?.target as HTMLElement | null)?.tagName !== "CANVAS") return;
@@ -262,14 +267,7 @@ export function LeonidaMap(props: MapViewProps) {
           }
           const p = e.point;
           const zHits = map!.getLayer("zones-fill") ? map!.queryRenderedFeatures([[p.x - 4, p.y - 4], [p.x + 4, p.y + 4]], { layers: ["zones-fill"] }) : [];
-          if (zHits.length && cb.current.onSelectZone) {
-            // la plus petite zone l'emporte quand elles se chevauchent
-            const z = [...zHits].sort((a, b) => Number(a.properties?.r) - Number(b.properties?.r))[0];
-            cb.current.onSelect(null);
-            cb.current.onSelectLandmark(null);
-            cb.current.onSelectZone(String(z.properties?.id));
-            return;
-          }
+          const selectableZones = zHits.filter((f) => !String(f.properties?.id).startsWith("district:"));
           const box: [[number, number], [number, number]] = [[p.x - 14, p.y - 14], [p.x + 14, p.y + 14]];
           const cl = map!.getLayoutProperty("lmf-cl", "visibility") !== "none" ? map!.queryRenderedFeatures(box, { layers: ["lmf-cl"] }) : [];
           if (cl.length) {
@@ -285,6 +283,11 @@ export function LeonidaMap(props: MapViewProps) {
           if (hits.length) {
             cb.current.onSelect(null);
             cb.current.onSelectLandmark(String(hits[0].properties?.id));
+          } else if (selectableZones.length && cb.current.onSelectZone) {
+            const z = selectableZones.sort((a, b) => Number(a.properties?.r) - Number(b.properties?.r))[0];
+            cb.current.onSelect(null);
+            cb.current.onSelectLandmark(null);
+            cb.current.onSelectZone(String(z.properties?.id));
           } else {
             cb.current.onSelect(null);
             cb.current.onSelectLandmark(null);
@@ -314,9 +317,10 @@ export function LeonidaMap(props: MapViewProps) {
           // Le conteneur peut avoir été mesuré avant la mise en page finale : recadrage propre,
           // ou reprise de la dernière position consultée.
           map!.resize();
-          const cam = loadCamera();
+          const cam = initialCamera;
           if (cam) map!.jumpTo({ center: cam.center, zoom: cam.zoom });
           else map!.fitBounds(landBounds(), { padding: padding(), duration: 0 });
+          cameraRestored = true;
           setZoom(map!.getZoom());
           setReady(true);
         });
@@ -454,23 +458,30 @@ export function LeonidaMap(props: MapViewProps) {
     }
   };
 
-  // Données des lieux gtadb
+  // Préparer les géométries une fois. Les mouvements de caméra ne réécrivent aucune source.
+  const features = useMemo(() => landmarks.map((l) => {
+    const cat = poiCategory(l);
+    const kind = poiKind(l);
+    const est = Number(EST_LM.has(l.id));
+    const uncertain = Number(poiStatus(l) === "uncertain");
+    const essential = matchesMapLayer("essentiels", kind, cat, !!est);
+    const minz = est ? 0 : essential ? 2 : cat === "autre" ? 7 : POI_CATS[cat].minZoom;
+    return { type: "Feature" as const, properties: { id: l.id, cat, kind, est, minz, uncertain, rank: POI_CATS[cat].rank - est * 2 + uncertain, named: Number(l.name !== "Lieu non identifié") }, geometry: { type: "Point" as const, coordinates: gameToLngLat(l.x, l.y) } };
+  }), [landmarks]);
+  const layerFeatures = useMemo(() => features.filter(({ properties: f }) =>
+    showLandmarks && matchesMapLayer(props.layer, f.kind, f.cat, !!f.est) && (!poiKey || poiCats.includes(f.cat))
+  ), [features, props.layer, showLandmarks, poiKey]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     const map = mapRef.current;
     if (!ready || !map) return;
-    (map.getSource("landmarks") as GeoJSONSource).setData({
-      type: "FeatureCollection",
-      features: landmarks.map((l) => {
-        const cat = poiCategory(l);
-        const est = EST_LM.has(l.id) ? 1 : 0;
-        // établissements confirmés d'abord, puis métiers précis, puis catégorie
-        const rank = POI_CATS[cat].rank - est * 1.5 + (poiStatus(l) === "uncertain" ? 0.5 : 0);
-        const named = l.name === "Lieu non identifié" ? 0 : 1;
-        // V0.15 : les milliers de bâtiments sans nom ne couvrent plus la carte (toujours trouvables par la recherche)
-        const minz = est ? Math.min(POI_CATS[cat].minZoom, 2) : cat === "autre" && !LEGACY ? (named ? 7 : 99) : POI_CATS[cat].minZoom;
-        return { type: "Feature", properties: { id: l.id, cat, kind: poiKind(l), est, minz, rank, named }, geometry: { type: "Point", coordinates: gameToLngLat(l.x, l.y) } };
-      }),
-    });
+    const selected = selectedLandmarkId && features.find((f) => f.properties.id === selectedLandmarkId);
+    (map.getSource("landmarks") as GeoJSONSource).setData({ type: "FeatureCollection", features:
+      selected && !layerFeatures.includes(selected) ? [...layerFeatures, selected] : layerFeatures });
+  }, [ready, features, layerFeatures, selectedLandmarkId]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!ready || !map) return;
     // quartiers : centre des repères qui partagent le même premier élément d'adresse (au moins 6)
     const groups = new Map<string, { x: number; y: number; n: number }>();
     for (const l of landmarks) {
@@ -492,7 +503,7 @@ export function LeonidaMap(props: MapViewProps) {
     const map = mapRef.current;
     if (!ready || !map) return;
     // filtre de catégorie (V0.15) : résultats visibles à tous les zooms, regroupés ; sans filtre, apparition par zoom
-    const filtered = !LEGACY && showLandmarks && poiCats.length > 0;
+    const filtered = !LEGACY && showLandmarks && poiCats.length > 0 && !poiCats.includes("autre");
     map.setLayoutProperty("lm", "visibility", showLandmarks && !filtered ? "visible" : "none");
     map.setLayoutProperty("lm-label", "visibility", showLandmarks ? "visible" : "none");
     map.setLayoutProperty("lmf-cl", "visibility", filtered ? "visible" : "none");
@@ -500,7 +511,7 @@ export function LeonidaMap(props: MapViewProps) {
     (map.getSource("lmf") as GeoJSONSource).setData({
       type: "FeatureCollection",
       features: filtered
-        ? landmarks.filter((l) => poiCats.includes(poiCategory(l))).map((l) => ({ type: "Feature" as const, properties: { id: l.id, kind: poiKind(l), est: EST_LM.has(l.id) ? 1 : 0, rank: EST_LM.has(l.id) ? 0 : 1 }, geometry: { type: "Point" as const, coordinates: gameToLngLat(l.x, l.y) } }))
+        ? layerFeatures
         : [],
     });
     map.setFilter("lm", lmFilter(poiCats));
@@ -508,7 +519,7 @@ export function LeonidaMap(props: MapViewProps) {
     map.setFilter("lm-sel", ["==", ["get", "id"], selectedLandmarkId ?? ""]);
     if (!LEGACY) map.setFilter("lm-sel-icon", ["==", ["get", "id"], selectedLandmarkId ?? ""]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, showLandmarks, selectedLandmarkId, poiKey, landmarks]);
+  }, [ready, showLandmarks, selectedLandmarkId, poiKey, layerFeatures]);
 
   // Zones de recherche : cercles calculés en coordonnées de jeu puis projetés
   const zoneKey = zones.map((z) => `${z.id}:${z.x}:${z.y}:${z.radius}:${z.color}:${z.kind ?? ""}:${z.path?.length ?? 0}`).join("|") + `#${selectedZoneId ?? ""}`;

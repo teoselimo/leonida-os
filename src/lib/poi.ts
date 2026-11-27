@@ -1,3 +1,4 @@
+import { establishmentCategoryFromQuery } from "@/data/establishments";
 import type { Landmark } from "./gtadb";
 
 /**
@@ -157,7 +158,10 @@ export function findPoi(q: string, landmarks: Landmark[], district?: string | nu
 export function searchPois(q: string, landmarks: Landmark[], limit = 12): Landmark[] {
   const n = nk(q);
   if (n.length < 2) return [];
-  const cat = categoryFromQuery(q);
+  const shop = establishmentCategoryFromQuery(n);
+  const kind = shop === "custom" || shop === "paint" ? "tuning" : shop;
+  const specific = kind && ["armurerie", "vetements", "coiffeur", "tatoueur", "tuning"].includes(kind) ? kind : null;
+  const cat = specific ? null : categoryFromQuery(q);
   const district = districtFromQuery(q, landmarks);
   const words = n.split(" ").filter((w) => w.length >= 2);
   const scored: Array<{ l: Landmark; s: number }> = [];
@@ -167,12 +171,30 @@ export function searchPois(q: string, landmarks: Landmark[], limit = 12): Landma
     let s = 0;
     if (name.includes(n)) s += 10;
     else if (words.every((w) => name.includes(w) || dist.includes(w) || l.tags.some((t) => t.startsWith(w)))) s += 5;
+    if (specific && poiKind(l) === specific) s += 8;
     if (cat && poiCategory(l) === cat) s += 6;
     if (district && l.district.includes(district)) s += cat ? 4 : 1;
     // une catégorie demandée filtre strictement (sauf nom exact), un quartier demandé aussi
+    if (specific && poiKind(l) !== specific && !name.includes(n)) s = 0;
     if (cat && poiCategory(l) !== cat && !name.includes(n)) s = 0;
     if (district && !l.district.includes(district) && !name.includes(n)) s = 0;
     if (s > 0) scored.push({ l, s: s - (poiStatus(l) === "uncertain" ? 1 : 0) - (l.name === "Lieu non identifié" ? 3 : 0) });
   }
   return scored.sort((a, b) => b.s - a.s || POI_CATS[poiCategory(a.l)].rank - POI_CATS[poiCategory(b.l)].rank).slice(0, limit).map((x) => x.l);
+}
+
+export const MAP_LAYERS = {
+  essentiels: "Essentiels", services: "Services", sorties: "Sorties", reperes: "Repères", tout: "Tout",
+} as const;
+export type MapLayer = keyof typeof MAP_LAYERS;
+const ESSENTIAL_KINDS = new Set(["armurerie", "vetements", "coiffeur", "tatoueur", "garage", "tuning", "station", "maison"]);
+
+export function matchesMapLayer(layer: MapLayer, kind: ReturnType<typeof poiKind>, cat: PoiCat, establishment: boolean) {
+  switch (layer) {
+    case "essentiels": return establishment || ESSENTIAL_KINDS.has(kind);
+    case "services": return cat === "commerce" || (kind !== "maison" && ESSENTIAL_KINDS.has(kind));
+    case "sorties": return ["restaurant", "loisirs", "hotel"].includes(cat);
+    case "reperes": return cat === "repere" || cat === "transport";
+    case "tout": return true;
+  }
 }

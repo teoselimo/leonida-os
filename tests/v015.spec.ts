@@ -1,3 +1,4 @@
+import { openMapFilters } from "./map-controls";
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -33,6 +34,7 @@ test("fond : niveau natif z5, tuiles déclarées pour l'écran Retina, zoom maxi
 
 test("filtre « Commerces » : résultats visibles tout de suite, regroupés en vue d'ensemble, détaillés en zoomant ; position sauvegardée intacte", async ({ page }) => {
   await start(page);
+  await openMapFilters(page);
   await page.getByTestId("filter-shops").click();
   await page.evaluate(() => (window as unknown as W).__leonidaMap.jumpTo({ center: [-29.5, -36.5], zoom: 2 }));
   await idle(page);

@@ -220,7 +220,7 @@ test("V0.6 : filtre Voitures cachées — zone approximative, point exact valid�
   await start(page, "#profil");
   await setProfile(page, "Standard", 1);
   await openGarage(page);
-  await expect(page.getByTestId("filter-garage")).toContainText("Voitures");
+  await expect(page.getByTestId("filter-garage")).toContainText("Garage");
   // point validé : épingle ; zone : pas d'épingle
   await expect(page.locator('[data-testid="marker-veh:v-pegassi-vitello"]')).toHaveCount(1);
   await expect(page.locator('[data-testid="marker-veh:v-maibatsu-penumbra-ff"]')).toHaveCount(0);

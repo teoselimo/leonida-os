@@ -34,11 +34,11 @@ import { ACCESS_FR, FILTERS, matches, viewOf } from "@/lib/garage";
 import type { GarageFilter, VehicleView } from "@/lib/garage";
 import type { MapZone } from "@/components/map/types";
 import type { Discovery } from "@/lib/types";
-import { POI_CATS, POI_FILTERS, poiCategory, poiName, poiStatus, searchPois } from "@/lib/poi";
+import { MAP_LAYERS, POI_CATS, POI_FILTERS, poiCategory, poiName, poiStatus, searchPois } from "@/lib/poi";
 import { EST_CATS, ESTABLISHMENTS } from "@/data/establishments";
 import { isPoint, placementOf, PRECISION_FR, searchEstablishments } from "@/lib/places";
 import { EstablishmentCard } from "@/components/EstablishmentCard";
-import type { PoiCat } from "@/lib/poi";
+import type { MapLayer, PoiCat } from "@/lib/poi";
 import { nodeByName } from "@/lib/progress";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
@@ -76,6 +76,31 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       }
       return next;
     });
+  const [layer, setLayer] = useState<MapLayer>("essentiels");
+  const [layersOpen, setLayersOpen] = useState(false);
+  const layerKey = "leonida-os/map-layer/v1";
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(layerKey);
+      if (saved && Object.hasOwn(MAP_LAYERS, saved)) setLayer(saved as MapLayer);
+      if (saved === "garage" && !placeFocus.nonce) setGarage(true);
+      if (!saved) setPoiCatsState([]);
+    } catch { /* préférence facultative */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const rememberLayer = (name: string) => {
+    try { localStorage.setItem(layerKey, name); } catch { /* stockage indisponible */ }
+  };
+  const chooseLayer = (name: MapLayer) => {
+    setLayer(name);
+    setPoiCats([]);
+    setShowLandmarks(true);
+    setGarage(false);
+    selectVehicle(null);
+    setLayersOpen(false);
+    setMore(false);
+    rememberLayer(name);
+  };
   const [landmarks, setLandmarks] = useState<Landmark[]>([]);
   const [lmId, setLmId] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -136,8 +161,6 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       const l = landmarks.find((x) => x.id === placeFocus.landmarkId);
       if (l) {
         // le lieu choisi reste visible même si un filtre de catégorie l'aurait masqué
-        const c = poiCategory(l);
-        setPoiCats((cur) => (cur.length && !cur.includes(c) ? [...cur, c] : cur));
         setPlaceZone(null);
         setEstId(null);
         setLmId(l.id);
@@ -151,7 +174,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     // recherche pré-remplie (ou ancien format « quartier [+ catégorie] ») : la LISTE, y compris les lieux sans position
     const q = placeFocus.query ?? [cat ? POI_CATS[cat].plural : "", placeFocus.district ?? ""].join(" ").trim();
     if (q) {
-      if (cat) setPoiCats([cat]);
+      if (cat) { setLayer("tout"); setPoiCatsState([cat]); }
       setPlaceZone(null);
       setLmId(null);
       setEstId(null);
@@ -177,26 +200,27 @@ export function MapScreen({ active = true }: { active?: boolean }) {
 
   // V0.14 — premier cadrage : le quartier documenté de la mission du joueur (une fois par mission et par session),
   // sinon la dernière vue consultée (gérée par la carte), sinon la vue d'ensemble. Jamais de position du personnage.
-  useEffect(() => {
-    if (!landmarks.length || placeFocus.nonce) return;
+  const missionArea = useMemo((): MapZone | null => {
     const node = nodeByName(state.profile.nextMission);
-    if (!node?.district) return;
-    const key = `leonida-os/framed/${node.id}`;
-    try {
-      if (sessionStorage.getItem(key)) return;
-      sessionStorage.setItem(key, "1");
-    } catch {
-      return;
-    }
+    if (!node?.district) return null;
     const d = node.district.toLowerCase();
     const pts = landmarks.filter((l) => (l.district ?? "").toLowerCase().split(",")[0].trim() === d);
-    if (pts.length < 5) return; // quartier mal couvert par la carte communautaire : pas de cadrage approximatif
+    if (pts.length < 5) return null; // quartier mal couvert par la carte communautaire : pas de cadrage approximatif
     const x = pts.reduce((a, p) => a + p.x, 0) / pts.length;
     const y = pts.reduce((a, p) => a + p.y, 0) / pts.length;
     const ds = pts.map((p) => Math.hypot(p.x - x, p.y - y)).sort((a, b) => a - b);
-    setView({ x, y, radius: Math.min(2200, ds[Math.floor(ds.length * 0.85)] + 150), nonce: -1 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [landmarks.length, state.profile.nextMission]);
+    return { id: `district:${node.id}`, x, y, radius: ds[Math.floor(ds.length * 0.85)] + 150,
+      color: "#A879FF", label: node.district, kind: "zone" };
+  }, [landmarks, state.profile.nextMission]);
+  useEffect(() => {
+    if (!missionArea || placeFocus.nonce) return;
+    const key = `leonida-os/framed/${missionArea.id.slice(9)}`;
+    try {
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+    } catch { return; }
+    setView({ ...missionArea, radius: Math.min(2200, missionArea.radius), nonce: -1 });
+  }, [missionArea, placeFocus.nonce]);
 
   const selectDiscovery = (id: string | null) => {
     if (id?.startsWith("place:est:")) {
@@ -223,18 +247,25 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const shownVehicles = vehicleViews.filter((x) => !x.hidden && (!gFilter || matches(x, gFilter)));
   const hiddenVehicles = vehicleViews.filter((x) => x.hidden).length;
   const VCOLOR = (x: VehicleView) => (x.v.type === "garage" ? "#5AB8FF" : x.v.edition.exclusive === "ultimate" ? "#FFB547" : x.now ? "#2EE6D6" : x.v.reliability === "reported" ? "#B98CFF" : "#FF3D8B");
-  const vehicleZones: MapZone[] = garage
-    ? shownVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened, ...rvlZone(x.v.id) }))
-    : [];
+  const trackedVehicles = vehicleViews.filter((x) => !x.hidden && state.wanted?.includes(x.v.id));
+  const filteredVehicles = garage ? shownVehicles : trackedVehicles;
+  const selectedVehicle = vehicleViews.find((x) => !x.hidden && x.v.id === vehicleId);
+  const mappedVehicles = selectedVehicle && !filteredVehicles.includes(selectedVehicle)
+    ? [...filteredVehicles, selectedVehicle] : filteredVehicles;
+  const vehicleZones: MapZone[] = mappedVehicles.filter((x) => x.v.location.zone && x.v.location.precision === "zone").map((x) => ({ id: `veh:${x.v.id}`, x: x.v.location.zone!.x, y: x.v.location.zone!.y, radius: x.v.location.zone!.radius, color: VCOLOR(x), label: x.v.name, widened: x.v.location.zone!.widened, ...rvlZone(x.v.id) }));
   // positions observées par le joueur : toujours visibles (hors mode Voitures cachées)
   const pinZones: MapZone[] = garage
     ? []
     : Object.entries(state.pins ?? {})
         .filter(([id]) => placeZone?.id !== `place:est:${id}`)
         .map(([id, p]) => ({ id: `place:est:${id}`, x: p.x, y: p.y, radius: 40, color: "#7CF29A", kind: "point" as const, label: ESTABLISHMENTS.find((e) => e.id === id)?.name ?? "Position" }));
-  const zones: MapZone[] = [...vehicleZones, ...pinZones, ...(placeZone ? [placeZone] : [])];
-  const vehicleMarkers: MapMarker[] = garage
-    ? shownVehicles
+  const establishments = useMemo(() => ESTABLISHMENTS.map((e) => ({ e, pl: placementOf(e, landmarks, state.pins ?? {}) })), [landmarks, state.pins]);
+  const serviceZones: MapZone[] = !garage && showLandmarks && !poiCats.length && (layer === "essentiels" || layer === "services")
+    ? establishments.filter(({ e, pl }) => pl.precision === "zone" && placeZone?.id !== `place:est:${e.id}`).map(({ e, pl }) =>
+      ({ id: `place:est:${e.id}`, x: pl.x!, y: pl.y!, radius: pl.radius!, color: "#2EE6D6", kind: "zone", label: e.name }))
+    : [];
+  const zones: MapZone[] = [...(!garage && missionArea && layer === "essentiels" ? [missionArea] : []), ...serviceZones, ...vehicleZones, ...pinZones, ...(placeZone ? [placeZone] : [])];
+  const vehicleMarkers: MapMarker[] = mappedVehicles
         .filter((x) => x.v.location.point)
         .map((x) => ({
           discovery: { id: `veh:${x.v.id}`, title: x.v.name, category: "vehicle", regionId: x.v.location.regionId ?? "vicecity", x: x.v.location.point!.x, y: x.v.location.point!.y, summary: "", prerequisites: [], reward: "", durationMin: 0, difficulty: 1, spoilerChapter: 0, contentPotential: 0, source: { label: "", reliability: x.v.reliability }, provenance: { kind: "live", recordId: x.v.id, url: "", firstSeenAt: x.v.firstSeenAt } } as Discovery,
@@ -242,8 +273,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
           fresh: false,
           tracked: false,
           visible: true,
-        }))
-    : [];
+        }));
   const guide = (id: string) => focusVehicle(id);
   const selectLandmark = (id: string | null) => {
     if (id) setPlaceZone(null);
@@ -325,7 +355,6 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const lm = lmId ? landmarks.find((l) => l.id === lmId) ?? null : null;
 
   // ── Recherche (découvertes + lieux) ─────────────────────────────────────────
-  const visibleCount = markers.filter((m) => m.visible && m.status === "available").length;
   const results = useMemo(() => {
     const q = norm(query.trim());
     if (q.length < 2) return { disc: [], lms: [] as Landmark[], ests: [] as typeof ESTABLISHMENTS };
@@ -356,7 +385,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     <div className="search search--results" onClick={(e) => e.stopPropagation()}>
       {(results.disc.length > 0 || results.lms.length > 0 || results.ests.length > 0) && (
         <div className="search__results" data-testid="search-results">
-          {results.ests.length > 0 && <p className="search__group">Établissements confirmés · {results.ests.length}</p>}
+          {results.ests.length > 0 && <p className="search__group">Établissements sourcés · {results.ests.length}</p>}
           {results.ests.map((e) => {
             const pl = placementOf(e, landmarks, state.pins ?? {});
             return (
@@ -400,7 +429,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   const [menu, setMenu] = useState(false);
   const shopsOn = showLandmarks && poiCats.length === 1 && poiCats[0] === "commerce";
 
-  const togglePoi = (c: PoiCat) => setPoiCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c]));
+  const togglePoi = (c: PoiCat) => { setLayer("tout"); rememberLayer("tout"); setPoiCats((cur) => (cur.includes(c) ? cur.filter((x) => x !== c) : [...cur, c])); };
   const toggleCat = (c: CategoryId) =>
     setCats((s) => {
       const n = new Set(s);
@@ -409,9 +438,25 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     });
 
   const garageChip = (
-    <button className={`fchip fchip--garage ${garage ? "is-on" : ""}`} onClick={() => { setGarageStore({ on: !garage, filter: null }); selectVehicle(null); }} aria-pressed={garage} data-testid="filter-garage">
-      {garage && <span aria-hidden>🚗</span>} Voitures{garage && <b>{vehicleViews.filter((x) => !x.hidden && x.v.type === "vehicle").length}</b>}
+    <button className={`fchip fchip--garage ${garage ? "is-on" : ""}`} onClick={() => { setGarageStore({ on: !garage, filter: null }); rememberLayer(garage ? layer : "garage"); setLayersOpen(false); selectVehicle(null); }} aria-pressed={garage} data-testid="filter-garage">
+      Garage{garage && <b>{vehicleViews.filter((x) => !x.hidden && x.v.type === "vehicle").length}</b>}
     </button>
+  );
+  const missionDistrict = nodeByName(state.profile.nextMission)?.district ?? null;
+  const layerChoices = (
+    <div className="maplayers__choices" aria-label="Couches de carte">
+      {Object.entries(MAP_LAYERS).map(([id, name]) => <button key={id} className={id === layer && !garage ? "is-on" : ""} data-testid={`layer-${id}`} aria-pressed={id === layer && !garage} onClick={() => chooseLayer(id as MapLayer)}>{name}</button>)}
+      {isTablet && garageChip}
+    </div>
+  );
+  const party = (
+    <div className="maplayers__party" data-testid="map-party">
+      <strong>Ma partie</strong>
+      <span>{state.profile.nextMission || "Aucune mission sélectionnée"}{missionDistrict && ` · district : ${missionDistrict}`}</span>
+      <span>Repères personnels · {Object.keys(state.pins ?? {}).length} ／ Véhicules suivis · {trackedVehicles.length}</span>
+      {missionArea && <span>Zone indicative du district de mission</span>}
+      {placeFocus.nonce > 0 && (lmId === placeFocus.landmarkId || (estId && estId === placeFocus.estId)) && (lm || placeZone || estId) && <span>Lieu demandé · {lm?.name ?? placeZone?.label ?? ESTABLISHMENTS.find((e) => e.id === estId)?.name}</span>}
+    </div>
   );
   const filters = garage ? (
     <div className="filters" onClick={(e) => e.stopPropagation()}>
@@ -428,19 +473,22 @@ export function MapScreen({ active = true }: { active?: boolean }) {
   ) : (
     <div className="filters14" onClick={(e) => e.stopPropagation()}>
     <div className="filters">
-      <button className={`fchip ${shopsOn ? "is-on" : ""}`} onClick={() => { if (shopsOn) setPoiCats([]); else { setShowLandmarks(true); setPoiCats(["commerce"]); } }} aria-pressed={shopsOn} data-testid="filter-shops">
+      {!isTablet && <button className="fchip is-on" data-testid="map-layers" aria-expanded={layersOpen} onClick={() => setLayersOpen(!layersOpen)}><Icon name="map" size={15} />{MAP_LAYERS[layer]} ▾</button>}
+      {!isTablet && garageChip}
+    </div>
+    {(isTablet || layersOpen) && <div className="maplayers">
+      {layerChoices}
+      {party}
+      <div className="maplayers__key" aria-label="Fiabilité"><span>Confirmé</span><span>Communautaire</span><span>Incertain</span></div>
+      <button className="fchip" data-testid="filter-more" aria-expanded={more} onClick={() => setMore(!more)}>Affiner</button>
+    {more && (
+    <div className="filters filters--more" data-testid="filters-more">
+      <button className={`fchip ${shopsOn ? "is-on" : ""}`} onClick={() => { setLayer("tout"); rememberLayer("tout"); if (shopsOn) setPoiCats([]); else { setShowLandmarks(true); setPoiCats(["commerce"]); } }} aria-pressed={shopsOn} data-testid="filter-shops">
         <i className="fchip__dot" style={{ background: POI_CATS.commerce.color }} /> Commerces
       </button>
-      {garageChip}
       <button className={`fchip ${showLandmarks ? "is-on" : ""}`} onClick={() => setShowLandmarks((v) => !v)} aria-pressed={showLandmarks} data-testid="filter-landmarks">
         <i className="fchip__dot" style={{ background: "#e9f6ff" }} /> Repères
       </button>
-      <button className={`fchip ${more ? "is-on" : ""}`} onClick={() => setMore((v) => !v)} aria-expanded={more} data-testid="filter-more">
-        <Icon name="plus" size={14} /> Plus
-      </button>
-    </div>
-    {more && (
-    <div className="filters filters--more" data-testid="filters-more">
       <button className={`fchip ${onlyNew ? "is-on" : ""}`} onClick={() => setOnlyNew((v) => !v)} aria-pressed={onlyNew} data-testid="filter-new">
         <Icon name="sparkle" size={14} /> Nouveau
       </button>
@@ -453,7 +501,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       {showLandmarks && (
         <>
           <span className="filters__sep" />
-          <button className={`fchip ${!poiCats.length ? "is-on" : ""}`} onClick={() => setPoiCats([])} aria-pressed={!poiCats.length} data-testid="poi-all">Tous les lieux</button>
+          <button className={`fchip ${!poiCats.length ? "is-on" : ""}`} onClick={() => chooseLayer("tout")} aria-pressed={!poiCats.length} data-testid="poi-all">Tous les lieux</button>
           {POI_FILTERS.filter((c) => c !== "autre" && c !== "transport").map((c) => (
             <button key={c} className={`fchip ${poiCats.includes(c) ? "is-on" : ""}`} style={{ ["--c" as string]: POI_CATS[c].color }} onClick={() => togglePoi(c)} aria-pressed={poiCats.includes(c)} data-testid={`poi-${c}`}>
               <i className="fchip__dot" /> {POI_CATS[c].plural}
@@ -469,6 +517,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       ))}
     </div>
     )}
+    </div>}
     </div>
   );
 
@@ -481,8 +530,9 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       onSelect={selectDiscovery}
       focusNonce={focusNonce}
       occlusion={occlusion}
+      layer={layer}
       landmarks={landmarks}
-      showLandmarks={showLandmarks}
+      showLandmarks={showLandmarks && !garage}
       poiCats={poiCats}
       selectedLandmarkId={lmId}
       onSelectLandmark={selectLandmark}
@@ -533,15 +583,13 @@ export function MapScreen({ active = true }: { active?: boolean }) {
       </div>
     </div>
   );
-  const vehicleEl = vehicleId && <VehicleSheet id={vehicleId} onClose={() => selectVehicle(null)} onGuide={guide} />;
+  const vehicleEl = selectedVehicle && <VehicleSheet id={selectedVehicle.v.id} onClose={() => selectVehicle(null)} onGuide={guide} />;
 
   // Inspecteur iPad au repos : établissements confirmés du quartier de la mission (sinon tous), les mieux situés d'abord
   const RANK = { joueur: 0, repere: 1, zone: 2, inconnue: 3 } as const;
-  const missionDistrict = nodeByName(state.profile.nextMission)?.district ?? null;
-  const inDistrict = missionDistrict ? ESTABLISHMENTS.filter((e) => e.district === missionDistrict) : [];
-  const usefulTitle = inDistrict.length ? `Établissements confirmés · ${missionDistrict}` : "Établissements confirmés";
-  const useful = (inDistrict.length ? inDistrict : ESTABLISHMENTS)
-    .map((e) => ({ e, pl: placementOf(e, landmarks, state.pins ?? {}) }))
+  const inDistrict = establishments.filter(({ e }) => e.district === missionDistrict);
+  const usefulTitle = inDistrict.length ? `Établissements · ${missionDistrict}` : "Établissements confirmés et signalés";
+  const useful = (inDistrict.length ? inDistrict : [...establishments])
     .sort((a, b) => RANK[a.pl.precision] - RANK[b.pl.precision] || a.e.name.localeCompare(b.e.name))
     .slice(0, 14);
 
@@ -551,6 +599,8 @@ export function MapScreen({ active = true }: { active?: boolean }) {
     return (
       <div className="mapsplit" data-place-ack={placeAck}>
         <aside className="panel">
+          <header className="panel__head"><h1 className="h2">Carte</h1><ShieldChip /></header>
+          {filters}
           {editor ? (
             <div className="panel__scroll" style={{ paddingTop: "calc(var(--sat) + 18px)" }}>{editorEl}</div>
           ) : detailOpen ? (
@@ -562,13 +612,6 @@ export function MapScreen({ active = true }: { active?: boolean }) {
             </>
           ) : (
             <>
-              <header className="panel__head">
-                <div>
-                  <p className="eyebrow">Lieux, voitures et repères</p>
-                  <h1 className="h2">Carte</h1>
-                </div>
-                <ShieldChip />
-              </header>
               <div className="panel__tools">{cartoBtn}</div>
               <div className="panel__search">{searchOpen ? search : <button className="searchfake" onClick={() => setSearchOpen(true)} data-testid="search-btn"><Icon name="search" size={16} /> Rechercher un lieu, une découverte…</button>}</div>
               {garage ? (
@@ -601,7 +644,7 @@ export function MapScreen({ active = true }: { active?: boolean }) {
         </aside>
         <div className="mapsplit__map">
           {mapEl({ top: 64, bottom: 0, left: 0 })}
-          <div className="mapsplit__filters">{filters}</div>
+
           {cartoBar && <div className="mapsplit__carto">{cartoBar}</div>}
           {pinBar && <div className="mapsplit__carto">{pinBar}</div>}
         </div>

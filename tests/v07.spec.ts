@@ -1,3 +1,4 @@
+import { openMapFilters } from "./map-controls";
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -60,6 +61,7 @@ test("PS5 Standard ch.1 après « Down to Earth », Shirley et perroquet faits :
 test("« voiture Fast & Furious » : zone + fiche Penumbra + conseil pour la garder, sans recréer la carte ni perdre les filtres", async ({ page }, info) => {
   await start(page, {}, {}, "#carte");
   await page.waitForFunction(() => !!(window as unknown as { __leonidaMap?: unknown }).__leonidaMap);
+  await openMapFilters(page);
   await page.getByTestId("filter-landmarks").click(); // un filtre choisi par le joueur
   await expect(page.getByTestId("filter-landmarks")).toHaveAttribute("aria-pressed", "false");
   const a = await ask(page, "Où trouver la voiture de Fast & Furious ?");
@@ -75,6 +77,7 @@ test("« voiture Fast & Furious » : zone + fiche Penumbra + conseil pour la gar
   await page.screenshot({ path: `captures/${info.project.name}-41-ia-fast-furious.png` });
   await sheet.locator(".vmedia__close").click();
   await page.getByTestId("filter-garage").click(); // retour aux lieux
+  await openMapFilters(page);
   await expect(page.getByTestId("filter-landmarks")).toHaveAttribute("aria-pressed", "false");
   expect(await mapCount(page)).toBe(1);
 });

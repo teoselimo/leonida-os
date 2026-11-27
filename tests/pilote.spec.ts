@@ -1,3 +1,4 @@
+import { openMapFilters } from "./map-controls";
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -100,6 +101,7 @@ test("Pilote 3 — « magasin à Key Lento » : la carte s'ouvre sur la liste de
   await expect(page.getByTestId("search-results")).toContainText("Billie's Key Lento Gift Shop");
   await expect(page.getByTestId("zone-tag")).toHaveCount(0);
   await page.getByRole("button", { name: "Fermer la recherche" }).click();
+  await openMapFilters(page);
   await expect(page.getByTestId("filter-landmarks")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("filter-shops")).toHaveAttribute("aria-pressed", "true"); // V0.14 : filtre « Commerces »
   await page.waitForTimeout(900);
@@ -147,7 +149,7 @@ test("Pilote 6 — « C'est fait » : mémorisé localement et dans le stockage 
 test("Pilote 7 — aller-retour IA ↔ carte sans perdre la conversation, les filtres ni recréer la carte", async ({ page }) => {
   await start(page, "#carte");
   await page.waitForFunction(() => !!(window as unknown as { __leonidaMap?: unknown }).__leonidaMap);
-  await page.getByTestId("filter-more").click(); // V0.14 : catégories détaillées sous « Plus »
+  await openMapFilters(page);
   await page.getByTestId("poi-station").click();
   await expect(page.getByTestId("poi-station")).toHaveAttribute("aria-pressed", "true");
   const a = await ask(page, "Où trouver la Penumbra FF ?");
@@ -156,6 +158,7 @@ test("Pilote 7 — aller-retour IA ↔ carte sans perdre la conversation, les fi
   expect(await mapCount(page)).toBe(1);
   await page.getByTestId("vehicle-sheet").locator(".vmedia__close").click();
   await page.getByTestId("filter-garage").click(); // retour aux lieux
+  await openMapFilters(page);
   await expect(page.getByTestId("poi-station")).toHaveAttribute("aria-pressed", "true");
   if (!(await page.getByTestId("ai-panel").isVisible().catch(() => false))) await page.getByTestId("ai-open").click();
   expect(await page.getByTestId("ai-answer").count()).toBeGreaterThanOrEqual(1);

@@ -1,17 +1,24 @@
 "use client";
 
-import { repo, useStore } from "@/lib/store";
+import { useEffect, useState } from "react";
+import { loadHubPlaces } from "@/lib/hub/data";
+import type { HubPlaces } from "@/lib/hub/model";
+import { KIND } from "./map/icons";
+import { useStore } from "@/lib/store";
 import { statusOf } from "@/lib/engine";
 import { CC_BY_URL, GTADB_URL, tagFr } from "@/lib/gtadb";
 import type { Landmark } from "@/lib/gtadb";
 import { Icon } from "./ui/Icon";
-import { POI_CATS, POI_STATUS_FR, poiCategory, poiName, poiStatus } from "@/lib/poi";
+import { POI_CATS, POI_STATUS_FR, poiCategory, poiKind, poiName, poiStatus } from "@/lib/poi";
 import { EST_CATS, establishmentForLandmark } from "@/data/establishments";
 import { computeProgress } from "@/lib/progress";
 
 /** Fiche d'un lieu de la carte communautaire gtadb.org. */
 export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => void }) {
   const { state, focusOnMap, discoveries } = useStore();
+  const [places, setPlaces] = useState<HubPlaces | null>(null);
+  useEffect(() => { void loadHubPlaces().then(({ data }) => setPlaces(data)); }, []);
+  const enrichment = places?.enrich[lm.id];
   const near = discoveries
     .filter((d) => statusOf(d, state) !== "hidden")
     .map((d) => ({ d, dist: Math.hypot(d.x - lm.x, d.y - lm.y) }))
@@ -26,7 +33,7 @@ export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => voi
     <div className="detail" data-testid="landmark">
       <div className="detail__top">
         <span className="glyph glyph--lm" style={{ color: cat.color }}><b style={{ fontSize: 20 }}>{cat.glyph}</b></span>
-        <div className="detail__meta"><span className="lmsrc" style={{ color: cat.color }}>{cat.label}</span></div>
+        <div className="detail__meta"><span className="lmsrc" style={{ color: cat.color }}>{KIND[poiKind(lm)].label}</span></div>
         <button className="iconbtn" onClick={onClose} aria-label="Fermer"><Icon name="close" /></button>
       </div>
       <h3 className="detail__title">{poiName(lm)}</h3>
@@ -46,6 +53,8 @@ export function LandmarkCard({ lm, onClose }: { lm: Landmark; onClose: () => voi
       ) : (
         <p className={`lmstatus lmstatus--${status}`} data-testid="poi-status"><Icon name={status === "uncertain" ? "alert" : "info"} size={13} /> {POI_STATUS_FR[status]}</p>
       )}
+      {!est && <p className="fineprint">Position issue du repère GTADB, non vérifiée en jeu.</p>}
+      {enrichment && <p className="fineprint">{[...(enrichment.flags ?? []), ...(enrichment.photo ? ["Photo référencée par GTADB"] : [])].join(" · ")}</p>}
       <div className="row gap8 wrap">
         {tags.map((t) => <span key={t} className="tagchip">{tagFr(t)}</span>)}
       </div>
