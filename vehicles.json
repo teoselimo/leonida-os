@@ -174,6 +174,11 @@
       "sourceName": "GTA Xtreme",
       "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
       "quote": "Your realistic shortlist is the older muscle cars, sedans and pickups parked around Port Gellhorn and Kelly County."
+     },
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-muscle-car",
+      "quote": "Firebug Dominator: Drive to the abandoned motel under the highway overpass on Port Gellhorn’s western waterfront."
      }
     ]
    },
@@ -280,6 +285,11 @@
       "sourceName": "GTA Xtreme",
       "url": "https://www.gta-xtreme.com/en/gta-6-best-car-chapter-2",
       "quote": "Moses gives Lucia one free registration in Port Gellhorn, and the car you pick has to carry you until Chapter 3."
+     },
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-getaway-car",
+      "quote": "Small jobs fit in two trunk slots, and the Dominator is the quickest car you can register early."
      }
     ]
    },
@@ -375,18 +385,33 @@
     "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
     "official": false,
     "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-getaway-car",
+    "title": "GTA 6 best getaway car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-muscle-car",
+    "title": "GTA 6 best muscle car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Exclusivité Ultimate signalée : compatibilité à vérifier.",
    "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
    "Zone de recherche élargie autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:57:39.890Z",
-  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:57:39.890Z",
@@ -415,6 +440,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 6"
     ]
    }
   ]
@@ -770,6 +802,118 @@
   ]
  },
  {
+  "id": "v-pfister-comet",
+  "type": "vehicle",
+  "name": "'88 Pfister Comet",
+  "make": "Pfister",
+  "model": "Comet",
+  "year": "88",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pfister Class Act Comet Speed: 8.5 Acceleration: 8.4 Where to find it: Mansion driveway in front of two garage doors, Starfish Island Standout set: Retro",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-class-act-comet",
+      "quote": "Pfister Class Act Comet Speed: 8.5 Acceleration: 8.4 Where to find it: Mansion driveway in front of two garage doors, Starfish Island Standout set: Retro"
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "First house on the left after the bridge onto Starfish Island."
+     }
+    ]
+   },
+   "district": "Starfish Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 777,
+    "y": 470,
+    "radius": 220,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-class-act-comet",
+    "title": "GTA 6 Pfister Class Act Comet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ",
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-annis-elegy",
   "type": "vehicle",
   "name": "'90 Annis Elegy",
@@ -858,6 +1002,13 @@
     "readAt": "2026-11-25T13:47:47.494Z"
    },
    {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
     "sourceName": "GTA BOOM",
     "url": "https://www.gtaboom.com/how-to-get-the-free-anime-car-in-gta-6-6d7f",
     "title": "How to Get the Free Anime Car in GTA 6",
@@ -868,6 +1019,7 @@
   "reliability": "reported",
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Salton (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -875,7 +1027,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
@@ -889,6 +1041,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 1 → 2"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
     ]
    }
   ]
@@ -1038,6 +1197,269 @@
      "fiabilité : reported → confirmed",
      "preuves : 1 → 2",
      "édition : ultimate (reported) → ultimate (confirmed)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-infernus",
+  "type": "vehicle",
+  "name": "'96 Pegassi Infernus",
+  "make": "Pegassi",
+  "model": "Infernus",
+  "year": "96",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "purple",
+   "support": [
+    {
+     "sourceName": "PC Gamer",
+     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+     "quote": "Turn right, then left, and make your way up to the seventh level of the multi-story car park—the purple Pegassi Infernus is easy to recognise since it's the only sports car in there."
+    }
+   ],
+   "conflicts": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars",
+     "quote": "The Gold Rope Infernus is a '96 Infernus with a gold makeover, and the custom work adds more than a full point of Speed over the stock car."
+    }
+   ]
+  },
+  "edition": {
+   "exclusive": "ultimate",
+   "status": "confirmed",
+   "support": [
+    {
+     "sourceName": "GamesRadar+",
+     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+     "quote": "How to unlock GTA 6 Ultimate Edition Content and when you can use each item"
+    }
+   ]
+  },
+  "location": {
+   "text": {
+    "value": "Location: Vice City > Crosstown Reward: $15,600",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice City > Crosstown Reward: $15,600"
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Location: Vice City > Crosstown Reward: $15,600"
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+      "quote": "Police-station parking structure, NW 9th Street, level seven."
+     },
+     {
+      "sourceName": "GTA Xtreme (sitemap)",
+      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+      "quote": "Parkhaus der Polizeistation, NW 9th Street, Ebene sieben."
+     },
+     {
+      "sourceName": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+      "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
+     },
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+      "quote": "There's a Pegassi Infernus located on the 8th level of the police parking lot in Crosstown, Vice City."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+      "quote": "Pegassi Gold Rope Infernus Speed: 8.3 Acceleration: 8.0 Where to find it: Under the porch roof of a small house by the water on Reservoir St, Ambrosia Standout set: Blinged Up"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "Under the porch roof of a small house on Reservoir St, Ambrosia."
+     }
+    ]
+   },
+   "district": "Vice City",
+   "regionId": "vicecity",
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "GamesRadar+",
+      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+      "quote": "There should be no one around, so just hack into the car with the GTA 6 key cloner and drive it to the bottom level."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "yes"
+  },
+  "steps": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Use the elevator to get inside."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Bring it back in pristine condition and you'll net 15k for the trouble."
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "quote": "Police-station parking structure, NW 9th Street, level seven."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Stealing the Pegassi Infernus in GTA 6 can be quite tricky, considering it's being held in the police department lockup, the building to the west of the police station in southwest Crosstown."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Now you just need to drive down a few levels to exit via the police station parking lot—which I'd recommend—or keep going all the way down to exit at the bottom of the car park."
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "quote": "Remember, you need to drive fast to stop the tracker going off, and if you hear it beeping, you should speed up to prevent it pinging the cops."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PC Gamer",
+    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
+    "title": "How to steal the Pegassi Infernus in GTA 6",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "GamesRadar+",
+    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
+    "title": "GTA 6 Pegassi Infernus location",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "confirmed",
+  "reasons": [
+   "4 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Exclusivité Ultimate recoupée.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 2 → 6",
+     "localisation : text → zone",
+     "édition : aucune (none) → ultimate (confirmed)"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 6 → 8",
+     "localisation : zone → text"
     ]
    }
   ]
@@ -1286,6 +1708,103 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 5 → 4"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-albany-driveshaft-devanity",
+  "type": "vehicle",
+  "name": "Albany DriveShaft Devanity",
+  "make": "Albany",
+  "model": "DriveShaft Devanity",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -3023,6 +3542,307 @@
   ]
  },
  {
+  "id": "v-bravado-bison",
+  "type": "vehicle",
+  "name": "Bravado Bison",
+  "make": "Bravado",
+  "model": "Bison",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-getaway-car",
+    "title": "GTA 6 best getaway car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu."
+  ],
+  "missing": [
+   "emplacement",
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-devil",
+  "type": "vehicle",
+  "name": "Bravado Devil",
+  "make": "Bravado",
+  "model": "Devil",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "#8 Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Handling: 6.4 Where to find it: Inside Hog Stars Garage in Ambrosia",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#8 Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Handling: 6.4 Where to find it: Inside Hog Stars Garage in Ambrosia"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ambrosia",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -2796,
+    "y": 3954,
+    "radius": 778,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Ambrosia (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ",
+     "source : AlcastHQ",
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-driveshaft-banshee",
+  "type": "vehicle",
+  "name": "Bravado DriveShaft Banshee",
+  "make": "Bravado",
+  "model": "DriveShaft Banshee",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-bravado-driveshaft-gauntlet",
   "type": "vehicle",
   "name": "Bravado DriveShaft Gauntlet",
@@ -3057,19 +3877,32 @@
       "quote": "Dom's 1970 Dodge Charger R/T GTA 6 car: Bravado DriveShaft Gauntlet Where to find it: Behind Sid Thompson's house in Grayson Standout?: Yes, DriveShaft Famous set"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ]
    },
-   "district": "Ocean Beach",
-   "regionId": "vicecity",
+   "district": "Hamlet",
+   "regionId": "grassrivers",
    "precision": "zone",
    "zone": {
-    "x": 1743,
-    "y": 702,
-    "radius": 758,
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "Dom's 1970 Dodge Charger R/T GTA 6 car: Bravado DriveShaft Gauntlet Where to find it: Behind Sid Thompson's house in Grayson Standout?: Yes, DriveShaft Famous set",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fast-and-furious-cars"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -3126,21 +3959,140 @@
     "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
     "official": false,
     "readAt": "2026-11-25T13:47:47.494Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-muscle-car",
+    "title": "GTA 6 best muscle car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 3"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-driveshaft-youga",
+  "type": "vehicle",
+  "name": "Bravado DriveShaft Youga",
+  "make": "Bravado",
+  "model": "DriveShaft Youga",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -3157,7 +4109,17 @@
   "year": null,
   "aliases": null,
   "kind": "hidden",
-  "variant": null,
+  "variant": {
+   "value": "livrée Gauntlet Hellfire with a custom",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars",
+     "quote": "It is a modded Gauntlet Hellfire with a custom livery and built-in nitrous, kept inside Hog Stars Garage, a Final Chapter hideout in Ambrosia."
+    }
+   ],
+   "conflicts": []
+  },
   "edition": {
    "exclusive": null,
    "status": "none",
@@ -3193,6 +4155,16 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
       "quote": "Not every garage needs to be a wall of supercars."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+      "quote": "Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Where to find it: Hog Stars Garage, Acacia St, Ambrosia Standout set: Ripped & Shredded"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "It is a modded Gauntlet Hellfire with a custom livery and built-in nitrous, kept inside Hog Stars Garage, a Final Chapter hideout in Ambrosia."
      }
     ]
    },
@@ -3206,7 +4178,20 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Ambrosia",
+     "text": "Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Where to find it: Hog Stars Garage, Acacia St, Ambrosia Standout set: Ripped & Shredded",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet"
+    },
+    {
+     "district": "Ambrosia",
+     "text": "It is a modded Gauntlet Hellfire with a custom livery and built-in nitrous, kept inside Hog Stars Garage, a Final Chapter hideout in Ambrosia.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -3215,7 +4200,17 @@
    "mission": null,
    "early": false,
    "keyCloner": null,
-   "tracker": null,
+   "tracker": {
+    "value": "none",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
+     }
+    ],
+    "conflicts": []
+   },
    "alarm": null
   },
   "keep": {
@@ -3228,7 +4223,13 @@
       "quote": "Our take: A car you love bringing out for a drive deserves a garage slot."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
+     }
+    ]
    },
    "rule": {
     "chapter": 2,
@@ -3249,7 +4250,13 @@
     "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
    }
   ],
-  "risks": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
@@ -3287,20 +4294,40 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
+    "title": "GTA 6 best street racing car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+    "title": "GTA 6 Bravado Devil's Rope Gauntlet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
+   "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -3317,6 +4344,13 @@
     "changes": [
      "preuves : 3 → 5",
      "localisation : text → zone"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 8"
     ]
    }
   ]
@@ -4166,6 +5200,105 @@
     "reason": "Détection automatique",
     "changes": [
      "source : Push Square"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-crosstown-police-station",
+  "type": "garage",
+  "name": "Crosstown Police Station Garage",
+  "make": "",
+  "model": "Crosstown Police Station Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi '96 Infernus Speed: 7.1 Acceleration: Not found yet Where to find it: Crosstown Police Station garage, Vice City (Randy's Wish List), or a house garage in Capri Standout set: –",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+      "quote": "Pegassi '96 Infernus Speed: 7.1 Acceleration: Not found yet Where to find it: Crosstown Police Station garage, Vice City (Randy's Wish List), or a house garage in Capri Standout set: –"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Crosstown",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -636,
+    "y": 1157,
+    "radius": 487,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "quote": "Pegassi '96 Infernus Speed: 7.1 Acceleration: Not found yet Where to find it: Crosstown Police Station garage, Vice City (Randy's Wish List), or a house garage in Capri Standout set: –"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "quote": "Give him the regular one from the Crosstown police garage and keep the Gold Rope Infernus for yourself."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Crosstown (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -5833,7 +6966,13 @@
       "quote": "Brian's Mitsubishi Lancer Evolution GTA 6 car: Emperor Sultan Where to find it: Moses' Sultan, a gift from Moses in Port Gellhorn Standout?: Regular car, plus the Moses' Sultan standout"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-getaway-car",
+      "quote": "Emperor Sultan: Finish every car request from Moses at Watkins Auto Parts in Port Gellhorn."
+     }
+    ]
    },
    "district": "Port Gellhorn",
    "regionId": "gellhorn",
@@ -5898,11 +7037,26 @@
     "title": "All GTA 6 Fast and Furious Cars and Where to Find Them",
     "official": false,
     "readAt": "2026-11-25T13:47:47.494Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-getaway-car",
+    "title": "GTA 6 best getaway car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -5910,13 +7064,21 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T13:47:47.494Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 1 → 3"
     ]
    }
   ]
@@ -6350,7 +7512,13 @@
       "quote": "An Itali RSX can be found inside the car dealership located in Bayside west of Dynamix Fitness."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "In a villa garage on Vespucci Island, Rialto Islands."
+     }
+    ]
    },
    "district": "Bayside",
    "regionId": "vicecity",
@@ -6362,7 +7530,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Rialto Islands",
+     "text": "In a villa garage on Vespucci Island, Rialto Islands.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -6370,26 +7545,62 @@
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
-   "tracker": null,
+   "keyCloner": {
+    "value": false,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Status RSX is the faster of the two by a hair, and it is the only one you can take without the Key Cloner: break into the recovery truck with the Slim Jim, start it, and the RSX's security switches off."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": {
+    "value": "standard",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Dolce Vita RSX has the same acceleration and a Standard Tracker, so it is easier to register."
+     }
+    ],
+    "conflicts": []
+   },
    "alarm": null
   },
   "keep": {
-   "text": null,
+   "text": {
+    "value": "The Dolce Vita RSX has the same acceleration and a Standard Tracker, so it is easier to register.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Dolce Vita RSX has the same acceleration and a Standard Tracker, so it is easier to register."
+     }
+    ],
+    "conflicts": []
+   },
    "rule": {
-    "chapter": 2,
-    "where": "garage de Moses",
-    "tracker": null,
+    "chapter": 3,
+    "where": "Pay 'n' Spray",
+    "tracker": "standard",
     "source": {
-     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
-     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
-     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-register-cars",
+     "quote": "Chapter 3 Where you register: Any Pay 'n' Spray What you can register: Cars without a tracker or with a standard tracker"
     }
    },
    "mode": "register"
   },
   "steps": [],
-  "risks": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "quote": "The Dolce Vita RSX has the same acceleration and a Standard Tracker, so it is easier to register."
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
@@ -6413,20 +7624,33 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-status-rsx",
+    "title": "GTA 6 Grotti Status RSX: Location, Stats and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
+   "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -6441,6 +7665,13 @@
     "changes": [
      "preuves : 1 → 3",
      "localisation : none → zone"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 5"
     ]
    }
   ]
@@ -6541,6 +7772,138 @@
   ]
  },
  {
+  "id": "v-grotti-rsx",
+  "type": "vehicle",
+  "name": "Grotti RSX",
+  "make": "Grotti",
+  "model": "RSX",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Grotti Dolce Vita RSX Speed: 8.6 Acceleration: 8.7 Where to find it: Villa garage on Vespucci Island, Rialto Islands What you need: Key Cloner, Standard Tracker",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-status-rsx",
+      "quote": "Grotti Dolce Vita RSX Speed: 8.6 Acceleration: 8.7 Where to find it: Villa garage on Vespucci Island, Rialto Islands What you need: Key Cloner, Standard Tracker"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Rialto Islands",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 495,
+    "y": 1253,
+    "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-status-rsx",
+      "quote": "The Dolce Vita and the regular Itali RSX need the Key Cloner."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": {
+    "value": "advanced",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-status-rsx",
+      "quote": "Advanced Tracker"
+     }
+    ],
+    "conflicts": []
+   },
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-status-rsx",
+    "quote": "Advanced Tracker"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-status-rsx",
+    "quote": "Grotti Dolce Vita RSX Speed: 8.6 Acceleration: 8.7 Where to find it: Villa garage on Vespucci Island, Rialto Islands What you need: Key Cloner, Standard Tracker"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-status-rsx",
+    "quote": "Grotti Itali RSX Speed: 7.5 Acceleration: 8.1 Where to find it: Mansions on the Rialto Islands and in north Capri What you need: Key Cloner, Advanced Tracker"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-status-rsx",
+    "title": "GTA 6 Grotti Status RSX: Location, Stats and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "méthode de conservation"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-grotti-status-rsx",
   "type": "vehicle",
   "name": "Grotti Status RSX",
@@ -6565,22 +7928,45 @@
       "quote": "Grotti Status RSX Type: Car Area: Port Gellhorn Where to find it: It on the back of a recovery truck here"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#3 Grotti Status RSX Speed: 8.7 Acceleration: 8.7 Handling: 7.0 Where to find it: On the back of a recovery truck at Gellhorn International Raceway"
+     }
+    ]
    },
-   "district": "Port Gellhorn",
+   "district": "Gellhorn International Raceway",
    "regionId": "gellhorn",
    "precision": "zone",
    "zone": {
-    "x": -6579,
-    "y": 3734,
-    "radius": 1017,
+    "x": -6472,
+    "y": 1968,
+    "radius": 872,
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Port Gellhorn",
+     "text": "Grotti Status RSX Type: Car Area: Port Gellhorn Where to find it: It on the back of a recovery truck here",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-standout-vehicles"
+    }
+   ]
   },
   "access": {
-   "chapterMin": null,
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
+   },
    "inferredChapter": null,
    "until": null,
    "mission": null,
@@ -6614,22 +8000,262 @@
     "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
     "official": false,
     "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Gellhorn International Raceway (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-hog-stars",
+  "type": "garage",
+  "name": "Hog Stars Garage",
+  "make": "",
+  "model": "Hog Stars Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": {
+   "value": "livrée Gauntlet Hellfire with a custom",
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars",
+     "quote": "It is a modded Gauntlet Hellfire with a custom livery and built-in nitrous, kept inside Hog Stars Garage, a Final Chapter hideout in Ambrosia."
+    }
+   ],
+   "conflicts": []
+  },
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Where to find it: Hog Stars Garage, Acacia St, Ambrosia Standout set: Ripped & Shredded",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+      "quote": "Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Where to find it: Hog Stars Garage, Acacia St, Ambrosia Standout set: Ripped & Shredded"
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "It is a modded Gauntlet Hellfire with a custom livery and built-in nitrous, kept inside Hog Stars Garage, a Final Chapter hideout in Ambrosia."
+     }
+    ]
+   },
+   "district": "Ambrosia",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -2796,
+    "y": 3954,
+    "radius": 778,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": {
+    "value": "none",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
+     }
+    ],
+    "conflicts": []
+   },
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "It is unlocked and has no tracker, so Moses can register it for just $8,500.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
+     }
+    ],
+    "conflicts": []
+   },
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+    "title": "GTA 6 Bravado Devil's Rope Gauntlet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
-   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Ambrosia (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ",
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-garage-inside-hog-stars",
+  "type": "garage",
+  "name": "Inside Hog Stars Garage",
+  "make": "",
+  "model": "Inside Hog Stars Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "#8 Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Handling: 6.4 Where to find it: Inside Hog Stars Garage in Ambrosia",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#8 Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Handling: 6.4 Where to find it: Inside Hog Stars Garage in Ambrosia"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ambrosia",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -2796,
+    "y": 3954,
+    "radius": 778,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ambrosia (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
-  "firstSeenAt": "2026-11-26T14:33:11.590Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
-    "at": "2026-11-26T14:33:11.590Z",
+    "at": "2026-11-27T15:23:12.412Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -7644,7 +9270,18 @@
       "quote": "Pegassi Dante's Vitello Type: Car Area: Vice City Where to find it: At Dante Fresh's mansion on Starfish Island"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+      "quote": "Granforma Zorrusso Speed: 7.5 Acceleration: 7.8 Where to find it: Hathaway Apartments garage, Ocean Beach (Randy's Chapter 3 mission) Standout set: –"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#4 Pegassi Dante's Vitello Speed: 8.6 Acceleration: 8.9 Handling: 8.6 Where to find it: At Dante Fresh's mansion on Starfish Island"
+     }
+    ]
    },
    "district": "Starfish Island",
    "regionId": "vicecity",
@@ -7656,141 +9293,33 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
-  },
-  "access": {
-   "chapterMin": null,
-   "inferredChapter": null,
-   "until": null,
-   "mission": null,
-   "early": false,
-   "keyCloner": null,
-   "tracker": null,
-   "alarm": null
-  },
-  "keep": {
-   "text": null,
-   "rule": null,
-   "mode": "yes"
-  },
-  "steps": [],
-  "risks": [],
-  "price": null,
-  "media": null,
-  "evidence": [
-   {
-    "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-standout-vehicles",
-    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
-    "official": false,
-    "readAt": "2026-11-26T14:33:11.590Z"
-   }
-  ],
-  "reliability": "reported",
-  "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
-   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
-  ],
-  "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
-  ],
-  "firstSeenAt": "2026-11-26T14:33:11.590Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
-  "revisions": [
-   {
-    "at": "2026-11-26T14:33:11.590Z",
-    "reason": "Détection automatique",
-    "changes": [
-     "source : AlcastHQ"
-    ]
-   }
-  ]
- },
- {
-  "id": "v-pegassi-infernus",
-  "type": "vehicle",
-  "name": "Pegassi Infernus",
-  "make": "Pegassi",
-  "model": "Infernus",
-  "year": null,
-  "aliases": null,
-  "kind": "hidden",
-  "variant": {
-   "value": "purple",
-   "support": [
+   "alternatives": [
     {
-     "sourceName": "PC Gamer",
-     "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-     "quote": "Turn right, then left, and make your way up to the seventh level of the multi-story car park—the purple Pegassi Infernus is easy to recognise since it's the only sports car in there."
-    }
-   ],
-   "conflicts": []
-  },
-  "edition": {
-   "exclusive": "ultimate",
-   "status": "confirmed",
-   "support": [
-    {
-     "sourceName": "GamesRadar+",
-     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
-     "quote": "How to unlock GTA 6 Ultimate Edition Content and when you can use each item"
+     "district": "Ocean Beach",
+     "text": "Granforma Zorrusso Speed: 7.5 Acceleration: 7.8 Where to find it: Hathaway Apartments garage, Ocean Beach (Randy's Chapter 3 mission) Standout set: –",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-tsunami-zorrusso"
     }
    ]
   },
-  "location": {
-   "text": {
-    "value": "Location: Vice City > Crosstown Reward: $15,600",
+  "access": {
+   "chapterMin": {
+    "value": 2,
     "support": [
      {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-      "quote": "Location: Vice City > Crosstown Reward: $15,600"
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-      "quote": "Location: Vice City > Crosstown Reward: $15,600"
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+      "quote": "The Tsunami Zorrusso is keyless, so the Slim Jim from Chapter 2 doesn't work on it."
      }
     ],
     "conflicts": [
      {
-      "sourceName": "GTA Xtreme (sitemap)",
-      "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-      "quote": "Police-station parking structure, NW 9th Street, level seven."
-     },
-     {
-      "sourceName": "GTA Xtreme (sitemap)",
-      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
-      "quote": "Parkhaus der Polizeistation, NW 9th Street, Ebene sieben."
-     },
-     {
-      "sourceName": "PC Gamer",
-      "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-      "quote": "GTA 6 guide : One-stop info shop GTA 6 cars : The garage lineup GTA 6 characters : Your anti-hero cast GTA 6 map : Confirmed Vice City locales GTA 6 PC release : When's it going to happen?"
-     },
-     {
-      "sourceName": "GamesRadar+",
-      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
-      "quote": "There's a Pegassi Infernus located on the 8th level of the police parking lot in Crosstown, Vice City."
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
      }
     ]
    },
-   "district": "Crosstown",
-   "regionId": "vicecity",
-   "precision": "zone",
-   "zone": {
-    "x": -636,
-    "y": 1157,
-    "radius": 487,
-    "widened": false
-   },
-   "point": null,
-   "alternatives": []
-  },
-  "access": {
-   "chapterMin": null,
    "inferredChapter": {
     "value": 3,
     "why": "cloneur de clé nécessaire",
@@ -7807,134 +9336,302 @@
     "value": true,
     "support": [
      {
-      "sourceName": "GamesRadar+",
-      "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
-      "quote": "There should be no one around, so just hack into the car with the GTA 6 key cloner and drive it to the bottom level."
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+      "quote": "You need the Key Cloner, and it costs $87,400 to register or sells for $23,375."
      }
     ],
     "conflicts": []
    },
-   "tracker": null,
-   "alarm": null
+   "tracker": {
+    "value": "advanced",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+      "quote": "The alarm goes off, and the Advanced Tracker reports you if you slow down."
+     }
+    ],
+    "conflicts": []
+   },
+   "alarm": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+      "quote": "The alarm goes off, and the Advanced Tracker reports you if you slow down."
+     }
+    ],
+    "conflicts": []
+   }
   },
   "keep": {
-   "text": null,
+   "text": {
+    "value": "Below I show you where the Tsunami Zorrusso is, what you need to take it, and whether you should keep it or sell it.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+      "quote": "Below I show you where the Tsunami Zorrusso is, what you need to take it, and whether you should keep it or sell it."
+     }
+    ],
+    "conflicts": []
+   },
    "rule": null,
    "mode": "yes"
   },
   "steps": [
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-    "quote": "Use the written address and source guide; this entry is not plotted as an exact location."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "quote": "Drive to Peacock Estates in Peacock Bay and find the mansion garage on the south side."
    },
    {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-    "quote": "Use the elevator to get inside."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "quote": "Open the garage."
    },
    {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-    "quote": "Bring it back in pristine condition and you'll net 15k for the trouble."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "quote": "Drive fast until you are sure the police aren't following you."
    }
   ],
   "risks": [
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-    "quote": "Police-station parking structure, NW 9th Street, level seven."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "quote": "A scan with the WAiNK app shows its name, its tracker and that it needs the Key Cloner."
    },
    {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-    "quote": "Stealing the Pegassi Infernus in GTA 6 can be quite tricky, considering it's being held in the police department lockup, the building to the west of the police station in southwest Crosstown."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "quote": "The alarm goes off, and the Advanced Tracker reports you if you slow down."
    },
    {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-    "quote": "Now you just need to drive down a few levels to exit via the police station parking lot—which I'd recommend—or keep going all the way down to exit at the bottom of the car park."
-   },
-   {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-    "quote": "Remember, you need to drive fast to stop the tracker going off, and if you hear it beeping, you should speed up to prevent it pinging the cops."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "quote": "The car is alarmed, and the Advanced Tracker reports you to the police when you drive slowly or stand still."
    }
   ],
+  "price": {
+   "value": 87400,
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+     "quote": "You need the Key Cloner, and it costs $87,400 to register or sells for $23,375."
+    }
+   ],
+   "conflicts": []
+  },
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-class-act-comet",
+    "title": "GTA 6 Pfister Class Act Comet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+    "title": "GTA 6 Bravado Devil's Rope Gauntlet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-tsunami-zorrusso",
+    "title": "GTA 6 Granforma Tsunami Zorrusso Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-dantes-vitello",
+    "title": "GTA 6 Pegassi Dante's Vitello: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 8"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-gold-rope-infernus",
+  "type": "vehicle",
+  "name": "Pegassi Gold Rope Infernus",
+  "make": "Pegassi",
+  "model": "Gold Rope Infernus",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "#9 Pegassi Gold Rope Infernus Speed: 8.3 Acceleration: 8.0 Handling: 6.6 Where to find it: Under a porch roof on Reservoir St, Ambrosia",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#9 Pegassi Gold Rope Infernus Speed: 8.3 Acceleration: 8.0 Handling: 6.6 Where to find it: Under a porch roof on Reservoir St, Ambrosia"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ambrosia",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -2796,
+    "y": 3954,
+    "radius": 778,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
   "price": null,
   "media": null,
   "evidence": [
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-    "title": "GTA 6 — Hidden cars",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
     "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
+    "readAt": "2026-11-27T15:23:12.412Z"
    },
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
-    "title": "GTA 6 — Hidden cars",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
     "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
+    "readAt": "2026-11-27T15:23:12.412Z"
    },
    {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-pegassi-infernus-location",
-    "title": "How to steal the Pegassi Infernus in GTA 6",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
     "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "GamesRadar+",
-    "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
-    "title": "GTA 6 Pegassi Infernus location",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 randys wish list car locations walkthrough",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
-  "reliability": "confirmed",
+  "reliability": "reported",
   "reasons": [
-   "3 sources indépendantes concordantes sur l'emplacement.",
+   "Une seule source : à vérifier en jeu.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Exclusivité Ultimate recoupée.",
-   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
-   "Zone de recherche autour de Crosstown (repères de la carte communautaire), pas un point exact."
+   "Zone de recherche autour de Ambrosia (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [],
-  "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
-    "at": "2026-11-21T09:44:56.655Z",
+    "at": "2026-11-27T15:23:12.412Z",
     "reason": "Détection automatique",
     "changes": [
-     "source : GTA Xtreme (sitemap)",
-     "source : GTA Xtreme (sitemap)"
-    ]
-   },
-   {
-    "at": "2026-11-25T22:51:16.706Z",
-    "reason": "Réévaluation",
-    "changes": [
-     "fiabilité : reported → confirmed",
-     "preuves : 2 → 6",
-     "localisation : text → zone",
-     "édition : aucune (none) → ultimate (confirmed)"
+     "source : AlcastHQ",
+     "source : AlcastHQ",
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -7964,7 +9661,13 @@
       "quote": "Pegassi Mojito Tempesta Type: Car Area: Gloriana Key Where to find it: Outside a hotel in Tequesta Retreat"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#10 Pegassi Mojito Tempesta Speed: 8.2 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside a hotel in Tequesta Retreat"
+     }
+    ]
    },
    "district": "Tequesta Retreat",
    "regionId": "vicecity",
@@ -7975,6 +9678,119 @@
     "radius": 254,
     "widened": false
    },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-standout-vehicles",
+    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "official": false,
+    "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Tequesta Retreat (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 3"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-mojito-tempesta-all",
+  "type": "vehicle",
+  "name": "Pegassi Mojito Tempesta All",
+  "make": "Pegassi",
+  "model": "Mojito Tempesta All",
+  "year": null,
+  "aliases": null,
+  "kind": "news",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": null,
+   "district": null,
+   "regionId": null,
+   "precision": "none",
+   "zone": null,
    "point": null,
    "alternatives": []
   },
@@ -8009,26 +9825,25 @@
   "evidence": [
    {
     "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-standout-vehicles",
-    "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
     "official": false,
-    "readAt": "2026-11-26T14:33:11.590Z"
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Zone de recherche autour de Tequesta Retreat (repères de la carte communautaire), pas un point exact."
+   "Une seule source : à vérifier en jeu."
   ],
   "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
+   "emplacement",
+   "chapitre"
   ],
-  "firstSeenAt": "2026-11-26T14:33:11.590Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
-    "at": "2026-11-26T14:33:11.590Z",
+    "at": "2026-11-27T15:23:12.412Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -8204,7 +10019,7 @@
   "model": "Tempesta",
   "year": null,
   "aliases": null,
-  "kind": "hidden",
+  "kind": "dynamic",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -8241,6 +10056,16 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
       "quote": "Try this: Take the same corners in both cars, rather than comparing one motorway blast with one messy city drive."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+      "quote": "Pegassi Gold Rush Tempesta Speed: 7.6 Acceleration: 7.8 Where to find it: Outside a restaurant in Ocean Beach Standout set: Blinged Up"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "Outside a restaurant in Ocean Beach."
      }
     ]
    },
@@ -8254,7 +10079,20 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "Pegassi Gold Rush Tempesta Speed: 7.6 Acceleration: 7.8 Where to find it: Outside a restaurant in Ocean Beach Standout set: Blinged Up",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-mojito-tempesta"
+    },
+    {
+     "district": "Ocean Beach",
+     "text": "Outside a restaurant in Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -8319,20 +10157,40 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
+    "title": "GTA 6 best street racing car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
+   "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -8349,6 +10207,13 @@
     "changes": [
      "preuves : 3 → 5",
      "localisation : text → zone"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 8"
     ]
    }
   ]
@@ -8573,47 +10438,75 @@
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
       "quote": "Dante's Vitello variant is found in a garage on the west of Starfish Island."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-dantes-vitello",
+      "quote": "Pegassi Dante's Vitello Speed: 8.6 Acceleration: 8.9 Where to find it: Garage at Dante Fresh's mansion, Starfish Island Standout set: Ultra-Luxe"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "At Dante Fresh's mansion on Starfish Island."
      }
     ]
    },
-   "district": "Belville",
-   "regionId": "ambrosia",
+   "district": "Starfish Island",
+   "regionId": "vicecity",
    "precision": "zone",
    "zone": {
-    "x": -1375,
-    "y": 2897,
-    "radius": 653,
+    "x": 777,
+    "y": 470,
+    "radius": 352,
     "widened": true
    },
    "point": null,
    "alternatives": [
     {
-     "district": "Waning Sands",
-     "text": "It is located at a mansion on the southeastern tip of Waning Sands.",
-     "sourceName": "PowerPyx",
-     "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
+     "district": "Belville",
+     "text": "Villa garage on Flamingo Parkway, east of Belville.",
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars"
+    },
+    {
+     "district": "Belville",
+     "text": "Villa-Garage am Flamingo Parkway, östlich von Belville.",
+     "sourceName": "GTA Xtreme (sitemap)",
+     "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars"
     },
     {
      "district": "Waning Sands",
      "text": "It is located at a mansion on the southeastern tip of Waning Sands.",
      "sourceName": "PowerPyx",
      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
-    },
-    {
-     "district": "Starfish Island",
-     "text": "Dante's Vitello variant is found in a garage on the west of Starfish Island.",
-     "sourceName": "GamesRadar+",
-     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello"
     }
    ]
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-dantes-vitello",
+      "quote": "Every Vitello needs the Key Cloner, so none of them can be taken before Chapter 3."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
    "alarm": null
   },
@@ -8700,6 +10593,48 @@
     "title": "Where to steal a GTA 6 Pegassi Vitello",
     "official": false,
     "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-class-act-comet",
+    "title": "GTA 6 Pfister Class Act Comet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+    "title": "GTA 6 Bravado Devil's Rope Gauntlet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-dantes-vitello",
+    "title": "GTA 6 Pegassi Dante's Vitello: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
@@ -8707,14 +10642,12 @@
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Exclusivité Ultimate signalée : compatibilité à vérifier.",
-   "Zone de recherche élargie autour de Belville (repères de la carte communautaire), pas un point exact."
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche élargie autour de Starfish Island (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -8738,6 +10671,13 @@
     "changes": [
      "preuves : 5 → 6",
      "édition : aucune (none) → ultimate (reported)"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 6 → 12"
     ]
    }
   ]
@@ -8777,7 +10717,13 @@
       "quote": "Starting Location: Vice Beach > Washington Beach"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
+      "quote": "The Pfister Comet S2, because it sits right on the 780 limit with strong Speed and Acceleration."
+     }
+    ]
    },
    "district": "Washington Beach",
    "regionId": "vicecity",
@@ -8843,11 +10789,26 @@
     "title": "GTA 6 best cars evidence guide",
     "official": false,
     "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
+    "title": "GTA 6 best street racing car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "3 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Washington Beach (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -8855,7 +10816,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -8863,6 +10824,13 @@
     "changes": [
      "source : PowerPyx (sitemap, guides GTA 6 véhicules)",
      "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 4"
     ]
    }
   ]
@@ -9440,22 +11408,38 @@
       "quote": "Piccia Dragon Gate Furia Type: Car Area: Vice Beach Where to find it: At the Y Hotel"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ]
    },
-   "district": "Vice Beach",
+   "district": "Starfish Island",
    "regionId": "vicecity",
    "precision": "zone",
    "zone": {
-    "x": 1636,
-    "y": 1096,
-    "radius": 1198,
+    "x": 777,
+    "y": 470,
+    "radius": 220,
     "widened": false
    },
    "point": null,
    "alternatives": []
   },
   "access": {
-   "chapterMin": null,
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
+   },
    "inferredChapter": null,
    "until": null,
    "mission": null,
@@ -9480,26 +11464,68 @@
     "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
     "official": false,
     "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-mojito-tempesta",
+    "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
+    "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-class-act-comet",
+    "title": "GTA 6 Pfister Class Act Comet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
+    "title": "GTA 6 Bravado Devil's Rope Gauntlet: Location and How to Get It",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Exclusivité Ultimate signalée : compatibilité à vérifier.",
-   "Zone de recherche autour de Vice Beach (repères de la carte communautaire), pas un point exact."
+   "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-26T14:33:11.590Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-26T14:33:11.590Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 6"
     ]
    }
   ]
@@ -9544,6 +11570,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Herrenhausgarage in der Palladia Lane, Peacock Estates."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The leopard print Big Cat Furia on Starfish Island is slower, but still fast."
      }
     ]
    },
@@ -9557,10 +11588,27 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Starfish Island",
+     "text": "The leopard print Big Cat Furia on Starfish Island is slower, but still fast.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars"
+    }
+   ]
   },
   "access": {
-   "chapterMin": null,
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Dragon Gate Furia belongs to a guest at the Y Hotel, and it only shows up from Chapter 4, when you get your new room there."
+     }
+    ],
+    "conflicts": []
+   },
    "inferredChapter": null,
    "until": null,
    "mission": null,
@@ -9621,20 +11669,33 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
+    "title": "GTA 6 best street racing car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -9650,6 +11711,13 @@
     "changes": [
      "preuves : 2 → 4",
      "localisation : text → zone"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 6"
     ]
    }
   ]
@@ -9889,42 +11957,103 @@
       "quote": "If your garage fantasy starts with a supercar, put the Emerus near the top of the shopping list."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "In a garage in Capri."
+     }
+    ]
    },
-   "district": "Leonida",
-   "regionId": "ambrosia",
-   "precision": "text",
-   "zone": null,
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
    "point": null,
    "alternatives": []
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
-   "tracker": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Honeycomb at Dolos Exotic Car Rental needs the Key Cloner and has an Advanced Tracker, and it costs $59,900 to register."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": {
+    "value": "advanced",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Honeycomb at Dolos Exotic Car Rental needs the Key Cloner and has an Advanced Tracker, and it costs $59,900 to register."
+     }
+    ],
+    "conflicts": []
+   },
    "alarm": null
   },
   "keep": {
-   "text": null,
-   "rule": {
-    "chapter": 2,
-    "where": "garage de Moses",
-    "tracker": null,
-    "source": {
-     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
-     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
-     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
-    }
+   "text": {
+    "value": "The Honeycomb at Dolos Exotic Car Rental needs the Key Cloner and has an Advanced Tracker, and it costs $59,900 to register.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "The Honeycomb at Dolos Exotic Car Rental needs the Key Cloner and has an Advanced Tracker, and it costs $59,900 to register."
+     }
+    ],
+    "conflicts": []
    },
+   "rule": null,
    "mode": "register"
   },
   "steps": [],
-  "risks": [],
-  "price": null,
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "quote": "The Honeycomb at Dolos Exotic Car Rental needs the Key Cloner and has an Advanced Tracker, and it costs $59,900 to register."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "quote": "The Black Widow in a shipping container at Port Vice City needs the Cut-Off Tool, but it has no Advanced Tracker and costs about half as much to register."
+   }
+  ],
+  "price": {
+   "value": 59900,
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-fastest-cars",
+     "quote": "The Honeycomb at Dolos Exotic Car Rental needs the Key Cloner and has an Advanced Tracker, and it costs $59,900 to register."
+    }
+   ],
+   "conflicts": []
+  },
   "media": null,
   "evidence": [
    {
@@ -9947,18 +12076,27 @@
     "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
     "official": false,
     "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
-  "reliability": "reported",
+  "reliability": "confirmed",
   "reasons": [
-   "3 sources, mais sans accord vérifiable sur l'emplacement."
+   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
+   "méthode de conservation"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -9979,6 +12117,15 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 2 → 3"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : reported → confirmed",
+     "preuves : 3 → 4",
+     "localisation : text → zone"
     ]
    }
   ]
@@ -10030,16 +12177,18 @@
    "alternatives": []
   },
   "access": {
-   "chapterMin": null,
-   "inferredChapter": {
-    "value": 3,
-    "why": "cloneur de clé nécessaire",
-    "source": {
-     "sourceName": "GTA BOOM",
-     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
-     "quote": "In Chapter 3, unlock the Key Cloner."
-    }
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
    },
+   "inferredChapter": null,
    "until": null,
    "mission": null,
    "early": false,
@@ -10080,17 +12229,24 @@
     "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
     "official": false,
     "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "confirmed",
   "reasons": [
    "2 sources indépendantes concordantes sur l'emplacement.",
-   "Exclusivité Ultimate recoupée.",
-   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Exclusivité Ultimate recoupée."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
@@ -10106,6 +12262,13 @@
      "fiabilité : reported → confirmed",
      "preuves : 1 → 2",
      "édition : aucune (none) → ultimate (confirmed)"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
     ]
    }
   ]
@@ -10846,7 +13009,13 @@
       "quote": "Truffade Andrew Node's Thrax Type: Car Area: Vice Beach Where to find it: At his luxury residence on Starfish Island"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#1 Truffade Andrew Node's Thrax Speed: 9.2 Acceleration: 8.9 Handling: 7.5 Where to find it: At his luxury residence on Starfish Island"
+     }
+    ]
    },
    "district": "Starfish Island",
    "regionId": "vicecity",
@@ -10861,7 +13030,17 @@
    "alternatives": []
   },
   "access": {
-   "chapterMin": null,
+   "chapterMin": {
+    "value": 4,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "#5 Piccia Dragon Gate Furia Speed: 8.5 Acceleration: 8.6 Handling: 7.3 Where to find it: Outside the Y Hotel, from Chapter 4"
+     }
+    ],
+    "conflicts": []
+   },
    "inferredChapter": null,
    "until": null,
    "mission": null,
@@ -10886,26 +13065,40 @@
     "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
     "official": false,
     "readAt": "2026-11-26T14:33:11.590Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Exclusivité Ultimate signalée : compatibilité à vérifier.",
    "Zone de recherche autour de Starfish Island (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-26T14:33:11.590Z",
-  "updatedAt": "2026-11-26T14:33:11.590Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-26T14:33:11.590Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2"
     ]
    }
   ]
@@ -10977,6 +13170,16 @@
       "sourceName": "PC Gamer",
       "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-truffade-thrax-andrew-node-no-flusher",
       "quote": "The first step is scanning ten No Flusher toilet graffiti stamps around Vice Beach, the east portion of Vice City, with your WAiNK It app."
+     },
+     {
+      "sourceName": "GTA Xtreme",
+      "url": "https://www.gta-xtreme.com/en/gta-6-best-muscle-car",
+      "quote": "Even the Devil’s Rope Gauntlet sits below the Truffade Thrax at 8.7."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-fastest-cars",
+      "quote": "You find it at his luxury residence on Starfish Island, but only after a hidden quest leads you there."
      }
     ]
    },
@@ -11224,6 +13427,27 @@
     "title": "GTA 6 Truffade Thrax: How to get Andrew Node's supercharged version",
     "official": false,
     "readAt": "2026-11-26T23:16:56.503Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-muscle-car",
+    "title": "GTA 6 best muscle car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "GTA Xtreme",
+    "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
+    "title": "GTA 6 best street racing car",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-fastest-cars",
+    "title": "Top 10 Fastest Cars in GTA 6 and Where to Find Them",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
    }
   ],
   "reliability": "reported",
@@ -11235,7 +13459,7 @@
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -11273,6 +13497,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 4 → 7"
+    ]
+   },
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 7 → 10"
     ]
    }
   ]
@@ -11448,6 +13679,200 @@
   "revisions": [
    {
     "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-vapid-driveshaft-hustler",
+  "type": "vehicle",
+  "name": "Vapid DriveShaft Hustler",
+  "make": "Vapid",
+  "model": "DriveShaft Hustler",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-vapid-driveshaft-marshall",
+  "type": "vehicle",
+  "name": "Vapid DriveShaft Marshall",
+  "make": "Vapid",
+  "model": "DriveShaft Marshall",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -11814,6 +14239,103 @@
   "revisions": [
    {
     "at": "2026-11-26T23:16:56.503Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-western-driveshaft-sovereign",
+  "type": "vehicle",
+  "name": "Western DriveShaft Sovereign",
+  "make": "Western",
+  "model": "DriveShaft Sovereign",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-doms-charger",
+      "quote": "Bravado DriveShaft Banshee Type: Car Where to find it: In a junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "PowerPyx (sitemap, guides GTA 6 véhicules)",
+     "url": "https://www.powerpyx.com/gta-6-moses-take-a-vehicle-to-moses-walkthrough",
+     "quote": "Reward: Slim Jim (break into locked cars without triggering alarm) + App: Scooter Bros (have your personal vehicle delivered anywhere) + Lucia gets a free registered car + can sell stolen cars (without trackers) at Mo…"
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-doms-charger",
+    "title": "GTA 6 Dom's Charger: Where to Find the DriveShaft Gauntlet",
+    "official": false,
+    "readAt": "2026-11-27T15:23:12.412Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "revisions": [
+   {
+    "at": "2026-11-27T15:23:12.412Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
