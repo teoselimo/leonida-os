@@ -9,6 +9,7 @@ import { nk } from "./missions";
 import type { BriefItem, MissionAlertBrief, PersistedState } from "./types";
 import { redactorFor } from "./spoiler";
 import { srcsVerified, storyAlerts } from "./story/engine";
+import { isChapterGoal } from "./motel";
 import type { StoryAlert } from "./story/engine";
 
 /**
@@ -55,6 +56,8 @@ export interface BeforeItem {
 export interface BeforeView {
   mission: string | null;
   critical: BeforeItem[];
+  /** V0.21.1 (issue #19) : objectifs de seuil du chapitre, pas encore imminents (« plus tard », jamais « Avant de continuer »). */
+  goals: string[];
   optional: BeforeItem[];
   /** Point de non-retour commun, sans spoiler (« au début d'une mission principale à venir »). */
   pnr: string | null;
@@ -115,8 +118,15 @@ export function buildBefore(
   };
 
   // 0. Story Intelligence (V0.17) : règles sourcées encore à venir dans ce chapitre — même liste que LEONIDA AI
+  const goals: string[] = [];
   for (const a of storyAlerts(s)) {
     if (a.horizon !== "imminent" && a.horizon !== "chapitre") continue;
+    // un seuil de fin de chapitre (ex. 15 000 $) reste connu, mais comme objectif du chapitre tant qu'il n'est pas imminent
+    if (isChapterGoal(a)) {
+      goals.push(a.advice);
+      storyMatch.push(...(a.rule.match ?? []).map((m) => nk(m)));
+      continue;
+    }
     if (a.tier === "À explorer") continue;
     const it = storyItem(a, !!p.missionInProgress);
     if (isDup(it.text)) continue;
@@ -212,7 +222,7 @@ export function buildBefore(
     (live && x.kind === "pendant" ? 0 : 10) + (x.high && x.status === "Vérifié" ? 0 : x.status === "Vérifié" ? 2 : 4) + (x.kind === "avant" ? 0 : x.kind === "pendant" ? 1 : 2) * 0.5;
   critical.sort((a, b) => rank(a) - rank(b));
   const anyPnr = critical.some((x) => x.atPnr);
-  return { mission, critical, optional, pnr: anyPnr ? pnr : null, analysed: !!brief };
+  return { mission, critical, optional, goals, pnr: anyPnr ? pnr : null, analysed: !!brief };
 }
 
 const TRUST_OF: Record<StoryAlert["confidence"], Trust3> = { Vérifié: "Vérifié", Probable: "Probable", "Non confirmé": "Non confirmé", Contesté: "Contesté" };

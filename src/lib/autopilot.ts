@@ -5,6 +5,7 @@ import { progressDelta } from "./ai/progressAnswers";
 import { coverageOf, findStoryNode } from "./story/engine";
 import type { Coverage } from "./story/model";
 import { nk } from "./missions";
+import { externalCondition } from "./motel";
 import type { PersistedState } from "./types";
 
 /**
@@ -50,6 +51,8 @@ export interface Autopilot {
   mains: NextOption[];
   /** Missions SECONDAIRES encore ouvertes (se choisissent comme une mission). */
   sides: NextOption[];
+  /** V0.21.1 : tâches qui attendent une condition DANS LE MONDE (affiche, appel, SMS…) : pas « disponibles » tant qu'elle n'est pas remplie. */
+  conditional: Array<NextOption & { condition: string }>;
   /** Activités LIBRES ouvertes (épargne, collecte…) : jamais une mission, se cochent « Fait » (V0.18.1). */
   activities: NextOption[];
   /** Missions principales antérieures non déclarées mais probablement faites : à confirmer (realName sert à enregistrer). */
@@ -115,7 +118,12 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
     const d = progressDelta(before, p.lastMission, s.done ?? {});
     for (const x of [...d.mains, ...d.potentials, ...d.sides]) fresh.add(x.node.id);
   }
-  const open = (x: NodeState) => x.status === "accessible" || x.status === "potentiellement accessible";
+  // V0.21.1 : une condition dans le monde (affiche, appel…) non confirmée n'est jamais « ouverte »
+  const waits = (x: NodeState) => x.status !== "en cours" && v.planned?.node.id !== x.node.id && !!externalCondition(x.node);
+  const open = (x: NodeState) => (x.status === "accessible" || x.status === "potentiellement accessible") && !waits(x);
+  const conditional = v.states
+    .filter((x) => (x.status === "accessible" || x.status === "potentiellement accessible") && waits(x) && x.node.chapter === p.chapter && !x.node.journalTask && shownName(x, p.spoilerMode) === x.node.name)
+    .map((x) => ({ ...option(x, v, s, fresh), condition: externalCondition(x.node)! }));
   const byRank = (a: NextOption, b: NextOption) => Number(b.fresh) - Number(a.fresh) || (a.state === "accessible" ? 0 : 1) - (b.state === "accessible" ? 0 : 1);
   const mains = v.states.filter((x) => x.node.kind === "main" && !x.node.journalTask && open(x) && shownName(x, p.spoilerMode) === x.node.name && !x.likelyDone && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort(byRank);
   const optional = v.states.filter((x) => x.node.kind !== "main" && open(x) && x.node.chapter === p.chapter).map((x) => option(x, v, s, fresh)).sort((a, b) => Number(b.missable) - Number(a.missable) || byRank(a, b));
@@ -156,6 +164,7 @@ export function autopilot(s: Pick<PersistedState, "profile"> & { done?: Record<s
     started,
     mains,
     sides: sides.slice(0, 6),
+    conditional: conditional.slice(0, 4),
     activities: activities.slice(0, 4),
     likely,
     suggestion: graphCovers && mains.length === 1 ? mains[0] : null,
@@ -183,6 +192,7 @@ export function autopilotContext(s: Pick<PersistedState, "profile"> & { done?: R
   );
   if (a.mains.length) lines.push(`- Missions principales accessibles : ${names(a.mains)}`);
   if (a.sides.length) lines.push(`- Missions secondaires encore ouvertes : ${names(a.sides)}`);
+  if (a.conditional.length) lines.push(`- Selon une condition à remplir dans le monde (PAS encore disponible, ne la présente pas comme accessible) : ${a.conditional.map((x) => `${x.name} — ${x.condition}`).join(" ; ")}`);
   if (a.activities.length) lines.push(`- Activités libres ouvertes (PAS des missions : ne les propose jamais comme prochaine mission, elles se cochent « Fait ») : ${names(a.activities)}`);
   if (a.likely.length) lines.push(`- ${a.likely.length} mission(s) antérieure(s) probablement faite(s) mais non déclarée(s) (ne les compte pas comme terminées, propose de confirmer dans l'Accueil) : ${a.likely.filter((x) => x.name === x.realName).map((x) => x.name).join(", ") || "noms masqués par l'anti-spoiler"}`);
   if (a.uncertain) lines.push(`- Incertitude : ${a.uncertain}`);

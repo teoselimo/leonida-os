@@ -1,6 +1,7 @@
 import { MOTEL_REPORTS, MOTEL_POSTERS, MOTEL_CARDS, POSTER_SOURCE } from "@/data/chapter2";
 import { KNOWLEDGE_BY_ID } from "@/data/knowledge";
 import { PROG_BY_ID } from "@/data/progression";
+import { motelSituation } from "../motel";
 import type { RadarFeed, RadarRecord } from "../feed";
 import { liveAdvice, spoilerVisibility } from "../feed";
 import type { VehicleRecord } from "../garage";
@@ -103,6 +104,8 @@ export interface AiContext {
   position?: { x: number; y: number } | null;
   /** Repères gtadb chargés par la carte : permettent « voir sur la carte » sans inventer de position. */
   places?: PlaceRef[];
+  /** V0.21.1 : messages précédents du joueur dans le chat (lecture seule) — tâches racontées mais non confirmées. */
+  chatTexts?: string[];
 }
 
 export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, " ");
@@ -483,6 +486,24 @@ export function answer(question: string, ctx: AiContext, topic: Topic | null = n
         return `La tâche de l’ambulance correspond à « ${name} ».`;
       });
       return { intent: "motel_report", text: lines.join(" "), actions, sources: [], reliability: "signalé" };
+    }
+    // V0.21.1 (issue #19) : « mettre ma progression à jour » / « que faire maintenant ? » sans mission choisie —
+    // cinq niveaux distincts, aucune écriture sans confirmation, aucun nom de principale future en mode strict
+    const sit = /mettre.{0,12}progression.{0,8}jour|(que|quoi) faire maintenant|ou en est ma (partie|progression)|ma situation/.test(nk(q)) ? motelSituation(ctx.state, ctx.chatTexts ?? []) : null;
+    if (sit) {
+      const parts: string[] = [];
+      parts.push(sit.confirmed ? `Confirmé par toi : ${sit.confirmed}.` : "Aucune étape du chapitre 2 n’est encore confirmée dans ta progression.");
+      if (sit.reported.length) parts.push(`D’après ce que tu m’as raconté, probablement en cours (non confirmé) : ${sit.reported.map((r) => r.label).join(", ")}. Je ne marque rien sans ta confirmation : vérifie ce que ton journal affiche.`);
+      else parts.push("Décris-moi ce que tu as fait au motel ou l’objectif affiché dans ton journal : je te propose la mise à jour, tu confirmes.");
+      if (sit.accessible.length) parts.push(`Accessible selon les sources : ${sit.accessible.join(", ")}.`);
+      if (sit.conditional.length) parts.push(`Condition à remplir dans le jeu d’abord : ${sit.conditional.map((c) => `${c.name} (${c.condition})`).join(", ")}.`);
+      if (sit.goals.length) parts.push(`Objectif du chapitre, plus tard : ${sit.goals[0]}`);
+      const actions: AiAction[] = sit.reported.slice(0, 3).map((r) =>
+        r.id === "ambulance-chaser"
+          ? { type: "set_mission" as const, name: r.name, label: `Confirmer « ${r.name} » terminée`, confirm: `Enregistrer « ${r.name} » comme terminée ?` }
+          : { type: "start_mission" as const, name: r.name, label: `Mon objectif actuel est « ${r.name} »`, confirm: `Confirmer que « ${r.name} » est en cours ?` },
+      );
+      return { intent: "motel_status", text: parts.join(" "), actions, sources: [], reliability: "signalé" };
     }
     const atMotel = /motel|reception|gerante/.test(nk(q));
     const practical = /manqu|rater|avant de continuer|debut.{0,12}chapitre 2|commenc.{0,20}chapitre 2|dois faire|aller maintenant/.test(nk(q));

@@ -12,6 +12,7 @@ import type { ProxyStatus } from "@/lib/ai/proxy";
 import { askProxy, proxyEnabled } from "@/lib/ai/proxy";
 import { askCopilot } from "@/lib/copilot";
 import { afterDone } from "@/lib/ai/progressAnswers";
+import { HISTORY_EVENT, HISTORY_KEY, reportedTasks } from "@/lib/motel";
 import type { CopilotAnswer, LlmMessage, WebStatus } from "@/lib/copilot";
 import { exaSearch } from "@/lib/runtime/web";
 import { reportWeb, useCopilotRuntime } from "@/lib/useCopilot";
@@ -40,7 +41,6 @@ const WEB_FAIL: Partial<Record<WebStatus, string>> = {
   empty: "Aucun résultat web pertinent trouvé.",
 };
 type Msg = { id: number; role: "user"; text: string; atts?: AttachmentChip[] } | AiMsg;
-const HISTORY_KEY = "leonida-os/ai-history/v2";
 const DRAFT_KEY = "leonida-os/ai-draft/v1";
 const routerMode = (): "local" | "planner" => {
   try {
@@ -227,6 +227,8 @@ export function AiCopilot() {
     try {
       // les aperçus d'images ne sont jamais conservés (seuls nom, type et taille restent)
       localStorage.setItem(HISTORY_KEY, JSON.stringify(msgs.slice(-40).map((m) => (m.role === "user" && m.atts ? { ...m, atts: m.atts.map(({ preview: _p, ...rest }) => rest) } : m))));
+      // V0.21.1 : l'Accueil relit les tâches racontées (lecture seule, jamais la sauvegarde de progression)
+      window.dispatchEvent(new Event(HISTORY_EVENT));
     } catch {
       /* stockage plein : l'historique reste en mémoire */
     }
@@ -320,7 +322,8 @@ export function AiCopilot() {
       setAway(false);
       // repères gtadb (cache partagé avec la carte) : nécessaires pour proposer « voir sur la carte »
       const pl = places.length ? places : await loadLandmarks();
-      const ctx = { feed, state, position: mapPosition(), places: pl };
+      const chatTexts = msgsRef.current.flatMap((m) => (m.role === "user" ? [m.text] : []));
+      const ctx = { feed, state, position: mapPosition(), places: pl, chatTexts };
       const topic: Topic | null = forcedTopic === undefined ? topicOf(msgsRef.current) : forcedTopic;
       if (transport) {
         // Claude rédige, à partir des preuves du Radar ; la réponse s'affiche au fil de l'écriture
@@ -363,7 +366,7 @@ export function AiCopilot() {
         return;
       }
       const local = answer(question, ctx, topic);
-      const a = { ...local, actions: local.actions.filter((x) => isValidAction(x, feed)).slice(0, local.intent === "motel_report" ? 3 : 2) };
+      const a = { ...local, actions: local.actions.filter((x) => isValidAction(x, feed)).slice(0, local.intent === "motel_report" || local.intent === "motel_status" ? 3 : 2) };
       const id = Date.now();
       // la réponse locale s'affiche tout de suite ; la synthèse serveur (si déployée) l'affine ensuite
       const remote = proxyEnabled() && !!(a.evidence ?? []).length;
@@ -457,11 +460,14 @@ export function AiCopilot() {
         break;
       case "set_mission": {
         // recalcul immédiat : ce que la mission terminée débloque (statuts du graphe sourcé), sans ordre inventé
-        const next = afterDone(state.profile, a.name);
+        // V0.21.1 (issue #19) : la relance garde les autres tâches racontées par le joueur, sans les enregistrer
+        const told = reportedTasks(msgsRef.current.flatMap((m) => (m.role === "user" ? [m.text] : [])), state, [a.name]);
+        const next = afterDone(state.profile, a.name, told);
         store.setMission(a.name, true);
         store.celebrate("Mission terminée");
         const id = Date.now();
-        setMsgs((m) => [...m, { id, role: "ai", a: { intent: "after_done", text: `C'est noté : « ${a.name} » terminée. ${next.text}`, reliability: "recoupé", sources: [], actions: next.actions } }]);
+        // texte construit localement, déjà filtré par l'anti-spoiler (noms visibles ou tâches racontées par le joueur)
+        setMsgs((m) => [...m, { id, role: "ai", engine: "direct", a: { intent: "after_done", text: `C'est noté : « ${a.name} » terminée. ${next.text}`, reliability: "recoupé", sources: [], actions: next.actions } }]);
         break;
       }
       case "start_mission":
@@ -499,7 +505,7 @@ export function AiCopilot() {
   // Les descriptions résolues localement ne contiennent que les noms des tâches décrites.
   // Toute réponse du modèle ou issue d’une pièce jointe passe par le rédacteur général.
   const displayText = (m: AiMsg, text: string) =>
-    m.a.intent === "motel_report" && m.engine === "direct" && !m.attNames?.length && state.profile.chapter === 2 ? text : redact(text);
+    (m.a.intent === "motel_report" || m.a.intent === "motel_status" || m.a.intent === "after_done") && m.engine === "direct" && !m.attNames?.length && state.profile.chapter === 2 ? text : redact(text);
   const ctxLine = state.profile.nextMission ? `${state.profile.missionInProgress ? "En mission" : "Prochaine mission"} · ${redact(state.profile.nextMission)}` : view === "carte" ? "Depuis la carte" : "Ton copilote de partie";
 
   const body = (
@@ -562,7 +568,7 @@ export function AiCopilot() {
               {m.llm === "pending" && <span className="bubble__refine" aria-live="polite">Leonida affine sa réponse…</span>}
               {m.a.actions.length > 0 && (
                 <div className="bubble__actions">
-                  {m.a.actions.slice(0, m.a.intent === "motel_report" ? 3 : 2).map((a, i) => {
+                  {m.a.actions.slice(0, m.a.intent === "motel_report" || m.a.intent === "motel_status" ? 3 : 2).map((a, i) => {
                     const key = `${m.id}:${JSON.stringify(a)}`;
                     const asking = pending?.key === key && "confirm" in a;
                     return asking ? (

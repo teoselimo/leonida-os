@@ -9,6 +9,7 @@ import type { PersistedState } from "../types";
 import { CONSOLES, SPOILER_FR } from "../meta";
 import { progressionContext } from "../progress";
 import { storyContext } from "../story/engine";
+import { reportedTasks } from "../motel";
 
 /** Limites de contexte : jamais des dizaines de fiches sans rapport. */
 export const CONTEXT_LIMITS = { maxEvidence: 8, maxQuote: 280, maxChars: 16_000 };
@@ -17,7 +18,9 @@ const EDITION: Record<string, string> = { standard: "Standard", ultimate: "Ultim
 const PREORDER: Record<string, string> = { yes: "oui", no: "non", unknown: "inconnu" };
 
 /** Contexte joueur en français, lu par le modèle avant chaque réponse (aucune donnée personnelle hors jeu). */
-export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "done"> & { story?: PersistedState["story"] }, feed: RadarFeed | null): string {
+export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "done"> & { story?: PersistedState["story"] }, feed: RadarFeed | null, chatTexts: string[] = []): string {
+  // V0.21.1 : tâches racontées par le joueur dans le chat, NON confirmées — distinctes de ce que le graphe débloque
+  const told = reportedTasks(chatTexts, s);
   const p = s.profile;
   const owned = Object.entries(s.vehicles)
     .filter(([, v]) => v.state !== "spotted")
@@ -43,6 +46,7 @@ export function playerContext(s: Pick<PersistedState, "profile" | "vehicles" | "
     `Anti-spoiler : ${SPOILER_FR[p.spoilerMode] ?? SPOILER_FR.strict}`,
     progressionContext(s),
     autopilotContext(s),
+    ...(told.length ? [`TÂCHES RACONTÉES PAR LE JOUEUR, NON CONFIRMÉES (ne les déclare jamais terminées ; rappelle-les et demande ce que son journal affiche) : ${told.map((t) => `${t.label} (probablement « ${t.name} »)`).join(" ; ")}`] : []),
     storyContext(s),
   ].join("\n");
 }

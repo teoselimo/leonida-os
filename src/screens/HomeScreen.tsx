@@ -25,6 +25,8 @@ import { progressDelta } from "@/lib/ai/progressAnswers";
 import type { ProgressDelta } from "@/lib/ai/progressAnswers";
 import { useRedact } from "@/lib/useRedact";
 import { autopilot } from "@/lib/autopilot";
+import { HISTORY_EVENT, motelSituation, readChatTexts } from "@/lib/motel";
+import type { MotelSituation } from "@/lib/motel";
 import type { Autopilot } from "@/lib/autopilot";
 import { launchRisks } from "@/lib/story/engine";
 import { StoryLaunch } from "@/components/StoryLaunch";
@@ -58,6 +60,21 @@ export function HomeScreen() {
   const view = useMemo(() => buildBefore(state, feed, discover, plan.before, mb.brief), [state, feed, discover, plan.before, mb.brief]);
   const [justDone, setJustDone] = useState<{ name: string; delta: ProgressDelta } | null>(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
+  // V0.21.1 (issue #19) : tâches racontées au copilote (historique du chat, lecture seule) → carte de situation du chapitre 2
+  const [chatTexts, setChatTexts] = useState<string[]>([]);
+  useEffect(() => {
+    const read = () => setChatTexts(readChatTexts());
+    read();
+    window.addEventListener(HISTORY_EVENT, read);
+    window.addEventListener("storage", read);
+    return () => (window.removeEventListener(HISTORY_EVENT, read), window.removeEventListener("storage", read));
+  }, []);
+  const situation = useMemo(() => (justDone ? null : motelSituation(state, chatTexts)), [state, chatTexts, justDone]);
+  const askAi = (question: string) => {
+    tick();
+    store.setAiOpen(true);
+    window.dispatchEvent(new CustomEvent("leonida:ask", { detail: question }));
+  };
 
   const finish = () => {
     if (!mission) return;
@@ -90,7 +107,7 @@ export function HomeScreen() {
 
   return (
     <div className="screen home home14">
-      <MissionHeader mission={mission} live={live} onEnd={() => setConfirmEnd(true)} onStart={() => mission && launch(mission, true)} />
+      <MissionHeader mission={mission} live={live} situation={situation?.title ?? null} onEnd={() => setConfirmEnd(true)} onStart={() => mission && launch(mission, true)} />
       <div className="home__main">
       <CollectorAlert hideSnapshot />
       <ChapterTransition />
@@ -106,7 +123,8 @@ export function HomeScreen() {
           </div>
         </section>
       )}
-      {!mission && <NextChoice justDone={justDone} onChoose={(n, live) => (live ? launch(n, false) : choose(n))} choices={plan.mission.choices} />}
+      {!mission && situation && <SituationCard s={situation} onAsk={askAi} />}
+      {!mission && <NextChoice justDone={justDone} compact={!!situation} hideNote={!!situation?.reported.length} onChoose={(n, live) => (live ? launch(n, false) : choose(n))} choices={plan.mission.choices} />}
 
       {(mission || view.critical.length > 0) && (
         <section className="before glass" data-testid="before">
@@ -129,6 +147,12 @@ export function HomeScreen() {
           )}
           {mb.failed && <p className="before__note">L&apos;analyse n&apos;a pas abouti. Réessaie dans un instant.</p>}
           {mission && <StoryLaunch mission={mission} />}
+        </section>
+      )}
+      {/* V0.21.1 : un seuil de fin de chapitre reste visible, mais « plus tard », jamais dans « Avant de continuer » */}
+      {!situation && view.goals.length > 0 && (
+        <section className="before before--later glass" data-testid="chapter-goals">
+          <p className="nextc__line"><Icon name="clock" size={12} /> <b>Objectif du chapitre · plus tard</b> · {view.goals[0]}</p>
         </section>
       )}
 
@@ -162,14 +186,14 @@ export function HomeScreen() {
 }
 
 /** A — mission principale : nom, état (menu), bouclier discret. */
-function MissionHeader({ mission, live, onEnd, onStart }: { mission: string | null; live: boolean; onEnd: () => void; onStart: () => void }) {
+function MissionHeader({ mission, live, situation, onEnd, onStart }: { mission: string | null; live: boolean; situation: string | null; onEnd: () => void; onStart: () => void }) {
   const { setMissionInProgress, setNextMission } = useStore();
   const [menu, setMenu] = useState(false);
   return (
     <header className="mhead" data-testid="home-header">
       <div className="mhead__main" data-testid="next-mission">
         <div className="mhead__row">
-          <p className="mhead__eyebrow">{mission ? "Mission principale" : "Aucune mission choisie"}</p>
+          <p className="mhead__eyebrow">{mission ? "Mission principale" : situation ? "Ta situation" : "Aucune mission choisie"}</p>
           {mission && (
             <div className="mhead__statewrap">
               <button className={`mstate14 press${live ? " is-live" : ""}`} onClick={() => (tick(), setMenu((v) => !v))} aria-haspopup="menu" aria-expanded={menu} data-testid={live ? "mission-live" : "mission-upcoming"}>
@@ -186,7 +210,7 @@ function MissionHeader({ mission, live, onEnd, onStart }: { mission: string | nu
             </div>
           )}
         </div>
-        <h1 className="mhead__name" data-testid="next-mission-name">{mission ?? "Prochaine mission à choisir"}</h1>
+        <h1 className="mhead__name" data-testid="next-mission-name">{mission ?? situation ?? "Prochaine mission à choisir"}</h1>
       </div>
       <ShieldChip />
     </header>
@@ -341,7 +365,43 @@ function LikelyConfirm({ likely }: { likely: Autopilot["likely"] }) {
   );
 }
 
-function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string; delta: ProgressDelta } | null; onChoose: (n: string, live?: boolean) => void; choices: string[] }) {
+/**
+ * V0.21.1 (issue #19) — situation du chapitre 2 sans mission choisie, en cinq niveaux distincts :
+ * confirmé par le joueur · raconté mais non confirmé · accessible selon les sources · condition dans le monde ·
+ * objectif du chapitre (plus tard). Aucune écriture : les deux boutons ouvrent le copilote, le joueur confirme.
+ */
+function SituationCard({ s, onAsk }: { s: MotelSituation; onAsk: (q: string) => void }) {
+  return (
+    <section className="nextc sitc glass" data-testid="situation-card">
+      <p className="nextc__done" data-testid="situation-confirmed">
+        <Icon name="check" size={14} /> {s.confirmed ? <span>Confirmé : <b>{s.confirmed}</b></span> : "Aucune étape du chapitre confirmée pour l’instant."}
+      </p>
+      {s.reported.length > 0 && (
+        <div className="sitc__row" data-testid="situation-reported">
+          <p className="nextc__line"><b>D’après ton récit, à confirmer</b> · probablement en cours</p>
+          <ul className="nextc__chips">
+            {s.reported.map((r) => <li key={r.id}><span className="chip chip--told">{r.label}</span></li>)}
+          </ul>
+        </div>
+      )}
+      {s.accessible.length > 0 && (
+        <p className="nextc__line" data-testid="situation-accessible"><b>Accessible selon les sources</b> · {s.accessible.slice(0, 3).join(", ")}</p>
+      )}
+      {s.conditional.length > 0 && (
+        <p className="nextc__line" data-testid="situation-conditional"><b>Condition à remplir dans le jeu</b> · {s.conditional.map((c) => `${c.name} (${c.condition})`).join(", ")}</p>
+      )}
+      {s.goals.length > 0 && (
+        <p className="nextc__line sitc__later" data-testid="situation-goal"><Icon name="clock" size={12} /> <b>Objectif du chapitre · plus tard</b> · {s.goals[0]}</p>
+      )}
+      <div className="row gap8 sitc__cta">
+        <button className="btn btn--sm btn--primary press" onClick={() => onAsk("Mettre ma progression à jour")} data-testid="situation-update">Mettre ma progression à jour</button>
+        <button className="btn btn--sm btn--ghost press" onClick={() => onAsk("Que faire maintenant ?")} data-testid="situation-now">Que faire maintenant&nbsp;?</button>
+      </div>
+    </section>
+  );
+}
+
+function NextChoice({ justDone, onChoose, choices, compact = false, hideNote = false }: { justDone: { name: string; delta: ProgressDelta } | null; onChoose: (n: string, live?: boolean) => void; choices: string[]; compact?: boolean; hideNote?: boolean }) {
   const { state, setExploring, markDone, notify } = useStore();
   const [draft, setDraft] = useState("");
   const [actOpen, setActOpen] = useState<string | null>(null);
@@ -359,10 +419,12 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
   const several = a.mains.length > 1;
   return (
     <section className="nextc glass" data-testid="next-choice" data-mode={a.mode}>
-      <p className="nextc__done" data-testid="autopilot-last">
+{!compact && (
+            <p className="nextc__done" data-testid="autopilot-last">
         <Icon name="check" size={14} /> {a.last ? <span>Dernière mission terminée : <b>{a.last.name}</b></span> : "Aucune mission terminée déclarée."}
       </p>
-      <h2>{a.suggestion ? "Voici ce que tu peux faire ensuite" : several ? "Plusieurs suites possibles" : "Quelle mission ensuite ?"}</h2>
+      )}
+      <h2>{compact ? "Ou choisis une mission toi-même" : a.suggestion ? "Voici ce que tu peux faire ensuite" : several ? "Plusieurs suites possibles" : "Quelle mission ensuite ?"}</h2>
       {a.suggestion ? (
         <div className="nextc__sugg" data-testid="autopilot-suggestion">
           <span>
@@ -389,7 +451,8 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
           ))}
         </ul>
       ) : null}
-      {a.uncertain && <p className="nextc__note" data-testid="autopilot-uncertain"><Icon name="info" size={13} /> {a.uncertain}</p>}
+      {/* la note d'incertitude reste utile tant que le joueur n'a rien raconté ; ensuite la carte de situation la remplace */}
+      {a.uncertain && !hideNote && <p className="nextc__note" data-testid="autopilot-uncertain"><Icon name="info" size={13} /> {a.uncertain}</p>}
       {a.likely.length > 0 && <LikelyConfirm likely={a.likely} />}
       {a.sides.length > 0 && (
         <div className="nextc__sides" data-testid="autopilot-sides">
@@ -397,6 +460,20 @@ function NextChoice({ justDone, onChoose, choices }: { justDone: { name: string;
           <ul className="nextc__chips">
             {a.sides.slice(0, 3).map((x) => (
               <li key={x.id}><button className="chip press" onClick={() => onChoose(x.name)} data-testid="choose-side">{x.name}{x.missable ? " ⏳" : ""}</button></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {/* V0.21.1 : condition dans le monde (affiche, appel, SMS…) : pas « disponible » tant que le joueur ne l'a pas remplie */}
+      {a.conditional.length > 0 && !compact && (
+        <div className="nextc__sides" data-testid="autopilot-conditional">
+          <p className="nextc__line"><b>Selon une condition dans le jeu</b> · pas encore disponible</p>
+          <ul className="nextc__list">
+            {a.conditional.map((x) => (
+              <li key={x.id}>
+                <span><b>{x.name}</b><em>{x.condition}</em></span>
+                <button className="btn btn--xs btn--ghost press" onClick={() => onChoose(x.name)} data-testid="choose-conditional">Condition remplie · choisir</button>
+              </li>
             ))}
           </ul>
         </div>
