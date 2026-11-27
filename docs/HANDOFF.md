@@ -6,30 +6,27 @@
 
 | | |
 | --- | --- |
-| Version en service | **V0.21** — [note de version](V0.21.md) |
+| Version en service | **V0.21** — Artifact actuel ; **V0.21.1 intégrée, publication en attente** |
 | Branche d’intégration | `experiment/claude-artifact` |
-| SHA de fusion et du code final | `7f12e5aa1ddb0222be5a871de8e8932f5bc24d0d` |
-| Artifact en service | **V0.21, version `1795644634-44cf`**, publiée le 25/11/2026 depuis `7f12e5a` — 472 fichiers distants, 61 743 736 octets ; 471 / 471 fichiers applicatifs identiques au build ; `data/radar.json` distant conservé (voir ci-dessous). Précédente : V0.20.2 `1795608546-b457`. |
-| Tests sur le code final | Hub Python 39/39. Playwright standard 559 réussis, 4 ignorés, 0 échec, dont 242 unitaires. Artifact ciblé 90/90. |
-| Mis à jour le | 25/11/2026, par Claude (publication V0.21) |
+| SHA d’intégration V0.21.1 | `5baf0e379e7ad9686a04757701d14586a2b4de20` |
+| Artifact en service | **V0.21, version `1795644634-44cf`**, publiée le 25/11/2026 depuis `7f12e5a`. V0.21.1 n'est pas encore publiée. |
+| Validation V0.21.1 avant fusion | Suite complète Claude : 581 réussis, 4 ignorés, 0 échec sur `749ef42` ; correctif Codex : 251/251 unitaires + 57/57 parcours ciblés sur `3a70fad`. Version affichée fixée à V0.21.1 dans `edb332c`. |
+| Mis à jour le | 27/11/2026, intégration GitHub pilotée par ChatGPT ; publication Artifact en attente de Claude |
 
-## Correctif en revue — issue #19 (27/11/2026, Codex)
+## V0.21.1 intégrée — issue #19 (27/11/2026)
 
-Branche `codex/chapter2-home-affirmative-fix`, basée sur `claude/chapter2-home-situation@851b843`. La lecture des 40 derniers messages utilisateur retient une tâche du motel uniquement si une action du joueur correspond à son objet. Les questions, négations et simples mentions sont écartées. Plusieurs déclarations de la même tâche donnent un seul rappel à confirmer.
-
-TypeScript strict et build standard réussis. Les 251 tests unitaires ont réussi, dont les 9 de V0.21.1. Les 57 parcours de `v018.spec.ts` et `v0211.spec.ts` ont réussi (19 par configuration : iPhone Chromium, iPad Chromium et iPhone WebKit, Claude simulé). Le parcours question puis déclaration compare la chaîne complète de sauvegarde avant et après rechargement. Le manifeste des cinq projections a été vérifié dans les sources et dans l’export standard. Revue avant fusion ; publication en attente.
-
-## Branche en revue — issue #19 (26/11/2026, Claude)
-
-**`claude/chapter2-home-situation`**, base `experiment/claude-artifact@2e1577a` (V0.21 publiée), code `749ef42`. **Non fusionnée, non publiée.** Les lignes ci-dessus décrivent toujours l'intégration et l'Artifact en service.
-
-- Accueil du chapitre 2 sans mission choisie : en-tête « Ta situation · Chapitre 2 · Starlet Motel » et carte en cinq niveaux (confirmé par le joueur · raconté au copilote, à confirmer · accessible selon les sources · condition à remplir dans le jeu · objectif du chapitre plus tard), boutons « Mettre ma progression à jour » / « Que faire maintenant ? ». Les tâches racontées sont relues dans l'historique du chat (`leonida-os/ai-history/v2`, déjà existant) : rien n'est écrit dans `leonida-os/progress/v1`.
-- 15 000 $ : objectif du chapitre tant que Checking Out n'est pas la prochaine mission ; McKittrick Farm (affiche de Kyle) n'est plus « disponible ». Conditions limitées au chapitre 2 (au chapitre 1, une condition nomme une mission future).
-- Continuité : après « Ambulance Chaser terminée », rappel des provisions et de la gérante racontées, sans écriture ; propositions à confirmer. Le vrai Claude reçoit la ligne « tâches racontées, non confirmées ».
-- Nouveau module `src/lib/motel.ts` ; aucun changement de schéma, du graphe, de `progress.ts`, du Hub ou des données (`git diff` vide sur `hub/`, `src/data/`, `public/data/`, `types.ts`, `store.tsx`).
-- Tests : suite complète **581 réussis, 0 échec, 4 ignorés** (25,9 min, `749ef42`, Claude simulé) dont `tests/v0211.unit.spec.ts` (7) et `tests/v0211.spec.ts` (5 × iPhone, iPad, WebKit) ; Python 39 / 39 ; `verify_manifest.py` OK. `tests/v018.spec.ts` adapté (dernière étape lue dans la carte de situation).
-- Captures avant/après (Claude simulé) : `docs/v0211-iphone-avant-apres.jpg`, `docs/v0211-ipad-avant-apres.jpg`.
-- Avant publication : revue, intégration par fusion, version affichée à fixer (le code affiche encore V0.21), build Artifact + parcours ciblés, puis essai iPhone réel par Théo.
+- PR #20 fusionnée dans `experiment/claude-artifact` : merge commit `5baf0e379e7ad9686a04757701d14586a2b4de20`.
+- Travail UX Claude : `749ef42` puis documentation/captures `851b843`.
+- Durcissement mémoire conversationnelle Codex : `3a70faddca5cbc448979c2a7d4e5585d401601ed`.
+- Version affichée fixée à **V0.21.1** : `edb332c`.
+- Accueil chapitre 2 : « Ta situation · Chapitre 2 · Starlet Motel », distinction confirmé / raconté à confirmer / condition dans le jeu / objectif du chapitre.
+- Seuil des 15 000 $ classé « objectif du chapitre · plus tard » tant qu'il n'est pas imminent.
+- Check Out McKittrick Farm n'est plus présentée comme accessible avant lecture de l'affiche de Kyle.
+- Continuité du copilote : après confirmation d'Ambulance Chaser, les provisions et la gérante racontées sont rappelées sans écriture automatique.
+- `reportedTasks()` ne retient désormais que des déclarations affirmatives ; questions, négations, simples mentions et demandes d'aide sont ignorées.
+- Aucun changement du Data Engine V0.21 ni du schéma de sauvegarde.
+- Validation avant fusion : suite complète Claude **581 réussis, 4 ignorés, 0 échec** sur le code UX ; correctif Codex **251/251 unitaires** et **57/57 parcours ciblés** (19 iPhone Chromium, 19 iPad Chromium, 19 iPhone WebKit). Claude simulé.
+- **Publication Artifact en attente**. Avant publication, reconstruire le merge commit final, relancer TypeScript + build Artifact + parcours ciblés, vérifier les empreintes distantes et tester le vrai Claude sur iPhone.
 
 ## Publication V0.21 (25/11/2026, Claude)
 
