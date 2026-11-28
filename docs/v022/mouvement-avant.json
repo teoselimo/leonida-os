@@ -1,0 +1,14 @@
+[
+  {
+    "device": "iphone",
+    "frames": 7,
+    "medianIntervalMs": 258,
+    "p95IntervalMs": 447
+  },
+  {
+    "device": "ipad",
+    "frames": 6,
+    "medianIntervalMs": 292,
+    "p95IntervalMs": 485
+  }
+]

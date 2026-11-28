@@ -1,0 +1,128 @@
+[
+  {
+    "name": "essentiels",
+    "lmf": 0,
+    "districts": 45,
+    "landmarks": 79,
+    "zones": 6,
+    "visible": {
+      "ensemble": {
+        "icons": 2,
+        "labels": 0
+      },
+      "quartier": {
+        "icons": 3,
+        "labels": 4
+      },
+      "rue": {
+        "icons": 3,
+        "labels": 3
+      }
+    }
+  },
+  {
+    "name": "services",
+    "lmf": 0,
+    "districts": 45,
+    "landmarks": 214,
+    "zones": 6,
+    "visible": {
+      "ensemble": {
+        "icons": 1,
+        "labels": 0
+      },
+      "quartier": {
+        "icons": 6,
+        "labels": 6
+      },
+      "rue": {
+        "icons": 14,
+        "labels": 5
+      }
+    }
+  },
+  {
+    "name": "sorties",
+    "lmf": 0,
+    "districts": 45,
+    "landmarks": 187,
+    "zones": 0,
+    "visible": {
+      "ensemble": {
+        "icons": 1,
+        "labels": 0
+      },
+      "quartier": {
+        "icons": 7,
+        "labels": 5
+      },
+      "rue": {
+        "icons": 4,
+        "labels": 2
+      }
+    }
+  },
+  {
+    "name": "reperes",
+    "lmf": 0,
+    "districts": 45,
+    "landmarks": 182,
+    "zones": 0,
+    "visible": {
+      "ensemble": {
+        "icons": 19,
+        "labels": 0
+      },
+      "quartier": {
+        "icons": 2,
+        "labels": 1
+      },
+      "rue": {
+        "icons": 0,
+        "labels": 0
+      }
+    }
+  },
+  {
+    "name": "tout",
+    "lmf": 0,
+    "districts": 45,
+    "landmarks": 3663,
+    "zones": 0,
+    "visible": {
+      "ensemble": {
+        "icons": 19,
+        "labels": 0
+      },
+      "quartier": {
+        "icons": 10,
+        "labels": 6
+      },
+      "rue": {
+        "icons": 17,
+        "labels": 7
+      }
+    }
+  },
+  {
+    "name": "garage",
+    "lmf": 0,
+    "districts": 45,
+    "landmarks": 0,
+    "zones": 78,
+    "visible": {
+      "ensemble": {
+        "icons": 0,
+        "labels": 0
+      },
+      "quartier": {
+        "icons": 0,
+        "labels": 0
+      },
+      "rue": {
+        "icons": 0,
+        "labels": 0
+      }
+    }
+  }
+]

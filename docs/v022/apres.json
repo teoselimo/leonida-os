@@ -1,0 +1,92 @@
+[
+  {
+    "device": "iphone",
+    "scene": "ensemble",
+    "zoom": 1.45,
+    "createdMs": 1977,
+    "readyMs": 4875,
+    "sources": {
+      "lmf": 0,
+      "districts": 45,
+      "landmarks": 79,
+      "zones": 6
+    },
+    "icons": 2,
+    "labels": 0
+  },
+  {
+    "device": "iphone",
+    "scene": "quartier",
+    "zoom": 4.4,
+    "createdMs": 1977,
+    "readyMs": 4875,
+    "sources": {
+      "lmf": 0,
+      "districts": 45,
+      "landmarks": 79,
+      "zones": 6
+    },
+    "icons": 2,
+    "labels": 2
+  },
+  {
+    "device": "iphone",
+    "scene": "rue",
+    "zoom": 6.2,
+    "createdMs": 1977,
+    "readyMs": 4875,
+    "sources": {
+      "lmf": 0,
+      "districts": 45,
+      "landmarks": 79,
+      "zones": 6
+    },
+    "icons": 3,
+    "labels": 3
+  },
+  {
+    "device": "ipad",
+    "scene": "ensemble",
+    "zoom": 1.45,
+    "createdMs": 1302,
+    "readyMs": 3684,
+    "sources": {
+      "lmf": 0,
+      "districts": 45,
+      "landmarks": 79,
+      "zones": 6
+    },
+    "icons": 2,
+    "labels": 0
+  },
+  {
+    "device": "ipad",
+    "scene": "quartier",
+    "zoom": 4.4,
+    "createdMs": 1302,
+    "readyMs": 3684,
+    "sources": {
+      "lmf": 0,
+      "districts": 45,
+      "landmarks": 79,
+      "zones": 6
+    },
+    "icons": 3,
+    "labels": 4
+  },
+  {
+    "device": "ipad",
+    "scene": "rue",
+    "zoom": 6.2,
+    "createdMs": 1302,
+    "readyMs": 3684,
+    "sources": {
+      "lmf": 0,
+      "districts": 45,
+      "landmarks": 79,
+      "zones": 6
+    },
+    "icons": 3,
+    "labels": 3
+  }
+]

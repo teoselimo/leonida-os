@@ -13,6 +13,21 @@
 | Validation V0.21.1 avant fusion | Suite complète Claude : 581 réussis, 4 ignorés, 0 échec sur `749ef42` ; correctif Codex : 251/251 unitaires + 57/57 parcours ciblés sur `3a70fad`. Version affichée fixée à V0.21.1 dans `edb332c`. |
 | Mis à jour le | 27/11/2026, intégration GitHub pilotée par ChatGPT ; publication Artifact en attente de Claude |
 
+## V0.22 en revue — issue #21 (28/11/2026, Codex)
+
+Branche `codex/map-v022`, basée sur `experiment/claude-artifact@6eb8ecb`. Code fonctionnel `ceb9f34`. **Non fusionnée, non publiée.** La version en service et la branche d'intégration restent celles du tableau.
+
+- Carte utile par défaut avec six choix : Essentiels, Services, Sorties, Repères, Tout et Garage. Sélecteur compact sur iPhone, choix dans l'inspecteur sur iPad.
+- La source GeoJSON passe de 3 663 lieux à 79 en Essentiels. Recherche exhaustive conservée ; sélection et `placeFocus` restent visibles hors couche.
+- « Ma partie » utilise uniquement la mission et son district documenté, les positions placées par le joueur, les véhicules suivis et le lieu demandé. Aucun marqueur de position du personnage.
+- Confiance par anneau, couleur et opacité ; les fiches séparent existence sourcée, coordonnées communautaires et incertitude GTADB. `places.json` enrichit la fiche à la demande.
+- MapLibre, 363 tuiles, coordonnées, caméra, cartographe, RVL et Garage conservés. Data Engine, données, graphe et schéma de sauvegarde inchangés.
+- Artifact local : 472 fichiers publiables, 62 632 318 octets ; +5 434 octets par rapport à la base, tuiles inchangées, marge 4 476 546 octets sous 64 Mio.
+- Validation : TypeScript strict, builds standard et Artifact, manifeste v1 ; 253 unitaires ; 85 parcours ciblés réussis et 1 ignoré en 14,4 minutes sur l'export standard propre ; 19 parcours ciblés réussis sur le package propre. iPhone Chromium, iPad Chromium et iPhone WebKit, appareils émulés, Claude simulé.
+- Mesures, limites et comparaisons avant/après : [`docs/V0.22.md`](V0.22.md) et `docs/v022/`.
+
+Reprise : revoir le diff depuis `6eb8ecb`, tester les quatre captures comparatives, puis relancer les parcours ciblés sur le commit fusionné. L'essai sur iPhone/iPad physiques doit vérifier le pinch, le sélecteur compact, les seuils de zoom et la fluidité en Tout. Publication Artifact en attente après revue et intégration.
+
 ## V0.21.1 intégrée — issue #19 (27/11/2026)
 
 - PR #20 fusionnée dans `experiment/claude-artifact` : merge commit `5baf0e379e7ad9686a04757701d14586a2b4de20`.

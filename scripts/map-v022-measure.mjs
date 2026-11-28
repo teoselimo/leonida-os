@@ -68,7 +68,20 @@ try {
         await page.evaluate(async()=>{ const map=window.__leonidaMap; const idle=map.once("idle"); map.triggerRepaint(); await idle; });
         const sources = await page.evaluate(()=>Object.fromEntries(Object.entries(window.__leonidaMap.getStyle().sources)
           .filter(([,s])=>s.type==="geojson").map(([k,s])=>[k,s.data.features.length])));
-        layers.push({name,...sources});
+        const visible = {};
+        for (const [scene, center, zoom] of [["ensemble",[-32,3],1.45],["quartier",[-29.5,-36.5],4.4],["rue",[-29.5,-36.5],6.2]]) {
+          visible[scene] = await page.evaluate(async ({center,zoom}) => {
+            const map = window.__leonidaMap;
+            const idle = map.once("idle");
+            map.jumpTo({center,zoom,padding:{top:0,bottom:0,left:0,right:0}});
+            await idle;
+            return {
+              icons: new Set(map.queryRenderedFeatures({layers:["lm","lmf-pt"]}).map(f=>f.properties.id)).size,
+              labels: map.queryRenderedFeatures({layers:["lm-label"]}).length,
+            };
+          },{center,zoom});
+        }
+        layers.push({name,...sources,visible});
       }
     }
     await page.close();
