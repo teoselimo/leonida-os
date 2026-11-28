@@ -129,6 +129,407 @@
   ]
  },
  {
+  "id": "v-declasse-mamba-gt",
+  "type": "vehicle",
+  "name": "'64 Declasse Mamba GT",
+  "make": "Declasse",
+  "model": "Mamba GT",
+  "year": "64",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Then you can register them at Moses' garage in Port Gellhorn.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "Then you can register them at Moses' garage in Port Gellhorn."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "Then you can register them at Moses' garage in Port Gellhorn."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+      "quote": "Starting Location: Vice Beach > Leaf Links"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "It is at a guarded mansion in Leaf Links, Vice Beach."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
+     }
+    ]
+   },
+   "district": "Port Gellhorn",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6579,
+    "y": 3734,
+    "radius": 1017,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": [
+    {
+     "district": "Leaf Links",
+     "text": "Starting Location: Vice Beach > Leaf Links",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough"
+    },
+    {
+     "district": "Leaf Links",
+     "text": "It is at a guarded mansion in Leaf Links, Vice Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
+  },
+  "access": {
+   "chapterMin": {
+    "value": 2,
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
+     }
+    ],
+    "conflicts": []
+   },
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": {
+    "value": "Main Mission Moses",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Later in Chapter 2, during Main Mission Moses (Take A Vehicle to Moses) , you unlock the ability to register new vehicles."
+     }
+    ],
+    "conflicts": []
+   },
+   "early": true,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Key Cloner doesn't work on it."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": {
+    "value": "advanced",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+      "quote": "Reward: $12,110 + vehicle condition bonus + Advanced Tracker cars can now be registered and sold"
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Delivering it is the first step toward advanced tracker registration at Pay 'n' Spray, but the rest only comes in Chapter 4."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "After you meet Moses in Chapter 2 (automatic from story), you can bring him any car that doesn't have a tracker and click \"Register\" in his garage."
+     }
+    ]
+   },
+   "alarm": null
+  },
+  "keep": {
+   "text": {
+    "value": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Delivering it is the first step toward advanced tracker registration at Pay 'n' Spray, but the rest only comes in Chapter 4."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+      "quote": "Later in Chapter 2, during Main Mission Moses (Take A Vehicle to Moses) , you unlock the ability to register new vehicles."
+     }
+    ]
+   },
+   "rule": null,
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "quote": "Head there to start the mission."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "quote": "Steal the Mamba GT"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Open the doors with the Snap Gun and take the key from the bowl in the main house."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+    "quote": "Register Advanced Tracker Cars"
+   }
+  ],
+  "risks": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "quote": "No Tracker Cars = Finish Chapter 2 – Main Mission: Moses (Take A Vehicle to Moses) ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "quote": "Standard Tracker Cars = Automatically unlocked early in Chapter 3, after the first few main missions in the Chapter you can register Standard Tracker Cars at any Pay 'n' Spray ."
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "quote": "Advanced Tracker Cars = Finish Randy's Missions (the first one is a Chapter 3 Main Mission): Clonin’ Keys, Makin’ GS (Steal the Zorrusso for Randy) > Randy's Wish List (steal cars for Randy) > Dale Mamba (Steal the De…"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "quote": "Reward: $12,110 + vehicle condition bonus + Advanced Tracker cars can now be registered and sold"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "title": "GTA 6 How to Register Advanced Tracker Cars",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
+    "title": "GTA 6 how to register advanced tracker cars",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
+    "title": "GTA 6 Dale Mamba (Steal the Declasse Mamba GT) Walkthrough",
+    "official": false,
+    "readAt": "2026-11-26T04:41:53.730Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
+    "title": "GTA 6 how to get new personal car",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "méthode de conservation"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx",
+     "source : PowerPyx"
+    ]
+   },
+   {
+    "at": "2026-11-26T04:41:53.730Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 3 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 5"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-declasse-mamba-gt-area",
+  "type": "vehicle",
+  "name": "'64 Declasse Mamba GT Area",
+  "make": "Declasse",
+  "model": "Mamba GT Area",
+  "year": "64",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Declasse '64 Mamba GT Area: Leaf Links Where to find it: Guarded mansion in Leaf Links (side mission ¡Dale Mamba!)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Declasse '64 Mamba GT Area: Leaf Links Where to find it: Guarded mansion in Leaf Links (side mission ¡Dale Mamba!)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Leaf Links",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 457,
+    "y": 2422,
+    "radius": 351,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Leaf Links (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-vapid-dominator",
   "type": "vehicle",
   "name": "'67 Vapid Dominator",
@@ -1276,6 +1677,11 @@
      },
      {
       "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The easiest '96 Infernus is in north-west Starfish Island."
+     },
+     {
+      "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
       "quote": "Pegassi Gold Rope Infernus Speed: 8.3 Acceleration: 8.0 Where to find it: Under the porch roof of a small house by the water on Reservoir St, Ambrosia Standout set: Blinged Up"
      },
@@ -1314,6 +1720,11 @@
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-infernus",
       "quote": "There should be no one around, so just hack into the car with the GTA 6 key cloner and drive it to the bottom level."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "It just sits outside, close to the building on the right side, so you can clone the key and leave."
      }
     ],
     "conflicts": []
@@ -1412,6 +1823,13 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-gold-rope-infernus",
     "title": "GTA 6 Pegassi Gold Rope Infernus: Location and How to Get It",
     "official": false,
@@ -1434,7 +1852,7 @@
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -1460,6 +1878,116 @@
     "changes": [
      "preuves : 6 → 8",
      "localisation : zone → text"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 8 → 9"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-infernus-area",
+  "type": "vehicle",
+  "name": "'96 Pegassi Infernus Area",
+  "make": "Pegassi",
+  "model": "Infernus Area",
+  "year": "96",
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi '96 Infernus Area: Starfish Island Where to find it: Outside a building in north-west Starfish Island, or the Crosstown Police Station car park (7th floor)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Pegassi '96 Infernus Area: Starfish Island Where to find it: Outside a building in north-west Starfish Island, or the Crosstown Police Station car park (7th floor)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Starfish Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 777,
+    "y": 470,
+    "radius": 352,
+    "widened": true
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Pegassi '96 Infernus Area: Starfish Island Where to find it: Outside a building in north-west Starfish Island, or the Crosstown Police Station car park (7th floor)"
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche élargie autour de Starfish Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -2577,6 +3105,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Die Hauptbar Banana Hole, Shore Drive; berichtete über eine abendliche Sichtung."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Paragon is one of the cars at the Ocean View Poolside Bar in Ocean Beach."
      }
     ]
    },
@@ -2587,6 +3120,177 @@
     "x": -349,
     "y": 1041,
     "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "The Paragon is one of the cars at the Ocean View Poolside Bar in Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "It has a tracker, so drive fast once you clone the key."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "It has a tracker, so drive fast once you clone the key."
+   }
+  ],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "GTA Xtreme (sitemap)",
+    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
+    "title": "GTA 6 — Hidden cars",
+    "official": false,
+    "readAt": "2026-11-21T10:08:37.824Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-21T09:44:56.655Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-21T09:44:56.655Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : GTA Xtreme (sitemap)",
+     "source : GTA Xtreme (sitemap)"
+    ]
+   },
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 4",
+     "localisation : text → zone"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 5"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ascot-paragon-area",
+  "type": "vehicle",
+  "name": "Ascot Paragon Area",
+  "make": "Ascot",
+  "model": "Paragon Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Ascot Paragon Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or outside The Banana Hole on Shore Dr (around 6 PM)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Ascot Paragon Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or outside The Banana Hole on Shore Dr (around 6 PM)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Shore Dr",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1943,
+    "y": 447,
+    "radius": 431,
     "widened": false
    },
    "point": null,
@@ -2622,61 +3326,30 @@
   "media": null,
   "evidence": [
    {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/gta-6/locations/hidden-cars",
-    "title": "GTA 6 — Hidden cars",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
     "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
-   },
-   {
-    "sourceName": "GTA Xtreme (sitemap)",
-    "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
-    "title": "GTA 6 — Hidden cars",
-    "official": false,
-    "readAt": "2026-11-21T10:08:37.824Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 randys wish list car locations walkthrough",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
-   "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Shore Dr (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
-  "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
-    "at": "2026-11-21T09:44:56.655Z",
+    "at": "2026-11-28T14:07:43.424Z",
     "reason": "Détection automatique",
     "changes": [
-     "source : GTA Xtreme (sitemap)",
-     "source : GTA Xtreme (sitemap)"
-    ]
-   },
-   {
-    "at": "2026-11-25T22:51:16.706Z",
-    "reason": "Réévaluation",
-    "changes": [
-     "preuves : 2 → 4",
-     "localisation : text → zone"
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -2709,6 +3382,139 @@
       "sourceName": "PowerPyx",
       "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
       "quote": "Dubstas can be found outside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Dubstas park at the Ocean View Poolside Bar in Ocean Beach too."
+     }
+    ]
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "Dubstas park at the Ocean View Poolside Bar in Ocean Beach too.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-benefactor-dubsta-area",
+  "type": "vehicle",
+  "name": "Benefactor Dubsta Area",
+  "make": "Benefactor",
+  "model": "Dubsta Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Benefactor Dubsta Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or outside Status Auto Imports in Bayside",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Benefactor Dubsta Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or outside Status Auto Imports in Bayside"
      }
     ],
     "conflicts": []
@@ -2755,39 +3561,30 @@
   "media": null,
   "evidence": [
    {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
     "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 randys wish list car locations walkthrough",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
-  "firstSeenAt": "2026-11-25T22:51:16.706Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
-    "at": "2026-11-25T22:51:16.706Z",
+    "at": "2026-11-28T14:07:43.424Z",
     "reason": "Détection automatique",
     "changes": [
-     "source : PowerPyx",
-     "source : PowerPyx"
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -3323,6 +4120,11 @@
       "quote": "Sunrise Premium Autos is in Southside, southeast of Vice City International Airport."
      },
      {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "If it isn't there, check outside the Sweetbay Inn in Capri at around 3 AM."
+     },
+     {
       "sourceName": "PC Gamer",
       "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
       "quote": "You can find this car inside the Sunrise Premium Autos showroom at the north tip of Southside, southwest of Pay 'N' Spray - Salton or east across the road from Ron Gas - Southside."
@@ -3339,7 +4141,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Capri",
+     "text": "If it isn't there, check outside the Sweetbay Inn in Capri at around 3 AM.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
   },
   "access": {
    "chapterMin": {
@@ -3432,9 +4241,9 @@
     "quote": "Scan the car with WAiNK, check its security details and use the tool at the prompt."
    },
    {
-    "sourceName": "PC Gamer",
-    "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6-bravado-banshee-location",
-    "quote": "Head inside to find the car—if you've played previous GTAs, you'll recognise it as a convertible with a white stripe down the middle."
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Drive it out through the glass, and you also unlock the Capital Offense trophy."
    }
   ],
   "risks": [
@@ -3499,6 +4308,13 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-cheats",
     "title": "GTA 6 Cheats: All 61 Cheat Codes and How to Unlock Them",
     "official": false,
@@ -3512,15 +4328,15 @@
     "readAt": "2026-11-26T23:16:56.503Z"
    }
   ],
-  "reliability": "confirmed",
+  "reliability": "reported",
   "reasons": [
-   "3 sources indépendantes concordantes sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-26T23:16:56.503Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -3551,6 +4367,111 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 5 → 7"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : confirmed → reported",
+     "preuves : 7 → 8"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-banshee-area",
+  "type": "vehicle",
+  "name": "Bravado Banshee Area",
+  "make": "Bravado",
+  "model": "Banshee Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado Banshee Area: Southside Where to find it: Inside Sunrise Premium Autos, or outside Sweetbay Inn in Capri (around 3 AM)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Bravado Banshee Area: Southside Where to find it: Inside Sunrise Premium Autos, or outside Sweetbay Inn in Capri (around 3 AM)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -3723,6 +4644,20 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-searing-zombie-bobber",
+    "title": "GTA 6 Searing Zombie Bobber: Location, Stats and Price",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-mojito-tempesta",
     "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
     "official": false,
@@ -3753,7 +4688,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-27T15:23:12.412Z",
-  "updatedAt": "2026-11-27T23:43:22.437Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-27T15:23:12.412Z",
@@ -3769,6 +4704,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 6"
     ]
    }
   ]
@@ -4205,6 +5147,11 @@
      },
      {
       "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The fixed backup is the back of the M7 junkyard off Galerina St in Hamlet, east of Boone Speedway."
+     },
+     {
+      "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-devils-rope-gauntlet",
       "quote": "Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Where to find it: Hog Stars Garage, Acacia St, Ambrosia Standout set: Ripped & Shredded"
      },
@@ -4227,6 +5174,12 @@
    "point": null,
    "alternatives": [
     {
+     "district": "Hamlet",
+     "text": "The fixed backup is the back of the M7 junkyard off Galerina St in Hamlet, east of Boone Speedway.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    },
+    {
      "district": "Ambrosia",
      "text": "Bravado Devil's Rope Gauntlet Speed: 8.3 Acceleration: 8.3 Where to find it: Hog Stars Garage, Acacia St, Ambrosia Standout set: Ripped & Shredded",
      "sourceName": "AlcastHQ",
@@ -4242,11 +5195,29 @@
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The gang guards that one, so clear them and open the front gates before you clone the key."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": {
     "value": "none",
     "support": [
@@ -4304,7 +5275,17 @@
     "quote": "It is unlocked and has no tracker, so Moses can register it for just $8,500."
    }
   ],
-  "price": null,
+  "price": {
+   "value": 8500,
+   "support": [
+    {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list",
+     "quote": "It is the fastest muscle car in the game and costs only $8,500 to keep."
+    }
+   ],
+   "conflicts": []
+  },
   "media": null,
   "evidence": [
    {
@@ -4343,6 +5324,13 @@
     "readAt": "2026-11-25T22:51:16.706Z"
    },
    {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
     "title": "GTA 6 best street racing car",
@@ -4368,13 +5356,12 @@
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
    "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "chapitre"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -4398,6 +5385,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 5 → 8"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 8 → 9"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-bravado-gauntlet-hellfire-area",
+  "type": "vehicle",
+  "name": "Bravado Gauntlet Hellfire Area",
+  "make": "Bravado",
+  "model": "Gauntlet Hellfire Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Bravado Gauntlet Hellfire Area: Ocean Beach Where to find it: Parking lot south of the park, near the Aural Expert shop, or the M7 junkyard in Hamlet",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Bravado Gauntlet Hellfire Area: Ocean Beach Where to find it: Parking lot south of the park, near the Aural Expert shop, or the M7 junkyard in Hamlet"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Hamlet",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -2691,
+    "y": -3193,
+    "radius": 472,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Hamlet (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -4939,7 +6030,13 @@
       "quote": "A Jubilee can be found inside the car dealership located in Bayside west of Dynamix Fitness."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Jubilee is a luxury SUV that parks at the Ocean View Poolside Bar in Ocean Beach."
+     }
+    ]
    },
    "district": "Bayside",
    "regionId": "vicecity",
@@ -4951,7 +6048,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "The Jubilee is a luxury SUV that parks at the Ocean View Poolside Bar in Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -4977,7 +6081,13 @@
    },
    "mode": "register"
   },
-  "steps": [],
+  "steps": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Drive that one out slowly through the front doors, because every scratch costs you money."
+   }
+  ],
   "risks": [],
   "price": null,
   "media": null,
@@ -4995,11 +6105,18 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
   ],
@@ -5008,7 +6125,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T22:51:16.706Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-25T22:51:16.706Z",
@@ -5017,15 +6134,22 @@
      "source : PowerPyx",
      "source : PowerPyx"
     ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
+    ]
    }
   ]
  },
  {
-  "id": "v-buckingham-windsor-drop",
+  "id": "v-buckingham-jubilee-area",
   "type": "vehicle",
-  "name": "Buckingham Windsor Drop",
+  "name": "Buckingham Jubilee Area",
   "make": "Buckingham",
-  "model": "Windsor Drop",
+  "model": "Jubilee Area",
   "year": null,
   "aliases": null,
   "kind": "hidden",
@@ -5037,17 +6161,12 @@
   },
   "location": {
    "text": {
-    "value": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness.",
+    "value": "Buckingham Jubilee Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or inside Status Auto Imports in Bayside",
     "support": [
      {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-      "quote": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness."
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-      "quote": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Buckingham Jubilee Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or inside Status Auto Imports in Bayside"
      }
     ],
     "conflicts": []
@@ -5094,6 +6213,121 @@
   "media": null,
   "evidence": [
    {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-windsor-drop",
+  "type": "vehicle",
+  "name": "Buckingham Windsor Drop",
+  "make": "Buckingham",
+  "model": "Windsor Drop",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness.",
+    "support": [
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     },
+     {
+      "sourceName": "PowerPyx",
+      "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+      "quote": "Windsor Drops can be found inside the car dealership located in Bayside west of Dynamix Fitness."
+     }
+    ],
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "I found the Windsor Drop in the driveway of a hotel near Ocean Beach, at the spot marked on the map above."
+     }
+    ]
+   },
+   "district": "Bayside",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -349,
+    "y": 1041,
+    "radius": 456,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "I found the Windsor Drop in the driveway of a hotel near Ocean Beach, at the spot marked on the map above.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
     "sourceName": "PowerPyx",
     "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
     "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
@@ -5106,11 +6340,18 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Bayside (repères de la carte communautaire), pas un point exact."
   ],
@@ -5119,7 +6360,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T22:51:16.706Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-25T22:51:16.706Z",
@@ -5127,6 +6368,110 @@
     "changes": [
      "source : PowerPyx",
      "source : PowerPyx"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-buckingham-windsor-drop-area",
+  "type": "vehicle",
+  "name": "Buckingham Windsor Drop Area",
+  "make": "Buckingham",
+  "model": "Windsor Drop Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Buckingham Windsor Drop Area: Ocean Beach Where to find it: Hotel driveway near Ocean Beach, or the driveways of the big houses in Capri",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Buckingham Windsor Drop Area: Ocean Beach Where to find it: Hotel driveway near Ocean Beach, or the driveways of the big houses in Capri"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -5888,251 +7233,6 @@
     "reason": "Détection automatique",
     "changes": [
      "source : GTA Xtreme"
-    ]
-   }
-  ]
- },
- {
-  "id": "v-declasse-mamba-gt",
-  "type": "vehicle",
-  "name": "Declasse Mamba GT",
-  "make": "Declasse",
-  "model": "Mamba GT",
-  "year": null,
-  "aliases": null,
-  "kind": "hidden",
-  "variant": null,
-  "edition": {
-   "exclusive": null,
-   "status": "none",
-   "support": []
-  },
-  "location": {
-   "text": {
-    "value": "Then you can register them at Moses' garage in Port Gellhorn.",
-    "support": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-      "quote": "Then you can register them at Moses' garage in Port Gellhorn."
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-      "quote": "Then you can register them at Moses' garage in Port Gellhorn."
-     }
-    ],
-    "conflicts": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
-      "quote": "Starting Location: Vice Beach > Leaf Links"
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-      "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
-     }
-    ]
-   },
-   "district": "Port Gellhorn",
-   "regionId": "gellhorn",
-   "precision": "zone",
-   "zone": {
-    "x": -6579,
-    "y": 3734,
-    "radius": 1017,
-    "widened": false
-   },
-   "point": null,
-   "alternatives": [
-    {
-     "district": "Leaf Links",
-     "text": "Starting Location: Vice Beach > Leaf Links",
-     "sourceName": "PowerPyx",
-     "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough"
-    }
-   ]
-  },
-  "access": {
-   "chapterMin": {
-    "value": 2,
-    "support": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-      "quote": "Moses is located in Port Gellhorn (only available after Chapter 2 – Moses: Take A Vehicle to Moses ):"
-     }
-    ],
-    "conflicts": []
-   },
-   "inferredChapter": null,
-   "until": null,
-   "mission": {
-    "value": "Main Mission Moses",
-    "support": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-      "quote": "Later in Chapter 2, during Main Mission Moses (Take A Vehicle to Moses) , you unlock the ability to register new vehicles."
-     }
-    ],
-    "conflicts": []
-   },
-   "early": true,
-   "keyCloner": null,
-   "tracker": {
-    "value": "advanced",
-    "support": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
-      "quote": "Reward: $12,110 + vehicle condition bonus + Advanced Tracker cars can now be registered and sold"
-     }
-    ],
-    "conflicts": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-      "quote": "After you meet Moses in Chapter 2 (automatic from story), you can bring him any car that doesn't have a tracker and click \"Register\" in his garage."
-     }
-    ]
-   },
-   "alarm": null
-  },
-  "keep": {
-   "text": {
-    "value": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers.",
-    "support": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
-     },
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-      "quote": "In GTA 6 (Grand Theft Auto VI) there's a hidden method to unlock the ability to register vehicles with Advanced Trackers."
-     }
-    ],
-    "conflicts": [
-     {
-      "sourceName": "PowerPyx",
-      "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-      "quote": "Later in Chapter 2, during Main Mission Moses (Take A Vehicle to Moses) , you unlock the ability to register new vehicles."
-     }
-    ]
-   },
-   "rule": null,
-   "mode": "register"
-  },
-  "steps": [
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
-    "quote": "Head there to start the mission."
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
-    "quote": "Steal the Mamba GT"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-    "quote": "Register Advanced Tracker Cars"
-   }
-  ],
-  "risks": [
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-    "quote": "No Tracker Cars = Finish Chapter 2 – Main Mission: Moses (Take A Vehicle to Moses) ."
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-    "quote": "Standard Tracker Cars = Automatically unlocked early in Chapter 3, after the first few main missions in the Chapter you can register Standard Tracker Cars at any Pay 'n' Spray ."
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-    "quote": "Advanced Tracker Cars = Finish Randy's Missions (the first one is a Chapter 3 Main Mission): Clonin’ Keys, Makin’ GS (Steal the Zorrusso for Randy) > Randy's Wish List (steal cars for Randy) > Dale Mamba (Steal the De…"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
-    "quote": "Reward: $12,110 + vehicle condition bonus + Advanced Tracker cars can now be registered and sold"
-   }
-  ],
-  "price": null,
-  "media": null,
-  "evidence": [
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-    "title": "GTA 6 How to Register Advanced Tracker Cars",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-register-advanced-tracker-cars",
-    "title": "GTA 6 how to register advanced tracker cars",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-dale-mamba-steal-the-declasse-mamba-gt-walkthrough",
-    "title": "GTA 6 Dale Mamba (Steal the Declasse Mamba GT) Walkthrough",
-    "official": false,
-    "readAt": "2026-11-26T04:41:53.730Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-how-to-get-new-personal-car",
-    "title": "GTA 6 how to get new personal car",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   }
-  ],
-  "reliability": "reported",
-  "reasons": [
-   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
-   "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
-  ],
-  "missing": [
-   "méthode de conservation"
-  ],
-  "firstSeenAt": "2026-11-25T22:51:16.706Z",
-  "updatedAt": "2026-11-26T04:41:53.730Z",
-  "revisions": [
-   {
-    "at": "2026-11-25T22:51:16.706Z",
-    "reason": "Détection automatique",
-    "changes": [
-     "source : PowerPyx",
-     "source : PowerPyx",
-     "source : PowerPyx"
-    ]
-   },
-   {
-    "at": "2026-11-26T04:41:53.730Z",
-    "reason": "Réévaluation",
-    "changes": [
-     "preuves : 3 → 4"
     ]
    }
   ]
@@ -7258,7 +8358,13 @@
       "quote": "Location: Vice Beach > Rialto Islands (Casanova Island) Reward: $20,200"
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Baller ST-D parks at the Ocean View Poolside Bar in Ocean Beach."
+     }
+    ]
    },
    "district": "Rialto Islands",
    "regionId": "vicecity",
@@ -7267,6 +8373,139 @@
     "x": 495,
     "y": 1253,
     "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "The Baller ST-D parks at the Ocean View Poolside Bar in Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Scan it first, since the regular Baller looks similar."
+   }
+  ],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "PowerPyx",
+    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
+    "title": "GTA 6 randys wish list car locations walkthrough",
+    "official": false,
+    "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-25T22:51:16.706Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : PowerPyx",
+     "source : PowerPyx"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 2 → 3"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-gallivanter-baller-st-d-area",
+  "type": "vehicle",
+  "name": "Gallivanter Baller ST-D Area",
+  "make": "Gallivanter",
+  "model": "Baller ST-D Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Gallivanter Baller ST-D Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the Gallivanter dealer in Southside",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Gallivanter Baller ST-D Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the Gallivanter dealer in Southside"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
     "widened": false
    },
    "point": null,
@@ -7302,39 +8541,30 @@
   "media": null,
   "evidence": [
    {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 Randy's Wish List Car Locations Walkthrough",
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
     "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
-   },
-   {
-    "sourceName": "PowerPyx",
-    "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough",
-    "title": "GTA 6 randys wish list car locations walkthrough",
-    "official": false,
-    "readAt": "2026-11-25T22:51:16.706Z"
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Une seule source : à vérifier en jeu.",
-   "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre",
    "sécurité (traqueur, alarme, clé)"
   ],
-  "firstSeenAt": "2026-11-25T22:51:16.706Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
-    "at": "2026-11-25T22:51:16.706Z",
+    "at": "2026-11-28T14:07:43.424Z",
     "reason": "Détection automatique",
     "changes": [
-     "source : PowerPyx",
-     "source : PowerPyx"
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -7427,6 +8657,200 @@
   "revisions": [
    {
     "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-carbonizzare",
+  "type": "vehicle",
+  "name": "Grotti Carbonizzare",
+  "make": "Grotti",
+  "model": "Carbonizzare",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The Carbonizzare shows up at the same parking lot as the Hellfire, south of the park in Ocean Beach near the Aural Expert shop, and on the streets around it.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Carbonizzare shows up at the same parking lot as the Hellfire, south of the park in Ocean Beach near the Aural Expert shop, and on the streets around it."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-carbonizzare-area",
+  "type": "vehicle",
+  "name": "Grotti Carbonizzare Area",
+  "make": "Grotti",
+  "model": "Carbonizzare Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Grotti Carbonizzare Area: Ocean Beach Where to find it: Parking lot south of the park, near the Aural Expert shop, or car parks in north Capri",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Grotti Carbonizzare Area: Ocean Beach Where to find it: Parking lot south of the park, near the Aural Expert shop, or car parks in north Capri"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 971,
+    "widened": true
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche élargie autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -7562,6 +8986,11 @@
     "conflicts": [
      {
       "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Itali RSX parks at the Ocean View Poolside Bar in Ocean Beach."
+     },
+     {
+      "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-fastest-cars",
       "quote": "In a villa garage on Vespucci Island, Rialto Islands."
      }
@@ -7579,6 +9008,12 @@
    "point": null,
    "alternatives": [
     {
+     "district": "Ocean Beach",
+     "text": "The Itali RSX parks at the Ocean View Poolside Bar in Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    },
+    {
      "district": "Rialto Islands",
      "text": "In a villa garage on Vespucci Island, Rialto Islands.",
      "sourceName": "AlcastHQ",
@@ -7595,6 +9030,11 @@
    "keyCloner": {
     "value": false,
     "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The standout Status RSX is even faster and is the only RSX you can take without the Key Cloner."
+     },
      {
       "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-fastest-cars",
@@ -7674,6 +9114,13 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-status-rsx",
     "title": "GTA 6 Grotti Status RSX: Location, Stats and How to Get It",
     "official": false,
@@ -7697,7 +9144,7 @@
    "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -7719,6 +9166,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 5"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 6"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-grotti-itali-rsx-area",
+  "type": "vehicle",
+  "name": "Grotti Itali RSX Area",
+  "make": "Grotti",
+  "model": "Itali RSX Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Grotti Itali RSX Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or a house garage on Vespucci Island",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Grotti Itali RSX Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or a house garage on Vespucci Island"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -8085,6 +9636,94 @@
   ]
  },
  {
+  "id": "v-garage-hathaway-apartments",
+  "type": "garage",
+  "name": "Hathaway Apartments Garage",
+  "make": "",
+  "model": "Hathaway Apartments Garage",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Granforma Zorrusso Area: Ocean Beach Where to find it: Hathaway Apartments garage (story mission), later the Ocean View Poolside Bar",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Granforma Zorrusso Area: Ocean Beach Where to find it: Hathaway Apartments garage (story mission), later the Ocean View Poolside Bar"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": null,
+   "mode": "unknown"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
   "id": "v-garage-hog-stars",
   "type": "garage",
   "name": "Hog Stars Garage",
@@ -8303,6 +9942,210 @@
   "revisions": [
    {
     "at": "2026-11-27T15:23:12.412Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-invetero-coquette-d10",
+  "type": "vehicle",
+  "name": "Invetero Coquette D10",
+  "make": "Invetero",
+  "model": "Coquette D10",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Randy calls you about a crew shipping a Coquette D10 out of the western docks on Waxman Island, and the spot shows up on your map.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Randy calls you about a crew shipping a Coquette D10 out of the western docks on Waxman Island, and the spot shows up on your map."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": null,
+   "regionId": null,
+   "precision": "text",
+   "zone": null,
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Clone the key and drive it to Randy."
+     }
+    ],
+    "conflicts": []
+   },
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM)."
+  ],
+  "missing": [],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-invetero-coquette-d10-area",
+  "type": "vehicle",
+  "name": "Invetero Coquette D10 Area",
+  "make": "Invetero",
+  "model": "Coquette D10 Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Invetero Coquette D10 Area: Waxman Island Where to find it: Western docks on Waxman Island (Randy calls you)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Invetero Coquette D10 Area: Waxman Island Where to find it: Western docks on Waxman Island (Randy calls you)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -9039,7 +10882,7 @@
   "variant": null,
   "edition": {
    "exclusive": "ultimate",
-   "status": "confirmed",
+   "status": "reported",
    "support": [
     {
      "sourceName": "GamesRadar+",
@@ -9068,6 +10911,11 @@
       "sourceName": "GamesRadar+",
       "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-ocelot-jugular",
       "quote": "The Ocelot Jugular can be found around Vice City, particularly at lively hotspots after dark, but there's a guaranteed spawn in Belville, parked in a garage in a cul-de-sac as marked on the map above."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "It also parks outside BITE on Atlantic Ave, just north of Ocean Beach."
      }
     ]
    },
@@ -9081,7 +10929,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "It also parks outside BITE on Atlantic Ave, just north of Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -9108,7 +10963,13 @@
    "rule": null,
    "mode": "yes"
   },
-  "steps": [],
+  "steps": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Scan four-door sedans in the area, because the game only offers the delivery for the right model."
+   }
+  ],
   "risks": [
    {
     "sourceName": "GamesRadar+",
@@ -9144,13 +11005,20 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
-  "reliability": "confirmed",
+  "reliability": "reported",
   "reasons": [
-   "2 sources indépendantes concordantes sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Exclusivité Ultimate recoupée.",
+   "Exclusivité Ultimate signalée : compatibilité à vérifier.",
    "Zone de recherche autour de Belville (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
@@ -9158,7 +11026,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-25T13:47:47.494Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-25T13:47:47.494Z",
@@ -9174,6 +11042,112 @@
      "fiabilité : reported → confirmed",
      "preuves : 1 → 3",
      "édition : ultimate (reported) → ultimate (confirmed)"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "fiabilité : confirmed → reported",
+     "preuves : 3 → 4",
+     "édition : ultimate (confirmed) → ultimate (reported)"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ocelot-jugular-area",
+  "type": "vehicle",
+  "name": "Ocelot Jugular Area",
+  "make": "Ocelot",
+  "model": "Jugular Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Ocelot Jugular Area: Belville Where to find it: Inside a garage in Belville, or outside BITE on Atlantic Ave",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Ocelot Jugular Area: Belville Where to find it: Inside a garage in Belville, or outside BITE on Atlantic Ave"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Belville",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -1375,
+    "y": 2897,
+    "radius": 408,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Belville (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -9647,6 +11621,20 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-searing-zombie-bobber",
+    "title": "GTA 6 Searing Zombie Bobber: Location, Stats and Price",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-mojito-tempesta",
     "title": "GTA 6 Pegassi Mojito Tempesta: Location and How to Get It",
     "official": false,
@@ -9677,7 +11665,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-27T15:23:12.412Z",
-  "updatedAt": "2026-11-27T23:43:22.437Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-27T15:23:12.412Z",
@@ -9693,6 +11681,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 4"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 6"
     ]
    }
   ]
@@ -10080,7 +12075,7 @@
   "model": "Tempesta",
   "year": null,
   "aliases": null,
-  "kind": "dynamic",
+  "kind": "hidden",
   "variant": null,
   "edition": {
    "exclusive": null,
@@ -10120,6 +12115,11 @@
      },
      {
       "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "I find the Tempesta parked at the Ocean View Poolside Bar in Ocean Beach."
+     },
+     {
+      "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-mojito-tempesta",
       "quote": "Pegassi Gold Rush Tempesta Speed: 7.6 Acceleration: 7.8 Where to find it: Outside a restaurant in Ocean Beach Standout set: Blinged Up"
      },
@@ -10130,28 +12130,28 @@
      }
     ]
    },
-   "district": "Rialto Islands",
+   "district": "Ocean Beach",
    "regionId": "vicecity",
    "precision": "zone",
    "zone": {
-    "x": 495,
-    "y": 1253,
-    "radius": 431,
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
     "widened": false
    },
    "point": null,
    "alternatives": [
     {
-     "district": "Ocean Beach",
-     "text": "Pegassi Gold Rush Tempesta Speed: 7.6 Acceleration: 7.8 Where to find it: Outside a restaurant in Ocean Beach Standout set: Blinged Up",
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-mojito-tempesta"
+     "district": "Rialto Islands",
+     "text": "Location: Vice City > Rialto Islands (Vespucci Island) Reward: $16,300",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
     },
     {
-     "district": "Ocean Beach",
-     "text": "Outside a restaurant in Ocean Beach.",
-     "sourceName": "AlcastHQ",
-     "url": "https://alcasthq.com/gta-6-fastest-cars"
+     "district": "Rialto Islands",
+     "text": "Location: Vice City > Rialto Islands (Vespucci Island) Reward: $16,300",
+     "sourceName": "PowerPyx",
+     "url": "https://www.powerpyx.com/gta-6-randys-wish-list-car-locations-walkthrough"
     }
    ]
   },
@@ -10220,6 +12220,13 @@
     "readAt": "2026-11-25T22:51:16.706Z"
    },
    {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
     "title": "GTA 6 best street racing car",
@@ -10245,13 +12252,14 @@
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
-   "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre"
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -10275,6 +12283,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 5 → 8"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 8 → 9"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-tempesta-area",
+  "type": "vehicle",
+  "name": "Pegassi Tempesta Area",
+  "make": "Pegassi",
+  "model": "Tempesta Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi Tempesta Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the tow truck event on NE 3rd St (around 1 PM)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Pegassi Tempesta Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the tow truck event on NE 3rd St (around 1 PM)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -10319,6 +12431,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Außerhalb der Pegassi Residences, Bayside Drive; berichtete über eine abendliche Sichtung."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Toros is an SUV, and I found it on the 2nd or 3rd floor of the multi-storey car park on Fig St in Ocean Beach."
      }
     ]
    },
@@ -10344,16 +12461,40 @@
      "text": "Außerhalb der Pegassi Residences, Bayside Drive; berichtete über eine abendliche Sichtung.",
      "sourceName": "GTA Xtreme (sitemap)",
      "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars"
+    },
+    {
+     "district": "Ocean Beach",
+     "text": "The Toros is an SUV, and I found it on the 2nd or 3rd floor of the multi-storey car park on Fig St in Ocean Beach.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
     }
    ]
   },
   "access": {
    "chapterMin": null,
-   "inferredChapter": null,
+   "inferredChapter": {
+    "value": 3,
+    "why": "cloneur de clé nécessaire",
+    "source": {
+     "sourceName": "GTA BOOM",
+     "url": "https://www.gtaboom.com/gta-6-starfish-island-mansion-garage-4cf3",
+     "quote": "In Chapter 3, unlock the Key Cloner."
+    }
+   },
    "until": null,
    "mission": null,
    "early": true,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The other spot is outside Pegassi Residences on Bayside Dr in Tequesta Retreat, around 6:30 PM, where security guards walk around, so clone the key quietly there."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
    "alarm": null
   },
@@ -10372,7 +12513,13 @@
    "mode": "register"
   },
   "steps": [],
-  "risks": [],
+  "risks": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "It is slow for a car with a tracker, so take the widest roads back to Randy."
+   }
+  ],
   "price": null,
   "media": null,
   "evidence": [
@@ -10410,20 +12557,25 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
    "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Accès estimé au chapitre 3 : cloneur de clé nécessaire (règle générale, GTA BOOM).",
    "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -10439,6 +12591,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 3 → 5"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 5 → 6"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-toros-area",
+  "type": "vehicle",
+  "name": "Pegassi Toros Area",
+  "make": "Pegassi",
+  "model": "Toros Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi Toros Area: Ocean Beach Where to find it: 2nd or 3rd floor of the car park on Fig St in Ocean Beach, or outside Pegassi Residences in Tequesta Retreat (around 6:30 PM)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Pegassi Toros Area: Ocean Beach Where to find it: 2nd or 3rd floor of the car park on Fig St in Ocean Beach, or outside Pegassi Residences in Tequesta Retreat (around 6:30 PM)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Tequesta Retreat",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": -208,
+    "y": -1076,
+    "radius": 254,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Tequesta Retreat (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -10494,6 +12750,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/en/gta-6-best-cars-evidence-guide",
       "quote": "That saves a lot of chasing the wrong label."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "If it isn't there, save and reload, or go to the villa off Flamingo Parkway in Waning Sands, east of Belville."
      },
      {
       "sourceName": "GamesRadar+",
@@ -10560,6 +12821,11 @@
    "keyCloner": {
     "value": true,
     "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Clone the key and drive off."
+     },
      {
       "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-dantes-vitello",
@@ -10649,6 +12915,13 @@
     "readAt": "2026-11-25T22:51:16.706Z"
    },
    {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
     "sourceName": "GamesRadar+",
     "url": "https://www.gamesradar.com/games/grand-theft-auto/gta-6-pegassi-vitello",
     "title": "Where to steal a GTA 6 Pegassi Vitello",
@@ -10708,7 +12981,7 @@
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -10739,6 +13012,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 6 → 12"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 12 → 13"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pegassi-vitello-area",
+  "type": "vehicle",
+  "name": "Pegassi Vitello Area",
+  "make": "Pegassi",
+  "model": "Vitello Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pegassi Vitello Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the villa garage off Flamingo Parkway in Waning Sands",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Pegassi Vitello Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the villa garage off Flamingo Parkway in Waning Sands"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Waning Sands",
+   "regionId": "ambrosia",
+   "precision": "zone",
+   "zone": {
+    "x": -23,
+    "y": 3987,
+    "radius": 546,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Waning Sands (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -11031,6 +13408,11 @@
       "sourceName": "GTA Xtreme (sitemap)",
       "url": "https://www.gta-xtreme.com/de/gta-6/locations/hidden-cars",
       "quote": "Mehrstöckiges Parkhaus in der Fig Street; berichtete über eine Nachmittagssichtung."
+     },
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "It also parks in the multi-storey car park on Fig St in Ocean Beach, the same one as the Toros, around 5 PM, and along the beachfront shops on Shore Dr."
      }
     ]
    },
@@ -11044,7 +13426,14 @@
     "widened": false
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Shore Dr",
+     "text": "It also parks in the multi-storey car park on Fig St in Ocean Beach, the same one as the Toros, around 5 PM, and along the beachfront shops on Shore Dr.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -11052,7 +13441,17 @@
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": false,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "There are no guards, so just clone the key and drive back to Randy."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
    "alarm": null
   },
@@ -11108,20 +13507,26 @@
     "title": "GTA 6 randys wish list car locations walkthrough",
     "official": false,
     "readAt": "2026-11-25T22:51:16.706Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "2 sources, mais sans accord vérifiable sur l'emplacement.",
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
-   "chapitre",
-   "sécurité (traqueur, alarme, clé)"
+   "chapitre"
   ],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-25T22:51:16.706Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -11137,6 +13542,110 @@
     "changes": [
      "preuves : 2 → 4",
      "localisation : text → zone"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 4 → 5"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pfister-growler-area",
+  "type": "vehicle",
+  "name": "Pfister Growler Area",
+  "make": "Pfister",
+  "model": "Growler Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pfister Growler Area: Southside Where to find it: Outside a car dealer in Southside, or the car park on Fig St in Ocean Beach (around 5 PM)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Pfister Growler Area: Southside Where to find it: Outside a car dealer in Southside, or the car park on Fig St in Ocean Beach (around 5 PM)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -11231,6 +13740,200 @@
   "revisions": [
    {
     "at": "2026-11-26T14:33:11.590Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pfister-neon",
+  "type": "vehicle",
+  "name": "Pfister Neon",
+  "make": "Pfister",
+  "model": "Neon",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "The Neon is the last of the cars I found at the Ocean View Poolside Bar in Ocean Beach.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Neon is the last of the cars I found at the Ocean View Poolside Bar in Ocean Beach."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-pfister-neon-area",
+  "type": "vehicle",
+  "name": "Pfister Neon Area",
+  "make": "Pfister",
+  "model": "Neon Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Pfister Neon Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or outside the big houses in Capri",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Pfister Neon Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or outside the big houses in Capri"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Capri",
+   "regionId": "gellhorn",
+   "precision": "zone",
+   "zone": {
+    "x": -6896,
+    "y": 210,
+    "radius": 607,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Capri (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
@@ -11528,6 +14231,13 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-searing-zombie-bobber",
+    "title": "GTA 6 Searing Zombie Bobber: Location, Stats and Price",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-standout-vehicles",
     "title": "All GTA 6 Standout Vehicles: 281 Rare Car Locations by Set",
     "official": false,
@@ -11580,7 +14290,7 @@
    "sécurité (traqueur, alarme, clé)"
   ],
   "firstSeenAt": "2026-11-26T14:33:11.590Z",
-  "updatedAt": "2026-11-27T23:43:22.437Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-26T14:33:11.590Z",
@@ -11601,6 +14311,13 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 6 → 7"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 7 → 8"
     ]
    }
   ]
@@ -11648,6 +14365,11 @@
      },
      {
       "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Furia parks at the Ocean View Poolside Bar in Ocean Beach, so you can clone the key and leave in seconds."
+     },
+     {
+      "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-fastest-cars",
       "quote": "The leopard print Big Cat Furia on Starfish Island is slower, but still fast."
      }
@@ -11664,6 +14386,12 @@
    },
    "point": null,
    "alternatives": [
+    {
+     "district": "Ocean Beach",
+     "text": "The Furia parks at the Ocean View Poolside Bar in Ocean Beach, so you can clone the key and leave in seconds.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
+    },
     {
      "district": "Starfish Island",
      "text": "The leopard print Big Cat Furia on Starfish Island is slower, but still fast.",
@@ -11688,7 +14416,17 @@
    "until": null,
    "mission": null,
    "early": false,
-   "keyCloner": null,
+   "keyCloner": {
+    "value": true,
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "The Furia parks at the Ocean View Poolside Bar in Ocean Beach, so you can clone the key and leave in seconds."
+     }
+    ],
+    "conflicts": []
+   },
    "tracker": null,
    "alarm": null
   },
@@ -11746,6 +14484,13 @@
     "readAt": "2026-11-25T22:51:16.706Z"
    },
    {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
     "sourceName": "GTA Xtreme",
     "url": "https://www.gta-xtreme.com/en/gta-6-best-street-racing-car",
     "title": "GTA 6 best street racing car",
@@ -11766,11 +14511,9 @@
    "Certaines sources reprennent la même origine : comptées une seule fois.",
    "Zone de recherche autour de Rialto Islands (repères de la carte communautaire), pas un point exact."
   ],
-  "missing": [
-   "sécurité (traqueur, alarme, clé)"
-  ],
+  "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -11793,6 +14536,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 4 → 6"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 6 → 7"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-piccia-furia-area",
+  "type": "vehicle",
+  "name": "Piccia Furia Area",
+  "make": "Piccia",
+  "model": "Furia Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Piccia Furia Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the mansion garage on Palladia Ln in Peacock Estates",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Piccia Furia Area: Ocean Beach Where to find it: Ocean View Poolside Bar, or the mansion garage on Palladia Ln in Peacock Estates"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Ocean Beach",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1743,
+    "y": 702,
+    "radius": 758,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Ocean Beach (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -13362,6 +16209,11 @@
      },
      {
       "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Take the ferry from Waxman Island to Dalton Island and steal the Thrax from the car park behind the Dalton Island Club."
+     },
+     {
+      "sourceName": "AlcastHQ",
       "url": "https://alcasthq.com/gta-6-thrax",
       "quote": "The GTA 6 Thrax sits in a mansion garage on Starfish Island, and the trail to it starts with a hidden side quest about a conspiracy group with a strange thing about toilets."
      },
@@ -13404,6 +16256,12 @@
      "text": "Starting Location: Vice Beach > Dalton Island",
      "sourceName": "PowerPyx",
      "url": "https://www.powerpyx.com/gta-6-mansion-thrax-steal-the-truffade-thrax-walkthrough"
+    },
+    {
+     "district": "Dalton Island",
+     "text": "Take the ferry from Waxman Island to Dalton Island and steal the Thrax from the car park behind the Dalton Island Club.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-randys-wish-list"
     }
    ]
   },
@@ -13534,8 +16392,8 @@
    },
    {
     "sourceName": "AlcastHQ",
-    "url": "https://alcasthq.com/gta-6-thrax",
-    "quote": "Scan 10 No Flusher tags in Vice Beach to find him, then take it for free."
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "quote": "Take the ferry from Waxman Island to Dalton Island and steal the Thrax from the car park behind the Dalton Island Club."
    }
   ],
   "risks": [
@@ -13608,6 +16466,13 @@
    },
    {
     "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-thrax",
     "title": "GTA 6 Thrax: How to Get Andrew Node's Thrax, the Fastest Car",
     "official": false,
@@ -13658,7 +16523,7 @@
   ],
   "missing": [],
   "firstSeenAt": "2026-11-21T09:44:56.655Z",
-  "updatedAt": "2026-11-27T15:23:12.412Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-21T09:44:56.655Z",
@@ -13703,6 +16568,110 @@
     "reason": "Réévaluation",
     "changes": [
      "preuves : 7 → 10"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 10 → 11"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-truffade-thrax-area",
+  "type": "vehicle",
+  "name": "Truffade Thrax Area",
+  "make": "Truffade",
+  "model": "Thrax Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Truffade Thrax Area: Dalton Island Where to find it: Car park behind the Dalton Island Club (last car)",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Truffade Thrax Area: Dalton Island Where to find it: Car park behind the Dalton Island Club (last car)"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Dalton Island",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1738,
+    "y": -1355,
+    "radius": 390,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Dalton Island (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -13784,6 +16753,200 @@
     "reason": "Détection automatique",
     "changes": [
      "source : GamesRadar+"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ubermacht-cypher",
+  "type": "vehicle",
+  "name": "Ubermacht Cypher",
+  "make": "Ubermacht",
+  "model": "Cypher",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "It also parks along Shore Dr in Ocean Beach, outside Cirque de Cuisine.",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "It also parks along Shore Dr in Ocean Beach, outside Cirque de Cuisine."
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Shore Dr",
+   "regionId": "vicecity",
+   "precision": "zone",
+   "zone": {
+    "x": 1943,
+    "y": 447,
+    "radius": 431,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Shore Dr (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "v-ubermacht-cypher-area",
+  "type": "vehicle",
+  "name": "Ubermacht Cypher Area",
+  "make": "Ubermacht",
+  "model": "Cypher Area",
+  "year": null,
+  "aliases": null,
+  "kind": "hidden",
+  "variant": null,
+  "edition": {
+   "exclusive": null,
+   "status": "none",
+   "support": []
+  },
+  "location": {
+   "text": {
+    "value": "Ubermacht Cypher Area: Southside Where to find it: Outside the Ubermacht dealership in Southside, or outside Cirque de Cuisine on Shore Dr",
+    "support": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-randys-wish-list",
+      "quote": "Ubermacht Cypher Area: Southside Where to find it: Outside the Ubermacht dealership in Southside, or outside Cirque de Cuisine on Shore Dr"
+     }
+    ],
+    "conflicts": []
+   },
+   "district": "Southside",
+   "regionId": "grassrivers",
+   "precision": "zone",
+   "zone": {
+    "x": -1791,
+    "y": -2071,
+    "radius": 332,
+    "widened": false
+   },
+   "point": null,
+   "alternatives": []
+  },
+  "access": {
+   "chapterMin": null,
+   "inferredChapter": null,
+   "until": null,
+   "mission": null,
+   "early": false,
+   "keyCloner": null,
+   "tracker": null,
+   "alarm": null
+  },
+  "keep": {
+   "text": null,
+   "rule": {
+    "chapter": 2,
+    "where": "garage de Moses",
+    "tracker": null,
+    "source": {
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-paul-walker-car",
+     "quote": "A stolen car isn't saved until you register it, and registering only opens up in Chapter 2 when you meet Moses."
+    }
+   },
+   "mode": "register"
+  },
+  "steps": [],
+  "risks": [],
+  "price": null,
+  "media": null,
+  "evidence": [
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-randys-wish-list",
+    "title": "GTA 6 Randy's Wish List: All 22 Car Locations and Rewards",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
+   }
+  ],
+  "reliability": "reported",
+  "reasons": [
+   "Une seule source : à vérifier en jeu.",
+   "Zone de recherche autour de Southside (repères de la carte communautaire), pas un point exact."
+  ],
+  "missing": [
+   "chapitre",
+   "sécurité (traqueur, alarme, clé)"
+  ],
+  "firstSeenAt": "2026-11-28T14:07:43.424Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
+  "revisions": [
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Détection automatique",
+    "changes": [
+     "source : AlcastHQ"
     ]
    }
   ]
@@ -14114,19 +17277,32 @@
       "quote": "It sits just south of the bridge to Draper Island, close to Wild Hog Point."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-scrapper-vf5c",
+      "quote": "It sits on the waterfront, just south of the bridge to Draper Island and close to Wild Hog Point."
+     }
+    ]
    },
-   "district": "Port Gellhorn",
-   "regionId": "gellhorn",
+   "district": "Belville",
+   "regionId": "ambrosia",
    "precision": "zone",
    "zone": {
-    "x": -6579,
-    "y": 3734,
-    "radius": 1017,
-    "widened": false
+    "x": -1375,
+    "y": 2897,
+    "radius": 653,
+    "widened": true
    },
    "point": null,
-   "alternatives": []
+   "alternatives": [
+    {
+     "district": "Port Gellhorn",
+     "text": "It sits just south of the bridge to Draper Island, close to Wild Hog Point.",
+     "sourceName": "AlcastHQ",
+     "url": "https://alcasthq.com/gta-6-firebug-dominator"
+    }
+   ]
   },
   "access": {
    "chapterMin": null,
@@ -14168,7 +17344,13 @@
       "quote": "The GTA 6 Firebug Dominator is a standout version of the regular Dominator, with better stats and no tracker, so Moses can register it for you."
      }
     ],
-    "conflicts": []
+    "conflicts": [
+     {
+      "sourceName": "AlcastHQ",
+      "url": "https://alcasthq.com/gta-6-scrapper-vf5c",
+      "quote": "You can keep it or sell it to Moses."
+     }
+    ]
    },
    "rule": {
     "chapter": 2,
@@ -14224,6 +17406,11 @@
     "sourceName": "AlcastHQ",
     "url": "https://alcasthq.com/gta-6-firebug-dominator",
     "quote": "It pulls away from most cars you can steal in Port Gellhorn, and it is quick enough to lose a patrol car on a straight road."
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-scrapper-vf5c",
+    "quote": "GLR40 grenade launcher Where: Coffee table in the back of the top floor What you get: Not unique, lost when you die"
    }
   ],
   "price": {
@@ -14245,24 +17432,39 @@
     "title": "GTA 6 Firebug Dominator: Location, Stats and How to Keep It",
     "official": false,
     "readAt": "2026-11-22T17:05:49.250Z"
+   },
+   {
+    "sourceName": "AlcastHQ",
+    "url": "https://alcasthq.com/gta-6-scrapper-vf5c",
+    "title": "GTA 6 Scrapper VF5C Location: Unique SMG at La Cascara Motel",
+    "official": false,
+    "readAt": "2026-11-28T14:07:43.424Z"
    }
   ],
   "reliability": "reported",
   "reasons": [
-   "Une seule source : à vérifier en jeu.",
-   "Zone de recherche autour de Port Gellhorn (repères de la carte communautaire), pas un point exact."
+   "Les sources divergent sur l'emplacement ou l'édition : à vérifier.",
+   "Certaines sources reprennent la même origine : comptées une seule fois.",
+   "Zone de recherche élargie autour de Belville (repères de la carte communautaire), pas un point exact."
   ],
   "missing": [
    "chapitre"
   ],
   "firstSeenAt": "2026-11-22T17:05:49.250Z",
-  "updatedAt": "2026-11-22T17:05:49.250Z",
+  "updatedAt": "2026-11-28T14:07:43.424Z",
   "revisions": [
    {
     "at": "2026-11-22T17:05:49.250Z",
     "reason": "Détection automatique",
     "changes": [
      "source : AlcastHQ"
+    ]
+   },
+   {
+    "at": "2026-11-28T14:07:43.424Z",
+    "reason": "Réévaluation",
+    "changes": [
+     "preuves : 1 → 2"
     ]
    }
   ]
